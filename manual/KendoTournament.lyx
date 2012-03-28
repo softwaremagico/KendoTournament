@@ -1,0 +1,2972 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Índice
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+KENDO TOURNAMENT GENERATION TOOL
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../images/defaults/mainPhoto.png
+	lyxscale 20
+	width 60col%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+v0.97
+\end_layout
+
+\begin_layout Author
+Jorge Hortelano Otero
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Instalación
+\end_layout
+
+\begin_layout Section
+Requisitos
+\end_layout
+
+\begin_layout Standard
+He generado la aplicación Kendo Tournament Generator (KTG) de forma que
+ debería ser compatible con todas las versiones de Windows (al menos a partir
+ de Windows 2000) y con todas las versiones de Linux.
+ Por desgracia el abanico de posibilidades es tan grande que no he realizado
+ pruebas en cada una de ellas, por lo que podrían aparecer errores imprecisos
+ en algunas de ellas.
+ 
+\end_layout
+
+\begin_layout Standard
+La aplicación consta de dos partes principales: una aplicación que genera
+ un entorno gráfico con ventanas para facilitar el manejo al usuario, y
+ una base de datos que permite almacenar y gestionar toda la información
+ relativa a las ligas de kendo.
+ Por tanto, esta aplicación tiene dos requisitos que deben ser instalados
+ en su ordenador:
+\end_layout
+
+\begin_layout Description
+Maquina
+\begin_inset space ~
+\end_inset
+
+virtual
+\begin_inset space ~
+\end_inset
+
+Java.
+ Aunque algunos sistemas operativos incluyen su máquina virtual (MV) propia,
+ aconsejo fervientemente que se utilice la versión oficial proporcionada
+ por SUN.
+ Esta MV puede ser descargada gratuitamente de la página oficial sin coste
+ alguno para el usuario en 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.java.com/es/download/
+\end_layout
+
+\end_inset
+
+ Nuestro programa ha sido desarrollado para la versión 6 (1.6) update 0,
+ por lo que cualquier versión igual o posterior debería bastar.
+ 
+\end_layout
+
+\begin_layout Description
+MySQL: Esto es un servidor de bases de datos utilizado por nuestra aplicación.
+ Al igual que la maquina virtual de Java, es completamente gratuito (exceptuando
+ la asistencia técnica).
+ Puede ser descargado aquí: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/downloads/mysql/5.1.html
+\end_layout
+
+\end_inset
+
+ La versión utilizada en nuestro caso es la 5.1, por lo que cualquier versión
+ igual o superior debería bastar.
+ También aconsejo descargarse algunas aplicaciones de mantenimiento del
+ servidor: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/downloads/gui-tools/5.0.html
+\end_layout
+
+\end_inset
+
+ Con estas aplicaciones podrás crear backups de tus bases de datos y evitar
+ pérdidas de datos por fallos en los discos, aunque no son esenciales para
+ el uso del KTG.
+ Esta aplicación solo es necesaria instalarla en un ordenador, el que vaya
+ a albergar los datos.
+ Consulta el capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cha:Uso-de-distintos"
+
+\end_inset
+
+ para más información.
+\end_layout
+
+\begin_layout Standard
+Por último señalar que tanto la MV de Java, como el servidor MySQL están
+ realizados por grandes empresas (realmente muy grandes) a las que no pertenezco.
+ Por lo que para cualquier pregunta de mantenimiento se debería contactar
+ con ellos.
+ 
+\end_layout
+
+\begin_layout Section
+Instalación
+\end_layout
+
+\begin_layout Subsection
+Instalación de los requisitos básicos
+\end_layout
+
+\begin_layout Standard
+Tanto la máquina virtual de Java, como el servidor de bases de datos de
+ MySQL tienen un entorno gráfico para su instalación en Windows, o vienen
+ en paquetes de repositorio en Linux.
+ Por tanto no voy a explicar lo que hay que hacer para su instalación (básicamen
+te decir 
+\begin_inset Quotes eld
+\end_inset
+
+sí
+\begin_inset Quotes erd
+\end_inset
+
+ a todo).
+ Solamente voy a indicar algunos detalles sobre MySQL para aquellos que
+ son inexpertos en el tema.
+\end_layout
+
+\begin_layout Standard
+Cuando se instale la base de datos MySQL en Windows, se realizarán varias
+ preguntas al usuario.
+ De ellas, la respuesta por defecto suele ser acertada (para cualquier duda,
+ consultar 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/doc/refman/5.0/es/
+\end_layout
+
+\end_inset
+
+).
+ Sin embargo, aconsejo tener en cuenta estas tres cosas al arrancar el asistente
+ de configuración:
+\end_layout
+
+\begin_layout Enumerate
+Ventana de dialogo del tipo de servidor.
+ En nuestro caso, escogeremos la opción 
+\begin_inset Quotes eld
+\end_inset
+
+Developer machine (Ordenador de desarrollo) 
+\begin_inset Quotes erd
+\end_inset
+
+ ya que es la que menos consumo utilizará.
+ Esta opción es suficiente para nuestras necesidades.
+ 
+\end_layout
+
+\begin_layout Enumerate
+La ventana de diálogo del conjunto de caracteres.
+ Aconsejo el uso de UTF-8, aunque no es fundamental.
+\end_layout
+
+\begin_layout Enumerate
+La ventana de diálogo de las opciones de seguridad.
+ Desmarcaremos la opción de solo acceso local, ya que así podremos trabajar
+ con varios equipos dentro de la liga.
+ Además, habrá que recordar la contraseña indicada, ya que será necesaria
+ al ejecutar nuestro programa.
+ 
+\emph on
+Nota: por simplicidad, en este manual accederemos a nuestra base de datos
+ con el usuario root, ya que evita la generación de cuentas de usuario nuevas.
+ Si es usted un usuario avanzado o teme por la seguridad de su sistema,
+ le aconsejo que acceda con otro usuario.
+ KTG le preguntará el nombre de usuario y su contraseña cuando quiera acceder
+ a la base de datos, por lo que no tendrá ningún problema.
+ Recuerde si hace esto, dar permisos al nuevo usuario tanto local como remotamen
+te para la base de datos específica del KTG.
+\end_layout
+
+\begin_layout Standard
+Teniendo en cuenta las opciones descritas anteriormente, debería de funcionar
+ todo correctamente.
+ 
+\end_layout
+
+\begin_layout Subsection
+Instalación de la aplicación
+\end_layout
+
+\begin_layout Standard
+Para los usuarios de Windows, la aplicación se distribuye como el típico
+ conjunto de ventanas de instalador.
+ No resulta muy flexible, ya que el usuario no puede cambiar apenas las
+ opciones.
+ Sin embargo, esto facilita enormemente la instalación ya que el usuario
+ se limitará a aceptar todo lo que aparezca por pantalla.
+ 
+\end_layout
+
+\begin_layout Standard
+Para los usuarios de Linux (Debian/Ubuntu), la aplicación se distribuye
+ como un paquete DEB.
+ Por tanto un 
+\emph on
+dpkg -i fichero.deb
+\emph default
+ debería bastar.
+ Para los usuarios de otras distribuciones que no dispongan de 
+\emph on
+dpkg
+\emph default
+, aconsejo que se descarguen el paquete SRC y lo compilen con un compilador
+ en java.
+\end_layout
+
+\begin_layout Standard
+En todos los casos que se use un instalador, se generará un enlace simbólico
+ que te permitirá arrancar la aplicación.
+ 
+\end_layout
+
+\begin_layout Subsection
+Instalación de la base de datos
+\end_layout
+
+\begin_layout Standard
+A partir de la versión 0.9 del programa, la base de datos se instala automáticame
+nte en el servidor MySQL si esta no está ya instalada.
+ De todas formas, si existiera algún problema, siempre se puede instalar
+ manualmente.
+ Para ello, utiliza el programa MySQL Admin y el fichero incluido en la
+ carpeta 
+\begin_inset Quotes eld
+\end_inset
+
+database
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Instalarlo como si fuera un backup con la opción que el MySQL Admin presenta.
+\end_layout
+
+\begin_layout Chapter
+Utilización de la aplicación
+\end_layout
+
+\begin_layout Standard
+Podemos decir que el programa está dividido lógicamente en cinco partes.
+\end_layout
+
+\begin_layout Enumerate
+Conexión a la base de datos.
+ Primero nos debemos conectar a la base de datos de la máquina para poder
+ manipular y almacenar los datos.
+ Si está conexión falla, la aplicación no puede realizar ninguna operación,
+ por lo que es lo primero que hay que hacer.
+\end_layout
+
+\begin_layout Enumerate
+Inserción o registro de datos.
+ Previamente a la liga, se deberá de insertar en la base de datos los participan
+tes, clubes, equipos y otros datos necesarios.
+ Todo lo que no se haya incluido, obviamente no existirá para el programa.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Diseño de la liga.
+ Se tendrá que decidir los combates iniciales, la estructura de la liga
+ y otros detalles.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Marcador de liga.
+ Una pantalla que se irá completando con las distintas puntuaciones obtenidas
+ en la liga.
+ Los resultados irán generando los distintos combates.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Gráficas.
+ Un conjunto de estadísticas y listas de la liga.
+ De aquí se pueden extraer el ranking, un listado de resultados y muchas
+ cosas más.
+ 
+\end_layout
+
+\begin_layout Section
+Conexión a la base de datos
+\end_layout
+
+\begin_layout Standard
+Lo primero que pide el programa son los datos para conectarse al servidor
+ de bases de datos (MySQL o SQLite).
+ Estos datos son el usuario, contraseña, máquina y base de datos:
+\end_layout
+
+\begin_layout Standard
+El usuario y contraseña es, para MySQL, el indicado en la instalación o
+ el que se haya creado después.
+ En el caso de SQLite no se utiliza usuario ni contraseña.
+ 
+\end_layout
+
+\begin_layout Standard
+La máquina será, para MySQL, 
+\emph on
+localhost
+\emph default
+ si el servidor está albergado en la misma máquina (lo normal en la mayoría
+ de los casos), o la dirección de red de la máquina que lo contenga en otros
+ casos (ver Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cha:Uso-de-distintos"
+
+\end_inset
+
+).
+ SQLite solamente se puede contectar localmente a la base de datos.
+ 
+\end_layout
+
+\begin_layout Standard
+La base de datos será 
+\emph on
+kendotournament
+\emph default
+ en todos los casos, que es lo que identifica nuestra base de datos respecto
+ a las de otros programas que puedan estar utilizándo el servidor.
+ 
+\end_layout
+
+\begin_layout Subsection
+Actualización de la base de datos
+\end_layout
+
+\begin_layout Standard
+Existe la posibilidad de actualizar la base de datos si esta pertenece a
+ la versión 0.91 o posterior.
+ De esta forma, al actualizar la aplicación a una versión posterior, también
+ se puede actualizar la base de datos sin necesidad de perder la información.
+ Para ello, seleccionar la opción adecuada en el menú principal de la aplicación.
+ Puede ser que de algunos errores al actualizarlo, debido en parte a los
+ datos ya introducidos en la base de datos.
+ Estos errores no resultan vitales y se pueden ignorar.
+ De todas formas, si la base de datos no contiene información vital, borrarla
+ y volverla a instalar aseguraría el buen funcionamiento de la misma.
+ 
+\end_layout
+
+\begin_layout Subsection
+Copia de seguridad de la base de datos
+\end_layout
+
+\begin_layout Standard
+Existe la posibilidad de hacer una copia de seguridad de la base de datos
+ del programa sin la necesidad de tener conocimientos de SQL o de aplicaciones
+ externas.
+ Dentro del menú principal, en el apartado de 
+\emph on
+Programa
+\emph default
+ 
+\emph on
+- Base de Datos
+\emph default
+ existe la opción 
+\emph on
+Exportar a 
+\emph default
+e
+\emph on
+ Importar de
+\emph default
+ a partir de la versión 0.931 del programa.
+ Con estas dos opciones se puede guardar toda la información de la base
+ de datos en un único fichero, que podrá ser usado después para recuperar
+ la información en caso de emergencia o en alguna otra máquina.
+ 
+\end_layout
+
+\begin_layout Section
+Inserción de la información
+\end_layout
+
+\begin_layout Standard
+Aquí se incluyen el almacenar toda la información necesaria para el desarrollo
+ de la liga: competidores, equipos, clubes hasta la propia liga.
+ Estas ventanas tienen un uso semejante, por lo que este capítulo engloba
+ a todas ellas.
+ 
+\end_layout
+
+\begin_layout Subsection
+Información general
+\end_layout
+
+\begin_layout Standard
+Existen ciertos elementos que no deberían cambiar de una liga a otra.
+ Por ello se deben de insertar una vez y no más.
+ Entre estos ejemplos están los competidores: la información de los competidores
+ (nombre, numero de identificación, etc.) nunca cambiará, por lo que bastará
+ almacenarla una única vez.
+ 
+\end_layout
+
+\begin_layout Subsection
+Información particular para cada liga
+\end_layout
+
+\begin_layout Standard
+Hay algunos datos que son utilizados exclusivamente dentro de una liga,
+ y pueden darse o no darse en otros.
+ Por ejemplo, los equipos.
+ Un equipo solamente es válido para una liga, ya que aunque el nombre se
+ puede repetir en los distintas ligas, los integrantes del mismo pueden
+ variar.
+ Por ello hay que definirlos de nuevo para cada una de las ligas.
+ Otro ejemplo es la selección de que competidores participan en una liga
+ en concreto y sus roles.
+ Ya que con el paso de los años, los competidores pueden retirarse o desaparecer
+ en versiones sucesivas de la misma liga.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Roles
+\end_layout
+
+\begin_layout Standard
+El rol es el papel que un participante tiene en la liga.
+ En la inserción de competidores, guardamos la información de cada competidor
+ (nombre, DNI, etc.
+ ), pero esto no significa que este competidor participe en la liga.
+ Para que participe en la liga, debe tener algún rol asignado: árbitro,
+ competidor, voluntario, etc.
+ Hasta ahora, tenemos los siguientes roles creados:
+\end_layout
+
+\begin_layout Description
+Competidor: un competidor es aquel que formará parte de un equipo.
+ Por tanto, combatirá en el campeonato para lograr la máxima puntuación.
+ Solamente los competidores pueden formar parte de un equipo.
+ Los competidores además reciben un diploma de reconocimiento.
+ 
+\end_layout
+
+\begin_layout Description
+Árbitro: como su nombre indica, arbitrará los combates.
+ No participará en ninguno de ellos y no recibe diploma.
+\end_layout
+
+\begin_layout Description
+Organizador: es la autoridad del evento.
+ Sabe como funciona, controla la logística y muy probablemente controlará
+ este programa.
+ Recibe diploma de agradecimiento.
+\end_layout
+
+\begin_layout Description
+Voluntario: apoyan al evento.
+ No tiene por que conocer en profundidad el funcionamiento de la organización,
+ si bien interactuan con esta para poder realizar su labor.
+ Particularmente, la numerácion de la acreditación de los voluntarios se
+ realiza por orden alfabético, y no por orden de inscripción como en el
+ caso de los competidores.
+ No reciben diploma.
+ 
+\end_layout
+
+\begin_layout Description
+Voluntario
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+Kendo: es una mezcla de voluntario y competidor, y tiene las ventajas de
+ ambos.
+ Por tanto, su numeración de acreditación es similar a los de los voluntarios,
+ pero pueden pertenecer a un equipo y reciben diplomas.
+ 
+\end_layout
+
+\begin_layout Description
+Seminario: tiene acceso a las clases del evento pero no compite en este.
+ Reciben diploma.
+ 
+\end_layout
+
+\begin_layout Subsection
+Búsqueda y cambio de información
+\end_layout
+
+\begin_layout Standard
+Existe la posibilidad de cambiar los datos ya incluidos previamente (competidore
+s, clubes, ligas, ...).
+ Para ello, hay que ir a la ventana de inserción adecuada según el elemento
+ que vayamos a cambiar.
+ En ella está el botón 
+\emph on
+Buscar
+\emph default
+.
+ En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Botón-buscar."
+
+\end_inset
+
+ aparece un ejemplo de dicho botón.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/BotonBuscar.png
+	lyxscale 60
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Botón-buscar."
+
+\end_inset
+
+Botón buscar.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pulsando este botón, aparecerá una nueva ventana en la que podremos seleccionar
+ los patrones de búsqueda.
+ Se puede rellenar cualquiera de ellos para realizar la búsqueda.
+ En el caso de que se rellenen varios de ellos, el programa seleccionará
+ el patrón que esté más cercano al borde superior de la pantalla.
+ En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Búsqueda-de-competidores."
+
+\end_inset
+
+ aparece un ejemplo de la ventana 
+\emph on
+Búsqueda de Competidores
+\emph default
+.
+ En ella hay claramente dos secciones: (A) donde se introducen los datos
+ a buscar, y (B) donde aparecen los resultados de la búsqueda.
+ En el ejemplo de la figura, si rellenáramos el nombre y los apellidos,
+ el programa buscaría por apellidos.
+ Hay que añadir que no es necesario incluir el apellido completo, ya que
+ el programa busca por patrones.
+ Por ejemplo una letra bastaría para que se presentaran todos los apellidos
+ que incluyeran esa letra en cualquier parte de la palabra.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/Buscador.png
+	lyxscale 60
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Búsqueda-de-competidores."
+
+\end_inset
+
+Búsqueda de competidores.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La mitad inferior de la ventana es la lista de resultados (B), que presentará
+ un listado de competidores que cumplen el patrón una vez se ha iniciado
+ la búsqueda.
+ Seleccionando cualquiera de ellos y dándole al botón 
+\emph on
+Seleccionar
+\emph default
+ nos permitirá volver a la pantalla de introducción de datos con todos los
+ campos del competidor seleccionado, en donde podremos cambiarlos.
+\end_layout
+
+\begin_layout Subsection
+Borrado de información.
+\end_layout
+
+\begin_layout Standard
+El borrado de información se realiza desde la misma ventana de búsqueda.
+ Volviendo al ejemplo de la sección anterior, para borrar un competidor,
+ deberíamos primero buscarlo y luego seleccionarlo en la lista de resultados
+ (B).
+ En ese momento se le puede dar al botón 
+\emph on
+borrar
+\emph default
+ y el competidor será borrado para siempre de la base de datos.
+ Mucha atención a la dependencia de datos, es decir, si borramos una liga,
+ también se borrarán todos los combates relacionados con esta liga.
+ 
+\end_layout
+
+\begin_layout Subsection
+Ejemplo de inserción de un competidor.
+\end_layout
+
+\begin_layout Standard
+Cuando un futuro participante se presenta ante el mostrado de registro,
+ los pasos que hay que hacer para incluirlo en el programa son los siguientes:
+\end_layout
+
+\begin_layout Enumerate
+Preguntar si ya ha sido incluido en una liga anterior, en cuyo caso ya existirán
+ sus datos en el programa.
+\end_layout
+
+\begin_layout Enumerate
+Si no es así, habrá que incluir todos los datos.
+ Para ello:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Realizar una fotografía con una webcam y un software adecuado para ello
+ para después almacenarla en una carpeta localizable.
+\end_layout
+
+\begin_layout Enumerate
+En el programa (Insertar -> Añadir nuevo participante), introducir todos
+ los datos del nuevo participante: Nombre, DNI, Foto, etc.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Al finalizar la inclusión de datos, hay que definir el rol de dicho participante
+: Si es competidor, árbitro, etc.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Si ya estuviera incluido en la base de datos los pasos aconsejados a realizar
+ son:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+En la ventana (Insertar -> Añadir nuevo participante) darle al botón 
+\emph on
+buscar
+\emph default
+.
+ Buscar allí el participante para ver que todos los datos están correctamente,
+ utilizando el DNI o nombre para ello.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Incluir el rol del participante para que ya pueda utilizarse en la liga
+ actual.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Acreditaciones
+\end_layout
+
+\begin_layout Standard
+El programa permite generar con los datos insertados previamente un listado
+ de acreditaciones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/acreditacion.png
+	height 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Ejemplo de acreditación.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El programa generará un PDF con la información del participante.
+ Su involucración en la liga y una foto para reconocerlo.
+ Esta acreditación deberá ser impresa (y preferentemente plastificada) para
+ después ser entregada al participante.
+\end_layout
+
+\begin_layout Standard
+Estas acreditaciones pueden ser útiles a la hora de controlar quién entra
+ en la liga, especialmente si hay que pagar algún tipo de cuota.
+ Además permitirá controlar que cada uno de los participantes esté en su
+ equipo.
+ 
+\end_layout
+
+\begin_layout Standard
+Un detalle importante del sistema de acreditaciones, es que el sistema solamente
+ imprimirá cada vez las acreditaciones que NO se hayan impreso anteriormente,
+ salvo que se indique que se desea imprimir todas.
+ Esto significa que puedes imprimir las acreditaciones según los competidores
+ se van inscribiendo en el sistema, sin necesidad de preocuparse de las
+ que ya han sido impresas anteriormente.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: En la imagen mostrada, se ve el logotipo y el diseño usado en el VI
+ Open de Kendo de la Universidad de Valencia.
+ Obviamente, todo esto deberá ser cambiado de acuerdo con el evento a organizar.
+ Para ello, cambiar la imagen localizada en la carpeta images/background.png
+\end_layout
+
+\begin_layout Section
+Diseño de la liga
+\end_layout
+
+\begin_layout Standard
+Una vez incluido todos los datos de la liga y creada la Liga, se podrán
+ definir los distintos combates.
+ Existen varias formas de definir los combates de acuerdo con el tipo de
+ liga que se necesite.
+ Para ello no hay más que seleccionar la opción adecuada en el menú superior:
+\end_layout
+
+\begin_layout Subsection
+Reglas de puntuaciones
+\end_layout
+
+\begin_layout Standard
+En esta ventana se pueden definir las distintas reglas de puntuaciones,
+ es decir, cuanto valdrá ganar un combate y cuanto valdrá un empate.
+ Por defecto, existe el sistema japonés, en el que solamente se contabilizan
+ los combates ganados, y los empatados equivalen a los perdidos.
+ Otra opción, representa el sistema que actualmente está extendiéndose en
+ Europa: en el que en caso de que dos equipos hayan empatado según sus combates
+ ganados, prevalecerá aquel que tenga un mayor número de combates empatados,
+ ya que se considera que estos puntúan más que los perdidos.
+ Por último, existe un sistema que permite otorgar una puntuación a los
+ combates ganados y empatados, para imitar otros sistemas como los del fútbol,
+ en los que el ganador se lleva tres puntos y en un empate se lleva un punto.
+ Aquí el usuario podrá elegir el sistema de puntuación que prefiera.
+ 
+\end_layout
+
+\begin_layout Subsection
+Liga manual
+\end_layout
+
+\begin_layout Standard
+Si se define la liga como manual, se abrirá la ventana 
+\emph on
+Marcador de la Liga
+\emph default
+ completamente vacía (ver Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+ para más información sobre esta ventana).
+ En ella podremos seleccionar la liga que hemos creado y empezar a trabajar
+ con ella.
+ Para añadir los distintos combates no hay más que darle al botón 
+\emph on
+Añadir
+\emph default
+ y seleccionar los equipos que se enfrentan.
+ Automáticamente el marcador se actualizará con la nueva información y se
+ podrá empezar a almacenar la puntuación de los combates.
+\end_layout
+
+\begin_layout Standard
+Con esta opción, el programa no hace ningún control sobre los combates,
+ por lo que queda a elección del usuario elegir si cada equipo va ha hacer
+ el mismo número de combates o estos se repiten.
+ De esta forma el usuario tiene total libertad de diseñar sus propias ligas
+ sin que el programa lo limite.
+\end_layout
+
+\begin_layout Subsection
+Ligas sencillas
+\end_layout
+
+\begin_layout Standard
+Llamamos liga sencilla a una liga en la que todos los equipos combaten contra
+ todos.
+ El ganador, obviamente será aquel que haga tenga más partidos ganados,
+ en caso de empate aquel que tenga más combates ganados y en caso de nuevo
+ empate el que tenga más puntos.
+ El usuario puede hacer las combinaciones que considere oportunas.
+ 
+\end_layout
+
+\begin_layout Standard
+Existe un botón que permite generar los combates aleatoriamente.
+ Si se pulsa, se generará un listado de combates en el que el programa intentará
+ que cada uno de los equipos haga dos combates seguidos sin salir del shiaijo
+ para agilizar los combates, como es tradicional en el Kendo.
+ 
+\end_layout
+
+\begin_layout Standard
+Otro botón permite hacer lo mismo, pero los equipos se seleccionarán por
+ orden alfabético según su nombre.
+ 
+\end_layout
+
+\begin_layout Standard
+Los combates no serán almacenados hasta que no se pulse el botón 
+\emph on
+Aceptar
+\emph default
+.
+ Por lo que el usuario puede intentar hacer distintas pruebas.
+ Una vez se pulse el botón 
+\emph on
+Aceptar
+\emph default
+, se borrará cualquier combate que pudiera existir previamente en esa liga
+ y se guardarán los nuevos combates.
+ 
+\end_layout
+
+\begin_layout Subsection
+Ligas en círculo o anillo
+\end_layout
+
+\begin_layout Standard
+Una liga en círculo es aquella en que un equipo se enfrenta de forma consecutiva
+ a todos los demás equipos sin descanso alguno.
+ De esta forma, como si de una rueda se tratara, cada uno de los equipos
+ se enfrentará contra todos los equipos adversarios de forma consecutiva,
+ intentando distribuir sus fuerzas en los diversos combates.
+ Aunque no es un sistema de liga oficial, resulta muy útil en entrenamientos
+ y por ello se incluye en el programa.
+ Para el uso de esta modalidad, se recomienda que los participantes con
+ mayor experiencia entren antes a competir, es decir, estén en posiciones
+ más altas en la lista.
+ 
+\end_layout
+
+\begin_layout Standard
+En esta ventana, el usuario solamente deberá seleccionar el orden en el
+ que saldrán los equipos y el programa calculará todos los combates manteniendo
+ este mismo orden.
+ Hay que resaltar que el número de combates totales obtenidos de esta forma
+ equivale a (equipos*(equipos-1)/2), por lo que solo es conveniente realizar
+ este campeonato con un número reducido de equipos.
+ 
+\end_layout
+
+\begin_layout Subsection
+Diseñador
+\end_layout
+
+\begin_layout Standard
+El diseñador es un entorno gráfico que intenta facilitar al usuario la creación
+ de una liga.
+ Esta especialmente diseñado para comprender que es lo que se está haciendo
+ cuando se genera una liga en árbol o un campeonato.
+ Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diseñador-de-ligas."
+
+\end_inset
+
+ muestra un ejemplo del diseñador.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/Diseñador.png
+	lyxscale 70
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diseñador-de-ligas."
+
+\end_inset
+
+Diseñador de ligas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En el diseñador existen dos partes bien diferenciadas.
+ Una donde se dibuja la estructura de la liga, y otra en donde aparecen
+ los equipos que todavía no han sido asignados a la liga y que permite seleccion
+arlos para añadirlos.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Generación de la liga.
+\end_layout
+
+\begin_layout Standard
+Para generar la liga, lo que hay que hace es insertar tantos grupos como
+ se desee.
+ En cada uno de los grupos iremos insertando los equipos que resten para
+ que compitan entre ellos.
+ Para insertar un equipo a un grupo, lo que hay que hacer es seleccionar
+ el grupo y después seleccionar el equipo.
+ Luego le damos al botón 
+\emph on
+Añadir equipo
+\emph default
+ y de esta forma el equipo será incluido dentro del grupo.
+ El equipo desaparecerá de la lista ya que un mismo equipo no puede estar
+ en dos grupos distintos.
+ 
+\end_layout
+
+\begin_layout Standard
+Solamente se pueden editar los grupos iniciales ya que los ganadores de
+ estos grupos pasarán a la fase siguiente de forma automática.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Edición de los grupos insertados.
+\end_layout
+
+\begin_layout Standard
+Un doble click en uno de los grupos permite abrir una ventana y editar algunas
+ opciones específicas de dicho grupo, como el shiaijo, el número de ganadores
+ que pasarán a la siguiente ronda (si estamos en modo campeonato) o el orden
+ de los equipos.
+ Si un grupo tiene más de un ganador, las flechas cambiarán de color para
+ diferenciar dónde va cada uno de los ganadores.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Tipos de ligas
+\end_layout
+
+\begin_layout Standard
+El diseñador permite generar la liga de tres formas distintas.
+ Como campeonato, árbol o manual.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Campeonato
+\end_layout
+
+\begin_layout Standard
+Un campeonato es similar a lo que ocurre en la Champions de fútbol europeo.
+ Primero se definen grupos de equipos que compiten entre ellos.
+ De estos solamente los primeros podrán pasar a la siguiente fase del campeonato.
+ Los partidos serán generados automáticamente por la aplicación una vez
+ la liga sea definida, teniendo en cuenta que los juntará por parejas según
+ el orden de equipos establecido en el grupo.
+ 
+\end_layout
+
+\begin_layout Standard
+Los vencedores del campeonato se cruzan entre los demás siguiendo una pauta.
+ Los cruces de las demás fases se hacen de forma automática.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Liga en árbol
+\end_layout
+
+\begin_layout Standard
+La principal diferencia de una liga en árbol y un campeonato es que solamente
+ existen grupos con dos equipos.
+ Todos los grupos tienen dos equipos de los cuales solamente uno será el
+ ganador y pasará a la fase siguiente.
+ Además los grupos no se cruzan al pasar a la siguiente fase.
+ 
+\end_layout
+
+\begin_layout Paragraph
+Liga manual
+\end_layout
+
+\begin_layout Standard
+Esta opción da mayor libertad al usuario.
+ Permite indicar que ganador pasará a que grupo.
+ Simplemente selecciona un grupo de la primera fase y después uno de la
+ segunda fase.
+ Una flecha aparecerá indicando que se ha memorizado la acción.
+ Hay que tener en cuenta que el programa no permite algunas cosas anómalas
+ como que mas de dos grupos seleccionen como destino a un grupo de la segunda
+ fase, por lo que borrará los enlaces que no sean adecuados.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Liga sencilla
+\end_layout
+
+\begin_layout Standard
+Esta opción simplemente indica que la liga ha sido generada con otra opción
+ (ya sea una liga sencilla o en círculo) y que por tanto no sería conveniente
+ cambiar nada de la misma.
+ Por tanto se deshabilitan muchas de las opciones de esta ventana cuando
+ esta opción está seleccionada.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Borrar Nivel
+\end_layout
+
+\begin_layout Standard
+Esta opción permite limpiar un nivel (columna del árbol) y todos los combates
+ asociados a este.
+ De esta forma se permite volver hacia atrás en el campeonato si algún error
+ hubiera ocurrido.
+ Hay que resaltar, que cuando se borra un nivel de la liga, se borran todos
+ los niveles siguientes pues cada uno de ellos, depende del anterior.
+ Por tanto, borrar el primer nivel es equivalente a borrar todos los niveles.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Botones
+\end_layout
+
+\begin_layout Standard
+Una pequeña explicación del funcionamiento de los botones de esta ventana.
+\end_layout
+
+\begin_layout Description
+Añadir
+\begin_inset space ~
+\end_inset
+
+Equipos: añade el equipo seleccionado al grupo seleccionado si todavía es
+ posible (no está completo).
+\end_layout
+
+\begin_layout Description
+Limpiar
+\begin_inset space ~
+\end_inset
+
+Equipos: borra todos los equipos del grupo seleccionado.
+\end_layout
+
+\begin_layout Description
+Borrar
+\begin_inset space ~
+\end_inset
+
+Ganadores: elimina del grupo seleccionado todos los enlaces a la siguiente
+ fase creados anteriormente.
+ Este botón solo estará disponible en el modo manual.
+\end_layout
+
+\begin_layout Description
+Añadir
+\begin_inset space ~
+\end_inset
+
+Grupo: añade un grupo al diseñador debajo del grupo seleccionado.
+ En este grupo se podrán incluir los distintos equipos para que compitan
+ entre sí.
+ Además añadirá si es necesario todos los grupos en los demás niveles.
+ Solamente es posible si hay equipos disponibles para llenarlo.
+\end_layout
+
+\begin_layout Description
+Borrar
+\begin_inset space ~
+\end_inset
+
+Grupo: elimina el grupo seleccionado liberando a los equipos incluidos para
+ que sean incluidos dentro de otros grupos.
+ Si es necesario también elimina los grupos de los próximos niveles.
+\end_layout
+
+\begin_layout Description
+Borrar
+\begin_inset space ~
+\end_inset
+
+Todo: borra todos los grupos, enlaces y equipos incluidos, permitiendo empezar
+ de nuevo.
+ 
+\end_layout
+
+\begin_layout Description
+Generar
+\begin_inset space ~
+\end_inset
+
+Partidos: una vez acabado, si se pulsa este botón se generan todos los combates
+ deseados.
+ La ventana se cerrará por que ya no será útil.
+ El resto de la liga se habrá automatizado.
+ 
+\end_layout
+
+\begin_layout Description
+Cerrar: cierra la ventana guardando el diseño realizado y permite continuarlo
+ más tarde.
+\end_layout
+
+\begin_layout Description
+Cargar
+\begin_inset space ~
+\end_inset
+
+Diseño
+\begin_inset space ~
+\end_inset
+
+Anterior: permite obtener el diseño que representa la puntuación de combates
+ ya realizados.
+ Útil especialmente cuando se modifica por error el diseño en árbol de una
+ liga ya comenzada.
+ No tiene efecto si ya se ha pulsado al botón Generar Partidos y ya se han
+ generado los nuevos combates.
+\end_layout
+
+\begin_layout Description
+Numero
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+Ganadores: En esta opción se puede indicar el número de grupos que pasan
+ la primera fase.
+ Es decir, si se indica un uno, solamente el ganador de cada grupo pasará
+ a la siguiente fase.
+ Si se indica un dos, tanto el primero como el segundo pasará a la siguiente
+ fase, etc.
+ 
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Marcador-de-la"
+
+\end_inset
+
+Marcador de la liga
+\end_layout
+
+\begin_layout Standard
+Esta es la pantalla más importante del programa, ya que es la que permite
+ controlar el transcurso de los combates.
+ En este panel el usuario puede ir incluyendo los golpes del combate según
+ se están produciendo de una forma sencilla, rápida e intuitiva.
+ El programa los almacenará en la base de datos de forma automática.
+ 
+\end_layout
+
+\begin_layout Standard
+La modalidad tratada será de “SAN BON SHOBU”.
+ Al mejor de tres puntos válidos como máximo dentro del tiempo establecido
+ por partido individual.
+ Gana el equipo que más partidos haya ganado.
+ Si el número de partidos ganados es el mismo, gana el que haya ganado más
+ combates individuales, y si todavía persiste un empate, gana el equipo
+ que obtenga mayor número de puntos válidos.
+ Si todavía persiste el empate se procederá a un desempate mediante un combate
+ en el que se enfrentan un representante por cada equipo, ganando el primero
+ que realice un punto.
+\end_layout
+
+\begin_layout Standard
+Está dividido en tres partes: control de la liga, control de los combates
+ y grupo de botones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/FightPanel.png
+	lyxscale 50
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Marcador de la liga.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Control de la liga
+\end_layout
+
+\begin_layout Standard
+La parte superior de la ventana muestra todos los datos de la liga.
+ Permite mostrar un banner o publicidad por si este panel se muestra por
+ un proyector, permite cambiar la liga para controlar la que resulte adecuada
+ y permite cambiar los shiaijos.
+ Un panel solamente puede mostrar los partidos de un shiaijo en un momento
+ determinado, por lo que si se dispone de varios ordenadores, se aconseja
+ el uso de cada uno de ellos para un shiaijo distinto (y nunca más de uno
+ por shiaijo).
+ 
+\end_layout
+
+\begin_layout Subsection
+Control de combates
+\end_layout
+
+\begin_layout Standard
+Aquí aparecer un listado de combates entre los equipos.
+ Este listado dependerá de la liga seleccionada, del shiaijo seleccionado
+ y de los combates definidos previamente con el diseñador de ligas.
+ Cambiando el shiaijo cambiará el listado, para mostrar otros grupos de
+ combates.
+ 
+\end_layout
+
+\begin_layout Standard
+El listado de combates es adaptativo a la resolución de la pantalla.
+ Es decir, cuanto mayor sea la resolución de la pantalla que lo muestre,
+ más combates aparecerán en el panel.
+ Normalmente aparecerán dos o tres combates.
+ En la imagen presentada solamente aparecen dos combates, pero pueden ser
+ los siguientes tres:
+\end_layout
+
+\begin_layout Description
+Partido
+\begin_inset space ~
+\end_inset
+
+anterior: con la puntuación pasada, que permite a los competidores revisar
+ el transcurso de sus combates una vez han salido del shiaijo, así como
+ al público recordar la puntuación pasada.
+ En la imagen mostrada no aparecen debido a la escasa resolución de la pantalla
+ utilizada.
+ 
+\end_layout
+
+\begin_layout Description
+Partido
+\begin_inset space ~
+\end_inset
+
+actual: marcado con un recuadro negro.
+ Este es el más importante ya que es el único que se puede editar.
+ En este partido se pueden ir incluyendo las distintas puntuaciones o faltas
+ simplemente seleccionando la casilla correspondiente con el botón derecho
+ del ratón.
+ Un menú permite seleccionar el tipo de golpe y el combate será actualizado
+ en el momento.
+\end_layout
+
+\begin_layout Description
+Partido
+\begin_inset space ~
+\end_inset
+
+posterior: un listado con los nombres de los próximos combatientes permite
+ a estos estar listos para el próximo combate.
+ Así se ahorra tiempo y permite al público ver el transcurso de la liga.
+ Si la pantalla es lo suficientemente grande pueden aparecer varios partidos
+ posteriores.
+ 
+\end_layout
+
+\begin_layout Standard
+Recuerda que solamente se puede editar el combate actual.
+ El resto de combates están protegidos por el sistema.
+ En cada uno de los combates el programa ordenará los participantes según
+ el orden que se haya dado en la creación del equipo.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Menú de puntuación
+\end_layout
+
+\begin_layout Standard
+Cuando se selecciona una casilla de puntuación o faltas con el botón derecho
+ del ratón se abre un pequeño menú con todas las opciones.
+ Básicamente permite añadir los distintos golpes para que queden plasmados
+ en el papel.
+ El programa es inteligente, por lo que autocompleta la puntuación cuando
+ se acumulan un par de faltas o impide la colocación de la puntuación en
+ la casilla equivocada.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Menú de empates
+\end_layout
+
+\begin_layout Standard
+Si se selecciona con el botón derecho del ratón al espacio que existe entre
+ los dos equipos, aparecerá un pequeño menú en el que permite indicar a
+ la aplicación que el combate ha acabado en empate.
+ Esta opción lo que hará será dibujar una gran equis entre los dos equipos
+ para que el usuario y público puedan recordar más fácilmente que hay un
+ empate.
+ De todas formas, cuando se cambia el resultado del siguiente combate, la
+ aplicación entiende que el combate anterior ha acabado y por tanto incluye
+ la equis automáticamente.
+ 
+\end_layout
+
+\begin_layout Subsection
+Grupo de botones
+\end_layout
+
+\begin_layout Standard
+En la parte inferior de la ventana aparece una colección de botones que
+ permiten el control de los combates.
+ 
+\end_layout
+
+\begin_layout Description
+Partido
+\begin_inset space ~
+\end_inset
+
+anterior: permite retroceder entre los partidos para corregir posibles errores
+ producidos.
+\end_layout
+
+\begin_layout Description
+Partido
+\begin_inset space ~
+\end_inset
+
+siguiente: da por concluido el partido actual y este se convierte en el
+ partido anterior.
+ El próximo partido podrá ser editado para la inclusión de sus puntuaciones.
+ Para dar por concluido el partido, espera a que todos los combates de los
+ distintos competidores se hayan realizado.
+ Este botón también es el que permitirá en los campeonatos generar las siguiente
+s fases según se van resolviendo los combates.
+ Una vez todos los combates estén acabados (todos los de todos los shiaijos)
+ el programa generará automáticamente las siguientes rondas.
+ Por tanto, acuérdate de finalizar cada uno de los combates antes de cambiar
+ de shiaijo.
+ Y si ves que no genera los partidos de siguiente nivel, muy probablemente
+ es que se habrá olvidado de finalizar los combates del algún otro shiaijo.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Además, cuando se acaban todos los combates de un grupo, mostrará durante
+ un breve periodo de tiempo, la puntuación de todos los equipos que han
+ participado en dicho grupo.
+ 
+\end_layout
+
+\begin_layout Description
+Borrar
+\begin_inset space ~
+\end_inset
+
+partido: permite borrar el partido seleccionado.
+ Esta acción es irrecuperable y peligrosa, ya que desmontará la estructura
+ de un campeonato.
+ Es aconsejable solo usar esta opción cuando se está generando una liga
+ de forma manual.
+ 
+\end_layout
+
+\begin_layout Description
+Añadir
+\begin_inset space ~
+\end_inset
+
+partido: permite añadir un partido al final de todos los añadidos previamente.
+ Solo útil si se quiere editar la liga de forma manual, ya que impedirá
+ al programa gestionar correctamente los árboles de la liga e influenciará
+ negativamente en los combates que el sistema añada si se está ejecutando
+ una liga en árbol o campeonato.
+ 
+\end_layout
+
+\begin_layout Description
+Invertir
+\begin_inset space ~
+\end_inset
+
+posición
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+los
+\begin_inset space ~
+\end_inset
+
+equipos: como resulta difícil predecir dónde estará colocado el ordenador
+ respecto al combate, esta opción permite invertir el lado de los equipos
+ representados en el panel.
+ De esta forma los equipos que estén a la izquierda pasarán a la derecha
+ y viceversa.
+ Por defecto el programa asume que el ordenador estará enfrente del árbitro
+ principal, pero si no fuera así por algún motivo, se puede invertir el
+ orden de los equipos.
+ 
+\end_layout
+
+\begin_layout Description
+Árbol: muestra una ventana en dónde se ve la progresión de la liga (está
+ opción solo estará disponible en el caso de que tenga forma de campeonato),
+ los equipos que pasan a la fase siguiente y los combates definidos.
+ Las fases se autocompletan una vez todos los combates de la fase anterior
+ han sido finalizados.
+ Pulsando 
+\begin_inset Quotes eld
+\end_inset
+
+Control + p
+\begin_inset Quotes erd
+\end_inset
+
+ se permite imprimir dicho árbol.
+\end_layout
+
+\begin_layout Description
+Refrescar: Este botón lee de nuevo todos los resultados de la base de datos.
+ Resulta útil en los casos en el que se quiera consultar algún dato que
+ no haya sido incluido en este equipo, como por ejemplo, cuando hay múltiples
+ shiaijos y cada uno de ellos está gestionado con un equipo distinto.
+ 
+\end_layout
+
+\begin_layout Description
+Puntuación: Este botón mostrará un listado de los equipos que actualmente
+ estén compitiendo.
+ Mostrando los combates ganados y empatados, tanto por equipos como de forma
+ individual.
+ Así como los puntos realizados.
+ Además, los equipos aparecen ordenados por puntuación, lo que significa
+ que el primero de la lista es el que tiene la puntuación más alta.
+ 
+\end_layout
+
+\begin_layout Description
+Cerrar: cierra la ventana de forma segura sin que se pierda información.
+ 
+\end_layout
+
+\begin_layout Subsection
+Cambiar el orden de los miembros de un equipo
+\end_layout
+
+\begin_layout Standard
+Según la liga va avanzando y los equipos se van clasificando, los miembros
+ del mismo pueden desear cambiar el orden de aparición en el próximo combate.
+ Para realizar este cambio, basta hacer doble click en el equipo deseado
+ dentro del mismo panel de puntuaciones.
+ Aparecerá una ventana que permitirá cambiar el orden de los mismos.
+ Esto solamente se aplicará a partir del próximo combate no resuelto, y
+ por tanto, solamente es aplicable a aquellos equipos que tengan algún combate
+ pendiente.
+ 
+\end_layout
+
+\begin_layout Section
+Gráficas y listas
+\end_layout
+
+\begin_layout Standard
+Aparte del manejo de participantes y ligas, el programa permite imprimir
+ parte de los datos para la mejora de la gestión de la liga.
+ 
+\end_layout
+
+\begin_layout Subsection
+Listas de apoyo a la organización
+\end_layout
+
+\begin_layout Standard
+Existe la posibilidad de hacer distintos listados con información para poder
+ imprimirla y colgarla a lo largo de las instalaciones o al rededor del
+ shiaijo.
+ Todas las listas genera un fichero PDF para poder ser visualizado e impreso.
+\end_layout
+
+\begin_layout Description
+Acreditaciones: Esta opción permite generar un fichero con todas las acreditacio
+nes de un torneo.
+ De esta forma estarán listas para imprimir y entregar.
+ Se imprimen cuatro acreditaciones por hoja.
+ Aconsejo plastificarlas y entregarlas con algún tipo de cinta para el cuello
+ o alguna otra forma que permita que queden a la vista.
+ 
+\end_layout
+
+\begin_layout Description
+Lista
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+equipos: Un listado con todos los equipos e integrantes que participan en
+ la liga.
+ De esta forma los integrantes del mismo pueden revisar si sus datos son
+ correctos, y el resto de los equipos si fuera necesario.
+\end_layout
+
+\begin_layout Description
+Lista
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+combates: Listado con todos los combates ya definidos en la liga.
+ De esta forma si no existe un proyector y no pueden ver los marcadores,
+ al menos pueden conocer el orden de los combates para estar preparados
+ cuando sea su turno.
+ 
+\end_layout
+
+\begin_layout Description
+Lista
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+puntuaciones: Una vez acabado el campeonato (o alguna de sus fases) se puede
+ imprimir un listado con la puntuación de cada uno de los equipos.
+ De esta forma se hace pública la puntuación total de cada equipo y se sabe
+ así quién pasa a la fase siguiente o quien es el vencedor.
+ Si el campeonato es un campeonato o liga en árbol, la puntuación quedará
+ agrupada según cada fase de la liga de forma que se pueda mostrar a los
+ participantes en todo momento la evolución de la misma.
+\end_layout
+
+\begin_layout Description
+Resumen
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+combates: Genera un resumen de todos los combates incluyendo los golpes
+ que ha realizado cada uno de los competidores.
+ 
+\end_layout
+
+\begin_layout Description
+Lista
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+árbitros: Un pequeño listado con los nombres de todos los árbitros que participa
+n en la competición.
+\end_layout
+
+\begin_layout Subsection
+Diploma
+\end_layout
+
+\begin_layout Standard
+Un pequeño diploma de reconocimiento para todo aquel que ha participado
+ en el campeonato.
+ Obviamente el diseño de fondo debe ser cambiado cada año para evitar confusione
+s.
+ Una vez impreso basta con firmarlo por el/los responsable/s y así darle
+ cierta validez, quedando como un recuerdo agradable para todos los participante
+s.
+\end_layout
+
+\begin_layout Standard
+Como los diseños pueden varias, el programa permite cambiar la posición
+ de los nombres de los participantes para adaptarlos al diseño.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/NombreDiploma.png
+	lyxscale 50
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nombre-Diploma"
+
+\end_inset
+
+Selección de la posición de los nombres en los diplomas.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la Figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nombre-Diploma"
+
+\end_inset
+
+ se puede observar un ejemplo, en el que se selecciona colocar los nombres
+ del diploma en el espacio en blanco permitido por el diploma.
+ El 
+\emph on
+slider
+\emph default
+ lateral permite cambiar la altura en donde irán apareciendo los nombre,
+ mientras que una delgada línea indica su posición aproximada según se modifique
+ el valor de este 
+\emph on
+slider
+\emph default
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: Los voluntarios no reciben diploma.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: Solamente se imprimen los diplomas que no han sido impresos anteriormente,
+ salvo que se seleccione la opción de 
+\begin_inset Quotes eld
+\end_inset
+
+imprimir todos
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Gráficas como conclusiones de la liga
+\end_layout
+
+\begin_layout Standard
+Se pueden generar distintas gráficas para observar más fácilmente como ha
+ transcurrido la liga o como han progresado los jugadores.
+ Estas gráficas se pueden obtener para una liga en concreto o para todas
+ ellas (estadísticas generales).
+ 
+\end_layout
+
+\begin_layout Description
+Porcentaje
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+golpes: Estas gráficas representan cual es el porcentaje de puntos.
+ Es decir, que porcentaje de Mems, Kotes y demás se han producido o recibido.
+ Pueden resultar útiles para un jugador para conocer sus puntos fuertes
+ y débiles.
+ Por ejemplo, observar si todos los golpes recibidos son de un tipo, puede
+ indicar al jugador que tiene una vulnerabilidad en su guardia y deja al
+ descubierto una parte de su cuerpo al atacante.
+ 
+\end_layout
+
+\begin_layout Description
+Clasificación: Aquí se representa por orden de puntuación los distintos
+ competidores o equipos.
+ Se muestra separadamente las victorias y los puntos obtenidos.
+ En caso de empate, se resuelve por orden alfabético.
+ Hay que señalar que en el caso de incluir todos los campeonatos, los competidor
+es que hayan participado en más campeonatos muy probablemente tendrán más
+ puntos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/PercentageOfPerformedHits.png
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Porcentaje de golpes realizados por un jugador.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Opciones
+\end_layout
+
+\begin_layout Standard
+Por último, el programa permite configurar algunas opciones para el manejo
+ del mismo:
+\end_layout
+
+\begin_layout Description
+Idioma: permite seleccionar el idioma en el que se visualizará la aplicación.
+\end_layout
+
+\begin_layout Description
+Log: Permite activar el registro del log del programa, de forma que en un
+ fichero de texto quedan escritas todas las acciones que se han ido realizando.
+ De esta forma se puede hacer un seguimiento del uso del programa.
+\end_layout
+
+\begin_layout Description
+Debug: Permite visualizar los errores de la aplicación si todavía existen.
+ Esto permite obtener más información cuando una acción no se puede realiar
+ con éxito debido a algún error de configuración o de implementación.
+ Por ejemplo, cuando no se puede conectar a la base de datos.
+ 
+\emph on
+Nota: para entender estos errores, se necesita cierto conocimiento de programaci
+ón en Java.
+ 
+\end_layout
+
+\begin_layout Section
+Resumen
+\end_layout
+
+\begin_layout Standard
+Para una guía de referencia rápida, repito los pasos principales que hay
+ que seguir para utilizar la aplicación correctamente.
+\end_layout
+
+\begin_layout Enumerate
+Conectarse a la base de datos con la ventana de conexión que aparece al
+ iniciar el programa.
+\end_layout
+
+\begin_layout Enumerate
+Añadir todos los clubes invitados a la liga.
+ Los representantes se añadirán más tarde.
+\end_layout
+
+\begin_layout Enumerate
+Añadir todos los participantes.
+\end_layout
+
+\begin_layout Enumerate
+Una vez existen los participantes, ya se pueden incluir los representantes
+ de los clubes.
+\end_layout
+
+\begin_layout Enumerate
+Añadir una nueva liga.
+\end_layout
+
+\begin_layout Enumerate
+Definir los roles de los participantes.
+ Solamente los participantes que tenga un rol designado estarán incluidos
+ dentro de dicha liga a la hora, por ejemplo, de formar equipos.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Crear los distintos equipos y sus componentes.
+\end_layout
+
+\begin_layout Enumerate
+Definir el estilo de la liga y con ello los combates entre equipos.
+\end_layout
+
+\begin_layout Enumerate
+Utilizar el marcador para ir añadiendo los resultados de los distintos enfrentam
+ientos.
+ Este panel puede ser utilizado en un proyector como información para el
+ público asistente a la liga.
+\end_layout
+
+\begin_layout Standard
+Los pasos 1, 2, 3 y 4 solamente tienen que hacerse una única vez ya que
+ son comunes a las distintas ligas.
+ Es decir, solamente habrá que añadir la información de los participantes
+ una única vez, pudiendo reusarse para ligas futuras.
+ Los pasos 5, 6, 7, 8, y 9 hay que repetirlos para cada liga distinta.
+ 
+\end_layout
+
+\begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "cha:Uso-de-distintos"
+
+\end_inset
+
+Uso de distintos ordenadores
+\end_layout
+
+\begin_layout Standard
+Esta parte presupone que los equipos están conectados entre ellos a una
+ red.
+ Esta red, preferentemente 
+\emph on
+wireless
+\emph default
+, se asume que es robusta y que no sufre caídas.
+ En el caso de una red 
+\emph on
+wireless
+\emph default
+, por favor, utilizar un punto de acceso de calidad para asegurarse que
+ la red funciona adecuadamente y no cae en mitad de la liga.
+ Esta opción únicamente funciona si la base de datos utilizada es MySQL.
+ Las bases de datos SQLite solamente pueden ser ejecutadas en modo local.
+ 
+\end_layout
+
+\begin_layout Section
+Uso de un equipo distinto por cada shiaijo
+\end_layout
+
+\begin_layout Standard
+El programa permite separar la base de datos del entorno gráfico.
+ Por tanto, pueden existir distintos ordenadores ejecutando el programa,
+ accediendo a la base de datos a la vez.
+ Esto permite poder colocar un ordenador en cada uno de los shiaijos de
+ forma que la persona que lo maneje se tenga que centrar solamente en su
+ zona y no en todas las demás.
+ Para ello, simplemente hay que instalar la base de datos en un único ordenador,
+ y conectar los demás equipos a este mediante una red (aconsejablemente
+ Wi-Fi).
+ Al arrancar el KTG en cada uno de los ordenadores habrá que indicar en
+ la ventana de conexión a la base de datos, la IP del ordenador que contiene
+ la base de datos.
+ La IP, que es la dirección de red, se puede mirar en las propiedades de
+ red de dicha máquina.
+ 
+\end_layout
+
+\begin_layout Standard
+Una vez conectado, en el Marcador de la Liga se podrá seleccionar el shiaijo
+ correspondiente, sin necesidad de ir cambiando entre ellos.
+ 
+\end_layout
+
+\begin_layout Standard
+Utilizar una única base de datos impide la fragmentación de información,
+ evitando problemas en las fases más avanzadas del campeonato, cuando equipos
+ de distintos shiaijos se enfrenten entre ellos; así como permitiendo que
+ las estadísticas de los participantes sean completas.
+ Por tanto una liga solamente debe tener una sola base de datos instalada
+ en cualquiera de las máquinas utilizadas.
+\end_layout
+
+\begin_layout Section
+Modo monitor
+\end_layout
+
+\begin_layout Standard
+La finalidad básica de los monitores es la de utilizar un proyector y mostrar
+ un resumen al público, de forma que pueda ver el transcurso de la liga
+ o del campeonato.
+ La mejor forma de utilizar estas opciones es usar un equipo exclusivo conectado
+ a la base de datos por red y a un proyector que sea visible por el público.
+ Por supuesto, no existe inconveniente en que existan varios proyectores
+ mostrando a la vez la misma información.
+ 
+\end_layout
+
+\begin_layout Subsection
+Monitor de puntuaciones
+\end_layout
+
+\begin_layout Standard
+Esta pantalla muestra los combates que se están realizando en este mismo
+ momento, mostrando los equipos que se enfrentan y la puntuación que se
+ realiza en cada momento.
+ Cada 10 segundos va rotando entre las distintos shiaijos para mostrar el
+ funcionamiento de cada uno de ellos, de esta forma con un único proyector
+ se puede mostrar toda la liga.
+ La ventana no es interactiva, es decir, no permite cambiar ningún resultado
+ desde aquí, evitando errores de manejo.
+ Para salir de la pantalla, basta con pulsar la tecla 
+\emph on
+ESC
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+Monitor de clasificación
+\end_layout
+
+\begin_layout Standard
+Según el tipo de liga, esta opción puede mostrar, si es una liga simple
+ una tabla con la clasificación o si es un campeonato, el árbol del mismo.
+\end_layout
+
+\begin_layout Standard
+Para las ligas sencillas, la tabla contendrá cada equipo ordenado según
+ los partidos ganados, los duelos vencidos o los puntos realizados.
+ 
+\end_layout
+
+\begin_layout Standard
+Si es un campeonato, mostrará el árbol con el progreso de la misma, resaltando
+ en cada grupo los ganadores del mismo.
+ En ella, los grupos iniciales se representan en las hojas del árbol y según
+ se van resolviendo los combates, los enfrentamientos se completan hasta
+ la raíz del mismo, que representa la final.
+ 
+\end_layout
+
+\begin_layout Standard
+Al igual que el monitor de puntuaciones, la pantalla no es interactiva.
+ Para salir de la pantalla, basta con pulsar la tecla 
+\emph on
+ESC
+\emph default
+.
+\end_layout
+
+\begin_layout Section
+Caso real: VIII Open de Kendo de la Universidad de Valencia.
+ 
+\end_layout
+
+\begin_layout Standard
+Como resulta todo más fácil de entender con un ejemplo, aquí adjunto un
+ esquema del torneo que se celebró en la ciudad de Valencia en febrero de
+ 2011.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/Distribucion Open.png
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Esquema del VIII Open de Kendo de la UV.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se puede observar en el esquema, el campeonato constaba de dos torneos
+ diferenciados por sexos: el masculino y el femenino.
+ Debido a la mayor participación de hombres en el campeonato, se dedicaron
+ dos shiaijos al torneo masculino.
+ 
+\end_layout
+
+\begin_layout Standard
+Para la gestión de este campeonato, se utilizaron cuatro equipos portátiles.
+ Uno de ellos en la mesa de coordinación, que albergaba la base de datos
+ y tenía una impresora para imprimir todo aquello que fuera necesario como
+ las acreditaciones o la composición de los equipos.
+ Los otros tres equipos estaban cada uno en una mesa de control de los shiaijos.
+ Estos tres equipos, se encargaban de introducir la puntuación de cada uno
+ de los combates según estos se iban realizando.
+ 
+\end_layout
+
+\begin_layout Standard
+Los equipos se conectaban entre ellos por una red inalámbrica Wi-Fi, evitando
+ así la presencia de cables innecesarios.
+ Para ello usamos un router Wi-Fi convencional.
+ 
+\end_layout
+
+\begin_layout Standard
+La idea original, era tener cuatro pantallas para mostrar los resultados.
+ Tres pantallas en cada uno de los shiaijos, que mostraran los resultados
+ del combate actual a los árbitros y/o al público, y otra pantalla que mostrará
+ la evolución del árbol de la liga al público o las puntuaciones de cada
+ uno de todos los shiaijos.
+ Para mostrar estas pantallas, debían de haber, u otros cuatro equipos en
+ modo monitor, o simplemente conectarlos a los equipos que ya habían y que
+ mostraran lo que se estaba haciendo actualmente.
+ 
+\end_layout
+
+\begin_layout Standard
+Al arrancar el KTG en los cuatro equipos, el de coordinación, que como he
+ comentado antes, es el que tiene la base de datos instalada, indica los
+ datos siguientes: 
+\end_layout
+
+\begin_layout Standard
+Servidor: localhost, usuario: kendo, contraseña: *******.
+ 
+\end_layout
+
+\begin_layout Standard
+Los otros tres equipos indican los datos de forma similar, salvo que el
+ Servidor es la IP del ordenador de coordinación.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: Un detalle muy importante en estos casos, especialmente si los portátiles
+ están trabajando únicamente con las baterías, es evitar que el ordenador
+ de coordinación se suspenda (stand by).
+ Si este se suspende, la conexión Wi-Fi se cortará y por tanto, los otros
+ tres equipos dejarán de tener acceso a la base de datos del programa, causando
+ errores de acceso al servidor.
+ Otro motivo para que aparezca el error de conexión, suele ser que los portátile
+s se conecten automáticamente a alguna otra red Wi-Fi al alcance.
+ Vigilad estos dos detalles para evitaros problemas indeseados.
+ 
+\end_layout
+
+\begin_layout Chapter
+Personalización de la aplicación
+\end_layout
+
+\begin_layout Standard
+Esta aplicación está distribuida como software libre y puede ser utilizada
+ por cualquier club de kendo sin coste alguna.
+ Además si tenéis tiempo y ganas tenéis libertad de personalizar la aplicación
+ a vuestro gusto.
+ Principalmente lo que se puede cambiar es el aspecto y texto.
+\end_layout
+
+\begin_layout Section
+Cambio de imágenes
+\end_layout
+
+\begin_layout Standard
+Todas las imágenes se pueden cambiar.
+ No es nada más fácil que ir a la carpeta 
+\emph on
+images
+\emph default
+ del programa y cambiar el contenido respetando el nombre del fichero.
+ De esta forma el programa cargará vuestras imágenes en vez de las originales.
+ La imagen del diploma contenida en la carpeta 
+\emph on
+diploma
+\emph default
+ debería cambiarse todos los años, cambiando el texto, la fecha y el nombre
+ del torneo al menos.
+ También sería interesante cambiar el contenido de la carpeta 
+\emph on
+background
+\emph default
+ cada año, ya que sino alguien podría utilizar la acreditación de un año
+ anterior.
+ No se puede cambiar fácilmente la posición de las letras ni de las fotos,
+ por lo que se aconseja que se elija un diseño que quede bien teniendo en
+ cuenta dónde irá colocada la información.
+ Alguna de las imágenes se usan también como fondo de las listas generadas
+ por el programa.
+ 
+\end_layout
+
+\begin_layout Section
+Añadir un idioma
+\end_layout
+
+\begin_layout Standard
+El programa está preparado para que fácilmente se puedan añadir idiomas
+ o corregir los que ya hay.
+ Tiene una carpeta llamada 
+\emph on
+translations
+\emph default
+ que contiene toda la información que se muestra en el programa.
+ No está encriptado ni compilado, sino que es un texto simple que se puede
+ editar.
+ En concreto está en XML, pero no te preocupes si desconoces lo que es,
+ ya que es muy sencillo de cambiar.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+\end_layout
+
+\begin_layout Plain Layout
+<translator> 
+\end_layout
+
+\begin_layout Plain Layout
+<languages abbrev="en" >English</languages> 
+\end_layout
+
+\begin_layout Plain Layout
+<languages abbrev="es" >Español</languages> 
+\end_layout
+
+\begin_layout Plain Layout
+</translator>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Fichero-languages.xml"
+
+\end_inset
+
+Fichero languages.xml
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lo primero es añadir el idioma.
+ Para ello se debe editar el fichero incluido en la carpeta 
+\emph on
+translations
+\emph default
+ llamado 
+\emph on
+languages.xml
+\emph default
+.
+ El Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Fichero-languages.xml"
+
+\end_inset
+
+ muestra su contenido inicial.
+ Básicamente lo que se debe hacer es añadir una línea nueva debajo de la
+ que contiene la palabra 
+\begin_inset Quotes eld
+\end_inset
+
+Español
+\begin_inset Quotes erd
+\end_inset
+
+ de la misma forma y ANTES de la que contiene el código 
+\emph on
+</translator>
+\emph default
+.
+ Cambiando el nombre por el idioma que queremos que se muestre en el programa
+ y el contenido de 
+\begin_inset Quotes eld
+\end_inset
+
+abbrev
+\begin_inset Quotes erd
+\end_inset
+
+ por un código que lo relacione.
+ Este código será el que se use en los otros ficheros para buscar los idiomas.
+ Por ejemplo, para añadir el italiano deberíamos poner: 
+\end_layout
+
+\begin_layout Quotation
+<languages abbrev="it" >Italiano</languages>
+\end_layout
+
+\begin_layout Standard
+Recuerda en poner el idioma en su propia lengua para que el usuario lo entienda
+ y lo encuentre.
+ 
+\end_layout
+
+\begin_layout Standard
+Ahora habrá que cambiar todos los otros ficheros incluidos en la carpeta
+ 
+\emph on
+translations
+\emph default
+ y cambiar su contenido.
+ Por ejemplo en el fichero newClub.xml vemos entre otras cosas, lo mostrado
+ en el Algoritmo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:newClub.xml"
+
+\end_inset
+
+.
+ Aunque solo muestra un párrafo, habrá que hacer lo mismo en todos ellos.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+<AcceptButton> 
+\end_layout
+
+\begin_layout Plain Layout
+<en>Accept</en> 
+\end_layout
+
+\begin_layout Plain Layout
+<es>Aceptar</es> 
+\end_layout
+
+\begin_layout Plain Layout
+</AcceptButton>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:newClub.xml"
+
+\end_inset
+
+Parte del Fichero newClub.xml
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Siguiendo el ejemplo del italiano, deberíamos añadir lo siguiente ANTES
+ de 
+\emph on
+</AcceptButton> 
+\emph default
+que es lo que marca el final del párrafo.
+\end_layout
+
+\begin_layout Standard
+<it>Accettare</it>
+\end_layout
+
+\begin_layout Standard
+En donde 
+\emph on
+it
+\emph default
+ es la abreviatura que hemos puesto en el fichero 
+\emph on
+languages.xml
+\emph default
+ De esta forma el programa encuentra el texto adecuado para el idioma selecciona
+do.
+ Es algo de trabajo pero muy sencillo de realizar.
+ 
+\end_layout
+
+\begin_layout Standard
+Por supuesto, después de todas las traducciones si queréis compartir vuestro
+ trabajo con otras personas solamente me tenéis que enviar la carpeta 
+\emph on
+translations
+\emph default
+ comprimida con vuestro contenido a 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+softwaremagico@gmail.com
+\end_layout
+
+\end_inset
+
+.
+ Yo lo incluiré en la próxima versión del programa y además os incluiré
+ en los créditos del programa agradeciendo vuestro trabajo.
+ 
+\end_layout
+
+\begin_layout Section
+Cambiar el diseño de los diplomas
+\end_layout
+
+\begin_layout Standard
+Para generar un diploma nuevo cada año, bastará cambiar el fichero que se
+ encuentra en la carpeta 
+\emph on
+diploma
+\emph default
+, manteniendo su nombre y terminación.
+ El programa seleccionará esta nueva imagen como fondo para los futuros
+ diplomas generados.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/diploma_areas.png
+	lyxscale 20
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Distribución-diploma"
+
+\end_inset
+
+Distribución de un diploma.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En la figura 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distribución-diploma"
+
+\end_inset
+
+ se puede ver la distribución típica de un diploma, en el que existen dos
+ áreas de fondo, una que incluirá el título del torneo, y otra en donde
+ saldría en letra más pequeña los datos importantes del mismo.
+ El tamaño de las áreas puede ser cambiado ya que la aplicación permite
+ variar la posición del nombre.
+\end_layout
+
+\begin_layout Section
+Licencias y demás
+\end_layout
+
+\begin_layout Standard
+En la ventana 
+\begin_inset Quotes eld
+\end_inset
+
+Acerca de...
+\begin_inset Quotes erd
+\end_inset
+
+ se incluye entre otras cosas la licencia, los agradecimientos y otras cosas
+ importantes.
+ Os animo a que personalicéis el programa para vuestro club, e incluso lo
+ mejoréis.
+ La licencia del programa es GNU y así lo permite.
+ Mantened el nombre del autor (© Jorge Hortelano Otero) y el de todos aquellos
+ que han colaborado en él e incluiros vosotros mismos si el cambio es sustancial.
+ Si no tenéis capacidad técnica para hacer cambios, podéis escribirme indicando
+ que cosas faltan o se pueden mejorar.
+ Incluiré toda la información que me deis en nuevas versiones futuras, como
+ ya llevo haciendo desde hace algunas versiones gracias a los e-mails de
+ distintos usuarios.
+\end_layout
+
+\begin_layout Chapter
+FAQs
+\end_layout
+
+\begin_layout Section
+Ejecución
+\end_layout
+
+\begin_layout Subsection
+Cuando hago click en el enlace al programa, este no hace nada.
+ ¿Qué puede ser?
+\end_layout
+
+\begin_layout Standard
+Si al hacer click en el enlace del programa, no aparece ventana alguna,
+ lo más probable es que la versión de Java que estás utilizando no sea la
+ adecuada (versión 6 o superior) o simplemente no tienes instalada la Máquina
+ Virtual de Java.
+ Para solucionar esto, solamente tienes que instalarlo.
+ Es totalmente gratuito y puede ser descargado desde: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.java.com/es/download/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: La máquina Java que trae por defecto Windows no es adecuada para el
+ uso de este programa.
+ 
+\end_layout
+
+\begin_layout Subsection
+Al apretar un botón, este no hace nada.
+ Además el programa no permite hacer nada más en el futuro y lo tengo que
+ reiniciar.
+\end_layout
+
+\begin_layout Standard
+Esto suele ser por que al apretar el botón, ha ocurrido una excepción.
+ Esto significa que el programa ha fallado por la causa probable de un bug.
+ Aunque el programa ha sido ya depurado de forma consciente, siempre pueden
+ existir algunos bugs imprevistos.
+ Lo mejor que se puede hacer en estos casos es ejecutar el programa desde
+ la consola de comandos de Windows o la terminal de Linux.
+ Así obtendremos más información sobre lo que ha ocurrido.
+ Si este error se repite, podéis enviármelo por e-mail para que intente
+ solucionarlo y no se repita en futuras versiones.
+ 
+\end_layout
+
+\begin_layout Section
+Base de datos.
+ 
+\end_layout
+
+\begin_layout Subsection
+Tengo problemas generales con la base de datos.
+ 
+\end_layout
+
+\begin_layout Standard
+Este problema resulta algo vago, por lo que indico aquí algunas sugerencias
+ para lidiar con el problema.
+\end_layout
+
+\begin_layout Enumerate
+Existe la posibilidad de actualizar la base de datos si esta pertenece a
+ la versión 0.91 o posterior.
+ De esta forma, al actualizar la aplicación a una versión posterior, también
+ se puede actualizar la base de datos sin necesidad de perder la información.
+ Para ello, seleccionar la opción adecuada en el menú principal de la aplicación.
+ Puede ser que de algunos errores al actualizarlo, debido en parte a los
+ datos ya introducidos en la base de datos.
+ Estos errores no resultan vitales y se pueden ignorar.
+ De todas formas, si la base de datos no contiene información vital, borrarla
+ y volverla a instalar aseguraría el buen funcionamiento de la misma.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Si ya tenías una versión anterior del programa instalada, también debes
+ actualizar la base de datos.
+ Para ello, debes seleccionar la opción adecuada dentro del programa.
+ Al ir mejorando el programa, también se va aumentando la complejidad de
+ la base de datos, ya que sin estas modificaciones no se podrán usar correctamen
+te la nueva funcionalidad de la aplicación.
+ Si esto sigue sin solucionarlo, prueba a borrar tu base de datos e instalar
+ de nuevo la base de datos vacía del programa.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Si los portátiles están trabajando únicamente con las baterías, debes también
+ evitar que el ordenador de coordinación se suspenda (stand by).
+ Si es el caso, la conexión Wi-Fi se cortará y por tanto, cualquier otro
+ equipo dejará de tener acceso a la base de datos del programa, causando
+ errores de acceso al servidor.
+ Otro motivo para que aparezca el error de conexión, suele ser que los portátile
+s se conecten automáticamente a alguna otra red Wi-Fi al alcance.
+ Revisad que los equipos están todos encendidos y conectados a la red Wi-Fi
+ deseada.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Utilizar el programa KTG desde la línea de comandos.
+ Esto mostrará más información sobre el problema y será más fácil abordarlo.
+ 
+\end_layout
+
+\begin_layout Subsection
+Importación/Exportación de la base de datos
+\end_layout
+
+\begin_layout Standard
+Si existen problemas al importar una base de datos de un archivo, esto puede
+ ser causado por distintos motivos: 
+\end_layout
+
+\begin_layout Enumerate
+El archivo es de una versión anterior del programa y por tanto la base de
+ datos no concuerda.
+ En este caso, lo mejor sería instalar el programa gratuito MySQL Workbench
+ y comprobar que campos son incoherentes en la nueva, aunque para esto,
+ es necesario tener conocimientos de SQL.
+\end_layout
+
+\begin_layout Enumerate
+Ya existen datos en la base de datos que se intenta sobreescribir.
+ Si existen problemas, sería importante vaciar la base de datos antes de
+ intentar importar una nueva.
+ Para ello, se puede usar la misma interfaz gráfica del MySQL Workbench.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Apartir de la versión 0.95 del programa, no son compatibles con las bases
+ de datos anteriores.
+ Por tanto, hay que eliminar y volver a instalar la base de datos.
+ 
+\end_layout
+
+\begin_layout Subsection
+¿Cuáles son las diferencias entre el uso de SQLite y MySQL? ¿Cuál debo usar
+ en mi torneo?
+\end_layout
+
+\begin_layout Standard
+En general, MySQL es más potente que SQLite y permtie más opciones.
+ Si bien la instalación del mismo y el consumo de recursos también es mayor.
+ Por tanto, la decisión vendrá determinada por los siguientes factores:
+\end_layout
+
+\begin_layout Enumerate
+Si utilizas un ordenador con pocos recursos, antiguo, o simplemente no quieres
+ que te enlentezca el resto de aplicaciones corriendo un servidor que usarás
+ puntualmente, lo correcto es usar SQLite.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Si necesitas que varios ordenadores trabajen con la misma base de datos
+ para que manejen los distintos shiaijos concurrentemente, entonces debes
+ instalar MySQL, ya que es el que te permite aceptar conexiones de otros
+ equipos.
+ 
+\emph on
+Nota: Recuerda que para el uso de múltiples equipos, únicamente uno de ellos
+ debe tener la base de datos instalada.
+ 
+\end_layout
+
+\begin_layout Enumerate
+En el caso de bases de datos con un gran número de registros (varios miles)
+ aconsejo utilizar MySQL.
+ 
+\end_layout
+
+\begin_layout Enumerate
+En el caso de que la base de datos se deba mover de un equipo a otro habitualmen
+te, probablemente SQLite sea más cómodo para ello.
+ Si bien MySQL tiene herramientas como el MySQL Workbench que facilitan
+ esta función.
+ 
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,98 @@
+SELECT
+	CASE
+			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq
+			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer
+			ELSE (select  case when winner = -1 then team1 when winner = 1 then team2 else 'Combate no acabado' end from  fight t0 where t1. idcombate = t0.id)
+	END as Equipo,
+	count(idcombate) as NumVictorias
+FROM
+	(SELECT 
+			idcombate,
+			EquipoIzq,
+			EquipoDer,
+			Sum(NumDuelosGanados1) as VictoriaIzq,
+			Sum(NumDuelosGanados2) as VictoriaDer
+			Sum(TotalDuelo1) as TotalPuntosA
+			Sum(TotalDuelo2) as TotalPuntosB
+	FROM 
+			(SELECT
+					t1.Team as EquipoIzq,
+					t2.Team as EquipoDer,
+					t1.IdCombate,
+					CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1
+					ELSE 0 END as NumDuelosGanados1,
+					CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1
+					ELSE 0 END  as NumDuelosGanados2
+							
+			FROM	
+				(SELECT 
+						t2.Name as Team,
+						t3.Id as IdCombate,
+						t4.ID as IdDuelo, 
+						Sum(CASE 
+							WHEN PointPlayer1A in ('K','M','T','D','I')  THEN 1 
+							ELSE 0 END + CASE 
+											WHEN PointPlayer1B in ('K','M','T','D','I')  THEN 1 
+											ELSE 0 END )
+						as TotalDuelo1 
+				FROM 
+						team t2 
+						INNER JOIN 
+						fight t3 
+						ON t2.Name = t3.Team1 
+						AND t2.Tournament = t3.Tournament 
+						AND (t2.Tournament = 'Open 2009 (Femenino)' OR 'All' = 'Open 2009 (Femenino)') 
+						INNER JOIN duel t4 
+						ON t3.ID = t4.Fight 
+				WHERE 
+						t2.Position = t4.OrderPlayer 
+				GROUP BY
+						t2.Name,
+						t3.ID,
+						t4.ID 
+				)t1 
+				INNER JOIN 
+				(SELECT 
+						t2.Name as Team,
+						t3.Id as IdCombate,
+						t4.ID as IdDuelo, 
+						Sum(CASE 
+							WHEN PointPlayer2A in ('K','M','T','D','I')  THEN 1 
+							ELSE 0 END + CASE 
+											WHEN PointPlayer2B in ('K','M','T','D','I')  THEN 1 
+											ELSE 0 END )
+						as TotalDuelo2 
+				FROM 
+						team t2 
+						INNER JOIN fight t3 
+						ON t2.Name = t3.Team2 
+						AND t2.Tournament = t3.Tournament 
+						AND (t2.Tournament = 'Open 2009 (Femenino)' OR 'All' = 'Open 2009 (Femenino)')
+						INNER JOIN duel t4
+						ON t3.ID = t4.Fight
+				WHERE 
+						t2.Position = t4.OrderPlayer 
+				GROUP BY
+						t2.Name,
+						t3.ID,
+						t4.ID 
+				)t2
+				ON t1.IdDuelo = t2.IdDuelo 
+				AND t1.IdCombate = t2.IDCombate
+			WHERE 
+					TotalDuelo1 <> TotalDuelo2
+			)t1
+		GROUP BY
+				idcombate,
+				EquipoIzq,
+				EquipoDer
+	) t1
+	GROUP BY
+	CASE
+			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq
+			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer
+			ELSE (select  case when winner = -1 then team1 when winner = 1 then team2  else 'Combate no acabado' end from  fight t0 where t1. idcombate = t0.id)
+	END  
+	
+	
+

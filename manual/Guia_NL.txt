@@ -1,0 +1,23 @@
+Snelstartgids voor het programma:
+
+1. Maak verbinding met de database d.m.v. de popup schermpjes die verschijnen bij de start van het programma.
+
+2. Voeg alle deelnemende clubs aan de database toe (Invoegen->Voeg club toe)
+
+3. Voeg alle deelnemers, scheidsrechters en anderen functionarissen aan de database toe (Invoegen->voeg nieuwe deelnemer toe).
+
+4. Nu kun je de clubvertegenwoordiger toevoegen (Invoegen->nieuwe club toevoegen).
+
+5. Poule toevoegen (Invoegen->nieuwe Poule)
+
+6. Definiëer de rol van deelnemer (wedstrijd->definiëer rol van deelnemer). Alleen deelnemers met een rol zullen verder in het programma worden gebruikt. B.v. bij het samenstellen van een nieuw team. 
+
+7. Voeg de gewenste teams met de leden toe (toernooi->Voeg een nieuw team aan de wedstrijd toe).
+
+8. Definiëer het toernooi en de wedstrijden (Toernooi->Definiëer wedstrijd als->...). 
+
+9. Gebruik het wedstrijdpaneel om gescoorde punten toetevoegen (wedstrijd->wedstrijdpaneel). Dit paneel kan ook ter informatie voor het publiek worden gebruikt. 
+
+Stap 1, 2, 3 en 4 hoeven maar 1 keer te worden uitgevoerd, deze zijn standaard voor het toernooi. Deelnemersinformatie hoeft maar 1 keer te worden toegevoegd en wordt verder in het gehele toernooi gebruikt. Stappen 5, 6, 7, 8, en 9 moeten voor iedere wedstrijd worden herhaald. 
+
+

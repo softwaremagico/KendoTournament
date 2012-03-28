@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<translator>
+	<languages abbrev="ca" flag="icons/flags/cat.png" >Català</languages>
+	<languages abbrev="en" flag="icons/flags/gb.png" >English</languages>
+	<languages abbrev="es" flag="icons/flags/es.png" >Español</languages>
+	<languages abbrev="de" flag="icons/flags/de.png" >Deutsch</languages>
+	<languages abbrev="nl" flag="icons/flags/nl.png" >Dutch</languages>
+	<languages abbrev="ca" flag="icons/flags/val.png" >Valencià</languages>
+</translator>

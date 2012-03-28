@@ -1,0 +1,51 @@
+	SELECT 
+			t1.NomEquipo as Equipo, 
+			sum(TotalPtos) as TotalPtos 
+	FROM 
+			(SELECT 
+					t2.Name as NomEquipo, 
+					CASE 
+						WHEN PointPlayer1A in ('K','M','T','D','I')  THEN 1 
+						ELSE 0 END + CASE 
+											WHEN PointPlayer1B in ('K','M','T','D','I')  THEN 1 
+											ELSE 0 END
+					as TotalPtos 
+			FROM 
+					team t2 
+					INNER JOIN 
+					fight t3 
+					ON t2.Name = t3.Team1 
+					AND t2.Tournament = t3.Tournament 
+					AND (t2.Tournament = 'Open 2009 (Femenino)' OR 'All' = 'Open 2009 (Femenino)') 
+					INNER JOIN 
+					duel t4 
+					ON t3.ID = t4.Fight 
+			WHERE 
+					t2.Position = t4.OrderPlayer
+					
+			UNION ALL 
+			
+			SELECT 
+					t2.Name as NomEquipo, 
+					CASE 
+						WHEN PointPlayer2A in ('K','M','T','D','I')  THEN 1 
+						ELSE 0 END + CASE 
+											WHEN PointPlayer2B in ('K','M','T','D','I')  THEN 1 
+											ELSE 0 END
+					as TotalPtos
+			FROM 
+					team t2 
+					INNER JOIN 
+					fight t3 
+					ON t2.Name = t3.Team2 
+					AND t2.Tournament = t3.Tournament 
+					AND (t2.Tournament = 'Open 2009 (Femenino)' OR 'All' = 'Open 2009 (Femenino)') 
+					INNER JOIN 
+					duel t4 
+					ON t3.ID = t4.Fight 
+			WHERE 
+				t2.Position = t4.OrderPlayer
+
+			) t1 
+	GROUP BY 
+			t1.NomEquipo 

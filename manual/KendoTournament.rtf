@@ -1,0 +1,797 @@
+{\rtf1\ansi\deff4\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset128 Times New Roman;}{\f4\froman\fprq0\fcharset0 Times{\*\falt Times New Roman};}{\f5\fswiss\fprq2\fcharset128 Arial;}{\f6\fmodern\fprq1\fcharset0 Courier{\*\falt Courier New};}{\f7\fnil\fprq2\fcharset128 Droid Sans Fallback;}{\f8\fnil\fprq2\fcharset128 Lohit Hindi;}{\f9\fnil\fprq0\fcharset128 Lohit Hindi;}}
+{\colortbl;\red0\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s0\snext0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024 Predeterminado;}
+{\*\cs15\snext15 Caracteres de nota final;}
+{\s16\sbasedon0\snext17\sb240\sa120\keepn\hich\af7\dbch\af8\afs28\loch\f5\fs28 Encabezado;}
+{\s17\sbasedon0\snext17\sb0\sa120\afs20\fs20 Cuerpo de texto;}
+{\s18\sbasedon17\snext18\sb0\sa120\dbch\af9\afs20\fs20 Lista;}
+{\s19\sbasedon0\snext19\sb120\sa120\noline\i\dbch\af9\afs24\ai\fs24 Etiqueta;}
+{\s20\sbasedon0\snext20\noline\dbch\af9\afs20\fs20 \u205\'3fndice;}
+{\s21\sbasedon0\snext21\tqc\tx4819\tqr\tx9638\noline\afs20\fs20 Pie de p\u225\'3fgina;}
+{\s22\sbasedon0\snext0\qc\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40 part;}
+{\s23\sbasedon0\snext0\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40 heading 1;}
+{\s24\sbasedon0\snext0\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32 heading 2;}
+{\s25\sbasedon0\snext0\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32 heading 3;}
+{\s26\sbasedon0\snext0\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24 heading 4;}
+{\s27\sbasedon0\snext0\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24 heading 5;}
+{\s28\sbasedon0\snext0\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24 heading 6;}
+}{\info{\title Original file was KendoTournament.tex}{\doccomm Created using latex2rtf 1.9.19 (released Nov 20 2007) on Mon Oct 31 11:10:02 2011}{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment LibreOffice}{\vern3400}}\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720\deftab720
+
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse195\pgwsxn12280\pghsxn15900\marglsxn2680\margrsxn2700\margtsxn2540\margbsxn1760\pgdscnxt0 Predeterminado;}
+{\pgdsc1\pgdscuse195\pgndec\pgwsxn12280\pghsxn15900\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt1 Nota final;}}
+\formshade{\*\pgdscno0}\paperh15900\paperw12280\margl2680\margr2700\margt2540\margb1760\sectd\sbknone\sectunlocked1\pgndec\pgwsxn12280\pghsxn15900\marglsxn2680\margrsxn2700\margtsxn2540\margbsxn1760\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnar
+\pgndec\pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\qj{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc\li0\ri0\lin0\rin0\fi300{\afs30\rtlch \ltrch\loch\fs30
+KENDO TOURNAMENT GENERATION TOOL}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\afs30\rtlch \ltrch\fs30
+\~ }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\afs30\rtlch \ltrch\loch\fs30
+v0.96}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl200\slmult0\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\afs24\rtlch \ltrch\loch\fs24
+Jorge Hortelano Otero}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl200\slmult0\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl200\slmult0\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl200\slmult0\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s22\qc\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s23\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Cap\'ectulo 1}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Instalaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+1.1  Requisitos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+He generado la aplicaci\'f3n Kendo Tournament Generator (KTG) de forma que deber\'eda ser compatible con todas las versiones de Windows (al menos a partir de Windows 2000) y con todas las versiones de Linux. Por desgracia el abanico de posibilidades es tan grande que no he realizado pruebas en cada una de ellas, por lo que podr\'edan aparecer errores imprecisos en algunas de ellas. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+La aplicaci\'f3n consta de dos partes principales: una aplicaci\'f3n que genera un entorno gr\'e1fico con ventanas para facilitar el manejo al usuario, y una base de datos que permite almacenar y gestionar toda la informaci\'f3n relativa a las ligas de kendo. Por tanto, esta aplicaci\'f3n tiene dos requisitos que deben ser instalados en su ordenador: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Maquina\~ virtual\~ Java.}{\rtlch \ltrch\loch
+ Aunque algunos sistemas operativos incluyen su m\'e1quina virtual (MV) propia, aconsejo fervientemente que se utilice la versi\'f3n oficial proporcionada por SUN. Esta MV puede ser descargada gratuitamente de la p\'e1gina oficial sin coste alguno para el usuario en }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+http://www.java.com/es/download/}{\rtlch \ltrch\loch
+ Nuestro programa ha sido desarrollado para la versi\'f3n 6 (1.6) update 0, por lo que cualquier versi\'f3n igual o posterior deber\'eda bastar. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+MySQL:}{\rtlch \ltrch\loch
+ Esto es un servidor de bases de datos utilizado por nuestra aplicaci\'f3n. Al igual que la maquina virtual de Java, es completamente gratuito (exceptuando la asistencia t\'e9cnica). Puede ser descargado aqu\'ed: }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+http://dev.mysql.com/downloads/mysql/5.1.html}{\rtlch \ltrch\loch
+ La versi\'f3n utilizada en nuestro caso es la 5.1, por lo que cualquier versi\'f3n igual o superior deber\'eda bastar. Tambi\'e9n aconsejo descargarse algunas aplicaciones de mantenimiento del servidor: }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+http://dev.mysql.com/downloads/gui-tools/5.0.html}{\rtlch \ltrch\loch
+ Con estas aplicaciones podr\'e1s crear backups de tus bases de datos y evitar p\'e9rdidas de datos por fallos en los discos, aunque no son esenciales para el uso del KTG. Esta aplicaci\'f3n solo es necesaria instalarla en un ordenador, el que vaya a albergar los datos. Consulta el cap\'edtulo }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMcha_Uso_de_distintos \\h }{\fldrslt 3}}}{\rtlch \ltrch\loch
+ para m\'e1s informaci\'f3n. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Por \'faltimo se\'f1alar que tanto la MV de Java, como el servidor MySQL est\'e1n realizados por grandes empresas (realmente muy grandes) a las que no pertenezco. Por lo que para cualquier pregunta de mantenimiento se deber\'eda contactar con ellos. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+1.2  Instalaci\'f3n}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+1.2.1  Instalaci\'f3n de los requisitos b\'e1sicos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Tanto la m\'e1quina virtual de Java, como el servidor de bases de datos de MySQL tienen un entorno gr\'e1fico para su instalaci\'f3n en Windows, o vienen en paquetes de repositorio en Linux. Por tanto no voy a explicar lo que hay que hacer para su instalaci\'f3n (b\'e1sicamente decir \'93s\'ed\'94 a todo). Solamente voy a indicar algunos detalles sobre MySQL para aquellos que son inexpertos en el tema.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Cuando se instale la base de datos MySQL en Windows, se realizar\'e1n varias preguntas al usuario. De ellas, la respuesta por defecto suele ser acertada (para cualquier duda, consultar }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+http://dev.mysql.com/doc/refman/5.0/es/}{\rtlch \ltrch\loch
+). Sin embargo, aconsejo tener en cuenta estas tres cosas al arrancar el asistente de configuraci\'f3n: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab Ventana de dialogo del tipo de servidor. En nuestro caso, escogeremos la opci\'f3n \'93Developer machine (Ordenador de desarrollo) \'94 ya que es la que menos consumo utilizar\'e1. Esta opci\'f3n es suficiente para nuestras necesidades. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab La ventana de di\'e1logo del conjunto de caracteres. Aconsejo el uso de UTF-8, aunque no es fundamental. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab La ventana de di\'e1logo de las opciones de seguridad. Desmarcaremos la opci\'f3n de solo acceso local, ya que as\'ed podremos trabajar con varios equipos dentro de la liga. Adem\'e1s, habr\'e1 que recordar la contrase\'f1a indicada, ya que ser\'e1 necesaria al ejecutar nuestro programa. }{\i\ai\rtlch \ltrch\loch
+Nota: por simplicidad, en este manual accederemos a nuestra base de datos con el usuario root, ya que evita la generaci\'f3n de cuentas de usuario nuevas. Si es usted un usuario avanzado o teme por la seguridad de su sistema, le aconsejo que acceda con otro usuario. KTG le preguntar\'e1 el nombre de usuario y su contrase\'f1a cuando quiera acceder a la base de datos, por lo que no tendr\'e1 ning\'fan problema. Recuerde si hace esto, dar permisos al nuevo usuario tanto local como remotamente para la base de datos espec\'edfica del KTG.}{\rtlch \ltrch\loch
+ }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Teniendo en cuenta las opciones descritas anteriormente, deber\'eda de funcionar todo correctamente. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+1.2.2  Instalaci\'f3n de la aplicaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Para los usuarios de Windows, la aplicaci\'f3n se distribuye como el t\'edpico conjunto de ventanas de instalador. No resulta muy flexible, ya que el usuario no puede cambiar apenas las opciones. Sin embargo, esto facilita enormemente la instalaci\'f3n ya que el usuario se limitar\'e1 a aceptar todo lo que aparezca por pantalla. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Para los usuarios de Linux (Debian/Ubuntu), la aplicaci\'f3n se distribuye como un paquete DEB. Por tanto un }{\i\ai\rtlch \ltrch\loch
+dpkg -i fichero.deb}{\rtlch \ltrch\loch
+ deber\'eda bastar. Para los usuarios de otras distribuciones que no dispongan de }{\i\ai\rtlch \ltrch\loch
+dpkg}{\rtlch \ltrch\loch
+, aconsejo que se descarguen el paquete SRC y lo compilen con un compilador en java.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+En todos los casos que se use un instalador, se generar\'e1 un enlace simb\'f3lico que te permitir\'e1 arrancar la aplicaci\'f3n. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+1.2.3  Instalaci\'f3n de la base de datos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+A partir de la versi\'f3n 0.9 del programa, la base de datos se instala autom\'e1ticamente en el servidor MySQL si esta no est\'e1 ya instalada. De todas formas, si existiera alg\'fan problema, siempre se puede instalar manualmente. Para ello, utiliza el programa MySQL Admin y el fichero incluido en la carpeta \'93database\'94. Instalarlo como si fuera un backup con la opci\'f3n que el MySQL Admin presenta.}
+\par \pard\plain \s23\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Cap\'ectulo 2}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Utilizaci\'f3n de la aplicaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Podemos decir que el programa est\'e1 dividido l\'f3gicamente en cinco partes. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab Conexi\'f3n a la base de datos. Primero nos debemos conectar a la base de datos de la m\'e1quina para poder manipular y almacenar los datos. Si est\'e1 conexi\'f3n falla, la aplicaci\'f3n no puede realizar ninguna operaci\'f3n, por lo que es lo primero que hay que hacer. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab Inserci\'f3n o registro de datos. Previamente a la liga, se deber\'e1 de insertar en la base de datos los participantes, clubes, equipos y otros datos necesarios. Todo lo que no se haya incluido, obviamente no existir\'e1 para el programa. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab Dise\'f1o de la liga. Se tendr\'e1 que decidir los combates iniciales, la estructura de la liga y otros detalles. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+4.\tab Marcador de liga. Una pantalla que se ir\'e1 completando con las distintas puntuaciones obtenidas en la liga. Los resultados ir\'e1n generando los distintos combates. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+5.\tab Gr\'e1ficas. Un conjunto de estad\'edsticas y listas de la liga. De aqu\'ed se pueden extraer el ranking, un listado de resultados y muchas cosas m\'e1s. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.1  Conexi\'f3n a la base de datos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Lo primero que pide el programa son los datos para conectarse al servidor de bases de datos (MySQL). Estos datos son el usuario, contrase\'f1a, m\'e1quina y base de datos. El usuario y contrase\'f1a es }{\i\ai\rtlch \ltrch\loch
+root}{\rtlch \ltrch\loch
+ y el indicado en la instalaci\'f3n, o el que se haya definido si se ha cambiado. La m\'e1quina ser\'e1 }{\i\ai\rtlch \ltrch\loch
+localhost}{\rtlch \ltrch\loch
+ si el servidor est\'e1 albergado en la misma m\'e1quina (lo normal en la mayor\'eda de los casos), o la direcci\'f3n de red de la m\'e1quina que lo contenga en otros casos (ver Secci\'f3n }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMcha_Uso_de_distintos \\h }{\fldrslt 3}}}{\rtlch \ltrch\loch
+). La base de datos ser\'e1 }{\i\ai\rtlch \ltrch\loch
+kendotournament}{\rtlch \ltrch\loch
+ que es lo que identifica nuestra base de datos respecto a las de otros programas que puedan estar utiliz\'e1ndolo. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.1.1  Actualizaci\'f3n de la base de datos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Existe la posibilidad de actualizar la base de datos si esta pertenece a la versi\'f3n 0.91 o posterior. De esta forma, al actualizar la aplicaci\'f3n a una versi\'f3n posterior, tambi\'e9n se puede actualizar la base de datos sin necesidad de perder la informaci\'f3n. Para ello, seleccionar la opci\'f3n adecuada en el men\'fa principal de la aplicaci\'f3n. Puede ser que de algunos errores al actualizarlo, debido en parte a los datos ya introducidos en la base de datos. Estos errores no resultan vitales y se pueden ignorar. De todas formas, si la base de datos no contiene informaci\'f3n vital, borrarla y volverla a instalar asegurar\'eda el buen funcionamiento de la misma. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.1.2  Copia de seguridad de la base de datos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Existe la posibilidad de hacer una copia de seguridad de la base de datos del programa sin la necesidad de tener conocimientos de SQL o de aplicaciones externas. Dentro del men\'fa principal, en el apartado de }{\i\ai\rtlch \ltrch\loch
+Programa}{\rtlch \ltrch\loch
+ }{\i\ai\rtlch \ltrch\loch
+- Base de Datos}{\rtlch \ltrch\loch
+ existe la opci\'f3n }{\i\ai\rtlch \ltrch\loch
+Exportar a }{\rtlch \ltrch\loch
+e}{\i\ai\rtlch \ltrch\loch
+ Importar de}{\rtlch \ltrch\loch
+ a partir de la versi\'f3n 0.931 del programa. Con estas dos opciones se puede guardar toda la informaci\'f3n de la base de datos en un \'fanico fichero, que podr\'e1 ser usado despu\'e9s para recuperar la informaci\'f3n en caso de emergencia o en alguna otra m\'e1quina. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2  Inserci\'f3n de la informaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Aqu\'ed se incluyen el almacenar toda la informaci\'f3n necesaria para el desarrollo de la liga: competidores, equipos, clubes hasta la propia liga. Estas ventanas tienen un uso semejante, por lo que este cap\'edtulo engloba a todas ellas. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2.1  Informaci\'f3n general}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Existen ciertos elementos que no deber\'edan cambiar de una liga a otra. Por ello se deben de insertar una vez y no m\'e1s. Entre estos ejemplos est\'e1n los competidores: la informaci\'f3n de los competidores (nombre, numero de identificaci\'f3n, etc.) nunca cambiar\'e1, por lo que bastar\'e1 almacenarla una \'fanica vez. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2.2  Informaci\'f3n particular para cada liga}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Hay algunos datos que son utilizados exclusivamente dentro de una liga, y pueden darse o no darse en otros. Por ejemplo, los equipos. Un equipo solamente es v\'e1lido para una liga, ya que aunque el nombre se puede repetir en los distintas ligas, los integrantes del mismo pueden variar. Por ello hay que definirlos de nuevo para cada una de las ligas. Otro ejemplo es la selecci\'f3n de que competidores participan en una liga en concreto y sus roles. Ya que con el paso de los a\'f1os, los competidores pueden retirarse o desaparecer en versiones sucesivas de la misma liga. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2.3  B\'fasqueda y cambio de informaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Existe la posibilidad de cambiar los datos ya incluidos previamente (competidores, clubes, ligas, ...). Para ello, hay que ir a la ventana de inserci\'f3n adecuada seg\'fan el elemento que vayamos a cambiar. En ella est\'e1 el bot\'f3n }{\i\ai\rtlch \ltrch\loch
+Buscar}{\rtlch \ltrch\loch
+. En la Figura }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMfig_Bot_0000F3n_buscar_ \\h }{\fldrslt 2.1}}}{\rtlch \ltrch\loch
+ aparece un ejemplo de dicho bot\'f3n.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura }{{\*\bkmkstart BMfig_Bot_0000F3n_buscar_}\rtlch \ltrch\loch
+2.1}{{\*\bkmkend BMfig_Bot_0000F3n_buscar_}\rtlch \ltrch\loch
+: Bot\'f3n buscar.\'01}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+Pulsando este bot\'f3n, aparecer\'e1 una nueva ventana en la que podremos seleccionar los patrones de b\'fasqueda. Se puede rellenar cualquiera de ellos para realizar la b\'fasqueda. En el caso de que se rellenen varios de ellos, el programa seleccionar\'e1 el patr\'f3n que est\'e9 m\'e1s cercano al borde superior de la pantalla. En la Figura }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMfig_B_0000FAsqueda_de_competidores_ \\h }{\fldrslt 2.2}}}{\rtlch \ltrch\loch
+ aparece un ejemplo de la ventana }{\i\ai\rtlch \ltrch\loch
+B\'fasqueda de Competidores}{\rtlch \ltrch\loch
+. En ella hay claramente dos secciones: (A) donde se introducen los datos a buscar, y (B) donde aparecen los resultados de la b\'fasqueda. En el ejemplo de la figura, si rellen\'e1ramos el nombre y los apellidos, el programa buscar\'eda por apellidos. Hay que a\'f1adir que no es necesario incluir el apellido completo, ya que el programa busca por patrones. Por ejemplo una letra bastar\'eda para que se presentaran todos los apellidos que incluyeran esa letra en cualquier parte de la palabra. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura }{{\*\bkmkstart BMfig_B_0000FAsqueda_de_competidores_}\rtlch \ltrch\loch
+2.2}{{\*\bkmkend BMfig_B_0000FAsqueda_de_competidores_}\rtlch \ltrch\loch
+: B\'fasqueda de competidores.\'01}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+La mitad inferior de la ventana es la lista de resultados (B), que presentar\'e1 un listado de competidores que cumplen el patr\'f3n una vez se ha iniciado la b\'fasqueda. Seleccionando cualquiera de ellos y d\'e1ndole al bot\'f3n }{\i\ai\rtlch \ltrch\loch
+Seleccionar}{\rtlch \ltrch\loch
+ nos permitir\'e1 volver a la pantalla de introducci\'f3n de datos con todos los campos del competidor seleccionado, en donde podremos cambiarlos.}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2.4  Borrado de informaci\'f3n.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El borrado de informaci\'f3n se realiza desde la misma ventana de b\'fasqueda. Volviendo al ejemplo de la secci\'f3n anterior, para borrar un competidor, deber\'edamos primero buscarlo y luego seleccionarlo en la lista de resultados (B). En ese momento se le puede dar al bot\'f3n }{\i\ai\rtlch \ltrch\loch
+borrar}{\rtlch \ltrch\loch
+ y el competidor ser\'e1 borrado para siempre de la base de datos. Mucha atenci\'f3n a la dependencia de datos, es decir, si borramos una liga, tambi\'e9n se borrar\'e1n todos los combates relacionados con esta liga. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.2.5  Ejemplo de inserci\'f3n de un competidor.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Cuando un futuro participante se presenta ante el mostrado de registro, los pasos que hay que hacer para incluirlo en el programa son los siguientes: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab Preguntar si ya ha sido incluido en una liga anterior, en cuyo caso ya existir\'e1n sus datos en el programa. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab Si no es as\'ed, habr\'e1 que incluir todos los datos. Para ello:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li1200\ri0\lin1200\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+(a)\tab Realizar una fotograf\'eda con una webcam y un software adecuado para ello para despu\'e9s almacenarla en una carpeta localizable. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li1200\ri0\lin1200\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+(b)\tab En el programa (Insertar -> A\'f1adir nuevo participante), introducir todos los datos del nuevo participante: Nombre, DNI, Foto, etc. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li1200\ri0\lin1200\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+(c)\tab Al finalizar la inclusi\'f3n de datos, hay que definir el rol de dicho participante: Si es competidor, \'e1rbitro, etc. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab Si ya estuviera incluido en la base de datos los pasos aconsejados a realizar son:}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li1200\ri0\lin1200\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+(a)\tab En la ventana (Insertar -> A\'f1adir nuevo participante) darle al bot\'f3n }{\i\ai\rtlch \ltrch\loch
+buscar}{\rtlch \ltrch\loch
+. Buscar all\'ed el participante para ver que todos los datos est\'e1n correctamente, utilizando el DNI o nombre para ello. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li1200\ri0\lin1200\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+(b)\tab Incluir el rol del participante para que ya pueda utilizarse en la liga actual. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.3  Acreditaciones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El programa permite generar con los datos insertados previamente un listado de acreditaciones.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura 2.3: Ejemplo de acreditaci\'f3n.}{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+El programa generar\'e1 un PDF con la informaci\'f3n del participante. Su involucraci\'f3n en la liga y una foto para reconocerlo. Esta acreditaci\'f3n deber\'e1 ser impresa (y preferentemente plastificada) para despu\'e9s ser entregada al participante.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Estas acreditaciones pueden ser \'fatiles a la hora de controlar qui\'e9n entra en la liga, especialmente si hay que pagar alg\'fan tipo de cuota. Adem\'e1s permitir\'e1 controlar que cada uno de los participantes est\'e9 en su equipo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Un detalle importante del sistema de acreditaciones, es que el sistema solamente imprimir\'e1 cada vez las acreditaciones que NO se hayan impreso anteriormente, salvo que se indique que se desea imprimir todas. Esto significa que puedes imprimir las acreditaciones seg\'fan los competidores se van inscribiendo en el sistema, sin necesidad de preocuparse de las que ya han sido impresas anteriormente. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\i\ai\rtlch \ltrch\loch
+Nota: En la imagen mostrada, se ve el logotipo y el dise\'f1o usado en el VI Open de Kendo de la Universidad de Valencia. Obviamente, todo esto deber\'e1 ser cambiado de acuerdo con el evento a organizar. Para ello, cambiar la imagen localizada en la carpeta images/background.png}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4  Dise\'f1o de la liga}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Una vez incluido todos los datos de la liga y creada la Liga, se podr\'e1n definir los distintos combates. Existen varias formas de definir los combates de acuerdo con el tipo de liga que se necesite. Para ello no hay m\'e1s que seleccionar la opci\'f3n adecuada en el men\'fa superior:}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4.1  Reglas de puntuaciones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+En esta ventana se pueden definir las distintas reglas de puntuaciones, es decir, cuanto valdr\'e1 ganar un combate y cuanto valdr\'e1 un empate. Por defecto, existe el sistema japon\'e9s, en el que solamente se contabilizan los combates ganados, y los empatados equivalen a los perdidos. Otra opci\'f3n, representa el sistema que actualmente est\'e1 extendi\'e9ndose en Europa: en el que en caso de que dos equipos hayan empatado seg\'fan sus combates ganados, prevalecer\'e1 aquel que tenga un mayor n\'famero de combates empatados, ya que se considera que estos punt\'faan m\'e1s que los perdidos. Por \'faltimo, existe un sistema que permite otorgar una puntuaci\'f3n a los combates ganados y empatados, para imitar otros sistemas como los del f\'fatbol, en los que el ganador se lleva tres puntos y en un empate se lleva un punto. Aqu\'ed el usuario podr\'e1 elegir el sistema de puntuaci\'f3n que prefiera. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4.2  Liga manual}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Si se define la liga como manual, se abrir\'e1 la ventana }{\i\ai\rtlch \ltrch\loch
+Marcador de la Liga}{\rtlch \ltrch\loch
+ completamente vac\'eda (ver Secci\'f3n }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMsec_Marcador_de_la \\h }{\fldrslt 2.5}}}{\rtlch \ltrch\loch
+ para m\'e1s informaci\'f3n sobre esta ventana). En ella podremos seleccionar la liga que hemos creado y empezar a trabajar con ella. Para a\'f1adir los distintos combates no hay m\'e1s que darle al bot\'f3n }{\i\ai\rtlch \ltrch\loch
+A\'f1adir}{\rtlch \ltrch\loch
+ y seleccionar los equipos que se enfrentan. Autom\'e1ticamente el marcador se actualizar\'e1 con la nueva informaci\'f3n y se podr\'e1 empezar a almacenar la puntuaci\'f3n de los combates.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Con esta opci\'f3n, el programa no hace ning\'fan control sobre los combates, por lo que queda a elecci\'f3n del usuario elegir si cada equipo va ha hacer el mismo n\'famero de combates o estos se repiten. De esta forma el usuario tiene total libertad de dise\'f1ar sus propias ligas sin que el programa lo limite.}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4.3  Ligas sencillas}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Llamamos liga sencilla a una liga en la que todos los equipos combaten contra todos. El ganador, obviamente ser\'e1 aquel que haga tenga m\'e1s partidos ganados, en caso de empate aquel que tenga m\'e1s combates ganados y en caso de nuevo empate el que tenga m\'e1s puntos. El usuario puede hacer las combinaciones que considere oportunas. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Existe un bot\'f3n que permite generar los combates aleatoriamente. Si se pulsa, se generar\'e1 un listado de combates en el que el programa intentar\'e1 que cada uno de los equipos haga dos combates seguidos sin salir del shiaijo para agilizar los combates, como es tradicional en el Kendo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Otro bot\'f3n permite hacer lo mismo, pero los equipos se seleccionar\'e1n por orden alfab\'e9tico seg\'fan su nombre. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Los combates no ser\'e1n almacenados hasta que no se pulse el bot\'f3n }{\i\ai\rtlch \ltrch\loch
+Aceptar}{\rtlch \ltrch\loch
+. Por lo que el usuario puede intentar hacer distintas pruebas. Una vez se pulse el bot\'f3n }{\i\ai\rtlch \ltrch\loch
+Aceptar}{\rtlch \ltrch\loch
+, se borrar\'e1 cualquier combate que pudiera existir previamente en esa liga y se guardar\'e1n los nuevos combates. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4.4  Ligas en c\'edrculo o anillo}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Una liga en c\'edrculo es aquella en que un equipo se enfrenta de forma consecutiva a todos los dem\'e1s equipos sin descanso alguno. De esta forma, como si de una rueda se tratara, cada uno de los equipos se enfrentar\'e1 contra todos los equipos adversarios de forma consecutiva, intentando distribuir sus fuerzas en los diversos combates. Aunque no es un sistema de liga oficial, resulta muy \'fatil en entrenamientos y por ello se incluye en el programa. Para el uso de esta modalidad, se recomienda que los participantes con mayor experiencia entren antes a competir, es decir, est\'e9n en posiciones m\'e1s altas en la lista. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+En esta ventana, el usuario solamente deber\'e1 seleccionar el orden en el que saldr\'e1n los equipos y el programa calcular\'e1 todos los combates manteniendo este mismo orden. Hay que resaltar que el n\'famero de combates totales obtenidos de esta forma equivale a (equipos*(equipos-1)/2), por lo que solo es conveniente realizar este campeonato con un n\'famero reducido de equipos. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.4.5  Dise\'f1ador}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El dise\'f1ador es un entorno gr\'e1fico que intenta facilitar al usuario la creaci\'f3n de una liga. Esta especialmente dise\'f1ado para comprender que es lo que se est\'e1 haciendo cuando se genera una liga en \'e1rbol o un campeonato. Figura }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMfig_Dise_0000F1ador_de_ligas_ \\h }{\fldrslt 2.4}}}{\rtlch \ltrch\loch
+ muestra un ejemplo del dise\'f1ador.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura }{{\*\bkmkstart BMfig_Dise_0000F1ador_de_ligas_}\rtlch \ltrch\loch
+2.4}{{\*\bkmkend BMfig_Dise_0000F1ador_de_ligas_}\rtlch \ltrch\loch
+: Dise\'f1ador de ligas.\'01}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+En el dise\'f1ador existen dos partes bien diferenciadas. Una donde se dibuja la estructura de la liga, y otra en donde aparecen los equipos que todav\'eda no han sido asignados a la liga y que permite seleccionarlos para a\'f1adirlos. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.1  Generaci\'f3n de la liga.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Para generar la liga, lo que hay que hace es insertar tantos grupos como se desee. En cada uno de los grupos iremos insertando los equipos que resten para que compitan entre ellos. Para insertar un equipo a un grupo, lo que hay que hacer es seleccionar el grupo y despu\'e9s seleccionar el equipo. Luego le damos al bot\'f3n }{\i\ai\rtlch \ltrch\loch
+A\'f1adir equipo}{\rtlch \ltrch\loch
+ y de esta forma el equipo ser\'e1 incluido dentro del grupo. El equipo desaparecer\'e1 de la lista ya que un mismo equipo no puede estar en dos grupos distintos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Solamente se pueden editar los grupos iniciales ya que los ganadores de estos grupos pasar\'e1n a la fase siguiente de forma autom\'e1tica. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.2  Edici\'f3n de los grupos insertados.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Un doble click en uno de los grupos permite abrir una ventana y editar algunas opciones espec\'edficas de dicho grupo, como el shiaijo, el n\'famero de ganadores que pasar\'e1n a la siguiente ronda (si estamos en modo campeonato) o el orden de los equipos. Si un grupo tiene m\'e1s de un ganador, las flechas cambiar\'e1n de color para diferenciar d\'f3nde va cada uno de los ganadores. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.3  Tipos de ligas}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El dise\'f1ador permite generar la liga de tres formas distintas. Como campeonato, \'e1rbol o manual. }
+\par \pard\plain \s27\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql\sb240\sa60\keepn{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.3.1  Campeonato}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+Un campeonato es similar a lo que ocurre en la Champions de f\'fatbol europeo. Primero se definen grupos de equipos que compiten entre ellos. De estos solamente los primeros podr\'e1n pasar a la siguiente fase del campeonato. Los partidos ser\'e1n generados autom\'e1ticamente por la aplicaci\'f3n una vez la liga sea definida, teniendo en cuenta que los juntar\'e1 por parejas seg\'fan el orden de equipos establecido en el grupo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Los vencedores del campeonato se cruzan entre los dem\'e1s siguiendo una pauta. Los cruces de las dem\'e1s fases se hacen de forma autom\'e1tica. }
+\par \pard\plain \s27\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql\sb240\sa60\keepn{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.3.2  Liga en \'e1rbol}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+La principal diferencia de una liga en \'e1rbol y un campeonato es que solamente existen grupos con dos equipos. Todos los grupos tienen dos equipos de los cuales solamente uno ser\'e1 el ganador y pasar\'e1 a la fase siguiente. Adem\'e1s los grupos no se cruzan al pasar a la siguiente fase. }
+\par \pard\plain \s27\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql\sb240\sa60\keepn{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.3.3  Liga manual}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+Esta opci\'f3n da mayor libertad al usuario. Permite indicar que ganador pasar\'e1 a que grupo. Simplemente selecciona un grupo de la primera fase y despu\'e9s uno de la segunda fase. Una flecha aparecer\'e1 indicando que se ha memorizado la acci\'f3n. Hay que tener en cuenta que el programa no permite algunas cosas an\'f3malas como que mas de dos grupos seleccionen como destino a un grupo de la segunda fase, por lo que borrar\'e1 los enlaces que no sean adecuados. }
+\par \pard\plain \s27\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql\sb240\sa60\keepn{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+Liga sencilla}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+Esta opci\'f3n simplemente indica que la liga ha sido generada con otra opci\'f3n (ya sea una liga sencilla o en c\'edrculo) y que por tanto no ser\'eda conveniente cambiar nada de la misma. Por tanto se deshabilitan muchas de las opciones de esta ventana cuando esta opci\'f3n est\'e1 seleccionada. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.4  Borrar Nivel}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esta opci\'f3n permite limpiar un nivel (columna del \'e1rbol) y todos los combates asociados a este. De esta forma se permite volver hacia atr\'e1s en el campeonato si alg\'fan error hubiera ocurrido. Hay que resaltar, que cuando se borra un nivel de la liga, se borran todos los niveles siguientes pues cada uno de ellos, depende del anterior. Por tanto, borrar el primer nivel es equivalente a borrar todos los niveles. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.4.5.5  Botones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Una peque\'f1a explicaci\'f3n del funcionamiento de los botones de esta ventana. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+A\'f1adir\~ Equipos:}{\rtlch \ltrch\loch
+ a\'f1ade el equipo seleccionado al grupo seleccionado si todav\'eda es posible (no est\'e1 completo). }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Limpiar\~ Equipos:}{\rtlch \ltrch\loch
+ borra todos los equipos del grupo seleccionado. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Borrar\~ Ganadores:}{\rtlch \ltrch\loch
+ elimina del grupo seleccionado todos los enlaces a la siguiente fase creados anteriormente. Este bot\'f3n solo estar\'e1 disponible en el modo manual. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+A\'f1adir\~ Grupo:}{\rtlch \ltrch\loch
+ a\'f1ade un grupo al dise\'f1ador debajo del grupo seleccionado. En este grupo se podr\'e1n incluir los distintos equipos para que compitan entre s\'ed. Adem\'e1s a\'f1adir\'e1 si es necesario todos los grupos en los dem\'e1s niveles. Solamente es posible si hay equipos disponibles para llenarlo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Borrar\~ Grupo:}{\rtlch \ltrch\loch
+ elimina el grupo seleccionado liberando a los equipos incluidos para que sean incluidos dentro de otros grupos. Si es necesario tambi\'e9n elimina los grupos de los pr\'f3ximos niveles. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Borrar\~ Todo:}{\rtlch \ltrch\loch
+ borra todos los grupos, enlaces y equipos incluidos, permitiendo empezar de nuevo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Generar\~ Partidos:}{\rtlch \ltrch\loch
+ una vez acabado, si se pulsa este bot\'f3n se generan todos los combates deseados. La ventana se cerrar\'e1 por que ya no ser\'e1 \'fatil. El resto de la liga se habr\'e1 automatizado. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Cerrar:}{\rtlch \ltrch\loch
+ cierra la ventana guardando el dise\'f1o realizado y permite continuarlo m\'e1s tarde. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Cargar\~ Dise\'f1o\~ Anterior:}{\rtlch \ltrch\loch
+ permite obtener el dise\'f1o que representa la puntuaci\'f3n de combates ya realizados. \'datil especialmente cuando se modifica por error el dise\'f1o en \'e1rbol de una liga ya comenzada. No tiene efecto si ya se ha pulsado al bot\'f3n Generar Partidos y ya se han generado los nuevos combates. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Numero\~ de\~ Ganadores:}{\rtlch \ltrch\loch
+ En esta opci\'f3n se puede indicar el n\'famero de grupos que pasan la primera fase. Es decir, si se indica un uno, solamente el ganador de cada grupo pasar\'e1 a la siguiente fase. Si se indica un dos, tanto el primero como el segundo pasar\'e1 a la siguiente fase, etc. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{{\*\bkmkstart BMsec_Marcador_de_la}\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.5}{{\*\bkmkend BMsec_Marcador_de_la}\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+  Marcador de la liga}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esta es la pantalla m\'e1s importante del programa, ya que es la que permite controlar el transcurso de los combates. En este panel el usuario puede ir incluyendo los golpes del combate seg\'fan se est\'e1n produciendo de una forma sencilla, r\'e1pida e intuitiva. El programa los almacenar\'e1 en la base de datos de forma autom\'e1tica. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+La modalidad tratada ser\'e1 de \'93SAN BON SHOBU\'94. Al mejor de tres puntos v\'e1lidos como m\'e1ximo dentro del tiempo establecido por partido individual. Gana el equipo que m\'e1s partidos haya ganado. Si el n\'famero de partidos ganados es el mismo, gana el que haya ganado m\'e1s combates individuales, y si todav\'eda persiste un empate, gana el equipo que obtenga mayor n\'famero de puntos v\'e1lidos. Si todav\'eda persiste el empate se proceder\'e1 a un desempate mediante un combate en el que se enfrentan un representante por cada equipo, ganando el primero que realice un punto.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Est\'e1 dividido en tres partes: control de la liga, control de los combates y grupo de botones.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura 2.5: Marcador de la liga.}{\rtlch \ltrch\loch
+}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.5.1  Control de la liga}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+La parte superior de la ventana muestra todos los datos de la liga. Permite mostrar un banner o publicidad por si este panel se muestra por un proyector, permite cambiar la liga para controlar la que resulte adecuada y permite cambiar los shiaijos. Un panel solamente puede mostrar los partidos de un shiaijo en un momento determinado, por lo que si se dispone de varios ordenadores, se aconseja el uso de cada uno de ellos para un shiaijo distinto (y nunca m\'e1s de uno por shiaijo). }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.5.2  Control de combates}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Aqu\'ed aparecer un listado de combates entre los equipos. Este listado depender\'e1 de la liga seleccionada, del shiaijo seleccionado y de los combates definidos previamente con el dise\'f1ador de ligas. Cambiando el shiaijo cambiar\'e1 el listado, para mostrar otros grupos de combates. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+El listado de combates es adaptativo a la resoluci\'f3n de la pantalla. Es decir, cuanto mayor sea la resoluci\'f3n de la pantalla que lo muestre, m\'e1s combates aparecer\'e1n en el panel. Normalmente aparecer\'e1n dos o tres combates. En la imagen presentada solamente aparecen dos combates, pero pueden ser los siguientes tres: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Partido\~ anterior:}{\rtlch \ltrch\loch
+ con la puntuaci\'f3n pasada, que permite a los competidores revisar el transcurso de sus combates una vez han salido del shiaijo, as\'ed como al p\'fablico recordar la puntuaci\'f3n pasada. En la imagen mostrada no aparecen debido a la escasa resoluci\'f3n de la pantalla utilizada. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Partido\~ actual:}{\rtlch \ltrch\loch
+ marcado con un recuadro negro. Este es el m\'e1s importante ya que es el \'fanico que se puede editar. En este partido se pueden ir incluyendo las distintas puntuaciones o faltas simplemente seleccionando la casilla correspondiente con el bot\'f3n derecho del rat\'f3n. Un men\'fa permite seleccionar el tipo de golpe y el combate ser\'e1 actualizado en el momento. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Partido\~ posterior:}{\rtlch \ltrch\loch
+ un listado con los nombres de los pr\'f3ximos combatientes permite a estos estar listos para el pr\'f3ximo combate. As\'ed se ahorra tiempo y permite al p\'fablico ver el transcurso de la liga. Si la pantalla es lo suficientemente grande pueden aparecer varios partidos posteriores. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Recuerda que solamente se puede editar el combate actual. El resto de combates est\'e1n protegidos por el sistema. En cada uno de los combates el programa ordenar\'e1 los participantes seg\'fan el orden que se haya dado en la creaci\'f3n del equipo. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.5.2.1  Men\'fa de puntuaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Cuando se selecciona una casilla de puntuaci\'f3n o faltas con el bot\'f3n derecho del rat\'f3n se abre un peque\'f1o men\'fa con todas las opciones. B\'e1sicamente permite a\'f1adir los distintos golpes para que queden plasmados en el papel. El programa es inteligente, por lo que autocompleta la puntuaci\'f3n cuando se acumulan un par de faltas o impide la colocaci\'f3n de la puntuaci\'f3n en la casilla equivocada. }
+\par \pard\plain \s26\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs24\ab\loch\f4\fs24\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs24\ab\rtlch \ltrch\loch\fs24
+2.5.2.2  Men\'fa de empates}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Si se selecciona con el bot\'f3n derecho del rat\'f3n al espacio que existe entre los dos equipos, aparecer\'e1 un peque\'f1o men\'fa en el que permite indicar a la aplicaci\'f3n que el combate ha acabado en empate. Esta opci\'f3n lo que har\'e1 ser\'e1 dibujar una gran equis entre los dos equipos para que el usuario y p\'fablico puedan recordar m\'e1s f\'e1cilmente que hay un empate. De todas formas, cuando se cambia el resultado del siguiente combate, la aplicaci\'f3n entiende que el combate anterior ha acabado y por tanto incluye la equis autom\'e1ticamente. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.5.3  Grupo de botones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+En la parte inferior de la ventana aparece una colecci\'f3n de botones que permiten el control de los combates. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Partido\~ anterior:}{\rtlch \ltrch\loch
+ permite retroceder entre los partidos para corregir posibles errores producidos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Partido\~ siguiente:}{\rtlch \ltrch\loch
+ da por concluido el partido actual y este se convierte en el partido anterior. El pr\'f3ximo partido podr\'e1 ser editado para la inclusi\'f3n de sus puntuaciones. Para dar por concluido el partido, espera a que todos los combates de los distintos competidores se hayan realizado. Este bot\'f3n tambi\'e9n es el que permitir\'e1 en los campeonatos generar las siguientes fases seg\'fan se van resolviendo los combates. Una vez todos los combates est\'e9n acabados (todos los de todos los shiaijos) el programa generar\'e1 autom\'e1ticamente las siguientes rondas. Por tanto, acu\'e9rdate de finalizar cada uno de los combates antes de cambiar de shiaijo. Y si ves que no genera los partidos de siguiente nivel, muy probablemente es que se habr\'e1 olvidado de finalizar los combates del alg\'fan otro shiaijo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Adem\'e1s, cuando se acaban todos los combates de un grupo, mostrar\'e1 durante un breve periodo de tiempo, la puntuaci\'f3n de todos los equipos que han participado en dicho grupo. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Borrar\~ partido:}{\rtlch \ltrch\loch
+ permite borrar el partido seleccionado. Esta acci\'f3n es irrecuperable y peligrosa, ya que desmontar\'e1 la estructura de un campeonato. Es aconsejable solo usar esta opci\'f3n cuando se est\'e1 generando una liga de forma manual. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+A\'f1adir\~ partido:}{\rtlch \ltrch\loch
+ permite a\'f1adir un partido al final de todos los a\'f1adidos previamente. Solo \'fatil si se quiere editar la liga de forma manual, ya que impedir\'e1 al programa gestionar correctamente los \'e1rboles de la liga e influenciar\'e1 negativamente en los combates que el sistema a\'f1ada si se est\'e1 ejecutando una liga en \'e1rbol o campeonato. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Invertir\~ posici\'f3n\~ de\~ los\~ equipos:}{\rtlch \ltrch\loch
+ como resulta dif\'edcil predecir d\'f3nde estar\'e1 colocado el ordenador respecto al combate, esta opci\'f3n permite invertir el lado de los equipos representados en el panel. De esta forma los equipos que est\'e9n a la izquierda pasar\'e1n a la derecha y viceversa. Por defecto el programa asume que el ordenador estar\'e1 enfrente del \'e1rbitro principal, pero si no fuera as\'ed por alg\'fan motivo, se puede invertir el orden de los equipos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+\'c1rbol:}{\rtlch \ltrch\loch
+ muestra una ventana en d\'f3nde se ve la progresi\'f3n de la liga (est\'e1 opci\'f3n solo estar\'e1 disponible en el caso de que tenga forma de campeonato), los equipos que pasan a la fase siguiente y los combates definidos. Las fases se autocompletan una vez todos los combates de la fase anterior han sido finalizados. Pulsando \'93Control + p\'94 se permite imprimir dicho \'e1rbol. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Refrescar:}{\rtlch \ltrch\loch
+ Este bot\'f3n lee de nuevo todos los resultados de la base de datos. Resulta \'fatil en los casos en el que se quiera consultar alg\'fan dato que no haya sido incluido en este equipo, como por ejemplo, cuando hay m\'faltiples shiaijos y cada uno de ellos est\'e1 gestionado con un equipo distinto. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Puntuaci\'f3n:}{\rtlch \ltrch\loch
+ Este bot\'f3n mostrar\'e1 un listado de los equipos que actualmente est\'e9n compitiendo. Mostrando los combates ganados y empatados, tanto por equipos como de forma individual. As\'ed como los puntos realizados. Adem\'e1s, los equipos aparecen ordenados por puntuaci\'f3n, lo que significa que el primero de la lista es el que tiene la puntuaci\'f3n m\'e1s alta. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Cerrar:}{\rtlch \ltrch\loch
+ cierra la ventana de forma segura sin que se pierda informaci\'f3n. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.5.4  Cambiar el orden de los miembros de un equipo}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Seg\'fan la liga va avanzando y los equipos se van clasificando, los miembros del mismo pueden desear cambiar el orden de aparici\'f3n en el pr\'f3ximo combate. Para realizar este cambio, basta hacer doble click en el equipo deseado dentro del mismo panel de puntuaciones. Aparecer\'e1 una ventana que permitir\'e1 cambiar el orden de los mismos. Esto solamente se aplicar\'e1 a partir del pr\'f3ximo combate no resuelto, y por tanto, solamente es aplicable a aquellos equipos que tengan alg\'fan combate pendiente. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.6  Gr\'e1ficas y listas}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Aparte del manejo de participantes y ligas, el programa permite imprimir parte de los datos para la mejora de la gesti\'f3n de la liga. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.6.1  Listas de apoyo a la organizaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Existe la posibilidad de hacer distintos listados con informaci\'f3n para poder imprimirla y colgarla a lo largo de las instalaciones o al rededor del shiaijo. Todas las listas genera un fichero PDF para poder ser visualizado e impreso. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Acreditaciones:}{\rtlch \ltrch\loch
+ Esta opci\'f3n permite generar un fichero con todas las acreditaciones de un torneo. De esta forma estar\'e1n listas para imprimir y entregar. Se imprimen cuatro acreditaciones por hoja. Aconsejo plastificarlas y entregarlas con alg\'fan tipo de cinta para el cuello o alguna otra forma que permita que queden a la vista. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Lista\~ de\~ equipos:}{\rtlch \ltrch\loch
+ Un listado con todos los equipos e integrantes que participan en la liga. De esta forma los integrantes del mismo pueden revisar si sus datos son correctos, y el resto de los equipos si fuera necesario. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Lista\~ de\~ combates:}{\rtlch \ltrch\loch
+ Listado con todos los combates ya definidos en la liga. De esta forma si no existe un proyector y no pueden ver los marcadores, al menos pueden conocer el orden de los combates para estar preparados cuando sea su turno. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Lista\~ de\~ puntuaciones:}{\rtlch \ltrch\loch
+ Una vez acabado el campeonato (o alguna de sus fases) se puede imprimir un listado con la puntuaci\'f3n de cada uno de los equipos. De esta forma se hace p\'fablica la puntuaci\'f3n total de cada equipo y se sabe as\'ed qui\'e9n pasa a la fase siguiente o quien es el vencedor. Si el campeonato es un campeonato o liga en \'e1rbol, la puntuaci\'f3n quedar\'e1 agrupada seg\'fan cada fase de la liga de forma que se pueda mostrar a los participantes en todo momento la evoluci\'f3n de la misma. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Resumen\~ de\~ combates:}{\rtlch \ltrch\loch
+ Genera un resumen de todos los combates incluyendo los golpes que ha realizado cada uno de los competidores. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Lista\~ de\~ \'e1rbitros:}{\rtlch \ltrch\loch
+ Un peque\'f1o listado con los nombres de todos los \'e1rbitros que participan en la competici\'f3n. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.6.2  Diploma}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Un peque\'f1o diploma de reconocimiento para todo aquel que ha participado en el campeonato. Obviamente el dise\'f1o de fondo debe ser cambiado cada a\'f1o para evitar confusiones. Una vez impreso basta con firmarlo por el/los responsable/s y as\'ed darle cierta validez, quedando como un recuerdo agradable para todos los participantes.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Como los dise\'f1os pueden varias, el programa permite cambiar la posici\'f3n de los nombres de los participantes para adaptarlos al dise\'f1o. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura }{{\*\bkmkstart BMfig_Nombre_Diploma}\rtlch \ltrch\loch
+2.6}{{\*\bkmkend BMfig_Nombre_Diploma}\rtlch \ltrch\loch
+: Selecci\'f3n de la posici\'f3n de los nombres en los diplomas.\'01}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+En la Figura }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMfig_Nombre_Diploma \\h }{\fldrslt 2.6}}}{\rtlch \ltrch\loch
+ se puede observar un ejemplo, en el que se selecciona colocar los nombres del diploma en el espacio en blanco permitido por el diploma. El }{\i\ai\rtlch \ltrch\loch
+slider}{\rtlch \ltrch\loch
+ lateral permite cambiar la altura en donde ir\'e1n apareciendo los nombre, mientras que una delgada l\'ednea indica su posici\'f3n aproximada seg\'fan se modifique el valor de este }{\i\ai\rtlch \ltrch\loch
+slider}{\rtlch \ltrch\loch
+.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\i\ai\rtlch \ltrch\loch
+Nota: Los voluntarios no reciben diploma. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.6.3  Gr\'e1ficas como conclusiones de la liga}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Se pueden generar distintas gr\'e1ficas para observar m\'e1s f\'e1cilmente como ha transcurrido la liga o como han progresado los jugadores. Estas gr\'e1ficas se pueden obtener para una liga en concreto o para todas ellas (estad\'edsticas generales). }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Porcentaje\~ de\~ golpes:}{\rtlch \ltrch\loch
+ Estas gr\'e1ficas representan cual es el porcentaje de puntos. Es decir, que porcentaje de Mems, Kotes y dem\'e1s se han producido o recibido. Pueden resultar \'fatiles para un jugador para conocer sus puntos fuertes y d\'e9biles. Por ejemplo, observar si todos los golpes recibidos son de un tipo, puede indicar al jugador que tiene una vulnerabilidad en su guardia y deja al descubierto una parte de su cuerpo al atacante. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Clasificaci\'f3n:}{\rtlch \ltrch\loch
+ Aqu\'ed se representa por orden de puntuaci\'f3n los distintos competidores o equipos. Se muestra separadamente las victorias y los puntos obtenidos. En caso de empate, se resuelve por orden alfab\'e9tico. Hay que se\'f1alar que en el caso de incluir todos los campeonatos, los competidores que hayan participado en m\'e1s campeonatos muy probablemente tendr\'e1n m\'e1s puntos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb300\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb300\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura 2.7: Porcentaje de golpes realizados por un jugador.}{\rtlch \ltrch\loch
+}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.7  Opciones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Por \'faltimo, el programa permite configurar algunas opciones para el manejo del mismo: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Idioma:}{\rtlch \ltrch\loch
+ permite seleccionar el idioma en el que se visualizar\'e1 la aplicaci\'f3n. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Log:}{\rtlch \ltrch\loch
+ Permite activar el registro del log del programa, de forma que en un fichero de texto quedan escritas todas las acciones que se han ido realizando. De esta forma se puede hacer un seguimiento del uso del programa. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\b\ab\rtlch \ltrch\loch
+Debug:}{\rtlch \ltrch\loch
+ Permite visualizar los errores de la aplicaci\'f3n si todav\'eda existen. Esto permite obtener m\'e1s informaci\'f3n cuando una acci\'f3n no se puede realiar con \'e9xito debido a alg\'fan error de configuraci\'f3n o de implementaci\'f3n. Por ejemplo, cuando no se puede conectar a la base de datos. }{\i\ai\rtlch \ltrch\loch
+Nota: para entender estos errores, se necesita cierto conocimiento de programaci\'f3n en Java. }{\rtlch \ltrch\loch
+ }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+2.8  Resumen}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Para una gu\'eda de referencia r\'e1pida, repito los pasos principales que hay que seguir para utilizar la aplicaci\'f3n correctamente. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab Conectarse a la base de datos con la ventana de conexi\'f3n que aparece al iniciar el programa. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab A\'f1adir todos los clubes invitados a la liga. Los representantes se a\'f1adir\'e1n m\'e1s tarde. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab A\'f1adir todos los participantes. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+4.\tab Una vez existen los participantes, ya se pueden incluir los representantes de los clubes. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+5.\tab A\'f1adir una nueva liga. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+6.\tab Definir los roles de los participantes. Solamente los participantes que tenga un rol designado estar\'e1n incluidos dentro de dicha liga a la hora, por ejemplo, de formar equipos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+7.\tab Crear los distintos equipos y sus componentes. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+8.\tab Definir el estilo de la liga y con ello los combates entre equipos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+9.\tab Utilizar el marcador para ir a\'f1adiendo los resultados de los distintos enfrentamientos. Este panel puede ser utilizado en un proyector como informaci\'f3n para el p\'fablico asistente a la liga. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Los pasos 1, 2, 3 y 4 solamente tienen que hacerse una \'fanica vez ya que son comunes a las distintas ligas. Es decir, solamente habr\'e1 que a\'f1adir la informaci\'f3n de los participantes una \'fanica vez, pudiendo reusarse para ligas futuras. Los pasos 5, 6, 7, 8, y 9 hay que repetirlos para cada liga distinta. }
+\par \pard\plain \s23\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Cap\'ectulo }{{\*\bkmkstart BMcha_Uso_de_distintos}{\*\bkmkend BMcha_Uso_de_distintos}\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+3}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Uso de distintos ordenadores}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esta parte presupone que los equipos est\'e1n conectados entre ellos a una red. Esta red, preferentemente }{\i\ai\rtlch \ltrch\loch
+wireless}{\rtlch \ltrch\loch
+, se asume que es robusta y que no sufre ca\'eddas. En el caso de una red }{\i\ai\rtlch \ltrch\loch
+wireless}{\rtlch \ltrch\loch
+, por favor, utilizar un punto de acceso de calidad para asegurarse que la red funciona adecuadamente y no cae en mitad de la liga. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+3.1  Uso de un equipo distinto por cada shiaijo}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El programa permite separar la base de datos del entorno gr\'e1fico. Por tanto, pueden existir distintos ordenadores ejecutando el programa, accediendo a la base de datos a la vez. Esto permite poder colocar un ordenador en cada uno de los shiaijos de forma que la persona que lo maneje se tenga que centrar solamente en su zona y no en todas las dem\'e1s. Para ello, simplemente hay que instalar la base de datos en un \'fanico ordenador, y conectar los dem\'e1s equipos a este mediante una red (aconsejablemente Wi-Fi). Al arrancar el KTG en cada uno de los ordenadores habr\'e1 que indicar en la ventana de conexi\'f3n a la base de datos, la IP del ordenador que contiene la base de datos. La IP, que es la direcci\'f3n de red, se puede mirar en las propiedades de red de dicha m\'e1quina. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Una vez conectado, en el Marcador de la Liga se podr\'e1 seleccionar el shiaijo correspondiente, sin necesidad de ir cambiando entre ellos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Utilizar una \'fanica base de datos impide la fragmentaci\'f3n de informaci\'f3n, evitando problemas en las fases m\'e1s avanzadas del campeonato, cuando equipos de distintos shiaijos se enfrenten entre ellos; as\'ed como permitiendo que las estad\'edsticas de los participantes sean completas. Por tanto una liga solamente debe tener una sola base de datos instalada en cualquiera de las m\'e1quinas utilizadas.}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+3.2  Modo monitor}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+La finalidad b\'e1sica de los monitores es la de utilizar un proyector y mostrar un resumen al p\'fablico, de forma que pueda ver el transcurso de la liga o del campeonato. La mejor forma de utilizar estas opciones es usar un equipo exclusivo conectado a la base de datos por red y a un proyector que sea visible por el p\'fablico. Por supuesto, no existe inconveniente en que existan varios proyectores mostrando a la vez la misma informaci\'f3n. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+3.2.1  Monitor de puntuaciones}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esta pantalla muestra los combates que se est\'e1n realizando en este mismo momento, mostrando los equipos que se enfrentan y la puntuaci\'f3n que se realiza en cada momento. Cada 10 segundos va rotando entre las distintos shiaijos para mostrar el funcionamiento de cada uno de ellos, de esta forma con un \'fanico proyector se puede mostrar toda la liga. La ventana no es interactiva, es decir, no permite cambiar ning\'fan resultado desde aqu\'ed, evitando errores de manejo. Para salir de la pantalla, basta con pulsar la tecla }{\i\ai\rtlch \ltrch\loch
+ESC}{\rtlch \ltrch\loch
+.}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+3.2.2  Monitor de clasificaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Seg\'fan el tipo de liga, esta opci\'f3n puede mostrar, si es una liga simple una tabla con la clasificaci\'f3n o si es un campeonato, el \'e1rbol del mismo.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Para las ligas sencillas, la tabla contendr\'e1 cada equipo ordenado seg\'fan los partidos ganados, los duelos vencidos o los puntos realizados. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Si es un campeonato, mostrar\'e1 el \'e1rbol con el progreso de la misma, resaltando en cada grupo los ganadores del mismo. En ella, los grupos iniciales se representan en las hojas del \'e1rbol y seg\'fan se van resolviendo los combates, los enfrentamientos se completan hasta la ra\'edz del mismo, que representa la final. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Al igual que el monitor de puntuaciones, la pantalla no es interactiva. Para salir de la pantalla, basta con pulsar la tecla }{\i\ai\rtlch \ltrch\loch
+ESC}{\rtlch \ltrch\loch
+.}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+3.3  Caso real: VIII Open de Kendo de la Universidad de Valencia. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Como resulta todo m\'e1s f\'e1cil de entender con un ejemplo, aqu\'ed adjunto un esquema del torneo que se celebr\'f3 en la ciudad de Valencia en febrero de 2011. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura 3.1: Esquema del VIII Open de Kendo de la UV.}{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+Como se puede observar en el esquema, el campeonato constaba de dos torneos diferenciados por sexos: el masculino y el femenino. Debido a la mayor participaci\'f3n de hombres en el campeonato, se dedicaron dos shiaijos al torneo masculino. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Para la gesti\'f3n de este campeonato, se utilizaron cuatro equipos port\'e1tiles. Uno de ellos en la mesa de coordinaci\'f3n, que albergaba la base de datos y ten\'eda una impresora para imprimir todo aquello que fuera necesario como las acreditaciones o la composici\'f3n de los equipos. Los otros tres equipos estaban cada uno en una mesa de control de los shiaijos. Estos tres equipos, se encargaban de introducir la puntuaci\'f3n de cada uno de los combates seg\'fan estos se iban realizando. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Los equipos se conectaban entre ellos por una red inal\'e1mbrica Wi-Fi, evitando as\'ed la presencia de cables innecesarios. Para ello usamos un router Wi-Fi convencional. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+La idea original, era tener cuatro pantallas para mostrar los resultados. Tres pantallas en cada uno de los shiaijos, que mostraran los resultados del combate actual a los \'e1rbitros y/o al p\'fablico, y otra pantalla que mostrar\'e1 la evoluci\'f3n del \'e1rbol de la liga al p\'fablico o las puntuaciones de cada uno de todos los shiaijos. Para mostrar estas pantallas, deb\'edan de haber, u otros cuatro equipos en modo monitor, o simplemente conectarlos a los equipos que ya hab\'edan y que mostraran lo que se estaba haciendo actualmente. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Al arrancar el KTG en los cuatro equipos, el de coordinaci\'f3n, que como he comentado antes, es el que tiene la base de datos instalada, indica los datos siguientes: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Servidor: localhost, usuario: kendo, contrase\'f1a: *******. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Los otros tres equipos indican los datos de forma similar, salvo que el Servidor es la IP del ordenador de coordinaci\'f3n. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\i\ai\rtlch \ltrch\loch
+Nota: Un detalle muy importante en estos casos, especialmente si los port\'e1tiles est\'e1n trabajando \'fanicamente con las bater\'edas, es evitar que el ordenador de coordinaci\'f3n se suspenda (stand by). Si este se suspende, la conexi\'f3n Wi-Fi se cortar\'e1 y por tanto, los otros tres equipos dejar\'e1n de tener acceso a la base de datos del programa, causando errores de acceso al servidor. Otro motivo para que aparezca el error de conexi\'f3n, suele ser que los port\'e1tiles se conecten autom\'e1ticamente a alguna otra red Wi-Fi al alcance. Vigilad estos dos detalles para evitaros problemas indeseados. }
+\par \pard\plain \s23\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Cap\'ectulo 4}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Personalizaci\'f3n de la aplicaci\'f3n}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esta aplicaci\'f3n est\'e1 distribuida como software libre y puede ser utilizada por cualquier club de kendo sin coste alguna. Adem\'e1s si ten\'e9is tiempo y ganas ten\'e9is libertad de personalizar la aplicaci\'f3n a vuestro gusto. Principalmente lo que se puede cambiar es el aspecto y texto.}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+4.1  Cambio de im\'e1genes}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Todas las im\'e1genes se pueden cambiar. No es nada m\'e1s f\'e1cil que ir a la carpeta }{\i\ai\rtlch \ltrch\loch
+images}{\rtlch \ltrch\loch
+ del programa y cambiar el contenido respetando el nombre del fichero. De esta forma el programa cargar\'e1 vuestras im\'e1genes en vez de las originales. La imagen del diploma contenida en la carpeta }{\i\ai\rtlch \ltrch\loch
+diploma}{\rtlch \ltrch\loch
+ deber\'eda cambiarse todos los a\'f1os, cambiando el texto, la fecha y el nombre del torneo al menos. Tambi\'e9n ser\'eda interesante cambiar el contenido de la carpeta }{\i\ai\rtlch \ltrch\loch
+background}{\rtlch \ltrch\loch
+ cada a\'f1o, ya que sino alguien podr\'eda utilizar la acreditaci\'f3n de un a\'f1o anterior. No se puede cambiar f\'e1cilmente la posici\'f3n de las letras ni de las fotos, por lo que se aconseja que se elija un dise\'f1o que quede bien teniendo en cuenta d\'f3nde ir\'e1 colocada la informaci\'f3n. Alguna de las im\'e1genes se usan tambi\'e9n como fondo de las listas generadas por el programa. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{{\*\bkmkstart BMalg_Fichero_languages_xml}\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+4.2}{{\*\bkmkend BMalg_Fichero_languages_xml}\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+  A\'f1adir un idioma}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+El programa est\'e1 preparado para que f\'e1cilmente se puedan a\'f1adir idiomas o corregir los que ya hay. Tiene una carpeta llamada }{\i\ai\rtlch \ltrch\loch
+translations}{\rtlch \ltrch\loch
+ que contiene toda la informaci\'f3n que se muestra en el programa. No est\'e1 encriptado ni compilado, sino que es un texto simple que se puede editar. En concreto est\'e1 en XML, pero no te preocupes si desconoces lo que es, ya que es muy sencillo de cambiar. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{algorithm\} ... \\end\{algorithm\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Lo primero es a\'f1adir el idioma. Para ello se debe editar el fichero incluido en la carpeta }{\i\ai\rtlch \ltrch\loch
+translations}{\rtlch \ltrch\loch
+ llamado }{\i\ai\rtlch \ltrch\loch
+languages.xml}{\rtlch \ltrch\loch
+. El Algoritmo }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMalg_Fichero_languages_xml \\h }{\fldrslt 4.2}}}{\rtlch \ltrch\loch
+ muestra su contenido inicial. B\'e1sicamente lo que se debe hacer es a\'f1adir una l\'ednea nueva debajo de la que contiene la palabra \'93Espa\'f1ol\'94 de la misma forma y ANTES de la que contiene el c\'f3digo }{\i\ai\rtlch \ltrch\loch
+</translator>}{\rtlch \ltrch\loch
+. Cambiando el nombre por el idioma que queremos que se muestre en el programa y el contenido de \'93abbrev\'94 por un c\'f3digo que lo relacione. Este c\'f3digo ser\'e1 el que se use en los otros ficheros para buscar los idiomas. Por ejemplo, para a\'f1adir el italiano deber\'edamos poner: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li512\ri512\lin512\rin512\fi0\sb60\sa0\ltrpar{\rtlch \ltrch
+ }{\rtlch \ltrch\loch
+<languages abbrev="it" >Italiano</languages> }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Recuerda en poner el idioma en su propia lengua para que el usuario lo entienda y lo encuentre. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Ahora habr\'e1 que cambiar todos los otros ficheros incluidos en la carpeta }{\i\ai\rtlch \ltrch\loch
+translations}{\rtlch \ltrch\loch
+ y cambiar su contenido. Por ejemplo en el fichero newClub.xml vemos entre otras cosas, lo mostrado en el Algoritmo }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMalg_newClub_xml \\h }{\fldrslt Error: No se encuentra la fuente de referencia}}}{\rtlch \ltrch\loch
+. Aunque solo muestra un p\'e1rrafo, habr\'e1 que hacer lo mismo en todos ellos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{algorithm\} ... \\end\{algorithm\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Siguiendo el ejemplo del italiano, deber\'edamos a\'f1adir lo siguiente ANTES de }{\i\ai\rtlch \ltrch\loch
+</AcceptButton> }{\rtlch \ltrch\loch
+que es lo que marca el final del p\'e1rrafo.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+<it>Accettare</it>}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+En donde }{\i\ai\rtlch \ltrch\loch
+it}{\rtlch \ltrch\loch
+ es la abreviatura que hemos puesto en el fichero }{\i\ai\rtlch \ltrch\loch
+languages.xml}{\rtlch \ltrch\loch
+ De esta forma el programa encuentra el texto adecuado para el idioma seleccionado. Es algo de trabajo pero muy sencillo de realizar. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Por supuesto, despu\'e9s de todas las traducciones si quer\'e9is compartir vuestro trabajo con otras personas solamente me ten\'e9is que enviar la carpeta }{\i\ai\rtlch \ltrch\loch
+translations}{\rtlch \ltrch\loch
+ comprimida con vuestro contenido a }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+softwaremagico@gmail.com}{\rtlch \ltrch\loch
+. Yo lo incluir\'e9 en la pr\'f3xima versi\'f3n del programa y adem\'e1s os incluir\'e9 en los cr\'e9ditos del programa agradeciendo vuestro trabajo. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+4.3  Cambiar el dise\'f1o de los diplomas}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Para generar un diploma nuevo cada a\'f1o, bastar\'e1 cambiar el fichero que se encuentra en la carpeta }{\i\ai\rtlch \ltrch\loch
+diploma}{\rtlch \ltrch\loch
+, manteniendo su nombre y terminaci\'f3n. El programa seleccionar\'e1 esta nueva imagen como fondo para los futuros diplomas generados. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+[Sorry. Ignored }{\*\cs10\scaps0\caps0\cf0\outl0\strike0\expnd0\expndtw0\i0\shad0\ulnone\ulc0\b0\kerning1\hich\af6\langfe1024\dbch\af6\afs24\lang1024\ai0\ab0\horzvert0\accnone\charscalex100\v0\rtlch \ltrch\loch\fs24\lang1024\loch\f6
+\\begin\{centering\} ... \\end\{centering\}}{\rtlch \ltrch\loch
+]}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qc{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb0\sa0\ltrpar{\rtlch \ltrch\loch
+Figura }{{\*\bkmkstart BMfig_Distribuci_0000F3n_diploma}\rtlch \ltrch\loch
+4.1}{{\*\bkmkend BMfig_Distribuci_0000F3n_diploma}\rtlch \ltrch\loch
+: Distribuci\'f3n de un diploma.\'01}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\rtlch \ltrch\loch
+En la figura }{\rtlch \ltrch\loch\lang1024
+{\field{\*\fldinst  REF BMfig_Distribuci_0000F3n_diploma \\h }{\fldrslt 4.1}}}{\rtlch \ltrch\loch
+ se puede ver la distribuci\'f3n t\'edpica de un diploma, en el que existen dos \'e1reas de fondo, una que incluir\'e1 el t\'edtulo del torneo, y otra en donde saldr\'eda en letra m\'e1s peque\'f1a los datos importantes del mismo. El tama\'f1o de las \'e1reas puede ser cambiado ya que la aplicaci\'f3n permite variar la posici\'f3n del nombre.}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+4.4  Licencias y dem\'e1s}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+En la ventana \'93Acerca de...\'94 se incluye entre otras cosas la licencia, los agradecimientos y otras cosas importantes. Os animo a que personalic\'e9is el programa para vuestro club, e incluso lo mejor\'e9is. La licencia del programa es GNU y as\'ed lo permite. Mantened el nombre del autor (\'a9 Jorge Hortelano Otero) y el de todos aquellos que han colaborado en \'e9l e incluiros vosotros mismos si el cambio es sustancial. Si no ten\'e9is capacidad t\'e9cnica para hacer cambios, pod\'e9is escribirme indicando que cosas faltan o se pueden mejorar. Incluir\'e9 toda la informaci\'f3n que me deis en nuevas versiones futuras, como ya llevo haciendo desde hace algunas versiones gracias a los e-mails de distintos usuarios.}
+\par \pard\plain \s23\ql\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs40\ab\loch\f4\fs40\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+Cap\'ectulo 5}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+FAQs}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa0\ltrpar{\b\hich\af4\dbch\af4\afs40\ab\rtlch \ltrch\loch\fs40
+}
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.1  Ejecuci\'f3n}
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.1.1  Cuando hago click en el enlace al programa, este no hace nada. \'bfQu\'e9 puede ser? }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Si al hacer click en el enlace del programa, no aparece ventana alguna, lo m\'e1s probable es que la versi\'f3n de Java que est\'e1s utilizando no sea la adecuada (versi\'f3n 6 o superior) o simplemente no tienes instalada la M\'e1quina Virtual de Java. Para solucionar esto, solamente tienes que instalarlo. Es totalmente gratuito y puede ser descargado desde: }{\hich\af6\dbch\af6\rtlch \ltrch\loch\loch\f6
+http://www.java.com/es/download/}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi300\sb0\sa0\ltrpar{\i\ai\rtlch \ltrch\loch
+Nota: La m\'e1quina Java que trae por defecto Windows no es adecuada para el uso de este programa. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.1.2  Al apretar un bot\'f3n, este no hace nada. Adem\'e1s el programa no permite hacer nada m\'e1s en el futuro y lo tengo que reiniciar.}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Esto suele ser por que al apretar el bot\'f3n, ha ocurrido una excepci\'f3n. Esto significa que el programa ha fallado por la causa probable de un bug. Aunque el programa ha sido ya depurado de forma consciente, siempre pueden existir algunos bugs imprevistos. Lo mejor que se puede hacer en estos casos es ejecutar el programa desde la consola de comandos de Windows o la terminal de Linux. As\'ed obtendremos m\'e1s informaci\'f3n sobre lo que ha ocurrido. Si este error se repite, pod\'e9is envi\'e1rmelo por e-mail para que intente solucionarlo y no se repita en futuras versiones. }
+\par \pard\plain \s24\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.2  Base de datos. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.2.1  Tengo problemas generales con la base de datos. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Este problema resulta algo vago, por lo que indico aqu\'ed algunas sugerencias para lidiar con el problema. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab Existe la posibilidad de actualizar la base de datos si esta pertenece a la versi\'f3n 0.91 o posterior. De esta forma, al actualizar la aplicaci\'f3n a una versi\'f3n posterior, tambi\'e9n se puede actualizar la base de datos sin necesidad de perder la informaci\'f3n. Para ello, seleccionar la opci\'f3n adecuada en el men\'fa principal de la aplicaci\'f3n. Puede ser que de algunos errores al actualizarlo, debido en parte a los datos ya introducidos en la base de datos. Estos errores no resultan vitales y se pueden ignorar. De todas formas, si la base de datos no contiene informaci\'f3n vital, borrarla y volverla a instalar asegurar\'eda el buen funcionamiento de la misma. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab Si ya ten\'edas una versi\'f3n anterior del programa instalada, tambi\'e9n debes actualizar la base de datos. Para ello, debes seleccionar la opci\'f3n adecuada dentro del programa. Al ir mejorando el programa, tambi\'e9n se va aumentando la complejidad de la base de datos, ya que sin estas modificaciones no se podr\'e1n usar correctamente la nueva funcionalidad de la aplicaci\'f3n. Si esto sigue sin solucionarlo, prueba a borrar tu base de datos e instalar de nuevo la base de datos vac\'eda del programa. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab Si los port\'e1tiles est\'e1n trabajando \'fanicamente con las bater\'edas, debes tambi\'e9n evitar que el ordenador de coordinaci\'f3n se suspenda (stand by). Si es el caso, la conexi\'f3n Wi-Fi se cortar\'e1 y por tanto, cualquier otro equipo dejar\'e1 de tener acceso a la base de datos del programa, causando errores de acceso al servidor. Otro motivo para que aparezca el error de conexi\'f3n, suele ser que los port\'e1tiles se conecten autom\'e1ticamente a alguna otra red Wi-Fi al alcance. Revisad que los equipos est\'e1n todos encendidos y conectados a la red Wi-Fi deseada. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+4.\tab Utilizar el programa KTG desde la l\'ednea de comandos. Esto mostrar\'e1 m\'e1s informaci\'f3n sobre el problema y ser\'e1 m\'e1s f\'e1cil abordarlo. }
+\par \pard\plain \s25\ql\sb240\sa60\keepn\b\hich\af4\dbch\af4\afs32\ab\loch\f4\fs32\sl240\slmult1\ql{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb240\sa60\keepn\ltrpar{\b\hich\af4\dbch\af4\afs32\ab\rtlch \ltrch\loch\fs32
+5.2.2  Importaci\'f3n/Exportaci\'f3n de la base de datos}
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li0\ri0\lin0\rin0\fi0\sb60\sa0\ltrpar{\rtlch \ltrch\loch
+Si existen problemas al importar una base de datos de un archivo, esto puede ser causado por distintos motivos: }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+1.\tab El archivo es de una versi\'f3n anterior del programa y por tanto la base de datos no concuerda. En este caso, lo mejor ser\'eda instalar el programa gratuito MySQL Workbench y comprobar que campos son incoherentes en la nueva, aunque para esto, es necesario tener conocimientos de SQL. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+2.\tab Ya existen datos en la base de datos que se intenta sobreescribir. Si existen problemas, ser\'eda importante vaciar la base de datos antes de intentar importar una nueva. Para ello, se puede usar la misma interfaz gr\'e1fica del MySQL Workbench. }
+\par \pard\plain \s0\nowidctlpar{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\afs20\cf0\kerning1\hich\af4\langfe1024\dbch\af4\lang1024\fs20\loch\f4\lang1024\sl240\slmult1\qj{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\faauto\li600\ri0\lin600\rin0\fi-300\sb50\sa0\ltrpar{\rtlch \ltrch\loch
+3.\tab Apartir de la versi\'f3n 0.95 del programa, no son compatibles con las bases de datos anteriores. Por tanto, hay que eliminar y volver a instalar la base de datos. }
+\par }

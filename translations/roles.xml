@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<translator>
+	<role tag="Competitor" abbrev="C" red="35" green="144" blue="239" >
+		<en>Competitor</en>
+		<es>Competidor</es>
+		<nl>Deelnemer</nl>
+		<de>Teilnehmer</de>
+		<ca>Competidor</ca>
+	</role>
+	<role tag="Referee" abbrev="A" red="255" green="102" blue="0" >
+		<en>Referee</en>
+		<es>Arbitro</es>
+		<nl>Scheidsrechter</nl>
+		<de>Kampfrichter</de>
+		<ca>Àrbitre</ca>
+	</role>
+	<role tag="Organizer" abbrev="O" red="107" green="179" blue="130" >
+		<en>Organizer</en>
+		<es>Organizador</es>
+		<nl>Organisator</nl>
+		<de>Organisator</de>
+		<ca>Organitzador</ca>
+	</role>
+	<role tag="VolunteerK" abbrev="K" red="255" green="255" blue="204" > <!-- Volunteers of kendo are volunteer and competitors -->
+		<en>Volunteer of Kendo</en>
+		<es>Voluntario de Kendo</es>
+		<nl>Volontair-Deelnemer</nl>
+		<de>Ehrengast des Kendo</de>
+		<ca>Voluntari de Kendo</ca>
+	</role>
+	<role tag="VCLO" abbrev="V" red="167" green="239" blue="190" >
+		<en>Volunteer</en>
+		<es>Voluntario</es>
+		<nl>Volontair</nl>
+		<de>Ehrenamtlicher</de>
+		<ca>Voluntari</ca>
+	</role>
+	<role tag="Seminar" abbrev="S" red="148" green="148" blue="227" >
+		<en>Seminar</en>
+		<es>Seminario</es>
+		<nl>Seminar</nl>
+		<de>Lehrgang</de>
+		<ca>Seminari</ca>
+	</role>
+	<role tag="Press" abbrev="P" red="155" green="0" blue="255" >
+		<en>Press</en>
+		<es>Prensa</es>
+		<nl>Press</nl>
+		<de>Press</de>
+		<ca>Premsa</ca>
+	</role>
+</translator>
