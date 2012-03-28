@@ -218,7 +218,7 @@ public class MySQL extends SQL {
         if (answer) {
             updated = updateDatabaseAction(path);
             if (updated) {
-                MessageManager.customMessage("updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().version + "", JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.customMessage("updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
             } else {
                 MessageManager.errorMessage("notUpdateDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
             }

@@ -42,7 +42,7 @@ import java.util.List;
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
-    public final float version = 0.97f;
+    private final String version = "0.9.7";
     private boolean debugMode = true;
     public Database database = null;
     public String password = "";
@@ -131,6 +131,9 @@ public class KendoTournamentGenerator {
         return teams;
     }
 
+    public String getVersion(){
+        return version;
+    }
     /**
      * **********************************************
      *

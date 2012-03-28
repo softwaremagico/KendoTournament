@@ -18,15 +18,15 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -43,7 +43,7 @@ public final class AboutBox extends javax.swing.JFrame {
     public AboutBox() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        VersionLabel.setText("v" + KendoTournamentGenerator.getInstance().version + "");
+        VersionLabel.setText("v" + KendoTournamentGenerator.getInstance().getVersion());
         setLanguage(KendoTournamentGenerator.getInstance().language);
         UpdateLogo();
     }
