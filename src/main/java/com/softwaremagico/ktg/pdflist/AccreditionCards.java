@@ -44,7 +44,9 @@ public class AccreditionCards extends ListFromTournament {
             if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
 
-                /* Store image for my personal pleasure. */
+                /*
+                 * Store image for my personal pleasure.
+                 */
                 try {
                     photoInput = new FileInputStream(Path.returnBackgroundPath());
                     File fileImage = new File(Path.returnBackgroundPath());
@@ -59,5 +61,10 @@ public class AccreditionCards extends ListFromTournament {
         } catch (Exception ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
+    }
+
+    @Override
+    protected ParentList getPdfGenerator() {
+        return null;
     }
 }

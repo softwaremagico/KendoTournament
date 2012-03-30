@@ -4,21 +4,17 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.MessageManager;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Score;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +24,6 @@ public class SummaryPDF extends ParentList {
 
     private Tournament championship;
     private final int border = 0;
-    private final int linesByPage = 40;
     Translator trans = null;
     private int useOnlyShiaijo = -1;
 
@@ -36,30 +31,6 @@ public class SummaryPDF extends ParentList {
         championship = tmp_championship;
         trans = new Translator("gui.xml");
         useOnlyShiaijo = shiaijo;
-    }
-
-    public boolean GenerateFightListPDF(String path) {
-        boolean error = false;
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("SummaryListOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("SummaryListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("SummaryListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-            }
-        }
-        return !error;
     }
 
     private PdfPTable FightTable(String font, int fontSize, Fight f, boolean first) throws DocumentException {
@@ -362,5 +333,20 @@ public class SummaryPDF extends ParentList {
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(footerBorder);
         mainTable.addCell(cell);
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "SummaryListOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "SummaryListBad";
     }
 }

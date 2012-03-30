@@ -18,13 +18,15 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.FontFactory;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.files.MyFile;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,33 +38,62 @@ public abstract class PdfDocument {
 
     protected Document documentData(Document document) {
         document.addTitle("Kendo Tournament's File");
-        document.addAuthor("Jorge Hortelano");
+        document.addAuthor("Software Magico");
         document.addCreator("Kendo Tournament Tool");
         document.addSubject("Kendo List");
-        document.addKeywords("Kendo, Tournament");
+        document.addKeywords("Kendo, Tournament, KTG");
         document.addCreationDate();
         return document;
     }
 
-    void addBackGroundImage(Document document, String imagen) throws BadElementException,
+    protected void addBackGroundImage(Document document, String imagen) throws BadElementException,
             DocumentException, MalformedURLException, IOException {
-        com.lowagie.text.Image png;
+        /*com.lowagie.text.Image png;
 
         png = com.lowagie.text.Image.getInstance(imagen);
         png.setAlignment(com.lowagie.text.Image.MIDDLE);
         png.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
         png.setAbsolutePosition(0, 0);
-        document.add(png);
+        document.add(png);*/
     }
 
-    void generatePDF(Document document, PdfWriter writer) throws Exception {
+    protected void generatePDF(Document document, PdfWriter writer) throws Exception {
         String font = FontFactory.HELVETICA;
         documentData(document);
         document.open();
-        document.setMargins(180, 108, 72, 36);
+        //document.setMargins(180, 108, 72, 36);
         createPagePDF(document, writer, font);
         document.close();
     }
+
+    public boolean createFile(String path) {
+        //DIN A6 105 x 148 mm
+        Document document = new Document(getPageSize());
+        if (!path.endsWith(".pdf")) {
+            path += ".pdf";
+        }
+        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+            try {
+                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
+                generatePDF(document, writer);
+                MessageManager.customMessage(fileCreatedOkTag(), "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                return false;
+            } catch (Exception ex) {
+                MessageManager.errorMessage(fileCreatedBadTag(), "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected abstract Rectangle getPageSize();
+
+    protected abstract String fileCreatedOkTag();
+
+    protected abstract String fileCreatedBadTag();
 
     protected abstract void createPagePDF(Document document, PdfWriter writer, String font) throws Exception;
 }

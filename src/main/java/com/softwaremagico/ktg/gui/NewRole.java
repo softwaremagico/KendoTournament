@@ -18,12 +18,7 @@
  */
 package com.softwaremagico.ktg.gui;
 
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.Participant;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.CompetitorAccreditationCardPDF;
 import java.awt.Toolkit;
@@ -354,7 +349,7 @@ public class NewRole extends KendoFrame {
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId(), false);
                 CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF(c, listTournaments.get(TournamentComboBox.getSelectedIndex()));
-                pdf.generateCompetitorPDF(file);
+                pdf.createFile(file);
             }
         } catch (Exception ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);

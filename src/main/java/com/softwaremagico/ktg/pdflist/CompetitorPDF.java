@@ -24,26 +24,21 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jorge
  */
-public class CompetitorPDF {
+public class CompetitorPDF extends PdfDocument {
 
     Tournament competition;
     CompetitorWithPhoto competitor;
     private final int border = 0;
-    private int fontSize = 17;
     private String role;
 
     public CompetitorPDF(CompetitorWithPhoto tmp_competitor, Tournament tmp_competition) throws Exception {
@@ -52,61 +47,13 @@ public class CompetitorPDF {
         role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
     }
 
-    public void GenerateCompetitorPDF(String path) {
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A6);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                GeneratePDF(document, writer);
-                MessageManager.customMessage("accreditationOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (NullPointerException npe) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("accreditationBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-            }
-        }
-    }
-
-    private void GeneratePDF(Document document, PdfWriter writer) throws Exception {
-        String font = FontFactory.HELVETICA;
-        DocumentData(document);
-        document.open();
-        AccreditationPagePDF(document, writer, font);
-        document.close();
-    }
-
-    private Document DocumentData(Document document) {
-        document.addTitle("Kendo Tournament accreditation card");
-        document.addAuthor("Jorge Hortelano");
-        document.addCreator("Kendo Tournament Tool");
-        document.addSubject("Accreditation Card of Competitor");
-        document.addKeywords("Kendo, Tournament, Card, Accreditation, Competitor");
-        document.addCreationDate();
-        return document;
-    }
-
-    private void AccreditationPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-        AddBackGroundImage(document, Path.returnBackgroundPath());
-        PdfPTable table = PageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
+    protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
+        addBackGroundImage(document, Path.returnBackgroundPath());
+        PdfPTable table = pageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         document.add(table);
     }
 
-    private void AddBackGroundImage(Document document, String imagen) throws BadElementException,
-            DocumentException, MalformedURLException, IOException {
-        com.lowagie.text.Image png;
-
-        png = com.lowagie.text.Image.getInstance(imagen);
-        png.setAlignment(com.lowagie.text.Image.MIDDLE | com.lowagie.text.Image.UNDERLYING);
-        png.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
-        document.add(png);
-    }
-
-    private PdfPTable CreateNameTable(String font, int fontSize) throws IOException, BadElementException {
+    private PdfPTable createNameTable(String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
         Paragraph p;
         float[] widths = {0.05f, 0.30f, 0.05f, 0.65f};
@@ -199,7 +146,7 @@ public class CompetitorPDF {
         return table;
     }
 
-    private PdfPTable CreateIdentificationTable(float height, String font, int fontSize) {
+    private PdfPTable createIdentificationTable(float height, String font, int fontSize) {
         PdfPCell cell;
         Paragraph p;
         PdfPTable table = new PdfPTable(1);
@@ -260,7 +207,7 @@ public class CompetitorPDF {
         return table;
     }
 
-    private PdfPTable CreateBannerTable(float width, float height) throws BadElementException, MalformedURLException, IOException {
+    private PdfPTable createBannerTable(float width, float height) throws BadElementException, MalformedURLException, IOException {
         PdfPCell cell;
         PdfPTable table = new PdfPTable(1);
         table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -281,7 +228,7 @@ public class CompetitorPDF {
         return table;
     }
 
-    private PdfPTable MainTable(float width, float height, String font, int fontSize) throws IOException, BadElementException {
+    private PdfPTable mainTable(float width, float height, String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
         Paragraph p;
         PdfPTable mainTable = new PdfPTable(1);
@@ -295,14 +242,14 @@ public class CompetitorPDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.addCell(cell);
 
-        cell = new PdfPCell(CreateNameTable(font, fontSize));
+        cell = new PdfPCell(createNameTable(font, fontSize));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setFixedHeight(height * 0.15f);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.addCell(cell);
 
-        cell = new PdfPCell(CreateIdentificationTable(height, font, fontSize));
+        cell = new PdfPCell(createIdentificationTable(height, font, fontSize));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setFixedHeight(height * 0.40f);
@@ -316,7 +263,7 @@ public class CompetitorPDF {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.addCell(cell);
 
-        cell = new PdfPCell(CreateBannerTable(width, height / 3));
+        cell = new PdfPCell(createBannerTable(width, height / 3));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setFixedHeight(height * 0.20f);
@@ -327,7 +274,7 @@ public class CompetitorPDF {
         return mainTable;
     }
 
-    public PdfPTable PageTable(float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException {
+    private PdfPTable pageTable(float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
         Paragraph p;
         float[] widths = {0.95f, 0.05f};
@@ -336,13 +283,13 @@ public class CompetitorPDF {
         mainTable.setTotalWidth(width);
 
 
-        cell = new PdfPCell(MainTable(width, height, font, fontSize));
+        cell = new PdfPCell(mainTable(width, height, font, fontSize));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.addCell(cell);
 
-        cell = new PdfPCell(CreateSignature(font, fontSize - 10));
+        cell = new PdfPCell(createSignature(font, fontSize - 10));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setPaddingBottom(0);
@@ -353,7 +300,7 @@ public class CompetitorPDF {
         return mainTable;
     }
 
-    private PdfPTable CreateSignature(String font, int fontSize) {
+    private PdfPTable createSignature(String font, int fontSize) {
         PdfPTable table = new PdfPTable(1);
         Paragraph p;
         PdfPCell cell;
@@ -378,5 +325,20 @@ public class CompetitorPDF {
         table.addCell(cell);
 
         return table;
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A6;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "accreditationOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "accreditationBad";
     }
 }

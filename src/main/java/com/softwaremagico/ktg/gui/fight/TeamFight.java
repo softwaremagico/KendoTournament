@@ -18,6 +18,11 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.gui.OrderTeam;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,11 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import com.softwaremagico.ktg.gui.OrderTeam;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
 
 /**
  *

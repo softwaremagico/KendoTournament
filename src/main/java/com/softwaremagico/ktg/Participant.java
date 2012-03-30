@@ -28,6 +28,10 @@ public class Participant {
         return id;
     }
 
+    public void setId(String value) {
+        id = value;
+    }
+
     protected final void storeName(String value) {
         name = "";
         String[] names = value.split(" ");

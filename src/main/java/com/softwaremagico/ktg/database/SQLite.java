@@ -171,9 +171,13 @@ public class SQLite extends SQL {
 
             int nRead;
             byte[] data = new byte[16384];
-
+            
+            try{
             while ((nRead = input.read(data, 0, data.length)) != -1) {
                 buffer.write(data, 0, nRead);
+            }
+            }catch(NullPointerException npe){
+                
             }
 
             buffer.flush();

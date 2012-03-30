@@ -18,14 +18,10 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Statistics;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
 import javax.swing.JPanel;
-import com.softwaremagico.ktg.language.Translator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -62,7 +58,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         this.setExtendedState(this.getExtendedState() | StatisticsTeamTopTen.MAXIMIZED_BOTH);
         try {
         if (tmp_championship.name.equals("All")) {
-            teams = KendoTournamentGenerator.getInstance().database.searchAllTeamsInAllTournaments(false);
+            teams = KendoTournamentGenerator.getInstance().database.getAllTeams();
         } else {
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(championship.name, false);
         }

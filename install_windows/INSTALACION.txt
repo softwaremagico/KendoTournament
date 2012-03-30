@@ -1,0 +1,112 @@
+Instalación
+
+1.1 Requisitos
+
+He generado la aplicación Kendo Tournament Generator (KTG) de 
+forma que debería ser compatible con todas las versiones de 
+Windows (al menos a partir de Windows 2000) y con todas las 
+versiones de Linux. Por desgracia el abanico de posibilidades es 
+tan grande que no he realizado pruebas en cada una de ellas, por 
+lo que podrían aparecer errores imprecisos en algunas de ellas. 
+
+La aplicación consta de dos partes principales: una aplicación 
+que genera un entorno gráfico con ventanas para facilitar el 
+manejo al usuario, y una base de datos que permite almacenar y 
+gestionar toda la información relativa a las ligas de kendo. Por 
+tanto, esta aplicación tiene dos requisitos que deben ser 
+instalados en su ordenador:
+
+  Maquina virtual Java. Aunque algunos sistemas operativos 
+  incluyen su máquina virtual (MV) propia, aconsejo 
+  fervientemente que se utilice la versión oficial proporcionada 
+  por SUN. Esta MV puede ser descargada gratuitamente de la 
+  página oficial sin coste alguno para el usuario en http://www.java.com/es/download/
+   Nuestro programa ha sido desarrollado para la versión 6 (1.6) 
+  update 0, por lo que cualquier versión igual o posterior 
+  debería bastar. 
+
+  MySQL: Esto es un servidor de bases de datos utilizado por 
+  nuestra aplicación. Al igual que la maquina virtual de Java, es 
+  completamente gratuito (exceptuando la asistencia técnica). 
+  Puede ser descargado aquí: http://dev.mysql.com/downloads/mysql/5.1.html
+   La versión utilizada en nuestro caso es la 5.1, por lo que 
+  cualquier versión igual o superior debería bastar. También 
+  aconsejo descargarse algunas aplicaciones de mantenimiento del 
+  servidor: http://dev.mysql.com/downloads/gui-tools/5.0.html Con 
+  estas aplicaciones podrás crear backups de tus bases de datos y 
+  evitar pérdidas de datos por fallos en los discos, aunque no 
+  son esenciales para el uso del KTG. 
+
+Por último señalar que tanto la MV de Java, como el servidor 
+MySQL están realizados por grandes empresas (realmente muy 
+grandes) a las que no pertenezco. Por lo que para cualquier 
+opción de mantenimiento se debería contactar con ellos. 
+
+1.2 Instalación
+
+1.2.1 Instalación de los requisitos
+
+Tanto la máquina virtual de Java, como el servidor de bases de 
+datos de MySQL tienen un entorno gráfico para su instalación en 
+Windows, o vienen en paquetes de repositorio en Linux. Por tanto 
+no voy a explicar lo que hay que hacer para su instalación 
+(básicamente decir “sí” a todo). Solamente voy a indicar algunos 
+detalles sobre MySQL para aquellos que son inexpertos en el tema.
+
+Cuando se instale la base de datos MySQL en Windows, se 
+realizarán varias preguntas al usuario. De ellas, la respuesta 
+por defecto suele ser acertada (para cualquier duda, consultar http://dev.mysql.com/doc/refman/5.0/es/
+). Sin embargo, aconsejo tener en cuenta estas tres cosas al 
+arrancar el asistente de configuración:
+
+1. Ventana de dialogo del tipo de servidor. En nuestro caso, 
+  escogeremos la opción “Developer machine (Ordenador de 
+  desarrollo) ” ya que es la que menos consumo utilizará. Esta 
+  opción es suficiente para nuestras necesidades. 
+
+2. La ventana de diálogo del conjunto de caracteres. Aconsejo el 
+  uso de UTF-8, aunque no es fundamental.
+
+3. La ventana de diálogo de las opciones de seguridad. 
+  Desmarcaremos la opción de solo acceso local, ya que así 
+  podremos trabajar con varios equipos dentro de la liga. Aquí 
+  habrá que recordar la contraseña indicada, ya que será 
+  necesaria al ejecutar nuestro programa. Nota: por simplicidad, 
+  en este manual accederemos a nuestra base de datos con el 
+  usuario root, ya que evita la generación de cuentas de usuario 
+  nuevas. Si es usted un usuario avanzado o teme por la seguridad 
+  de su sistema, le aconsejo que acceda con otro usuario. KTG le 
+  preguntará el nombre de usuario y su contraseña cuando quiera 
+  acceder a la base de datos, por lo que no tendrá ningún 
+  problema. Recuerde si hace esto, dar permisos al nuevo usuario 
+  tanto local como remotamente para la base de datos del KTG.
+
+Teniendo en cuenta las opciones descritas anteriormente, debería 
+de funcionar todo correctamente. 
+
+1.2.2 Instalación de la aplicación
+
+Para los usuarios de Windows, la aplicación se distribuye como el 
+típico conjunto de ventanas de instalador. No resulta muy 
+flexible, ya que el usuario no puede cambiar apenas las opciones. 
+Sin embargo, esto facilita enormemente la instalación ya que el 
+usuario se limitará a aceptar todo lo que aparezca por pantalla. 
+
+Para los usuarios de Linux (Debian/Ubuntu), la aplicación se 
+distribuye como un paquete DEB. Por tanto un dpkg -i fichero.deb 
+debería bastar. Para los usuarios de otras distribuciones que no 
+dispongan de dpkg, aconsejo que se descarguen el paquete SRC y lo 
+compilen con un compilador en java.
+
+En todos los casos que se use un instalador, se generará un 
+enlace simbólico que te permitirá arrancar la aplicación. 
+
+1.2.3 Instalación de la base de datos
+
+A partir de la versión 0.9 del programa, la base de datos se 
+instala automáticamente en el servidor MySQL si esta no está ya 
+instalada. De todas formas, si existiera algún problema, siempre 
+se puede instalar manualmente. Para ello, utiliza el programa 
+MySQL Admin y el fichero incluido en la carpeta “database”. 
+Instalarlo como si fuera un backup con la opción que el MySQL 
+Admin presenta.

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=0.96
+Encoding=UTF-8
+Name=Kendo Tournament
+Type=Application
+Categories=Application;Utility;
+Terminal=false
+Icon[es_ES]=/usr/share/icons/hicolor/64x64/apps/kendotournament.ico
+Icon=/usr/share/icons/hicolor/64x64/apps/kendotournament.ico
+Exec=kendotournament
+Name[es_ES]=Kendo Tournament
+Comment[es_ES]=Gestion de campeonatos de Kendo.
+Comment=Gestion de campeonatos de Kendo.
+GenericName[es_ES]=

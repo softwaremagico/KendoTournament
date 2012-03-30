@@ -18,15 +18,11 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
@@ -51,31 +47,6 @@ public class ScoreListPDF extends ParentList {
     public ScoreListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
         trans = new Translator("gui.xml");
-    }
-
-    public boolean GenerateScoreListPDF(String path) {
-        boolean error = false;
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                super.generatePDF(document, writer);
-                MessageManager.customMessage("scoreListOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("scoreListBad", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("scoreListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-            }
-        }
-        return !error;
     }
 
     private PdfPTable simpleTable(Document document, PdfWriter writer, PdfPTable mainTable, float[] widths, String font, int fontSize) {
@@ -508,6 +479,21 @@ public class ScoreListPDF extends ParentList {
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(footerBorder);
         mainTable.addCell(cell);
-        
+
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "scoreListOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "scoreListBad";
     }
 }

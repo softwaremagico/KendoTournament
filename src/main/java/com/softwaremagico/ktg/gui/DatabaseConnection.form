@@ -27,174 +27,31 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="252" max="32767" attributes="0"/>
+              <Component id="ConnectButton" linkSize="2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="248" max="32767" attributes="0"/>
-                      <Component id="ConnectButton" linkSize="2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CloseButton" linkSize="2" min="-2" pref="76" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="ContentPanel" max="32767" attributes="0"/>
-              </Group>
+              <Component id="CloseButton" linkSize="2" min="-2" pref="76" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
+          <Component id="mainPanel" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="ContentPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="mainPanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="CloseButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ConnectButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="ContentPanel">
-      <Properties>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-            <EtchetBorder/>
-          </Border>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[380, 120]"/>
-        </Property>
-        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[380, 120]"/>
-        </Property>
-      </Properties>
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ServerLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="UserLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="PasswordLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="DatabaseLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="EngineLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="DatabaseTextField" alignment="1" max="32767" attributes="2"/>
-                      <Component id="PasswordField" alignment="1" max="32767" attributes="2"/>
-                      <Component id="UserTextField" alignment="0" max="32767" attributes="2"/>
-                      <Component id="ServerTextField" alignment="0" max="32767" attributes="2"/>
-                      <Component id="EngineComboBox" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="EngineComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="EngineLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="ServerLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="ServerTextField" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="DatabaseLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="DatabaseTextField" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="UserLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="UserTextField" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="PasswordLabel" alignment="2" min="-2" max="-2" attributes="0"/>
-                      <Component id="PasswordField" alignment="2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="ServerLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Server:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="UserLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="User:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="PasswordLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Password:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="DatabaseLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Database:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="ServerTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="localhost"/>
-          </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="ServerTextFieldKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="UserTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="root"/>
-          </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="UserTextFieldKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JPasswordField" name="PasswordField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="password"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="DatabaseTextField">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="KendoTournament"/>
-          </Properties>
-          <Events>
-            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="DatabaseTextFieldKeyReleased"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="EngineComboBox">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EngineComboBoxActionPerformed"/>
-          </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="EngineLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Engine:"/>
-          </Properties>
-        </Component>
-      </SubComponents>
-    </Container>
     <Component class="javax.swing.JButton" name="ConnectButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Connect"/>
@@ -208,5 +65,25 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseButtonActionPerformed"/>
       </Events>
     </Component>
+    <Container class="javax.swing.JPanel" name="mainPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
   </SubComponents>
 </Form>

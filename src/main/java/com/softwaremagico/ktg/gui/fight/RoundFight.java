@@ -18,7 +18,12 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.PanelBackground;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,11 +37,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
-import com.softwaremagico.ktg.gui.PanelBackground;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *

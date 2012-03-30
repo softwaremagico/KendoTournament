@@ -1725,4 +1725,32 @@
 		<de>Print the diplomas of:</de>
 		<ca>Imprimeix els diplomes de:</ca>
 	</DiplomaRole>	
+	<ConvertDatabase>
+		<en>Convert database to...</en>
+		<es>Convertir la base de datos a...</es>
+		<nl>Convert database  to...</nl>
+		<de>Convert database  to...</de>
+		<ca>Converteix la base de dades a...</ca>
+	</ConvertDatabase>	
+	<FromDatabaseLabel>
+		<en>Source database:</en>
+		<es>Base de datos origen:</es>
+		<nl>Source database:</nl>
+		<de>Source database:</de>
+		<ca>Base de dades de origen:</ca>
+	</FromDatabaseLabel>	
+	<ToDatabaseLabel>
+		<en>Address database:</en>
+		<es>Base de datos destino:</es>
+		<nl>Address database:</nl>
+		<de>Address database:</de>
+		<ca>Base de dades de destí:</ca>
+	</ToDatabaseLabel>	
+		<ConvertButton>
+		<en>Convert</en>
+		<es>Convertir</es>
+		<nl>Convert</nl>
+		<de>Convert</de>
+		<ca>Convertir</ca>
+	</ConvertButton>	
 </translator>

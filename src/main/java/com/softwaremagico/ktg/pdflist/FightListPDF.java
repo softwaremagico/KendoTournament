@@ -10,16 +10,12 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
 import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,30 +31,6 @@ public class FightListPDF extends ParentList {
     public FightListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
         trans = new Translator("gui.xml");
-    }
-
-    public boolean GenerateFightListPDF(String path) {
-        boolean error = false;
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("fightsListOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("fightsListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("fightsListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-            }
-        }
-        return !error;
     }
 
     public PdfPTable fightTable(Fight f, String font, int fontSize) {
@@ -394,5 +366,20 @@ public class FightListPDF extends ParentList {
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(footerBorder);
         mainTable.addCell(cell);
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "fightsListOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "fightsListBad";
     }
 }

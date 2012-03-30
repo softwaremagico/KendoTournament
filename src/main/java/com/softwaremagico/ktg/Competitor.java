@@ -40,7 +40,6 @@ public class Competitor extends Participant {
         return order;
     }
 
-
     private void storeClub(String value) {
         club = "";
         String[] data = value.split(" ");

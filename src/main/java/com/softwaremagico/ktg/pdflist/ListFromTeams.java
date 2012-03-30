@@ -18,14 +18,14 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import com.softwaremagico.ktg.gui.KendoFrame;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.language.Translator;
 
 public abstract class ListFromTeams extends KendoFrame {
 
@@ -53,7 +53,7 @@ public abstract class ListFromTeams extends KendoFrame {
 
     private void fillTeams() {
         try {
-            listTeams = KendoTournamentGenerator.getInstance().database.searchAllTeamsInAllTournaments(false);
+            listTeams = KendoTournamentGenerator.getInstance().database.getAllTeams();
             if (voidTournament) {
                 TeamComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
             }

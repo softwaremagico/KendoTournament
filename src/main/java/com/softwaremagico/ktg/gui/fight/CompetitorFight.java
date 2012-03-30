@@ -252,9 +252,10 @@ public class CompetitorFight extends JPanel {
 
     private JPopupMenu createContextMenu(int player, int round) {
         JPopupMenu contextMenu = new JPopupMenu();
-        JMenuItem menMenu = new JMenuItem();
+        JMenuItem menMenu;
         try {
             for (Score s : Score.getValidPoints()) {
+                menMenu = new JMenuItem();
                 menMenu.setText(s.getName());
                 menMenu.addActionListener(new MenuListener(player, round));
                 contextMenu.add(menMenu);

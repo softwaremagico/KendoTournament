@@ -19,7 +19,6 @@
 package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -46,18 +45,9 @@ public class FightList extends ListFromTournament {
     }
 
     @Override
-    public void generate() {
-        try {
-            String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                FightListPDF pdf = new FightListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
-                if (pdf.GenerateFightListPDF(file)) {
-                    this.dispose();
-                }
-            }
-        } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
+    protected ParentList getPdfGenerator() {
+       return new FightListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
     }
+    
+
 }

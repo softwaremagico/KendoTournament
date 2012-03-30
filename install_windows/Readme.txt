@@ -1,0 +1,84 @@
+Introduction:
+-----------
+Kendo Tournament Generator is a powerful tool developed for manage the kendo tournaments. Designed for the Kendo Club of the University of Valencia Kendo UV, is a flexible and useful tool for any kind of championship or league of this sport.
+
+
+
+Installation:
+----------
+This program is developed in Java. You must install first the Java Virtual Machine and the MySQL database. You can download it on: http://www.java.com/es/download/
+
+
+Execution:
+---------
+For execute the program:
+"java -jar dist\KendoTournament.jar"
+
+Or click the shortcut of the program if it has been installed on your computer.  
+
+
+
+
+Version:
+------------
+0.010	Schema of the GUI.
+0.020	Search windows.
+0.100	Basic interaction with the database.
+0.110	Tournament can use more than one fighting areas for current fights.
+0.200	Generating the Fight Panel.
+0.300	Tournament can use a league configuration.
+0.310	Added a graphical interface to show the league configuration. 
+0.400	Export to PDF the competitors data (for acreditation).
+0.410	Export to PDF the teams data.
+0.420	Export to PDF the fights data.
+0.430	Export to PDF the score list.
+0.440	Automated generation of diplomas for all participants.
+0.500	Official release for the Open tournament of Kendo in the University of Valencia. 
+0.501	The database connection is stored in a file.
+0.502	The alert messages are logged into a file. 
+0.510	A graphical interface for the league design. 
+0.520	Graphical statistics of the score obtained in a league.
+0.900	Lots of error corrected. Ready to be used?
+0.910	Graphical statistics finished. 
+		Tested for Windows 7
+		Team color represented
+		Draw fights represented
+	
+0.920	Database can be upgraded to include changes since version 0.90		Solved some minor bugs.		Competitor's color can be changed.
+0.930	Designer can delete levels in the tournament.		Ring League added.		New Monitor for Simple Leagues.
+		The score of a tournament can be changed.
+		Some bugs resolved.
+		Improvements into the league designer. 
+		0.940 	Database can be imported/exported.
+		An important bug in the role GUI solved!
+		Improvements into the league designer. 
+		Icons added to the menu.
+		
+0.941	Icon change.
+
+0.950	Log register can be disabled.
+		Teams can change its member order in the different levels of the championship.
+		** WARNING ** Previous databases are not compatible with version 0.95
+		Debug option created. 
+		German translation added.
+	
+
+Thanks to
+-------------------------
+The Kendo Club of the University of Valencia, for all lessons of kendo.
+Juan Manuel Masia Soriano, for the help provided for obtain the statistics.
+Jos Maas for the dutch translation.
+Stefan Schürrle for the german translation.
+
+
+Others
+-------------------------
+Icons obtained of the Gartoon Gnome Icon Theme.
+
+
+More info
+-------------------------
+http://kendotournament.sourceforge.net
+
+Bugs and errors:
+softwaremagico at gmail.com

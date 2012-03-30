@@ -51,7 +51,6 @@ public class MonitorFightPosition extends JFrame {
     private Translator transl;
     private final int seconds = 8;
     private List<TeamRanking> teamTopTen = new ArrayList<TeamRanking>();
-    private JLabel nameLabel;
     private static int minRows = 10;
     private List<Team> teams = new ArrayList<Team>();
     private DesignedGroup group;
@@ -143,6 +142,7 @@ public class MonitorFightPosition extends JFrame {
     }
 
     void addTitle(int fontSize) {
+        JLabel nameLabel;
         nameLabel = new JLabel(transl.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(group)) + 1) + " / "
                 + transl.returnTag("ArenaLabel", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[group.arena]);
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
@@ -169,6 +169,7 @@ public class MonitorFightPosition extends JFrame {
     void addTeamToList(TeamRanking tr, int fontSize) {
         int longName = 18 + (42 - fontSize) / 3;
         int type = Font.PLAIN;
+        JLabel nameLabel;
 
         nameLabel = new JLabel(tr.returnShortName(longName));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
@@ -196,7 +197,7 @@ public class MonitorFightPosition extends JFrame {
     }
 
     void addVoidTeamToList(int fontSize) {
-        nameLabel = new JLabel("");
+        JLabel nameLabel = new JLabel("");
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);

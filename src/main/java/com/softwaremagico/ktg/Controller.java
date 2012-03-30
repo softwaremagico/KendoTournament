@@ -18,33 +18,10 @@
  */
 package com.softwaremagico.ktg;
 
-import com.softwaremagico.ktg.gui.fight.MonitorTree;
-import com.softwaremagico.ktg.gui.fight.Monitor;
-import com.softwaremagico.ktg.gui.fight.SelectTournamentForTreeMonitor;
-import com.softwaremagico.ktg.gui.fight.SelectTournamentForMonitor;
-import com.softwaremagico.ktg.gui.fight.FightPanel;
-import com.softwaremagico.ktg.gui.fight.LeagueEvolution;
-import com.softwaremagico.ktg.gui.fight.MonitorPosition;
-import com.softwaremagico.ktg.gui.SearchCompetitor;
-import com.softwaremagico.ktg.gui.NewTournament;
-import com.softwaremagico.ktg.gui.NewRole;
-import com.softwaremagico.ktg.gui.NewClub;
-import com.softwaremagico.ktg.gui.NewTeam;
-import com.softwaremagico.ktg.gui.AboutBox;
-import com.softwaremagico.ktg.gui.NewSimpleTournament;
-import com.softwaremagico.ktg.gui.NewRingTournament;
-import com.softwaremagico.ktg.gui.DatabaseConnection;
-import com.softwaremagico.ktg.gui.ShortNewFight;
-import com.softwaremagico.ktg.gui.HelpWindow;
-import com.softwaremagico.ktg.gui.SearchTournament;
-import com.softwaremagico.ktg.gui.SearchClub;
-import com.softwaremagico.ktg.gui.NewCompetitor;
-import com.softwaremagico.ktg.gui.MainGUI;
-import com.softwaremagico.ktg.gui.SearchTeam;
-import com.softwaremagico.ktg.gui.ChooseScoreGUI;
-import com.softwaremagico.ktg.gui.ChangeOrderTeam;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.*;
+import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.leaguedesigner.LeagueDesigner;
 import com.softwaremagico.ktg.pdflist.*;
@@ -81,7 +58,7 @@ public class Controller {
     private SearchTournament searchTournament = null;
     private FightPanel tournamentPanel = null;
     private NewRole participantFunction = null;
-    private TeamsList teamsList = null;
+    private TeamList teamsList = null;
     private RefereeList refereeList = null;
     private FightList fightsList = null;
     private PointList pointList = null;
@@ -113,6 +90,7 @@ public class Controller {
     private SelectTournamentForTreeMonitor selectTournamentForTreeMonitor = null;
     private SelectTournamentForCSV selectTournamentForCSV = null;
     private ChangeOrderTeam changeTeam = null;
+    private DatabaseConversor databaseConversor = null;
 
     public Controller(MainGUI tmp_gui) {
         main = tmp_gui;
@@ -171,13 +149,14 @@ public class Controller {
         main.addRingMenuItemListener(new NewRingListener());
         main.addDesignerMenuItemListener(new DesignerListener());
         main.addTeamTopTenListener(new NewTeamTopTenStatisticsListener());
-        main.addScoreMonitorListener(new NewScoreMonitorListener());
-        main.addTreeMonitorListener(new NewTreeMonitorListener());
+        main.addScoreMonitorListener(new ScoreMonitorListener());
+        main.addTreeMonitorListener(new TreeMonitorListener());
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
-        main.addScoreMenuItemListener(new NewChooseScoreListener());
-        main.addCsvMenuItemListener(new NewCsvListener());
-        main.addChangeTeamMenuItemListener(new NewChangeTeamListener());
+        main.addScoreMenuItemListener(new ChooseScoreListener());
+        main.addCsvMenuItemListener(new CsvListener());
+        main.addChangeTeamMenuItemListener(new ChangeTeamListener());
+        main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
     }
 
     class AddLanguagesListener implements ActionListener {
@@ -270,7 +249,7 @@ public class Controller {
                 teamsList.dispose();
             } catch (NullPointerException npe) {
             }
-            teamsList = new TeamsList();
+            teamsList = new TeamList();
             teamsList.setVisible(true);
         }
     }
@@ -581,7 +560,7 @@ public class Controller {
         }
     }
 
-    class NewScoreMonitorListener implements ActionListener {
+    class ScoreMonitorListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -595,7 +574,7 @@ public class Controller {
         }
     }
 
-    class NewTreeMonitorListener implements ActionListener {
+    class TreeMonitorListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -609,7 +588,7 @@ public class Controller {
         }
     }
 
-    class NewChooseScoreListener implements ActionListener {
+    class ChooseScoreListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -623,7 +602,7 @@ public class Controller {
         }
     }
 
-    class NewCsvListener implements ActionListener {
+    class CsvListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -638,7 +617,7 @@ public class Controller {
         }
     }
 
-    class NewChangeTeamListener implements ActionListener {
+    class ChangeTeamListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -648,6 +627,19 @@ public class Controller {
             }
             changeTeam = new ChangeOrderTeam();
             changeTeam.setVisible(true);
+        }
+    }
+
+    class DatabaseConversorListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                databaseConversor.dispose();
+            } catch (NullPointerException npe) {
+            }
+            databaseConversor = new DatabaseConversor();
+            databaseConversor.setVisible(true);
         }
     }
 

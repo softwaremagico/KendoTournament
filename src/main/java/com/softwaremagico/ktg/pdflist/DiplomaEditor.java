@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.RoleTags;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.GridBagConstraints;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
     private Translator trans = null;
     private RoleTags roles = null;
     private List<JCheckBox> rolesSelected = new ArrayList<JCheckBox>();
+    private DiplomaBlackBoard DiplomaPanel = new DiplomaBlackBoard();
 
     /**
      * Creates new form DiplomaEditor
@@ -47,6 +49,8 @@ public class DiplomaEditor extends javax.swing.JFrame {
         Slider.setValue(KendoTournamentGenerator.getInstance().getLastNamePositionOnDiploma());
         setLanguage(KendoTournamentGenerator.getInstance().language);
         addRoles();
+        DiplomaPanel.setBounds(new Rectangle(mainPanel.getSize().width,mainPanel.getSize().height));
+        mainPanel.add(DiplomaPanel);
     }
 
     /**
@@ -97,8 +101,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         Slider = new javax.swing.JSlider();
-        SpacerPanel = new javax.swing.JPanel();
-        DiplomaPanel = new DiplomaBlackBoard() ;
+        mainPanel = new javax.swing.JPanel();
         AcceptButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();
         InformationLabel = new javax.swing.JLabel();
@@ -128,28 +131,15 @@ public class DiplomaEditor extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout DiplomaPanelLayout = new javax.swing.GroupLayout(DiplomaPanel);
-        DiplomaPanel.setLayout(DiplomaPanelLayout);
-        DiplomaPanelLayout.setHorizontalGroup(
-            DiplomaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
-        DiplomaPanelLayout.setVerticalGroup(
-            DiplomaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 239, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout SpacerPanelLayout = new javax.swing.GroupLayout(SpacerPanel);
-        SpacerPanel.setLayout(SpacerPanelLayout);
-        SpacerPanelLayout.setHorizontalGroup(
-            SpacerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SpacerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(DiplomaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        SpacerPanelLayout.setVerticalGroup(
-            SpacerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(DiplomaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -159,16 +149,16 @@ public class DiplomaEditor extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(Slider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SpacerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(SpacerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(11, 11, 11))
             .addComponent(Slider, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         AcceptButton.setText("Accept");
@@ -277,14 +267,13 @@ public class DiplomaEditor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AcceptButton;
     private javax.swing.JButton CloseButton;
-    private DiplomaBlackBoard DiplomaPanel;
     private javax.swing.JLabel InformationLabel;
     private javax.swing.JLabel RoleLabel;
     private javax.swing.JPanel RolePanel;
     private javax.swing.JScrollPane RoleScrollPane;
     private javax.swing.JSlider Slider;
-    private javax.swing.JPanel SpacerPanel;
     private javax.swing.JCheckBox StatisticsCheckBox;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

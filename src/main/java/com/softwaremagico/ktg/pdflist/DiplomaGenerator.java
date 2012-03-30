@@ -76,4 +76,9 @@ public class DiplomaGenerator extends ListFromTournament {
         CheckBox.setEnabled(true);
         CheckBox.setText(trans.returnTag("PrintAll", KendoTournamentGenerator.getInstance().language));
     }
+
+    @Override
+    protected ParentList getPdfGenerator() {
+        return null;
+    }
 }

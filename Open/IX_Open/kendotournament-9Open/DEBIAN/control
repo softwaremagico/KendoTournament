@@ -1,0 +1,13 @@
+Package: kendotournament-9Open
+Version: 0.96
+Section: Utility
+Priority: optional
+Architecture: all
+Essential: no
+Depends: kendotournament
+Installed-Size: 680KiB
+Maintainer: Jorge Hortelano [softwaremagico@gmail.com]
+Replaces: kendotournament-9Open
+Provides: kendotournament-9Open
+Description: 
+	Adapt the KendoTournament for the IX Open (Valencia, 2012).

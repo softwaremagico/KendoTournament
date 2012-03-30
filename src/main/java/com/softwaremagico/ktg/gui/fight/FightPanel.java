@@ -18,7 +18,12 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.PhotoFrame;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
+import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -28,11 +33,6 @@ import java.util.List;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.gui.PhotoFrame;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
 
 /**
  *

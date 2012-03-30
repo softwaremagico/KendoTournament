@@ -4,9 +4,9 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -52,17 +52,17 @@ public class MessageManager {
 
     public static void errorMessage(String text, String title, boolean log) {
         logActivated = log;
-        ShowTextMessage(text, title);
-        ShowErrorMessage(text, title, JOptionPane.ERROR_MESSAGE);
+        showTextMessage(text, title);
+        showErrorMessage(text, title, JOptionPane.ERROR_MESSAGE);
     }
 
     public static void customMessage(String text, String title, int option, boolean log) {
         logActivated = log;
-        ShowTextMessage(text, title);
-        ShowErrorMessage(text, title, option);
+        showTextMessage(text, title);
+        showErrorMessage(text, title, option);
     }
 
-    public static void ShowErrorMessage(String text, String title, int option) {
+    public static void showErrorMessage(String text, String title, int option) {
         int i = 0, caracteres = 0;
         try {
             String texto[] = text.split(" ");
@@ -86,7 +86,7 @@ public class MessageManager {
         }
     }
 
-    public static void ShowTextMessage(String text, String title) {
+    public static void showTextMessage(String text, String title) {
         java.util.Date date = new java.util.Date();
         long lnMilisegundos = date.getTime();
         java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
@@ -97,6 +97,14 @@ public class MessageManager {
         if (logActivated) {
             Log.storeLog(title + ": " + text);
         }
+    }
+
+    public static void informationManager(String code, String title, String language, boolean log) {
+        MessageManager.customMessage(code, title, KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, log);
+    }
+
+    public static void informationManager(String code, String title, String language, String finalText, boolean log) {
+        MessageManager.customMessage(code, title, KendoTournamentGenerator.getInstance().language, finalText, JOptionPane.INFORMATION_MESSAGE, log);
     }
 
     public static boolean question(String code, String title, String language) {

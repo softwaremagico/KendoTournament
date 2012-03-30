@@ -18,14 +18,14 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.leaguedesigner.BlackBoardPanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.leaguedesigner.BlackBoardPanel;
 
 /**
  *

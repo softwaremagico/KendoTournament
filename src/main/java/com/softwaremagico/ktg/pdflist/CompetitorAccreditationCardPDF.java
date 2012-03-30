@@ -24,15 +24,11 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,27 +45,6 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         competitor = tmp_competitor;
         competition = tmp_competition;
         role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
-    }
-
-    public void generateCompetitorPDF(String path) {
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A6);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("accreditationOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().database.setParticipantInTournamentAsAccreditationPrinted(competitor, competition.name);
-            } catch (NullPointerException npe) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("accreditationBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-            }
-        }
     }
 
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
@@ -387,5 +362,20 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table.addCell(cell);
 
         return table;
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A6;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "accreditationOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "accreditationBad";
     }
 }

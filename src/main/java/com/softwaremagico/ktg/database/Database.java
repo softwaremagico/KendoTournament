@@ -36,7 +36,6 @@ import java.util.List;
 public abstract class Database {
 
     Connection connection = null;
-    public int port = 3306;
 
     public Database() {
     }
@@ -64,7 +63,7 @@ public abstract class Database {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-             KendoTournamentGenerator.getInstance().showErrorInformation(ex1);
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex1);
         }
     }
 
@@ -127,6 +126,8 @@ public abstract class Database {
     public abstract List<Participant> getParticipants(String query, boolean verbose);
 
     public abstract List<CompetitorWithPhoto> getAllCompetitorsWithPhoto();
+
+    public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors);
 
     public abstract List<Competitor> getAllCompetitors();
 
@@ -224,6 +225,8 @@ public abstract class Database {
 
     public abstract List<Role> getAllRoles();
 
+    public abstract boolean storeAllRoles(List<Role> roles);
+
     /**
      * *******************************************************************
      *
@@ -240,7 +243,9 @@ public abstract class Database {
 
     public abstract List<String> returnClubsName();
 
-    public abstract List<Club> returnClubs(boolean verbose);
+    public abstract List<Club> getAllClubs();
+
+    public abstract boolean storeAllClubs(List<Club> clubs);
 
     public abstract List<Club> searchClub(String query, boolean verbose);
 
@@ -271,6 +276,8 @@ public abstract class Database {
     public abstract boolean updateTournament(Tournament t, boolean verbose);
 
     public abstract List<Tournament> getAllTournaments();
+
+    public abstract boolean storeAllTournaments(List<Tournament> tournaments);
 
     public abstract Tournament getTournamentByName(String name, boolean verbose);
 
@@ -314,7 +321,9 @@ public abstract class Database {
 
     public abstract List<Team> searchTeamsByLevel(String tournament, int level, boolean verbose);
 
-    public abstract List<Team> searchAllTeamsInAllTournaments(boolean verbose);
+    public abstract List<Team> getAllTeams();
+
+    public abstract boolean storeAllTeams(List<Team> teams);
 
     public abstract void updateTeamGroupOfLeague(String league, Team t);
 
@@ -349,6 +358,8 @@ public abstract class Database {
      * Store a fight into the database.
      */
     public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
+
+    public abstract boolean storeAllFights(List<Fight> fights);
 
     public abstract boolean storeFight(Fight fight, boolean verbose);
 
@@ -427,6 +438,10 @@ public abstract class Database {
      * Store a undraw into the database.
      */
     public abstract boolean storeUndraw(String championship, String team, int order, int group);
+
+    public abstract List<Undraw> getAllUndraws();
+
+    public abstract boolean storeAllUndraws(List<Undraw> undraws);
 
     //public abstract boolean defineWinnerInUndraw(String championship, String team, int level, List<Team> drawTeams);
     public abstract String getWinnerInUndraws(String championship, int group, List<Team> drawTeams);

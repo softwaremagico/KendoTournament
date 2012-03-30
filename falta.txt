@@ -1,0 +1,7 @@
+Solucionar que se olvida de combates el fight panel.  AHORA ES PEOR QUE ANTES!!!
+Simplificar la comunicación entre equipos. 
+SQLite. 
+PRESENTACION DEL GANADOR DEL TORNEO!
+SQLite necesita cambiar los autoincrement de ListOrder (competitor)  insert select count(*)
+Añadir iconos al Maven
+Las acreditaciones ahora salen mal. 

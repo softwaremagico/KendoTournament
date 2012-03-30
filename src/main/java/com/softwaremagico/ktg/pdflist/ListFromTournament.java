@@ -18,14 +18,15 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import com.softwaremagico.ktg.gui.KendoFrame;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -107,7 +108,22 @@ public abstract class ListFromTournament extends KendoFrame {
         }
     }
 
-    public abstract void generate();
+    protected abstract ParentList getPdfGenerator();
+    
+    public void generate() {
+        try {
+            String file;
+            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
+                ParentList pdf = getPdfGenerator();
+                if (pdf.createFile(file)) {
+                    this.dispose();
+                }
+            }
+        } catch (Exception ex) {
+          KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+    }
 
     private void updateArena() {
         ArenaComboBox.removeAllItems();

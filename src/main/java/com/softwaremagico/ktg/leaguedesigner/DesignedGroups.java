@@ -389,6 +389,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public DesignedGroup returnGroupOfFight(Fight f) {
+        System.out.println(f.team1.returnName() +" vs " + f.team2.returnName());
         for (DesignedGroup dg : designedGroups) {
             if (dg.isFightOfGroup(f)) {
                 return dg;
@@ -541,9 +542,8 @@ public class DesignedGroups implements Serializable {
     public void updateInnerLevels(int level) {
         int arena = 0;
         if (designedGroups.size() > 0) {
-            DesignedGroup d = designedGroups.get(0);
             //Next Level has the half groups, distributed in X arenas.
-            int groupsPerArena = (returnCalculatedSizeOfLevel(level + 1)) / championship.fightingAreas;
+            //int groupsPerArena = (returnCalculatedSizeOfLevel(level + 1)) / championship.fightingAreas;
             double sizeOfNextLevel = returnCalculatedSizeOfLevel(level + 1);
             while ((returnActualSizeOfLevel(level) > 1) && ((float) returnNumberOfTotalTeamsPassNextRound(level) / 2 > returnActualSizeOfLevel(level + 1))) {
                 try {
@@ -551,8 +551,7 @@ public class DesignedGroups implements Serializable {
                 } catch (ArithmeticException ae) {
                     arena = 0;
                 }
-                DesignedGroup d1 = new DesignedGroup(2, 1, d.championship, level + 1, arena);
-                add(d1, level + 1, false, true);
+                add(new DesignedGroup(2, 1, championship, level + 1, arena), level + 1, false, true);
             }
 
             //When we remove two groups in one level, we must remove one in the next one.
@@ -571,17 +570,12 @@ public class DesignedGroups implements Serializable {
     }
 
     public int returnLevelOfFight(Fight f) {
-        for (int i = 0; i
-                < designedGroups.size(); i++) {
+        for (int i = 0; i < designedGroups.size(); i++) {
             if (designedGroups.get(i).isFightOfGroup(f)) {
                 return designedGroups.get(i).getLevel();
-
-
             }
         }
         return -1;
-
-
     }
 
     public int returnLevelOfGroup(Integer groupIndex) {
@@ -642,7 +636,7 @@ public class DesignedGroups implements Serializable {
             //Not finished the championship.
             if (nextLevel >= 0 && nextLevel < returnNumberOfLevels()) {
                 //Update fights to load the fights of other arenas and computers.
-                if (championship.fightingAreas > 1) { 
+                if (championship.fightingAreas > 1) {
                     KendoTournamentGenerator.getInstance().fights.getFightsFromDatabase(championship.name);
                 }
 
@@ -945,6 +939,7 @@ public class DesignedGroups implements Serializable {
     private void refillLevel(List<Fight> tmp_fights, int level) {
         List<Fight> fights = getFightsOfLevel(tmp_fights, level);
         List<Team> teamsOfGroup = new ArrayList<Team>();
+                
         for (int i = 0; i < fights.size(); i++) {
             //If one team exist in the group, then this fight is also of this group.
             if (isTeamIncludedInList(teamsOfGroup, fights.get(i).team1)) {

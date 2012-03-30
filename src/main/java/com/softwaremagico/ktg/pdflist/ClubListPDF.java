@@ -4,21 +4,17 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.MessageManager;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.Club;
+import com.softwaremagico.ktg.CompetitorWithPhoto;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
-import java.io.FileOutputStream;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,7 +24,6 @@ public class ClubListPDF extends ParentList {
 
     private Tournament championship;
     private final int border = 0;
-    private final int linesByPage = 55;
     Translator trans = null;
 
     public ClubListPDF(Tournament tmp_championship) {
@@ -36,32 +31,8 @@ public class ClubListPDF extends ParentList {
         trans = new Translator("gui.xml");
     }
 
-    public boolean generateClubListPDF(String path) {
-        boolean error = false;
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("ClubListOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("ClubListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("ClubListBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                error = true;
-            }
-        }
-        return !error;
-    }
-
     public float[] getTableWidths() {
-        float[] widths = {0.15f, 0.50f, 0.20f, 0.15f};
+        float[] widths = {0.05f, 0.60f, 0.30f, 0.05f};
         return widths;
     }
 
@@ -75,7 +46,7 @@ public class ClubListPDF extends ParentList {
         Paragraph p;
         int cellNumber = 0;
 
-        List<Club> clubs = KendoTournamentGenerator.getInstance().database.returnClubs(false);
+        List<Club> clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
 
@@ -219,5 +190,20 @@ public class ClubListPDF extends ParentList {
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(footerBorder);
         mainTable.addCell(cell);
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "ClubListOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "ClubListBad";
     }
 }

@@ -154,6 +154,16 @@ public class Fights {
         return fightsOfArea;
     }
 
+    public List<Fight> getFightsOfLevel(int level) {
+        List<Fight> fightsOfLevel = new ArrayList<Fight>();
+        for (int i = 0; i < fights.size(); i++) {
+            if (fights.get(i).level == level) {
+                fightsOfLevel.add(fights.get(i));
+            }
+        }
+        return fightsOfLevel;
+    }
+
     public Fight getSelectedFight(int arena) {
         return fights.get(currentFight(arena));
     }
@@ -303,7 +313,8 @@ public class Fights {
      * Detect if the fights of an arena are over but not fights of other arenas.
      *
      * @param arena
-     * @return -1 if all are over, or the number of the first arena not finished.
+     * @return -1 if all are over, or the number of the first arena not
+     * finished.
      */
     public int allArenasAreOver() {
         for (int i = 0; i < returnArenas().size(); i++) {

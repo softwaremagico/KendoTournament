@@ -19,9 +19,7 @@
 package com.softwaremagico.ktg.pdflist;
 
 
-import javax.swing.JFileChooser;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.pdflist.ScoreListPDF;
 
 /**
  *
@@ -44,18 +42,7 @@ public class PointList extends ListFromTournament {
     }
 
     @Override
-    public void generate() {
-        try {
-            String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                ScoreListPDF pdf = new ScoreListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
-                if (pdf.GenerateScoreListPDF(file)) {
-                    this.dispose();
-                }
-            }
-        } catch (Exception ex) {
-           KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
+    protected ParentList getPdfGenerator() {
+        return new ScoreListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
     }
 }

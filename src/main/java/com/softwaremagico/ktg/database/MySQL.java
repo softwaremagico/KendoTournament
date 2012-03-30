@@ -43,6 +43,8 @@ import javax.swing.JOptionPane;
  */
 public class MySQL extends SQL {
 
+    public int port = 3306;
+
     public MySQL() {
     }
 
@@ -114,7 +116,7 @@ public class MySQL extends SQL {
                 MessageManager.customMessage("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language, tmp_server, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
             } else {
                 if (KendoTournamentGenerator.getInstance().getLogOption()) {
-                     Log.storeLog("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language);
+                    Log.storeLog("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language);
                 }
             }
         }
@@ -177,7 +179,7 @@ public class MySQL extends SQL {
             executeScript(Path.returnDatabasePath() + "kendotournament_empty.sql");
 
         } catch (SQLException ex) {
-              KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
 

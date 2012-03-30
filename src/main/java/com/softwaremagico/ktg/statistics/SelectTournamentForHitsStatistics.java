@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
+import com.softwaremagico.ktg.pdflist.ParentList;
 
 /**
  *
@@ -39,6 +40,11 @@ public class SelectTournamentForHitsStatistics extends ListFromTournament {
 
     @Override
     public void generate() {
+    }
+
+    @Override
+    protected ParentList getPdfGenerator() {
+        return null;
     }
 
 }

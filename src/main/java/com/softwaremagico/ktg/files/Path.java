@@ -100,8 +100,12 @@ public class Path {
     public static String returnScoreFolder() {
         return returnImagePath() + "score" + File.separator;
     }
-    
-    public static String returnLogFile(){
+
+    public static String returnLogFile() {
         return "kendoTournament.log";
+    }
+
+    public static String returnIconFolder() {
+        return returnImagePath() + "icons" + File.separator;
     }
 }

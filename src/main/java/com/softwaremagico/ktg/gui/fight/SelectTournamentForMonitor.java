@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
+import com.softwaremagico.ktg.pdflist.ParentList;
 
 /**
  *
@@ -42,6 +43,11 @@ public class SelectTournamentForMonitor extends ListFromTournament {
     @Override
     public String defaultFileName() {
         return "";
+    }
+
+    @Override
+    protected ParentList getPdfGenerator() {
+       return null;
     }
 
 }

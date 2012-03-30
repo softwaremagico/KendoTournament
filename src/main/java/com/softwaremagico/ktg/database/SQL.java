@@ -18,23 +18,9 @@
  */
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.Participant;
-import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.Role;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.RoleTags;
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.Log;
-import com.softwaremagico.ktg.RoleTag;
-import com.softwaremagico.ktg.MessageManager;
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.statistics.CompetitorRanking;
@@ -116,7 +102,7 @@ public abstract class SQL extends Database {
         } catch (Exception ex) {
         }
         f.AppendTextToFile("LOCK TABLES `club` WRITE;\n", file);
-        List<Club> clubs = returnClubs(false);
+        List<Club> clubs = getAllClubs();
         for (int i = 0; i < clubs.size(); i++) {
             f.AppendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).returnName() + "','" + clubs.get(i).returnCountry() + "','"
                     + clubs.get(i).representativeID + "','" + clubs.get(i).email + "','"
@@ -280,7 +266,7 @@ public abstract class SQL extends Database {
         } catch (Exception ex) {
         }
         f.AppendTextToFile("LOCK TABLES `team` WRITE;\n", file);
-        List<Team> teams = searchAllTeamsInAllTournaments(false);
+        List<Team> teams = getAllTeams();
         for (int i = 0; i < teams.size(); i++) {
             for (int levelIndex = 0; levelIndex < teams.get(i).levelChangesSize(); levelIndex++) {
                 for (int member = 0; member < teams.get(i).getNumberOfMembers(levelIndex); member++) {
@@ -714,6 +700,26 @@ public abstract class SQL extends Database {
     public List<CompetitorWithPhoto> getAllCompetitorsWithPhoto() {
         String query = "SELECT * FROM competitor ORDER BY Surname";
         return getCompetitorsWithPhoto(query, false);
+    }
+
+    @Override
+    public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM competitor");
+            s.close();
+
+            for (int i = 0; i < competitors.size(); i++) {
+                if (!storeCompetitor(competitors.get(i), false)) {
+                    error = true;
+                }
+            }
+        } catch (SQLException ex) {
+            error = true;
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
     }
 
     @Override
@@ -1267,6 +1273,26 @@ public abstract class SQL extends Database {
         return roles;
     }
 
+    @Override
+    public boolean storeAllRoles(List<Role> roles) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM role");
+            s.close();
+
+            for (int i = 0; i < roles.size(); i++) {
+                if (!storeRole(roles.get(i), false)) {
+                    error = true;
+                }
+            }
+        } catch (SQLException ex) {
+            error = true;
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
+    }
+
     /**
      * *******************************************************************
      *
@@ -1366,7 +1392,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Club> returnClubs(boolean verbose) {
+    public List<Club> getAllClubs() {
         List<Club> results = new ArrayList<Club>();
         try {
             Statement s = connection.createStatement();
@@ -1401,11 +1427,7 @@ public abstract class SQL extends Database {
             }
             rs.close();
             s.close();
-            if (results.isEmpty()) {
-                if (verbose) {
-                    MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                }
-            }
+
         } catch (SQLException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             showSQLError(ex.getErrorCode());
@@ -1414,6 +1436,26 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("MySQL database connection fail", this.getClass().getName(), KendoTournamentGenerator.getInstance().getLogOption());
         }
         return results;
+    }
+
+    @Override
+    public boolean storeAllClubs(List<Club> clubs) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM club");
+            s.close();
+
+            for (int i = 0; i < clubs.size(); i++) {
+                if (!storeClub(clubs.get(i), false)) {
+                    error = true;
+                }
+            }
+        } catch (SQLException ex) {
+            error = true;
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
     }
 
     @Override
@@ -1554,7 +1596,9 @@ public abstract class SQL extends Database {
                         t.bannerInput.reset();
                     }
                 } catch (IOException ex) {
+                    KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 } catch (NullPointerException npe) {
+                    KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 }
                 PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 stmt.setString(1, t.name);
@@ -1577,6 +1621,7 @@ public abstract class SQL extends Database {
             rs.close();
             s.close();
         } catch (MysqlDataTruncation mdt) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(mdt);
             error = true;
             MessageManager.errorMessage("storeImage", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         } catch (SQLException ex) {
@@ -1584,6 +1629,7 @@ public abstract class SQL extends Database {
             error = true;
             MessageManager.errorMessage("storeTournament", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         } catch (NullPointerException npe) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             error = true;
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().getLogOption());
         }
@@ -1607,6 +1653,7 @@ public abstract class SQL extends Database {
                 }
             }
         }
+        
         return !error;
     }
 
@@ -1736,6 +1783,26 @@ public abstract class SQL extends Database {
         }
 
         return null;
+    }
+
+    @Override
+    public boolean storeAllTournaments(List<Tournament> tournaments) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM tournament");
+            s.close();
+
+            for (int i = 0; i < tournaments.size(); i++) {
+                if (!storeTournament(tournaments.get(i), false)) {
+                    error = true;
+                }
+            }
+        } catch (SQLException ex) {
+            error = true;
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
     }
 
     @Override
@@ -2118,7 +2185,9 @@ public abstract class SQL extends Database {
         if (!teams.isEmpty()) {
             return searchTeam(query, verbose).get(0);
         } else {
-            System.out.println("Error obtaining team " + name);
+            if (verbose) {
+                MessageManager.customMessage("Error obtaining team " + name, "Error", 0, true);
+            }
             return null;
         }
     }
@@ -2143,9 +2212,29 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Team> searchAllTeamsInAllTournaments(boolean verbose) {
+    public List<Team> getAllTeams() {
         String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name ";
-        return searchTeam(query, verbose);
+        return searchTeam(query, false);
+    }
+
+    @Override
+    public boolean storeAllTeams(List<Team> teams) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM team");
+            s.close();
+
+            for (int i = 0; i < teams.size(); i++) {
+                if (!storeTeam(teams.get(i), false)) {
+                    error = true;
+                }
+            }
+        } catch (SQLException ex) {
+            error = true;
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
     }
 
     @Override
@@ -2554,6 +2643,34 @@ public abstract class SQL extends Database {
     }
 
     @Override
+    public boolean storeAllFights(List<Fight> fights) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM fight");
+            s.executeUpdate("DELETE FROM duel");
+            for (int i = 0; i < fights.size(); i++) {
+                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fights.get(i).team1.returnName() + "','" + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "','" + fights.get(i).asignedFightArea + "'," + fights.get(i).returnWinner() + "," + fights.get(i).level + "," + fights.get(i).getMaxWinners() + ")", Statement.RETURN_GENERATED_KEYS);
+                ResultSet rs = s.getGeneratedKeys();
+                rs.next();
+                fights.get(i).setDatabaseID(rs.getInt(1));
+                rs.close();
+
+                storeDuelsOfFight(fights.get(i));
+            }
+            s.close();
+        } catch (SQLException ex) {
+            error = true;
+            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            Log.storeLog("fightStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fights.get(0).competition.name);
+        }
+        return !error;
+    }
+
+    @Override
     public boolean storeFight(Fight fight, boolean verbose) {
         boolean error = false;
         try {
@@ -2837,7 +2954,6 @@ public abstract class SQL extends Database {
                         if (d != null) {
                             f.setDuel(d, i);
                         }
-
                     }
                 }
                 results.add(f);
@@ -3220,6 +3336,53 @@ public abstract class SQL extends Database {
             error = true;
             MessageManager.errorMessage("storeUndraw", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        return !error;
+    }
+
+    @Override
+    public List<Undraw> getAllUndraws() {
+        String query = "SELECT * FROM undraw ";
+
+        List<Undraw> results = new ArrayList<Undraw>();
+
+        try {
+            Statement s = connection.createStatement();
+            ResultSet rs = s.executeQuery(query);
+            while (rs.next()) {
+                Undraw u = new Undraw(rs.getObject("Championship").toString(), (Integer) rs.getObject("UndrawGroup"), rs.getObject("Team").toString(), (Integer) rs.getObject("Player"));
+                results.add(u);
+            }
+            rs.close();
+            s.close();
+        } catch (SQLException ex) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            showSQLError(ex.getErrorCode());
+        } catch (NullPointerException npe) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+        }
+        return results;
+    }
+
+    @Override
+    public boolean storeAllUndraws(List<Undraw> undraws) {
+        boolean error = false;
+        try {
+            Statement s = connection.createStatement();
+            s.executeUpdate("DELETE FROM undraw");
+            for (int i = 0; i < undraws.size(); i++) {
+                s.executeUpdate("INSERT INTO undraw (Championship, UndrawGroup, Team, Player) VALUES ('"
+                        + undraws.get(i).getTournament() + "'," + undraws.get(i).getGroup() + ",'" + undraws.get(i).getWinnerTeam() + "'," + undraws.get(i).getPlayer() + ")");
+            }
+            s.close();
+        } catch (SQLException ex) {
+            error = true;
+            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            Log.storeLog("fightStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, undraws.get(0).getTournament() + ": " + undraws.get(0).getWinnerTeam());
         }
         return !error;
     }

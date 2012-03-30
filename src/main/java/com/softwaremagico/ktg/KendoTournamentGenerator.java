@@ -19,7 +19,7 @@
 package com.softwaremagico.ktg;
 
 import com.softwaremagico.ktg.database.Database;
-import com.softwaremagico.ktg.database.DatabasesEngines;
+import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.language.Translator;
@@ -50,7 +50,7 @@ public class KendoTournamentGenerator {
     public String databaseName = "kendotournament";
     public String server = "localhost";
     public String language = "en";
-    private DatabasesEngines databaseEngine = null;
+    private DatabaseEngine databaseEngine = null;
     public Languages languages = new Languages();
     private String explorationFolder = null;
     public DesignedGroups designedGroups = null;
@@ -217,7 +217,7 @@ public class KendoTournamentGenerator {
                 }
                 if (connectionData.get(i).contains("Engine:")) {
                     try {
-                        databaseEngine = DatabasesEngines.getDatabase(connectionData.get(i).split("Engine:")[1]);
+                        databaseEngine = DatabaseEngine.getDatabase(connectionData.get(i).split("Engine:")[1]);
                     } catch (ArrayIndexOutOfBoundsException aiofb) {
                     }
                 }
@@ -271,15 +271,15 @@ public class KendoTournamentGenerator {
         return false;
     }
 
-    public DatabasesEngines getDatabaseEngine() {
+    public DatabaseEngine getDatabaseEngine() {
         if (databaseEngine == null) {
-            return DatabasesEngines.getDatabase("MySQL");
+            return DatabaseEngine.getDatabase("MySQL");
         }
         return databaseEngine;
     }
 
     public void setDatabaseEngine(String engine) {
-        databaseEngine = DatabasesEngines.getDatabase(engine);
+        databaseEngine = DatabaseEngine.getDatabase(engine);
     }
 
     /**

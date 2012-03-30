@@ -805,21 +805,28 @@
 		<es>El combate ha sido añadido con éxito.</es>
 		<nl>The fight has been added correctly.</nl>
 		<de>The fight has been added correctly.</de>
-		<ca>The fight has been added correctly.</ca>
+		<ca>El combat ha sigut inserit correctament.</ca>
 	</addFight>
 	<waitNewLevel>
 		<en>The team order can not be changed until all current fights are finished.</en>
 		<es>No se puede cambiar el orden del equipo hasta que se terminen los combates actuales.</es>
 		<nl>The team order can not be changed until all current fights are finished.</nl>
 		<de>The team order can not be changed until all current fights are finished.</de>
-		<ca>The team order can not be changed until all current fights are finished.</ca>
+		<ca>El ordre del equips not pot ser cambiat fins que els combats no finisquen</ca>
 	</waitNewLevel>
 	<existFile>
 		<en>The file already exists. Do you want to overwrite it?</en>
 		<es>El fichero ya existe. ¿Desea sobreescribirlo?</es>
 		<nl>The file already exists. Do you want to overwrite it?</nl>
 		<de>The file already exists. Do you want to overwrite it?</de>
-		<ca>El fitxer ja existix. Desitja sobreescriure'l??</ca>
+		<ca>El fitxer ja existix. Desitja sobreescriure'l?</ca>
 	</existFile>
+	<ConversionCompleted>
+		<en>The database has been exported successfully!</en>
+		<es>¡La base de datos ha sido exportada correctamente!</es>
+		<nl>The database has been exported successfully!</nl>
+		<de>The database has been exported successfully!</de>
+		<ca>La base de dades ha sigut exportada correctament!</ca>
+	</ConversionCompleted>
 </translator>
 
