@@ -15,7 +15,7 @@
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- Created on agost of 2008.
+ Created on august of 2008.
  */
 package com.softwaremagico.ktg.files;
 
@@ -33,7 +33,7 @@ public class Path {
     public static String returnRootPath() {
         String soName = System.getProperty("os.name");
         if (soName.contains("Linux") || soName.contains("linux")) {
-            File f = new File("/usr/share/kendotournament/");
+            File f = new File("/usr/share/kendo-tournament-generator");
             if (f.exists()) {
                 return f.getPath() + File.separator;
             } else {

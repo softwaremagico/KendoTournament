@@ -18,10 +18,7 @@
  */
 package com.softwaremagico.ktg.language;
 
-import com.softwaremagico.ktg.Language;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.RoleTag;
-import com.softwaremagico.ktg.RoleTags;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,6 +58,7 @@ public class Translator {
 
     /**
      * Parse the file
+     *
      * @param tagName Tag of the data to be readed
      */
     private Document parseFile(Document usedDoc, String fileParsed) {
@@ -75,12 +73,14 @@ public class Translator {
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
             MessageManager.errorMessage(text, "Language", false);
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (SAXException ex) {
-            Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (FileNotFoundException fnf) {
             String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
+            KendoTournamentGenerator.getInstance().showErrorInformation(fnf);
             System.out.println(text);
         } catch (IOException ex) {
             Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);

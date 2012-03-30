@@ -214,6 +214,7 @@ public class Diploma {
             mainTable.addCell(cell);
             //mainTable.writeSelectedRows(0, -1, 0, document.getPageSize().getHeight() * nameposition + 27, writer.getDirectContent());
             //mainTable.flushContent();
+            mainTable.setWidthPercentage(100);
             document.add(mainTable);
         }
 

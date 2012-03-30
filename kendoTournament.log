@@ -47,3 +47,4 @@
 [2012-03-29 20:51:15] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> IX Open de Kendo
 [2012-03-29 23:17:37] MySQL: Se ha conectado con la base de datos: localhost
 [2012-03-29 23:18:44] MySQL: Se ha conectado con la base de datos: localhost
+[2012-03-30 13:17:53] MySQL: Acceso denegado para el usuario seleccionado. Comprueba si la contraseña es correcta.

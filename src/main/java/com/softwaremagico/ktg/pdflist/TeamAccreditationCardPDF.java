@@ -18,15 +18,11 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import java.io.FileOutputStream;
@@ -106,6 +102,7 @@ public class TeamAccreditationCardPDF {
     private void AccreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
         AddBackGroundImage(document, Path.returnBackgroundPath());
         PdfPTable table = PageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
+        table.setWidthPercentage(100);
         document.add(table);
         
     }

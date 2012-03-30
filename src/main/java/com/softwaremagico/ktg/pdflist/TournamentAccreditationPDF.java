@@ -65,7 +65,7 @@ public class TournamentAccreditationPDF {
         }
     }
 
-    public class ThreadAccreditation extends Thread{
+    public class ThreadAccreditation extends Thread {
 
         TimerPanel timerPanel;
         Document document;
@@ -147,7 +147,9 @@ public class TournamentAccreditationPDF {
 
         private void AccreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
             AddBackGroundImage(document, Path.returnBackgroundPath());
-            document.add(PageTable(document, writer, font, fontSize));
+            PdfPTable table = PageTable(document, writer, font, fontSize);
+            table.setWidthPercentage(100);
+            document.add(table);
         }
 
         private PdfPTable PageTable(Document document, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
@@ -178,8 +180,7 @@ public class TournamentAccreditationPDF {
                  * -1, 0, document.getPageSize().getHeight(),
                  * writer.getDirectContent()); mainTable.flushContent();
                  * document.newPage(); AddBackGroundImage(document,
-                 * Path.returnBackgroundPath());
-                }
+                 * Path.returnBackgroundPath()); }
                  */
             }
 
@@ -191,7 +192,7 @@ public class TournamentAccreditationPDF {
             /*
              * mainTable.writeSelectedRows(0, -1, 0,
              * document.getPageSize().getHeight(), writer.getDirectContent());
-            mainTable.flushContent();
+             * mainTable.flushContent();
              */
 
             return mainTable;

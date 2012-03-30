@@ -40,6 +40,7 @@ public abstract class ParentList extends PdfDocument {
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
         addBackGroundImage(document, Path.returnBackgroundPath());
         PdfPTable mainTable = createMainTable(document, document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
+        mainTable.setWidthPercentage(100);
         document.add(mainTable);
     }
 

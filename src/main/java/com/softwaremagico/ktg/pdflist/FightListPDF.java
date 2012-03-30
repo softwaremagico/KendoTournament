@@ -25,7 +25,6 @@ public class FightListPDF extends ParentList {
 
     private Tournament championship;
     private final int border = 0;
-    private final int teamsByPage = 40;
     Translator trans = null;
 
     public FightListPDF(Tournament tmp_championship) {

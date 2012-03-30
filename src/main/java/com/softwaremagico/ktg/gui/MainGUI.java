@@ -29,7 +29,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  *
@@ -121,7 +124,7 @@ public class MainGUI extends KendoFrame {
 
     private void setPhoto() {
         banner = new PhotoFrame(MainPhotoPanel, Path.returnMainPhoto());
-        // MainPhotoPanel.add(banner, 0);
+        //  MainPhotoPanel.add(banner, 0);
         banner.repaint();
     }
 
@@ -377,7 +380,7 @@ public class MainGUI extends KendoFrame {
         ExportMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"export.png"));
         ImportMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"import.png"));
         DatabaseUpdateMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"execute.png"));
-        ConvertDatabaseMenuItem = new javax.swing.JMenuItem();
+        ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"convertDatabase.png"));
         MonitorMenu = new javax.swing.JMenu();
         MonitorMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"monitor.png"));
         ScoreMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));

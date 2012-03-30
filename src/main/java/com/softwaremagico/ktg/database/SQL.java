@@ -1653,7 +1653,7 @@ public abstract class SQL extends Database {
                 }
             }
         }
-        
+
         return !error;
     }
 
