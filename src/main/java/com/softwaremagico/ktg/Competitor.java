@@ -23,7 +23,7 @@ package com.softwaremagico.ktg;
  * @author jorge
  */
 public class Competitor extends Participant {
-  
+
     public String club;
     private int order;
 
@@ -53,4 +53,13 @@ public class Competitor extends Participant {
         club = club.trim();
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

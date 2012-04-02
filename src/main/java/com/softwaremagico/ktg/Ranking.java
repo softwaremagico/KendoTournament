@@ -125,7 +125,7 @@ public class Ranking {
         return new Float(0);
     }
 
-    public int obtainWonFights(List<Fight> fights, Team team, int level) {
+    public static int obtainWonFights(List<Fight> fights, Team team, int level) {
         int total = 0;
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
@@ -140,7 +140,7 @@ public class Ranking {
         return total;
     }
 
-    public int obtainDrawFights(List<Fight> fights, Team team, int level) {
+    public static int obtainDrawFights(List<Fight> fights, Team team, int level) {
         int total = 0;
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
@@ -155,7 +155,7 @@ public class Ranking {
         return total;
     }
 
-    public int obtainWonDuels(List<Fight> fights, Team team, int level) {
+    public static int obtainWonDuels(List<Fight> fights, Team team, int level) {
         int total = 0;
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
@@ -184,7 +184,7 @@ public class Ranking {
         return total;
     }
 
-    public int obtainDrawDuels(List<Fight> fights, Team team, int level) {
+    public static int obtainDrawDuels(List<Fight> fights, Team team, int level) {
         int total = 0;
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
@@ -205,7 +205,7 @@ public class Ranking {
         return total;
     }
 
-    public int obtainHits(List<Fight> fights, Team team, int level) {
+    public static int obtainHits(List<Fight> fights, Team team, int level) {
         int total = 0;
         //String undraw;
         for (int j = 0; j < fights.size(); j++) {
@@ -372,19 +372,4 @@ public class Ranking {
             teamsScore.add((double) 0);
         }
     }
-
-    /*
-     * public Team getTeamInOrderOfScore(int order, List<Fight> fights, boolean
-     * resolvDraws) { updateScoreForTeams(fights); List<Team> sortedTeams =
-     * getTeamsOrderedByScore(); try { //if (resolvDraws &&
-     * teamsScoreOrdered.get(order).equals(teamsScoreOrdered.get(order + 1)) &&
-     * order >= numberMaxOfWinners - 1) { if (resolvDraws &&
-     * teamsScoreOrdered.get(order).equals(teamsScoreOrdered.get(order + 1))) {
-     * return resolvDrawTeams(order, sortedTeams); } } catch
-     * (IndexOutOfBoundsException iob) { } try { return sortedTeams.get(order);
-     * } catch (IndexOutOfBoundsException iob) { //If there are only one team in
-     * a group, there are no fights. In trees where are even groups. try {
-     * return teams.get(0); } catch (IndexOutOfBoundsException iob2) { return
-     * null; } } }
-     */
 }

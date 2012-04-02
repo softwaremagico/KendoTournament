@@ -39,15 +39,7 @@ public class Fights {
     }
 
     public boolean existFight(Fight f) {
-        for (int i = 0; i < fights.size(); i++) {
-            if (f.team1.returnName().equals(fights.get(i).team1.returnName())
-                    && f.team2.returnName().equals(fights.get(i).team2.returnName())
-                    && f.level == fights.get(i).level
-                    && f.competition.name.equals((fights.get(i).competition.name))) {
-                return true;
-            }
-        }
-        return false;
+        return fights.contains(f);
     }
 
     public void add(Fight f) {
@@ -326,13 +318,11 @@ public class Fights {
     }
 
     private boolean addFightToList(Fight f, List<Fight> fightsList) {
-        for (int i = 0; i < fightsList.size(); i++) {
-            if ((fightsList.get(i).team1 == f.team1 && fightsList.get(i).team2 == f.team2)
-                    || (fightsList.get(i).team2 == f.team1 && fightsList.get(i).team1 == f.team2)) {
-                return false;
-            }
+        if (fightsList.contains(f)) {
+            return false;
+        } else {
+            fightsList.add(f);
         }
-        fightsList.add(f);
         return true;
     }
 
@@ -641,34 +631,6 @@ public class Fights {
             //And the couple of the next couple is not my own number.
             return true;
         }
-
-        /*
-         * if ((teamA != c.a) && (existCoupleWithTeam(couples, c.a) > 2) ||
-         * ((teamA != c.b) && existCoupleWithTeam(couples, c.b) > 2)) { //And
-         * the couple of the next couple is not my own number. return true; }
-         *
-         * //The other team of the couple has only two couples left. if ((teamA
-         * != c.a) && (existCoupleWithTeam(couples, c.a) == 2)) { //And the
-         * couple of the next couple is not my own number. List<Couple>
-         * nextCouples = new ArrayList<Couple>();
-         *
-         * //Obtain the couples of the next number. for (int i = 0; i <
-         * couples.size(); i++) { if ((couples.get(i).a == c.a &&
-         * couples.get(i).b != teamA) || (couples.get(i).b == c.a &&
-         * couples.get(i).a != teamA)) { nextCouples.add(c); } } }
-         *
-         * if ((teamA != c.b) && (existCoupleWithTeam(couples, c.b) == 2)) {
-         * //And the couple of the next couple is not my own number.
-         * List<Couple> nextCouples = new ArrayList<Couple>();
-         *
-         * //Obtain the couples of the next number. for (int i = 0; i <
-         * couples.size(); i++) { if ((couples.get(i).a == c.b &&
-         * couples.get(i).b != teamA) || (couples.get(i).b == c.b &&
-         * couples.get(i).a != teamA)) { nextCouples.add(c); } } }
-         *
-         * //We only can choose one couple, the last one. if
-         * (existCoupleWithTeam(couples, teamA) == 1) { return true; }
-         */
 
         return false;
     }

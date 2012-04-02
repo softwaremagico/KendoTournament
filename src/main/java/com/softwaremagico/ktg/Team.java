@@ -100,8 +100,8 @@ public class Team implements Serializable {
     public int getIndexOfMember(int level, String competitorID) {
         try {
             List<Competitor> orderInLevel = getCompetitorsInLevel(level);
-            for (int i = 0; i < orderInLevel.size();i++) {
-                if(orderInLevel.get(i).id.equals(competitorID)){
+            for (int i = 0; i < orderInLevel.size(); i++) {
+                if (orderInLevel.get(i).id.equals(competitorID)) {
                     return i;
                 }
             }
@@ -216,5 +216,26 @@ public class Team implements Serializable {
             }
             System.out.println(" +++++++ +++++++++++++ +++++++ ");
         }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Team)) {
+            return false;
+        }
+        Team otherTeam = (Team) object;
+        return this.name.equals(otherTeam.name) && this.competition.equals(otherTeam.competition);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + (this.competition != null ? this.competition.hashCode() : 0);
+        hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
     }
 }

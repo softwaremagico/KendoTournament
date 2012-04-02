@@ -71,7 +71,6 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     @Override
     public void generateStatistics() {
-        Statistics stats = new Statistics();
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

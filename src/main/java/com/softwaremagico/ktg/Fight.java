@@ -71,20 +71,13 @@ public class Fight implements Serializable {
     }
 
     public int isOver() {
-        /*try {
-        Team winnerTeam = winner();
-        if (winnerTeam.returnName().equals(team1.returnName())) {
-        winner = -1;
-        return -1;
-        }
-        if (winnerTeam.returnName().equals(team2.returnName())) {
-        winner = 1;
-        return 1;
-        }
-        } catch (NullPointerException npe) {
-        return winner;
-        }
-        winner = 2;*/
+        /*
+         * try { Team winnerTeam = winner(); if
+         * (winnerTeam.returnName().equals(team1.returnName())) { winner = -1;
+         * return -1; } if (winnerTeam.returnName().equals(team2.returnName()))
+         * { winner = 1; return 1; } } catch (NullPointerException npe) { return
+         * winner; } winner = 2;
+         */
         return winner;
     }
 
@@ -129,7 +122,8 @@ public class Fight implements Serializable {
     }
 
     /**
-     * Return the winner only counting the duels. 
+     * Return the winner only counting the duels.
+     *
      * @return Team winner of match.
      */
     public Team winnerByDuels() {
@@ -163,6 +157,7 @@ public class Fight implements Serializable {
 
     /**
      * To win a fight, a team need to win more duels or do more points.
+     *
      * @return
      */
     public boolean isDrawFight() {
@@ -270,5 +265,31 @@ public class Fight implements Serializable {
             score += duels.get(i).howManyPoints(team1);
         }
         return score;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Fight)) {
+            return false;
+        }
+        Fight otherFight = (Fight) object;
+        return this.team1.equals(otherFight.team1)
+                && this.team2.equals(otherFight.team2)
+                && this.competition.equals(otherFight.competition)
+                && this.level == otherFight.level;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + (this.team1 != null ? this.team1.hashCode() : 0);
+        hash = 59 * hash + (this.team2 != null ? this.team2.hashCode() : 0);
+        hash = 59 * hash + (this.competition != null ? this.competition.hashCode() : 0);
+        hash = 59 * hash + this.level;
+        return hash;
     }
 }

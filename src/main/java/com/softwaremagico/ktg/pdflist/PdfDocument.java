@@ -19,7 +19,10 @@
 package com.softwaremagico.ktg.pdflist;
 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.*;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfPTableEvent;
+import com.lowagie.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
@@ -36,7 +39,13 @@ import javax.swing.JOptionPane;
  */
 public abstract class PdfDocument {
 
-    protected int fontSize = 17;
+    protected int fontSize = 12;
+    protected String font = FontFactory.HELVETICA;
+    protected int fontType = Font.BOLD;
+    protected int rightMargin = 50;
+    protected int leftMargin = 50;
+    protected int topMargin = 65;
+    protected int bottomMargin = 55;
 
     protected Document documentData(Document document) {
         document.addTitle("Kendo Tournament's File");
@@ -59,21 +68,22 @@ public abstract class PdfDocument {
          * document.getPageSize().getHeight()); png.setAbsolutePosition(0, 0);
          * document.add(png);
          */
+
+        Image img = Image.getInstance(Path.returnBackgroundPath());
+        img.setAbsolutePosition(0, 0);
+        document.add(img);
     }
 
     protected void generatePDF(Document document, PdfWriter writer) throws Exception {
-        String font = FontFactory.HELVETICA;
         documentData(document);
         document.open();
-        //document.setMargins(180, 108, 72, 36);
-        document.setMargins(0, 0, 0, 0);
         createPagePDF(document, writer, font);
         document.close();
     }
 
     public boolean createFile(String path) {
         //DIN A6 105 x 148 mm
-        Document document = new Document(getPageSize());
+        Document document = new Document(getPageSize(), rightMargin, leftMargin, topMargin, bottomMargin);
         if (!path.endsWith(".pdf")) {
             path += ".pdf";
         }

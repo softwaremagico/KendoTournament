@@ -2116,10 +2116,6 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             showSQLError(ex.getErrorCode());
         }
-        //Complete the team with void competitors
-        //for (int i = results.size(); i < t.competition.teamSize; i++) {
-        //    results.add(new Competitor("", "", "", ""));
-        //}
         return results;
     }
 
@@ -2597,17 +2593,6 @@ public abstract class SQL extends Database {
                             level = fights.get(i).level;
                         }
                     }
-
-                    //Obtain all teams in fights
-                    List<Team> teams = KendoTournamentGenerator.getInstance().getTeamsOfFights(fights);
-
-                    //Add the teams in the new level.
-                    /*
-                     * if (level > 0) { for (int i = 0; i < teams.size(); i++) {
-                     * teams.get(i).completeToLevel(level); for (int addLevel =
-                     * 1; addLevel <= level; addLevel++) {
-                     * extendTeamInLevel(teams.get(i), addLevel, false); } } }
-                     */
 
                     for (int i = 0; i < fights.size(); i++) {
                         //Add the fights that depends on the level and the teams.

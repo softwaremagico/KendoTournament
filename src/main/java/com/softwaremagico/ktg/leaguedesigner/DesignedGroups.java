@@ -125,12 +125,7 @@ public class DesignedGroups implements Serializable {
 
     public boolean containTeamInTournament(Team t, String Championship) {
         List<Team> ts = returnUsedTeamsOfTournament(Championship);
-        for (int i = 0; i < ts.size(); i++) {
-            if (t.returnName().equals(ts.get(i).returnName())) {
-                return true;
-            }
-        }
-        return false;
+        return isTeamIncludedInList(ts, t);
     }
 
     int returnNumberOfTotalTeamsPassNextRound(Integer level) {
@@ -221,12 +216,7 @@ public class DesignedGroups implements Serializable {
     }
 
     private boolean isTeamIncludedInList(List<Team> list, Team team) {
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).returnName().equals(team.returnName())) {
-                return true;
-            }
-        }
-        return false;
+        return list.contains(team);
     }
 
     public void deleteTeamsOfLevel(Integer level) {
@@ -236,14 +226,8 @@ public class DesignedGroups implements Serializable {
                 groups.get(j).cleanTeams();
             }
         }
-        //updateInnerLevels();
     }
 
-    /*
-     * private void updateOrderTeamsOfLevel(int level) { List<DesignedGroup>
-     * groups = returnGroupsOfLevel(level); for (int i = 0; i < groups.size();
-     * i++) { groups.get(i).extendTeamOrder(); } }
-     */
     /**
      * ********************************************
      *
@@ -389,7 +373,6 @@ public class DesignedGroups implements Serializable {
     }
 
     public DesignedGroup returnGroupOfFight(Fight f) {
-        System.out.println(f.team1.returnName() +" vs " + f.team2.returnName());
         for (DesignedGroup dg : designedGroups) {
             if (dg.isFightOfGroup(f)) {
                 return dg;
@@ -891,11 +874,7 @@ public class DesignedGroups implements Serializable {
         return championship.fightingAreas;
     }
 
-    /*
-     * public int getArenaOfGroup(DesignedGroup group) { int level =
-     * group.getLevel(); List<DesignedGroup> groups =
-     * returnGroupsOfLevel(level); int pos = groups.indexOf(group); }
-     */
+   
     /**
      * ********************************************
      *
@@ -939,7 +918,7 @@ public class DesignedGroups implements Serializable {
     private void refillLevel(List<Fight> tmp_fights, int level) {
         List<Fight> fights = getFightsOfLevel(tmp_fights, level);
         List<Team> teamsOfGroup = new ArrayList<Team>();
-                
+
         for (int i = 0; i < fights.size(); i++) {
             //If one team exist in the group, then this fight is also of this group.
             if (isTeamIncludedInList(teamsOfGroup, fights.get(i).team1)) {
@@ -1073,7 +1052,6 @@ public class DesignedGroups implements Serializable {
     public boolean load(Tournament c) {
         championship = c;
 
-
         for (int i = 0; i < designedGroups.size(); i++) {
             if (!designedGroups.get(i).load(c)) {
                 return false;
@@ -1145,13 +1123,9 @@ public class DesignedGroups implements Serializable {
         if (from.getLevel() == to.getLevel() - 1) {
             if (numberOfSourcesOfLink(from) >= from.returnMaxNumberOfWinners()) {
                 removefirstSourceLink(from);
-
-
             }
             if (numberOfAddressesOfLink(to) >= 2) {
                 removefirstAddressLink(to);
-
-
             }
             links.add(from, to);
 
@@ -1162,13 +1136,9 @@ public class DesignedGroups implements Serializable {
     int numberOfSourcesOfLink(DesignedGroup from) {
         int number = 0;
 
-
-        for (int i = 0; i
-                < links.size(); i++) {
+        for (int i = 0; i < links.size(); i++) {
             if (links.get(i).source.equals(from)) {
                 number++;
-
-
             }
         }
         return number;
@@ -1178,14 +1148,9 @@ public class DesignedGroups implements Serializable {
 
     int numberOfAddressesOfLink(DesignedGroup to) {
         int number = 0;
-
-
-        for (int i = 0; i
-                < links.size(); i++) {
+        for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(to)) {
                 number++;
-
-
             }
         }
         return number;
@@ -1194,29 +1159,19 @@ public class DesignedGroups implements Serializable {
     }
 
     void removefirstSourceLink(DesignedGroup from) {
-        for (int i = 0; i
-                < links.size(); i++) {
+        for (int i = 0; i < links.size(); i++) {
             if (links.get(i).source.equals(from)) {
                 links.remove(i);
-
-
                 break;
-
-
             }
         }
     }
 
     void removefirstAddressLink(DesignedGroup to) {
-        for (int i = 0; i
-                < links.size(); i++) {
+        for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(to)) {
                 links.remove(i);
-
-
                 break;
-
-
             }
         }
     }
@@ -1224,51 +1179,32 @@ public class DesignedGroups implements Serializable {
     boolean allGroupsHaveManualLink() {
         try {
             List<DesignedGroup> groupslvl = returnGroupsOfLevel(0);
-
-
-            for (int i = 0; i
-                    < groupslvl.size(); i++) {
+            for (int i = 0; i < groupslvl.size(); i++) {
                 boolean found = false;
 
-
-                for (int j = 0; j
-                        < links.size(); j++) {
+                for (int j = 0; j < links.size(); j++) {
                     if (links.get(j).source.equals(groupslvl.get(i))) {
                         found = true;
-
-
                         break;
-
-
                     }
                 }
                 if (!found) {
                     return false;
-
-
                 }
             }
             return true;
-
-
         } catch (NullPointerException npe) {
             return false;
-
-
         }
     }
 
     void cleanLinksSelectedGroup() {
         try {
-            for (int i = 0; i
-                    < links.size(); i++) {
+            for (int i = 0; i < links.size(); i++) {
                 if (links.get(i).source.equals(returnLastSelected())) {
                     links.remove(i);
                     i--;
-
                 }
-
-
             }
         } catch (NullPointerException npe) {
         }
@@ -1278,17 +1214,12 @@ public class DesignedGroups implements Serializable {
         int found = 0; //Winners in the manual linking are stored by order.
 
 
-        for (int i = 0; i
-                < links.size(); i++) {
+        for (int i = 0; i < links.size(); i++) {
             if (links.get(i).source.equals(source)) {
                 if (found == winner) {
                     return links.get(i).address;
-
-
                 }
                 found++;
-
-
             }
         }
         return null;

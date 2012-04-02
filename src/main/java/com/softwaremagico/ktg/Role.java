@@ -21,7 +21,8 @@ package com.softwaremagico.ktg;
 import java.io.Serializable;
 
 /**
- * The objective of this class is store the database into a file. For managing the Role used in the GUI, use the RoleTag class. 
+ * The objective of this class is store the database into a file. For managing
+ * the Role used in the GUI, use the RoleTag class.
  */
 public class Role implements Serializable {
 
@@ -38,11 +39,29 @@ public class Role implements Serializable {
     }
 
     public String competitorID() {
-        /*Float dni = Float.parseFloat(competitorID);
-        if (competitorID.length() == 8 && dni != null) {
-            String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
-            return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(Integer.parseInt(competitorID) % 23);
-        }*/
         return competitorID;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        Role otherRole = (Role) object;
+        return this.tournament.equals(otherRole.tournament)
+                && this.Role.equals(otherRole.Role)
+                && this.competitorID.equals(otherRole.competitorID);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
+        hash = 67 * hash + (this.competitorID != null ? this.competitorID.hashCode() : 0);
+        hash = 67 * hash + (this.Role != null ? this.Role.hashCode() : 0);
+        return hash;
     }
 }

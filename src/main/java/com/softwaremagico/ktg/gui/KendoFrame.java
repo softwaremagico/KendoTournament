@@ -19,10 +19,10 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 
 /**
  *
@@ -72,6 +72,16 @@ public abstract class KendoFrame extends javax.swing.JFrame {
      */
     public String exploreWindowsForPdf(String title, int mode, String file) {
         return exploreWindows(title, mode, file, new PdfFilter());
+    }
+
+    /**
+     * Generate a window to search in the file system.
+     *
+     * @param mode The kind of window.
+     * @see setFileSelectionMode
+     */
+    public String exploreWindowsForPdfAndTxt(String title, int mode, String file) {
+        return exploreWindows(title, mode, file, new PdfAndTxtFilter());
     }
 
     /**
@@ -131,6 +141,20 @@ public abstract class KendoFrame extends javax.swing.JFrame {
         @Override
         public String getDescription() {
             return "Portable Document Format";
+        }
+    }
+
+    private class PdfAndTxtFilter extends javax.swing.filechooser.FileFilter {
+
+        @Override
+        public boolean accept(File file) {
+            String filename = file.getName();
+            return file.isDirectory() || filename.endsWith(".pdf") || filename.endsWith(".txt");
+        }
+
+        @Override
+        public String getDescription() {
+            return "Portable Document Format and text files";
         }
     }
 

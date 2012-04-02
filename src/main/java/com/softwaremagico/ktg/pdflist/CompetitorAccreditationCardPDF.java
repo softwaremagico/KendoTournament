@@ -168,7 +168,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         float[] widths = {0.02f, 0.96f, 0.02f};
         PdfPTable table2 = new PdfPTable(widths);
 
-        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role), FontFactory.getFont(font, fontSize - 10));
+        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role), FontFactory.getFont(font, fontSize - 2));
         cell = new PdfPCell(p);
         cell.setColspan(3);
         cell.setBorderWidth(border);
@@ -176,7 +176,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
         table2.addCell(cell);
 
-        p = new Paragraph("", FontFactory.getFont(font, fontSize - 10));
+        p = new Paragraph("", FontFactory.getFont(font, fontSize - 2));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);
@@ -291,11 +291,10 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
     public PdfPTable pageTable(float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
-        Paragraph p;
         float[] widths = {0.95f, 0.05f};
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
-        mainTable.setTotalWidth(width+30);
+        mainTable.setTotalWidth(width + 30);
 
 
         cell = new PdfPCell(mainTable(width, height, font, fontSize));

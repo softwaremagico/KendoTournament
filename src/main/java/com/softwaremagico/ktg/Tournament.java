@@ -19,19 +19,9 @@
  */
 package com.softwaremagico.ktg;
 
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.Image;
-import java.awt.Transparency;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -226,5 +216,24 @@ public class Tournament implements Serializable {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Tournament)) {
+            return false;
+        }
+        Tournament otherTournament = (Tournament) object;
+        return this.name.equals(otherTournament.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
     }
 }

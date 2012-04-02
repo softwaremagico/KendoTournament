@@ -32,7 +32,7 @@ public class ClubListPDF extends ParentList {
     }
 
     public float[] getTableWidths() {
-        float[] widths = {0.05f, 0.60f, 0.30f, 0.05f};
+        float[] widths = {0.60f, 0.30f};
         return widths;
     }
 
@@ -42,130 +42,43 @@ public class ClubListPDF extends ParentList {
     }
 
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        PdfPCell cell;
         Paragraph p;
         int cellNumber = 0;
+        boolean firstClub = true;
 
         List<Club> clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-
             List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship.name, false, false);
 
             if (competitors.size() > 0) {
-
-                p = new Paragraph(" ", FontFactory.getFont(font, fontSize, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(4);
-                cell.setBorderWidth(border);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
-
-                p = new Paragraph(" ", FontFactory.getFont(font, fontSize, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(1);
-                cell.setBorderWidth(border);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
-
-                /*
+                if (!firstClub) {
+                    mainTable.addCell(getEmptyRow());
+                } else {
+                    firstClub = false;
+                }
+                /**
                  * Club
                  */
                 String text = clubs.get(i).returnName();
                 if (clubs.get(i).returnCountry().length() > 1) {
                     text += " (" + clubs.get(i).returnCountry() + ")";
                 }
-
-                /*
-                 * try { if (clubs.get(i).email.length() > 1) { text += ": " +
-                 * clubs.get(i).email; } } catch (NullPointerException npe) { }
-                 */
-                p = new Paragraph(text, FontFactory.getFont(font, fontSize, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(2);
-                cell.setBorderWidth(1);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setBackgroundColor(new Color(255, 255, 255));
-                mainTable.addCell(cell);
-
-                p = new Paragraph(" ", FontFactory.getFont(font, fontSize, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(1);
-                cell.setBorderWidth(border);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
-
-                cellNumber += 3;
-
+                mainTable.addCell(getHeader2(text, 2));
             }
 
             for (int j = 0; j < competitors.size(); j++) {
-
-                /*
-                 * Border Line
-                 */
-                p = new Paragraph(" ", FontFactory.getFont(font, fontSize - 8, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(1);
-                cell.setBorderWidth(border);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
-
-                p = new Paragraph(competitors.get(j).returnSurnameName() + " (" + competitors.get(j).getId() + ")", FontFactory.getFont(font, fontSize - 8, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setBorderWidth(1);
-                cell.setColspan(1);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                Color color;
                 if (cellNumber % 2 == 0) {
-                    cell.setBackgroundColor(new Color(255, 255, 255));
+                    color = new Color(255, 255, 255);
                 } else {
-                    cell.setBackgroundColor(new Color(230, 230, 230));
+                    color = new Color(230, 230, 230);
                 }
-                mainTable.addCell(cell);
+                mainTable.addCell(getCell(competitors.get(j).returnSurnameName() + " (" + competitors.get(j).getId() + ")", 1, Element.ALIGN_LEFT, color));
+                mainTable.addCell(getCell(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(KendoTournamentGenerator.getInstance().database.getTagRole(championship, competitors.get(j))), 1, 1, color));
 
-                p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(KendoTournamentGenerator.getInstance().database.getTagRole(championship, competitors.get(j))), FontFactory.getFont(font, fontSize - 8, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setBorderWidth(1);
-                cell.setColspan(1);
-                if (cellNumber % 2 == 0) {
-                    cell.setBackgroundColor(new Color(255, 255, 255));
-                } else {
-                    cell.setBackgroundColor(new Color(230, 230, 230));
-                }
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
-
-                /*
-                 * Border Line
-                 */
-                p = new Paragraph(" ", FontFactory.getFont(font, fontSize - 8, Font.BOLD));
-                cell = new PdfPCell(p);
-                cell.setColspan(1);
-                cell.setBorderWidth(border);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                mainTable.addCell(cell);
                 cellNumber++;
-
-                //Add a new page if it is necessary...
-               /*
-                 * if ((cellNumber >= linesByPage - 1) && (j <
-                 * competitors.size() - 1)) { mainTable.writeSelectedRows(0, -1,
-                 * 0, document.getPageSize().getHeight() - 40,
-                 * writer.getDirectContent()); mainTable.flushContent();
-                 * document.newPage(); AddBackGroundImage(document,
-                 * Path.returnBackgroundPath()); cellNumber = 0; }
-                 */
             }
-
-            //Add a new page if is necessary...
-            /*
-             * if ((cellNumber >= linesByPage - 1) && (i < clubs.size() - 1)) {
-             * mainTable.writeSelectedRows(0, -1, 0,
-             * document.getPageSize().getHeight() - 40,
-             * writer.getDirectContent()); mainTable.flushContent();
-             * document.newPage(); AddBackGroundImage(document,
-             * Path.returnBackgroundPath()); cellNumber = 0; }
-             */
         }
     }
 
@@ -173,7 +86,7 @@ public class ClubListPDF extends ParentList {
     public void createHeaderRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
         PdfPCell cell;
         Paragraph p;
-        p = new Paragraph(championship.name, FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(championship.name + "\n ", FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(headerBorder);
@@ -185,11 +98,7 @@ public class ClubListPDF extends ParentList {
 
     @Override
     public void createFooterRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        PdfPCell cell;
-        cell = new PdfPCell();
-        cell.setColspan(getTableWidths().length);
-        cell.setBorderWidth(footerBorder);
-        mainTable.addCell(cell);
+        mainTable.addCell(getEmptyRow());
     }
 
     @Override

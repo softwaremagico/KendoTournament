@@ -18,10 +18,9 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import javax.swing.JPanel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Statistics;
 import com.softwaremagico.ktg.language.Translator;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -45,7 +44,6 @@ public class StatisticsLines extends StatisticsGUI {
 
     @Override
     public void generateStatistics() {
-        Statistics stats = new Statistics();
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

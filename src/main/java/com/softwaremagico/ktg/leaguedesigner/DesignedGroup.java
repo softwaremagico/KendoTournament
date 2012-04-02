@@ -18,6 +18,11 @@
  */
 package com.softwaremagico.ktg.leaguedesigner;
 
+import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,11 +32,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -293,16 +293,8 @@ public class DesignedGroup extends Group implements Serializable {
         teams.addAll(tmp_teams);
     }
 
-    private boolean isTeamOfGroup(String team) {
-        for (int i = 0; i < teams.size(); i++) {
-            try {
-                if (teams.get(i).returnName().equals(team)) {
-                    return true;
-                }
-            } catch (NullPointerException npe) {
-            }
-        }
-        return false;
+    private boolean isTeamOfGroup(Team team) {
+        return teams.contains(team);
     }
 
     public List<Team> getWinners() {
@@ -367,7 +359,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     public boolean isFightOfGroup(Fight f) {
-        if (isTeamOfGroup(f.team1.returnName()) && isTeamOfGroup(f.team2.returnName()) && level == f.level) {
+        if (isTeamOfGroup(f.team1) && isTeamOfGroup(f.team2) && level == f.level) {
             return true;
         }
         return false;
@@ -383,12 +375,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     private boolean existFight(List<Fight> fights, Fight f) {
-        for (int i = 0; i < fights.size(); i++) {
-            if ((fights.get(i).team1.equals(f.team1)) && (fights.get(i).team2.equals(f.team2))) {
-                return true;
-            }
-        }
-        return false;
+        return fights.contains(f);
     }
 
     public List<Fight> getFightsOfGroup(List<Fight> fights) {
@@ -625,12 +612,6 @@ public class DesignedGroup extends Group implements Serializable {
             }
         }
         return index;
-    }
-
-    private void showScore() {
-        for (int i = 0; i < teams.size(); i++) {
-            System.out.println(teams.get(i).returnName() + ": " + teamsScore.get(i));
-        }
     }
 
     private double obainScoreOfTeam(int team) {

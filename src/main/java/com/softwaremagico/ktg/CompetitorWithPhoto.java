@@ -110,4 +110,14 @@ public class CompetitorWithPhoto extends Competitor implements Serializable {
         DecimalFormat myFormatter = new DecimalFormat("000");
         return n1 + n2 + myFormatter.format(photoSize % 1000);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

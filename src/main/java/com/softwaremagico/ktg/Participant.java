@@ -144,4 +144,23 @@ public class Participant {
         String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
         return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(Integer.parseInt(dni) % 23);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Participant)) {
+            return false;
+        }
+        Participant otherParticipant = (Participant) object;
+        return this.id.equals(otherParticipant.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
 }
