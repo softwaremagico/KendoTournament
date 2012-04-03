@@ -51,7 +51,7 @@ public class TournamentAccreditationPDF {
         championship = tmp_championship;
     }
 
-    public void GenerateTournamentPDF(String path, boolean printAll) {
+    public void generateTournamentPDF(String path, boolean printAll) {
         //DIN A6 105 x 148 mm
         Document document = new Document(PageSize.A4);
         if (!path.endsWith(".pdf")) {
@@ -92,7 +92,7 @@ public class TournamentAccreditationPDF {
             boolean error = false;
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                GeneratePDF(document, writer);
+                generatePDF(document, writer);
                 MessageManager.customMessage("tournamentOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
                 KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsAccreditationPrinted(championship.name);
             } catch (NullPointerException npe) {
@@ -107,15 +107,15 @@ public class TournamentAccreditationPDF {
             return error;
         }
 
-        private void GeneratePDF(Document document, PdfWriter writer) throws Exception {
+        private void generatePDF(Document document, PdfWriter writer) throws Exception {
             String font = FontFactory.HELVETICA;
-            DocumentData(document);
+            documentData(document);
             document.open();
-            AccreditationGroupPagePDF(document, writer, font);
+            accreditationGroupPagePDF(document, writer, font);
             document.close();
         }
 
-        private Document DocumentData(Document document) {
+        private Document documentData(Document document) {
             document.addTitle("Kendo Tournament");
             document.addAuthor("Jorge Hortelano");
             document.addCreator("Kendo Tournament Tool");
@@ -125,7 +125,7 @@ public class TournamentAccreditationPDF {
             return document;
         }
 
-        private void AddBackGroundImage(Document document, String imagen) throws BadElementException,
+        private void addBackGroundImage(Document document, String imagen) throws BadElementException,
                 DocumentException, MalformedURLException, IOException {
             //Obtain and scale the background. 
             if (png == null) {
@@ -145,14 +145,14 @@ public class TournamentAccreditationPDF {
             document.add(png);
         }
 
-        private void AccreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-            AddBackGroundImage(document, Path.returnBackgroundPath());
-            PdfPTable table = PageTable(document, writer, font, fontSize);
+        private void accreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
+            addBackGroundImage(document, Path.returnBackgroundPath());
+            PdfPTable table = pageTable(document, writer, font, fontSize);
             table.setWidthPercentage(100);
             document.add(table);
         }
 
-        private PdfPTable PageTable(Document document, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
+        private PdfPTable pageTable(Document document, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
             PdfPCell cell;
             Paragraph p;
             float[] widths = {0.50f, 0.50f};

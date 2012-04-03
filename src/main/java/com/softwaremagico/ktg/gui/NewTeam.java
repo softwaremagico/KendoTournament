@@ -19,15 +19,15 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
 
 /**
  *
@@ -463,7 +463,7 @@ public class NewTeam extends KendoFrame {
                 if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TeamAccreditationCardPDF pdf = new TeamAccreditationCardPDF(t, listTournaments.get(TournamentComboBox.getSelectedIndex()));
-                    pdf.GenerateTeamPDF(file);
+                    pdf.generateTeamPDF(file);
                 }
 
             } catch (Exception ex) {

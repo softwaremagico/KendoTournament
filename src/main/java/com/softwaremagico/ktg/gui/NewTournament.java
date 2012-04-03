@@ -19,18 +19,18 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
 
 public class NewTournament extends KendoFrame {
 
@@ -359,7 +359,7 @@ public class NewTournament extends KendoFrame {
                 if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(t);
-                    pdf.GenerateTournamentPDF(file, true);
+                    pdf.generateTournamentPDF(file, true);
                 }
             } catch (Exception ex) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);

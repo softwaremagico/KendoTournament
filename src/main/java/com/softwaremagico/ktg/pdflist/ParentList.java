@@ -43,14 +43,58 @@ public abstract class ParentList extends PdfDocument {
         document.add(mainTable);
     }
 
+    /**
+     * Creates the header of the document.
+     *
+     * @param document
+     * @param mainTable
+     * @param width
+     * @param height
+     * @param writer
+     * @param font
+     * @param fontSize
+     */
     public abstract void createHeaderRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize);
 
+    /**
+     * Creates the body of the document.
+     *
+     * @param document
+     * @param mainTable
+     * @param width
+     * @param height
+     * @param writer
+     * @param font
+     * @param fontSize
+     */
     public abstract void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize);
 
+    /**
+     * Creates the footer of the document.
+     *
+     * @param document
+     * @param mainTable
+     * @param width
+     * @param height
+     * @param writer
+     * @param font
+     * @param fontSize
+     */
     public abstract void createFooterRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize);
 
+    /**
+     * Obtain the widh of the main table of the document.
+     *
+     * @return
+     */
     public abstract float[] getTableWidths();
 
+    /**
+     * Creates an empty cell.
+     *
+     * @param colspan The width of the cell.
+     * @return
+     */
     public PdfPCell getEmptyCell(int colspan) {
         Paragraph p = new Paragraph(" ", FontFactory.getFont(font, fontSize, fontType));
         PdfPCell cell = new PdfPCell(p);
@@ -60,14 +104,38 @@ public abstract class ParentList extends PdfDocument {
         return cell;
     }
 
+    /**
+     * Creates an empty row. It is formed by as many cells as the width of the
+     * table.
+     *
+     * @return
+     */
     public PdfPCell getEmptyRow() {
         return getEmptyCell(getTableWidths().length);
     }
 
+    /**
+     * Creates an empty cell.
+     *
+     * @return
+     */
     public PdfPCell getEmptyCell() {
         return getEmptyCell(1);
     }
 
+    /**
+     * Creates a cell.
+     *
+     * @param text Test to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param colspan Width of the cell.
+     * @param align Text alignment.
+     * @param color Background color of the cell.
+     * @param font Font of the text.
+     * @param fontSize Size of the font.
+     * @param fontType Cursive, Bold, ...
+     * @return
+     */
     public PdfPCell getCell(String text, int border, int colspan, int align, Color color, String font, int fontSize, int fontType) {
         Paragraph p = new Paragraph(text, FontFactory.getFont(font, fontSize, fontType));
         PdfPCell cell = new PdfPCell(p);
@@ -79,68 +147,205 @@ public abstract class ParentList extends PdfDocument {
         return cell;
     }
 
+    /**
+     * Default cell
+     *
+     * @param text Text that will appear into the cell.
+     * @return
+     */
     public PdfPCell getCell(String text) {
         return getCell(text, 0, 1, Element.ALIGN_LEFT, Color.WHITE, font, fontSize, fontType);
     }
 
+    /**
+     * Creates a cell.
+     *
+     * @param text Text to be putted in the cell.
+     * @param colspan Width of the cell.
+     * @return
+     */
     public PdfPCell getCell(String text, int colspan) {
         return getCell(text, 0, colspan, Element.ALIGN_LEFT, Color.WHITE, font, fontSize, fontType);
     }
 
+    /**
+     * Creates a cell.
+     *
+     * @param text Text to be putted in the cell.
+     * @param colspan Width of the cell.
+     * @param align Text alignment.
+     * @return
+     */
     public PdfPCell getCell(String text, int colspan, int align) {
         return getCell(text, 0, colspan, align, Color.WHITE, font, fontSize, fontType);
     }
 
+    /**
+     * Creates a cell.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param colspan Width of the cell.
+     * @param align Text alignment.
+     * @return
+     */
     public PdfPCell getCell(String text, int border, int colspan, int align) {
         return getCell(text, border, colspan, align, Color.WHITE, font, fontSize, fontType);
     }
 
+    /**
+     * Creates a cell.
+     *
+     * @param text Text to be putted in the cell.
+     * @param colspan Width of the cell.
+     * @param align Text alignment.
+     * @param color Background color of the cell.
+     * @return
+     */
     public PdfPCell getCell(String text, int colspan, int align, Color color) {
         return getCell(text, 0, colspan, align, Color.WHITE, font, fontSize, fontType);
     }
 
+    /**
+     * Creates a cell with a header (similar to html headers).
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param align Text alignment.
+     * @param fontSize Size of the font.
+     * @return
+     */
     public PdfPCell getHeader(String text, int border, int align, int fontSize) {
         return getCell(text, border, getTableWidths().length, align, new Color(255, 255, 255), font, fontSize, Font.BOLD);
     }
 
+    /**
+     * Default header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param align Text alignment.
+     * @param fontSize Size of the font.
+     * @param colspan Width of the cell.
+     * @return
+     */
     public PdfPCell getHeader(String text, int border, int align, int fontSize, int colspan) {
         return getCell(text, border, colspan, align, new Color(255, 255, 255), font, fontSize, Font.BOLD);
     }
 
+    /**
+     * Section header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @return
+     */
     public PdfPCell getHeader1(String text, int border) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 8);
     }
 
+    /**
+     * The bigger header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param align Text alignment.
+     * @return
+     */
     public PdfPCell getHeader1(String text, int border, int align) {
         return getHeader(text, border, align, fontSize + 8);
     }
 
+    /**
+     * Subsection header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @return
+     */
     public PdfPCell getHeader2(String text, int border) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 6);
     }
 
+    /**
+     * Subsection header
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param align Text alignment.
+     * @return
+     */
     public PdfPCell getHeader2(String text, int border, int align) {
         return getHeader(text, border, align, fontSize + 6);
     }
 
+    /**
+     * Subsubsection header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @return
+     */
     public PdfPCell getHeader3(String text, int border) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 4);
     }
 
+    /**
+     * Marked text.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param colspan Width of the cell.
+     * @return
+     */
     public PdfPCell getHeader3(String text, int border, int colspan) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 4, colspan);
     }
 
+    /**
+     * Subsubsection header.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @return
+     */
     public PdfPCell getHeader4(String text, int border) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 2);
     }
 
+    /**
+     * Marked text.
+     *
+     * @param text Text to be putted in the cell.
+     * @param border Number of pixels of the border width.
+     * @param colspan Width of the cell.
+     * @return
+     */
     public PdfPCell getHeader4(String text, int border, int colspan) {
         return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 2, colspan);
     }
 
+    /**
+     * Defines the propierties of the main table of the document.
+     *
+     * @param mainTable
+     */
     public abstract void setTablePropierties(PdfPTable mainTable);
 
+    /**
+     * Creates the main table of the document.
+     *
+     * @param document
+     * @param width
+     * @param height
+     * @param writer
+     * @param font
+     * @param fontSize
+     * @return
+     * @throws IOException
+     * @throws BadElementException
+     * @throws Exception
+     */
     private PdfPTable createMainTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
         PdfPCell cellHeader, cellFooter;
         Paragraph p;

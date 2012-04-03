@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Basical document in PDF.
  * @author LOCAL\jhortelano
  */
 public abstract class PdfDocument {
