@@ -22,7 +22,6 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.files.Path;
 import java.awt.Color;
 import java.io.IOException;
 
@@ -37,7 +36,7 @@ public abstract class ParentList extends PdfDocument {
 
     @Override
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-        addBackGroundImage(document, Path.returnBackgroundPath());
+        //addBackGroundImage(document, Path.returnBackgroundPath(), writer);
         PdfPTable mainTable = createMainTable(document, document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         mainTable.setWidthPercentage(100);
         document.add(mainTable);

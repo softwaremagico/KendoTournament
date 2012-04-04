@@ -19,10 +19,7 @@
 package com.softwaremagico.ktg.pdflist;
 
 import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfPTableEvent;
-import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.pdf.*;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
@@ -35,6 +32,7 @@ import javax.swing.JOptionPane;
 
 /**
  * Basical document in PDF.
+ *
  * @author LOCAL\jhortelano
  */
 public abstract class PdfDocument {
@@ -46,6 +44,23 @@ public abstract class PdfDocument {
     protected int leftMargin = 50;
     protected int topMargin = 65;
     protected int bottomMargin = 55;
+    protected Image bgImage;
+    private float opacity = 0.6f;
+
+    private void startBackgroundImage() {
+        try {
+            bgImage = Image.getInstance(Path.returnBackgroundPath());
+        } catch (BadElementException ex) {
+            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        } catch (MalformedURLException ex) {
+            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        } catch (IOException ex) {
+            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+    }
 
     protected Document documentData(Document document) {
         document.addTitle("Kendo Tournament's File");
@@ -57,26 +72,10 @@ public abstract class PdfDocument {
         return document;
     }
 
-    protected void addBackGroundImage(Document document, String imagen) throws BadElementException,
-            DocumentException, MalformedURLException, IOException {
-        /*
-         * com.lowagie.text.Image png;
-         *
-         * png = com.lowagie.text.Image.getInstance(imagen);
-         * png.setAlignment(com.lowagie.text.Image.MIDDLE);
-         * png.scaleToFit(document.getPageSize().getWidth(),
-         * document.getPageSize().getHeight()); png.setAbsolutePosition(0, 0);
-         * document.add(png);
-         */
-
-        Image img = Image.getInstance(Path.returnBackgroundPath());
-        img.setAbsolutePosition(0, 0);
-        document.add(img);
-    }
-
     protected void generatePDF(Document document, PdfWriter writer) throws Exception {
         documentData(document);
         document.open();
+        startBackgroundImage();
         createPagePDF(document, writer, font);
         document.close();
     }
@@ -113,35 +112,70 @@ public abstract class PdfDocument {
     protected abstract void createPagePDF(Document document, PdfWriter writer, String font) throws Exception;
 
     /**
-     * Inner class with a table event that draws a background with rounded
-     * corners.
+     * Event for creating a transparent cell.
      */
-    class TableBackground implements PdfPTableEvent {
+    class TransparentCellBackground implements PdfPCellEvent {
 
-        /*
-         * public void tableLayout(PdfPTable table, float[][] width, float[]
-         * height, int headerRows, int rowStart, PdfContentByte[] canvas) {
-         * PdfContentByte background = canvas[PdfPTable.BASECANVAS];
-         * background.saveState(); background.setCMYKColorFill(0x00, 0x00, 0xFF,
-         * 0x0F); background.roundRectangle( width[0][0], height[height.length -
-         * 1] - 2, width[0][1] - width[0][0] + 6, height[0] -
-         * height[height.length - 1] - 4, 4); background.fill();
-         * background.restoreState(); }
-         */
-        public void tableLayout(PdfPTable table, float[][] widths, float[] heights,
-                int headerRows, int rowStart, PdfContentByte[] canvases) {
-            System.out.println("************************************ ------");
-            int columns;
-            Rectangle rect;
-            int footer = widths.length - table.getFooterRows();
-            int header = table.getHeaderRows() - table.getFooterRows() + 1;
-            for (int row = header; row < footer; row += 2) {
-                columns = widths[row].length - 1;
-                rect = new Rectangle(widths[row][0], heights[row],
-                        widths[row][columns], heights[row + 1]);
-                rect.setBackgroundColor(new Color(125, 0, 200));
-                rect.setBorder(Rectangle.NO_BORDER);
-                canvases[PdfPTable.BASECANVAS].rectangle(rect);
+        public PdfGState documentGs = new PdfGState();
+
+        public TransparentCellBackground() {
+            documentGs.setFillOpacity(opacity);
+            documentGs.setStrokeOpacity(1f);
+        }
+
+        public void cellLayout(PdfPCell cell, Rectangle rect,
+                PdfContentByte[] canvas) {
+            PdfContentByte cb = canvas[PdfPTable.BACKGROUNDCANVAS];
+            cb.saveState();
+            cb.setGState(documentGs);
+            cb.setColorFill(new Color(255, 255, 255));
+            cb.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(),
+                    rect.getHeight());
+            cb.fill();
+            cb.restoreState();
+        }
+    }
+
+    /**
+     * Event class to draw the background image for table headers.
+     */
+    class CellBgEvent implements PdfPCellEvent {
+
+        public void cellLayout(PdfPCell cell, Rectangle rect,
+                PdfContentByte[] canvas) {
+
+            try {
+                Image cellBgImage = Image.getInstance(Path.returnBackgroundPath());
+                PdfContentByte cb = canvas[PdfPTable.BACKGROUNDCANVAS];
+                if (cellBgImage != null) {
+                    cellBgImage.scaleAbsolute(rect.getWidth(), rect.getHeight());
+                    cb.addImage(cellBgImage, rect.getWidth(), 0, 0, rect.getHeight(),
+                            rect.getLeft(), rect.getBottom());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Event for adding a background image to a table.
+     */
+    class TableBgEvent implements PdfPTableEvent {
+
+        public void tableLayout(PdfPTable ppt, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] pcbs) {
+            try {
+                //bgImage = Image.getInstance(Path.returnBackgroundPath());
+                if (bgImage != null) {
+                    int row = 0;
+                    int columns = widths[row].length - 1;
+                    Rectangle rect = new Rectangle(widths[row][0], heights[0], widths[row][columns], heights[row + 1]);
+                    //bgImage.scaleAbsolute(rect.getWidth(), rect.getHeight());
+                    pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, rect.getHeight(), rect.getLeft(), rect.getBottom());
+                }
+            } catch (Exception e) {
+                KendoTournamentGenerator.getInstance().showErrorInformation(e);
             }
         }
     }
