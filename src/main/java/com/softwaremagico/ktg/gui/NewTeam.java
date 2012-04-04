@@ -313,6 +313,11 @@ public class NewTeam extends KendoFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generate Team");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         TeamPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -463,7 +468,7 @@ public class NewTeam extends KendoFrame {
                 if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TeamAccreditationCardPDF pdf = new TeamAccreditationCardPDF(t, listTournaments.get(TournamentComboBox.getSelectedIndex()));
-                    pdf.generateTeamPDF(file);
+                    pdf.createFile(file);
                 }
 
             } catch (Exception ex) {
@@ -538,6 +543,11 @@ public class NewTeam extends KendoFrame {
             NameTextField.setEnabled(true);
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.toFront();
+    }//GEN-LAST:event_formWindowOpened
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton AcceptButton;
     private javax.swing.JButton CancelButton;

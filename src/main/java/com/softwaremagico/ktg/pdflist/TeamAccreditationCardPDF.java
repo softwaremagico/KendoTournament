@@ -22,19 +22,16 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.files.MyFile;
-import com.softwaremagico.ktg.files.Path;
-import java.io.FileOutputStream;
+import com.softwaremagico.ktg.CompetitorWithPhoto;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.Tournament;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import javax.swing.JOptionPane;
 
-public class TeamAccreditationCardPDF {
+public class TeamAccreditationCardPDF extends PdfDocument {
 
     Team team;
     private final int border = 1;
-    private int fontSize = 17;
     Tournament competition;
 
     public TeamAccreditationCardPDF(Team tmp_team, Tournament tmp_competition) throws Exception {
@@ -42,65 +39,8 @@ public class TeamAccreditationCardPDF {
         competition = tmp_competition;
     }
 
-    public void generateTeamPDF(String path) {
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("teamOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().database.setParticipantsInTournamentAsAccreditationPrinted(team.getCompetitorsInLevel(0), competition.name);
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("noTeamFieldsFilled", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                MessageManager.errorMessage("teamBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-            }
-        }
-    }
-
-    private void generatePDF(Document document, PdfWriter writer) throws Exception {
-        String font = FontFactory.HELVETICA;
-        documentData(document);
-        document.open();
-        accreditationGroupPagePDF(document, writer, font);
-        document.close();
-    }
-
-    private Document documentData(Document document) {
-        document.addTitle("Kendo Tournament Team's accreditation card");
-        document.addAuthor("Jorge Hortelano");
-        document.addCreator("Kendo Tournament Tool");
-        document.addSubject("Accreditation Card of Competitor");
-        document.addKeywords("Kendo, Tournament, Card, Accreditation, Competitor");
-        document.addCreationDate();
-        return document;
-    }
-
-    private void addBackGroundImage(Document document, String imagen) throws BadElementException,
-            DocumentException, MalformedURLException, IOException {
-        com.lowagie.text.Image png;
-
-        png = com.lowagie.text.Image.getInstance(imagen);
-        png.setAlignment(com.lowagie.text.Image.UNDERLYING);
-        png.scaleToFit(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2);
-        png.setAbsolutePosition(0, 0);
-        document.add(png);
-        png.setAbsolutePosition(document.getPageSize().getWidth() / 2, 0);
-        document.add(png);
-        png.setAbsolutePosition(0, document.getPageSize().getHeight() / 2);
-        document.add(png);
-        png.setAbsolutePosition(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2);
-        document.add(png);
-    }
-
-    private void accreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-        addBackGroundImage(document, Path.returnBackgroundPath());
+    protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
+        //addBackGroundImage(document, Path.returnBackgroundPath());
         PdfPTable table = pageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         table.setWidthPercentage(100);
         document.add(table);
@@ -120,6 +60,7 @@ public class TeamAccreditationCardPDF {
             CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(team.getMember(i, 0).getId(), false);
             CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(c, competition);
             PdfPTable competitorTable = competitorPDF.pageTable(width / 2, height / 2, writer, font, fontSize);
+            competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
             cell = new PdfPCell(competitorTable);
             cell.setBorderWidth(border);
             cell.setColspan(1);
@@ -136,5 +77,20 @@ public class TeamAccreditationCardPDF {
             mainTable.addCell(cell);
         }
         return mainTable;
+    }
+
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
+
+    @Override
+    protected String fileCreatedOkTag() {
+        return "teamOK";
+    }
+
+    @Override
+    protected String fileCreatedBadTag() {
+        return "teamBad";
     }
 }

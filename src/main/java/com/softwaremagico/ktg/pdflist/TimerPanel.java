@@ -19,10 +19,10 @@
 package com.softwaremagico.ktg.pdflist;
 
 import com.lowagie.text.Document;
+import com.softwaremagico.ktg.Duel;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
-import com.softwaremagico.ktg.Duel;
 
 /**
  *
@@ -72,6 +72,11 @@ public class TimerPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         ProgressBar.setStringPainted(true);
 
@@ -115,6 +120,11 @@ public class TimerPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.toFront();
+    }//GEN-LAST:event_formWindowOpened
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ContainerPanel;
     private javax.swing.JProgressBar ProgressBar;

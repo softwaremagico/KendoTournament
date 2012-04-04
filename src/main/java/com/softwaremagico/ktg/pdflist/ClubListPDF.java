@@ -23,7 +23,6 @@ import java.util.List;
 public class ClubListPDF extends ParentList {
 
     private Tournament championship;
-    private final int border = 0;
     Translator trans = null;
 
     public ClubListPDF(Tournament tmp_championship) {
@@ -42,7 +41,6 @@ public class ClubListPDF extends ParentList {
     }
 
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        Paragraph p;
         int cellNumber = 0;
         boolean firstClub = true;
 
@@ -64,7 +62,7 @@ public class ClubListPDF extends ParentList {
                 if (clubs.get(i).returnCountry().length() > 1) {
                     text += " (" + clubs.get(i).returnCountry() + ")";
                 }
-                mainTable.addCell(getHeader2(text, 2));
+                mainTable.addCell(getHeader2(text, 0));
             }
 
             for (int j = 0; j < competitors.size(); j++) {

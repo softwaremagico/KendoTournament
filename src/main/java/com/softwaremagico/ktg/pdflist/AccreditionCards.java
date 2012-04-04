@@ -56,7 +56,8 @@ public class AccreditionCards extends ListFromTournament {
                     KendoTournamentGenerator.getInstance().showErrorInformation(fnf);
                 }
                 TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false));
-                pdf.generateTournamentPDF(file, isCheckBoxSelected());
+                pdf.setPrintAll(isCheckBoxSelected());
+                pdf.createFile(file);
             }
         } catch (Exception ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);

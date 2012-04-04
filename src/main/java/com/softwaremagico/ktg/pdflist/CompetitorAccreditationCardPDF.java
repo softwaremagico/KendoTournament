@@ -258,6 +258,8 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
         mainTable.setTotalWidth(width);
+        
+        mainTable.addCell(this.getEmptyCell(1));
 
         cell = new PdfPCell(createNameTable(font, fontSize));
         cell.setBorderWidth(border);

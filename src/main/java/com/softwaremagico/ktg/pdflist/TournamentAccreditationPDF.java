@@ -24,16 +24,10 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.files.MyFile;
-import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -43,159 +37,98 @@ public class TournamentAccreditationPDF {
 
     Tournament championship;
     private final int border = 1;
-    private int fontSize = 17;
-    //private final int accreditationPerPage = 4;
-    private com.lowagie.text.Image png = null;
+    private boolean all;
 
     public TournamentAccreditationPDF(Tournament tmp_championship) throws Exception {
         championship = tmp_championship;
     }
 
-    public void generateTournamentPDF(String path, boolean printAll) {
-        //DIN A6 105 x 148 mm
-        Document document = new Document(PageSize.A4);
-        if (!path.endsWith(".pdf")) {
-            path += ".pdf";
-        }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
-            TimerPanel tp = new TimerPanel();
+    public void setPrintAll(boolean value) {
+        all = value;
+    }
 
-            ThreadAccreditation ta = new ThreadAccreditation(tp, document, path, printAll);
-            ta.start();
-        }
+    public void createFile(String file) {
+        TimerPanel tp = new TimerPanel();
+        ThreadAccreditation ta = new ThreadAccreditation(tp, file, all);
+        ta.start();
     }
 
     public class ThreadAccreditation extends Thread {
 
         TimerPanel timerPanel;
-        Document document;
         String path;
         Translator transl;
         boolean all;
+        TournamentAccreditation ta;
 
-        public ThreadAccreditation(TimerPanel tp, Document d, String p, boolean printAll) {
+        public ThreadAccreditation(TimerPanel tp, String p, boolean printAll) {
             transl = new Translator("gui.xml");
             timerPanel = tp;
             tp.updateTitle(transl.returnTag("AccreditationProgressBarTitle", KendoTournamentGenerator.getInstance().language));
             tp.updateLabel(transl.returnTag("AccreditationProgressBarLabel", KendoTournamentGenerator.getInstance().language));
-            document = d;
             path = p;
             all = printAll;
         }
 
         @Override
         public void run() {
-            convertPDF();
+            ta = new TournamentAccreditation(path);
         }
 
-        public boolean convertPDF() {
-            boolean error = false;
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
-                generatePDF(document, writer);
-                MessageManager.customMessage("tournamentOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsAccreditationPrinted(championship.name);
-            } catch (NullPointerException npe) {
-                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                MessageManager.errorMessage("tournamentBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-            }
-            timerPanel.dispose();
-            return error;
-        }
+        public class TournamentAccreditation extends PdfDocument {
 
-        private void generatePDF(Document document, PdfWriter writer) throws Exception {
-            String font = FontFactory.HELVETICA;
-            documentData(document);
-            document.open();
-            accreditationGroupPagePDF(document, writer, font);
-            document.close();
-        }
-
-        private Document documentData(Document document) {
-            document.addTitle("Kendo Tournament");
-            document.addAuthor("Jorge Hortelano");
-            document.addCreator("Kendo Tournament Tool");
-            document.addSubject("Tournament");
-            document.addKeywords("Kendo, Tournament");
-            document.addCreationDate();
-            return document;
-        }
-
-        private void addBackGroundImage(Document document, String imagen) throws BadElementException,
-                DocumentException, MalformedURLException, IOException {
-            //Obtain and scale the background. 
-            if (png == null) {
-                png = com.lowagie.text.Image.getInstance(imagen);
-                png.setAlignment(com.lowagie.text.Image.UNDERLYING);
-                png.scaleToFit(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2);
+            TournamentAccreditation(String file) {
+                createFile(file);
             }
 
-            //Copy the background to each competitor accreditation. 
-            png.setAbsolutePosition(0, 0);
-            document.add(png);
-            png.setAbsolutePosition(document.getPageSize().getWidth() / 2, 0);
-            document.add(png);
-            png.setAbsolutePosition(0, document.getPageSize().getHeight() / 2);
-            document.add(png);
-            png.setAbsolutePosition(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2);
-            document.add(png);
-        }
-
-        private void accreditationGroupPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-            addBackGroundImage(document, Path.returnBackgroundPath());
-            PdfPTable table = pageTable(document, writer, font, fontSize);
-            table.setWidthPercentage(100);
-            document.add(table);
-        }
-
-        private PdfPTable pageTable(Document document, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
-            PdfPCell cell;
-            Paragraph p;
-            float[] widths = {0.50f, 0.50f};
-            PdfPTable mainTable = new PdfPTable(widths);
-            mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            mainTable.setTotalWidth(document.getPageSize().getWidth());
-
-            List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship.name, all);
-
-
-            for (int i = 0; i < competitors.size(); i++) {
-                timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel", KendoTournamentGenerator.getInstance().language), i, competitors.size());
-                CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship);
-                PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
-                cell = new PdfPCell(competitorTable);
-                cell.setBorderWidth(border);
-                cell.setColspan(1);
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.addElement(competitorTable);
-                mainTable.addCell(cell);
-                /*
-                 * if ((i > 0) && (i % accreditationPerPage == 0)) { //Add a new
-                 * page if this one is filled up and remains more than one
-                 * competitor's accreditation. mainTable.writeSelectedRows(0,
-                 * -1, 0, document.getPageSize().getHeight(),
-                 * writer.getDirectContent()); mainTable.flushContent();
-                 * document.newPage(); AddBackGroundImage(document,
-                 * Path.returnBackgroundPath()); }
-                 */
+            @Override
+            protected Rectangle getPageSize() {
+                return PageSize.A4;
             }
 
-            if (competitors.size() % 2 == 1) {  // if we have even competitors, the last one needs an empty cell.
-                cell = new PdfPCell();
-                mainTable.addCell(cell);
+            @Override
+            protected String fileCreatedOkTag() {
+                return "tournamentOK";
             }
 
-            /*
-             * mainTable.writeSelectedRows(0, -1, 0,
-             * document.getPageSize().getHeight(), writer.getDirectContent());
-             * mainTable.flushContent();
-             */
+            @Override
+            protected String fileCreatedBadTag() {
+                return "tournamentBad";
+            }
 
-            return mainTable;
+            @Override
+            protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
+                PdfPTable table = pageTable(document, writer);
+                table.setWidthPercentage(100);
+                document.add(table);
+            }
+
+            private PdfPTable pageTable(Document document, PdfWriter writer) throws IOException, BadElementException, Exception {
+                PdfPCell cell;
+                float[] widths = {0.50f, 0.50f};
+                PdfPTable mainTable = new PdfPTable(widths);
+                mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+                mainTable.setTotalWidth(document.getPageSize().getWidth());
+
+                List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship.name, all);
+
+                for (int i = 0; i < competitors.size(); i++) {
+                    timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel", KendoTournamentGenerator.getInstance().language), i, competitors.size());
+                    CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship);
+                    PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
+                     competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
+                    cell = new PdfPCell(competitorTable);
+                    cell.setBorderWidth(border);
+                    cell.setColspan(1);
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    cell.addElement(competitorTable);
+                    mainTable.addCell(cell);
+                }
+
+                mainTable.completeRow();
+                timerPanel.dispose();
+                return mainTable;
+            }
         }
     }
 }

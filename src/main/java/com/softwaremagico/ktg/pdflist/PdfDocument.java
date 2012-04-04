@@ -112,6 +112,21 @@ public abstract class PdfDocument {
     protected abstract void createPagePDF(Document document, PdfWriter writer, String font) throws Exception;
 
     /**
+     * Creates an empty cell.
+     *
+     * @param colspan The width of the cell.
+     * @return
+     */
+    public PdfPCell getEmptyCell(int colspan) {
+        Paragraph p = new Paragraph(" ", FontFactory.getFont(font, fontSize, fontType));
+        PdfPCell cell = new PdfPCell(p);
+        cell.setColspan(colspan);
+        cell.setBorder(0);
+        //cell.setBackgroundColor(Color.WHITE);
+        return cell;
+    }
+
+    /**
      * Event for creating a transparent cell.
      */
     class TransparentCellBackground implements PdfPCellEvent {
@@ -171,6 +186,7 @@ public abstract class PdfDocument {
                     int row = 0;
                     int columns = widths[row].length - 1;
                     Rectangle rect = new Rectangle(widths[row][0], heights[0], widths[row][columns], heights[row + 1]);
+                    //Rectangle rect = new Rectangle(ppt.getTotalWidth(), ppt.getTotalWidth());
                     //bgImage.scaleAbsolute(rect.getWidth(), rect.getHeight());
                     pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, rect.getHeight(), rect.getLeft(), rect.getBottom());
                 }

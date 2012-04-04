@@ -89,21 +89,6 @@ public abstract class ParentList extends PdfDocument {
     public abstract float[] getTableWidths();
 
     /**
-     * Creates an empty cell.
-     *
-     * @param colspan The width of the cell.
-     * @return
-     */
-    public PdfPCell getEmptyCell(int colspan) {
-        Paragraph p = new Paragraph(" ", FontFactory.getFont(font, fontSize, fontType));
-        PdfPCell cell = new PdfPCell(p);
-        cell.setColspan(colspan);
-        cell.setBorder(0);
-        cell.setBackgroundColor(Color.WHITE);
-        return cell;
-    }
-
-    /**
      * Creates an empty row. It is formed by as many cells as the width of the
      * table.
      *
