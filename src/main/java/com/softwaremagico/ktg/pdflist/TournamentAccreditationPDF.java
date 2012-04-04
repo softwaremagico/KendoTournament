@@ -101,6 +101,7 @@ public class TournamentAccreditationPDF {
                 PdfPTable table = pageTable(document, writer);
                 table.setWidthPercentage(100);
                 document.add(table);
+                timerPanel.dispose();
             }
 
             private PdfPTable pageTable(Document document, PdfWriter writer) throws IOException, BadElementException, Exception {
@@ -126,7 +127,6 @@ public class TournamentAccreditationPDF {
                 }
 
                 mainTable.completeRow();
-                timerPanel.dispose();
                 return mainTable;
             }
         }

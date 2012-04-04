@@ -86,48 +86,32 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
             }
         }
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-        table.addCell(cell);
+        table.addCell(this.getEmptyCell(1));
+
+
 
         cell = new PdfPCell(img, true);
         cell.setBorderWidth(border);
         cell.setColspan(1);
-        //cell.setBackgroundColor(new Color(255, 255, 255));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_TOP);
         table.addCell(cell);
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        table.addCell(cell);
+        table.addCell(this.getEmptyCell(1));
 
 
         float[] widths2 = {0.90f, 0.10f};
         PdfPTable table2 = new PdfPTable(widths2);
 
-        p = new Paragraph(competitor.getShortName(18), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
+        p = new Paragraph(competitor.getShortName(18), FontFactory.getFont(font, fontSize, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setCellEvent(new TransparentCellBackground());
-        //cell.setBackgroundColor(new Color(255, 255, 255));
         table2.addCell(cell);
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        table2.addCell(cell);
+        table2.addCell(this.getEmptyCell(1));
 
         p = new Paragraph(competitor.getShortSurname().toUpperCase(), FontFactory.getFont(font, fontSize + 6, Font.BOLD));
         cell = new PdfPCell(p);
@@ -135,32 +119,20 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setCellEvent(new TransparentCellBackground());
-        //cell.setBackgroundColor(new Color(255, 255, 255));
         table2.addCell(cell);
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        table2.addCell(cell);
+        table2.addCell(this.getEmptyCell(1));
 
-        p = new Paragraph(competitor.club, FontFactory.getFont(font, fontSize - 4));
+        p = new Paragraph(competitor.club, FontFactory.getFont(font, fontSize - 2));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         cell.setCellEvent(new TransparentCellBackground());
-        //cell.setBackgroundColor(new Color(255, 255, 255));
         table2.addCell(cell);
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-        table2.addCell(cell);
+        table2.addCell(this.getEmptyCell(1));
 
         cell = new PdfPCell(table2);
         cell.setColspan(1);
@@ -243,7 +215,6 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         //png.scaleAbsoluteWidth(width);
         cell = new PdfPCell(png, true);
         cell.setBorderWidth(border);
-        cell.setFixedHeight(height);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
         table.addCell(cell);
@@ -258,7 +229,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
         mainTable.setTotalWidth(width);
-        
+
         mainTable.addCell(this.getEmptyCell(1));
 
         cell = new PdfPCell(createNameTable(font, fontSize));
@@ -266,16 +237,18 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         cell.setColspan(1);
         cell.setFixedHeight(height * 0.20f);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_TOP);
         mainTable.addCell(cell);
 
         cell = new PdfPCell(createIdentificationTable(height, font, fontSize));
         cell.setBorderWidth(border);
         cell.setColspan(1);
-        cell.setFixedHeight(height * 0.30f);
+        cell.setFixedHeight(height * 0.20f);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
         mainTable.addCell(cell);
 
-        cell = new PdfPCell(createBannerTable(width, height / 3));
+        cell = new PdfPCell(createBannerTable(width, height / 5));
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setFixedHeight(height * 0.20f);
