@@ -19,14 +19,14 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -38,7 +38,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     DefaultListModel<String> fightsModel = new DefaultListModel<String>();
     List<Tournament> listTournaments = new ArrayList<Tournament>();
     List<Team> listTeams = new ArrayList<Team>();
-    List<Fight> fights = new ArrayList<Fight>();
+    ArrayList<Fight> fights = new ArrayList<Fight>();
     Tournament competition = null;
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;
@@ -499,7 +499,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             }
             if (fightsModel.isEmpty() || (answer)) {
                 //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-                fights = KendoTournamentGenerator.getInstance().fights.obtainRandomFights(listTeams, competition);
+                fights = KendoTournamentGenerator.getInstance().fightManager.obtainRandomFights(listTeams, competition);
 
                 int ind = FightsList.getSelectedIndex();
 
@@ -570,7 +570,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
             //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            fights = KendoTournamentGenerator.getInstance().fights.obtainSortedFights(listTeams, competition);
+            fights = KendoTournamentGenerator.getInstance().fightManager.obtainSortedFights(listTeams, competition);
 
             int ind = FightsList.getSelectedIndex();
 

@@ -128,7 +128,7 @@ public abstract class SQL extends Database {
                 try {
                     StoreInputStream(competitors.get(i).photoInput, (int) competitors.get(i).photoSize);
                 } catch (Exception ex) {
-                    Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 }
             }
             //Select Photo from competitor where competitor.ListOrder=1 into dumpfile '/tmp/image.jpg';
@@ -150,7 +150,7 @@ public abstract class SQL extends Database {
         try {
             InputStream in = new BufferedInputStream(inputStream);
             byte[] data = new byte[length];
-            int bytesRead = 0;
+            int bytesRead;
             int offset = 0;
             while (offset < length) {
                 try {
@@ -160,7 +160,7 @@ public abstract class SQL extends Database {
                     }
                     offset += bytesRead;
                 } catch (IOException ex) {
-                    Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
                 }
             }
             in.close();
@@ -174,7 +174,7 @@ public abstract class SQL extends Database {
             out.flush();
             out.close();
         } catch (IOException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -197,7 +197,7 @@ public abstract class SQL extends Database {
     public static String convertStreamToString(InputStream is) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
             sb.append(line);
         }
@@ -292,7 +292,7 @@ public abstract class SQL extends Database {
         } catch (Exception ex) {
         }
         f.AppendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
-        List<Fight> fights = getAllFights();
+        ArrayList<Fight> fights = getAllFights();
         for (int i = 0; i < fights.size(); i++) {
             f.AppendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.returnName() + "','"
                     + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "',"
@@ -312,7 +312,7 @@ public abstract class SQL extends Database {
         } catch (Exception ex) {
         }
         f.AppendTextToFile("LOCK TABLES `duel` WRITE;\n", file);
-        List<Fight> fights = getAllFights();
+        ArrayList<Fight> fights = getAllFights();
         int id = 0;
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < fights.get(i).duels.size(); j++) {
@@ -380,11 +380,13 @@ public abstract class SQL extends Database {
         } catch (IOException ex) {
             showSQLError(1049);
         } catch (SQLException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     protected abstract void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException;
+
+    protected abstract InputStream getBinaryStream(ResultSet rs, String column) throws SQLException;
 
     /**
      * *******************************************************************
@@ -597,7 +599,7 @@ public abstract class SQL extends Database {
     @Override
     public List<CompetitorWithPhoto> getCompetitorsWithPhoto(String query, boolean verbose) {
         List<CompetitorWithPhoto> results = new ArrayList<CompetitorWithPhoto>();
-        String name = "", surname = "";
+        String name, surname;
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -607,7 +609,7 @@ public abstract class SQL extends Database {
                 try {
                     CompetitorWithPhoto c = new CompetitorWithPhoto(rs.getObject("ID").toString(), name, surname, rs.getObject("Club").toString());
                     c.addOrder(rs.getInt("ListOrder"));
-                    InputStream sImage = rs.getBinaryStream("Photo");
+                    InputStream sImage = getBinaryStream(rs, "Photo");
                     Long size = rs.getLong("PhotoSize");
                     c.addImage(sImage, size);
                     results.add(c);
@@ -624,6 +626,7 @@ public abstract class SQL extends Database {
 
             return results;
         } catch (SQLException ex) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
@@ -635,7 +638,7 @@ public abstract class SQL extends Database {
     @Override
     public List<Competitor> getCompetitors(String query, boolean verbose) {
         List<Competitor> results = new ArrayList<Competitor>();
-        String name = "", surname = "";
+        String name, surname;
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -837,7 +840,7 @@ public abstract class SQL extends Database {
             if (rs.next()) {
                 c = new CompetitorWithPhoto(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString(), rs.getObject("Club").toString());
                 c.addOrder(rs.getInt("ListOrder"));
-                InputStream sImage = rs.getBinaryStream("Photo");
+                InputStream sImage = getBinaryStream(rs, "Photo");
                 Long size = rs.getLong("PhotoSize");
                 c.addImage(sImage, size);
             }
@@ -890,7 +893,7 @@ public abstract class SQL extends Database {
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String club, String championship, boolean getImage, boolean verbose) {
-        String query = "SELECT * FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + club + "' AND r1.Tournament='" + championship + "'  ORDER BY c1.Surname";
+        String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + club + "' AND r1.Tournament='" + championship + "'  ORDER BY c1.Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
 
@@ -1682,14 +1685,12 @@ public abstract class SQL extends Database {
     @Override
     public boolean updateTournament(Tournament t, boolean verbose) {
         boolean error = false;
-        Tournament old_tournament = null;
         boolean answer = false;
         try {
             if (verbose) {
                 answer = MessageManager.question("questionUpdateTournament", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
             if (!verbose || answer) {
-                old_tournament = getTournamentByName(t.name, false);
                 try {
                     if (t.bannerInput.markSupported()) {
                         t.bannerInput.reset();
@@ -1713,18 +1714,8 @@ public abstract class SQL extends Database {
                 stmt.executeUpdate();
                 stmt.close();
 
-                //Delete fights and teams because can be some changes (area fights or size of teams of the tournament).
-                try {
-                    if (old_tournament.fightingAreas != t.fightingAreas) {
-                        deleteFightsOfTournament(t.name, false);
-                    }
-                    if (old_tournament.teamSize != t.teamSize) {
-                        deleteTeamsOfTournament(t.name, false);
-                    }
-                } catch (NullPointerException npe) {
-                    deleteTeamsOfTournament(t.name, false);
-                    deleteFightsOfTournament(t.name, false);
-                }
+                //Delete fightManager and teams because can be some changes (area fightManager or size of teams of the tournament).
+                //deleteTeamsOfTournament(t.name, false);
             } else {
                 return false;
             }
@@ -1761,13 +1752,13 @@ public abstract class SQL extends Database {
             while (rs.next()) {
                 Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
                 t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                InputStream sImage = rs.getBinaryStream("Banner");
+                InputStream sImage = getBinaryStream(rs, "Banner");
                 Long size = rs.getLong("Size");
                 t.addBanner(sImage, size);
-                InputStream sImage2 = rs.getBinaryStream("Accreditation");
+                InputStream sImage2 = getBinaryStream(rs, "Accreditation");
                 Long size2 = rs.getLong("AccreditationSize");
                 t.addAccreditation(sImage2, size2);
-                InputStream sImage3 = rs.getBinaryStream("Diploma");
+                InputStream sImage3 = getBinaryStream(rs, "Diploma");
                 Long size3 = rs.getLong("DiplomaSize");
                 t.addDiploma(sImage3, size3);
                 results.add(t);
@@ -1813,13 +1804,13 @@ public abstract class SQL extends Database {
             rs.next();
             Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
             t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-            InputStream sImage = rs.getBinaryStream("Banner");
+            InputStream sImage = getBinaryStream(rs, "Banner");
             Long size = rs.getLong("Size");
             t.addBanner(sImage, size);
-            InputStream sImage2 = rs.getBinaryStream("Accreditation");
+            InputStream sImage2 = getBinaryStream(rs, "Accreditation");
             Long size2 = rs.getLong("AccreditationSize");
             t.addAccreditation(sImage2, size2);
-            InputStream sImage3 = rs.getBinaryStream("Diploma");
+            InputStream sImage3 = getBinaryStream(rs, "Diploma");
             Long size3 = rs.getLong("DiplomaSize");
             t.addDiploma(sImage3, size3);
             rs.close();
@@ -1843,7 +1834,7 @@ public abstract class SQL extends Database {
             while (rs.next()) {
                 Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
                 t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                InputStream sImage = (InputStream) rs.getBinaryStream("Banner");
+                InputStream sImage = (InputStream) getBinaryStream(rs, "Banner");
                 Long size = rs.getLong("Size");
                 t.addBanner(sImage, size);
                 results.add(t);
@@ -1961,7 +1952,7 @@ public abstract class SQL extends Database {
             rs.close();
             s.close();
         } catch (SQLException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return level;
     }
@@ -2476,7 +2467,6 @@ public abstract class SQL extends Database {
                 }
             }
         } catch (NullPointerException npe) {
-            npe.printStackTrace();
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             if (!error) {
                 error = true;
@@ -2567,12 +2557,12 @@ public abstract class SQL extends Database {
      * Store a fight into the database.
      */
     @Override
-    public boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose) {
+    public boolean storeFights(ArrayList<Fight> fights, boolean purgeTournament, boolean verbose) {
         boolean error = false;
         boolean answer = false;
         if (fights.size() > 0) {
             try {
-                //Delete all previous fights.
+                //Delete all previous fightManager.
                 if (verbose) {
                     answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
                 } else {
@@ -2594,13 +2584,10 @@ public abstract class SQL extends Database {
                         }
                     }
 
-                    for (int i = 0; i < fights.size(); i++) {
-                        //Add the fights that depends on the level and the teams.
-                        s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fights.get(i).team1.returnName() + "','" + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "','" + fights.get(i).asignedFightArea + "'," + fights.get(i).returnWinner() + "," + fights.get(i).level + "," + fights.get(i).getMaxWinners() + ")", Statement.RETURN_GENERATED_KEYS);
-                        ResultSet rs = s.getGeneratedKeys();
-                        rs.next();
-                        fights.get(i).setDatabaseID(rs.getInt(1));
-                        rs.close();
+                    for (Fight f : fights) {
+                        //Add the fightManager that depends on the level and the teams.
+                        s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.competition.name + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                        f.setOverStored(true);
                     }
                     s.close();
                 }
@@ -2628,20 +2615,16 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllFights(List<Fight> fights) {
+    public boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights) {
         boolean error = false;
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("DELETE FROM fight");
             s.executeUpdate("DELETE FROM duel");
-            for (int i = 0; i < fights.size(); i++) {
-                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fights.get(i).team1.returnName() + "','" + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "','" + fights.get(i).asignedFightArea + "'," + fights.get(i).returnWinner() + "," + fights.get(i).level + "," + fights.get(i).getMaxWinners() + ")", Statement.RETURN_GENERATED_KEYS);
-                ResultSet rs = s.getGeneratedKeys();
-                rs.next();
-                fights.get(i).setDatabaseID(rs.getInt(1));
-                rs.close();
-
-                storeDuelsOfFight(fights.get(i));
+            for (Fight f : fights) {
+                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.competition.name + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                f.setOverStored(true);
+                storeDuelsOfFight(f);
             }
             s.close();
         } catch (SQLException ex) {
@@ -2661,20 +2644,16 @@ public abstract class SQL extends Database {
         try {
             Statement s = connection.createStatement();
             s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "'");
-            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.competition.name + "','" + fight.asignedFightArea + "'," + fight.isOver() + "," + fight.level + "," + fight.getMaxWinners() + ")", Statement.RETURN_GENERATED_KEYS);
-            ResultSet rs = s.getGeneratedKeys();
-            rs.next();
-            fight.setDatabaseID(rs.getInt(1));
-            rs.close();
+            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.competition.name + "','" + fight.asignedFightArea + "'," + fight.isOver() + "," + fight.level + "," + fight.getMaxWinners() + ")");
+            fight.setOverStored(true);
             s.close();
         } catch (SQLException ex) {
             error = true;
-            ex.printStackTrace();
             MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (NullPointerException npe) {
             error = true;
-            npe.printStackTrace();
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         }
         if (!error) {
@@ -2691,7 +2670,7 @@ public abstract class SQL extends Database {
 
     @Override
     public boolean deleteFightsOfTournament(String championship, boolean verbose) {
-        boolean error = false;
+        boolean error;
         boolean answer = false;
         try {
             if (verbose) {
@@ -2716,7 +2695,7 @@ public abstract class SQL extends Database {
 
     @Override
     public boolean deleteFightsOfLevelOfTournament(String championship, int level, boolean verbose) {
-        boolean error = false;
+        boolean error;
         boolean answer = false;
         try {
             if (verbose) {
@@ -2726,7 +2705,7 @@ public abstract class SQL extends Database {
                 Statement s = connection.createStatement();
                 s.executeUpdate("DELETE FROM fight WHERE Tournament='" + championship + "' AND LeagueLevel >=" + level);
                 s.close();
-                List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevel(level);
+                List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevelOrMore(level);
                 for (int i = 0; i < groups.size(); i++) {
                     deleteDrawsOfGroupOfTournament(championship, i);
                 }
@@ -2744,8 +2723,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Fight> searchFights(String query, String championship) {
-        List<Fight> results = new ArrayList<Fight>();
+    public ArrayList<Fight> searchFights(String query, String championship) {
+        ArrayList<Fight> results = new ArrayList<Fight>();
         try {
             Statement s = connection.createStatement();
             ResultSet rs = s.executeQuery(query);
@@ -2754,9 +2733,9 @@ public abstract class SQL extends Database {
                 Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), championship, false),
                         getTeamByName(rs.getObject("Team2").toString(), championship, false),
                         getTournamentByName(rs.getObject("Tournament").toString(), false),
-                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"),
-                        rs.getInt("ID"));
+                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                 f.changeMaxWinners(rs.getInt("MaxWinners"));
+                f.calculateOverWithDuels();
                 if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
                     for (int i = 0; i < Math.max(f.team1.getNumberOfMembers(0), f.team2.getNumberOfMembers(0)); i++) {
                         Duel d = getDuel(f, i);
@@ -2782,37 +2761,37 @@ public abstract class SQL extends Database {
     }
 
     /**
-     * Search all fights from one determined tournament.
+     * Search all fightManager from one determined tournament.
      *
      * @param championship
      * @return
      */
     @Override
-    public List<Fight> searchFightsByTournamentName(String championship) {
+    public ArrayList<Fight> searchFightsByTournamentName(String championship) {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "'";
         return searchFights(query, championship);
     }
 
     /**
-     * Search all fights from one determined tournament.
+     * Search all fightManager from one determined tournament.
      *
      * @param championship
      * @return
      */
     @Override
-    public List<Fight> searchFightsByTournamentNameAndFightArea(String championship, int fightArea) {
+    public ArrayList<Fight> searchFightsByTournamentNameAndFightArea(String championship, int fightArea) {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND FightArea=" + fightArea;
         return searchFights(query, championship);
     }
 
     /**
-     * Search all fights from one determined tournament.
+     * Search all fightManager from one determined tournament.
      *
      * @param championship
      * @return
      */
     @Override
-    public List<Fight> searchFightsByTournamentNameAndTeam(String championship, String team) {
+    public ArrayList<Fight> searchFightsByTournamentNameAndTeam(String championship, String team) {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
         return searchFights(query, championship);
     }
@@ -2828,7 +2807,7 @@ public abstract class SQL extends Database {
             rs.close();
             s.close();
         } catch (SQLException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return ID;
     }
@@ -2841,18 +2820,7 @@ public abstract class SQL extends Database {
             answer = MessageManager.question("deleteOneFight", "Warning!", KendoTournamentGenerator.getInstance().language);
             if (answer) {
                 Statement s = connection.createStatement();
-
-                /*
-                 * Try to delete by ID
-                 */
-                int result = s.executeUpdate("DELETE FROM fight WHERE  + ID=" + fight.returnDatabaseID() + "");
-
-                /*
-                 * If not, try to delete by data
-                 */
-                if (result < 1) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "'");
-                }
+                s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND Level=" + fight.level);
                 s.close();
             }
 
@@ -2882,7 +2850,7 @@ public abstract class SQL extends Database {
             /*
              * Considering the fight over if is updated
              */
-            int over = fight.isOver();
+            int over = fight.returnWinner();
             if (over == 2) {
                 over = 0;
             }
@@ -2892,6 +2860,7 @@ public abstract class SQL extends Database {
             stmt.executeUpdate();
             stmt.close();
             s.close();
+            fight.setOverStored(true);
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
@@ -2910,6 +2879,7 @@ public abstract class SQL extends Database {
             stmt.executeUpdate();
             stmt.close();
             s.close();
+            fight.setOverStored(true);
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
@@ -2919,8 +2889,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Fight> getAllFights() {
-        List<Fight> results = new ArrayList<Fight>();
+    public ArrayList<Fight> getAllFights() {
+        ArrayList<Fight> results = new ArrayList<Fight>();
 
         try {
             Statement s = connection.createStatement();
@@ -2930,8 +2900,7 @@ public abstract class SQL extends Database {
                 Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), rs.getObject("Tournament").toString(), false),
                         getTeamByName(rs.getObject("Team2").toString(), rs.getObject("Tournament").toString(), false),
                         getTournamentByName(rs.getObject("Tournament").toString(), false),
-                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"),
-                        rs.getInt("ID"));
+                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                 f.changeMaxWinners(rs.getInt("MaxWinners"));
                 if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
                     for (int i = 0; i < Math.max(f.team1.getNumberOfMembers(0), f.team2.getNumberOfMembers(0)); i++) {
@@ -2967,12 +2936,11 @@ public abstract class SQL extends Database {
     @Override
     public boolean storeDuel(Duel d, Fight f, int player) {
         boolean error = false;
-        int fightID = f.returnDatabaseID();
         try {
             //Obtain the ID of the fight..
-            if (fightID < 0) {
-                fightID = obtainFightID(f);
-            }
+
+            int fightID = obtainFightID(f);
+
             //Delete the duel if exist previously.
             Statement s = connection.createStatement();
             s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player);
@@ -2981,6 +2949,7 @@ public abstract class SQL extends Database {
             //Add the new duel.
             s = connection.createStatement();
             s.executeUpdate("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + player + ",'" + d.hitsFromCompetitorA.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorA.get(1).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + d.faultsCompetitorA + "," + d.faultsCompetitorB + ")");
+            d.setStored(true);
             s.close();
         } catch (SQLException ex) {
             error = true;
@@ -2994,12 +2963,10 @@ public abstract class SQL extends Database {
     @Override
     public boolean storeDuelsOfFight(Fight f) {
         boolean error = false;
-        int fightID = f.returnDatabaseID();
         try {
             //Obtain the ID of the fight..
-            if (fightID < 0) {
-                fightID = obtainFightID(f);
-            }
+            int fightID = obtainFightID(f);
+
             //Delete the duel if exist previously.
             Statement s = connection.createStatement();
             s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID);
@@ -3009,6 +2976,7 @@ public abstract class SQL extends Database {
             s = connection.createStatement();
             for (int i = 0; i < f.duels.size(); i++) {
                 s.executeUpdate("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + i + ",'" + f.duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + f.duels.get(i).faultsCompetitorA + "," + f.duels.get(i).faultsCompetitorB + ")");
+                f.duels.get(i).setStored(true);
             }
             s.close();
         } catch (SQLException ex) {
@@ -3022,14 +2990,10 @@ public abstract class SQL extends Database {
 
     @Override
     public List<Duel> getDuelsOfFight(Fight f) {
-        int fightID = f.returnDatabaseID();
-        if (fightID < 0) {
-            fightID = obtainFightID(f);
-        }
-
+        int fightID = obtainFightID(f);
         Statement s;
 
-        Duel d = null;
+        Duel d;
         List<Duel> results = new ArrayList<Duel>();
         try {
             s = connection.createStatement();
@@ -3085,11 +3049,7 @@ public abstract class SQL extends Database {
     @Override
     public Duel getDuel(Fight f, int player) {
         Statement s;
-        int fightID = f.returnDatabaseID();
-        if (fightID < 0) {
-            fightID = obtainFightID(f);
-        }
-
+        int fightID = obtainFightID(f);
 
         Duel d = null;
         try {
@@ -3151,7 +3111,7 @@ public abstract class SQL extends Database {
         Statement s;
         List<Duel> results = new ArrayList<Duel>();
 
-        List<Fight> fights = searchFightsByTournamentName(championship);
+        ArrayList<Fight> fights = searchFightsByTournamentName(championship);
         for (int i = 0; i < fights.size(); i++) {
             results.addAll(getDuelsOfFight(fights.get(i)));
         }
@@ -3163,7 +3123,7 @@ public abstract class SQL extends Database {
     public List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight) {
         Statement s;
         List<Duel> results = new ArrayList<Duel>();
-        Duel d = null;
+        Duel d;
         ResultSet rs;
 
         String queryTeamRight = "select * from duel d1 where EXISTS " + "(SELECT * from fight f1 WHERE f1.ID=d1.Fight AND EXISTS " + "(SELECT * FROM team t1 WHERE (f1.Team2=t1.name) AND EXISTS  " + "(SELECT * FROM competitor c1 WHERE t1.Member='" + competitorID + "') AND " + "d1.OrderPlayer=t1.Position))";
@@ -3236,7 +3196,7 @@ public abstract class SQL extends Database {
     public List<Duel> getAllDuels() {
         Statement s;
         List<Duel> results = new ArrayList<Duel>();
-        Duel d = null;
+        Duel d;
         try {
             s = connection.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM duel");

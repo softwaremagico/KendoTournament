@@ -1,8 +1,5 @@
 Solucionar que se olvida de combates el fight panel.  AHORA ES PEOR QUE ANTES!!!
-Simplificar la comunicación entre equipos. 
-SQLite. 
 PRESENTACION DEL GANADOR DEL TORNEO!
-SQLite necesita cambiar los autoincrement de ListOrder (competitor)  insert select count(*)
-Las acreditaciones ahora salen mal. Añadir fondo a cada celda. 
 Que las listas se puedan exportar en TXT
 Que solamente se inserten los combates en la base de datos cuando acaban todos los combates del shiaijo (si está en remoto).
+

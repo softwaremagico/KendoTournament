@@ -87,7 +87,7 @@ public class TeamFight extends JPanel {
         if (left) {
             title.setTitleJustification(TitledBorder.LEFT);
 
-            if (KendoTournamentGenerator.getInstance().inverseColours) {
+            if (KendoTournamentGenerator.getInstance().fightManager.inverseColours) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
@@ -95,7 +95,7 @@ public class TeamFight extends JPanel {
         } else {
             title.setTitleJustification(TitledBorder.RIGHT);
 
-            if (!KendoTournamentGenerator.getInstance().inverseColours) {
+            if (!KendoTournamentGenerator.getInstance().fightManager.inverseColours) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
@@ -144,8 +144,8 @@ public class TeamFight extends JPanel {
 
     private void showTeam() {
         //Are more than one member, and fight is not over, and there is not another fight in this level already done.
-        if ((team.numberOfMembers() > 1) && (fight.isOver() == 2)) {
-            if (!KendoTournamentGenerator.getInstance().fights.someFightWithTeamAndLevelIsStarted(team, fight.level)) {
+        if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
+            if (!KendoTournamentGenerator.getInstance().fightManager.someFightWithTeamAndLevelIsStarted(team, fight.level)) {
                 OrderTeam orderTeam;
                 orderTeam = new OrderTeam(fight.competition.name, fight.level, this);
                 orderTeam.updateOrderWindow(team);

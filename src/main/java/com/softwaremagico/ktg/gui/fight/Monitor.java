@@ -5,28 +5,27 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.championship.DesignedGroup;
+import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.PhotoFrame;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-import com.softwaremagico.ktg.gui.PhotoFrame;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
 
 /**
  *
- * @author  jorge
+ * @author jorge
  */
 public final class Monitor extends javax.swing.JFrame {
 
@@ -36,14 +35,23 @@ public final class Monitor extends javax.swing.JFrame {
     Timer timer;
     private final int seconds = 5;
     Translator trans = null;
-    private int useOnlyShiaijo = -1;
+    //private int useOnlyShiaijo = -1;
     private List<DesignedGroup> finishedGroups = new ArrayList<DesignedGroup>();
     private List<DesignedGroup> showedRanking = new ArrayList<DesignedGroup>();
+    private ScorePanel scorePanel;
+    private boolean showAllArenas = false;
 
-    /** Creates new form Monitor */
+    /**
+     * Creates new form Monitor
+     */
     public Monitor(Tournament championship, int shiaijos) {
         selectedTournament = championship;
-        useOnlyShiaijo = shiaijos;
+        scorePanel = new ScorePanel(selectedTournament);
+        if (shiaijos < 0) {
+            showAllArenas = true;
+        } else {
+            fightArea = shiaijos;
+        }
         trans = new Translator("gui.xml");
         initComponents();
         //setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
@@ -53,11 +61,15 @@ public final class Monitor extends javax.swing.JFrame {
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseColours);
-        InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseTeams);
+        scorePanel.setBounds(new Rectangle(FightsPanel.getSize().width, FightsPanel.getSize().height));
+        FightsPanel.add(scorePanel);
+
+        ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseColours);
+        InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseTeams);
 
         if (selectedTournament.fightingAreas == 1) {
-            useOnlyShiaijo = 0;
+            fightArea = 0;
+            showAllArenas = false;
         }
 
         createBanner();
@@ -69,6 +81,10 @@ public final class Monitor extends javax.swing.JFrame {
             startTimer();
         } catch (NullPointerException npe) {
         }
+    }
+
+    public void fillFightsPanel() {
+        scorePanel.fillFightsPanel(fightArea);
     }
 
     /**
@@ -88,7 +104,7 @@ public final class Monitor extends javax.swing.JFrame {
     private void showRemainingStatistics() {
         for (int i = 0; i < finishedGroups.size(); i++) {
             if (!showedRanking.contains(finishedGroups.get(i))) {
-                MonitorFightPosition mfp = new MonitorFightPosition(KendoTournamentGenerator.getInstance().fights.getFights(), finishedGroups.get(i), true);
+                MonitorFightPosition mfp = new MonitorFightPosition(KendoTournamentGenerator.getInstance().fightManager.getFights(), finishedGroups.get(i), true);
                 mfp.setVisible(true);
                 showedRanking.add(finishedGroups.get(i));
                 break; //Only show one window each timer loop. 
@@ -101,21 +117,21 @@ public final class Monitor extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                //if (useOnlyShiaijo > -1) {
                 //Show the winner of the group
                 for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.size(); i++) {
-                    //DesignedGroup groupFinished = KendoTournamentGenerator.getInstance().designedGroups.get(KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fights.getFights(), KendoTournamentGenerator.getInstance().fights.getPositionOfPreviousAreaFight(useOnlyShiaijo)));
-                    if (KendoTournamentGenerator.getInstance().designedGroups.get(i).arena == useOnlyShiaijo || useOnlyShiaijo == -1) {
-                        if (KendoTournamentGenerator.getInstance().designedGroups.get(i).areFightsOver()) {
-//                            if(KendoTournamentGenerator.getInstance().designedGroups.get(i).getLevel() >= KendoTournamentGenerator.getInstance().designedGroups.firstLevelNotFinished(KendoTournamentGenerator.getInstance().fights.getFights()))
-                            if (!finishedGroups.contains(KendoTournamentGenerator.getInstance().designedGroups.get(i))) {
-                                finishedGroups.add(KendoTournamentGenerator.getInstance().designedGroups.get(i));
+                    //Only groups of this arena. 
+                    if (KendoTournamentGenerator.getInstance().designedGroups.get(i).arena == fightArea || fightArea == -1) {
+                        //Only groups of this level.
+                        if (KendoTournamentGenerator.getInstance().designedGroups.get(i).getLevel() == KendoTournamentGenerator.getInstance().fightManager.getLastLevel()) {
+                            if (KendoTournamentGenerator.getInstance().designedGroups.get(i).areFightsOver()) {
+                                if (!finishedGroups.contains(KendoTournamentGenerator.getInstance().designedGroups.get(i))) {
+                                    finishedGroups.add(KendoTournamentGenerator.getInstance().designedGroups.get(i));
+                                }
                             }
                         }
                     }
                 }
                 showRemainingStatistics();
-                // }
                 updateFightPanel();
             }
         });
@@ -124,17 +140,14 @@ public final class Monitor extends javax.swing.JFrame {
     }
 
     private void updateFightPanel() {
-        if (useOnlyShiaijo > -1) {
-            fightArea = useOnlyShiaijo;
-        } else {
+        if (showAllArenas) {
             fightArea++;
         }
-
-        KendoTournamentGenerator.getInstance().fights.getFightsFromDatabase(selectedTournament.name);
+        KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
 
         if (KendoTournamentGenerator.getInstance().designedGroups == null || !KendoTournamentGenerator.getInstance().designedGroups.returnTournament().name.equals(selectedTournament.name)) {
             KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fights.getFights());
+            KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
         }
 
         //If the designedgroups are not loaded, we use the default number of shiaijos.
@@ -149,7 +162,7 @@ public final class Monitor extends javax.swing.JFrame {
         } else {
             //If the designedgroups are loaded, we can select only the shiaijos used in this level.
             try {
-                if (fightArea >= KendoTournamentGenerator.getInstance().designedGroups.getArenasOfLevel(KendoTournamentGenerator.getInstance().fights.getFights(), KendoTournamentGenerator.getInstance().fights.get(KendoTournamentGenerator.getInstance().fights.size() - 1).level)) {
+                if (fightArea >= KendoTournamentGenerator.getInstance().designedGroups.getArenasOfLevel(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level)) {
                     fightArea = 0;
                 }
             } catch (NullPointerException npe2) {
@@ -160,94 +173,6 @@ public final class Monitor extends javax.swing.JFrame {
         fillFightsPanel();
     }
 
-    public void fillFightsPanel() {
-        FightsPanel.removeAll();
-        if (useOnlyShiaijo > -1) {
-            fightArea = useOnlyShiaijo;
-        }
-        if (KendoTournamentGenerator.getInstance().fights.size() > 0) {
-            RoundFight rf;
-            Fight f;
-            int showedFights = 0;
-            Dimension minSize = new Dimension(0, 5);
-            Dimension prefSize = new Dimension(5, 5);
-            Dimension maxSize = new Dimension(5, 5);
-
-            //Penultimus
-            if (numberOfFightsToShow() > 4) {
-                f = KendoTournamentGenerator.getInstance().fights.getPreviousOfPreviousAreaFight((Integer) fightArea);
-                if (f != null) {
-                    rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fights.currentArenaFight(fightArea) - 2, KendoTournamentGenerator.getInstance().fights.arenaSize(fightArea));
-                } else {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
-                }
-                showedFights++;
-                rf.updateScorePanels();
-                FightsPanel.add(rf);
-                FightsPanel.add(new Box.Filler(minSize, prefSize, maxSize));
-            }
-            //Previous
-            if (numberOfFightsToShow() > 2) {
-                f = KendoTournamentGenerator.getInstance().fights.getPreviousAreaFight(fightArea);
-                if (f != null) {
-                    rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fights.currentArenaFight(fightArea) - 1, KendoTournamentGenerator.getInstance().fights.arenaSize(fightArea));
-                } else {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
-                }
-                showedFights++;
-                rf.updateScorePanels();
-                FightsPanel.add(rf);
-                FightsPanel.add(new Box.Filler(minSize, prefSize, maxSize));
-            }
-            //Current
-            if (KendoTournamentGenerator.getInstance().fights.size() > 0) {
-                rf = new RoundFight(KendoTournamentGenerator.getInstance().fights.getSelectedFight(fightArea), true, KendoTournamentGenerator.getInstance().fights.currentArenaFight(fightArea), KendoTournamentGenerator.getInstance().fights.arenaSize(fightArea));
-                rf.updateScorePanels();
-                FightsPanel.add(rf);
-            }
-            showedFights++;
-            FightsPanel.add(new Box.Filler(minSize, prefSize, maxSize));
-
-            //Nexts
-            if (numberOfFightsToShow() > 1) {
-                for (int i = KendoTournamentGenerator.getInstance().fights.currentArenaFight(fightArea);
-                        showedFights < numberOfFightsToShow() && i < KendoTournamentGenerator.getInstance().fights.arenaSize(fightArea) - 1; i++) {
-                    f = KendoTournamentGenerator.getInstance().fights.getNextAreaFight(i, fightArea);
-                    if (f != null) {
-                        rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fights.currentArenaFight(fightArea) + 1, KendoTournamentGenerator.getInstance().fights.arenaSize(fightArea));
-                    } else {
-                        rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
-                    }
-                    showedFights++;
-                    rf.updateScorePanels();
-                    FightsPanel.add(rf);
-                    FightsPanel.add(new Box.Filler(minSize, prefSize, maxSize));
-                }
-            }
-
-            //Add null fights to complete the panel.
-            while (showedFights < numberOfFightsToShow()) {
-                try {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
-                    FightsPanel.add(rf);
-                    FightsPanel.add(new Box.Filler(minSize, prefSize, maxSize));
-                } catch (NullPointerException npe) {
-                }
-                showedFights++;
-            }
-        }
-        FightsPanel.repaint();
-        FightsPanel.revalidate();
-    }
-
-    private int numberOfFightsToShow() {
-        return (int) FightsPanel.getHeight() / screenSizeOfTeam();
-    }
-
-    private int screenSizeOfTeam() {
-        return 60 * selectedTournament.teamSize + 45;
-    }
-
     private void setTournament() {
         try {
             banner.CleanPhoto();
@@ -255,7 +180,7 @@ public final class Monitor extends javax.swing.JFrame {
             banner.ChangePhoto(selectedTournament.banner(), selectedTournament.bannerInput, selectedTournament.bannerSize);
             BannerPanel.repaint();
             BannerPanel.revalidate();
-            KendoTournamentGenerator.getInstance().fights.getFightsFromDatabase(selectedTournament.name);
+            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
         } catch (IOException ex) {
             //ex.printStackTrace();
         } catch (IllegalArgumentException iae) {
@@ -285,10 +210,10 @@ public final class Monitor extends javax.swing.JFrame {
         this.dispose();
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -301,6 +226,11 @@ public final class Monitor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 formComponentResized(evt);
@@ -399,7 +329,7 @@ public final class Monitor extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyReleased
 
     private void InverseCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InverseCheckBoxActionPerformed
-        KendoTournamentGenerator.getInstance().inverseTeams = InverseCheckBox.isSelected();
+        KendoTournamentGenerator.getInstance().fightManager.inverseTeams = InverseCheckBox.isSelected();
         fillFightsPanel();
     }//GEN-LAST:event_InverseCheckBoxActionPerformed
 
@@ -413,7 +343,7 @@ public final class Monitor extends javax.swing.JFrame {
     }//GEN-LAST:event_InverseCheckBoxKeyReleased
 
     private void ColourCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColourCheckBoxActionPerformed
-        KendoTournamentGenerator.getInstance().inverseColours = ColourCheckBox.isSelected();
+        KendoTournamentGenerator.getInstance().fightManager.inverseColours = ColourCheckBox.isSelected();
         fillFightsPanel();
     }//GEN-LAST:event_ColourCheckBoxActionPerformed
 
@@ -425,6 +355,10 @@ public final class Monitor extends javax.swing.JFrame {
             close();
         }
     }//GEN-LAST:event_ColourCheckBoxKeyReleased
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.toFront();
+    }//GEN-LAST:event_formWindowOpened
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ArenaLabel;
     private javax.swing.JPanel BannerPanel;

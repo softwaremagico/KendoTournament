@@ -26,8 +26,6 @@ import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,21 +89,13 @@ public class MySQL extends SQL {
                 } else {
                     error = true;
                 }
-            }
-            //Server started, but no database found.
-            if (ex.getErrorCode() == 1049) {
-                InetAddress ownIP = null;
-                try {
-                    ownIP = InetAddress.getLocalHost();
-                } catch (UnknownHostException ex1) {
-                }
+            } else if (ex.getErrorCode() == 1049) { //Server started, but no database found.
                 if (retry && KendoTournamentGenerator.getInstance().isLocallyConnected()) {
                     installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
                     return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
                 } else {
                     error = true;
                 }
-
             } else {
                 showSQLError(ex.getErrorCode());
                 error = true;
@@ -113,7 +103,7 @@ public class MySQL extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.customMessage("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language, tmp_server, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.customMessage("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language, "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
             } else {
                 if (KendoTournamentGenerator.getInstance().getLogOption()) {
                     Log.storeLog("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language);
@@ -152,6 +142,11 @@ public class MySQL extends SQL {
         } catch (IOException ex1) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex1);
         }
+    }
+
+    @Override
+    public boolean onlyLocalConnection() {
+        return false;
     }
 
     /**
@@ -276,6 +271,10 @@ public class MySQL extends SQL {
     @Override
     protected void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException {
         stmt.setBinaryStream(index, input, size);
+    }
+
+    protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
+        return rs.getBinaryStream(column);
     }
 
     /**

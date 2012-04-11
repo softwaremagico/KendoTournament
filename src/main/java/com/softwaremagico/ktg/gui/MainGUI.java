@@ -120,11 +120,12 @@ public class MainGUI extends KendoFrame {
         LogMenuCheckBox.setText(trans.returnTag("LogOption", language));
         DebugMenuCheckBox.setText(trans.returnTag("DebugOption", language));
         ConvertDatabaseMenuItem.setText(trans.returnTag("ConvertDatabase", language));
+        FightsCardMenuItem.setText(trans.returnTag("FightsCard", language));
     }
 
     private void setPhoto() {
         banner = new PhotoFrame(MainPhotoPanel, Path.returnMainPhoto());
-        //  MainPhotoPanel.add(banner, 0);
+        MainPhotoPanel.add(banner, 0);
         banner.repaint();
     }
 
@@ -360,6 +361,10 @@ public class MainGUI extends KendoFrame {
         ConvertDatabaseMenuItem.addActionListener(al);
     }
 
+    public void addFightsCardMenuItemListener(ActionListener al) {
+        FightsCardMenuItem.addActionListener(al);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -411,6 +416,7 @@ public class MainGUI extends KendoFrame {
         RefereeListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         FightListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
         StatisticsMenu = new javax.swing.JMenu();
@@ -583,6 +589,9 @@ public class MainGUI extends KendoFrame {
 
         PointListMenuItem.setText("List of Points");
         ListMenu.add(PointListMenuItem);
+
+        FightsCardMenuItem.setText("FightsCard");
+        ListMenu.add(FightsCardMenuItem);
 
         SummaryMenuItem.setText("Fights Summary");
         ListMenu.add(SummaryMenuItem);
@@ -757,6 +766,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem ExportMenuItem;
     private javax.swing.JMenuItem FightListMenuItem;
     private javax.swing.JMenuItem FightMenuItem;
+    private javax.swing.JMenuItem FightsCardMenuItem;
     private javax.swing.JMenu HelpMenu;
     private javax.swing.JMenuItem HelpMenuItem;
     private javax.swing.JMenu ImportMenu;

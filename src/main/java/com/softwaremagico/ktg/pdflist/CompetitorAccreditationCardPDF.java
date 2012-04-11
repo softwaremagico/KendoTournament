@@ -18,15 +18,14 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.files.Path;
-import java.awt.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -58,8 +57,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         Paragraph p;
         float[] widths = {0.05f, 0.35f, 0.05f, 0.60f};
         PdfPTable table = new PdfPTable(widths);
-        com.lowagie.text.Image img = null;
-        boolean success = false;
+        com.itextpdf.text.Image img;
 
         try {
             img = Image.getInstance(competitor.photo(), null);
@@ -72,17 +70,10 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
             competitor = KendoTournamentGenerator.getInstance().database.selectCompetitor(competitor.getId(), false);
             try {
                 img = Image.getInstance(competitor.photo(), null);
-                success = true;
             } catch (NullPointerException npe2) {
-                if (!success) {
                     img = Image.getInstance(Path.returnDefaultPhoto());
-                    //npe2.printStackTrace();
-                }
             } catch (IllegalArgumentException ie) {
-                if (!success) {
                     img = Image.getInstance(Path.returnDefaultPhoto());
-                    //ie.printStackTrace();
-                }
             }
         }
 
@@ -148,24 +139,20 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable table = new PdfPTable(1);
 
 
-        float[] widths = {0.02f, 0.96f, 0.02f};
+        float[] widths = {0.08f, 0.90f, 0.02f};
         PdfPTable table2 = new PdfPTable(widths);
 
-        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role), FontFactory.getFont(font, fontSize - 2));
+        table2.addCell(this.getEmptyCell());
+        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
         cell = new PdfPCell(p);
-        cell.setColspan(3);
-        cell.setBorderWidth(border);
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
-        table2.addCell(cell);
-
-        p = new Paragraph("", FontFactory.getFont(font, fontSize - 2));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
         cell.setColspan(1);
+        cell.setBorderWidth(border);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
         table2.addCell(cell);
+        table2.addCell(this.getEmptyCell());
+
+        table2.addCell(getEmptyCell(1));
 
         String identification = KendoTournamentGenerator.getInstance().getAvailableRoles().getAbbrev(role)
                 + "-" + KendoTournamentGenerator.getInstance().getCompetitorOrder(competitor, role, competition.name);
@@ -179,18 +166,13 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
         try {
-            cell.setBackgroundColor(KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(role).color);
+            cell.setBackgroundColor(KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(role).getItextColor());
         } catch (NullPointerException npe) {
-            cell.setBackgroundColor(new Color(35, 144, 239));
+            cell.setBackgroundColor(new com.itextpdf.text.BaseColor(35, 144, 239));
         }
         table2.addCell(cell);
 
-        p = new Paragraph(" ", FontFactory.getFont(font, fontSize));
-        cell = new PdfPCell(p);
-        cell.setBorderWidth(border);
-        cell.setColspan(1);
-        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        table2.addCell(cell);
+        table2.addCell(this.getEmptyCell());
 
         cell = new PdfPCell(table2);
         cell.setColspan(1);
@@ -210,8 +192,8 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table.setTotalWidth(width);
         table.getTotalWidth();
 
-        com.lowagie.text.Image png;
-        png = com.lowagie.text.Image.getInstance(Path.returnBannerPath());
+        com.itextpdf.text.Image png;
+        png = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
         //png.scaleAbsoluteWidth(width);
         cell = new PdfPCell(png, true);
         cell.setBorderWidth(border);

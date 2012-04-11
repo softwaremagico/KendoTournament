@@ -828,5 +828,12 @@
 		<de>The database has been exported successfully!</de>
 		<ca>La base de dades ha sigut exportada correctament!</ca>
 	</ConversionCompleted>
+	<imageNotFound>
+		<en>Background image not found!</en>
+		<es>¡La imagen de fondo no ha sido encontrada!</es>
+		<nl>Background image not found!</nl>
+		<de>Background image not found!</de>
+		<ca>La imatge no ha sigut trabada!</ca>
+	</imageNotFound>
 </translator>
 

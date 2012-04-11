@@ -96,7 +96,7 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<TeamFight>();
         TeamFight tf;
-        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+        if (!KendoTournamentGenerator.getInstance().fightManager.inverseTeams) {
             tf = new TeamFight(this, f.team1, f, true, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(this, f.team2, f, true, selected, menu, fight_number, fight_total);
@@ -106,7 +106,7 @@ public class RoundFight extends JPanel {
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+        if (!KendoTournamentGenerator.getInstance().fightManager.inverseTeams) {
             tf = new TeamFight(this, f.team2, f, false, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(this, f.team1, f, false, selected, menu, fight_number, fight_total);
@@ -204,7 +204,7 @@ public class RoundFight extends JPanel {
 
             minSize = new Dimension(5, 0);
             prefSize = new Dimension(5, 4);
-            maxSize = maxSize = new Dimension(5, Short.MAX_VALUE);
+            maxSize = new Dimension(5, Short.MAX_VALUE);
 
             add(new Box.Filler(minSize, prefSize, maxSize));
         }
@@ -272,7 +272,7 @@ public class RoundFight extends JPanel {
                 } else {
                     nextStarted = false;
                 }
-                updateDrawPanel(draws.get(i), fight.duels.get(i).winner(), fight.isOver(), nextStarted, i);
+                updateDrawPanel(draws.get(i), fight.duels.get(i).winner(), fight.returnWinner(), nextStarted, i);
             }
         }
 

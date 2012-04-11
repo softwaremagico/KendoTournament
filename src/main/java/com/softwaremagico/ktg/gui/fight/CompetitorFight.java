@@ -18,12 +18,10 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.Score;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.PanelBackground;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -33,8 +31,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
-import com.softwaremagico.ktg.gui.PanelBackground;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -46,7 +42,6 @@ public class CompetitorFight extends JPanel {
     private PanelBackground round2;
     private PanelBackground faults;
     private JLabel nameLabel;
-    private int height = 10;
     private Competitor competitor;
     private Fight fight;
     private Translator trans = null;
@@ -100,38 +95,40 @@ public class CompetitorFight extends JPanel {
     }
 
     private void fillRightToLeft(String name) {
+        add(Box.createRigidArea(new Dimension(6, 0)));
+        
         round1 = new PanelBackground();
         round1.setBackground(new Color(255, 255, 255));
-        round1.setMinimumSize(new Dimension(40, height));
-        round1.setPreferredSize(new Dimension(50, height));
-        round1.setMaximumSize(new Dimension(50, 60));
-        add(Box.createRigidArea(new Dimension(10, 0)));
+        round1.setMinimumSize(new Dimension(40, 40));
+        round1.setPreferredSize(new Dimension(50, 50));
+        round1.setMaximumSize(new Dimension(60, 60));
         add(round1, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(10, 0)));
+        add(Box.createRigidArea(new Dimension(6, 0)));
 
         round2 = new PanelBackground();
         round2.setBackground(new Color(255, 255, 255));
-        round2.setMinimumSize(new Dimension(40, height));
-        round2.setPreferredSize(new Dimension(50, height));
-        round2.setMaximumSize(new Dimension(50, 60));
+        round2.setMinimumSize(new Dimension(40, 40));
+        round2.setPreferredSize(new Dimension(50, 50));
+        round2.setMaximumSize(new Dimension(60, 60));
         add(round2, BorderLayout.CENTER);
         add(Box.createRigidArea(new Dimension(10, 0)));
 
         faults = new PanelBackground();
         faults.setBackground(new Color(255, 255, 255));
-        faults.setMinimumSize(new Dimension(height / 2, height));
-        faults.setPreferredSize(new Dimension(15, height));
-        faults.setMaximumSize(new Dimension(height / 2, 60));
+        faults.setMinimumSize(new Dimension(10, 40));
+        faults.setPreferredSize(new Dimension(15, 50));
+        faults.setMaximumSize(new Dimension(20, 60));
         add(faults, BorderLayout.EAST);
+        add(Box.createRigidArea(new Dimension(6, 0)));
 
         add(Box.createHorizontalGlue());
 
         nameLabel = new JLabel(name);
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-        add(Box.createRigidArea(new Dimension(10, 0)));
+        add(Box.createRigidArea(new Dimension(6, 0)));
         add(nameLabel, BorderLayout.EAST);
 
-        add(Box.createRigidArea(new Dimension(10, 0)));
+        add(Box.createRigidArea(new Dimension(6, 0)));
     }
 
     private void fillLeftToRight(String name) {
@@ -139,35 +136,35 @@ public class CompetitorFight extends JPanel {
         Font f = nameLabel.getFont();
         //nameLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-        add(Box.createRigidArea(new Dimension(10, 0)));
         add(nameLabel, BorderLayout.EAST);
+        add(Box.createRigidArea(new Dimension(6, 0)));
 
         add(Box.createHorizontalGlue());
 
         faults = new PanelBackground();
         faults.setBackground(new Color(255, 255, 255));
-        faults.setMinimumSize(new Dimension(height / 2, height));
-        faults.setPreferredSize(new Dimension(15, height));
-        faults.setMaximumSize(new Dimension(height / 2, 60));
+        faults.setMinimumSize(new Dimension(10, 40));
+        faults.setPreferredSize(new Dimension(15, 50));
+        faults.setMaximumSize(new Dimension(20, 60));
         add(faults, BorderLayout.EAST);
+        add(Box.createRigidArea(new Dimension(10, 0)));
 
         round2 = new PanelBackground();
         round2.setBackground(new Color(255, 255, 255));
-        round2.setMinimumSize(new Dimension(40, height));
-        round2.setPreferredSize(new Dimension(50, height));
+        round2.setMinimumSize(new Dimension(40, 40));
+        round2.setPreferredSize(new Dimension(50, 50));
         round2.setMaximumSize(new Dimension(50, 60));
-        add(Box.createRigidArea(new Dimension(10, 0)));
         add(round2, BorderLayout.CENTER);
+        add(Box.createRigidArea(new Dimension(6, 0)));
 
         round1 = new PanelBackground();
         round1.setBackground(new Color(255, 255, 255));
-        round1.setMinimumSize(new Dimension(40, height));
-        round1.setPreferredSize(new Dimension(50, height));
+        round1.setMinimumSize(new Dimension(40, 40));
+        round1.setPreferredSize(new Dimension(50, 50));
         round1.setMaximumSize(new Dimension(50, 60));
-        add(Box.createRigidArea(new Dimension(10, 0)));
         add(round1, BorderLayout.EAST);
+        add(Box.createRigidArea(new Dimension(6, 0)));
 
-        add(Box.createRigidArea(new Dimension(10, 0)));
     }
 
     private void decoration() {
@@ -214,17 +211,19 @@ public class CompetitorFight extends JPanel {
     void updateScorePanels() {
         int player;
         try {
-            if ((player = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
-                Duel d = fight.duels.get(player);
-                updateScorePanel(round1, d.hitsFromCompetitorA.get(0));
-                updateScorePanel(round2, d.hitsFromCompetitorA.get(1));
-                updateFaultPanel(faults, d.faultsCompetitorA);
-            }
-            if ((player = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
-                Duel d = fight.duels.get(player);
-                updateScorePanel(round1, d.hitsFromCompetitorB.get(0));
-                updateScorePanel(round2, d.hitsFromCompetitorB.get(1));
-                updateFaultPanel(faults, d.faultsCompetitorB);
+            if (fight != null) {
+                if ((player = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
+                    Duel d = fight.duels.get(player);
+                    updateScorePanel(round1, d.hitsFromCompetitorA.get(0));
+                    updateScorePanel(round2, d.hitsFromCompetitorA.get(1));
+                    updateFaultPanel(faults, d.faultsCompetitorA);
+                }
+                if ((player = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
+                    Duel d = fight.duels.get(player);
+                    updateScorePanel(round1, d.hitsFromCompetitorB.get(0));
+                    updateScorePanel(round2, d.hitsFromCompetitorB.get(1));
+                    updateFaultPanel(faults, d.faultsCompetitorB);
+                }
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
@@ -294,8 +293,8 @@ public class CompetitorFight extends JPanel {
     }
 
     private void updateDuel(Score point, int round) {
-        int index = 0;
-        Duel d = null;
+        int index;
+        Duel d;
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
@@ -304,7 +303,7 @@ public class CompetitorFight extends JPanel {
                 } else {
                     d.clearResultInRound(round, true);
                 }
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 //  updateScorePanels();
             }
             if ((index = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
@@ -314,7 +313,7 @@ public class CompetitorFight extends JPanel {
                 } else {
                     d.clearResultInRound(round, false);
                 }
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 //   updateScorePanels();
             }
         } catch (NullPointerException npe) {
@@ -324,19 +323,19 @@ public class CompetitorFight extends JPanel {
     }
 
     private void increaseFault() {
-        int index = 0;
-        Duel d = null;
+        int index;
+        Duel d;
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
                 d.setFaultInRound(true);
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
             if ((index = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
                 d.setFaultInRound(false);
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
         } catch (NullPointerException npe) {
@@ -345,19 +344,19 @@ public class CompetitorFight extends JPanel {
     }
 
     private void resetFault() {
-        int index = 0;
-        Duel d = null;
+        int index;
+        Duel d;
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
                 d.resetFaults(true);
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
             if ((index = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
                 d.resetFaults(false);
-                KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, index);
+                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
         } catch (NullPointerException npe) {

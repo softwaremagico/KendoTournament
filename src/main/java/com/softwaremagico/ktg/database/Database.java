@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,7 +84,7 @@ public abstract class Database {
         in.close();
 
         BufferedReader stdError = new BufferedReader(new InputStreamReader(child.getErrorStream()));
-        String s = null;
+        String s;
         while ((s = stdError.readLine()) != null) {
             System.out.println(s);
         }
@@ -96,6 +97,12 @@ public abstract class Database {
     public abstract boolean updateDatabase(String path, boolean verbose);
 
     public abstract void clearDatabase();
+    
+    /**
+     * The database only allows local connections (such as SQLite).
+     * @return 
+     */
+    public abstract boolean onlyLocalConnection();
 
     /**
      * *******************************************************************
@@ -357,9 +364,9 @@ public abstract class Database {
     /**
      * Store a fight into the database.
      */
-    public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
+    public abstract boolean storeFights(ArrayList<Fight> fights, boolean purgeTournament, boolean verbose);
 
-    public abstract boolean storeAllFights(List<Fight> fights);
+    public abstract boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights);
 
     public abstract boolean storeFight(Fight fight, boolean verbose);
 
@@ -367,7 +374,7 @@ public abstract class Database {
 
     public abstract boolean deleteFightsOfLevelOfTournament(String championship, int level, boolean verbose);
 
-    public abstract List<Fight> searchFights(String query, String championship);
+    public abstract ArrayList<Fight> searchFights(String query, String championship);
 
     /**
      * Search all fights from one determined tournament.
@@ -375,7 +382,7 @@ public abstract class Database {
      * @param tournament
      * @return
      */
-    public abstract List<Fight> searchFightsByTournamentName(String championship);
+    public abstract ArrayList<Fight> searchFightsByTournamentName(String championship);
 
     /**
      * Search all fights from one determined tournament.
@@ -383,7 +390,7 @@ public abstract class Database {
      * @param tournament
      * @return
      */
-    public abstract List<Fight> searchFightsByTournamentNameAndFightArea(String championship, int fightArea);
+    public abstract ArrayList<Fight> searchFightsByTournamentNameAndFightArea(String championship, int fightArea);
 
     /**
      * Search all fights from one determined tournament.
@@ -391,7 +398,7 @@ public abstract class Database {
      * @param tournament
      * @return
      */
-    public abstract List<Fight> searchFightsByTournamentNameAndTeam(String championship, String team);
+    public abstract ArrayList<Fight> searchFightsByTournamentNameAndTeam(String championship, String team);
 
     public abstract int obtainFightID(Fight f);
 
@@ -401,7 +408,7 @@ public abstract class Database {
 
     public abstract boolean updateFightAsNotOver(Fight fight);
 
-    public abstract List<Fight> getAllFights();
+    public abstract ArrayList<Fight> getAllFights();
 
     /**
      * *******************************************************************

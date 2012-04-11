@@ -112,11 +112,16 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     }
 
     public void setSelectedEngine(String selectedEngine) {
+        EngineComboBox.setSelectedItem(selectedEngine);
         this.selectedEngine = selectedEngine;
     }
 
     public void setFocusOnPassword() {
         PasswordField.requestFocusInWindow();
+    }
+    
+    public boolean getPasswordEnabled(){
+        return PasswordField.isEnabled();
     }
 
     /**
@@ -249,6 +254,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             //KendoTournamentGenerator.getInstance().setDatabaseEngine(EngineComboBox.getSelectedItem().toString());
             setSelectedEngine(EngineComboBox.getSelectedItem().toString());
             hasNetworkConnection(DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()));
+            resetPassword();
         }
     }//GEN-LAST:event_EngineComboBoxActionPerformed
 

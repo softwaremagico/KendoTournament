@@ -18,17 +18,17 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
+import com.softwaremagico.ktg.championship.DesignedGroup;
+import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class ScoreListPDF extends ParentList {
         Paragraph p;
         int cellNumber = 0;
 
-        KendoTournamentGenerator.getInstance().fights.getFightsFromDatabase(championship.name);
+        KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
         KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
@@ -87,7 +87,7 @@ public class ScoreListPDF extends ParentList {
                 mainTable.addCell(getEmptyRow());
                 String head = trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1);
                 if (championship.fightingAreas > 1) {
-                    head += " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fights.getFights())] + ")";
+                    head += " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())] + ")";
                 }
 
                 mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));
@@ -103,13 +103,13 @@ public class ScoreListPDF extends ParentList {
                     /*
                      * Header of the teams
                      */
-                    Team t = groups.get(i).getTeamInOrderOfScore(j, KendoTournamentGenerator.getInstance().fights.getFights(), false);
+                    Team t = groups.get(i).getTeamInOrderOfScore(j, KendoTournamentGenerator.getInstance().fightManager.getFights(), false);
 
                     mainTable.addCell(getCell(t.returnName(), 0, Element.ALIGN_LEFT));
-                    mainTable.addCell(getCell(Ranking.obtainWonFights(KendoTournamentGenerator.getInstance().fights.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawFights(KendoTournamentGenerator.getInstance().fights.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
-                    mainTable.addCell(getCell(Ranking.obtainWonDuels(KendoTournamentGenerator.getInstance().fights.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(KendoTournamentGenerator.getInstance().fights.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
+                    mainTable.addCell(getCell(Ranking.obtainWonFights(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawFights(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
+                    mainTable.addCell(getCell(Ranking.obtainWonDuels(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
 
-                    String score = "" + (int) (float) (Ranking.obtainHits(KendoTournamentGenerator.getInstance().fights.getFights(), t, groups.get(i).getLevel()));
+                    String score = "" + (int) (float) (Ranking.obtainHits(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()));
                     if (winnerUndraw != null) {
                         if (winnerUndraw.equals(t.returnName())) {
                             score += "*";

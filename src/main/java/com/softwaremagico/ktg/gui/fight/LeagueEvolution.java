@@ -19,7 +19,7 @@
 package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.leaguedesigner.BlackBoardPanel;
+import com.softwaremagico.ktg.championship.BlackBoardPanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -97,7 +97,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels();
         int rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0).size();
 
-        int x = KendoTournamentGenerator.getInstance().designedGroups.firstLevelNotFinished(KendoTournamentGenerator.getInstance().fights.getFights());
+        int x = KendoTournamentGenerator.getInstance().designedGroups.firstLevelNotFinished(KendoTournamentGenerator.getInstance().fightManager.getFights());
         int y;
 
         int designedgroupIndex = KendoTournamentGenerator.getInstance().designedGroups.returnLastGroupUsed() + 1;

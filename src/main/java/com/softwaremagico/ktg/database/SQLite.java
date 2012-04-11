@@ -4,15 +4,15 @@
  */
 package com.softwaremagico.ktg.database;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Log;
+import com.softwaremagico.ktg.MessageManager;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Log;
-import com.softwaremagico.ktg.MessageManager;
 
 /**
  *
@@ -47,7 +47,7 @@ public class SQLite extends SQL {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (Exception e) {
-            MessageManager.errorMessage("Mysql driver for Java is not installed. Check your configuration.", "Mysql", KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("Sqlite driver for Java is not installed. Check your configuration.", "SQLite", KendoTournamentGenerator.getInstance().getLogOption());
             error = true;
         }
 
@@ -65,7 +65,7 @@ public class SQLite extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.customMessage("databaseConnected", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, tmp_server, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.customMessage("databaseConnected", "SQLite", KendoTournamentGenerator.getInstance().language, "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
             } else {
                 if (KendoTournamentGenerator.getInstance().getLogOption()) {
                     Log.storeLog("databaseConnected", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
@@ -86,6 +86,11 @@ public class SQLite extends SQL {
     @Override
     void startDatabase() {
         //It is not necesary. 
+    }
+
+    @Override
+    public boolean onlyLocalConnection() {
+        return true;
     }
 
     /**
@@ -154,7 +159,7 @@ public class SQLite extends SQL {
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLite.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -171,13 +176,12 @@ public class SQLite extends SQL {
 
             int nRead;
             byte[] data = new byte[16384];
-            
-            try{
-            while ((nRead = input.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, nRead);
-            }
-            }catch(NullPointerException npe){
-                
+
+            try {
+                while ((nRead = input.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+            } catch (NullPointerException npe) {
             }
 
             buffer.flush();
@@ -186,6 +190,11 @@ public class SQLite extends SQL {
         } catch (IOException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
+    }
+
+    protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
+        byte[] bytes = rs.getBytes(column);
+        return new ByteArrayInputStream(bytes);
     }
 
     /**

@@ -43,7 +43,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
 
     /** Creates new form ChangeOrderTeam */
     public ChangeOrderTeam() {
-        level = KendoTournamentGenerator.getInstance().fights.getLastLevel();
+        level = KendoTournamentGenerator.getInstance().fightManager.getLastLevel();
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));

@@ -4,7 +4,7 @@ Section: Utility
 Priority: optional
 Architecture: all
 Essential: no
-Depends: openjdk-6-jre | sun-java6-jre
+Recommends: openjdk-7-jre
 Installed-Size: 9.7MiB
 Maintainer: Jorge Hortelano [softwaremagico@gmail.com]
 Replaces: kendotournament

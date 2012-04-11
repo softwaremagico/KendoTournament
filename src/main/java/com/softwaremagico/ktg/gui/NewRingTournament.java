@@ -10,6 +10,8 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,6 @@ import java.util.Random;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -164,8 +164,8 @@ public class NewRingTournament extends javax.swing.JFrame {
         return results;
     }
 
-    private List<Fight> obtainRingFightsWithoutRepetition() {
-        List<Fight> fights = new ArrayList<Fight>();
+    private ArrayList<Fight> obtainRingFightsWithoutRepetition() {
+        ArrayList<Fight> fights = new ArrayList<Fight>();
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
             for (int j = i + 1; j < teams.size(); j++) {
@@ -175,14 +175,14 @@ public class NewRingTournament extends javax.swing.JFrame {
         return fights;
     }
 
-    private List<Fight> obtainRingFightsWithRepetition() {
-        List<Fight> fights = new ArrayList<Fight>();
+    private ArrayList<Fight> obtainRingFightsWithRepetition() {
+        ArrayList<Fight> fights = new ArrayList<Fight>();
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
-            for (int j = i + 1; j < teams.size(); j++) { //First, fights with teams that not have played the ring.
+            for (int j = i + 1; j < teams.size(); j++) { //First, fightManager with teams that not have played the ring.
                 fights.add(new Fight(teams.get(i), teams.get(j % teams.size()), competition, 0, level));
             }
-            for (int j = 0; j < i ; j++) { //Next, fights with exhausted teams.
+            for (int j = 0; j < i ; j++) { //Next, fightManager with exhausted teams.
                 fights.add(new Fight(teams.get(i), teams.get(j % teams.size()), competition, 0, level));
             }
         }

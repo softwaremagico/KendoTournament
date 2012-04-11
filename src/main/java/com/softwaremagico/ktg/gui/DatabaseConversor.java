@@ -43,12 +43,16 @@ public class DatabaseConversor extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage(KendoTournamentGenerator.getInstance().language);
-        fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
-        fromDatabaseConnectionPanel.resetPassword();
         SourcePanel.add(fromDatabaseConnectionPanel);
+        fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
+        //fromDatabaseConnectionPanel.resetPassword();
+        fromDatabaseConnectionPanel.setSelectedEngine(KendoTournamentGenerator.getInstance().getDatabaseEngine().name());
+        
+        DestinationPanel.add(toDatabaseConnectionPanel);
         toDatabaseConnectionPanel.setBounds(new Rectangle(DestinationPanel.getSize().width, DestinationPanel.getSize().height));
         toDatabaseConnectionPanel.resetPassword();
-        DestinationPanel.add(toDatabaseConnectionPanel);
+        toDatabaseConnectionPanel.setSelectedEngine(DatabaseEngine.getOtherDatabase(KendoTournamentGenerator.getInstance().getDatabaseEngine().name()).name());
+        
     }
 
     private void setLanguage(String language) {
@@ -197,47 +201,7 @@ public class DatabaseConversor extends javax.swing.JFrame {
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DatabaseConversor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DatabaseConversor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DatabaseConversor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DatabaseConversor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new DatabaseConversor().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CloseButton;
     private javax.swing.JPanel DestinationPanel;

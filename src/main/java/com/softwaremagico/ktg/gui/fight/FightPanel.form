@@ -11,6 +11,7 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
     <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="formComponentResized"/>
   </Events>
   <AuxValues>
@@ -31,7 +32,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="FightsPanel" alignment="0" pref="913" max="32767" attributes="0"/>
+                  <Component id="FightsPanel" alignment="0" pref="800" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="PreviousButton" linkSize="8" min="-2" pref="133" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -41,12 +42,12 @@
                           <Group type="102" attributes="0">
                               <Component id="AddButton" linkSize="8" min="-2" pref="133" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Component id="ColourCheckBox" pref="218" max="32767" attributes="0"/>
+                              <Component id="ColourCheckBox" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="DeleteButton" linkSize="8" min="-2" pref="133" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                              <Component id="InverseCheckBox" pref="218" max="32767" attributes="0"/>
+                              <Component id="InverseCheckBox" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -61,7 +62,7 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="BannerPanel" pref="555" max="32767" attributes="0"/>
+                      <Component id="BannerPanel" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="FightAreaLabel" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -100,7 +101,7 @@
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="FightsPanel" pref="328" max="32767" attributes="0"/>
+              <Component id="FightsPanel" pref="300" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="PreviousButton" alignment="0" pref="52" max="32767" attributes="1"/>

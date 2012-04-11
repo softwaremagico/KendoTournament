@@ -18,12 +18,12 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.championship.LeagueDesigner;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.*;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.language.Configuration;
-import com.softwaremagico.ktg.leaguedesigner.LeagueDesigner;
 import com.softwaremagico.ktg.pdflist.*;
 import com.softwaremagico.ktg.statistics.*;
 import java.awt.event.ActionEvent;
@@ -63,6 +63,7 @@ public class Controller {
     private FightList fightsList = null;
     private PointList pointList = null;
     private SummaryList summaryList = null;
+    private EmptyFightsList fightsCard = null;
     private ClubList clubList = null;
     private DiplomaEditor diplomaGui = null;
     private AccreditionCards accreditionCards = null;
@@ -134,6 +135,7 @@ public class Controller {
         main.addTournamentPanelMenuItemListener(new NewTournamentPanelListener());
         main.addTeamListMenuItemListener(new NewTeamListListener());
         main.addFightListMenuItemListener(new NewFightListListener());
+        main.addFightsCardMenuItemListener(new NewFightsCardListener());
         main.addRefereeListMenuItemListener(new NewRefereeListListener());
         main.addPointListMenuItemListener(new NewPointListListener());
         main.addSummaryMenuItemListener(new NewSummaryListener());
@@ -387,6 +389,19 @@ public class Controller {
             }
             fightsList = new FightList();
             fightsList.setVisible(true);
+        }
+    }
+
+    class NewFightsCardListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                fightsCard.dispose();
+            } catch (NullPointerException npe) {
+            }
+            fightsCard = new EmptyFightsList();
+            fightsCard.setVisible(true);
         }
     }
 
@@ -1283,16 +1298,17 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Fight f = null;
+            Fight f;
             try {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
-                        shortFight.getTournament(), shortFight.getArena(), KendoTournamentGenerator.getInstance().fights.get(KendoTournamentGenerator.getInstance().fights.size() - 1).level + 1);
+                        shortFight.getTournament(), shortFight.getArena(), 
+                        KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level + 1);
             } catch (IndexOutOfBoundsException aion) {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
                         shortFight.getTournament(), shortFight.getArena(), 0);
             }
             try {
-                KendoTournamentGenerator.getInstance().fights.add(f);
+                KendoTournamentGenerator.getInstance().fightManager.add(f);
                 MessageManager.customMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
                 tournamentPanel.fillFightsPanel();
                 KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(shortFight.getTournament().name));

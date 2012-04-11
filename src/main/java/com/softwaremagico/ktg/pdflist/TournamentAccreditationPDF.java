@@ -18,10 +18,10 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
@@ -125,7 +125,7 @@ public class TournamentAccreditationPDF {
                     cell.addElement(competitorTable);
                     mainTable.addCell(cell);
                 }
-
+                timerPanel.updateLabel(transl.returnTag("WrittingToDisk", KendoTournamentGenerator.getInstance().language));
                 mainTable.completeRow();
                 return mainTable;
             }

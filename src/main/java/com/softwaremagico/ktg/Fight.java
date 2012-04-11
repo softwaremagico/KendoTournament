@@ -37,9 +37,25 @@ public class Fight implements Serializable {
     private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     public int level;
     private int maxWinners = 1;
-    private int databaseID = -1;
+    private boolean overUpdated = false; //Over value has been stored into the database or not. 
 
-    public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_winner, int tmp_level, int ID) {
+    public boolean isOverStored() {
+        return overUpdated;
+    }
+
+    public void setOverStored(boolean overUpdated) {
+        this.overUpdated = overUpdated;
+    }
+
+    public void calculateOverWithDuels() {
+        if (returnWinner() == 2) {
+            overUpdated = false;
+        } else {
+            overUpdated = true;
+        }
+    }
+
+    public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_winner, int tmp_level) {
         team1 = tmp_team1;
         team2 = tmp_team2;
         competition = tmp_tournament;
@@ -47,7 +63,6 @@ public class Fight implements Serializable {
         addDuels();
         winner = tmp_winner;
         level = tmp_level;
-        databaseID = ID;
     }
 
     public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_level) {
@@ -70,7 +85,7 @@ public class Fight implements Serializable {
         level = 0;
     }
 
-    public int isOver() {
+    public boolean isOver() {
         /*
          * try { Team winnerTeam = winner(); if
          * (winnerTeam.returnName().equals(team1.returnName())) { winner = -1;
@@ -78,15 +93,18 @@ public class Fight implements Serializable {
          * { winner = 1; return 1; } } catch (NullPointerException npe) { return
          * winner; } winner = 2;
          */
-        return winner;
+        return winner < 2;
     }
 
     public int returnWinner() {
         return winner;
     }
 
-    public void setOver(KendoTournamentGenerator tournament) {
-        completeIppons(tournament);
+    public void setOver() {
+        completeIppons();
+        if (winner == 2) {
+            overUpdated = false;
+        }
         try {
             Team winnerTeam = winner();
             if (winnerTeam.returnName().equals(team1.returnName())) {
@@ -103,6 +121,7 @@ public class Fight implements Serializable {
 
     public void setAsNotOver() {
         winner = 2;
+        overUpdated = false;
     }
 
     public final boolean addDuels() {
@@ -211,7 +230,7 @@ public class Fight implements Serializable {
         return maxWinners;
     }
 
-    private void completeIppons(KendoTournamentGenerator tournament) {
+    private void completeIppons() {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
             if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, level) != null) //There is a player
                     && (!team2.getMember(i, level).returnName().equals("")
@@ -220,7 +239,7 @@ public class Fight implements Serializable {
                     || (team1.getMember(i, level).returnName().equals("")
                     && team1.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(false);
-                tournament.database.storeDuel(duels.get(i), this, i);
+                KendoTournamentGenerator.getInstance().database.storeDuel(duels.get(i), this, i);
             }
         }
 
@@ -232,18 +251,10 @@ public class Fight implements Serializable {
                     || (team2.getMember(i, level).returnName().equals("")
                     && team2.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(true);
-                tournament.database.storeDuel(duels.get(i), this, i);
+                KendoTournamentGenerator.getInstance().database.storeDuel(duels.get(i), this, i);
             }
         }
 
-    }
-
-    public int returnDatabaseID() {
-        return databaseID;
-    }
-
-    public void setDatabaseID(int value) {
-        databaseID = value;
     }
 
     public int getWinnedDuels(boolean team1) {
@@ -291,5 +302,17 @@ public class Fight implements Serializable {
         hash = 59 * hash + (this.competition != null ? this.competition.hashCode() : 0);
         hash = 59 * hash + this.level;
         return hash;
+    }
+
+    public boolean areUpdatedDuelsOfFight() {
+        if (duels.isEmpty()) {
+            return false;
+        }
+        for (Duel d : duels) {
+            if (!d.isStored()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

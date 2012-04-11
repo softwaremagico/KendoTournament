@@ -71,8 +71,10 @@ public class SearchCompetitor extends javax.swing.JFrame {
      */
     public void FillResults(List<CompetitorWithPhoto> competitors) {
         resultModel.removeAllElements();
-        for (int i = 0; i < competitors.size(); i++) {
-            resultModel.addElement(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName() + " (" + competitors.get(i).getId() + ")");
+        if (competitors != null) {
+            for (int i = 0; i < competitors.size(); i++) {
+                resultModel.addElement(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName() + " (" + competitors.get(i).getId() + ")");
+            }
         }
     }
 
@@ -316,7 +318,6 @@ public class SearchCompetitor extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JLabel ClubLabel;

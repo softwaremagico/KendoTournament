@@ -27,7 +27,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
+import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -103,12 +103,12 @@ public class MonitorFightPosition extends JFrame {
         setTeams();
 //        for (int i = 0; i < teams.size(); i++) {
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(group.getFightsOfGroup(KendoTournamentGenerator.getInstance().fights.getFights()));
+        teamTopTen = ranking.getRanking(group.getFightsOfGroup(KendoTournamentGenerator.getInstance().fightManager.getFights()));
 
-        /* Team t = group.getTeamInOrderOfScore(i, fights, false);
-        int fightsWinned = group.obtainWonFights(fights, t);
-        int duelsWinned = group.obtainWonDuels(fights, t);
-        int score = (int) group.obtainHits(fights, t);
+        /* Team t = group.getTeamInOrderOfScore(i, fightManager, false);
+        int fightsWinned = group.obtainWonFights(fightManager, t);
+        int duelsWinned = group.obtainWonDuels(fightManager, t);
+        int score = (int) group.obtainHits(fightManager, t);
         TeamRanking tr = new TeamRanking(t.returnName(), group.getChampionshipOfGroup().name, fightsWinned, duelsWinned, score);
         teamTopTen.add(tr);*/
         //     }

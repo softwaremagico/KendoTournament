@@ -18,12 +18,12 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -58,14 +58,12 @@ public class KendoTournamentGenerator {
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
     public boolean databaseConnected = false;
-    public Fights fights;
+    public FightManager fightManager;
     private int nameDiplomaPosition = 100;
-    public boolean inverseColours = false;
-    public boolean inverseTeams = false;
     private boolean logActivated = true;
 
     private KendoTournamentGenerator() {
-        fights = new Fights(this);
+        fightManager = new FightManager();
         obtainStoredDatabaseConnection();
         loadConfig();
     }
@@ -246,6 +244,10 @@ public class KendoTournamentGenerator {
         try {
             ownIP = InetAddress.getLocalHost();
         } catch (UnknownHostException ex1) {
+        }
+        
+        if(database.onlyLocalConnection()){
+            return true;
         }
 
         //The easy way. 

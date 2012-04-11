@@ -4,17 +4,16 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.championship.DesignedGroup;
+import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroup;
-import com.softwaremagico.ktg.leaguedesigner.DesignedGroups;
-import java.awt.Color;
 import java.util.List;
 
 /**
@@ -24,7 +23,6 @@ import java.util.List;
 public class FightListPDF extends ParentList {
 
     private Tournament championship;
-    Translator trans = null;
 
     public FightListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
@@ -62,11 +60,11 @@ public class FightListPDF extends ParentList {
                 cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
                 cell.setBorderWidth(0);
                 cell.setColspan(3);
-                if (fights.get(j).isOver() < 2) {
-                    cell.setBackgroundColor(new Color(200, 200, 200));
-                } else {
-                    cell.setBackgroundColor(new Color(255, 255, 255));
-                }
+                //if (fights.get(j).isOver()) {
+                //    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200, 200, 200));
+                //} else {
+                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
+                //}
                 //cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 mainTable.addCell(cell);
             }
@@ -78,7 +76,7 @@ public class FightListPDF extends ParentList {
     private PdfPTable championshipTable(PdfPTable mainTable) {
         PdfPCell cell;
 
-        KendoTournamentGenerator.getInstance().fights.getFightsFromDatabase(championship.name);
+        KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
         KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
@@ -94,19 +92,19 @@ public class FightListPDF extends ParentList {
 
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fights.getFights())] + ")", 0));
+                mainTable.addCell(getHeader2(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())] + ")", 0));
 
-                for (int j = 0; j < KendoTournamentGenerator.getInstance().fights.size(); j++) {
-                    if (groups.get(i).isFightOfGroup(KendoTournamentGenerator.getInstance().fights.get(j))) {
+                for (int j = 0; j < KendoTournamentGenerator.getInstance().fightManager.size(); j++) {
+                    if (groups.get(i).isFightOfGroup(KendoTournamentGenerator.getInstance().fightManager.get(j))) {
 
-                        cell = new PdfPCell(fightTable(KendoTournamentGenerator.getInstance().fights.get(j), font, fontSize));
+                        cell = new PdfPCell(fightTable(KendoTournamentGenerator.getInstance().fightManager.get(j), font, fontSize));
                         cell.setBorderWidth(1);
                         cell.setColspan(3);
-                        if (KendoTournamentGenerator.getInstance().fights.get(j).isOver() < 2) {
-                            cell.setBackgroundColor(new Color(200, 200, 200));
-                        } else {
-                            cell.setBackgroundColor(new Color(255, 255, 255));
-                        }
+                        //if (KendoTournamentGenerator.getInstance().fightManager.get(j).isOver()) {
+                        //    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200, 200, 200));
+                        // } else {
+                        cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
+                        //}
                         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                         mainTable.addCell(cell);
                     }

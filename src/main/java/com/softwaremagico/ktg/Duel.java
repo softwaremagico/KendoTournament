@@ -34,6 +34,15 @@ public class Duel implements Serializable {
     public List<Score> hitsFromCompetitorB = new ArrayList<Score>(); //M, K, T, D, H, I
     public int faultsCompetitorA = 0;
     public int faultsCompetitorB = 0;
+    private boolean stored = false; //Has been stored into the database or not. 
+
+    public boolean isStored() {
+        return stored;
+    }
+
+    public void setStored(boolean stored) {
+        this.stored = stored;
+    }
 
     public Duel() {
         addRounds();
@@ -197,6 +206,14 @@ public class Duel implements Serializable {
             }
         }
         return round;
+    }
+
+    public boolean needsToBeStored() {
+        if (howManyPoints(true) > 0 || howManyPoints(false) > 0 || 
+                getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
+            return true;
+        }
+        return false;
     }
 
     /**

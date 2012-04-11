@@ -286,7 +286,7 @@ public class Ranking {
                     teamScore += obtainPointsForWonFights(oneFight, team);
                     teamScore += obtainPointsForWonDuels(oneFight, team);
                     teamScore += obtainPointsForHits(oneFight, team);
-                    if (oneFight.competition.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fights are used to 
+                    if (oneFight.competition.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
                         teamScore += obtainPointsForDrawFights(oneFight, team);
                         teamScore += obtainPointsForDrawDuels(oneFight, team);
                     }

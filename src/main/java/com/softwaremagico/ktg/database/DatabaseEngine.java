@@ -42,6 +42,15 @@ public enum DatabaseEngine {
         return null;
     }
 
+    public static DatabaseEngine getOtherDatabase(String database) {
+        for (DatabaseEngine db : availableDatabase) {
+            if (!database.equals(db.toString())) {
+                return db;
+            }
+        }
+        return null;
+    }
+
     public Database getDatabaseClass() {
         return database;
     }
@@ -49,7 +58,6 @@ public enum DatabaseEngine {
     public static Database getDatabaseClass(String database) {
         return getDatabase(database).database;
     }
-    
 
     static {
         availableDatabase.addAll(Arrays.asList(DatabaseEngine.values()));

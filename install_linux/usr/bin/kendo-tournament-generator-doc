@@ -1,1 +1,1 @@
-gpdf /usr/share/kendo-tournament-generator/manual/KendoTournament_SPANISH.pdf | evince /usr/share/kendotournamentgenerator/manual/KendoTournament_SPANISH.pdf | kpdf /usr/share/kendo-tournament-generator/manual/KendoTournament_SPANISH.pdf
+gpdf /usr/share/kendo-tournament-generator/manual/KendoTournament_SPANISH.pdf | evince /usr/share/kendo-tournament-generator/manual/KendoTournament_SPANISH.pdf | kpdf /usr/share/kendo-tournament-generator/manual/KendoTournament_SPANISH.pdf

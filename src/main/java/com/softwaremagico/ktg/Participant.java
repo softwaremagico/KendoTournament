@@ -4,11 +4,13 @@
  */
 package com.softwaremagico.ktg;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jorge
  */
-public class Participant {
+public class Participant implements Serializable {
 
     protected String id;
     protected String name;
@@ -90,16 +92,20 @@ public class Participant {
         }
     }
 
-    public String returnSurnameNameIni() {
+    public String returnSurnameNameIni(int maxLength) {
         if (surname.length() > 0 || name.length() > 0) {
-            String surnameShort = surname.substring(0, Math.min(13, surname.length())).toUpperCase();
-            if (surname.length() > 13) {
+            String surnameShort = surname.substring(0, Math.min(maxLength, surname.length())).toUpperCase();
+            if (surname.length() > maxLength) {
                 surnameShort += ".";
             }
             return surnameShort + ", " + name.substring(0, 1) + ".";
         } else {
             return " --- --- ";
         }
+    }
+
+    public String returnSurnameNameIni() {
+        return returnSurnameNameIni(11);
     }
 
     protected final void storeSurname(String value) {

@@ -129,8 +129,8 @@ public class OrderTeam extends NewTeam {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
                 if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
-                    //Insert the change into the fights already loaded.
-                    KendoTournamentGenerator.getInstance().fights.updateFightsWithNewOrderOfTeam(team);
+                    //Insert the change into the fightManager already loaded.
+                    KendoTournamentGenerator.getInstance().fightManager.updateFightsWithNewOrderOfTeam(team);
                     MessageManager.customMessage("orderChanged", "League", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
                     this.dispose();
                 }

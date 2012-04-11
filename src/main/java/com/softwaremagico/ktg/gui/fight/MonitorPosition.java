@@ -22,6 +22,11 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Ranking;
+import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -31,11 +36,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.Timer;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.statistics.TeamRanking;
 
 /**
  *
@@ -43,7 +43,6 @@ import com.softwaremagico.ktg.statistics.TeamRanking;
  */
 public class MonitorPosition extends JFrame {
 
-    private KendoTournamentGenerator tournament;
     private Tournament championship;
     private Timer timer = null;
     private final int seconds = 5;
@@ -84,7 +83,7 @@ public class MonitorPosition extends JFrame {
     }
 
     private void updateList() {
-        int fontSize = 18;
+        int fontSize;
         TablePanel.removeAll();
 
         fontSize = this.getWidth() / 45;
@@ -92,7 +91,7 @@ public class MonitorPosition extends JFrame {
 
         //teamTopTen = tournament.database.getTeamsOrderByScore(championship.name, false);
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(tournament.database.searchFightsByTournamentName(championship.name));
+        teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
         if (teamTopTen.size() > 0) {
             if (fontSize > this.getWidth() / (teamTopTen.size() * 4)) {
@@ -112,23 +111,23 @@ public class MonitorPosition extends JFrame {
     }
 
     void addTitle(int fontSize) {
-        nameLabel = new JLabel(transl.returnTag("TeamTopTenMenuItem", tournament.language));
+        nameLabel = new JLabel(transl.returnTag("TeamTopTenMenuItem", KendoTournamentGenerator.getInstance().language));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
 
-        nameLabel = new JLabel(transl.returnTag("WonMatchs", tournament.language));
+        nameLabel = new JLabel(transl.returnTag("WonMatchs", KendoTournamentGenerator.getInstance().language));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("WonFights", tournament.language));
+        nameLabel = new JLabel(transl.returnTag("WonFights", KendoTournamentGenerator.getInstance().language));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("PerformedHitStatistics", tournament.language));
+        nameLabel = new JLabel(transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);

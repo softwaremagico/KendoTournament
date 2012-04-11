@@ -26,7 +26,7 @@ public class RoleTag {
     public String tag;     //Identical for all languages.
     public String name;    //The traduction for each language.
     public String abbrev;
-    public Color color; 
+    public Color color;
 
     public RoleTag(String tmp_tag, String tmp_name, String tmp_abbrev) {
         tag = tmp_tag;
@@ -34,7 +34,11 @@ public class RoleTag {
         abbrev = tmp_abbrev;
     }
 
-    public void addColor(int red, int green, int blue){
+    public void addColor(int red, int green, int blue) {
         color = new Color(red, green, blue);
+    }
+
+    public com.itextpdf.text.BaseColor getItextColor() {
+        return new com.itextpdf.text.BaseColor(color.getRed(), color.getGreen(), color.getBlue());
     }
 }

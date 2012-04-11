@@ -323,6 +323,14 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
               </AuxValues>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="FightsCardMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="FightsCard"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="SummaryMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Fights Summary"/>

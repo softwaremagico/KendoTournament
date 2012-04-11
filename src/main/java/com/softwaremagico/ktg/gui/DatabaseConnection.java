@@ -44,7 +44,11 @@ public class DatabaseConnection extends javax.swing.JFrame {
         //this.setBounds(this.getBounds().x, this.getBounds().y, (int) ContentPanel.getBounds().getWidth() + 40, this.getBounds().height);
         connectionPanel.setBounds(new Rectangle(mainPanel.getSize().width, mainPanel.getSize().height));
         mainPanel.add(connectionPanel);
-        connectionPanel.setFocusOnPassword();
+        if (connectionPanel.getPasswordEnabled()) {
+            connectionPanel.setFocusOnPassword();
+        }else{
+            ConnectButton.requestFocusInWindow();
+        }
     }
 
     private void setLanguage(String language) {

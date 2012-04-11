@@ -18,18 +18,11 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.RoleTags;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
-import com.lowagie.text.*;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
@@ -120,7 +113,7 @@ public class Diploma {
         }
 
         public boolean convertPDF() {
-            boolean error = false;
+            boolean error;
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
@@ -142,10 +135,10 @@ public class Diploma {
 
         void addBackGroundImage(Document document, String imagen) throws BadElementException,
                 DocumentException, MalformedURLException, IOException {
-            com.lowagie.text.Image png;
+            com.itextpdf.text.Image png;
 
-            png = com.lowagie.text.Image.getInstance(imagen);
-            png.setAlignment(com.lowagie.text.Image.UNDERLYING);
+            png = com.itextpdf.text.Image.getInstance(imagen);
+            png.setAlignment(com.itextpdf.text.Image.UNDERLYING);
             png.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
             png.setAbsolutePosition(0, 0);
             document.add(png);
@@ -174,7 +167,7 @@ public class Diploma {
         }
 
         public void pageTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
-            List<Competitor> competitors = null;
+            List<Competitor> competitors;
 
             competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, championship.name, allDiplomas);
 
@@ -212,10 +205,10 @@ public class Diploma {
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 
             mainTable.addCell(cell);
-            //mainTable.writeSelectedRows(0, -1, 0, document.getPageSize().getHeight() * nameposition + 27, writer.getDirectContent());
+            mainTable.writeSelectedRows(0, -1, 0, document.getPageSize().getHeight() * nameposition + 27, writer.getDirectContent());
             //mainTable.flushContent();
             mainTable.setWidthPercentage(100);
-            document.add(mainTable);
+            //document.add(mainTable);
         }
 
         private void statisticsTable(Document document, PdfWriter writer, Competitor competitor, String font, int fontSize) {
@@ -227,21 +220,21 @@ public class Diploma {
                 document.newPage();
 
                 //General hits.
-                Image image = com.lowagie.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.returnTag("TitleHits", KendoTournamentGenerator.getInstance().language)), null, false);
+                Image image = com.itextpdf.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.returnTag("TitleHits", KendoTournamentGenerator.getInstance().language)), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 mainTable.addCell(cell);
 
 
-                List<Duel> duelsTeamRight = new ArrayList<Duel>();
-                List<Duel> duelsTeamLeft = new ArrayList<Duel>();
+                List<Duel> duelsTeamRight;
+                List<Duel> duelsTeamLeft;
 
                 duelsTeamRight = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), true);
                 duelsTeamLeft = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), false);
 
                 //Performed hits.
-                image = com.lowagie.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -249,7 +242,7 @@ public class Diploma {
 
 
                 //Received hits.
-                image = com.lowagie.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("ReceivedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("ReceivedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -264,7 +257,7 @@ public class Diploma {
                 mainTable.addCell(cell);
 
                 //Team ranking.
-                image = com.lowagie.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.returnTag("TopTenTeamTitle", KendoTournamentGenerator.getInstance().language), transl.returnTag("NumberOfWinnedTopTen", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.returnTag("TopTenTeamTitle", KendoTournamentGenerator.getInstance().language), transl.returnTag("NumberOfWinnedTopTen", KendoTournamentGenerator.getInstance().language)), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setColspan(3);
@@ -434,7 +427,7 @@ public class Diploma {
                 startValue = 0;
             }
             for (int i = startValue; i < endValue; i++) {
-                String c = "";
+                String c;
                 if (championship.name.equals("All")) {
                     c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
                 } else {
