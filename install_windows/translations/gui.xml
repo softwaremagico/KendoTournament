@@ -452,7 +452,7 @@
 		<en>Database:</en>
 		<es>Base de Datos:</es>
 		<nl>Database:</nl>
-		<de>Datenbank</de>
+		<de>Datenbank:</de>
 		<ca>base de dades:</ca>
 	</DatabaseLabel>
 	<TournamentLabel>
@@ -1711,4 +1711,82 @@
 		<de>Avoid repetitions</de>
 		<ca>Avoid repetitions</ca>
 	</AvoidRepetitions>	
+	<DatabaseEngineLabel>
+		<en>Engine:</en>
+		<es>Motor:</es>
+		<nl>Engine:</nl>
+		<de>Engine:</de>
+		<ca>Motor:</ca>
+	</DatabaseEngineLabel>
+	<DiplomaRole>
+		<en>Print the diplomas of:</en>
+		<es>Imprimir los diplomas de:</es>
+		<nl>Print the diplomas of:</nl>
+		<de>Print the diplomas of:</de>
+		<ca>Imprimeix els diplomes de:</ca>
+	</DiplomaRole>	
+	<ConvertDatabase>
+		<en>Convert database to...</en>
+		<es>Convertir la base de datos a...</es>
+		<nl>Convert database  to...</nl>
+		<de>Convert database  to...</de>
+		<ca>Converteix la base de dades a...</ca>
+	</ConvertDatabase>	
+	<FromDatabaseLabel>
+		<en>Source database:</en>
+		<es>Base de datos origen:</es>
+		<nl>Source database:</nl>
+		<de>Source database:</de>
+		<ca>Base de dades de origen:</ca>
+	</FromDatabaseLabel>	
+	<ToDatabaseLabel>
+		<en>Address database:</en>
+		<es>Base de datos destino:</es>
+		<nl>Address database:</nl>
+		<de>Address database:</de>
+		<ca>Base de dades de destí:</ca>
+	</ToDatabaseLabel>	
+		<ConvertButton>
+		<en>Convert</en>
+		<es>Convertir</es>
+		<nl>Convert</nl>
+		<de>Convert</de>
+		<ca>Convertir</ca>
+	</ConvertButton>	
+	<WrittingToDisk>
+		<en>Writting to disk...</en>
+		<es>Escribiendo en el disco...</es>
+		<nl>Writting to disk...</nl>
+		<de>Writting to disk...</de>
+		<ca>Escribint al disc...</ca>
+	</WrittingToDisk>
+	<FightsCard>
+		<en>Fights card</en>
+		<es>Ficha de combates</es>
+		<nl>Fights card</nl>
+		<de>Fights card</de>
+		<ca>Fitxa de combats</ca>
+	</FightsCard>
+	<ShowEndFights>
+		<en>Add ended fights</en>
+		<es>Incluir combates acabados</es>
+		<nl>Add ended fights</nl>
+		<de>Add ended fights</de>
+		<ca>Incluoure combats finalitzats</ca>
+	</ShowEndFights>
+	<Page>
+		<en>Page</en>
+		<es>Página</es>
+		<nl>Page</nl>
+		<de>Page</de>
+		<ca>Pàgina</ca>
+	</Page>
+	<Of>
+		<en>of</en>
+		<es>de</es>
+		<nl>of</nl>
+		<de>of</de>
+		<ca>de</ca>
+	</Of>
+	
 </translator>

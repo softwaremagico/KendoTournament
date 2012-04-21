@@ -521,9 +521,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public void updateInnerLevels() {
-        for (int i = 0; i < levels.size(); i++) {
-            updateInnerLevel(i);
-        }
+        updateInnerLevels(0);
     }
 
     public void updateInnerLevels(int level) {
@@ -533,23 +531,40 @@ public class DesignedGroups implements Serializable {
     }
 
     public void updateInnerLevel(int level) {
-        int arena;
+        int arena = 0;
         if (designedGroups.size() > 0) {
             //Next Level has the half groups, distributed in X arenas.
             //int groupsPerArena = (returnCalculatedSizeOfLevel(level + 1)) / championship.fightingAreas;
             double sizeOfNextLevel = returnCalculatedSizeOfLevel(level + 1);
             while ((returnActualSizeOfLevel(level) > 1) && ((float) returnNumberOfTotalTeamsPassNextRound(level) / 2 > returnActualSizeOfLevel(level + 1))) {
-                try {
-                    arena = returnActualSizeOfLevel(level + 1) / (int) Math.ceil(sizeOfNextLevel / (double) championship.fightingAreas);
-                } catch (ArithmeticException ae) {
-                    arena = 0;
-                }
                 add(new DesignedGroup(2, 1, championship, level + 1, arena), level + 1, false, true);
             }
 
             //When we remove two groups in one level, we must remove one in the next one.
             if ((returnActualSizeOfLevel(level) == 1) || (Math.ceil((float) returnNumberOfTotalTeamsPassNextRound(level) / 2) < returnActualSizeOfLevel(level + 1))) {
                 remove(returnLastPositionOfLevel(level + 1), level + 1);
+            }
+        }
+
+        updateArenaOfLevels();
+    }
+
+    private void updateArenaOfLevels() {
+        int levelsC = calculateNumberOfLevels();
+        for (int level = 0; level < levelsC; level++) {
+            int arena = 0;
+            int inserted = 0;
+            List<DesignedGroup> groupsOfLevel = returnGroupsOfLevel(level);
+            int groupsPerLevel = (int) Math.floor(groupsOfLevel.size() / championship.fightingAreas);
+            int remainingGroups = groupsOfLevel.size() - groupsPerLevel * championship.fightingAreas;
+            for (int i = 0; i < groupsOfLevel.size(); i++) {
+                groupsOfLevel.get(i).arena = arena;
+                inserted++;
+                if ((inserted > groupsPerLevel)
+                        || (remainingGroups == 0 && inserted == groupsPerLevel)) {
+                    inserted = 0;
+                    arena++;
+                }
             }
         }
     }
@@ -923,8 +938,8 @@ public class DesignedGroups implements Serializable {
          * returnIndexOfGroupsOfLevel(i); for (int j = 0; j <
          * groupsOfLevel.size(); j++) {
          * fillGroupWithWinnersPreviousLevel(groupsOfLevel.get(j),
-         * KendoTournamentGenerator.getInstance().fightManager.getFights(), false); }
-         * } else { break; } }
+         * KendoTournamentGenerator.getInstance().fightManager.getFights(),
+         * false); } } else { break; } }
          */
         unselectDesignedGroups();
         selectLastGroup();

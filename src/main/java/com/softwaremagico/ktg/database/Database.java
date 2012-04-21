@@ -97,10 +97,11 @@ public abstract class Database {
     public abstract boolean updateDatabase(String path, boolean verbose);
 
     public abstract void clearDatabase();
-    
+
     /**
      * The database only allows local connections (such as SQLite).
-     * @return 
+     *
+     * @return
      */
     public abstract boolean onlyLocalConnection();
 
@@ -384,6 +385,8 @@ public abstract class Database {
      */
     public abstract ArrayList<Fight> searchFightsByTournamentName(String championship);
 
+    public abstract ArrayList<Fight> searchFightsByTournamentNameLevelEqualOrGreater(String championship, int level);
+
     /**
      * Search all fights from one determined tournament.
      *
@@ -423,6 +426,8 @@ public abstract class Database {
     public abstract boolean storeDuel(Duel d, Fight f, int player);
 
     public abstract boolean storeDuelsOfFight(Fight f);
+
+    public abstract boolean deleteDuelsOfFight(Fight f);
 
     public abstract List<Duel> getDuelsOfFight(Fight f);
 

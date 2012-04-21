@@ -261,6 +261,7 @@ public class SearchTournament extends javax.swing.JFrame {
                 if (results.size() > 0) {
                     ResultList.setSelectedIndex(1);
                 }
+                KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(t.name, false);
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
         }catch(NullPointerException npe){}

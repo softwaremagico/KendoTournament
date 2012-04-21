@@ -2,16 +2,16 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "KendoTournament"
-#define MyAppVersion "0.96"
+#define MyAppVersion "0.9.7"
 #define MyAppPublisher "SoftwareMagico"
 #define MyAppURL "http://kendotournament.sourceforge.net/"
-#define MyAppExeName "Kendo.exe"
+#define MyAppExeName "KendoTournamentGenerator.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={{9484EB54-8E7B-4706-A5E4-46A6F5E9A905}
+AppId={{CEFA096D-7600-4E7D-BC6D-0ED11DF85ED4}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
 ;AppVerName={#MyAppName} {#MyAppVersion}
@@ -24,7 +24,7 @@ DefaultGroupName=SoftwareMagico\KendoTournament
 AllowNoIcons=yes
 LicenseFile=C:\install_windows\gnu.txt
 InfoAfterFile=C:\install_windows\Readme.txt
-OutputBaseFilename=KendoTournament
+OutputBaseFilename=KendoTournamentGenerator
 SetupIconFile=C:\install_windows\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -43,7 +43,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\install_windows\Kendo.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\install_windows\KendoTournamentGenerator.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\install_windows\gnu.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\install_windows\INSTALACION.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\install_windows\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion

@@ -42,4 +42,11 @@
 		<de>Lehrgang</de>
 		<ca>Seminari</ca>
 	</role>
+	<role tag="Press" abbrev="P" red="155" green="0" blue="255" >
+		<en>Press</en>
+		<es>Prensa</es>
+		<nl>Press</nl>
+		<de>Press</de>
+		<ca>Premsa</ca>
+	</role>
 </translator>

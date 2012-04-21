@@ -64,7 +64,7 @@ CREATE TABLE `competitor` (
   `Club` char(25) DEFAULT NULL COMMENT 'Club belonging to',
   `Photo` mediumblob COMMENT 'Photo image',
   `PhotoSize` double NOT NULL DEFAULT '0' COMMENT 'Size of the photo',
-  `ListOrder` int(6) NOT NULL AUTO_INCREMENT,
+  `ListOrder` int(6) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `Order_UNIQUE` (`ListOrder`),
   KEY `ClubBelong` (`Club`),

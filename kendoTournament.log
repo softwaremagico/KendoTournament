@@ -1,0 +1,979 @@
+[2012-04-20 16:54:51] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 16:55:06] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 16:55:12] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 16:55:12] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 16:55:12] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 16:55:12] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 16:55:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 16:55:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 16:55:21] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Xavi Garcia Martinez -> Competidor
+[2012-04-20 16:55:27] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Hortelano Otero -> Competidor
+[2012-04-20 16:55:36] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Carlos Calabuig Simó -> Competidor
+[2012-04-20 16:55:42] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Vicente Soriano -> Arbitro
+[2012-04-20 16:55:53] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ricardo Bisquert Alcaraz -> Competidor
+[2012-04-20 16:56:03] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Pedro Quintanilla Serrano -> Competidor
+[2012-04-20 16:56:08] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Sergio Apellaniz Bernal -> Competidor
+[2012-04-20 16:56:37] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Almudena Iglesias Napoleón -> Competidor
+[2012-04-20 16:57:00] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Vicente Aparicio Vaya -> Competidor
+[2012-04-20 16:57:14] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Civera  Durban -> Competidor
+[2012-04-20 16:57:18] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Africa Inmaculada Climent Redon -> Competidor
+[2012-04-20 16:57:28] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mario Coma -> Competidor
+[2012-04-20 16:57:33] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Arsenia Corcoba -> Competidor
+[2012-04-20 16:57:39] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Xabier Cortés -> Competidor
+[2012-04-20 16:57:51] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 16:57:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 16:57:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 16:57:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 16:57:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 16:57:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 16:57:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 16:57:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 16:57:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 16:57:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 16:57:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 16:57:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 16:57:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 16:57:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 16:57:54] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 16:58:08] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 16:58:27] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 16:58:30] Error: null
+[2012-04-20 16:58:30] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 16:59:56] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 16:59:59] Error: null
+[2012-04-20 17:03:45] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:03:47] Error: null
+[2012-04-20 17:04:37] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:04:41] Error: null
+[2012-04-20 17:05:45] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:05:46] Error: null
+[2012-04-20 17:05:46] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 17:05:49] Error: null
+[2012-04-20 17:05:49] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 17:06:39] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:41] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:06:42] Error: null
+[2012-04-20 17:07:45] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:07:48] Error: null
+[2012-04-20 17:12:30] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:12:37] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:12:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:12:40] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:13:39] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:13:49] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:13:50] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:13:50] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:13:50] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:13:50] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:13:50] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:13:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:13:52] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:14:46] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:14:53] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:14:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:14:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:14:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:14:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:14:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:14:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:14:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:14:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:14:56] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:18:50] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:18:58] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:18:58] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:18:58] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:18:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:19:00] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:30:19] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-20 17:30:30] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntMar2012
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:30:40] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:30:46] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 17:30:50] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 17:30:54] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 17:30:58] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 17:31:01] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 17:31:05] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 17:31:09] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 17:31:13] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-20 17:31:16] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-20 17:31:58] com.softwaremagico.ktg.database.MySQL: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 17:31:59] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:33:45] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:33:52] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:33:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:33:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:33:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:33:53] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:33:54] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:33:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:34:12] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 17:35:32] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:35:41] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:35:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:35:58] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 17:36:16] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:36:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:36:21] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 17:36:26] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 17:36:29] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 17:36:33] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 17:36:37] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 17:36:40] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 17:36:44] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 17:36:50] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-20 17:36:53] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-20 17:36:58] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-20 17:37:04] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Carmen Aznar Flor -> Competidor
+[2012-04-20 17:37:26] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Carmen Aznar Flor -> Competidor
+[2012-04-20 17:37:36] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 17:37:37] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aznar Flor, Carmen
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:37:38] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:37:39] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:37:54] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:38:09] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:38:25] Error: null
+[2012-04-20 17:39:28] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:39:30] Error: null
+[2012-04-20 17:40:19] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:40:23] Error: null
+[2012-04-20 17:41:23] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:41:31] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 17:41:32] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aznar Flor, Carmen
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:41:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:41:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:41:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:41:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:41:34] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:42:03] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:42:26] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:42:32] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 17:42:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aznar Flor, Carmen
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Climent Redon, Africa Inmaculada
+[2012-04-20 17:42:34] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Coma, Mario
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Corcoba, Arsenia
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Cortés, Xabier
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Iglesias Napoleón, Almudena
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Quintanilla Serrano, Pedro
+[2012-04-20 17:42:35] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:42:45] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 17:42:58] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:42:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:43:03] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:43:21] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:43:30] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 17:43:43] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 17:43:45] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:43:45] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:43:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:43:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:43:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:43:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:43:56] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 17:44:01] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 17:44:04] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 17:44:08] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 17:44:12] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 17:44:15] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 17:44:19] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 17:44:24] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 17:44:43] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:44:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 17:44:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 17:44:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 17:44:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 17:44:45] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 17:44:45] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 17:44:45] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 17:44:45] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 17:44:45] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:45:00] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:49:36] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:49:44] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 17:49:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 17:49:54] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:49:54] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:49:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:49:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:49:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:49:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:50:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos: TrofeoRector2012
+[2012-04-20 17:50:06] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 17:50:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 17:50:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 17:50:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 17:50:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 17:50:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:50:13] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Hortelano Otero -> Competidor
+[2012-04-20 17:50:19] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Xavi Garcia Martinez -> Competidor
+[2012-04-20 17:50:25] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Carlos Calabuig Simó -> Competidor
+[2012-04-20 17:50:33] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Sergio Apellaniz Bernal -> Competidor
+[2012-04-20 17:50:53] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Sergio Apellaniz Bernal -> Competidor
+[2012-04-20 17:51:15] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Vicente Aparicio Vaya -> Competidor
+[2012-04-20 17:51:26] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: David Selma Huguet -> Competidor
+[2012-04-20 17:51:33] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ernesto Candela Senti -> Competidor
+[2012-04-20 17:51:43] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mar Fernández Barjau -> Competidor
+[2012-04-20 17:51:52] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ricardo Bisquert Alcaraz -> Competidor
+[2012-04-20 17:51:59] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Adell El Idrissi -> Competidor
+[2012-04-20 17:52:13] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Candela Senti, Ernesto
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> El Idrissi, Adell
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Fernández Barjau, Mar
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Selma Huguet, David
+[2012-04-20 17:52:15] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:52:19] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 17:52:48] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Fermín Calvete Vercher -> Competidor
+[2012-04-20 17:52:53] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Civera  Durban -> Competidor
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:52:57] Error: null
+[2012-04-20 17:53:19] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:53:22] Error: null
+[2012-04-20 17:54:52] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:54:54] Error: null
+[2012-04-20 17:54:54] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 17:55:25] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:55:29] Error: null
+[2012-04-20 17:55:29] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 17:58:15] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 17:58:19] Error: null
+[2012-04-20 17:58:19] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 17:59:44] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:00:07] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Apellaniz Bernal, Sergio
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Bisquert Alcaraz, Ricardo
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calabuig Simó, Carlos
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Calvete Vercher, Fermín
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Candela Senti, Ernesto
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Civera  Durban, Ana
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> El Idrissi, Adell
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Fernández Barjau, Mar
+[2012-04-20 18:00:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Garcia Martinez, Xavi
+[2012-04-20 18:00:09] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Hortelano Otero, Jorge
+[2012-04-20 18:00:09] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Selma Huguet, David
+[2012-04-20 18:00:09] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 18:00:26] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 18:00:39] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Bisquert Alcaraz, Ricardo; Aparicio Vaya, Jose Vicente
+[2012-04-20 18:02:17] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:04:38] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:05:42] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:05:57] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 18:22:04] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:22:12] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-04-20 18:29:20] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:29:40] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 18:29:42] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 18:29:42] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 18:29:43] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 18:29:43] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 18:29:43] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 18:29:43] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 18:30:51] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:30:55] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 18:30:59] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 18:31:02] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 18:31:05] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 18:31:09] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Arbitro
+[2012-04-20 18:31:12] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 18:31:15] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 18:31:18] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 18:31:25] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Eduardo Aparicio Revert -> Competidor
+[2012-04-20 18:31:31] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Vicente Aparicio Vaya -> Competidor
+[2012-04-20 18:31:35] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Paula Arana Aparicio -> Competidor
+[2012-04-20 18:31:38] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alfonso Arregui -> Competidor
+[2012-04-20 18:31:41] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Markel Arregui -> Competidor
+[2012-04-20 18:31:46] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 18:31:47] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 18:31:47] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Revert, Eduardo
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aparicio Vaya, Jose Vicente
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Arana Aparicio, Paula
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Arregui, Alfonso
+[2012-04-20 18:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Arregui, Markel
+[2012-04-20 18:31:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 18:31:54] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 18:32:10] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 18:33:46] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 18:33:48] Error: null
+[2012-04-20 18:33:48] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 18:33:49] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 18:35:32] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:35:39] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-04-20 18:59:27] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 18:59:32] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-04-20 18:59:53] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:00:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 19:00:05] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 19:00:06] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 19:00:06] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 19:00:06] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 19:00:06] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 19:00:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 19:01:09] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:01:23] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:24] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:24] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:25] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:26] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:27] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:27] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:27] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:28] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:28] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:28] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:01:34] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:04:21] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:04:30] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 19:04:33] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 19:04:36] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 19:04:40] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 19:04:43] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 19:04:46] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 19:04:51] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 19:04:54] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 19:04:58] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 19:05:04] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 19:05:08] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-20 19:05:13] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-20 19:05:17] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-20 19:05:22] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Antonio Miguel Anchel Barbera -> Competidor
+[2012-04-20 19:09:54] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 19:09:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-04-20 19:09:56] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 19:10:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 19:10:24] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 19:10:46] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud; Acosta, Alejandro
+[2012-04-20 19:11:01] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes; Agudo Segrelles, Luis
+[2012-04-20 19:11:15] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alonso Martinez, Jose Manuel
+[2012-04-20 19:11:31] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki; Alvarez Rubio, Ana Rosa
+[2012-04-20 19:11:34] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba borrar un partido.
+[2012-04-20 19:11:41] Error: no such column: Level
+[2012-04-20 19:11:42] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba almacenar los partidos en la base de datos.
+[2012-04-20 19:11:45] Error: no such column: false
+[2012-04-20 19:11:50] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba almacenar los partidos en la base de datos.
+[2012-04-20 19:11:51] Error: no such column: false
+[2012-04-20 19:12:00] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba almacenar los partidos en la base de datos.
+[2012-04-20 19:12:01] Error: no such column: false
+[2012-04-20 19:12:34] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:16:05] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:16:12] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki; Alvarez Rubio, Ana Rosa
+[2012-04-20 19:16:15] com.softwaremagico.ktg.database.SQLite: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-20 19:16:15] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba almacenar los partidos en la base de datos.
+[2012-04-20 19:16:18] Error: no such column: false
+[2012-04-20 19:16:21] com.softwaremagico.ktg.database.SQLite: Error mientras se intentaba almacenar los partidos en la base de datos.
+[2012-04-20 19:18:11] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:18:18] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki; Alvarez Rubio, Ana Rosa
+[2012-04-20 19:18:21] com.softwaremagico.ktg.database.SQLite: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-20 19:18:21] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:18:22] com.softwaremagico.ktg.database.SQLite: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-20 19:18:23] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:18:26] com.softwaremagico.ktg.database.SQLite: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-20 19:18:26] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:20:46] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:21:11] Error: [SQLITE_ERROR] SQL error or missing database (near "=": syntax error)
+[2012-04-20 19:21:15] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:21:16] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 19:22:11] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:22:19] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 19:22:52] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 19:22:59] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 19:23:09] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki; Alvarez Rubio, Ana Rosa
+[2012-04-20 19:23:12] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:12] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:12] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:12] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:25] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-20 19:23:32] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alvarez Rubio, Ana Rosa
+[2012-04-20 19:23:35] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alonso Martinez, Jose Manuel
+[2012-04-20 19:23:39] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel
+[2012-04-20 19:23:46] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki
+[2012-04-20 19:23:48] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:48] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:23:52] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alvarez Rubio, Ana Rosa
+[2012-04-20 19:23:56] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel
+[2012-04-20 19:23:58] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 19:24:03] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Alvarez Rubio, Ana Rosa
+[2012-04-20 19:24:06] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Alvarez Rubio, Ana Rosa
+[2012-04-20 19:26:08] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:26:09] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:39:35] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 19:39:36] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:01:12] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:01:14] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:01:50] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:01:58] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:02:01] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:02:14] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:17] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:25] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:25] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:26] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:27] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:27] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:28] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:02:29] SQLite: No se ha encontrado la base de datos en el servidor MySQL seleccionado.
+[2012-04-20 20:05:07] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:05:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:05:22] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:05:31] Error: null
+[2012-04-20 20:05:31] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 20:06:49] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:06:56] Error: null
+[2012-04-20 20:06:56] com.softwaremagico.ktg.database.SQLite: No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.
+[2012-04-20 20:08:49] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:09:01] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 20:09:05] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 20:09:08] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 20:09:11] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 20:09:16] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 20:09:22] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 20:09:23] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 20:09:23] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 20:09:24] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 20:09:24] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 20:09:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:09:29] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:09:39] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 20:09:43] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud; Adobes Tarazona, Margarita
+[2012-04-20 20:09:47] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alarcon Zamora, Lourdes
+[2012-04-20 20:09:49] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:09:49] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:09:52] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-20 20:09:55] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel
+[2012-04-20 20:09:57] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:09:59] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Abalos Cotino, Maria Salud
+[2012-04-20 20:13:44] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:14:19] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:14:25] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Abalos Cotino, Maria Salud
+[2012-04-20 20:14:29] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-20 20:14:32] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel
+[2012-04-20 20:14:43] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 20:15:19] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:15:27] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alarcon Zamora, Lourdes
+[2012-04-20 20:15:29] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:15:29] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:16:02] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:16:11] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 20:17:02] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:17:07] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alarcon Zamora, Lourdes
+[2012-04-20 20:17:08] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:17:08] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:17:12] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-20 20:17:15] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita
+[2012-04-20 20:17:17] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:17:21] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Adobes Tarazona, Margarita
+[2012-04-20 20:17:24] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Adobes Tarazona, Margarita
+[2012-04-20 20:17:39] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-04-20 20:17:42] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-04-20 20:17:48] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 20:19:21] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:19:30] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: Prueba
+[2012-04-20 20:20:52] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:21:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-20 20:21:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 20:21:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 20:21:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 20:21:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 20:21:04] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:21:07] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 20:21:10] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 20:21:14] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 20:21:19] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 20:21:23] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 20:21:27] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 20:21:30] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 20:21:37] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 20:21:42] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-20 20:21:45] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-20 20:21:49] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-20 20:21:53] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Antonio Miguel Anchel Barbera -> Competidor
+[2012-04-20 20:22:00] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 20:22:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 20:22:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 20:22:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 20:22:01] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-04-20 20:22:02] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:22:07] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-20 20:22:21] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 20:22:35] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita; Acosta, Alejandro
+[2012-04-20 20:22:44] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar; Agudo Segrelles, Luis
+[2012-04-20 20:22:53] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alcazar Tomas, Jorge
+[2012-04-20 20:23:01] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcón Rosello, Samuel; Alcazar Tomas, Jorge
+[2012-04-20 20:23:12] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alvarez Rubio, Ana Rosa; Amagai, Mizuki
+[2012-04-20 20:23:14] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:14] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:15] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:15] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:18] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-20 20:23:21] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar
+[2012-04-20 20:23:24] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-20 20:23:28] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita
+[2012-04-20 20:23:30] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:30] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:23:33] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-20 20:23:35] : Espere mientras se acaban los combates del shiaijo: B
+[2012-04-20 20:24:07] MySQL: ¡El partido ha sido borrado!
+[2012-04-20 20:24:20] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-20 20:24:29] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita; Abalos Cotino, Maria Salud
+[2012-04-20 20:24:36] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar; Agudo Segrelles, Luis
+[2012-04-20 20:24:47] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alonso Martinez, Jose Manuel; Alcazar Tomas, Jorge
+[2012-04-20 20:24:57] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alvarez Rubio, Ana Rosa; Amagai, Mizuki
+[2012-04-20 20:25:07] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:25:07] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:25:07] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:25:07] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:25:10] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita
+[2012-04-20 20:25:14] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar
+[2012-04-20 20:25:18] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-20 20:25:22] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-20 20:25:23] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:25:23] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-20 20:28:32] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:28:58] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-20 20:30:39] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:30:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: Prueba
+[2012-04-20 20:30:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 20:30:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 20:30:46] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 20:30:47] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 20:30:47] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:30:56] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos: Prueba
+[2012-04-20 20:30:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-20 20:30:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-20 20:30:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-20 20:30:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-20 20:30:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:31:02] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-20 20:31:07] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-20 20:31:10] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-20 20:31:13] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-20 20:31:17] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-20 20:31:20] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-20 20:31:24] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-20 20:31:28] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-20 20:31:32] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-20 20:31:36] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-20 20:31:39] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-20 20:31:43] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Antonio Miguel Anchel Barbera -> Competidor
+[2012-04-20 20:31:47] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-20 20:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-20 20:31:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-04-20 20:31:49] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:31:55] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-20 20:32:59] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-20 20:34:03] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 11:56:55] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 11:57:09] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-21 11:57:13] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 11:57:16] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-21 11:57:19] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-21 11:57:22] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-21 11:57:26] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-21 11:57:30] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-21 11:57:33] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-21 11:57:36] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-21 11:57:43] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-21 11:57:48] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-21 11:57:51] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-21 11:57:55] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-21 11:57:58] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Antonio Miguel Anchel Barbera -> Competidor
+[2012-04-21 11:58:05] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-21 11:58:07] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-21 11:58:07] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-21 11:58:07] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-21 11:58:07] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-21 11:58:07] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-21 11:58:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-21 11:58:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-21 11:58:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-21 11:58:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-21 11:58:08] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-21 11:58:09] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-21 11:58:09] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-04-21 11:58:09] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 11:58:14] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 11:58:29] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-21 11:58:39] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud; Acosta, Alejandro
+[2012-04-21 11:58:54] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar; Agudo Segrelles, Luis
+[2012-04-21 11:59:03] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alcazar Tomas, Jorge; Alarcón Rosello, Samuel
+[2012-04-21 11:59:13] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Anchel Barbera, Antonio Miguel; Alvarez Rubio, Ana Rosa
+[2012-04-21 11:59:16] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:16] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:16] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:16] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:19] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-21 11:59:22] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar
+[2012-04-21 11:59:26] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-21 11:59:29] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-21 11:59:31] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:31] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:36] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar
+[2012-04-21 11:59:39] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-21 11:59:41] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 11:59:44] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Acosta, Alejandro
+[2012-04-21 12:00:05] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-21 12:00:21] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-21 12:00:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-21 12:00:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-21 12:00:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-21 12:00:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-21 12:00:24] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-21 12:00:25] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:00:27] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Maria Salud Abalos Cotino -> Competidor
+[2012-04-21 12:00:30] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Alejandro Acosta -> Competidor
+[2012-04-21 12:00:34] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Margarita Adobes Tarazona -> Competidor
+[2012-04-21 12:00:37] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Luis Agudo Segrelles -> Competidor
+[2012-04-21 12:00:42] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Gaspar Aguilo Jimenez -> Competidor
+[2012-04-21 12:00:47] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Lourdes Alarcon Zamora -> Competidor
+[2012-04-21 12:00:51] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Samuel Alarcón Rosello -> Competidor
+[2012-04-21 12:00:57] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Alcazar Tomas -> Competidor
+[2012-04-21 12:01:01] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jose Manuel Alonso Martinez -> Competidor
+[2012-04-21 12:01:05] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Ana Rosa Alvarez Rubio -> Competidor
+[2012-04-21 12:01:09] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Mizuki Amagai -> Competidor
+[2012-04-21 12:01:12] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Antonio Miguel Anchel Barbera -> Competidor
+[2012-04-21 12:01:18] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-04-21 12:01:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-21 12:01:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-21 12:01:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-04-21 12:01:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-21 12:01:20] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-04-21 12:01:21] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-04-21 12:01:21] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:01:30] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:02:51] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:07:31] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:07:50] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-21 12:08:15] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita; Acosta, Alejandro
+[2012-04-21 12:08:25] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes; Agudo Segrelles, Luis
+[2012-04-21 12:08:26] : Espere mientras se acaban los combates del shiaijo: B
+[2012-04-21 12:08:36] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alcazar Tomas, Jorge; Alarcón Rosello, Samuel
+[2012-04-21 12:08:47] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Amagai, Mizuki; Alvarez Rubio, Ana Rosa
+[2012-04-21 12:08:51] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:08:51] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:08:51] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:08:51] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:08:56] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-21 12:09:07] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-21 12:09:13] MySQL: ¡Datos actualizados correctamente!
+[2012-04-21 12:09:16] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-21 12:09:25] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita
+[2012-04-21 12:09:27] : Espere mientras se acaban los combates del shiaijo: A
+[2012-04-21 12:09:32] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-21 12:09:47] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes
+[2012-04-21 12:09:49] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:09:50] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:10:00] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Acosta, Alejandro
+[2012-04-21 12:10:01] : Espere mientras se acaban los combates del shiaijo: B
+[2012-04-21 12:10:10] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Adobes Tarazona, Margarita
+[2012-04-21 12:10:13] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:10:34] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Acosta, Alejandro
+[2012-04-21 12:10:41] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Acosta, Alejandro

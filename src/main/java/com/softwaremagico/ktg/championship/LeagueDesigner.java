@@ -363,8 +363,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 AcceptButton.setVisible(true);
             }
             if (refreshMode) {
-                //Delete fightManager and teams because can be some changes (area fightManager or size of teams of the tournament).
-                KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(championship.name, false);
                 //Update tournament.
                 KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
             }
@@ -889,9 +887,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         //try{
-/*        if (TournamentComboBox.getItemCount() > 0 && KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
-            KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
-        }*/
+/*
+         * if (TournamentComboBox.getItemCount() > 0 &&
+         * KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
+         * KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
+         * }
+         */
         //}catch(NullPointerException npe){}
         this.dispose();
 }//GEN-LAST:event_CloseButtonActionPerformed
@@ -917,16 +918,18 @@ public class LeagueDesigner extends javax.swing.JFrame {
          * if (TournamentComboBox.getItemCount() > 0) {
          * KendoTournamentGenerator.getInstance().designedGroups.storeDesigner(FOLDER
          * + File.separator + TournamentComboBox.getSelectedItem().toString() +
-         * ".dsg");
-        }
+         * ".dsg"); }
          */
         KendoTournamentGenerator.getInstance().designedGroups.deleteUsedDesigner();
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-/*        if (TournamentComboBox.getItemCount() > 0 && KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
-            KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
-        }*/
+        /*
+         * if (TournamentComboBox.getItemCount() > 0 &&
+         * KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
+         * KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
+         * }
+         */
     }//GEN-LAST:event_formWindowClosing
 
     private void CleanAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanAllButtonActionPerformed
@@ -943,9 +946,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_CleanAllButtonActionPerformed
 
     private void TournamentComboBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TournamentComboBoxFocusGained
-/*        if (TournamentComboBox.getItemCount() > 0 && KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
-            KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
-        }*/
+        /*
+         * if (TournamentComboBox.getItemCount() > 0 &&
+         * KendoTournamentGenerator.getInstance().fightManager.size() == 0) {
+         * KendoTournamentGenerator.getInstance().designedGroups.storeDesigner();
+         * }
+         */
     }//GEN-LAST:event_TournamentComboBoxFocusGained
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
