@@ -35,7 +35,7 @@ public class FightList extends ListFromTournament {
     public String defaultFileName() {
         String shiaijo = "";
         if (returnSelectedArena() >= 0) {
-            shiaijo = "_" + KendoTournamentGenerator.getInstance().shiaijosName[returnSelectedArena()];
+            shiaijo = "_" + KendoTournamentGenerator.getInstance().returnShiaijo(returnSelectedArena());
         }
         try {
             return TournamentComboBox.getSelectedItem().toString() + "_FightList" + shiaijo;

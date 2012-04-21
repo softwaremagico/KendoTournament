@@ -55,7 +55,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         ServerTextField.setText(KendoTournamentGenerator.getInstance().server);
         UserTextField.setText(KendoTournamentGenerator.getInstance().user);
         DatabaseTextField.setText(KendoTournamentGenerator.getInstance().databaseName);
-        PasswordField.setText(KendoTournamentGenerator.getInstance().password);
+        //PasswordField.setText(KendoTournamentGenerator.getInstance().password);
     }
 
     private void fillEngines() {

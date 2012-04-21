@@ -26,9 +26,9 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
+import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.List;
 
@@ -40,8 +40,6 @@ public class ScoreListPDF extends ParentList {
 
     private Tournament championship;
     List<TeamRanking> teamTopTen;
-    private final int border = 0;
-    Translator trans = null;
 
     public ScoreListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
@@ -87,7 +85,7 @@ public class ScoreListPDF extends ParentList {
                 mainTable.addCell(getEmptyRow());
                 String head = trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1);
                 if (championship.fightingAreas > 1) {
-                    head += " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())] + ")";
+                    head += " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())) + ")";
                 }
 
                 mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));

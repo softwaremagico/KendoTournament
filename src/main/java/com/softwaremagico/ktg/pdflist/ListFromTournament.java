@@ -135,11 +135,7 @@ public abstract class ListFromTournament extends KendoFrame {
 
             if (selectedTourn >= 0) {
                 for (int i = 0; i < listTournaments.get(selectedTourn).fightingAreas; i++) {
-                    if (i < KendoTournamentGenerator.getInstance().shiaijosName.length) {
-                        ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().shiaijosName[i] + "");
-                    } else {
-                        ArenaComboBox.addItem((i + 1) + "");
-                    }
+                    ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
                 }
             }
         } catch (NullPointerException npe) {

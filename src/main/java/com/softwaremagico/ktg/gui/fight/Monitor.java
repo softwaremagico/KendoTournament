@@ -98,7 +98,7 @@ public final class Monitor extends javax.swing.JFrame {
     }
 
     private void updateArenaLabel() {
-        ArenaLabel.setText(trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[fightArea]);
+        ArenaLabel.setText(trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fightArea));
     }
 
     private void showRemainingStatistics() {

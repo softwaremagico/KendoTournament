@@ -134,11 +134,7 @@ public final class FightPanel extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < selectedTournament.fightingAreas; i++) {
-                if (i < KendoTournamentGenerator.getInstance().shiaijosName.length) {
-                    FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().shiaijosName[i] + "");
-                } else {
-                    FightAreaComboBox.addItem((i + 1) + "");
-                }
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
         }

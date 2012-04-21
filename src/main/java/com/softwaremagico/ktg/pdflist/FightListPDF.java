@@ -54,7 +54,7 @@ public class FightListPDF extends ParentList {
             List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentNameAndFightArea(championship.name, i);
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
-            mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getInstance().shiaijosName[i], 0));
+            mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getInstance().returnShiaijo(i), 0));
 
             for (int j = 0; j < fights.size(); j++) {
                 cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
@@ -92,7 +92,7 @@ public class FightListPDF extends ParentList {
 
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())] + ")", 0));
+                mainTable.addCell(getHeader2(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())) + ")", 0));
 
                 for (int j = 0; j < KendoTournamentGenerator.getInstance().fightManager.size(); j++) {
                     if (groups.get(i).isFightOfGroup(KendoTournamentGenerator.getInstance().fightManager.get(j))) {

@@ -26,8 +26,8 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.championship.DesignedGroup;
+import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -115,7 +115,7 @@ public class MonitorFightPosition extends JFrame {
     }
 
     private void updateList() {
-        int fontSize = 18;
+        int fontSize;
         TablePanel.removeAll();
 
         fontSize = this.getWidth() / 45;
@@ -144,7 +144,7 @@ public class MonitorFightPosition extends JFrame {
     void addTitle(int fontSize) {
         JLabel nameLabel;
         nameLabel = new JLabel(transl.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(group)) + 1) + " / "
-                + transl.returnTag("ArenaLabel", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[group.arena]);
+                + transl.returnTag("ArenaLabel", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(group.arena));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);

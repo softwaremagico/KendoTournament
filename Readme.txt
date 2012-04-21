@@ -105,6 +105,8 @@ Version:
 		Improved the connection with the database.
 		New look for the PDF documents.
 		Some minor bugs solved.
+		
+0.971	Some minor bugs solved.
 
 
 

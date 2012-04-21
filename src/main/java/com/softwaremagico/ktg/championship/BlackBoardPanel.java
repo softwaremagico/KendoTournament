@@ -98,7 +98,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfArenas());
 
             Separator s = new Separator(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1)
-                    + "<br>" + trans.returnTag("ArenaString", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().shiaijosName[grps.get(i).arena]);
+                    + "<br>" + trans.returnTag("ArenaString", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
             s.updateFont("sansserif", 24);
             add(s, c);
         }

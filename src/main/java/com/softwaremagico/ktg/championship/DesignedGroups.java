@@ -667,7 +667,7 @@ public class DesignedGroups implements Serializable {
                 } else {
                     //Only one arena is finished: show message for waiting all fightManager are over.
                     if ((arena = KendoTournamentGenerator.getInstance().fightManager.allArenasAreOver()) != -1) {
-                        MessageManager.customMessage("waitingArena", "", language, KendoTournamentGenerator.getInstance().shiaijosName[arena] + "", JOptionPane.INFORMATION_MESSAGE, log);
+                        MessageManager.customMessage("waitingArena", "", language, KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "", JOptionPane.INFORMATION_MESSAGE, log);
                     }
                 }
             } else {

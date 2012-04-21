@@ -977,3 +977,93 @@
 [2012-04-21 12:10:13] com.softwaremagico.ktg.database.SQLite: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
 [2012-04-21 12:10:34] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Acosta, Alejandro
 [2012-04-21 12:10:41] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Acosta, Alejandro
+[2012-04-21 12:15:27] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:32:57] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:33:09] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-21 12:33:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: TrofeoRector2012
+[2012-04-21 12:33:47] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-21 12:33:47] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-21 12:33:48] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-21 12:33:48] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-21 12:33:48] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-21 12:33:48] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:33:59] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Jorge Hortelano Otero -> Competidor
+[2012-04-21 12:34:15] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Carlos Calabuig Simó -> Competidor
+[2012-04-21 12:34:22] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Xavi Garcia Martinez -> Competidor
+[2012-04-21 12:34:31] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Sergio Apellaniz Bernal -> Competidor
+[2012-04-21 12:34:51] MySQL: Se ha desconectado de la de datos con éxito.
+[2012-04-21 12:35:00] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-21 12:35:10] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos: TrofeoRector2012
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> IX Open de Kendo (Femenino)
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntMar2012
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntNov2011
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> LigaIntOct2011
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-04-21 12:35:13] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:35:33] com.softwaremagico.ktg.database.MySQL: Ahora se generará un equipo por cada participante.
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-21 12:35:34] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:35:42] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:35:59] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Arantza Barquin Garcia -> Competidor
+[2012-04-21 12:36:02] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Pedro Maria Barrada Bustelo -> Competidor
+[2012-04-21 12:36:06] com.softwaremagico.ktg.database.MySQL: Se ha cambiado el rol del participante: Carlos Bartolome -> Competidor
+[2012-04-21 12:36:11] com.softwaremagico.ktg.database.MySQL: Ahora se generará un equipo por cada participante.
+[2012-04-21 12:36:11] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Barquin Garcia, Arantza
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Barrada Bustelo, Pedro Maria
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: Se ha agregado un nuevo equipo a la base de datos. -> Bartolome, Carlos
+[2012-04-21 12:36:12] com.softwaremagico.ktg.database.MySQL: El campeonato ha sido actualizado en la base de datos. -> TrofeoRector2012
+[2012-04-21 12:36:29] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos: TrofeoRector2012
+[2012-04-21 12:36:41] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis; Abalos Cotino, Maria Salud
+[2012-04-21 12:37:53] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-21 12:38:04] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis; Abalos Cotino, Maria Salud
+[2012-04-21 12:38:14] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes; Aguilo Jimenez, Gaspar
+[2012-04-21 12:38:21] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alvarez Rubio, Ana Rosa; Alcazar Tomas, Jorge
+[2012-04-21 12:38:32] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Barquin Garcia, Arantza; Bartolome, Carlos
+[2012-04-21 12:38:36] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:38:36] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:38:38] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:38:38] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:38:38] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:38:38] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:38:38] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:38:39] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:38:50] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Bartolome, Carlos
+[2012-04-21 12:38:53] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Agudo Segrelles, Luis
+[2012-04-21 12:38:56] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes
+[2012-04-21 12:39:06] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Aguilo Jimenez, Gaspar
+[2012-04-21 12:39:10] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-21 12:39:13] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:39:13] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:39:15] com.softwaremagico.ktg.database.MySQL: ¡El partido ha sido borrado! -> TrofeoRector2012
+[2012-04-21 12:39:15] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:41:53] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-21 12:42:03] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Alarcon Zamora, Lourdes
+[2012-04-21 12:42:07] !!!!!!!: Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son: Abalos Cotino, Maria Salud
+[2012-04-21 12:42:09] com.softwaremagico.ktg.database.MySQL: Se han agregado los distintos partidos a la base de datos. -> TrofeoRector2012
+[2012-04-21 12:42:13] Finally!: Todos los partidos han acabado, la liga ha terminado y el ganador es: Alarcon Zamora, Lourdes
+[2012-04-21 12:49:01] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-21 12:49:11] com.softwaremagico.ktg.database.MySQL: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-21 12:50:42] MySQL: Se ha conectado con la base de datos: MySQL (localhost)
+[2012-04-21 12:50:45] MySQL: Se ha desconectado de la de datos con éxito.
+[2012-04-21 12:50:50] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:51:01] MySQL: Se ha desconectado de la de datos con éxito.
+[2012-04-21 12:55:05] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:55:14] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012

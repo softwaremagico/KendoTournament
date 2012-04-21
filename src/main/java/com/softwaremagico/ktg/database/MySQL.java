@@ -18,7 +18,6 @@
  */
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Log;
 import com.softwaremagico.ktg.MessageManager;
@@ -27,7 +26,10 @@ import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,6 +117,7 @@ public class MySQL extends SQL {
     public void disconnect() throws SQLException {
         try {
             connection.close();
+            KendoTournamentGenerator.getInstance().resetPassword();
         } catch (NullPointerException npe) {
         }
     }
@@ -282,115 +285,6 @@ public class MySQL extends SQL {
      *
      ********************************************************************
      */
-    /**
-     * Delete fights must delete duels. MySQL use foreign key, but SQLite need
-     * to delete one by one
-     *
-     * @param championship
-     * @param level
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFightsOfLevelOfTournament(String championship, int level, boolean verbose) {
-        boolean error;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
-            }
-            if (answer || !verbose) {
-                Statement s = connection.createStatement();
-                s.executeUpdate("DELETE FROM fight WHERE Tournament='" + championship + "' AND LeagueLevel >=" + level);
-                s.close();
-                List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevelOrMore(level);
-                for (int i = 0; i < groups.size(); i++) {
-                    deleteDrawsOfGroupOfTournament(championship, i);
-                }
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
-        return !error;
-    }
-
-    /**
-     * Delete fights must delete duels. MySQL use foreign key, but SQLite need
-     *
-     * @param championship
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFightsOfTournament(String championship, boolean verbose) {
-        boolean error;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
-            }
-            if (answer || !verbose) {
-                Statement s = connection.createStatement();
-                s.executeUpdate("DELETE FROM fight WHERE Tournament='" + championship + "'");
-                s.close();
-                deleteDrawsOfTournament(championship);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
-        return !error;
-    }
-
-    /**
-     * Delete fights and duels of fights.
-     *
-     * @param fight
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFight(Fight fight, boolean verbose) {
-        boolean error = false;
-        boolean answer = false;
-        try {
-            answer = MessageManager.question("deleteOneFight", "Warning!", KendoTournamentGenerator.getInstance().language);
-            if (answer) {
-                //deleteDuelsOfFight(fight); Deleted by foreign key
-                Statement s = connection.createStatement();
-                s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
-                s.close();
-            }
-
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage("deleteFight", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
-
-        if (!error && answer) {
-            if (verbose) {
-                MessageManager.customMessage("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } else {
-                if (KendoTournamentGenerator.getInstance().getLogOption()) {
-                    Log.storeLog("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name);
-                }
-            }
-        }
-
-        return (answer && !error);
-    }
-
     /**
      * *******************************************************************
      *

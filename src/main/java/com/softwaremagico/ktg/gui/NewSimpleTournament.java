@@ -135,7 +135,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             FightAreaComboBox.removeAllItems();
             competition = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), true);
             for (int i = 0; i < competition.fightingAreas; i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().shiaijosName[i]+"");
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
         }
@@ -192,7 +192,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 String text = fights.get(i).team1.returnName() + " - " + fights.get(i).team2.returnName();
                 if (competition.fightingAreas > 1) {
                     text += "  (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language)
-                            + " " + KendoTournamentGenerator.getInstance().shiaijosName[fights.get(i).asignedFightArea] + ")";
+                            + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";
 
                 }
                 fightsModel.addElement(text);

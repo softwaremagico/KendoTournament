@@ -42,10 +42,10 @@ import java.util.List;
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
-    private final String version = "0.9.7";
+    private final String version = "0.9.7.1";
     private boolean debugMode = true;
     public Database database = null;
-    public String password = "";
+    private String password = "";
     public String user = "kendouser";
     public String databaseName = "kendotournament";
     public String server = "localhost";
@@ -54,7 +54,7 @@ public class KendoTournamentGenerator {
     public Languages languages = new Languages();
     private String explorationFolder = null;
     public DesignedGroups designedGroups = null;
-    public char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    private char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
     public boolean databaseConnected = false;
@@ -129,9 +129,10 @@ public class KendoTournamentGenerator {
         return teams;
     }
 
-    public String getVersion(){
+    public String getVersion() {
         return version;
     }
+
     /**
      * **********************************************
      *
@@ -180,6 +181,10 @@ public class KendoTournamentGenerator {
         }
         databaseConnected = database.connect(tmp_password, tmp_user, tmp_database, tmp_server, true, true);
         return databaseConnected;
+    }
+
+    public void resetPassword() {
+        password = "";
     }
 
     private void obtainStoredDatabaseConnection() {
@@ -245,8 +250,8 @@ public class KendoTournamentGenerator {
             ownIP = InetAddress.getLocalHost();
         } catch (UnknownHostException ex1) {
         }
-        
-        if(database.onlyLocalConnection()){
+
+        if (database.onlyLocalConnection()) {
             return true;
         }
 
@@ -429,5 +434,13 @@ public class KendoTournamentGenerator {
             }
         }
         return myFormatter.format(competitor.getOrder());
+    }
+
+    public String returnShiaijo(int pos) {
+        if (pos < shiaijosName.length) {
+            return shiaijosName[pos] + "";
+        } else {
+            return (pos + 1) + "";
+        }
     }
 }
