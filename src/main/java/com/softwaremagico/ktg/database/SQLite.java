@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Log;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.files.Path;
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.*;
@@ -55,7 +56,7 @@ public class SQLite extends SQL {
 
         try {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:database/" + tmp_database + ".sqlite");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Path.returnDatabasePath() + tmp_database + ".sqlite");
 
             if (!isDatabaseInstalledCorrectly(false)) {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);

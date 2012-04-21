@@ -1067,3 +1067,5 @@
 [2012-04-21 12:51:01] MySQL: Se ha desconectado de la de datos con éxito.
 [2012-04-21 12:55:05] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
 [2012-04-21 12:55:14] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: TrofeoRector2012
+[2012-04-21 12:57:59] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-04-21 12:58:06] PDF: La lista de partidos ha sido creada correctamente.
