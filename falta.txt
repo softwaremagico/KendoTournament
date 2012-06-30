@@ -2,4 +2,7 @@ Solucionar que se olvida de combates el fight panel.  AHORA ES PEOR QUE ANTES!!!
 PRESENTACION DEL GANADOR DEL TORNEO!
 Que las listas se puedan exportar en TXT
 Que solamente se inserten los combates en la base de datos cuando acaban todos los combates del shiaijo (si está en remoto).
+Que la base de datos SQLITE se pueda explorar y buscar.
+Mensaje final cuando se crean equipos automaticamente de un solo miembro: ¡Se han hecho los equipos!
+Marcar el empate que gana en los PDFs!!!!
 

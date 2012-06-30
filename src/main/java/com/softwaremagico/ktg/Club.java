@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @author jorge
  */
 public class Club implements Serializable {
-    
+
     private String name = "";
     private String country = "";
     private String city = "";
@@ -34,19 +34,19 @@ public class Club implements Serializable {
     public String email = "";
     public String phone = null;
     private String web = "";
-    
+
     public Club(String tmp_name, String tmp_country, String tmp_city) {
         storeName(tmp_name);
         storeCountry(tmp_country);
         storeCity(tmp_city);
     }
-    
+
     public void RefreshRepresentative(String tmp_representative, String tmp_email, String tmp_phone) {
         representativeID = tmp_representative;
         email = tmp_email;
         phone = tmp_phone;
     }
-    
+
     private void storeName(String value) {
         name = "";
         String[] data = value.split(" ");
@@ -59,11 +59,11 @@ public class Club implements Serializable {
         }
         name = name.trim();
     }
-    
+
     public String returnName() {
         return name;
     }
-    
+
     private void storeCountry(String value) {
         country = "";
         String[] data = value.split(" ");
@@ -76,7 +76,7 @@ public class Club implements Serializable {
         }
         country = country.trim();
     }
-    
+
     private void storeCity(String value) {
         city = "";
         String[] data = value.split(" ");
@@ -89,7 +89,7 @@ public class Club implements Serializable {
         }
         city = city.trim();
     }
-    
+
     public void storeAddress(String value) {
         address = "";
         String[] data = value.split(" ");
@@ -102,27 +102,27 @@ public class Club implements Serializable {
         }
         address = address.trim();
     }
-    
+
     public void storeWeb(String value) {
         web = value.trim();
     }
-    
+
     public String returnCountry() {
         return country;
     }
-    
+
     public String returnCity() {
         return city;
     }
-    
+
     public String returnAddress() {
         return address;
     }
-    
+
     public String returnWeb() {
         return web;
     }
-    
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -134,7 +134,7 @@ public class Club implements Serializable {
         Club otherClub = (Club) object;
         return this.name.equals(otherClub.name) && this.city.equals(otherClub.city);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;

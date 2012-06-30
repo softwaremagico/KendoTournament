@@ -55,13 +55,4 @@ public class Competitor extends Participant implements Serializable {
         club = club.trim();
     }
 
-    @Override
-    public boolean equals(Object object) {
-        return super.equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

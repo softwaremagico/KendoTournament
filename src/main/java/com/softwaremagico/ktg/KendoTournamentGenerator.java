@@ -146,7 +146,6 @@ public class KendoTournamentGenerator {
     public void showErrorInformation(Exception ex) {
         if (getDebugOptionSelected()) {
             MessageManager.errorMessage(ex.getMessage(), "Error", getLogOption());
-            ex.printStackTrace();
         }
     }
 
