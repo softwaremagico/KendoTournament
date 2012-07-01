@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class RoleTags {
 
-    private List<RoleTag> listRoles = new ArrayList<RoleTag>();
+    private List<RoleTag> listRoles = new ArrayList<>();
 
     public RoleTags() {
     }

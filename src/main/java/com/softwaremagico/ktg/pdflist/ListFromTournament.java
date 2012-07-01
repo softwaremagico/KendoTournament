@@ -35,7 +35,7 @@ import javax.swing.JFileChooser;
 public abstract class ListFromTournament extends KendoFrame {
 
     public Translator trans = null;
-    public List<Tournament> listTournaments = new ArrayList<Tournament>();
+    public List<Tournament> listTournaments = new ArrayList<>();
     public boolean voidTournament;  //Add "All tournaments" option.
     private boolean refreshTournament = true;
 
@@ -138,10 +138,8 @@ public abstract class ListFromTournament extends KendoFrame {
                     ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
                 }
             }
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException | IndexOutOfBoundsException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
-        } catch (IndexOutOfBoundsException iob) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(iob);
         }
     }
 

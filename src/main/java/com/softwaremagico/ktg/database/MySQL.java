@@ -168,9 +168,9 @@ public class MySQL extends SQL {
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + tmp_server + ":" + port, tmp_user, tmp_password);
-            PreparedStatement sm = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS " + tmp_database);
-            sm.executeUpdate();
-            sm.close();
+            try (PreparedStatement sm = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS " + tmp_database)) {
+                sm.executeUpdate();
+            }
 
             executeScript(Path.returnDatabasePath() + "kendotournament_empty.sql");
 
@@ -184,19 +184,19 @@ public class MySQL extends SQL {
         int count = 0;
         try {
             java.sql.DatabaseMetaData md = connection.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            if (verbose) {
-                System.out.println("Searching for tables... ");
-            }
-            while (rs.next()) {
-                String catalogo = rs.getString(1);
-                String tabla = rs.getString(3);
+            try (ResultSet rs = md.getTables(null, null, "%", null)) {
                 if (verbose) {
-                    System.out.println("TABLE = " + catalogo + "." + tabla);
+                    System.out.println("Searching for tables... ");
                 }
-                count++;
+                while (rs.next()) {
+                    String catalogo = rs.getString(1);
+                    String tabla = rs.getString(3);
+                    if (verbose) {
+                        System.out.println("TABLE = " + catalogo + "." + tabla);
+                    }
+                    count++;
+                }
             }
-            rs.close();
         } catch (SQLException ex) {
             return false;
         }
@@ -246,9 +246,9 @@ public class MySQL extends SQL {
                                 } else {
                                     if (lines.get(i).trim().length() > 0) {
                                         query += lines.get(i).trim();
-                                        PreparedStatement s = connection.prepareStatement(query);
-                                        s.executeUpdate();
-                                        s.close();
+                                        try (PreparedStatement s = connection.prepareStatement(query)) {
+                                            s.executeUpdate();
+                                        }
                                         query = "";
                                     }
                                 }
@@ -274,6 +274,7 @@ public class MySQL extends SQL {
         stmt.setBinaryStream(index, input, size);
     }
 
+    @Override
     protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
         return rs.getBinaryStream(column);
     }

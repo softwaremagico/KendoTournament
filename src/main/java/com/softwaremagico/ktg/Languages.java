@@ -18,8 +18,8 @@
  */
 package com.softwaremagico.ktg;
 
-import java.util.List;
 import com.softwaremagico.ktg.language.Translator;
+import java.util.List;
 
 /**
  *

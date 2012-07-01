@@ -17,14 +17,7 @@
  */
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Role;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
 import java.awt.Image;
@@ -72,20 +65,20 @@ public class StoreDatabase implements Serializable {
 
     private void write(Object objectToSave) throws IOException {
         try {
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new BufferedOutputStream(new FileOutputStream(fileName)));
-            os.writeObject(objectToSave);
-            os.close();
+            try (ObjectOutputStream os = new ObjectOutputStream(
+                         new BufferedOutputStream(new FileOutputStream(fileName)))) {
+                os.writeObject(objectToSave);
+            }
         } catch (FileNotFoundException fnoe) {
         }
     }
 
     private StoreDatabase load() throws IOException, ClassNotFoundException,
             FileNotFoundException, InvalidClassException {
-        //List l;
-        ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName));
-        StoreDatabase sd = (StoreDatabase) is.readObject();
-        is.close();
+        StoreDatabase sd;
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName))) {
+            sd = (StoreDatabase) is.readObject();
+        }
         return sd;
     }
 
@@ -131,13 +124,7 @@ public class StoreDatabase implements Serializable {
                 } else {
                     return false;
                 }
-            } catch (InvalidClassException ice) {
-                error = true;
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (IOException ex) {
-                error = true;
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 error = true;
                 MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
             }
@@ -286,7 +273,7 @@ public class StoreDatabase implements Serializable {
         }
 
         private boolean getCompetitorsPhotos() {
-            photos = new ArrayList<ImageIcon>();
+            photos = new ArrayList<>();
             for (int i = 0; i < competitors.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ConvertPhotosProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + competitors.size(), current, total);
                 try {
@@ -305,9 +292,9 @@ public class StoreDatabase implements Serializable {
         }
 
         private boolean getTournamentBanners() {
-            banners = new ArrayList<ImageIcon>();
-            accreditations = new ArrayList<ImageIcon>();
-            diplomas = new ArrayList<ImageIcon>();
+            banners = new ArrayList<>();
+            accreditations = new ArrayList<>();
+            diplomas = new ArrayList<>();
             for (int i = 0; i < tournaments.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ConvertBannersProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + tournaments.size(), current, total);
                 try {
@@ -380,7 +367,6 @@ public class StoreDatabase implements Serializable {
             } catch (IOException ex) {
                 error = true;
                 MessageManager.errorMessage("exportDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-                ex.printStackTrace();
             }
             return !error;
         }

@@ -152,12 +152,11 @@ public class SQLite extends SQL {
     boolean isDatabaseInstalledCorrectly(boolean verbose) {
         //SELECT name FROM sqlite_master WHERE type='table' AND name='table_name';
         try {
-            Statement s = connection.createStatement();
-            ResultSet rs = s.executeQuery("SELECT count(name) FROM sqlite_master WHERE type='table'");
-            rs.next();
-            int tables = rs.getInt(1);
-            rs.close();
-            s.close();
+            int tables;
+            try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery("SELECT count(name) FROM sqlite_master WHERE type='table'")) {
+                rs.next();
+                tables = rs.getInt(1);
+            }
             if (tables > 6) {
                 return true;
             }
@@ -195,6 +194,7 @@ public class SQLite extends SQL {
         }
     }
 
+    @Override
     protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
         byte[] bytes = rs.getBytes(column);
         return new ByteArrayInputStream(bytes);
@@ -225,12 +225,12 @@ public class SQLite extends SQL {
                 answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
             if (answer || !verbose) {
-                Statement s = connection.createStatement();
-                List<Fight> fightsOfTournament = searchFightsByTournamentNameLevelEqualOrGreater(championship, level);
-                for (Fight f : fightsOfTournament) {
-                    deleteFight(f, false);
+                try (Statement s = connection.createStatement()) {
+                    List<Fight> fightsOfTournament = searchFightsByTournamentNameLevelEqualOrGreater(championship, level);
+                    for (Fight f : fightsOfTournament) {
+                        deleteFight(f, false);
+                    }
                 }
-                s.close();
                 List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevelOrMore(level);
                 for (int i = 0; i < groups.size(); i++) {
                     deleteDrawsOfGroupOfTournament(championship, i);
@@ -264,15 +264,14 @@ public class SQLite extends SQL {
                 answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
             if (answer || !verbose) {
-                Statement s = connection.createStatement();
-                //SQLite has problem with foreign key of duel, then we need to delete fight one by one.
-                List<Fight> fightsOfTournament = searchFightsByTournamentName(championship);
-                if (fightsOfTournament.size() > 0) {
-                    for (Fight f : fightsOfTournament) {
-                        deleteFight(f, false);
+                try (Statement s = connection.createStatement()) {
+                    List<Fight> fightsOfTournament = searchFightsByTournamentName(championship);
+                    if (fightsOfTournament.size() > 0) {
+                        for (Fight f : fightsOfTournament) {
+                            deleteFight(f, false);
+                        }
                     }
                 }
-                s.close();
                 deleteDrawsOfTournament(championship);
                 return true;
             } else {
@@ -303,9 +302,9 @@ public class SQLite extends SQL {
             }
             if (answer || !verbose) {
                 deleteDuelsOfFight(fight);
-                Statement s = connection.createStatement();
-                s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
-                s.close();
+                try (Statement s = connection.createStatement()) {
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                }
             }
 
         } catch (SQLException ex) {

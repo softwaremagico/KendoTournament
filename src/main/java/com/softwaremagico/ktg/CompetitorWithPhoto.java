@@ -48,7 +48,6 @@ public class CompetitorWithPhoto extends Competitor implements Serializable {
             BufferedImage bb = toBufferedImage(img);
             ImageIO.write(bb, "png", os);
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
         photoInput = new ByteArrayInputStream(os.toByteArray());
         photoSize = os.toByteArray().length;

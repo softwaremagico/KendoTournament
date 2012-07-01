@@ -62,8 +62,8 @@ public class Translator {
      * @param tagName Tag of the data to be readed
      */
     private Document parseFile(Document usedDoc, String fileParsed) {
-        DocumentBuilderFactory dbf = null;
-        DocumentBuilder db = null;
+        DocumentBuilderFactory dbf;
+        DocumentBuilder db;
         try {
             File file = new File(Path.returnTranslatorPath() + fileParsed);
             dbf = DocumentBuilderFactory.newInstance();
@@ -138,7 +138,7 @@ public class Translator {
     }
 
     public List<Language> returnAvailableLanguages() {
-        List<Language> languagesList = new ArrayList<Language>();
+        List<Language> languagesList = new ArrayList<>();
         Document storedLanguages = null;
         storedLanguages = parseFile(storedLanguages, "languages.xml");
         NodeList nodeLst = storedLanguages.getElementsByTagName("languages");

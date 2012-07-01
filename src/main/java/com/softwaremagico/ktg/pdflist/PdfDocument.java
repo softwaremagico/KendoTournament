@@ -28,7 +28,6 @@ import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -47,22 +46,16 @@ public abstract class PdfDocument {
     protected int bottomMargin = 55;
     protected Image bgImage;
     private float opacity = 0.6f;
-    static Translator trans = null;
+    static Translator trans = new Translator("gui.xml");
 
     PdfDocument() {
-        trans = new Translator("gui.xml");
+        
     }
 
     private void startBackgroundImage() {
         try {
             bgImage = Image.getInstance(Path.returnBackgroundPath());
-        } catch (BadElementException ex) {
-            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        } catch (MalformedURLException ex) {
-            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        } catch (IOException ex) {
+        } catch (BadElementException | IOException ex) {
             MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
@@ -286,6 +279,7 @@ public abstract class PdfDocument {
             documentGs.setStrokeOpacity(1f);
         }
 
+        @Override
         public void cellLayout(PdfPCell cell, Rectangle rect,
                 PdfContentByte[] canvas) {
             PdfContentByte cb = canvas[PdfPTable.BACKGROUNDCANVAS];
@@ -304,6 +298,7 @@ public abstract class PdfDocument {
      */
     class CellBgEvent implements PdfPCellEvent {
 
+        @Override
         public void cellLayout(PdfPCell cell, Rectangle rect,
                 PdfContentByte[] canvas) {
 
@@ -316,7 +311,7 @@ public abstract class PdfDocument {
                             rect.getLeft(), rect.getBottom());
                 }
 
-            } catch (Exception e) {
+            } catch (IOException | DocumentException e) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(e);
             }
         }
@@ -327,6 +322,7 @@ public abstract class PdfDocument {
      */
     class TableBgEvent implements PdfPTableEvent {
 
+        @Override
         public void tableLayout(PdfPTable ppt, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] pcbs) {
             try {
                 //bgImage = Image.getInstance(Path.returnBackgroundPath());

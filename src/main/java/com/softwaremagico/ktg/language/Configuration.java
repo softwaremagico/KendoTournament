@@ -18,12 +18,12 @@
  */
 package com.softwaremagico.ktg.language;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Folder;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 
 /**
  *
@@ -63,8 +63,7 @@ public class Configuration {
      */
     public void readLanguageConfiguration() {
         try {
-            String text = "";
-            text = directory.ReadFileAsText(getPathConfigInHome() + LANGUAGE_FILE, false);
+            String text = directory.ReadFileAsText(getPathConfigInHome() + LANGUAGE_FILE, false);
             if (text.length() > 1) {
                 KendoTournamentGenerator.getInstance().language = text;
             }

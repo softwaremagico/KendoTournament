@@ -30,7 +30,7 @@ import java.util.List;
 public class Team implements Serializable {
 
     public Tournament competition;
-    private List<List<Competitor>> participantsPerLevel = new ArrayList<List<Competitor>>();
+    private List<List<Competitor>> participantsPerLevel = new ArrayList<>();
     private String name;
     public int group = 0; //for the league
 

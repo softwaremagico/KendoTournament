@@ -28,11 +28,11 @@
  */
 package com.softwaremagico.ktg.files;
 
+import com.softwaremagico.ktg.MessageManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.MessageManager;
 
 /**
  *
@@ -85,12 +85,12 @@ public class MyFile {
      * Devuelve el fichero leido como una lista de lineas.
      */
     private List<String> ReadTextFileInLines(String mode, boolean verbose) {
-        List<String> contents = new ArrayList<String>();
+        List<String> contents = new ArrayList<>();
 
         BufferedReader input = null;
         try {
             input = new BufferedReader(new InputStreamReader(new FileInputStream(new File(nombreFichero)), mode));
-            String line = null;
+            String line;
             while ((line = input.readLine()) != null) {
                 contents.add(line);
             }
@@ -107,7 +107,6 @@ public class MyFile {
                     input.close();
                 }
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
 
         }
@@ -121,14 +120,13 @@ public class MyFile {
         File licence = new File(nombreFichero);
         String text = "Error opening the file:" + nombreFichero;
         try {
-            FileInputStream inputData = new FileInputStream(licence);
-
-            byte bt[] = new byte[(int) licence.length()];
-            int numBytes = inputData.read(bt);    /*
-             * If not this line, the file is no readed propetly.
-             */
-            text = new String(bt);
-            inputData.close();
+            try (FileInputStream inputData = new FileInputStream(licence)) {
+                byte bt[] = new byte[(int) licence.length()];
+                int numBytes = inputData.read(bt);    /*
+                 * If not this line, the file is no readed propetly.
+                 */
+                text = new String(bt);
+            }
         } catch (IOException ex) {
             if (verbose) {
                 MessageManager.errorMessage(text, "File Error", false);

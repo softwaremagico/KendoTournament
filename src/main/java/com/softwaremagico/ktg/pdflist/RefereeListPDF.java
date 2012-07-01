@@ -11,7 +11,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
 
 /**
@@ -22,7 +21,6 @@ public class RefereeListPDF extends ParentList {
 
     private Tournament championship;
     private final int border = 0;
-    Translator trans = new Translator("gui.xml");
 
     public RefereeListPDF(Tournament tmp_championship) {
         championship = tmp_championship;

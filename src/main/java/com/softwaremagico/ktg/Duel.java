@@ -30,8 +30,8 @@ import java.util.List;
 public class Duel implements Serializable {
 
     private final int POINTS_TO_WIN = 2;
-    public List<Score> hitsFromCompetitorA = new ArrayList<Score>(); //M, K, T, D, H, I
-    public List<Score> hitsFromCompetitorB = new ArrayList<Score>(); //M, K, T, D, H, I
+    public List<Score> hitsFromCompetitorA = new ArrayList<>(); //M, K, T, D, H, I
+    public List<Score> hitsFromCompetitorB = new ArrayList<>(); //M, K, T, D, H, I
     public int faultsCompetitorA = 0;
     public int faultsCompetitorB = 0;
     private boolean stored = false; //Has been stored into the database or not. 

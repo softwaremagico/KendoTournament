@@ -18,13 +18,7 @@
  */
 package com.softwaremagico.ktg.championship;
 
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,16 +32,16 @@ public class SerialParent {
 
     public void write(Object objectToSave) throws IOException {
         try {
-            ObjectOutputStream os = new ObjectOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(FILENAME)));
-            os.writeObject(objectToSave);
-            os.close();
+            try (ObjectOutputStream os = new ObjectOutputStream(new BufferedOutputStream(
+                         new FileOutputStream(FILENAME)))) {
+                os.writeObject(objectToSave);
+            }
         } catch (FileNotFoundException fnoe) {
         }
     }
 
     public void save(Object o) throws IOException {
-        List<Object> l = new ArrayList<Object>();
+        List<Object> l = new ArrayList<>();
         l.add(o);
         write(l);
     }
@@ -55,15 +49,15 @@ public class SerialParent {
     public List load() throws IOException, ClassNotFoundException,
             FileNotFoundException {
         List l;
-        ObjectInputStream is = new ObjectInputStream(new FileInputStream(FILENAME));
-        l = (List) is.readObject();
-        is.close();
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(FILENAME))) {
+            l = (List) is.readObject();
+        }
         return l;
     }
 
     public void dump() throws IOException, ClassNotFoundException {
-        ObjectInputStream is = new ObjectInputStream(new FileInputStream(FILENAME));
-        System.out.println(is.readObject());
-        is.close();
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(FILENAME))) {
+            System.out.println(is.readObject());
+        }
     }
 }

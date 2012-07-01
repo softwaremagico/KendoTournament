@@ -1301,7 +1301,7 @@ public class Controller {
             Fight f;
             try {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
-                        shortFight.getTournament(), shortFight.getArena(), 
+                        shortFight.getTournament(), shortFight.getArena(),
                         KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level + 1);
             } catch (IndexOutOfBoundsException aion) {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),

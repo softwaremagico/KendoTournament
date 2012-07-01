@@ -5,14 +5,14 @@
  */
 package com.softwaremagico.ktg.championship;
 
-import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import javax.swing.DefaultListModel;
-import com.softwaremagico.ktg.gui.NewTeam;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.gui.NewTeam;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,7 +20,7 @@ import com.softwaremagico.ktg.language.Translator;
  */
 public class DesignGroupWindow extends javax.swing.JFrame {
 
-    private DefaultListModel<String> groupModel = new DefaultListModel<String>();
+    private DefaultListModel<String> groupModel = new DefaultListModel<>();
     DesignedGroup dg;
     private Translator trans = null;
     private boolean refresh = true;

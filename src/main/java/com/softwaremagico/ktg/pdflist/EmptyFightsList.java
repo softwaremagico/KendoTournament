@@ -20,6 +20,7 @@ public class EmptyFightsList extends ListFromTournament {
         changeCheckBoxText(trans.returnTag("ShowEndFights", KendoTournamentGenerator.getInstance().language));
     }
 
+    @Override
     public String defaultFileName() {
         String shiaijo = "";
         if (returnSelectedArena() >= 0) {
@@ -32,6 +33,7 @@ public class EmptyFightsList extends ListFromTournament {
         }
     }
 
+    @Override
     protected ParentList getPdfGenerator() {
         return new EmptyFightsListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), returnSelectedArena(), isCheckBoxSelected());
     }

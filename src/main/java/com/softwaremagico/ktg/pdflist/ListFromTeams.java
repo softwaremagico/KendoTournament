@@ -30,7 +30,7 @@ import java.util.List;
 public abstract class ListFromTeams extends KendoFrame {
 
     public Translator trans = null;
-    public List<Team> listTeams = new ArrayList<Team>();
+    public List<Team> listTeams = new ArrayList<>();
     private boolean voidTournament;
 
     public void Start(boolean tmp_voidTournament) {

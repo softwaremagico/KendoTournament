@@ -42,11 +42,11 @@ import javax.swing.Timer;
  */
 public class LeagueDesigner extends javax.swing.JFrame {
 
-    private DefaultListModel<String> teamModel = new DefaultListModel<String>();
+    private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
     List<Team> teams;
     Tournament championship;
-    private List<Tournament> listTournaments = new ArrayList<Tournament>();
+    private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshMode = true;
     Integer numberMaxOfWinners = 1;
@@ -309,14 +309,19 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }
 
     private void updateRadioButton() {
-        if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("championship")) {
-            ChampionshipRadioButton.setSelected(true);
-        } else if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual")) {
-            ManualRadioButton.setSelected(true);
-        } else if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("tree")) {
-            TreeRadioButton.setSelected(true);
-        } else if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("simple")) {
-            SimpleRadioButton.setSelected(true);
+        switch (KendoTournamentGenerator.getInstance().designedGroups.mode) {
+            case "championship":
+                ChampionshipRadioButton.setSelected(true);
+                break;
+            case "manual":
+                ManualRadioButton.setSelected(true);
+                break;
+            case "tree":
+                TreeRadioButton.setSelected(true);
+                break;
+            case "simple":
+                SimpleRadioButton.setSelected(true);
+                break;
         }
     }
 

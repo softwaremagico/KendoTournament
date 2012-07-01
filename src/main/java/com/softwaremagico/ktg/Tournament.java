@@ -65,7 +65,6 @@ public class Tournament implements Serializable {
             BufferedImage bb = toBufferedImage(img);
             ImageIO.write(bb, "png", os);
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
         bannerInput = new ByteArrayInputStream(os.toByteArray());
         bannerSize = os.toByteArray().length;
@@ -179,7 +178,6 @@ public class Tournament implements Serializable {
             BufferedImage bb = toBufferedImage(img);
             ImageIO.write(bb, "png", os);
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
         diplomaInput = new ByteArrayInputStream(os.toByteArray());
         diplomaSize = os.toByteArray().length;
@@ -204,7 +202,6 @@ public class Tournament implements Serializable {
             BufferedImage bb = toBufferedImage(img);
             ImageIO.write(bb, "png", os);
         } catch (IOException ex) {
-            ex.printStackTrace();
         }
         accreditationInput = new ByteArrayInputStream(os.toByteArray());
         accreditationSize = os.toByteArray().length;

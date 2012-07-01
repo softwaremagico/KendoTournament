@@ -18,12 +18,12 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.gui.MainGUI;
+import com.softwaremagico.ktg.language.Configuration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import com.softwaremagico.ktg.gui.MainGUI;
-import com.softwaremagico.ktg.language.Configuration;
 
 /**
  *
@@ -41,22 +41,12 @@ public class Main {
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
             try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-            } catch (ClassNotFoundException ex1) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (InstantiationException ex1) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (IllegalAccessException ex1) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
-            } catch (UnsupportedLookAndFeelException ex1) {
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex1) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }

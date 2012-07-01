@@ -41,7 +41,7 @@ import java.util.List;
 public class Folder {
 
     public String folderName;
-    private List<String> files = new ArrayList<String>();
+    private List<String> files = new ArrayList<>();
 
     /** Creates a new instance of Folder */
     public Folder(String tmp_directory) throws Exception {
@@ -56,7 +56,7 @@ public class Folder {
     public List<String> ObtainFolders(String src) throws Exception {
         //Creamos el Objeto File con la URL que queremos desplegar
         File dir = new File(src);
-        List<String> lista = new ArrayList<String>();
+        List<String> lista = new ArrayList<>();
         if (dir.isDirectory()) {
             if (!dir.exists()) {
                 throw new Exception("Error: El directorio no existe");
@@ -71,7 +71,7 @@ public class Folder {
 
     private List<String> Searchfiles(String directory) throws Exception {
         List<String> filesDisponibles = ObtainFolders(directory);
-        List<String> listaDatos = new ArrayList<String>();
+        List<String> listaDatos = new ArrayList<>();
         for (int i = 0; i < filesDisponibles.size(); i++) {
             String dato = filesDisponibles.get(i);
             dato = dato.replaceAll(".txt", "");
@@ -120,13 +120,11 @@ public class Folder {
                 try {
                     outputChannel.write(b);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
                 }
             }
             try {
                 outputChannel.close();
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
         } catch (FileNotFoundException ex) {
             String text = "Impossible to generate the file:\n\t" + file +
@@ -152,13 +150,11 @@ public class Folder {
             try {
                 outputChannel.write(b);
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
 
             try {
                 outputChannel.close();
             } catch (IOException ex) {
-                ex.printStackTrace();
             }
         } catch (FileNotFoundException ex) {
             String msg = "Impossible to generate file:\n\t" + file +

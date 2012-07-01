@@ -33,7 +33,7 @@ public class Fight implements Serializable {
     public Team team2;
     public Tournament competition;
     public int asignedFightArea;
-    public List<Duel> duels = new ArrayList<Duel>();
+    public List<Duel> duels = new ArrayList<>();
     private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     public int level;
     private int maxWinners = 1;

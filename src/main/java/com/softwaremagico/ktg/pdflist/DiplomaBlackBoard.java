@@ -18,6 +18,7 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 
 /**
  *

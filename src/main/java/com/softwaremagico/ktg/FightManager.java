@@ -29,7 +29,7 @@ public class FightManager {
 
     public boolean inverseColours = false;
     public boolean inverseTeams = false;
-    private ArrayList<Fight> fights = new ArrayList<Fight>();
+    private ArrayList<Fight> fights = new ArrayList<>();
 
     FightManager() {
     }
@@ -139,7 +139,7 @@ public class FightManager {
     }
 
     public ArrayList<Fight> getFightsOfArena(int arena) {
-        ArrayList<Fight> fightsOfArea = new ArrayList<Fight>();
+        ArrayList<Fight> fightsOfArea = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).asignedFightArea == arena) {
                 fightsOfArea.add(fights.get(i));
@@ -149,7 +149,7 @@ public class FightManager {
     }
 
     public ArrayList<Fight> getFightsOfLevel(int level) {
-        ArrayList<Fight> fightsOfLevel = new ArrayList<Fight>();
+        ArrayList<Fight> fightsOfLevel = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).level == level) {
                 fightsOfLevel.add(fights.get(i));
@@ -233,14 +233,14 @@ public class FightManager {
     public boolean deleteAllFights(String championship, boolean verbose) {
         if (KendoTournamentGenerator.getInstance().database.deleteFightsOfTournament(championship, verbose)) {
             KendoTournamentGenerator.getInstance().database.deleteAllMemberChangesInTeams(championship, verbose);
-            fights = new ArrayList<Fight>();
+            fights = new ArrayList<>();
             return true;
         }
         return false;
     }
 
     public boolean deleteAllFightsButNotFromDatabase(String championship, boolean verbose) {
-        fights = new ArrayList<Fight>();
+        fights = new ArrayList<>();
         return true;
     }
 
@@ -282,7 +282,7 @@ public class FightManager {
     }
 
     private List<Integer> returnArenas() {
-        List<Integer> arenas = new ArrayList<Integer>();
+        List<Integer> arenas = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (!arenas.contains(fights.get(i).asignedFightArea)) {
                 arenas.add(fights.get(i).asignedFightArea);
@@ -337,7 +337,7 @@ public class FightManager {
     }
 
     public void removeAll() {
-        fights = new ArrayList<Fight>();
+        fights = new ArrayList<>();
     }
 
     public void updateFightsWithNewOrderOfTeam(Team t) {
@@ -391,12 +391,12 @@ public class FightManager {
      */
     @SuppressWarnings("unchecked")
     private ArrayList<Fight> obtainFightsWithOneFightArea(List<Team> listTeams, Tournament competition) {
-        ArrayList<Fight> results = new ArrayList<Fight>();
+        ArrayList<Fight> results = new ArrayList<>();
         Random rnd = new Random();
         List<Integer>[] fightsByTeam = new List[listTeams.size()];
 
         for (int i = 0; i < listTeams.size(); i++) {
-            fightsByTeam[i] = new ArrayList<Integer>();
+            fightsByTeam[i] = new ArrayList<>();
             for (int j = 0; j < listTeams.size(); j++) {
                 if (j != i) {
                     fightsByTeam[i].add(j);
@@ -438,7 +438,7 @@ public class FightManager {
     }
 
     private List<Couple> deleteAllCouplesWhereIsTeamOfCouple(Couple c, List<Couple> remainFights) {
-        List<Couple> notContains = new ArrayList<Couple>();
+        List<Couple> notContains = new ArrayList<>();
         for (int i = 0; i < remainFights.size(); i++) {
             if ((remainFights.get(i).a != c.a)
                     && (remainFights.get(i).a != c.b)
@@ -451,9 +451,9 @@ public class FightManager {
     }
 
     private ArrayList<Fight> obtainFightsWithTwoOrMoreFightArea(List<Team> listTeams, Tournament competition) {
-        ArrayList<Fight> results = new ArrayList<Fight>();
+        ArrayList<Fight> results = new ArrayList<>();
         int areas = Math.min(competition.fightingAreas, listTeams.size() / 2);
-        List<Couple> allFights = new ArrayList<Couple>();
+        List<Couple> allFights = new ArrayList<>();
         Random rnd = new Random();
         for (int i = 0; i < listTeams.size(); i++) {
             for (int j = i + 1; j < listTeams.size(); j++) {
@@ -464,7 +464,7 @@ public class FightManager {
         }
         int numberOfFights = allFights.size();
         do {
-            List<Couple> remainFights = new ArrayList<Couple>();
+            List<Couple> remainFights = new ArrayList<>();
             remainFights.addAll(allFights);
             for (int j = 0; (j < areas && (numberOfFights > 0)); j++) {
                 try {
@@ -501,7 +501,7 @@ public class FightManager {
 
         while (c == null) {
             //Couples of TeamA
-            List<Couple> listTeamA = new ArrayList<Couple>();
+            List<Couple> listTeamA = new ArrayList<>();
             for (int i = 0; i < couples.size(); i++) {
                 if (couples.get(i).a == teamA || couples.get(i).b == teamA) {
                     listTeamA.add(couples.get(i));
@@ -509,7 +509,7 @@ public class FightManager {
             }
 
 
-            List<List<Couple>> list = new ArrayList<List<Couple>>();
+            List<List<Couple>> list = new ArrayList<>();
             for (int i = 0; i < listTeams.size(); i++) {
                 list.add(new ArrayList<Couple>());
             }
@@ -590,9 +590,9 @@ public class FightManager {
     }
 
     public ArrayList<Fight> obtainSortedFights(List<Team> listTeams, Tournament competition) {
-        ArrayList<Fight> results = new ArrayList<Fight>();
-        List<Couple> couples = new ArrayList<Couple>();
-        List<Integer> lessUsed = new ArrayList<Integer>();
+        ArrayList<Fight> results = new ArrayList<>();
+        List<Couple> couples = new ArrayList<>();
+        List<Integer> lessUsed = new ArrayList<>();
         int area = 0;
         boolean teamAInLeft = true;
 
@@ -661,7 +661,7 @@ public class FightManager {
     }
 
     private ArrayList<Fight> notUpdatedFights() {
-        ArrayList<Fight> notStored = new ArrayList<Fight>();
+        ArrayList<Fight> notStored = new ArrayList<>();
         for (Fight f : fights) {
             if (!f.isOverStored() || !f.areUpdatedDuelsOfFight()) {
                 notStored.add(f);

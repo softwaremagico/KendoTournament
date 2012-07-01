@@ -33,8 +33,8 @@ import javax.swing.JOptionPane;
  */
 public class DesignedGroups implements Serializable {
 
-    private List<DesignedGroup> designedGroups = new ArrayList<DesignedGroup>();
-    private List<Integer> levels = new ArrayList<Integer>();  //"Pointer" to the designedGroup to point fightManager of the next level.
+    private List<DesignedGroup> designedGroups = new ArrayList<>();
+    private List<Integer> levels = new ArrayList<>();  //"Pointer" to the designedGroup to point fightManager of the next level.
     transient Tournament championship;
     String language;
     public String mode = "tree";
@@ -107,7 +107,7 @@ public class DesignedGroups implements Serializable {
      * @return
      */
     private List<Team> returnUsedTeamsOfTournament(String championship) {
-        List<Team> usedTeams = new ArrayList<Team>();
+        List<Team> usedTeams = new ArrayList<>();
         List<DesignedGroup> ds = returnGroupsOfTournament(championship);
         for (int i = 0; i < ds.size(); i++) {
             usedTeams.addAll(ds.get(i).teams);
@@ -116,7 +116,7 @@ public class DesignedGroups implements Serializable {
     }
 
     private List<Team> returnUsedTeams() {
-        List<Team> usedTeams = new ArrayList<Team>();
+        List<Team> usedTeams = new ArrayList<>();
         for (int i = 0; i < designedGroups.size(); i++) {
             usedTeams.addAll(designedGroups.get(i).teams);
         }
@@ -320,7 +320,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public List<DesignedGroup> returnGroupsOfLevel(Integer level) {
-        List<DesignedGroup> groups = new ArrayList<DesignedGroup>();
+        List<DesignedGroup> groups = new ArrayList<>();
 
         if ((level < levels.size() - 1) && (level >= 0)) {
             for (int i = levels.get(level); i < levels.get(level + 1); i++) {
@@ -341,7 +341,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public List<Integer> returnIndexOfGroupsOfLevel(Integer level) {
-        List<Integer> groups = new ArrayList<Integer>();
+        List<Integer> groups = new ArrayList<>();
         List<DesignedGroup> groupsLevel = returnGroupsOfLevel(level);
         for (int i = 0; i < groupsLevel.size(); i++) {
             groups.add(returnIndexOfGroup(groupsLevel.get(i)));
@@ -350,7 +350,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public List<Integer> returnIndexOfGroupsOfLevelOrMore(Integer level) {
-        List<Integer> groups = new ArrayList<Integer>();
+        List<Integer> groups = new ArrayList<>();
         if ((level < levels.size()) && (level >= 0)) {
             for (int i = levels.get(level); i < designedGroups.size(); i++) {
                 groups.add(i);
@@ -409,7 +409,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public List<DesignedGroup> returnGroupsOfTournament(String championship) {
-        List<DesignedGroup> result = new ArrayList<DesignedGroup>();
+        List<DesignedGroup> result = new ArrayList<>();
         for (int i = 0; i < designedGroups.size(); i++) {
             if (designedGroups.get(i).championship.name.equals(championship)) {
                 result.add(designedGroups.get(i));
@@ -686,7 +686,7 @@ public class DesignedGroups implements Serializable {
                     MessageManager.customMessage("leagueFinished", "Finally!", language, winnername, JOptionPane.INFORMATION_MESSAGE, log);
                 }
                 update();
-                return new ArrayList<Fight>();
+                return new ArrayList<>();
             }
         } catch (NullPointerException npe) {
         }
@@ -707,7 +707,7 @@ public class DesignedGroups implements Serializable {
      * @return
      */
     public ArrayList<Fight> generateLevelFights(int level) {
-        ArrayList<Fight> fights = new ArrayList<Fight>();
+        ArrayList<Fight> fights = new ArrayList<>();
         List<DesignedGroup> groups = returnGroupsOfLevel(level);
 
         boolean answer = false;
@@ -830,7 +830,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public ArrayList<Fight> getFightsOfLevel(ArrayList<Fight> fights, int level) {
-        ArrayList<Fight> fightsOfLevel = new ArrayList<Fight>();
+        ArrayList<Fight> fightsOfLevel = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).level == level) {
                 fightsOfLevel.add(fights.get(i));
@@ -841,7 +841,7 @@ public class DesignedGroups implements Serializable {
 
     public int getArenasOfLevel(ArrayList<Fight> fights, int level) {
         ArrayList<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
-        List<Integer> arenas = new ArrayList<Integer>();
+        List<Integer> arenas = new ArrayList<>();
         for (int i = 0; i < fightsOfLevel.size(); i++) {
             boolean found = false;
             for (int j = 0; j < arenas.size(); j++) {
@@ -913,8 +913,8 @@ public class DesignedGroups implements Serializable {
      */
     public void refillDesigner(ArrayList<Fight> tmp_fights) {
         //if (!loadDesigner(FOLDER + File.separator + KendoTournamentGenerator.getInstance().getLastSelectedTournament() + ".dsg", tournament)) {
-        designedGroups = new ArrayList<DesignedGroup>();
-        levels = new ArrayList<Integer>();
+        designedGroups = new ArrayList<>();
+        levels = new ArrayList<>();
 
         //Fill levels with fightManager zero.
         int maxFightLevel = FightManager.getLevelOfFights(tmp_fights);
@@ -948,7 +948,7 @@ public class DesignedGroups implements Serializable {
 
     private void refillLevel(ArrayList<Fight> tmp_fights, int level) {
         ArrayList<Fight> fights = getFightsOfLevel(tmp_fights, level);
-        List<Team> teamsOfGroup = new ArrayList<Team>();
+        List<Team> teamsOfGroup = new ArrayList<>();
 
         for (int i = 0; i < fights.size(); i++) {
             //If one team exist in the group, then this fight is also of this group.
@@ -970,7 +970,7 @@ public class DesignedGroups implements Serializable {
                     add(designedFight, level, false, false);
                 }
                 //Start generating the next group.
-                teamsOfGroup = new ArrayList<Team>();
+                teamsOfGroup = new ArrayList<>();
                 teamsOfGroup.add(fights.get(i).team1);
                 teamsOfGroup.add(fights.get(i).team2);
             }
@@ -995,7 +995,7 @@ public class DesignedGroups implements Serializable {
      * @param level
      */
     private void completeGroupsWithOneTeam(ArrayList<Fight> tmp_fights, int level) {
-        List<Team> winners = new ArrayList<Team>();
+        List<Team> winners = new ArrayList<>();
         if (level > 0 && (getFightsOfLevel(tmp_fights, level - 1).size() > 0) && (getFightsOfLevel(tmp_fights, level).size() > 0)) {
             //obtain all winners of previous level.
             List<DesignedGroup> groupsPrev = returnGroupsOfLevel(level - 1);
@@ -1108,7 +1108,7 @@ public class DesignedGroups implements Serializable {
      */
     class Links implements Serializable {
 
-        private List<Link> links = new ArrayList<Link>();
+        private List<Link> links = new ArrayList<>();
 
         Links() {
         }

@@ -59,7 +59,7 @@ public class Diploma {
     private boolean statistics;
     Tournament championship;
     float nameposition = 100;
-    List<Duel> duels = new ArrayList<Duel>();
+    List<Duel> duels = new ArrayList<>();
     static int TOTAL_RANGES = 9;
     List<TeamRanking> teamTopTen;
     List<CompetitorRanking> competitorTopTen;
@@ -280,9 +280,7 @@ public class Diploma {
                 mainTable.addCell(cell);
 
                 document.add(mainTable);
-            } catch (DocumentException ex) {
-                Logger.getLogger(Diploma.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (DocumentException | IOException ex) {
                 Logger.getLogger(Diploma.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -18,7 +18,7 @@ public enum DatabaseEngine {
     SQLite(false, new SQLite());
     private final boolean networkConnection;
     private Database database = null;
-    private static final List<DatabaseEngine> availableDatabase = new ArrayList<DatabaseEngine>();
+    private static final List<DatabaseEngine> availableDatabase = new ArrayList<>();
 
     DatabaseEngine(boolean network, Database db) {
         this.networkConnection = network;

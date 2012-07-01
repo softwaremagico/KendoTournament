@@ -80,7 +80,7 @@ public enum Score {
     }
 
     public static ArrayList<Score> getValidPoints() {
-        ArrayList<Score> points = new ArrayList<Score>();
+        ArrayList<Score> points = new ArrayList<>();
         points.add(MEN);
         points.add(KOTE);
         points.add(DO);

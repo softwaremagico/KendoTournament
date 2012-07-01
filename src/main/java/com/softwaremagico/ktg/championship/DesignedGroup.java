@@ -41,7 +41,7 @@ public class DesignedGroup extends Group implements Serializable {
 
     transient Tournament championship;
     transient DesignGroupWindow dgw;
-    public List<Team> teams = new ArrayList<Team>();
+    public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
     Integer numberMaxOfTeams;
     private Integer numberMaxOfWinners = 1;
@@ -127,7 +127,7 @@ public class DesignedGroup extends Group implements Serializable {
     public boolean load(Tournament c) {
         championship = c;
         setLanguage(KendoTournamentGenerator.getInstance().language);
-        List<Team> updatedTeams = new ArrayList<Team>();
+        List<Team> updatedTeams = new ArrayList<>();
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
             for (int i = 0; i < teams.size(); i++) {
@@ -285,7 +285,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     public void cleanTeams() {
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         label.setText(returnText());
         updateSize();
     }
@@ -311,7 +311,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     public List<Team> getWinners() {
-        List<Team> result = new ArrayList<Team>();
+        List<Team> result = new ArrayList<>();
         List<Team> orderedTeams = getTeamsOrderedByScore();
         for (int i = 0; i < numberMaxOfWinners; i++) {
             try {
@@ -339,7 +339,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     public List<Fight> generateGroupFights(int level, int fightArea) {
-        List<Fight> fights = new ArrayList<Fight>();
+        List<Fight> fights = new ArrayList<>();
         int count = 0;
         Fight f;
 
@@ -392,7 +392,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     public List<Fight> getFightsOfGroup(List<Fight> fights) {
-        List<Fight> fightsG = new ArrayList<Fight>();
+        List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < teams.size(); j++) {
                 try {
@@ -468,7 +468,7 @@ public class DesignedGroup extends Group implements Serializable {
      * Init the score.
      */
     private void setDefaultScore() {
-        teamsScore = new ArrayList<Double>();
+        teamsScore = new ArrayList<>();
         for (int i = 0; i < teams.size(); i++) {
             teamsScore.add((double) 0);
         }
@@ -636,13 +636,13 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     private List<Team> getTeamsOrderedByScore() {
-        List<Team> sortedTeams = new ArrayList<Team>();
-        List<Team> tmp_teams = new ArrayList<Team>();
-        List<Double> tmp_teamsScore = new ArrayList<Double>();
+        List<Team> sortedTeams = new ArrayList<>();
+        List<Team> tmp_teams = new ArrayList<>();
+        List<Double> tmp_teamsScore = new ArrayList<>();
 
         tmp_teams.addAll(teams);
         tmp_teamsScore.addAll(teamsScore);
-        teamsScoreOrdered = new ArrayList<Double>();
+        teamsScoreOrdered = new ArrayList<>();
 
         while (tmp_teams.size() > 0) {
             int index = obtainTeamWithMaxScore(tmp_teamsScore);
@@ -683,7 +683,7 @@ public class DesignedGroup extends Group implements Serializable {
 
     private int getOrderOfTeam(Team team) {
         updateScoreForTeams(getFightsOfGroup(KendoTournamentGenerator.getInstance().fightManager.getFights()));
-        List<Team> sortedTeams = new ArrayList<Team>();
+        List<Team> sortedTeams = new ArrayList<>();
         try {
             sortedTeams = getTeamsOrderedByScore();
         } catch (NullPointerException npe) {
@@ -715,7 +715,7 @@ public class DesignedGroup extends Group implements Serializable {
      * @return
      */
     private List<Team> obtainDrawTeams(int index, List<Team> sortedTeams) {
-        List<Team> result = new ArrayList<Team>();
+        List<Team> result = new ArrayList<>();
         double drawScore;
         try {
             drawScore = teamsScoreOrdered.get(index);
@@ -757,7 +757,7 @@ public class DesignedGroup extends Group implements Serializable {
         }
 
         //Ask the user who is the real winner.
-        List<String> optionsList = new ArrayList<String>();
+        List<String> optionsList = new ArrayList<>();
         for (int i = 0; i < drawTeams.size(); i++) {
             optionsList.add(drawTeams.get(i).returnName());
 //            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, level);

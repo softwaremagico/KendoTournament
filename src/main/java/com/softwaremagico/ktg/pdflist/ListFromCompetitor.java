@@ -18,19 +18,19 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
+import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import com.softwaremagico.ktg.gui.KendoFrame;
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.language.Translator;
 
 public abstract class ListFromCompetitor extends KendoFrame {
 
     public Translator trans = null;
-    public List<Competitor> listCompetitors = new ArrayList<Competitor>();
+    public List<Competitor> listCompetitors = new ArrayList<>();
     private boolean voidTournament;
 
     public void Start( boolean tmp_voidTournament) {

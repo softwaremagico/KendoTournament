@@ -137,8 +137,7 @@ public class OrderTeam extends NewTeam {
                     this.dispose();
                 }
             }
-        } catch (NullPointerException npe) {
-        } catch (ArrayIndexOutOfBoundsException aiob) {
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
         }
     }
 

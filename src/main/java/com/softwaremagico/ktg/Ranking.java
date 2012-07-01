@@ -4,9 +4,9 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.ArrayList;
 import java.util.List;
-import com.softwaremagico.ktg.statistics.TeamRanking;
 
 /**
  *
@@ -15,7 +15,7 @@ import com.softwaremagico.ktg.statistics.TeamRanking;
 public class Ranking {
 
     //transient Tournament championship;
-    public List<Team> teams = new ArrayList<Team>();
+    public List<Team> teams = new ArrayList<>();
     private List<Double> teamsScore;
     private final Float SCORE_WON_FIGHTS = new Float(1000000);
     private final Float SCORE_WON_DUELS = new Float(10000);
@@ -248,7 +248,7 @@ public class Ranking {
     }
 
     private void updateTeamsWithFights(List<Fight> fights) {
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             boolean inserted1 = false;
             boolean inserted2 = false;
@@ -326,14 +326,14 @@ public class Ranking {
     }
 
     private List<Team> getTeamsOrderedByScore() {
-        List<Team> sortedTeams = new ArrayList<Team>();
-        List<Team> tmp_teams = new ArrayList<Team>();
-        List<Double> tmp_teamsScore = new ArrayList<Double>();
+        List<Team> sortedTeams = new ArrayList<>();
+        List<Team> tmp_teams = new ArrayList<>();
+        List<Double> tmp_teamsScore = new ArrayList<>();
         List<Double> teamsScoreOrdered;
 
         tmp_teams.addAll(teams);
         tmp_teamsScore.addAll(teamsScore);
-        teamsScoreOrdered = new ArrayList<Double>();
+        teamsScoreOrdered = new ArrayList<>();
 
         while (tmp_teams.size() > 0) {
             int index = obtainTeamWithMaxScore(tmp_teamsScore);
@@ -350,7 +350,7 @@ public class Ranking {
     }
 
     public List<TeamRanking> getRanking(List<Fight> fights) {
-        List<TeamRanking> teamsOrdered = new ArrayList<TeamRanking>();
+        List<TeamRanking> teamsOrdered = new ArrayList<>();
 
         updateScoreForTeams(fights);
         List<Team> teamsOrd = getTeamsOrderedByScore();
@@ -367,7 +367,7 @@ public class Ranking {
      * Init the score.
      */
     private void ResetScoreToZero() {
-        teamsScore = new ArrayList<Double>();
+        teamsScore = new ArrayList<>();
         for (int i = 0; i < teams.size(); i++) {
             teamsScore.add((double) 0);
         }

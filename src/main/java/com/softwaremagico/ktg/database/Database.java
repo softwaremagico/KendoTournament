@@ -76,12 +76,12 @@ public abstract class Database {
     }
 
     void showCommandOutput(Process child) throws IOException {
-        InputStream in = child.getInputStream();
-        int c;
-        while ((c = in.read()) != -1) {
-            System.out.print((char) c);
+        try (InputStream in = child.getInputStream()) {
+            int c;
+            while ((c = in.read()) != -1) {
+                System.out.print((char) c);
+            }
         }
-        in.close();
 
         BufferedReader stdError = new BufferedReader(new InputStreamReader(child.getErrorStream()));
         String s;

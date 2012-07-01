@@ -37,7 +37,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
     private DiplomaGenerator diplomaGui = null;
     private Translator trans = null;
     private RoleTags roles = null;
-    private List<JCheckBox> rolesSelected = new ArrayList<JCheckBox>();
+    private List<JCheckBox> rolesSelected = new ArrayList<>();
     private DiplomaBlackBoard DiplomaPanel = new DiplomaBlackBoard();
 
     /**

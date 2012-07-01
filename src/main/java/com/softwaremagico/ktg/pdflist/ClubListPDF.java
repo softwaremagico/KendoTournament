@@ -29,16 +29,19 @@ public class ClubListPDF extends ParentList {
         trans = new Translator("gui.xml");
     }
 
+    @Override
     public float[] getTableWidths() {
         float[] widths = {0.60f, 0.30f};
         return widths;
     }
 
+    @Override
     public void setTablePropierties(PdfPTable mainTable) {
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
     }
 
+    @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
         int cellNumber = 0;
         boolean firstClub = true;

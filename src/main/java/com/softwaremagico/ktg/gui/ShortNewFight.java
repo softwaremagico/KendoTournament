@@ -35,10 +35,10 @@ import java.util.List;
 public class ShortNewFight extends javax.swing.JFrame {
 
     Translator trans = null;
-    List<Tournament> listTournaments = new ArrayList<Tournament>();
+    List<Tournament> listTournaments = new ArrayList<>();
     Tournament selectedTournament = null;
-    List<Team> listTeams = new ArrayList<Team>();
-    List<Fight> fights = new ArrayList<Fight>();
+    List<Team> listTeams = new ArrayList<>();
+    List<Fight> fights = new ArrayList<>();
     String competitionName;
     int selectedArena;
 
@@ -117,9 +117,7 @@ public class ShortNewFight extends javax.swing.JFrame {
             } else {
                 return listTeams.get(Team2ComboBox.getSelectedIndex() + 1);
             }
-        } catch (ArrayIndexOutOfBoundsException aiob) {
-            return null;
-        } catch (NullPointerException aiob) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException aiob) {
             return null;
         }
     }
