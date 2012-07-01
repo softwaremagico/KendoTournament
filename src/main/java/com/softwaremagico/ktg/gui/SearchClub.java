@@ -14,35 +14,31 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *  Created on 24-dic-2008.
+ *  Created on 1-jul-2012.
  */
 package com.softwaremagico.ktg.gui;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultListModel;
 import com.softwaremagico.ktg.Club;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
-/**
- *
- * @author  jorge
- */
-public class SearchClub extends javax.swing.JFrame {
+public final class SearchClub extends Search<Club> {
 
-    private Translator trans = null;
-    private DefaultListModel<String> resultModel = new DefaultListModel<String>();
-    private List<Club> results;
+    private JLabel NameLabel = new JLabel("Name:");
+    private JTextField NameTextField = new JTextField();
+    private JLabel CountryLabel = new JLabel("Country:");
+    private JTextField CountryTextField = new JTextField();
+    private JLabel CityLabel = new JLabel("City:");
+    private JTextField CityTextField = new JTextField();
 
-    /** Creates new form SearchClub */
     public SearchClub() {
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        super();
+        fillSearchFieldPanel();
         setLanguage(KendoTournamentGenerator.getInstance().language);
     }
 
@@ -51,214 +47,24 @@ public class SearchClub extends javax.swing.JFrame {
      */
     private void setLanguage(String language) {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleSearch", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
-        SelectButton.setText(trans.returnTag("SelectButton", language));
         CountryLabel.setText(trans.returnTag("CountryLabel", language));
         CityLabel.setText(trans.returnTag("CityLabel", language));
         NameLabel.setText(trans.returnTag("NameLabel", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
     }
 
-    /**
-     * Fill the list with the results obtained
-     */
-    public void FillResults(List<Club> clubs) {
-        resultModel.removeAllElements();
-        for (int i = 0; i < clubs.size(); i++) {
-            resultModel.addElement(clubs.get(i).returnName() + " (" + clubs.get(i).returnCountry() + ")");
-        }
+    @Override
+    protected void fillSearchFieldPanel() {
+        javax.swing.GroupLayout SearchFieldPanelLayout = new javax.swing.GroupLayout(SearchFieldPanel);
+        SearchFieldPanel.setLayout(SearchFieldPanelLayout);
+        SearchFieldPanelLayout.setHorizontalGroup(
+                SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(SearchFieldPanelLayout.createSequentialGroup().addContainerGap().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchFieldPanelLayout.createSequentialGroup().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(NameLabel).addComponent(CountryLabel).addComponent(CityLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false).addComponent(CityTextField, javax.swing.GroupLayout.Alignment.TRAILING).addComponent(CountryTextField, javax.swing.GroupLayout.Alignment.TRAILING).addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))).addContainerGap()));
+        SearchFieldPanelLayout.setVerticalGroup(
+                SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(SearchFieldPanelLayout.createSequentialGroup().addContainerGap().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(NameLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(CountryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(CountryLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(CityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(CityLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE).addContainerGap()));
     }
 
-    public Club ReturnSelectedClub() {
-        try {
-            int index = ResultList.getSelectedIndex();
-            return results.get(index);
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
-
-    /************************************************
-     *
-     *                    LISTENERS
-     *
-     ************************************************/
-    /**
-     * Add the same action listener to all langugaes of the menu.
-     * @param al
-     */
-    public void addSelectButtonListener(ActionListener al) {
-        SelectButton.addActionListener(al);
-    }
-
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        SearchPanel = new javax.swing.JPanel();
-        NameTextField = new javax.swing.JTextField();
-        NameLabel = new javax.swing.JLabel();
-        SearchButton = new javax.swing.JButton();
-        CountryTextField = new javax.swing.JTextField();
-        CountryLabel = new javax.swing.JLabel();
-        CityTextField = new javax.swing.JTextField();
-        CityLabel = new javax.swing.JLabel();
-        ResultPanel = new javax.swing.JPanel();
-        ResultScrollPanel = new javax.swing.JScrollPane();
-        ResultList = new javax.swing.JList();
-        SelectButton = new javax.swing.JButton();
-        DeleteButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-
-        SearchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        NameLabel.setText("Name:");
-
-        SearchButton.setText("Search");
-        SearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchButtonActionPerformed(evt);
-            }
-        });
-
-        CountryLabel.setText("Country:");
-
-        CityLabel.setText("City:");
-
-        javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
-        SearchPanel.setLayout(SearchPanelLayout);
-        SearchPanelLayout.setHorizontalGroup(
-            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SearchButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchPanelLayout.createSequentialGroup()
-                        .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NameLabel)
-                            .addComponent(CountryLabel)
-                            .addComponent(CityLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                        .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CityTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CountryTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        SearchPanelLayout.setVerticalGroup(
-            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CountryTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CountryLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CityTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CityLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(SearchButton)
-                .addContainerGap())
-        );
-
-        ResultPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        ResultList.setModel(resultModel);
-        ResultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        ResultScrollPanel.setViewportView(ResultList);
-
-        SelectButton.setText("Select");
-
-        DeleteButton.setText("Delete");
-        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteButtonActionPerformed(evt);
-            }
-        });
-
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout ResultPanelLayout = new javax.swing.GroupLayout(ResultPanel);
-        ResultPanel.setLayout(ResultPanelLayout);
-        ResultPanelLayout.setHorizontalGroup(
-            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ResultPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ResultScrollPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                    .addGroup(ResultPanelLayout.createSequentialGroup()
-                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(SelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton)))
-                .addContainerGap())
-        );
-
-        ResultPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, DeleteButton, SelectButton});
-
-        ResultPanelLayout.setVerticalGroup(
-            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ResultPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ResultScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DeleteButton)
-                    .addComponent(CancelButton)
-                    .addComponent(SelectButton))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(SearchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ResultPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(SearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ResultPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-    private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
-        results = new ArrayList<Club>();
+    @Override
+    protected void searchButtonActionPerformed(ActionEvent evt) {
+        results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchClubByName(NameTextField.getText(), true);
         } else if (CountryTextField.getText().length() > 0) {
@@ -268,46 +74,19 @@ public class SearchClub extends javax.swing.JFrame {
         } else {
             MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         }
-        FillResults(results);
-    }//GEN-LAST:event_SearchButtonActionPerformed
-
-    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        try {
-            Club c = results.get(ResultList.getSelectedIndex());
-            if (KendoTournamentGenerator.getInstance().database.deleteClub(c, true)) {
-                results.remove(c);
-                FillResults(results);
-                if (results.size() > 0) {
-                    ResultList.setSelectedIndex(1);
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException aiob) {
-        } catch (NullPointerException npe) {
+        fillResults(results);
+        if (results.size() > 0) {
+            ResultList.setSelectedIndex(0);
         }
-    }//GEN-LAST:event_DeleteButtonActionPerformed
+    }
 
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_CancelButtonActionPerformed
+    @Override
+    protected String getResultInformation(Club object) {
+        return object.returnName() + " (" + object.returnCountry() + ")";
+    }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.toFront();
-    }//GEN-LAST:event_formWindowOpened
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CancelButton;
-    private javax.swing.JLabel CityLabel;
-    private javax.swing.JTextField CityTextField;
-    private javax.swing.JLabel CountryLabel;
-    private javax.swing.JTextField CountryTextField;
-    private javax.swing.JButton DeleteButton;
-    private javax.swing.JLabel NameLabel;
-    private javax.swing.JTextField NameTextField;
-    private javax.swing.JList ResultList;
-    private javax.swing.JPanel ResultPanel;
-    private javax.swing.JScrollPane ResultScrollPanel;
-    private javax.swing.JButton SearchButton;
-    private javax.swing.JPanel SearchPanel;
-    private javax.swing.JButton SelectButton;
-    // End of variables declaration//GEN-END:variables
+    @Override
+    protected boolean deleteFromDatabase(Club object) {
+        return KendoTournamentGenerator.getInstance().database.deleteClub(object, true);
+    }
 }

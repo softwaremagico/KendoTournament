@@ -18,13 +18,15 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import com.softwaremagico.ktg.language.Translator;
+
+
 
 /**
  *
@@ -38,7 +40,7 @@ public class CompetitorPanel extends JPanel {
     int position;
 
     CompetitorPanel(String language, int tmp_position) {
-        competitorComboBox = new JComboBox<String>();
+        competitorComboBox = new JComboBox<>();
         competitorLabel = new JLabel();
         position = tmp_position;
 

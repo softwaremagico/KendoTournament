@@ -19,18 +19,16 @@
 package com.softwaremagico.ktg.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileFilter;
-
-import java.awt.Dimension;
-import java.awt.Image;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.io.File;
 
 class FileChooserPreview extends JFileChooser {
 
@@ -89,7 +87,9 @@ class FileChooserPreview extends JFileChooser {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals(JFileChooser.SELECTED_FILE_CHANGED_PROPERTY)) {
-                /* if we change the selected file */
+                /*
+                 * if we change the selected file
+                 */
                 File f = (File) e.getNewValue();
                 if (f == null) {
                     return;

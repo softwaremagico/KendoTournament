@@ -1945,7 +1945,7 @@ public abstract class SQL extends Database {
 
     @Override
     public int getLevelTournament(String tournament) {
-        String query = "SELECT MAX(LeagueLevel) FROM kendotournament.fight WHERE Tournament='" + tournament + "';";
+        String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournament + "';";
 
         int level = -1;
         try {

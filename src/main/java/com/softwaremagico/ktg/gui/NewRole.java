@@ -33,8 +33,8 @@ import javax.swing.JFileChooser;
 public class NewRole extends KendoFrame {
 
     private Translator trans = null;
-    private List<Tournament> listTournaments = new ArrayList<Tournament>();
-    private List<Participant> listParticipants = new ArrayList<Participant>();
+    private List<Tournament> listTournaments = new ArrayList<>();
+    private List<Participant> listParticipants = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshCompetitor = true;
     private boolean close;

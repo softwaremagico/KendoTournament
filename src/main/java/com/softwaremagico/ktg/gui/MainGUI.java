@@ -41,7 +41,7 @@ import javax.swing.JRadioButtonMenuItem;
 public class MainGUI extends KendoFrame {
 
     Translator trans = null;
-    private List<JRadioButtonMenuItem> languageList = new ArrayList<JRadioButtonMenuItem>();
+    private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
     private PhotoFrame banner;
     private boolean refresh = true;
 

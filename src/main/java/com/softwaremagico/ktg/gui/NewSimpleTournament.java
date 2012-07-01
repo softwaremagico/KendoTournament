@@ -35,10 +35,10 @@ import javax.swing.JOptionPane;
 public class NewSimpleTournament extends javax.swing.JFrame {
 
     Translator trans = null;
-    DefaultListModel<String> fightsModel = new DefaultListModel<String>();
-    List<Tournament> listTournaments = new ArrayList<Tournament>();
-    List<Team> listTeams = new ArrayList<Team>();
-    ArrayList<Fight> fights = new ArrayList<Fight>();
+    DefaultListModel<String> fightsModel = new DefaultListModel<>();
+    List<Tournament> listTournaments = new ArrayList<>();
+    List<Team> listTeams = new ArrayList<>();
+    ArrayList<Fight> fights = new ArrayList<>();
     Tournament competition = null;
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;
@@ -563,7 +563,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }//GEN-LAST:event_DownButtonActionPerformed
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
-        fights = new ArrayList<Fight>();
+        fights = new ArrayList<>();
         fightsModel.removeAllElements();
     }//GEN-LAST:event_DeleteAllButtonActionPerformed
 

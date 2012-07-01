@@ -1,12 +1,20 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * NewRingTournament.java
- *
- * Created on 18-nov-2010, 17:09:28
+ *   This software is designed by Jorge Hortelano Otero.
+ *   softwaremagico@gmail.com
+ *   Copyright (C) 2012 Jorge Hortelano Otero.
+ *   C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *   This program is free software; you can redistribute it and/or
+ *   modify it under the terms of the GNU General Public License
+ *   as published by the Free Software Foundation; either version 2
+ *   of the License, or (at your option) any later version.
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, write to the Free Software
+ *   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *   
  */
 package com.softwaremagico.ktg.gui;
 
@@ -27,13 +35,12 @@ import javax.swing.JOptionPane;
 public class NewRingTournament extends javax.swing.JFrame {
 
     Translator trans = null;
-    DefaultListModel<String> teamsModel = new DefaultListModel<String>();
-    List<Tournament> listTournaments = new ArrayList<Tournament>();
-    List<Team> listTeams = new ArrayList<Team>();
-    List<Team> teams = new ArrayList<Team>();
+    DefaultListModel<String> teamsModel = new DefaultListModel<>();
+    List<Tournament> listTournaments = new ArrayList<>();
+    List<Team> listTeams = new ArrayList<>();
+    List<Team> teams = new ArrayList<>();
     Tournament competition = null;
     private boolean refreshTournament = true;
-    private boolean refreshTeam1 = true;
 
     /** Creates new form NewRingTournament */
     public NewRingTournament() {
@@ -81,24 +88,20 @@ public class NewRingTournament extends javax.swing.JFrame {
     }
 
     private List<Team> remainingTeams() {
-        List<Team> remainingTeams = new ArrayList<Team>();
+        List<Team> remainingTeams = new ArrayList<>();
         remainingTeams.addAll(listTeams);
         remainingTeams.removeAll(teams);
         return remainingTeams;
     }
 
     private void fillTeam1ComboBox() {
-        refreshTeam1 = false;
-
         try {
             Team1ComboBox.removeAllItems();
             for (int i = 0; i < remainingTeams().size(); i++) {
                 Team1ComboBox.addItem(remainingTeams().get(i).returnName());
             }
         } catch (NullPointerException npe) {
-            //npe.printStackTrace();
         }
-        refreshTeam1 = true;
     }
 
     private void UpTeam(int index) {
@@ -149,8 +152,8 @@ public class NewRingTournament extends javax.swing.JFrame {
     }
 
     private List<Team> obtainRandomTeams() {
-        List<Team> results = new ArrayList<Team>();
-        List<Team> teamsListed = new ArrayList<Team>();
+        List<Team> results = new ArrayList<>();
+        List<Team> teamsListed = new ArrayList<>();
         Random rnd = new Random();
 
         teamsListed.addAll(listTeams);
@@ -165,7 +168,7 @@ public class NewRingTournament extends javax.swing.JFrame {
     }
 
     private ArrayList<Fight> obtainRingFightsWithoutRepetition() {
-        ArrayList<Fight> fights = new ArrayList<Fight>();
+        ArrayList<Fight> fights = new ArrayList<>();
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
             for (int j = i + 1; j < teams.size(); j++) {
@@ -176,7 +179,7 @@ public class NewRingTournament extends javax.swing.JFrame {
     }
 
     private ArrayList<Fight> obtainRingFightsWithRepetition() {
-        ArrayList<Fight> fights = new ArrayList<Fight>();
+        ArrayList<Fight> fights = new ArrayList<>();
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
             for (int j = i + 1; j < teams.size(); j++) { //First, fightManager with teams that not have played the ring.
@@ -497,7 +500,7 @@ public class NewRingTournament extends javax.swing.JFrame {
 }//GEN-LAST:event_DownButtonActionPerformed
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         teamsModel.removeAllElements();
         fillTeam1ComboBox();
 }//GEN-LAST:event_DeleteAllButtonActionPerformed

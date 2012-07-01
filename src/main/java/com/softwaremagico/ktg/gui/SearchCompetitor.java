@@ -14,39 +14,37 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *  Created on 23-dic-2008.
+ *  Created on 1-jul-2012.
  */
 package com.softwaremagico.ktg.gui;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author jorge
  */
-public class SearchCompetitor extends javax.swing.JFrame {
+public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
 
-    private Translator trans = null;
-    private DefaultListModel<String> resultModel = new DefaultListModel<String>();
-    private List<CompetitorWithPhoto> results;
+    private JLabel ClubLabel = new JLabel("Club:");
+    private JTextField ClubTextField = new JTextField();
+    private JLabel IDLabel = new JLabel("ID:");
+    private JTextField IDTextField = new JTextField();
+    private JLabel NameLabel = new JLabel("Name:");
+    private JTextField NameTextField = new JTextField();
+    private JLabel SurnameLabel = new JLabel("Surname:");
+    private JTextField SurnameTextField = new JTextField();
 
-    /**
-     * Creates new form SearchCompetitor
-     */
     public SearchCompetitor() {
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        super();
+        fillSearchFieldPanel();
         setLanguage(KendoTournamentGenerator.getInstance().language);
     }
 
@@ -55,233 +53,31 @@ public class SearchCompetitor extends javax.swing.JFrame {
      */
     private void setLanguage(String language) {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleSearch", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
-        SurnameLabel.setText(trans.returnTag("SurnameLabel", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
         NameLabel.setText(trans.returnTag("NameLabel", language));
+        SurnameLabel.setText(trans.returnTag("SurnameLabel", language));
         IDLabel.setText(trans.returnTag("IDLabel", language));
         ClubLabel.setText(trans.returnTag("ClubLabel", language));
-        SelectButton.setText(trans.returnTag("SelectButton", language));
     }
 
-    /**
-     * Fill the list with the results obtained
-     */
-    public void FillResults(List<CompetitorWithPhoto> competitors) {
-        resultModel.removeAllElements();
-        if (competitors != null) {
-            for (int i = 0; i < competitors.size(); i++) {
-                resultModel.addElement(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName() + " (" + competitors.get(i).getId() + ")");
-            }
-        }
+    @Override
+    protected void fillSearchFieldPanel() {
+        javax.swing.GroupLayout SearchFieldPanelLayout = new javax.swing.GroupLayout(SearchFieldPanel);
+        SearchFieldPanel.setLayout(SearchFieldPanelLayout);
+        SearchFieldPanelLayout.setHorizontalGroup(
+                SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchFieldPanelLayout.createSequentialGroup().addContainerGap().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(SearchFieldPanelLayout.createSequentialGroup().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false).addComponent(ClubLabel).addComponent(IDLabel).addComponent(SurnameLabel).addComponent(NameLabel)).addGap(40, 40, 40).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(ClubTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE).addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE).addComponent(SurnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE).addComponent(IDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)))).addContainerGap()));
+        SearchFieldPanelLayout.setVerticalGroup(
+                SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(SearchFieldPanelLayout.createSequentialGroup().addContainerGap().addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(IDLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(SurnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(SurnameLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(NameLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(SearchFieldPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER).addComponent(ClubTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(ClubLabel)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addContainerGap()));
+
     }
 
-    public CompetitorWithPhoto ReturnSelectedCompetitor() {
-        try {
-            int index = ResultList.getSelectedIndex();
-            return results.get(index);
-        } catch (NullPointerException npe) {
-            return null;
-        } catch (ArrayIndexOutOfBoundsException aiob) {
-            return null;
-        }
+    @Override
+    protected String getResultInformation(CompetitorWithPhoto object) {
+        return object.returnSurname() + ", " + object.returnName() + " (" + object.getId() + ")";
     }
 
-    /**
-     * **********************************************
-     *
-     * LISTENERS
-     *
-     ***********************************************
-     */
-    /**
-     * Add the same action listener to all langugaes of the menu.
-     *
-     * @param al
-     */
-    public void addSelectButtonListener(ActionListener al) {
-        SelectButton.addActionListener(al);
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        SearchPanel = new javax.swing.JPanel();
-        SurnameTextField = new javax.swing.JTextField();
-        IDTextField = new javax.swing.JTextField();
-        IDLabel = new javax.swing.JLabel();
-        SurnameLabel = new javax.swing.JLabel();
-        SearchButton = new javax.swing.JButton();
-        ClubTextField = new javax.swing.JTextField();
-        ClubLabel = new javax.swing.JLabel();
-        NameTextField = new javax.swing.JTextField();
-        NameLabel = new javax.swing.JLabel();
-        ResultPanel = new javax.swing.JPanel();
-        ResultScrollPane = new javax.swing.JScrollPane();
-        ResultList = new javax.swing.JList();
-        SelectButton = new javax.swing.JButton();
-        DeleteButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-
-        SearchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        IDLabel.setText("Identification Number:");
-
-        SurnameLabel.setText("Surname:");
-
-        SearchButton.setMnemonic('V');
-        SearchButton.setText("Search");
-        SearchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchButtonActionPerformed(evt);
-            }
-        });
-
-        ClubLabel.setText("Club:");
-
-        NameLabel.setText("Name:");
-
-        javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
-        SearchPanel.setLayout(SearchPanelLayout);
-        SearchPanelLayout.setHorizontalGroup(
-            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(SearchPanelLayout.createSequentialGroup()
-                        .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ClubLabel)
-                            .addComponent(IDLabel)
-                            .addComponent(SurnameLabel)
-                            .addComponent(NameLabel))
-                        .addGap(40, 40, 40)
-                        .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ClubTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                            .addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                            .addComponent(SurnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                            .addComponent(IDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        SearchPanelLayout.setVerticalGroup(
-            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(IDLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(SurnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SurnameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NameLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(ClubTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ClubLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SearchButton)
-                .addContainerGap())
-        );
-
-        ResultPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        ResultList.setModel(resultModel);
-        ResultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        ResultList.setToolTipText("Select one to edit this characteristics.");
-        ResultScrollPane.setViewportView(ResultList);
-
-        SelectButton.setText("Select");
-
-        DeleteButton.setText("Delete");
-        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteButtonActionPerformed(evt);
-            }
-        });
-
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout ResultPanelLayout = new javax.swing.GroupLayout(ResultPanel);
-        ResultPanel.setLayout(ResultPanelLayout);
-        ResultPanelLayout.setHorizontalGroup(
-            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ResultPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(ResultPanelLayout.createSequentialGroup()
-                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addComponent(SelectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton))
-                    .addComponent(ResultScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        ResultPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, DeleteButton, SelectButton});
-
-        ResultPanelLayout.setVerticalGroup(
-            ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ResultPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ResultScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ResultPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DeleteButton)
-                    .addComponent(CancelButton)
-                    .addComponent(SelectButton))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ResultPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SearchPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(SearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ResultPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-    private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
-        results = new ArrayList<CompetitorWithPhoto>();
+    @Override
+    protected void searchButtonActionPerformed(ActionEvent evt) {
+        results = new ArrayList<>();
         if (IDTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarID(IDTextField.getText(), true, true);
         } else if (SurnameTextField.getText().length() > 0) {
@@ -293,60 +89,14 @@ public class SearchCompetitor extends javax.swing.JFrame {
         } else {
             MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
         }
-        FillResults(results);
-    }//GEN-LAST:event_SearchButtonActionPerformed
-
-    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        try {
-            CompetitorWithPhoto c = results.get(ResultList.getSelectedIndex());
-            if (KendoTournamentGenerator.getInstance().database.deleteCompetitor(c, true)) {
-                results.remove(c);
-                FillResults(results);
-                if (results.size() > 0) {
-                    ResultList.setSelectedIndex(1);
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException aiob) {
-        } catch (NullPointerException npe) {
+        fillResults(results);
+        if (results.size() > 0) {
+            ResultList.setSelectedIndex(0);
         }
-    }//GEN-LAST:event_DeleteButtonActionPerformed
+    }
 
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        this.dispose();
-}//GEN-LAST:event_CancelButtonActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.toFront();
-    }//GEN-LAST:event_formWindowOpened
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CancelButton;
-    private javax.swing.JLabel ClubLabel;
-    private javax.swing.JTextField ClubTextField;
-    private javax.swing.JButton DeleteButton;
-    private javax.swing.JLabel IDLabel;
-    private javax.swing.JTextField IDTextField;
-    private javax.swing.JLabel NameLabel;
-    private javax.swing.JTextField NameTextField;
-    private javax.swing.JList ResultList;
-    private javax.swing.JPanel ResultPanel;
-    private javax.swing.JScrollPane ResultScrollPane;
-    private javax.swing.JButton SearchButton;
-    private javax.swing.JPanel SearchPanel;
-    private javax.swing.JButton SelectButton;
-    private javax.swing.JLabel SurnameLabel;
-    private javax.swing.JTextField SurnameTextField;
-    // End of variables declaration//GEN-END:variables
-
-    private boolean ShowAlert(String code, String title, String language) {
-        JFrame frame = null;
-        Translator transl = new Translator("messages.xml");
-        int n = JOptionPane.showConfirmDialog(frame, transl.returnTag(code, language), title, JOptionPane.YES_NO_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            return true;
-        } else if (n == JOptionPane.NO_OPTION) {
-            return false;
-        } else {
-            return false;
-        }
+    @Override
+    protected boolean deleteFromDatabase(CompetitorWithPhoto object) {
+        return KendoTournamentGenerator.getInstance().database.deleteCompetitor(object, true);
     }
 }

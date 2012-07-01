@@ -68,9 +68,7 @@ public class PhotoFrame extends JPanel {
             File file = new File(defaultImage);
             size = file.length();
             photoInput = new FileInputStream(defaultImage);
-        } catch (StackOverflowError sof) {
-        } catch (IOException ex) {
-            //Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (StackOverflowError | IOException sof) {
         }
     }
 
@@ -150,7 +148,7 @@ public class PhotoFrame extends JPanel {
         } catch (IOException ex) {
             Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException npe) {
-        } 
+        }
     }
 
     public void CleanPhoto() {

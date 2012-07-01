@@ -19,9 +19,11 @@ Created on september of 2009.
  */
 package com.softwaremagico.ktg.gui;
 
-import java.awt.Toolkit;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.Toolkit;
+
+
 
 /**
  *

@@ -18,16 +18,18 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import com.softwaremagico.ktg.gui.fight.TeamFight;
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
+
+
 
 /**
  *
@@ -117,7 +119,7 @@ public class OrderTeam extends NewTeam {
 
     private void AcceptButtonActionPerformed2(java.awt.event.ActionEvent evt) {
         try {
-            List<Competitor> participants = new ArrayList<Competitor>();
+            List<Competitor> participants = new ArrayList<>();
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));

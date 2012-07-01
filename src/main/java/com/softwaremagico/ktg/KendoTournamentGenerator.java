@@ -42,7 +42,7 @@ import java.util.List;
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
-    private final String version = "0.9.7.1";
+    private final String version = "0.9.7.2";
     private boolean debugMode = true;
     public Database database = null;
     private String password = "";
@@ -117,7 +117,7 @@ public class KendoTournamentGenerator {
     }
 
     public List<Team> getTeamsOfFights(List<Fight> fightList) {
-        List<Team> teams = new ArrayList<Team>();
+        List<Team> teams = new ArrayList<>();
         for (int i = 0; i < fightList.size(); i++) {
             if (!teams.contains(fightList.get(i).team1)) {
                 teams.add(fightList.get(i).team1);
@@ -229,7 +229,7 @@ public class KendoTournamentGenerator {
     }
 
     private void generateDatabaseConnectionFile() {
-        List<String> connectionData = new ArrayList<String>();
+        List<String> connectionData = new ArrayList<>();
         connectionData.add("User:" + user);
         connectionData.add("Machine:" + server);
         connectionData.add("Database:" + databaseName);
@@ -388,7 +388,7 @@ public class KendoTournamentGenerator {
     }
 
     private void storeConfig() {
-        List<String> configData = new ArrayList<String>();
+        List<String> configData = new ArrayList<>();
         configData.add("Tournament:" + lastSelectedTournament);
         configData.add("Club:" + lastSelectedClub);
         configData.add("NameDiploma:" + nameDiplomaPosition);

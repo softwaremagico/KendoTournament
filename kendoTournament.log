@@ -1070,3 +1070,84 @@
 [2012-04-21 12:57:59] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
 [2012-04-21 12:58:06] PDF: La lista de partidos ha sido creada correctamente.
 [2012-06-30 12:49:52] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 09:29:40] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:10:03] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:11:40] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:11:48] Search: Debes de rellenar uno de los campos para realizar una búsqueda.
+[2012-07-01 11:12:11] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:13:28] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:13:33] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-07-01 11:13:44] com.softwaremagico.ktg.database.SQLite: ¡Club insertado correctamente!: UV
+[2012-07-01 11:16:15] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:16:33] com.softwaremagico.ktg.database.SQLite: El club ha sido actualizado en la base de datos: UV
+[2012-07-01 11:16:41] com.softwaremagico.ktg.database.SQLite: ¡El club ha sido borrado!: UV
+[2012-07-01 11:16:49] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-07-01 11:26:49] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:26:57] com.softwaremagico.ktg.database.SQLite: ¡Club insertado correctamente!: UV
+[2012-07-01 11:27:14] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Jorge Hortelano
+[2012-07-01 11:28:31] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:28:41] com.softwaremagico.ktg.database.SQLite: ¡El competidor ha sido borrado!: Jorge Hortelano
+[2012-07-01 11:28:43] com.softwaremagico.ktg.database.SQLite: La búsqueda no ha producido resultado alguno.
+[2012-07-01 11:29:28] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:44:12] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:44:23] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba1 Prueba 1
+[2012-07-01 11:44:31] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba2 Prueba2
+[2012-07-01 11:44:44] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba3 Prueba3
+[2012-07-01 11:44:56] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: LigaPrueba
+[2012-07-01 11:44:59] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaPrueba
+[2012-07-01 11:45:02] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba1 Prueba 1 -> Competidor
+[2012-07-01 11:45:06] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba2 Prueba2 -> Competidor
+[2012-07-01 11:45:09] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba3 Prueba3 -> Competidor
+[2012-07-01 11:45:19] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos: EquipoA
+[2012-07-01 11:45:35] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: LigaB
+[2012-07-01 11:45:37] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaB
+[2012-07-01 11:45:37] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaPrueba
+[2012-07-01 11:45:40] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba1 Prueba 1 -> Competidor
+[2012-07-01 11:45:43] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba2 Prueba2 -> Competidor
+[2012-07-01 11:45:46] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba3 Prueba3 -> Competidor
+[2012-07-01 11:45:54] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-07-01 11:45:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba 1, Prueba1
+[2012-07-01 11:45:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba2, Prueba2
+[2012-07-01 11:45:55] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba3, Prueba3
+[2012-07-01 11:45:56] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaB
+[2012-07-01 11:45:56] Team: Se ha agregado un nuevo equipo a la base de datos.
+[2012-07-01 11:46:24] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:46:29] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-07-01 11:46:30] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba 1, Prueba1
+[2012-07-01 11:46:30] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba2, Prueba2
+[2012-07-01 11:46:30] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Prueba3, Prueba3
+[2012-07-01 11:46:30] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> LigaB
+[2012-07-01 11:46:32] Team: null
+[2012-07-01 11:48:20] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:48:50] com.softwaremagico.ktg.database.SQLite: Ahora se generará un equipo por cada participante.
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Abalos Cotino, Maria Salud
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Acosta, Alejandro
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Adobes Tarazona, Margarita
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Agudo Segrelles, Luis
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Aguilo Jimenez, Gaspar
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcon Zamora, Lourdes
+[2012-07-01 11:48:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alarcón Rosello, Samuel
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alcazar Tomas, Jorge
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alonso Martinez, Jose Manuel
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Alvarez Rubio, Ana Rosa
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Amagai, Mizuki
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos. -> Anchel Barbera, Antonio Miguel
+[2012-07-01 11:48:52] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-07-01 11:48:52] Team: Se ha agregado los nuevos equipos a la base de datos.
+[2012-07-01 11:49:50] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:50:00] com.softwaremagico.ktg.database.SQLite: ¡Club insertado correctamente!: UV
+[2012-07-01 11:50:33] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba1 Prueba1
+[2012-07-01 11:50:42] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba2 Prueba2
+[2012-07-01 11:50:51] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo competidor a la base de datos: Prueba3 Prueba3
+[2012-07-01 11:50:59] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo campeonato a la base de datos: Prueba
+[2012-07-01 11:51:02] com.softwaremagico.ktg.database.SQLite: El campeonato ha sido actualizado en la base de datos. -> Prueba
+[2012-07-01 11:51:05] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba1 Prueba1 -> Competidor
+[2012-07-01 11:51:10] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba2 Prueba2 -> Competidor
+[2012-07-01 11:51:13] com.softwaremagico.ktg.database.SQLite: Se ha cambiado el rol del participante: Prueba3 Prueba3 -> Competidor
+[2012-07-01 11:53:38] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 11:53:48] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos: EquipoA
+[2012-07-01 11:53:59] com.softwaremagico.ktg.database.SQLite: ¡El equipo ha sido borrado!: EquipoA
+[2012-07-01 11:54:16] com.softwaremagico.ktg.database.SQLite: Se ha agregado un nuevo equipo a la base de datos: EquipoA
+[2012-07-01 12:01:13] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 12:01:55] SQLite: Se ha conectado con la base de datos: SQLite (localhost)
+[2012-07-01 12:02:25] com.softwaremagico.ktg.database.SQLite: ¡Se ha eliminado el campeonato!: Prueba

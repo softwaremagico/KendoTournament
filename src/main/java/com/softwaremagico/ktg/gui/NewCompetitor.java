@@ -18,7 +18,9 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -28,8 +30,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.language.Translator;
+
+
 
 /**
  *

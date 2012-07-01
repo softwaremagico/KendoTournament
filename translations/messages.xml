@@ -835,5 +835,12 @@
 		<de>Background image not found!</de>
 		<ca>La imatge no ha sigut trabada!</ca>
 	</imageNotFound>
+		<teamsStored>
+		<en>The new teams have been stored into the database.</en>
+		<es>Se ha agregado los nuevos equipos a la base de datos.</es>
+		<nl>The new teams have been stored into the database.</nl>
+		<de>The new teams have been stored into the database.</de>
+		<ca>S'ha agregat els nous equips a la base de dades.</ca>
+	</teamsStored>
 </translator>
 

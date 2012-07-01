@@ -36,11 +36,11 @@ import javax.swing.JFileChooser;
 public class NewTeam extends KendoFrame {
 
     protected Translator trans = null;
-    protected List<Competitor> competitors = new ArrayList<Competitor>();
-    private List<Tournament> listTournaments = new ArrayList<Tournament>();
+    protected List<Competitor> competitors = new ArrayList<>();
+    private List<Tournament> listTournaments = new ArrayList<>();
     protected boolean refreshTournament = true;
     private boolean individualTeams = false;
-    protected List<CompetitorPanel> competitorsPanel = new ArrayList<CompetitorPanel>();
+    protected List<CompetitorPanel> competitorsPanel = new ArrayList<>();
     Tournament championship = null;
     boolean newTeam = true; //To avoid that OrderTeam also use the event . 
 
@@ -105,7 +105,7 @@ public class NewTeam extends KendoFrame {
     }
 
     protected void fillCompetitors() {
-        competitorsPanel = new ArrayList<CompetitorPanel>();
+        competitorsPanel = new ArrayList<>();
         for (int i = 0; i < championship.teamSize; i++) {
             CompetitorPanel cp = new CompetitorPanel(KendoTournamentGenerator.getInstance().language, i + 1);
 
@@ -206,7 +206,7 @@ public class NewTeam extends KendoFrame {
     }
 
     public boolean repeatedCompetitor() {
-        List<String> selectedCompetitors = new ArrayList<String>();
+        List<String> selectedCompetitors = new ArrayList<>();
 
         for (int i = 0; i < competitorsPanel.size(); i++) {
             if (selectedCompetitors.contains(competitorsPanel.get(i).competitorComboBox.getSelectedItem().toString())) {
@@ -233,7 +233,7 @@ public class NewTeam extends KendoFrame {
     }
 
     private boolean checkTeam() {
-        List<String> selectedCompetitors = new ArrayList<String>();
+        List<String> selectedCompetitors = new ArrayList<>();
 
         for (int i = 0; i < competitorsPanel.size(); i++) {
             if (!competitorsPanel.get(i).competitorComboBox.getSelectedItem().toString().equals(" ")) {
@@ -455,7 +455,7 @@ public class NewTeam extends KendoFrame {
         if (NameTextField.getText().length() > 0) {
             Team t = new Team(NameTextField.getText(), listTournaments.get(TournamentComboBox.getSelectedIndex()));
 
-            List<Competitor> participants = new ArrayList<Competitor>();
+            List<Competitor> participants = new ArrayList<>();
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
@@ -506,16 +506,21 @@ public class NewTeam extends KendoFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (newTeam) {
             if (individualTeams) {
-                if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(TournamentComboBox.getSelectedItem().toString(), true)) {
-                    KendoTournamentGenerator.getInstance().database.setIndividualTeams(TournamentComboBox.getSelectedItem().toString());
-                    championship.teamSize = 1;
-                    KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
-                    this.dispose();
+                try {
+                    if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(TournamentComboBox.getSelectedItem().toString(), true)) {
+                        KendoTournamentGenerator.getInstance().database.setIndividualTeams(TournamentComboBox.getSelectedItem().toString());
+                        championship.teamSize = 1;
+                        KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
+                        MessageManager.informationManager("teamsStored", "Team", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                        this.dispose();
+                    }
+                    //No competitors exist. 
+                } catch (NullPointerException npe) {
                 }
             } else {
                 try {
                     if (NameTextField.getText().length() > 0) {
-                        List<Competitor> participants = new ArrayList<Competitor>();
+                        List<Competitor> participants = new ArrayList<>();
                         Team t = new Team(NameTextField.getText().trim(), listTournaments.get(TournamentComboBox.getSelectedIndex()));
 
                         for (int i = 0; i < competitorsPanel.size(); i++) {
@@ -536,8 +541,8 @@ public class NewTeam extends KendoFrame {
                     } else {
                         MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
                     }
-                } catch (NullPointerException npe) {
-                } catch (ArrayIndexOutOfBoundsException aiob) {
+                } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
+                
                 }
             }
             NameTextField.setEnabled(true);
@@ -547,7 +552,6 @@ public class NewTeam extends KendoFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton AcceptButton;
     private javax.swing.JButton CancelButton;

@@ -18,14 +18,15 @@
  */
 package com.softwaremagico.ktg.gui;
 
-import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultListModel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 
 /**
  *
@@ -34,9 +35,9 @@ import com.softwaremagico.ktg.language.Translator;
 public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private Translator trans = null;
-    private List<Tournament> listTournaments = new ArrayList<Tournament>();
-    private List<Team> teams = new ArrayList<Team>();
-    DefaultListModel<String> teamsModel = new DefaultListModel<String>();
+    private List<Tournament> listTournaments = new ArrayList<>();
+    private List<Team> teams = new ArrayList<>();
+    DefaultListModel<String> teamsModel = new DefaultListModel<>();
     protected boolean refreshTournament = true;
     Tournament championship = null;
     int level = 0;

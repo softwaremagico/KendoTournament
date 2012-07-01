@@ -780,7 +780,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            CompetitorWithPhoto c = searchCompetitor.ReturnSelectedCompetitor();
+            CompetitorWithPhoto c = searchCompetitor.returnSelectedItem();
             newCompetitor.updateWindow(c);
             newCompetitor.setVisible(true);
             searchCompetitor.dispose();
@@ -844,7 +844,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Club c = searchClub.ReturnSelectedClub();
+            Club c = searchClub.returnSelectedItem();
             newClub.UpdateWindow(c);
             newClub.setVisible(true);
             searchClub.dispose();
@@ -898,7 +898,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Team t = searchTeam.ReturnSelectedTeam();
+            Team t = searchTeam.returnSelectedItem();
             newTeam.updateWindow(t);
             newTeam.setVisible(true);
             searchTeam.dispose();
@@ -975,7 +975,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Tournament t = searchTournament.ReturnSelectedTournament();
+            Tournament t = searchTournament.returnSelectedItem();
             newTournament.setVisible(true);
             newTournament.UpdateWindow(t);
             searchTournament.dispose();
