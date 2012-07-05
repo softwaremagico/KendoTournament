@@ -460,7 +460,7 @@ public class NewRingTournament extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();
         } else {
-            MessageManager.errorMessage("noTeam", "New Fight", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noTeam", "New Fight", KendoTournamentGenerator.getInstance().language);
         }
 }//GEN-LAST:event_AcceptButtonActionPerformed
 

@@ -65,7 +65,7 @@ public class NewCompetitor extends KendoFrame {
             ClubComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedClub());
         } else {
             NewClub newClub;
-            MessageManager.errorMessage("noClubsInserted", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noClubsInserted", "MySQL", KendoTournamentGenerator.getInstance().language);
             newClub = new NewClub();
             newClub.setVisible(true);
             newClub.updateClubsInCompetitor(this);
@@ -130,8 +130,8 @@ public class NewCompetitor extends KendoFrame {
 
     public void updateWindow(CompetitorWithPhoto c) {
         try {
-            NameTextField.setText(c.returnName());
-            SurnameTextField.setText(c.returnSurname());
+            NameTextField.setText(c.getName());
+            SurnameTextField.setText(c.getSurname());
             IDTextField.setText(c.getId());
             ClubComboBox.setSelectedItem(c.club);
             PhotoTextField.setText("");
@@ -183,7 +183,7 @@ public class NewCompetitor extends KendoFrame {
                     return comp;
                 }
             } else {
-                MessageManager.errorMessage("noCompetitiorFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noCompetitiorFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
         }
         return null;
@@ -191,10 +191,10 @@ public class NewCompetitor extends KendoFrame {
     
     public void testNIF(){
         try {
-            Float dni = Float.parseFloat(IDTextField.getText());
+            Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
-                if (MessageManager.question("isDNI", "DNI -> NIF", KendoTournamentGenerator.getInstance().language)) {
-                    IDTextField.setText(Competitor.nifFromDni(IDTextField.getText()));
+                if (MessageManager.questionMessage("isDNI", "DNI -> NIF", KendoTournamentGenerator.getInstance().language)) {
+                    IDTextField.setText(Competitor.nifFromDni(dni));
                 }
             }
         } catch (NumberFormatException nfe) {

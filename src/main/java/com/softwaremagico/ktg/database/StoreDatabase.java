@@ -100,7 +100,7 @@ public class StoreDatabase implements Serializable {
         @Override
         public void run() {
             if(!saveFileInDatabase()){
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
             timerPanel.dispose();
         }
@@ -126,7 +126,7 @@ public class StoreDatabase implements Serializable {
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 error = true;
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
             return !error;
         }
@@ -242,7 +242,7 @@ public class StoreDatabase implements Serializable {
             }
 
             if (!error) {
-                MessageManager.customMessage("databaseImported", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("databaseImported", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
             }
             return !error;
         }
@@ -363,10 +363,10 @@ public class StoreDatabase implements Serializable {
             try {
                 timerPanel.updateText(transl.returnTag("WriteFile", KendoTournamentGenerator.getInstance().language), current, total);
                 write(storeDatabase);
-                MessageManager.customMessage("exportDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("exportDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 error = true;
-                MessageManager.errorMessage("exportDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("exportDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
             return !error;
         }

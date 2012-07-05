@@ -37,9 +37,9 @@ public class FightListPDF extends ParentList {
         fightTable.addCell(getHeader3(f.team1.returnName() + " Vs " + f.team2.returnName(), 0));
 
         for (int i = 0; i < f.team1.getNumberOfMembers(f.level); i++) {
-            fightTable.addCell(getCell(f.team1.getMember(i, f.level).returnSurnameNameIni(), 1, Element.ALIGN_LEFT));
+            fightTable.addCell(getCell(f.team1.getMember(i, f.level).getSurnameNameIni(), 1, Element.ALIGN_LEFT));
             fightTable.addCell(getEmptyCell());
-            fightTable.addCell(getCell(f.team2.getMember(i, f.level).returnSurnameNameIni(), 1, Element.ALIGN_RIGHT));
+            fightTable.addCell(getCell(f.team2.getMember(i, f.level).getSurnameNameIni(), 1, Element.ALIGN_RIGHT));
         }
 
         return fightTable;
@@ -77,7 +77,7 @@ public class FightListPDF extends ParentList {
         PdfPCell cell;
 
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
         for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels(); l++) {

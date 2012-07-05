@@ -224,7 +224,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainDelegate()) {
                     error = true;
-                    MessageManager.errorMessage("clubNotStored", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                    MessageManager.errorMessage("clubNotStored", "MySQL", KendoTournamentGenerator.getInstance().language);
                 }
             } else if (fields[index].trim().toLowerCase().contains("equipo")
                     || fields[index].trim().toLowerCase().equals("equipo")
@@ -232,7 +232,7 @@ public class ImportCSV {
                     || fields[index].trim().equals(trans.returnTag("Team", KendoTournamentGenerator.getInstance().language).replace(":", ""))) {
                 if (!obtainTeam()) {
                     error = true;
-                    MessageManager.errorMessage("storeTeam", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                    MessageManager.errorMessage("storeTeam", "MySQL", KendoTournamentGenerator.getInstance().language);
                 }
             } else if (fields[index].trim().toLowerCase().contains("arbitro")
                     || fields[index].trim().toLowerCase().equals("arbitro")
@@ -241,7 +241,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainReferee()) {
                     error = true;
-                    MessageManager.errorMessage("storeRefereeBad", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                    MessageManager.errorMessage("storeRefereeBad", "MySQL", KendoTournamentGenerator.getInstance().language);
                 }
             } else if (fields[index].trim().toLowerCase().contains("seminar")
                     || fields[index].trim().toLowerCase().equals("seminar")
@@ -249,7 +249,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainSeminar()) {
                     error = true;
-                    MessageManager.errorMessage("storeSeminarBad", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                    MessageManager.errorMessage("storeSeminarBad", "MySQL", KendoTournamentGenerator.getInstance().language);
                 }
             } else {
                 //Unknown field, choose the next one. 
@@ -257,7 +257,7 @@ public class ImportCSV {
             }
         }
         if (!error) {
-            MessageManager.customMessage("csvInserted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.translatedMessage("csvInserted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

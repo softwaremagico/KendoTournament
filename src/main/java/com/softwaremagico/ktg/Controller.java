@@ -1309,7 +1309,7 @@ public class Controller {
             }
             try {
                 KendoTournamentGenerator.getInstance().fightManager.add(f);
-                MessageManager.customMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
                 KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(shortFight.getTournament().name));
             } catch (NullPointerException npe) {

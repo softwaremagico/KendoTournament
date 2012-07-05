@@ -217,7 +217,7 @@ public class Fight implements Serializable {
         System.out.println("---------------");
         System.out.println(team1.returnName() + " vs " + team2.returnName());
         for (int i = 0; i < duels.size(); i++) {
-            System.out.println(team1.getMember(i, level).returnName() + ": " + duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorA + " vs " + team2.getMember(i, level).returnName() + ": " + duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorB);
+            System.out.println(team1.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorA + " vs " + team2.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorB);
         }
         System.out.println("---------------");
     }
@@ -233,10 +233,10 @@ public class Fight implements Serializable {
     private void completeIppons() {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
             if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, level) != null) //There is a player
-                    && (!team2.getMember(i, level).returnName().equals("")
+                    && (!team2.getMember(i, level).getName().equals("")
                     || !team2.getMember(i, level).id.equals("")))
                     && ((team1.getMember(i, level) == null) //Versus no player.
-                    || (team1.getMember(i, level).returnName().equals("")
+                    || (team1.getMember(i, level).getName().equals("")
                     && team1.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(false);
                 KendoTournamentGenerator.getInstance().database.storeDuel(duels.get(i), this, i);
@@ -245,10 +245,10 @@ public class Fight implements Serializable {
 
         for (int i = 0; i < team2.getNumberOfMembers(level); i++) {
             if (((i < team1.getNumberOfMembers(level) && team1.getMember(i, level) != null) //There is a player
-                    && (!team1.getMember(i, level).returnName().equals("")
+                    && (!team1.getMember(i, level).getName().equals("")
                     || !team1.getMember(i, level).id.equals("")))
                     && ((team2.getMember(i, level) == null) //Versus no player.
-                    || (team2.getMember(i, level).returnName().equals("")
+                    || (team2.getMember(i, level).getName().equals("")
                     && team2.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(true);
                 KendoTournamentGenerator.getInstance().database.storeDuel(duels.get(i), this, i);

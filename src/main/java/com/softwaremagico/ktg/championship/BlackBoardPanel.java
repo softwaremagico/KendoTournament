@@ -38,7 +38,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);
         } else {
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championshipName);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false), KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false), KendoTournamentGenerator.getInstance().language);
             ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(fights);
             KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);

@@ -444,7 +444,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             boolean answer = false;
             if (!competition.mode.equals("simple")) {
-                answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
                 if (answer) {
                     fightsModel.removeAllElements();
                     competition.mode = "simple";
@@ -490,7 +490,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             boolean answer = false;
             if (!competition.mode.equals("simple") || fightsModel.size() > 0) {
-                answer = MessageManager.question("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
                 if (answer) {
                     fightsModel.removeAllElements();
                     competition.mode = "simple";
@@ -538,7 +538,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();
         } else {
-            MessageManager.errorMessage("noFight", "New Fight", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noFight", "New Fight", KendoTournamentGenerator.getInstance().language);
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
 

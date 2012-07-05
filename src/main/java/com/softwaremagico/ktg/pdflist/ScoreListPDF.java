@@ -65,12 +65,8 @@ public class ScoreListPDF extends ParentList {
     }
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
-        PdfPCell cell;
-        Paragraph p;
-        int cellNumber = 0;
-
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
         for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels(); l++) {
@@ -174,4 +170,5 @@ public class ScoreListPDF extends ParentList {
     protected String fileCreatedBadTag() {
         return "scoreListBad";
     }
+
 }

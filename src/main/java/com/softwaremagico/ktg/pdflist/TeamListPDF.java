@@ -34,8 +34,8 @@ public class TeamListPDF extends ParentList {
         for (int i = 0; i < t.getNumberOfMembers(0); i++) {
             String member;
             try {
-                if (t.getMember(i, 0).returnSurname().length() + t.getMember(i, 0).returnName().length() > 0) {
-                    member = t.getMember(i, 0).returnSurnameName();
+                if (t.getMember(i, 0).getSurname().length() + t.getMember(i, 0).getName().length() > 0) {
+                    member = t.getMember(i, 0).getSurnameName();
                 } else {
                     member = " ";
                 }

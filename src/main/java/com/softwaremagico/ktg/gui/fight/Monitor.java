@@ -146,7 +146,7 @@ public final class Monitor extends javax.swing.JFrame {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
 
         if (KendoTournamentGenerator.getInstance().designedGroups == null || !KendoTournamentGenerator.getInstance().designedGroups.returnTournament().name.equals(selectedTournament.name)) {
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
         }
 
@@ -181,12 +181,8 @@ public final class Monitor extends javax.swing.JFrame {
             BannerPanel.repaint();
             BannerPanel.revalidate();
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
-        } catch (IOException ex) {
+        } catch (IOException | IllegalArgumentException | NullPointerException ex) {
             //ex.printStackTrace();
-        } catch (IllegalArgumentException iae) {
-            //iae.printStackTrace();
-        } catch (NullPointerException npe) {
-            //npe.printStackTrace();
         }
     }
 

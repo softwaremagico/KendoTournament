@@ -99,7 +99,7 @@ public class NewClub extends javax.swing.JFrame {
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
-            RepresentativeComboBox.addItem(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName());
+            RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
             if (club.representativeID != null && club.representativeID.equals(competitors.get(i).getId())) {
                 RepresentativeComboBox.setSelectedIndex(i);
             }
@@ -112,7 +112,7 @@ public class NewClub extends javax.swing.JFrame {
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
-            RepresentativeComboBox.addItem(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName());
+            RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
         }
         updateClubOfCompetitor = true;
     }
@@ -157,7 +157,7 @@ public class NewClub extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                MessageManager.errorMessage("noClubFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noClubFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);

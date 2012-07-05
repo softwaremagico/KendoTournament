@@ -253,7 +253,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void updateInterface() {
         try {
             championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(TournamentComboBox.getSelectedItem().toString(), false);
 
             if (!championship.mode.equals("simple")) {
@@ -905,7 +905,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
             if (!(KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual")) || KendoTournamentGenerator.getInstance().designedGroups.allGroupsHaveManualLink()) {
-                if (MessageManager.question("questionCreateFight", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+                if (MessageManager.questionMessage("questionCreateFight", "Warning!", KendoTournamentGenerator.getInstance().language)) {
                     KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, false);
                     if (KendoTournamentGenerator.getInstance().fightManager.setAll(KendoTournamentGenerator.getInstance().designedGroups.generateLevelFights(0), true)) {
                         //Delete inner levels when delete old fightManager.
@@ -915,7 +915,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                     }
                 }
             } else {
-                MessageManager.errorMessage("noLinkFinished", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noLinkFinished", "Error", KendoTournamentGenerator.getInstance().language);
             }
         } catch (NullPointerException npe) {
         }
@@ -940,7 +940,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void CleanAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanAllButtonActionPerformed
         try {
             KendoTournamentGenerator.getInstance().fightManager.deleteAllFightsButNotFromDatabase(championship.name, false);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().designedGroups.mode = championship.mode;
             KendoTournamentGenerator.getInstance().designedGroups.setNumberOfTeamsPassNextRound(numberMaxOfWinners);
             updateMode();
@@ -1013,12 +1013,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             if (KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, true)) {
                 KendoTournamentGenerator.getInstance().designedGroups.deleteTeamsOfLevel(0);
-                MessageManager.customMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             if (KendoTournamentGenerator.getInstance().fightManager.deleteFightsOfLevel(championship.name, LevelComboBox.getSelectedIndex(), true)) {
                 KendoTournamentGenerator.getInstance().designedGroups.deleteTeamsOfLevel(LevelComboBox.getSelectedIndex());
-                MessageManager.customMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
             }
         }
         updateBlackBoard();
@@ -1026,7 +1026,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteLevelButtonActionPerformed
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
-        if (MessageManager.question("questionLoadDesign", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (MessageManager.questionMessage("questionLoadDesign", "Warning!", KendoTournamentGenerator.getInstance().language)) {
             KendoTournamentGenerator.getInstance().fightManager.setAll(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name), false);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
             KendoTournamentGenerator.getInstance().designedGroups.mode = championship.mode;

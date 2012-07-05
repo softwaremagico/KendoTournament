@@ -82,7 +82,7 @@ public class Diploma {
             path += ".pdf";
         }
 
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
             TimerPanel tp = new TimerPanel();
             //tp.dispose();
             ThreadDiploma td = new ThreadDiploma(tp, document, path);
@@ -117,15 +117,15 @@ public class Diploma {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
-                MessageManager.customMessage("diplomaOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("diplomaOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, championship.name);
                 error = false;
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 error = true;
             } catch (Exception ex) {
-                MessageManager.errorMessage("diplomaBad", "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("diplomaBad", "PDF", KendoTournamentGenerator.getInstance().language);
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 error = true;
             }
@@ -198,7 +198,7 @@ public class Diploma {
             document.newPage();
             addBackGroundImage(document, Path.returnDiplomaPath());
 
-            p = new Paragraph(competitor.returnSurname() + ", " + competitor.returnName(), FontFactory.getFont(font, fontSize + 20));
+            p = new Paragraph(competitor.getSurname() + ", " + competitor.getName(), FontFactory.getFont(font, fontSize + 20));
             cell = new PdfPCell(p);
             cell.setBorderWidth(border);
             cell.setColspan(1);

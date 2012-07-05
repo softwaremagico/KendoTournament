@@ -72,7 +72,7 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
 
     @Override
     protected String getResultInformation(CompetitorWithPhoto object) {
-        return object.returnSurname() + ", " + object.returnName() + " (" + object.getId() + ")";
+        return object.getSurname() + ", " + object.getName() + " (" + object.getId() + ")";
     }
 
     @Override
@@ -87,7 +87,7 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
         } else if (ClubTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
         }
         fillResults(results);
         if (results.size() > 0) {

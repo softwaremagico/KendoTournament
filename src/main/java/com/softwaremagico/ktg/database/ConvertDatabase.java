@@ -115,7 +115,7 @@ public class ConvertDatabase {
                 undraws.clear();
 
                 timerPanel.dispose();
-                MessageManager.informationManager("ConversionCompleted", "Database", KendoTournamentGenerator.getInstance().language, true);
+                MessageManager.informationManager("ConversionCompleted", "Database", KendoTournamentGenerator.getInstance().language);
             } catch (Exception e) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(e);
                 timerPanel.dispose();

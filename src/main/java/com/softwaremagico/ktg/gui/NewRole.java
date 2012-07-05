@@ -115,7 +115,7 @@ public class NewRole extends KendoFrame {
             CompetitorComboBox.removeAllItems();
             listParticipants = KendoTournamentGenerator.getInstance().database.getAllParticipants();
             for (int i = 0; i < listParticipants.size(); i++) {
-                CompetitorComboBox.addItem(listParticipants.get(i).returnSurname() + ", " + listParticipants.get(i).returnName());
+                CompetitorComboBox.addItem(listParticipants.get(i).getSurname() + ", " + listParticipants.get(i).getName());
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
@@ -138,7 +138,7 @@ public class NewRole extends KendoFrame {
     @Override
     public String defaultFileName() {
         try {
-            return listParticipants.get(CompetitorComboBox.getSelectedIndex()).returnName() + "_" + listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId();
+            return listParticipants.get(CompetitorComboBox.getSelectedIndex()).getName() + "_" + listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId();
         } catch (NullPointerException npe) {
             return null;
         }
@@ -159,7 +159,7 @@ public class NewRole extends KendoFrame {
             }
         } catch (ArrayIndexOutOfBoundsException aiofb) {
             KendoTournamentGenerator.getInstance().showErrorInformation(aiofb);
-            MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL", KendoTournamentGenerator.getInstance().language);
             try {
                 RoleComboBox.setSelectedItem("");
             } catch (IllegalArgumentException iae) {
@@ -181,7 +181,7 @@ public class NewRole extends KendoFrame {
 
     public void defaultSelect(Competitor competitor) {
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        CompetitorComboBox.setSelectedItem(competitor.returnSurname() + ", " + competitor.returnName());
+        CompetitorComboBox.setSelectedItem(competitor.getSurname() + ", " + competitor.getName());
     }
 
     private void nextOne() {

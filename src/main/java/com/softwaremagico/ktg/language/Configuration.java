@@ -87,11 +87,11 @@ public class Configuration {
     public String getPathConfigInHome() {
         String config = System.getProperty("user.home");
         String soName = System.getProperty("os.name");
-        if (soName.contains("Linux") || soName.contains("linux")) {
+        if (soName.toLowerCase().contains("linux")) {
             makeFolderIfNotExist(config + File.separator + "." + directory_STORE_USER_DATA + File.separator);
             makeFolderIfNotExist(config + File.separator + "." + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator);
             return config + File.separator + "." + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator;
-        } else if (soName.contains("Windows") || soName.contains("windows") || soName.contains("vista") || soName.contains("Vista")) {
+        } else if (soName.toLowerCase().contains("windows") || soName.toLowerCase().contains("vista")) {
             makeFolderIfNotExist(config + File.separator + directory_STORE_USER_DATA + File.separator);
             makeFolderIfNotExist(config + File.separator + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator);
             return config + File.separator + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator;

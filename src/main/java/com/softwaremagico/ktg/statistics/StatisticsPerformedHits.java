@@ -96,7 +96,7 @@ public class StatisticsPerformedHits extends StatisticsGUI {
         Translator transl = new Translator("gui.xml");
         String title;
         if (competitor != null) {
-            title = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language) + ": " + competitor.returnName() + " " + competitor.returnSurname(); // Titulo de grafico
+            title = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico
         } else {
             title = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language);
         }

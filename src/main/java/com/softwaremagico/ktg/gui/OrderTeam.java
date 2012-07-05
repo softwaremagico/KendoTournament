@@ -100,8 +100,8 @@ public class OrderTeam extends NewTeam {
             TournamentComboBox.setEnabled(false);
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 try {
-                    if (i < t.getNumberOfMembers(level) && t.getMember(i, level) != null && (t.getMember(i, level).returnSurname().length() > 0 || t.getMember(i, level).returnName().length() > 0)) {
-                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, level).returnSurname() + ", " + t.getMember(i, level).returnName() + " (" + t.getMember(i, level).getId() + ")");
+                    if (i < t.getNumberOfMembers(level) && t.getMember(i, level) != null && (t.getMember(i, level).getSurname().length() > 0 || t.getMember(i, level).getName().length() > 0)) {
+                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, level).getSurname() + ", " + t.getMember(i, level).getName() + " (" + t.getMember(i, level).getId() + ")");
                     } else {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
@@ -126,14 +126,14 @@ public class OrderTeam extends NewTeam {
             }
 
             if (repeatedCompetitor()) {
-                MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language);
             } else {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
                 if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
                     KendoTournamentGenerator.getInstance().fightManager.updateFightsWithNewOrderOfTeam(team);
-                    MessageManager.customMessage("orderChanged", "League", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                    MessageManager.translatedMessage("orderChanged", "League", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                 }
             }

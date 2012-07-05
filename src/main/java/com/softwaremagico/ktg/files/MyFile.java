@@ -97,7 +97,7 @@ public class MyFile {
             read = true;
         } catch (FileNotFoundException ex) {
             if (verbose) {
-                MessageManager.customMessage("Impossible to read the file: " + nombreFichero, "Error", JOptionPane.ERROR_MESSAGE, false);
+                MessageManager.customMessage("Impossible to read the file: " + nombreFichero, "Error", JOptionPane.ERROR_MESSAGE);
             }
             read = false;
         } catch (IOException ex) {
@@ -129,7 +129,7 @@ public class MyFile {
             }
         } catch (IOException ex) {
             if (verbose) {
-                MessageManager.errorMessage(text, "File Error", false);
+                MessageManager.errorMessage(text, "File Error");
             }
         }
         return text;

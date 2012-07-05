@@ -85,7 +85,7 @@ public class SummaryPDF extends ParentList {
 
         for (int i = 0; i < f.team1.getNumberOfMembers(f.level); i++) {
             //Team 1
-            Table.addCell(getCell(f.team1.getMember(i, f.level).returnSurnameNameIni(), 1, 1, Element.ALIGN_LEFT));
+            Table.addCell(getCell(f.team1.getMember(i, f.level).getSurnameNameIni(), 1, 1, Element.ALIGN_LEFT));
 
             //Faults
             Table.addCell(getCell(getFaults(f, i, true), 1, 1, Element.ALIGN_CENTER));
@@ -104,7 +104,7 @@ public class SummaryPDF extends ParentList {
             Table.addCell(getCell(getFaults(f, i, false), 1, 1, Element.ALIGN_CENTER));
 
             //Team 2
-            Table.addCell(getCell(f.team2.getMember(i, f.level).returnSurnameNameIni(), 1, 1, Element.ALIGN_RIGHT));
+            Table.addCell(getCell(f.team2.getMember(i, f.level).getSurnameNameIni(), 1, 1, Element.ALIGN_RIGHT));
         }
         Table.addCell(getEmptyRow());
 

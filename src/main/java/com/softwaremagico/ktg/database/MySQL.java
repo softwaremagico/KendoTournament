@@ -70,7 +70,7 @@ public class MySQL extends SQL {
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
         } catch (Exception e) {
-            MessageManager.errorMessage("Mysql driver for Java is not installed. Check your configuration.", "Mysql", KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("Mysql driver for Java is not installed. Check your configuration.", "Mysql");
             error = true;
         }
 
@@ -103,12 +103,9 @@ public class MySQL extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.customMessage("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language, "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
-            } else {
-                if (KendoTournamentGenerator.getInstance().getLogOption()) {
-                    Log.storeLog("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language);
-                }
+                MessageManager.translatedMessage("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language, "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
             }
+            Log.info("databaseConnected", "MySQL", KendoTournamentGenerator.getInstance().language);
         }
         return !error;
     }
@@ -211,14 +208,14 @@ public class MySQL extends SQL {
         boolean answer = true;
         boolean updated = false;
         if (verbose) {
-            answer = MessageManager.question("questionUpdateDatabase", "Warning!", KendoTournamentGenerator.getInstance().language);
+            answer = MessageManager.questionMessage("questionUpdateDatabase", "Warning!", KendoTournamentGenerator.getInstance().language);
         }
         if (answer) {
             updated = updateDatabaseAction(path);
             if (updated) {
-                MessageManager.customMessage("updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage("updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                MessageManager.errorMessage("notUpdateDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("notUpdateDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
             }
         }
         return updated;
@@ -296,28 +293,28 @@ public class MySQL extends SQL {
         System.out.println("Error: " + numberError);
         switch (numberError) {
             case 1045:
-                MessageManager.errorMessage("deniedUser", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("deniedUser", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1049:
-                MessageManager.errorMessage("noDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1062:
-                MessageManager.errorMessage("repeatedCompetitor", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("repeatedCompetitor", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1054:
-                MessageManager.errorMessage("unknownColumn", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("unknownColumn", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1146:
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1130:
-                MessageManager.errorMessage("noAccessUser", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noAccessUser", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 1044:
-                MessageManager.errorMessage("noUserPrivileges", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noUserPrivileges", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
             case 0:
-                MessageManager.errorMessage("noDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("noDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
                 return true;
         }
 

@@ -182,8 +182,8 @@ public class Team implements Serializable {
         int counter = 0;
         if (participantsPerLevel.size() > 0) {
             for (int i = 0; i < participantsPerLevel.get(0).size(); i++) {
-                if ((participantsPerLevel.get(0).get(i).returnName().length() > 0)
-                        || (participantsPerLevel.get(0).get(i).returnSurname().length() > 0)) {
+                if ((participantsPerLevel.get(0).get(i).getName().length() > 0)
+                        || (participantsPerLevel.get(0).get(i).getSurname().length() > 0)) {
                     counter++;
                 }
             }
@@ -211,7 +211,7 @@ public class Team implements Serializable {
             System.out.println(" +++++++ " + returnName() + " +++++++ ");
             for (int i = 0; i < participantsPerLevel.size(); i++) {
                 for (int j = 0; j < participantsPerLevel.get(i).size(); j++) {
-                    System.out.println(participantsPerLevel.get(i).get(j).returnSurnameName() + " LeveL: " + i);
+                    System.out.println(participantsPerLevel.get(i).get(j).getSurnameName() + " LeveL: " + i);
                 }
             }
             System.out.println(" +++++++ +++++++++++++ +++++++ ");

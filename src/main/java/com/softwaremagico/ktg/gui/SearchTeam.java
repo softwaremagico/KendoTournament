@@ -87,7 +87,7 @@ public final class SearchTeam extends Search<Team> {
         if (NameTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchTeamsByNameAndTournament(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
         }
         fillResults(results);
         if (results.size() > 0) {

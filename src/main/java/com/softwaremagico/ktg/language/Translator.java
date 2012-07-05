@@ -72,7 +72,7 @@ public class Translator {
             usedDoc.getDocumentElement().normalize();
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
-            MessageManager.errorMessage(text, "Language", false);
+            MessageManager.errorMessage(text, "Language");
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (SAXException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -105,7 +105,7 @@ public class Translator {
                         //npe.printStackTrace();
                         if (!retried) {
                             if (!showedMessage) {
-                                MessageManager.customMessage("There is a problem with tag: " + tag + " in  language: \"" + language + "\". We tray to use english language instead.", "Translator", JOptionPane.PLAIN_MESSAGE, false);
+                                MessageManager.customMessage("There is a problem with tag: " + tag + " in  language: \"" + language + "\". We tray to use english language instead.", "Translator", JOptionPane.PLAIN_MESSAGE);
                                 showedMessage = true;
                             }
                             retried = true;
@@ -113,7 +113,7 @@ public class Translator {
                         }
                         if (!language.equals(DEFAULT_LANGUAGE)) {
                             if (!errorShowed) {
-                                MessageManager.customMessage("Selecting english language by default. You can change it later in Options->Language ", "Translator", JOptionPane.PLAIN_MESSAGE, false);
+                                MessageManager.customMessage("Selecting english language by default. You can change it later in Options->Language ", "Translator", JOptionPane.PLAIN_MESSAGE);
                                 Configuration langConf = new Configuration();
                                 langConf.storeLanguageConfiguration(language);
                                 errorShowed = true;
@@ -121,7 +121,7 @@ public class Translator {
                             return returnTag(tag, DEFAULT_LANGUAGE);
                         } else {
                             if (!errorShowed) {
-                                MessageManager.errorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator", false);
+                                MessageManager.errorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator");
                                 errorShowed = true;
                             }
                             return null;
@@ -130,7 +130,7 @@ public class Translator {
 
                 }
             }
-            MessageManager.errorMessage("No tag for: " + tag + ".", "Translator", false);
+            MessageManager.errorMessage("No tag for: " + tag + ".", "Translator");
             return null;
         } catch (NullPointerException npe) {
             return null;
@@ -150,7 +150,7 @@ public class Translator {
                         fstNode.getAttributes().getNamedItem("flag").getNodeValue());
                 languagesList.add(lang);
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage("errorLanguage", "Language", false);
+                MessageManager.errorMessage("errorLanguage", "Language");
             }
         }
         return languagesList;

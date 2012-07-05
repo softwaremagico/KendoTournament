@@ -137,7 +137,7 @@ public class NewTournament extends KendoFrame {
                 return true;
             }
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
         }
         return false;
     }
@@ -373,7 +373,7 @@ public class NewTournament extends KendoFrame {
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             }
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 

@@ -38,7 +38,7 @@ import javax.swing.border.TitledBorder;
  */
 public class TeamFight extends JPanel {
 
-    private List<CompetitorFight> competitorFights = new ArrayList<CompetitorFight>();
+    private List<CompetitorFight> competitorFights = new ArrayList<>();
     private Fight fight;
     private final int lineBorder = 5;
     RoundFight roundFight = null;
@@ -116,7 +116,7 @@ public class TeamFight extends JPanel {
 
     final void fill(Team t, boolean left, boolean selected, boolean menu) {
         removeAll();
-        competitorFights = new ArrayList<CompetitorFight>();
+        competitorFights = new ArrayList<>();
         for (int i = 0; i < t.getNumberOfMembers(fight.level); i++) {
             CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.level), fight, left, selected, menu);
             addCompetitorFight(cp);
@@ -127,7 +127,7 @@ public class TeamFight extends JPanel {
 
     final void fill(boolean left, int teamSize) {
         removeAll();
-        competitorFights = new ArrayList<CompetitorFight>();
+        competitorFights = new ArrayList<>();
         for (int i = 0; i < teamSize; i++) {
             CompetitorFight cp = new CompetitorFight(left);
             addCompetitorFight(cp);
@@ -151,7 +151,7 @@ public class TeamFight extends JPanel {
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             }else{
-                MessageManager.errorMessage("waitNewLevel", "Team", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage("waitNewLevel", "Team", KendoTournamentGenerator.getInstance().language);
             }
         }
     }

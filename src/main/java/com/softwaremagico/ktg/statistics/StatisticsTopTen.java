@@ -90,7 +90,7 @@ public class StatisticsTopTen extends StatisticsGUI {
             if (competitorsList.get(i) != null) {
                 int victories = obtainWinnedDuels(competitorsList.get(i), fights);
                 int score = obtainTotalHits(competitorsList.get(i), fights);
-                ranking.add(new CompetitorRanking(competitorsList.get(i).returnName(), competitorsList.get(i).returnSurname(), competitorsList.get(i).getId(), victories, score));
+                ranking.add(new CompetitorRanking(competitorsList.get(i).getName(), competitorsList.get(i).getSurname(), competitorsList.get(i).getId(), victories, score));
             }
         }
         return OrderCompetitorRanking(ranking);
@@ -105,7 +105,7 @@ public class StatisticsTopTen extends StatisticsGUI {
             if (competitorsList.get(i) != null) {
                 int victories = obtainWinnedDuels(competitorsList.get(i), fights);
                 int score = obtainTotalHits(competitorsList.get(i), fights);
-                ranking.add(new CompetitorRanking(competitorsList.get(i).returnName(), competitorsList.get(i).returnSurname(), competitorsList.get(i).getId(), victories, score));
+                ranking.add(new CompetitorRanking(competitorsList.get(i).getName(), competitorsList.get(i).getSurname(), competitorsList.get(i).getId(), victories, score));
             }
         }
         return OrderCompetitorRanking(ranking);
@@ -282,7 +282,7 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     public void updateComboBox(Competitor c) {
         if (c != null) {
-            SelectComboBox.setSelectedItem(c.returnSurname() + ", " + c.returnName() + " (" + c.getId() + ")");
+            SelectComboBox.setSelectedItem(c.getSurname() + ", " + c.getName() + " (" + c.getId() + ")");
         }
     }
 
@@ -292,7 +292,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         SelectComboBox.setVisible(true);
 
         for (int i = 0; i < competitors.size(); i++) {
-            SelectComboBox.addItem(competitors.get(i).returnSurname() + ", " + competitors.get(i).returnName() + " (" + competitors.get(i).getId() + ")");
+            SelectComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName() + " (" + competitors.get(i).getId() + ")");
         }
 
         try {

@@ -698,9 +698,9 @@ public class MainGUI extends KendoFrame {
             KendoTournamentGenerator.getInstance().database.disconnect();
             KendoTournamentGenerator.getInstance().databaseConnected = false;
             isConnectedToDatabase();
-            MessageManager.customMessage("databaseDisconnected", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.translatedMessage("databaseDisconnected", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            MessageManager.errorMessage("disconnectDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("disconnectDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed

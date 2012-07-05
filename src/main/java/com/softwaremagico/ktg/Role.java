@@ -28,13 +28,13 @@ public class Role implements Serializable {
 
     public String tournament;
     private String competitorID;
-    public String Role;
+    public String roleName;
     public int impressCard;
 
     public Role(String championship, String competitor, String selectedRole, int impressedCard) {
         tournament = championship;
         competitorID = competitor;
-        Role = selectedRole;
+        roleName = selectedRole;
         impressCard = impressedCard;
     }
 
@@ -52,7 +52,7 @@ public class Role implements Serializable {
         }
         Role otherRole = (Role) object;
         return this.tournament.equals(otherRole.tournament)
-                && this.Role.equals(otherRole.Role)
+                && this.roleName.equals(otherRole.roleName)
                 && this.competitorID.equals(otherRole.competitorID);
     }
 
@@ -61,7 +61,7 @@ public class Role implements Serializable {
         int hash = 3;
         hash = 67 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
         hash = 67 * hash + (this.competitorID != null ? this.competitorID.hashCode() : 0);
-        hash = 67 * hash + (this.Role != null ? this.Role.hashCode() : 0);
+        hash = 67 * hash + (this.roleName != null ? this.roleName.hashCode() : 0);
         return hash;
     }
 }

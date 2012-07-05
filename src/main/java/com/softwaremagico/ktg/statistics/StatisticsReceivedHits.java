@@ -102,7 +102,7 @@ public class StatisticsReceivedHits extends StatisticsGUI {
         // create the chart…
         String title;
         if (competitor != null) {
-            title = transl.returnTag("ReceivedHitStatistics", KendoTournamentGenerator.getInstance().language) + ": " + competitor.returnName() + " " + competitor.returnSurname(); // Titulo de grafico
+            title = transl.returnTag("ReceivedHitStatistics", KendoTournamentGenerator.getInstance().language) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico
         } else {
             title = transl.returnTag("ReceivedHitStatistics", KendoTournamentGenerator.getInstance().language);
         }

@@ -41,16 +41,14 @@ public class DesignedGroups implements Serializable {
     private Links links;
     private final String FOLDER = "designer";
     public int default_max_winners = 1;
-    private boolean log;
 
-    public DesignedGroups(Tournament tmp_championship, String tmp_language, boolean showLog) {
+    public DesignedGroups(Tournament tmp_championship, String tmp_language) {
         try {
             mode = tmp_championship.mode;
             championship = tmp_championship;
             language = tmp_language;
             levels.add(0);
             links = new Links();
-            log = showLog;
         } catch (NullPointerException npe) {
         }
     }
@@ -650,7 +648,7 @@ public class DesignedGroups implements Serializable {
 
                 //But the level is over and need more fightManager.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver()) {
-                    if (MessageManager.question("nextLevel", "Warning!", language)) {
+                    if (MessageManager.questionMessage("nextLevel", "Warning!", language)) {
                         int start = levels.get(nextLevel);
                         int end;
                         if (nextLevel + 1 < levels.size()) {
@@ -667,7 +665,7 @@ public class DesignedGroups implements Serializable {
                 } else {
                     //Only one arena is finished: show message for waiting all fightManager are over.
                     if ((arena = KendoTournamentGenerator.getInstance().fightManager.allArenasAreOver()) != -1) {
-                        MessageManager.customMessage("waitingArena", "", language, KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "", JOptionPane.INFORMATION_MESSAGE, log);
+                        MessageManager.translatedMessage("waitingArena", "", language, KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
             } else {
@@ -683,7 +681,7 @@ public class DesignedGroups implements Serializable {
                 }
                 //Show message when last fight is selected.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-                    MessageManager.customMessage("leagueFinished", "Finally!", language, winnername, JOptionPane.INFORMATION_MESSAGE, log);
+                    MessageManager.translatedMessage("leagueFinished", "Finally!", language, winnername, JOptionPane.INFORMATION_MESSAGE);
                 }
                 update();
                 return new ArrayList<>();
@@ -714,7 +712,7 @@ public class DesignedGroups implements Serializable {
         int arena;
         //User must distribute the groups of level 0 in the different fightManager areas. 
         if (championship.fightingAreas > 1 && allGroupsInSameArena(groups) && level == 0) {
-            answer = MessageManager.question("noFightsDistributedInArenas", "Warning!", language);
+            answer = MessageManager.questionMessage("noFightsDistributedInArenas", "Warning!", language);
         }
 
         for (int i = 0; i < groups.size(); i++) {

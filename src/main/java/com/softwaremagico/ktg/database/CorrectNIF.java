@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Participant;
 import com.softwaremagico.ktg.Team;
 import java.util.List;
 
@@ -39,16 +40,12 @@ public class CorrectNIF {
         List<Competitor> competitors = tournament.database.getAllCompetitors();
         for (int i = 0; i < competitors.size(); i++) {
             String idNumber = competitors.get(i).getId();
-            idNumber = idNumber.replace("-", "");
-            idNumber = idNumber.replace(" ", "");
-            idNumber = idNumber.toUpperCase();
-
             competitors.get(i).setId(idNumber);
 
             try {
                 Integer dni = Integer.parseInt(idNumber);
                 if (competitors.get(i).getId().length() == 8 && dni != null) {
-                    competitors.get(i).setId(nifFromDni(dni));
+                    competitors.get(i).setId(Participant.nifFromDni(dni));
                 }
             } catch (NumberFormatException nfe) {
             }
@@ -64,16 +61,12 @@ public class CorrectNIF {
                 for (int k = 0; k < teams.get(i).getNumberOfMembers(j); k++) {
                     try {
                         String idNumber = teams.get(i).getMember(k, j).getId();
-                        idNumber = idNumber.replace("-", "");
-                        idNumber = idNumber.replace(" ", "");
-                        idNumber = idNumber.toUpperCase();
-
                         teams.get(i).getMember(k, j).setId(idNumber);
 
                         try {
                             Integer dni = Integer.parseInt(idNumber);
                             if (teams.get(i).getMember(k, j).getId().length() == 8 && dni != null) {
-                                teams.get(i).getMember(k, j).setId(nifFromDni(dni));
+                                teams.get(i).getMember(k, j).setId(Participant.nifFromDni(dni));
                             }
                         } catch (NumberFormatException nfe) {
                         }
@@ -85,9 +78,5 @@ public class CorrectNIF {
         }
     }
 
-    public static String nifFromDni(int dni) {
-        String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
-        //System.out.println(String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(dni % 23));
-        return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(dni % 23);
-    }
+
 }

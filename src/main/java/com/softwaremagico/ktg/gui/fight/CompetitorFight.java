@@ -56,13 +56,13 @@ public class CompetitorFight extends JPanel {
         try {
             if (left) {
                 try {
-                    fillLeftToRight(c.returnSurnameNameIni());
+                    fillLeftToRight(c.getSurnameNameIni());
                 } catch (NullPointerException npe) {
                     fillLeftToRight(" ");
                 }
             } else {
                 try {
-                    fillRightToLeft(c.returnSurnameNameIni());
+                    fillRightToLeft(c.getSurnameNameIni());
                 } catch (NullPointerException npe) {
                     fillRightToLeft(" ");
                 }

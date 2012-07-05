@@ -33,7 +33,7 @@ public class RefereeListPDF extends ParentList {
         mainTable.addCell(getHeader2(championship.name, 0));
         List<CompetitorWithPhoto> listReferee = KendoTournamentGenerator.getInstance().database.searchRefereeByTournament(championship.name, false, false);
         for (int i = 0; i < listReferee.size(); i++) {
-            mainTable.addCell(getCell(listReferee.get(i).returnSurnameName() + " (" + listReferee.get(i).club + ")", 0));
+            mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).club + ")", 0));
         }
     }
 

@@ -110,10 +110,10 @@ public class NewTeam extends KendoFrame {
             CompetitorPanel cp = new CompetitorPanel(KendoTournamentGenerator.getInstance().language, i + 1);
 
             for (int j = 0; j < competitors.size(); j++) {
-                if (competitors.get(j).returnName().equals("") && competitors.get(j).returnSurname().equals("")) {
+                if (competitors.get(j).getName().equals("") && competitors.get(j).getSurname().equals("")) {
                     cp.competitorComboBox.addItem(" ");
                 } else {
-                    cp.competitorComboBox.addItem(competitors.get(j).returnSurname() + ", " + competitors.get(j).returnName() + " (" + competitors.get(j).getId() + ")");
+                    cp.competitorComboBox.addItem(competitors.get(j).getSurname() + ", " + competitors.get(j).getName() + " (" + competitors.get(j).getId() + ")");
                 }
             }
             if (cp.competitorComboBox.getItemCount() > i + 1) {
@@ -153,8 +153,8 @@ public class NewTeam extends KendoFrame {
             TournamentComboBox.setEnabled(false);
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 try {
-                    if (i < t.getNumberOfMembers(0) && t.getMember(i, 0) != null && (t.getMember(i, 0).returnSurname().length() > 0 || t.getMember(i, 0).returnName().length() > 0)) {
-                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, 0).returnSurname() + ", " + t.getMember(i, 0).returnName() + " (" + t.getMember(i, 0).getId() + ")");
+                    if (i < t.getNumberOfMembers(0) && t.getMember(i, 0) != null && (t.getMember(i, 0).getSurname().length() > 0 || t.getMember(i, 0).getName().length() > 0)) {
+                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, 0).getSurname() + ", " + t.getMember(i, 0).getName() + " (" + t.getMember(i, 0).getId() + ")");
                     } else {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
@@ -253,15 +253,15 @@ public class NewTeam extends KendoFrame {
             for (int j = 0; j < t.getNumberOfMembers(t.levelChangesSize() - 1); j++) {
                 if (competitors.size() > 0) {
                     for (i = 0; i < competitors.size(); i++) {
-                        if (competitors.get(i).returnSurnameName().compareTo(t.getMember(j, 0).returnSurnameName()) > 0) {
-                            if (t.getMember(j, 0).returnSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).returnName().replaceAll("-", "").trim().length() > 0) {
+                        if (competitors.get(i).getSurnameName().compareTo(t.getMember(j, 0).getSurnameName()) > 0) {
+                            if (t.getMember(j, 0).getSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).getName().replaceAll("-", "").trim().length() > 0) {
                                 competitors.add(i, t.getMember(j, 0));
                             }
                             break;
                         }
                     }
                     if (i == competitors.size()) { //If has not been added, then add it in the last position.
-                        if (t.getMember(j, 0).returnSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).returnName().replaceAll("-", "").trim().length() > 0) {
+                        if (t.getMember(j, 0).getSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).getName().replaceAll("-", "").trim().length() > 0) {
                             competitors.add(t.getMember(j, 0));
                         }
                     }
@@ -476,7 +476,7 @@ public class NewTeam extends KendoFrame {
             }
 
         } else {
-            MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 
@@ -511,7 +511,7 @@ public class NewTeam extends KendoFrame {
                         KendoTournamentGenerator.getInstance().database.setIndividualTeams(TournamentComboBox.getSelectedItem().toString());
                         championship.teamSize = 1;
                         KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
-                        MessageManager.informationManager("teamsStored", "Team", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                        MessageManager.informationManager("teamsStored", "Team", KendoTournamentGenerator.getInstance().language);
                         this.dispose();
                     }
                     //No competitors exist. 
@@ -528,10 +528,10 @@ public class NewTeam extends KendoFrame {
                         }
 
                         if (repeatedCompetitor()) {
-                            MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                            MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language);
                         }
                         if (!checkTeam()) {
-                            MessageManager.errorMessage("notEnoughCompetitors", "League", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                            MessageManager.errorMessage("notEnoughCompetitors", "League", KendoTournamentGenerator.getInstance().language);
                         } else {
                             t.addMembers(participants, 0);
                             if (KendoTournamentGenerator.getInstance().database.storeTeam(t, true)) {
@@ -539,7 +539,7 @@ public class NewTeam extends KendoFrame {
                             }
                         }
                     } else {
-                        MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                        MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
                     }
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 

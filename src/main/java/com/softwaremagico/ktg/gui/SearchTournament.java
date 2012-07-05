@@ -57,7 +57,7 @@ public final class SearchTournament extends Search<Tournament> {
         if (NameTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchTournamentsByName(NameTextField.getText(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
         }
         fillResults(results);
     }

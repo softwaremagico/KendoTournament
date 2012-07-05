@@ -72,7 +72,7 @@ public final class SearchClub extends Search<Club> {
         } else if (CityTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchClubByCity(CityTextField.getText(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
         }
         fillResults(results);
         if (results.size() > 0) {

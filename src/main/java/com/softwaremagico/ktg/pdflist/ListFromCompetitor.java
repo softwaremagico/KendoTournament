@@ -57,7 +57,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
                 CompetitorComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
             }
             for (int i = 0; i < listCompetitors.size(); i++) {
-                CompetitorComboBox.addItem(listCompetitors.get(i).returnSurname() + ", " + listCompetitors.get(i).returnName());
+                CompetitorComboBox.addItem(listCompetitors.get(i).getSurname() + ", " + listCompetitors.get(i).getName());
             }
         } catch (NullPointerException npe) {
         }

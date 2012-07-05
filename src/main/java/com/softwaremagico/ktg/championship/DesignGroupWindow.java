@@ -305,7 +305,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_FightAreaComboBoxActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        if (MessageManager.question("questionRemoveTeam", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (MessageManager.questionMessage("questionRemoveTeam", "Warning!", KendoTournamentGenerator.getInstance().language)) {
             int index = GroupList.getSelectedIndex();
             Team t = dg.teams.remove(index);
             fillGroupArea();

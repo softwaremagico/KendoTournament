@@ -17,12 +17,12 @@ public class Participant implements Serializable {
     protected String surname;
 
     public Participant(String tmp_id, String name, String surname) {
-        storeName(name);
-        storeSurname(surname);
-        storeId(tmp_id);
+        setName(name);
+        setSurname(surname);
+        setId(tmp_id);
     }
 
-    protected final void storeId(String value) {
+    public final void setId(String value) {
         id = value.replaceAll("-", "").replaceAll(" ", "").trim().toUpperCase();
     }
 
@@ -30,11 +30,7 @@ public class Participant implements Serializable {
         return id;
     }
 
-    public void setId(String value) {
-        id = value;
-    }
-
-    protected final void storeName(String value) {
+    protected final void setName(String value) {
         name = "";
         String[] names = value.split(" ");
         for (int i = 0; i < names.length; i++) {
@@ -72,7 +68,7 @@ public class Participant implements Serializable {
         return getShortSurname(8);
     }
 
-    public String returnShortSurnameName(int maxLength) {
+    public String getShortSurnameName(int maxLength) {
         if (name.length() + surname.length() == 0) {
             return "";
         }
@@ -83,7 +79,7 @@ public class Participant implements Serializable {
         return ret;
     }
 
-    public String returnSurnameName() {
+    public String getSurnameName() {
         if (surname.length() > 0 || name.length() > 0) {
             return surname + ", " + name;
         } else {
@@ -92,7 +88,7 @@ public class Participant implements Serializable {
         }
     }
 
-    public String returnSurnameNameIni(int maxLength) {
+    public String getSurnameNameIni(int maxLength) {
         if (surname.length() > 0 || name.length() > 0) {
             String surnameShort = surname.substring(0, Math.min(maxLength, surname.length())).toUpperCase();
             if (surname.length() > maxLength) {
@@ -104,11 +100,11 @@ public class Participant implements Serializable {
         }
     }
 
-    public String returnSurnameNameIni() {
-        return returnSurnameNameIni(11);
+    public String getSurnameNameIni() {
+        return getSurnameNameIni(11);
     }
 
-    protected final void storeSurname(String value) {
+    protected final void setSurname(String value) {
         surname = "";
         String[] surnames = value.split(" ");
         for (int i = 0; i < surnames.length; i++) {
@@ -125,11 +121,11 @@ public class Participant implements Serializable {
         surname = surname.trim();
     }
 
-    public String returnName() {
+    public String getName() {
         return name;
     }
 
-    public String returnSurname() {
+    public String getSurname() {
         return surname;
     }
 
@@ -146,9 +142,12 @@ public class Participant implements Serializable {
         return acronim;
     }
 
-    public static String nifFromDni(String dni) {
+    public static String nifFromDni(Integer dni) {
+        if (dni == null)  {
+            return null;
+        }
         String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
-        return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(Integer.parseInt(dni) % 23);
+        return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(dni % 23);
     }
 
     @Override

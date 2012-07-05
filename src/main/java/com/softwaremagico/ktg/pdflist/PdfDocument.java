@@ -56,7 +56,7 @@ public abstract class PdfDocument {
         try {
             bgImage = Image.getInstance(Path.returnBackgroundPath());
         } catch (BadElementException | IOException ex) {
-            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
@@ -85,18 +85,18 @@ public abstract class PdfDocument {
         if (!path.endsWith(".pdf")) {
             path += ".pdf";
         }
-        if (!MyFile.fileExist(path) || MessageManager.question("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 TableFooter event = new TableFooter();
                 writer.setPageEvent(event);
                 generatePDF(document, writer);
-                MessageManager.customMessage(fileCreatedOkTag(), "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.translatedMessage(fileCreatedOkTag(), "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 return false;
             } catch (Exception ex) {
-                MessageManager.errorMessage(fileCreatedBadTag(), "PDF", KendoTournamentGenerator.getInstance().language, KendoTournamentGenerator.getInstance().getLogOption());
+                MessageManager.errorMessage(fileCreatedBadTag(), "PDF", KendoTournamentGenerator.getInstance().language);
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 return false;
             }
