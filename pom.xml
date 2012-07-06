@@ -5,8 +5,9 @@
 
     <groupId>com.softwaremagico</groupId>
     <artifactId>ktg</artifactId>
-    <version>0.9.7</version>
+    <version>0.9.7.2</version>
     <packaging>jar</packaging>
+    <description>Tool for the management of different Kendo Tournaments.</description>
 
     <name>KendoTournamentGenerator</name>
     <url>http://maven.apache.org</url>
@@ -18,6 +19,173 @@
             <name>Repository for library Library[swing-layout]</name>
         </repository>
     </repositories>
+    
+    <organization>
+        <name>Softwaremagico</name>
+        <url>kendotournament.sourceforge.net</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Jorge Hortelano</name>
+            <roles>
+                <role>Project Manager</role>
+                <role>Architect</role>
+                <role>Software developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+	
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <linux.releasedir>install_linux</linux.releasedir>
+        <linux.origin>linux-basic-files</linux.origin>
+        <windows.releasedir>install_windows</windows.releasedir>
+        <windows.origin>windows-basic-files</windows.origin>
+        
+    </properties>
+    
+    <profiles>
+        <profile>
+            <id>Linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <build>
+                <resources>
+            <!-- Filter the file control.txt -->
+                    <resource>
+                        <directory>${linux.origin}</directory>
+                        <filtering>true</filtering>
+                        <includes>
+                            <include>**/control</include>
+                            <include>**/*.desktop</include>
+                        </includes>
+                    </resource>
+            <!-- Not filtering the other files -->
+                    <resource>
+                        <directory>${linux.origin}</directory>
+                        <filtering>false</filtering>
+                        <excludes>
+                            <exclude>**/control</exclude>
+                        </excludes>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/DEBIAN" includes="**/*" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/usr" includes="**/*" />
+                                        </copy>
+
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/translations" overwrite="true" >
+                                            <fileset dir="./translations" includes="**/*.xml" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/images" overwrite="true" >
+                                            <fileset dir="./images" excludes="**/*.svg" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/database" overwrite="true" >
+                                            <fileset dir="./database" includes="**/*_empty.*" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/manual" overwrite="true" >
+                                            <fileset dir="./manual" includes="**/*.pdf" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/manual" overwrite="true" >
+                                            <fileset dir="./manual" includes="**/*.txt" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator" overwrite="true" flatten="true" >
+                                            <fileset dir="./" includes="**/gnu.txt" />
+                                        </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator" overwrite="true" flatten="true" >
+                                            <fileset dir="./" includes="**/Readme.txt" />
+                                        </copy>
+                                
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>Windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <build>
+                <resources>
+            <!-- No filtering the other files -->
+                    <resource>
+                        <directory>${windowx.origin}</directory>
+                        <filtering>false</filtering>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.4</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <configuration>
+                                    <tasks>
+                                        <copy todir="${windows.releasedir}" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/translations" overwrite="true" >
+                                            <fileset dir="./translations" includes="**/*.xml" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/images" overwrite="true" >
+                                            <fileset dir="./images" excludes="**/*.svg" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/database" overwrite="true" >
+                                            <fileset dir="./database" includes="**/*_empty.*" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                            <fileset dir="./manual" includes="**/*.pdf" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                            <fileset dir="./manual" includes="**/*.txt" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                            <fileset dir="./" includes="**/gnu.txt" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                            <fileset dir="./" includes="**/Readme.txt" />
+                                        </copy>      
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
     
     <build>
         <finalName>KendoTournamentGenerator</finalName>
@@ -63,13 +231,9 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
-    
-    
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -83,11 +247,6 @@
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>-->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
