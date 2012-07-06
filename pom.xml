@@ -47,7 +47,7 @@
     
     <profiles>
         <profile>
-            <id>Linux</id>
+            <id>linux</id>
             <activation>
                 <os>
                     <family>linux</family>
@@ -70,6 +70,7 @@
                         <filtering>false</filtering>
                         <excludes>
                             <exclude>**/control</exclude>
+                            <exclude>**/*.desktop</exclude>
                         </excludes>
                     </resource>
                 </resources>
@@ -88,7 +89,6 @@
                                         <copy todir="${linux.releasedir}/usr" overwrite="true" >
                                             <fileset dir="${project.build.outputDirectory}/usr" includes="**/*" />
                                         </copy>
-
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
                                             <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
@@ -129,7 +129,7 @@
             </build>
         </profile>
         <profile>
-            <id>Windows</id>
+            <id>windows</id>
             <activation>
                 <os>
                     <family>windows</family>
@@ -139,8 +139,14 @@
                 <resources>
             <!-- No filtering the other files -->
                     <resource>
-                        <directory>${windowx.origin}</directory>
+                        <directory>${windows.origin}</directory>
                         <filtering>false</filtering>
+                        <includes>
+                            <include>**/*.ico</include>
+                            <include>**/KendoTournamentGenerator.exe</include>
+                            <include>**/*.iss</include>
+                            <include>**/*.txt</include>
+                        </includes>
                     </resource>
                 </resources>
                 <plugins>
@@ -154,6 +160,9 @@
                                     <tasks>
                                         <copy todir="${windows.releasedir}" overwrite="true" >
                                             <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
+                                        </copy>
+                                        <copy todir="${windows.releasedir}/lib" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/../lib" includes="**/*.jar" />
                                         </copy>
                                         <copy todir="${windows.releasedir}/translations" overwrite="true" >
                                             <fileset dir="./translations" includes="**/*.xml" />
@@ -175,7 +184,16 @@
                                         </copy>
                                         <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
                                             <fileset dir="./" includes="**/Readme.txt" />
-                                        </copy>      
+                                        </copy>   
+                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                            <fileset dir="${project.build.outputDirectory}/" includes="**/icon.ico" />
+                                        </copy>  
+                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                            <fileset dir="${project.build.outputDirectory}/" includes="**/KendoTournamentGenerator.exe" />
+                                        </copy>  
+                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                            <fileset dir="${project.build.outputDirectory}/" includes="**/InstallScript.iss" />
+                                        </copy>  
                                     </tasks>
                                 </configuration>
                                 <goals>
