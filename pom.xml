@@ -92,6 +92,9 @@
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
                                             <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
+                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/lib" overwrite="true" >
+                                            <fileset dir="${project.build.outputDirectory}/../lib" includes="**/*.jar" />
+                                        </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/translations" overwrite="true" >
                                             <fileset dir="./translations" includes="**/*.xml" />
                                         </copy>
