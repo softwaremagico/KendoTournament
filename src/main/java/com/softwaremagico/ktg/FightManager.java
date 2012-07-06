@@ -275,9 +275,11 @@ public class FightManager {
     public boolean areArenaOver(int arena) {
         for (int i = 0; i < fights.size(); i++) {
             if (!fights.get(i).isOver() && fights.get(i).asignedFightArea == arena) {
+                Log.finest("Fight '" + fights.get(i).team1 + " vs " + fights.get(i).team2 + "' is not over.");
                 return false;
             }
         }
+        Log.finest("All arena fights are over.");
         return true;
     }
 
@@ -678,10 +680,12 @@ public class FightManager {
 
     public void setFightAsOver(Fight fight) {
         fight.setOver();
+        Log.finest("Fight '" + fight.team1 + " vs " + fight.team2 + "' is set to over.");
         //KendoTournamentGenerator.getInstance().database.updateFightAsOver(fight);
     }
 
     private boolean storeDuel(Duel d, Fight fight, int player) {
+        Log.fine("Storing duel '" + d.showScore());
         if (d.needsToBeStored()) {
             if (KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, player)) {
                 d.setStored(true);
@@ -695,6 +699,7 @@ public class FightManager {
     }
 
     private boolean storeDuelOfFights(Fight fight) {
+        Log.fine("Storing duels of fight " + fight.showFight() + ".");
         for (int i = 0; i < fight.duels.size(); i++) {
             if (!storeDuel(fight.duels.get(i), fight, i)) {
                 return false;
@@ -704,9 +709,11 @@ public class FightManager {
     }
 
     public boolean storeNotUpdatedFightsAndDuels() {
+        Log.fine("Storing all not updated fights and duels.");
         ArrayList<Fight> notUpdatedFights = notUpdatedFights();
         for (Fight f : notUpdatedFights) {
             if (!f.isOverStored() && f.isOver()) {
+                Log.finest("Fight " + f.showFight() + " is not over.");
                 KendoTournamentGenerator.getInstance().database.updateFightAsOver(f);
             }
 

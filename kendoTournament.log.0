@@ -1,0 +1,2 @@
+FINEST [Thu Jul 05 16:58:51 CEST 2012] com.softwaremagico.ktg.Log -> finest - SQLite: Connected to database!: SQLite (localhost)
+INFO [Thu Jul 05 16:58:51 CEST 2012] com.softwaremagico.ktg.Log -> info - com.softwaremagico.ktg.database.SQLite: Connected to database!

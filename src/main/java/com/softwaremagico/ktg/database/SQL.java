@@ -41,7 +41,7 @@ import javax.swing.JOptionPane;
  * @author LOCAL\jhortelano
  */
 public abstract class SQL extends Database {
-
+    
     @Override
     public void clearDatabase() {
         Log.fine("Clearing database");
@@ -82,7 +82,7 @@ public abstract class SQL extends Database {
         try {
             File f = new File(fileName);
             f.delete();
-
+            
             exportClubs(fileName);
             exportCompetitors(fileName);
             exportTournaments(fileName);
@@ -97,7 +97,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(e);
         }
     }
-
+    
     private void exportClubs(String file) {
         Folder f = null;
         try {
@@ -115,7 +115,7 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     private void exportCompetitors(String file) {
         Folder f = null;
         try {
@@ -169,7 +169,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-
+            
             if (offset != length) {
                 throw new IOException("Only read " + offset + " bytes; Expected " + length + " bytes");
             }
@@ -180,9 +180,9 @@ public abstract class SQL extends Database {
         } catch (IOException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     private String convertInputStream2String(InputStream inputStream) {
         //FUNCIONA-> SELECT Photo FROM kendotournament.competitor WHERE competitor.ListOrder=200 INTO OUTFILE '/tmp/Prueba6.txt' FIELDS TERMINATED BY '' ENCLOSED BY '' ESCAPED BY '' LINES TERMINATED BY '' STARTING BY '';
         /*
@@ -197,7 +197,7 @@ public abstract class SQL extends Database {
          */
         return "";
     }
-
+    
     public static String convertStreamToString(InputStream is) throws Exception {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
@@ -208,12 +208,12 @@ public abstract class SQL extends Database {
         is.close();
         return sb.toString();
     }
-
+    
     public static byte[] getBytes(InputStream is) throws IOException {
         int len;
         int size = 1024;
         byte[] buf;
-
+        
         if (is instanceof ByteArrayInputStream) {
             size = is.available();
             buf = new byte[size];
@@ -228,7 +228,7 @@ public abstract class SQL extends Database {
         }
         return buf;
     }
-
+    
     private void exportTournaments(String file) {
         Folder f = null;
         try {
@@ -247,7 +247,7 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     private void exportRole(String file) {
         Folder f = null;
         try {
@@ -291,7 +291,7 @@ public abstract class SQL extends Database {
         }
         return commands;
     }
-
+    
     private void exportTeams(String file) {
         Folder f = null;
         try {
@@ -317,7 +317,7 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     private void exportFights(String file) {
         Folder f = null;
         try {
@@ -337,7 +337,7 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     private void exportDuels(String file) {
         Folder f = null;
         try {
@@ -363,7 +363,7 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     private void exportUndraws(String file) {
         Folder f = null;
         try {
@@ -378,12 +378,12 @@ public abstract class SQL extends Database {
         f.AppendTextToFile("UNLOCK TABLES;\n", file);
         f.AppendTextToFile("--------------------\n", file);
     }
-
+    
     public void importDatabase(String fileName) {
         clearDatabase();
         executeScript(fileName);
     }
-
+    
     protected void executeScript(String fileName) {
         String query = "";
         try {
@@ -416,9 +416,9 @@ public abstract class SQL extends Database {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     protected abstract void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException;
-
+    
     protected abstract InputStream getBinaryStream(ResultSet rs, String column) throws SQLException;
 
     /**
@@ -441,7 +441,7 @@ public abstract class SQL extends Database {
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery("SELECT * FROM competitor WHERE ID='" + c.getId() + "'")) {
-
+                
                 if (rs.next()) {
                     return updateCompetitor(c, verbose);
                 } else {
@@ -483,7 +483,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             error = true;
         }
-
+        
         if (!error) {
             if (verbose) {
                 if (update) {
@@ -538,7 +538,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean updateCompetitor(CompetitorWithPhoto c, boolean verbose) {
         Log.fine("Updating competitor " + c.getSurnameName() + "  from database");
@@ -578,7 +578,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean updateIdCompetitor(Competitor c, boolean verbose) {
         Log.fine("Updating ID of competitor " + c.getSurnameName());
@@ -603,7 +603,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean updateClubCompetitor(Competitor c, boolean verbose) {
         Log.fine("Updating the club of competitor " + c.getSurnameName());
@@ -630,7 +630,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> getCompetitorsWithPhoto(String query, boolean verbose) {
         Log.fine("Obtaining a group of competitors with photo.");
@@ -655,11 +655,11 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-
+            
             if (results.isEmpty() && verbose) {
                 MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             }
-
+            
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -667,10 +667,10 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<Competitor> getCompetitors(String query, boolean verbose) {
         Log.fine("Getting competitors.");
@@ -692,21 +692,21 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-
+            
             if (results.isEmpty() && verbose) {
                 MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             }
-
+            
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<Participant> getParticipants(String query, boolean verbose) {
         Log.fine("Getting participants");
@@ -733,16 +733,16 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> getAllCompetitorsWithPhoto() {
         String query = "SELECT * FROM competitor ORDER BY Surname";
         return getCompetitorsWithPhoto(query, false);
     }
-
+    
     @Override
     public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors) {
         Log.fine("Storing a list of competitors");
@@ -752,7 +752,7 @@ public abstract class SQL extends Database {
                 Log.finer("Deleting previous competitors");
                 s.executeUpdate("DELETE FROM competitor");
             }
-
+            
             for (int i = 0; i < competitors.size(); i++) {
                 if (!storeCompetitor(competitors.get(i), false)) {
                     Log.finer("New competitors stored.");
@@ -767,13 +767,13 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public List<Competitor> getAllCompetitors() {
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor ORDER BY Surname";
         return getCompetitors(query, false);
     }
-
+    
     @Override
     public List<Participant> getAllParticipants() {
         String query = "SELECT ID,Name,Surname FROM competitor ORDER BY Surname";
@@ -835,7 +835,7 @@ public abstract class SQL extends Database {
     @Override
     public List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roles, String championship, boolean printAll) {
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + championship + "' AND competitor.ID=role.Competitor ";
-
+        
         if (!printAll) {
             query += " AND role.Diploma=0 ";
         }
@@ -851,7 +851,7 @@ public abstract class SQL extends Database {
             }
             query += ")";
         }
-
+        
         query += ") ORDER BY Surname";
         return getCompetitors(query, false);
     }
@@ -894,52 +894,52 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarName(String name, boolean getImage, boolean verbose) {
         String query = "SELECT * FROM competitor WHERE Name LIKE '%" + name + "%' ORDER BY Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarSurname(String surname, boolean getImage, boolean verbose) {
         String query = "SELECT * FROM competitor WHERE Surname LIKE '%" + surname + "%' ORDER BY Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarID(String id, boolean getImage, boolean verbose) {
         String query = "SELECT * FROM competitor WHERE ID LIKE '%" + id + "%' ORDER BY Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public List<Competitor> searchCompetitorsByClub(String club, boolean verbose) {
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club='" + club + "' ORDER BY Surname";
         return getCompetitors(query, verbose);
     }
-
+    
     @Override
     public List<Competitor> searchCompetitorsWithoutClub(boolean verbose) {
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club IS NULL ORDER BY Surname";
         return getCompetitors(query, verbose);
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarClub(String club, boolean getImage, boolean verbose) {
         String query = "SELECT * FROM competitor WHERE Club LIKE '%" + club + "%' ORDER BY Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String club, String championship, boolean getImage, boolean verbose) {
         String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + club + "' AND r1.Tournament='" + championship + "'  ORDER BY c1.Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public boolean deleteCompetitor(Competitor c, boolean verbose) {
         Log.fine("Deleting the competitor " + c.getSurnameName());
@@ -949,13 +949,13 @@ public abstract class SQL extends Database {
             if (verbose) {
                 answer = MessageManager.questionMessage("questionDeleteCompetitor", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
-
+            
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate("DELETE FROM competitor WHERE ID='" + c.getId() + "'");
                 }
             }
-
+            
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -985,17 +985,17 @@ public abstract class SQL extends Database {
         }
         return !error && (answer || !verbose);
     }
-
+    
     @Override
     public List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, String championship) {
         Log.fine("Getting competitors ordered by score from " + championship);
         List<CompetitorRanking> competitorsOrdered = new ArrayList<>();
         String query = "SELECT " + "t3.Name as Name, " + "t3.Surname as Surname, " + "t3.ID as ID, " + "t1.NumVictorias, " + "TotalPtos " + "FROM( " + "SELECT " + "count(Distinct t1.IdDuelo) as NumVictorias, " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + "as  IDGanador " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor1, " + "t1.NAME as Competidor1, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador1 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t1 " + "INNER JOIN " + "(SELECT " + "t1.ID as IdCompetidor2, " + "t1.NAME as Competidor2, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador2 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t2 " + "ON t1.IdDuelo = t2.IdDuelo " + "WHERE " + "TotalJugador1 <> TotalJugador2   " + "GROUP BY " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + ") t1 " + "RIGHT OUTER JOIN " + "(SELECT " + "t1.IdCompetidor, " + "sum(TotalPtos) as TotalPtos " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + "UNION ALL " + "SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer) t1 " + "GROUP BY " + "t1.IdCompetidor " + ") " + "t2 " + "ON t2.IdCompetidor = t1.IDGanador " + "INNER JOIN " + "competitor t3 " + "ON t2.IdCompetidor = t3.ID " + "ORDER BY " + "NumVictorias DESC,TotalPtos DESC, t3.surname asc;";
-
+        
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
-
+                
                 while (rs.next()) {
                     competitorsOrdered.add(new CompetitorRanking(rs.getObject("Name").toString(), rs.getObject("Surname").toString(), rs.getObject("ID").toString(), rs.getInt("NumVictorias"), rs.getInt("TotalPtos")));
                 }
@@ -1003,30 +1003,30 @@ public abstract class SQL extends Database {
             if (competitorsOrdered.isEmpty() && verbose) {
                 MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         }
-
+        
         return competitorsOrdered;
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String role, String championship, boolean getImage, boolean verbose) {
         String query = "SELECT * FROM competitor, role WHERE competitor.ID=role.Competitor AND role.Role='" + role + "' AND role.Tournament='" + championship + "'  ORDER BY competitor.Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
-
+    
     @Override
     public List<CompetitorWithPhoto> searchRefereeByTournament(String championship, boolean getImage, boolean verbose) {
         return searchCompetitorsByRoleAndTournament("Referee", championship, getImage, verbose);
     }
-
+    
     @Override
     public Integer searchVolunteerOrder(Competitor c, String championship) {
         Log.fine("Obtain the numeration order of the volunteer " + c.getSurnameName());
         List<Competitor> allVolunteers = selectAllVolunteersInTournament(championship);
-
+        
         for (int i = 0; i < allVolunteers.size(); i++) {
             if (allVolunteers.get(i).getId().equals(c.getId())) {
                 return i + 1; //Order starts in 1. 
@@ -1093,14 +1093,14 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         if (inserted && verbose) {
             MessageManager.translatedMessage("roleChanged", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, p.getName() + " " + p.getSurname() + " -> " + role.name, JOptionPane.INFORMATION_MESSAGE);
             Log.info("Role of " + p.getSurnameName() + " changed to " + role.name);
         }
         return inserted;
     }
-
+    
     @Override
     public boolean storeRole(Role role, boolean verbose) {
         Log.fine("Storing role " + role.roleName);
@@ -1118,29 +1118,29 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         if (inserted && verbose) {
             MessageManager.translatedMessage("roleChanged", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, role.competitorID() + " -> " + role.roleName, JOptionPane.INFORMATION_MESSAGE);
             Log.finer("Role " + role.roleName + " stored.");
         }
-
+        
         return inserted;
     }
-
+    
     @Override
     public boolean deleteRole(Tournament t, Participant p) {
         Log.fine("Deleting role of participant " + p.getSurnameName() + " in tournament " + t.name);
         boolean answer = false;
         try {
             Statement s = connection.createStatement();
-
+            
             answer = MessageManager.questionMessage("roleDeleteQuestion", "Warning!", KendoTournamentGenerator.getInstance().language);
             if (answer) {
                 s.executeUpdate("DELETE FROM role WHERE Tournament='" + t.name + "' AND Competitor='" + p.getId() + "'");
                 MessageManager.translatedMessage("roleDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, p.getName() + " " + p.getSurname(), JOptionPane.INFORMATION_MESSAGE);
                 s.close();
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -1150,7 +1150,7 @@ public abstract class SQL extends Database {
         }
         return answer;
     }
-
+    
     @Override
     public String getTagRole(Tournament t, Participant p) {
         Log.fine("Getting roleTag of participant " + p.getSurnameName() + " in tournament " + t.name);
@@ -1161,21 +1161,21 @@ public abstract class SQL extends Database {
                 rs.next();
                 role = rs.getObject("Role").toString();
             }
-
-
+            
+            
         } catch (SQLException ex) {
             if (ex.getErrorCode() != 0) {
                 showSQLError(ex.getErrorCode());
             }
-
+            
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         Log.finer("RolTag obtained for participant " + p.getSurnameName() + " in tournament " + t.name + " is " + role);
         return role;
     }
-
+    
     @Override
     public void setAllParticipantsInTournamentAsAccreditationPrinted(String championship) {
         Log.fine("Disabling printing all accreditations cards of " + championship);
@@ -1189,7 +1189,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
-
+    
     @Override
     public void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, String championship) {
         Log.fine("Disabling printing the accreditation card of " + competitor.getSurnameName() + " in tournament " + championship);
@@ -1265,7 +1265,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
-
+    
     @Override
     public List<Role> getAllRoles() {
         Log.fine("Getting all roles.");
@@ -1286,7 +1286,7 @@ public abstract class SQL extends Database {
         }
         return roles;
     }
-
+    
     @Override
     public boolean storeAllRoles(List<Role> roles) {
         Log.fine("Storing all roles into database.");
@@ -1296,7 +1296,7 @@ public abstract class SQL extends Database {
                 Log.finer("Deleting all roles");
                 s.executeUpdate("DELETE FROM role");
             }
-
+            
             for (int i = 0; i < roles.size(); i++) {
                 if (!storeRole(roles.get(i), false)) {
                     Log.severe("Role " + roles.get(i).roleName);
@@ -1374,18 +1374,18 @@ public abstract class SQL extends Database {
             }
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         if (inserted && verbose) {
             if (!update) {
                 MessageManager.translatedMessage("clubStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, club.returnName(), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 MessageManager.translatedMessage("clubUpdated", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, club.returnName(), JOptionPane.INFORMATION_MESSAGE);
             }
-
+            
         }
         return inserted;
     }
-
+    
     @Override
     public List<String> returnClubsName() {
         Log.fine("Obtaining the name of all clubs.");
@@ -1403,10 +1403,10 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("MySQL database connection fail", this.getClass().getName());
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<Club> getAllClubs() {
         Log.fine("Obtaining all clubs.");
@@ -1419,12 +1419,12 @@ public abstract class SQL extends Database {
                     if (rs.getObject("City") != null) {
                         city = rs.getObject("City").toString();
                     }
-
+                    
                     String country = "";
                     if (rs.getObject("Country") != null) {
                         country = rs.getObject("Country").toString();
                     }
-
+                    
                     Club c = new Club(rs.getObject("Name").toString(), country, city);
                     try {
                         c.storeAddress(rs.getObject("Address").toString());
@@ -1443,7 +1443,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -1453,7 +1453,7 @@ public abstract class SQL extends Database {
         }
         return results;
     }
-
+    
     @Override
     public boolean storeAllClubs(List<Club> clubs) {
         Log.fine("Storing a list of clubs.");
@@ -1462,7 +1462,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM club");
             }
-
+            
             for (int i = 0; i < clubs.size(); i++) {
                 if (!storeClub(clubs.get(i), false)) {
                     error = true;
@@ -1474,17 +1474,17 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public List<Club> searchClub(String query, boolean verbose) {
         Log.fine("Searching club.");
         Log.finer(query);
         List<Club> results = new ArrayList<>();
-
+        
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
-
+                
                 while (rs.next()) {
                     Club c = new Club(rs.getObject("Name").toString(), rs.getObject("Country").toString(), rs.getObject("City").toString());
                     try {
@@ -1507,7 +1507,7 @@ public abstract class SQL extends Database {
                     MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
                 }
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -1515,28 +1515,28 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         return results;
     }
-
+    
     @Override
     public List<Club> searchClubByName(String name, boolean verbose) {
         String query = "SELECT * FROM club WHERE Name LIKE '%" + name + "%' ORDER BY Name";
         return searchClub(query, verbose);
     }
-
+    
     @Override
     public List<Club> searchClubByCity(String city, boolean verbose) {
         String query = "SELECT * FROM club WHERE City LIKE '%" + city + "%' ORDER BY Name";
         return searchClub(query, verbose);
     }
-
+    
     @Override
     public List<Club> searchClubByCountry(String country, boolean verbose) {
         String query = "SELECT * FROM club WHERE Country LIKE '%" + country + "%' ORDER BY Name";
         return searchClub(query, verbose);
     }
-
+    
     @Override
     public boolean deleteClub(Club c, boolean verbose) {
         boolean error = false;
@@ -1545,13 +1545,13 @@ public abstract class SQL extends Database {
             if (verbose) {
                 answer = MessageManager.questionMessage("questionDeleteClub", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
-
+            
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate("DELETE FROM club WHERE Name='" + c.returnName() + "'");
                 }
             }
-
+            
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -1561,7 +1561,7 @@ public abstract class SQL extends Database {
                     }
                     KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 }
-
+                
             }
         } catch (NullPointerException npe) {
             if (!error) {
@@ -1569,19 +1569,19 @@ public abstract class SQL extends Database {
                 if (verbose) {
                     MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
                 }
-
+                
             }
         }
         if (!error && answer) {
             if (verbose) {
                 MessageManager.translatedMessage("clubDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, c.returnName(), JOptionPane.INFORMATION_MESSAGE);
             }
-
+            
             Log.info("clubDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, c.returnName());
-
-
+            
+            
         }
-
+        
         return !error && (answer || !verbose);
     }
 
@@ -1604,7 +1604,7 @@ public abstract class SQL extends Database {
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery("SELECT * FROM tournament WHERE Name='" + t.name + "'")) {
-
+                
                 if (rs.next()) {
                     return updateTournament(t, verbose);
                 } else {
@@ -1647,7 +1647,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             error = true;
         }
-
+        
         if (!error) {
             if (!update) {
                 if (verbose) {
@@ -1661,10 +1661,10 @@ public abstract class SQL extends Database {
                 Log.info("tournamentUpdated", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, t.name);
             }
         }
-
+        
         return !error;
     }
-
+    
     @Override
     public boolean deleteTournament(String championship) {
         boolean answer = false;
@@ -1679,17 +1679,17 @@ public abstract class SQL extends Database {
                     MessageManager.translatedMessage("tournamentDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, championship, JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         return answer;
     }
-
+    
     @Override
     public boolean updateTournament(Tournament t, boolean verbose) {
         boolean error = false;
@@ -1734,17 +1734,17 @@ public abstract class SQL extends Database {
             error = true;
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
-
+        
         if (!error) {
             if (verbose) {
                 MessageManager.translatedMessage("tournamentUpdated", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, t.name, JOptionPane.INFORMATION_MESSAGE);
             }
             Log.info("tournamentUpdated", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, t.name);
         }
-
+        
         return !error;
     }
-
+    
     @Override
     public List<Tournament> getAllTournaments() {
         List<Tournament> results = new ArrayList<>();
@@ -1773,10 +1773,10 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public boolean storeAllTournaments(List<Tournament> tournaments) {
         boolean error = false;
@@ -1784,7 +1784,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM tournament");
             }
-
+            
             for (int i = 0; i < tournaments.size(); i++) {
                 if (!storeTournament(tournaments.get(i), false)) {
                     error = true;
@@ -1796,7 +1796,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public Tournament getTournamentByName(String name, boolean verbose) {
         try {
@@ -1822,10 +1822,10 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return null;
     }
-
+    
     @Override
     public List<Tournament> searchTournament(String query, boolean verbose) {
         List<Tournament> results = new ArrayList<>();
@@ -1845,23 +1845,23 @@ public abstract class SQL extends Database {
                 if (verbose) {
                     MessageManager.errorMessage("noResults", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
                 }
-
+                
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return results;
     }
-
+    
     @Override
     public List<Tournament> searchTournamentsByName(String name, boolean verbose) {
         String query = "SELECT * FROM tournament WHERE Name LIKE '%" + name + "%' ORDER BY Name";
         return searchTournament(query, verbose);
     }
-
+    
     @Override
     public void cleanLeague(String league, List<Team> teams) {
         for (int i = 0; i < teams.size(); i++) {
@@ -1870,7 +1870,7 @@ public abstract class SQL extends Database {
             updateTeamGroupOfLeague(league, t);
         }
     }
-
+    
     @Override
     public void storeDiplomaImage(Tournament t, InputStream Image, long imageSize) {
         try {
@@ -1904,7 +1904,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
     }
-
+    
     @Override
     public void storeAccreditationImage(Tournament t, InputStream Image, long imageSize) {
         try {
@@ -1938,11 +1938,11 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
     }
-
+    
     @Override
     public int getLevelTournament(String tournament) {
         String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournament + "';";
-
+        
         int level = -1;
         try {
             try (Statement s = connection.createStatement();
@@ -1987,7 +1987,7 @@ public abstract class SQL extends Database {
                         return false;
                     }
                 }
-
+                
                 insertTeam(t, verbose);
             }
         } catch (MySQLIntegrityConstraintViolationException micve) {
@@ -2032,7 +2032,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean insertTeam(Team t, boolean verbose) {
         boolean error = false;
@@ -2067,7 +2067,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     private List<Competitor> searchTeamMembersInLevel(Team t, boolean verbose, int level) {
         List<Competitor> results = new ArrayList<>();
         try {
@@ -2094,7 +2094,7 @@ public abstract class SQL extends Database {
         }
         return results;
     }
-
+    
     private List<List<Competitor>> searchTeamMembers(Team t, boolean verbose) {
         List<List<Competitor>> membersPerLevel = new ArrayList<>();
         try {
@@ -2113,11 +2113,11 @@ public abstract class SQL extends Database {
         }
         return membersPerLevel;
     }
-
+    
     @Override
     public List<Team> searchTeam(String query, boolean verbose) {
         List<Team> results = new ArrayList<>();
-
+        
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
@@ -2142,13 +2142,13 @@ public abstract class SQL extends Database {
         }
         return results;
     }
-
+    
     @Override
     public List<Team> searchTeamsByNameAndTournament(String name, String tournament, boolean verbose) {
         String query = "SELECT * FROM team WHERE Name LIKE '%" + name + "%' AND Tournament='" + tournament + "' GROUP BY Name ORDER BY Name";
         return searchTeam(query, verbose);
     }
-
+    
     @Override
     public Team getTeamByName(String name, String championship, boolean verbose) {
         String query = "SELECT * FROM team WHERE Name='" + name + "' AND Tournament='" + championship + "' GROUP BY Name ORDER BY Name";
@@ -2163,32 +2163,32 @@ public abstract class SQL extends Database {
             return null;
         }
     }
-
+    
     @Override
     public List<Team> searchTeamsByTournament(String tournament, boolean verbose) {
         String query = "SELECT * FROM team WHERE Tournament LIKE '" + tournament + "' GROUP BY Name ORDER BY Name ";
         return searchTeam(query, verbose);
     }
-
+    
     @Override
     public List<Team> searchTeamsByTournamentExactName(String tournament, boolean verbose) {
         String query = "SELECT * FROM team WHERE Tournament='" + tournament + "' GROUP BY Name ORDER BY Name";
         return searchTeam(query, verbose);
     }
-
+    
     @Override
     public List<Team> searchTeamsByLevel(String tournament, int level, boolean verbose) {
         // String query = "SELECT * FROM team WHERE Tournament='" + tournament + "' AND LevelTournament>=" + level + " GROUP BY Name ORDER BY Name ";
         String query = "SELECT * FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament + "' AND f1.Tournament='" + tournament + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
         return searchTeam(query, verbose);
     }
-
+    
     @Override
     public List<Team> getAllTeams() {
         String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name ";
         return searchTeam(query, false);
     }
-
+    
     @Override
     public boolean storeAllTeams(List<Team> teams) {
         boolean error = false;
@@ -2196,7 +2196,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM team");
             }
-
+            
             for (int i = 0; i < teams.size(); i++) {
                 if (!storeTeam(teams.get(i), false)) {
                     error = true;
@@ -2208,7 +2208,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public void updateTeamGroupOfLeague(String league, Team t) {
         try {
@@ -2223,9 +2223,9 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
     }
-
+    
     @Override
     public boolean deleteTeam(Team t, boolean verbose) {
         boolean error = false;
@@ -2234,13 +2234,13 @@ public abstract class SQL extends Database {
             if (verbose) {
                 answer = MessageManager.questionMessage("questionDeleteTeam", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
-
+            
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate("DELETE FROM team WHERE Name='" + t.returnName() + "' AND Tournament='" + t.competition.name + "'");
                 }
             }
-
+            
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -2249,7 +2249,7 @@ public abstract class SQL extends Database {
                         MessageManager.errorMessage("deleteTeam", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
                     }
                 }
-
+                
             }
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (NullPointerException npe) {
@@ -2269,7 +2269,7 @@ public abstract class SQL extends Database {
         }
         return !error && (answer || !verbose);
     }
-
+    
     @Override
     public boolean deleteTeam(String team, String competition, boolean verbose) {
         boolean error = false;
@@ -2279,7 +2279,7 @@ public abstract class SQL extends Database {
             if (verbose) {
                 answer = MessageManager.questionMessage("questionDeleteTeam", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
-
+            
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
                     sol = s.executeUpdate("DELETE FROM team WHERE Name='" + team + "' AND Tournament='" + competition + "'");
@@ -2294,7 +2294,7 @@ public abstract class SQL extends Database {
                     }
                     KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 }
-
+                
             }
         } catch (NullPointerException npe) {
             if (!error) {
@@ -2314,11 +2314,11 @@ public abstract class SQL extends Database {
             } else {
                 MessageManager.errorMessage("teamNotDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             }
-
+            
         }
         return !error && (answer || !verbose);
     }
-
+    
     @Override
     public void setIndividualTeams(String championship) {
         List<Competitor> competitors = selectAllCompetitorsInTournament(championship);
@@ -2329,9 +2329,9 @@ public abstract class SQL extends Database {
             t.addOneMember(competitors.get(i), 0);
             storeTeam(t, false);
         }
-
+        
     }
-
+    
     @Override
     public boolean deleteTeamsOfTournament(String championship, boolean verbose) {
         boolean error = false;
@@ -2340,13 +2340,13 @@ public abstract class SQL extends Database {
             if (verbose) {
                 answer = MessageManager.questionMessage("questionDeleteTeams", "Warning!", KendoTournamentGenerator.getInstance().language);
             }
-
+            
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate("DELETE FROM team WHERE Tournament='" + championship + "'");
                 }
             }
-
+            
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -2368,7 +2368,7 @@ public abstract class SQL extends Database {
         }
         return !error && (answer || !verbose);
     }
-
+    
     @Override
     public List<TeamRanking> getTeamsOrderByScore(String championship, boolean verbose) {
         List<TeamRanking> teamsOrdered = new ArrayList<>();
@@ -2389,7 +2389,7 @@ public abstract class SQL extends Database {
         }
         return teamsOrdered;
     }
-
+    
     @Override
     public Team getTeamOfCompetitor(String competitorID, String championship, boolean verbose) {
         String query = "SELECT * FROM team WHERE Member='" + competitorID + "' AND Tournament='" + championship + "' GROUP BY Name";
@@ -2399,7 +2399,7 @@ public abstract class SQL extends Database {
             return null;
         }
     }
-
+    
     @Override
     public boolean insertMemebersOfTeamInLevel(Team t, int level, boolean verbose) {
         boolean error = false;
@@ -2453,21 +2453,21 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean extendTeamInLevel(Team t, int level, boolean verbose) {
         return false;
     }
-
+    
     @Override
     public boolean deleteTeamInLevel(Team t, int level, boolean verbose) {
         boolean error = false;
-
+        
         try {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM team WHERE Name='" + t.returnName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.competition.name + "'");
             }
-
+            
             return true;
         } catch (SQLException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -2484,9 +2484,9 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
         return !error;
-
+        
     }
-
+    
     @Override
     public boolean deleteAllMemberChangesInTeams(String championship, boolean verbose) {
         boolean error = false;
@@ -2534,7 +2534,7 @@ public abstract class SQL extends Database {
                 } else {
                     answer = true;
                 }
-
+                
                 if (answer) {
                     try (Statement s = connection.createStatement()) {
                         if (purgeTournament) {
@@ -2549,7 +2549,7 @@ public abstract class SQL extends Database {
                                 level = fights.get(i).level;
                             }
                         }
-
+                        
                         for (Fight f : fights) {
                             //Add the fightManager that depends on the level and the teams.
                             s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.competition.name + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
@@ -2557,13 +2557,13 @@ public abstract class SQL extends Database {
                         }
                     }
                 }
-
+                
             } catch (SQLException ex) {
                 error = true;
                 MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             }
-
+            
             if (!error && answer) {
                 if (verbose) {
                     MessageManager.translatedMessage("fightStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fights.get(0).competition.name, JOptionPane.INFORMATION_MESSAGE);
@@ -2573,10 +2573,10 @@ public abstract class SQL extends Database {
         } else {
             return false;
         }
-
+        
         return !error && answer;
     }
-
+    
     @Override
     public boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights) {
         boolean error = false;
@@ -2598,7 +2598,7 @@ public abstract class SQL extends Database {
         Log.info("fightStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fights.get(0).competition.name);
         return !error;
     }
-
+    
     @Override
     public boolean storeFight(Fight fight, boolean verbose) {
         boolean error = false;
@@ -2621,7 +2621,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public ArrayList<Fight> searchFights(String query, String championship) {
         ArrayList<Fight> results = new ArrayList<>();
@@ -2642,7 +2642,7 @@ public abstract class SQL extends Database {
                                 if (d != null) {
                                     f.setDuel(d, i);
                                 }
-
+                                
                             }
                         }
                     } catch (NullPointerException npe) {
@@ -2657,7 +2657,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         return results;
     }
 
@@ -2672,7 +2672,7 @@ public abstract class SQL extends Database {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "'";
         return searchFights(query, championship);
     }
-
+    
     @Override
     public ArrayList<Fight> searchFightsByTournamentNameLevelEqualOrGreater(String championship, int level) {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND LeagueLevel >=" + level;
@@ -2702,7 +2702,7 @@ public abstract class SQL extends Database {
         String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
         return searchFights(query, championship);
     }
-
+    
     @Override
     public int obtainFightID(Fight f) {
         int ID = -1;
@@ -2716,11 +2716,13 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
+        Log.finest("Id of fight " + f.showFight() + " is " + ID);
         return ID;
     }
-
+    
     @Override
     public boolean updateFightAsOver(Fight fight) {
+        Log.fine("Updating fight '" +fight.team1 + " vs " + fight.team2 + "' as over.");
         boolean error = false;
         try {
             /*
@@ -2733,6 +2735,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
                 stmt.setInt(1, over);
+                Log.finest("UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 stmt.executeUpdate();
             }
             fight.setOverStored(true);
@@ -2743,7 +2746,7 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public boolean updateFightAsNotOver(Fight fight) {
         boolean error = false;
@@ -2761,15 +2764,15 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public ArrayList<Fight> getAllFights() {
         ArrayList<Fight> results = new ArrayList<>();
-
+        
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery("SELECT * FROM fight")) {
-
+                
                 while (rs.next()) {
                     Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), rs.getObject("Tournament").toString(), false),
                             getTeamByName(rs.getObject("Team2").toString(), rs.getObject("Tournament").toString(), false),
@@ -2792,7 +2795,7 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return results;
     }
 
@@ -2825,7 +2828,7 @@ public abstract class SQL extends Database {
             } else {
                 return false;
             }
-
+            
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
@@ -2886,20 +2889,20 @@ public abstract class SQL extends Database {
                     s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
-
+            
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("deleteFight", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
-
+        
         if (!error && answer) {
             if (verbose) {
                 MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
             }
             Log.info("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name);
         }
-
+        
         return (answer && !error);
     }
 
@@ -2915,6 +2918,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeDuel(Duel d, Fight f, int player) {
+        Log.fine("Storing duel " + d.showScore() + " into database.");
         boolean error = false;
         try {
             //Obtain the ID of the fight..
@@ -2923,11 +2927,13 @@ public abstract class SQL extends Database {
 
             //Delete the duel if exist previously.
             Statement s = connection.createStatement();
+            Log.finest("DELETE FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player);
             s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player);
             s.close();
 
             //Add the new duel.
             s = connection.createStatement();
+            Log.finest("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + player + ",'" + d.hitsFromCompetitorA.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorA.get(1).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + d.faultsCompetitorA + "," + d.faultsCompetitorB + ")");
             s.executeUpdate("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + player + ",'" + d.hitsFromCompetitorA.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorA.get(1).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + d.faultsCompetitorA + "," + d.faultsCompetitorB + ")");
             d.setStored(true);
             s.close();
@@ -2936,10 +2942,10 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("storeDuel", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
-
+        
         return !error;
     }
-
+    
     @Override
     public boolean storeDuelsOfFight(Fight f) {
         boolean error = false;
@@ -2964,10 +2970,10 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("storeDuel", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
-
+        
         return !error;
     }
-
+    
     @Override
     public boolean deleteDuelsOfFight(Fight f) {
         boolean error = false;
@@ -2982,12 +2988,12 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public List<Duel> getDuelsOfFight(Fight f) {
         int fightID = obtainFightID(f);
         Statement s;
-
+        
         Duel d;
         List<Duel> results = new ArrayList<>();
         try {
@@ -3001,31 +3007,31 @@ public abstract class SQL extends Database {
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer1B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2A").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(1, Score.getScore(c));
                     results.add(d);
                 }
@@ -3037,15 +3043,15 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return results;
     }
-
+    
     @Override
     public Duel getDuel(Fight f, int player) {
         Statement s;
         int fightID = obtainFightID(f);
-
+        
         Duel d = null;
         try {
             s = connection.createStatement();
@@ -3058,36 +3064,36 @@ public abstract class SQL extends Database {
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer1B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2A").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(1, Score.getScore(c));
-
+                    
                     d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
                     d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
+                    
                 }
             }
             s.close();
@@ -3097,34 +3103,34 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
         }
-
+        
         return d;
     }
-
+    
     @Override
     public List<Duel> getDuelsOfTournament(String championship) {
         Statement s;
         List<Duel> results = new ArrayList<>();
-
+        
         ArrayList<Fight> fights = searchFightsByTournamentName(championship);
         for (int i = 0; i < fights.size(); i++) {
             results.addAll(getDuelsOfFight(fights.get(i)));
         }
-
+        
         return results;
     }
-
+    
     @Override
     public List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight) {
         Statement s;
         List<Duel> results = new ArrayList<>();
         Duel d;
         ResultSet rs;
-
+        
         String queryTeamRight = "select * from duel d1 where EXISTS " + "(SELECT * from fight f1 WHERE f1.ID=d1.Fight AND EXISTS " + "(SELECT * FROM team t1 WHERE (f1.Team2=t1.name) AND EXISTS  " + "(SELECT * FROM competitor c1 WHERE t1.Member='" + competitorID + "') AND " + "d1.OrderPlayer=t1.Position))";
-
+        
         String queryTeamLeft = "select * from duel d1 where EXISTS " + "(SELECT * from fight f1 WHERE f1.ID=d1.Fight AND EXISTS " + "(SELECT * FROM team t1 WHERE (f1.Team1=t1.name) AND EXISTS  " + "(SELECT * FROM competitor c1 WHERE t1.Member='" + competitorID + "') AND " + "d1.OrderPlayer=t1.Position))";
-
+        
         try {
             s = connection.createStatement();
             if (teamRight) {
@@ -3132,7 +3138,7 @@ public abstract class SQL extends Database {
             } else {
                 rs = s.executeQuery(queryTeamLeft);
             }
-
+            
             while (rs.next()) {
                 d = new Duel();
                 char c;
@@ -3141,37 +3147,37 @@ public abstract class SQL extends Database {
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
+                
                 d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
+                
                 try {
                     c = rs.getString("PointPlayer1B").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
+                
                 d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
+                
                 try {
                     c = rs.getString("PointPlayer2A").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
+                
                 d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
+                
                 try {
                     c = rs.getString("PointPlayer2B").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
+                
                 d.hitsFromCompetitorB.set(1, Score.getScore(c));
 
                 //Faults
                 d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
                 d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
+                
                 results.add(d);
             }
             rs.close();
@@ -3183,10 +3189,10 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         return results;
     }
-
+    
     @Override
     public List<Duel> getAllDuels() {
         Statement s;
@@ -3203,37 +3209,37 @@ public abstract class SQL extends Database {
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer1B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2A").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
+                    
                     try {
                         c = rs.getString("PointPlayer2B").charAt(0);
                     } catch (StringIndexOutOfBoundsException siob) {
                         c = ' ';
                     }
-
+                    
                     d.hitsFromCompetitorB.set(1, Score.getScore(c));
 
                     //Faults
                     d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
                     d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
+                    
                     results.add(d);
                 }
             }
@@ -3245,7 +3251,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-
+        
         return results;
     }
 
@@ -3279,13 +3285,13 @@ public abstract class SQL extends Database {
         }
         return !error;
     }
-
+    
     @Override
     public List<Undraw> getAllUndraws() {
         String query = "SELECT * FROM undraw ";
-
+        
         List<Undraw> results = new ArrayList<>();
-
+        
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
@@ -3303,7 +3309,7 @@ public abstract class SQL extends Database {
         }
         return results;
     }
-
+    
     @Override
     public boolean storeAllUndraws(List<Undraw> undraws) {
         boolean error = false;
@@ -3323,7 +3329,7 @@ public abstract class SQL extends Database {
         Log.info("fightStored", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, undraws.get(0).getTournament() + ": " + undraws.get(0).getWinnerTeam());
         return !error;
     }
-
+    
     @Override
     public String getWinnerInUndraws(String championship, int group, List<Team> teams) {
         String teamWinner = null;
@@ -3336,7 +3342,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-
+            
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
@@ -3344,7 +3350,7 @@ public abstract class SQL extends Database {
         }
         return teamWinner;
     }
-
+    
     @Override
     public int getValueWinnerInUndraws(String championship, String team) {
         int value = 0;
@@ -3364,7 +3370,7 @@ public abstract class SQL extends Database {
         }
         return value;
     }
-
+    
     @Override
     public int getValueWinnerInUndrawInGroup(String championship, int group, String team) {
         int value = 0;
@@ -3384,7 +3390,7 @@ public abstract class SQL extends Database {
         }
         return value;
     }
-
+    
     @Override
     public void deleteDrawsOfTournament(String championship) {
         try {
@@ -3396,7 +3402,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
-
+    
     @Override
     public void deleteDrawsOfGroupOfTournament(String championship, int group) {
         try {
@@ -3408,7 +3414,7 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
-
+    
     public List<String> getUndrawMySQLCommands() {
         List<String> commands = new ArrayList<>();
         try {
@@ -3429,6 +3435,6 @@ public abstract class SQL extends Database {
         }
         return commands;
     }
-
+    
     protected abstract boolean showSQLError(int numberError);
 }

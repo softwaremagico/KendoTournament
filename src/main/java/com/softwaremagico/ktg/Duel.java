@@ -209,8 +209,9 @@ public class Duel implements Serializable {
     }
 
     public boolean needsToBeStored() {
-        if (howManyPoints(true) > 0 || howManyPoints(false) > 0 || 
-                getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
+        if (howManyPoints(true) > 0 || howManyPoints(false) > 0
+                || getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
+            Log.finest("Duel needs to be stored.");
             return true;
         }
         return false;
@@ -328,5 +329,21 @@ public class Duel implements Serializable {
     public void completeIppons(boolean leftPlayer) {
         setResultInRound(0, Score.IPPON, leftPlayer);
         setResultInRound(1, Score.IPPON, leftPlayer);
+    }
+
+    public String showScore() {
+        String score = "";
+        score += "TeamA: ";
+        for (Score s : hitsFromCompetitorA) {
+            score += s.getAbbreviature() + " ";
+        }
+        
+        score+="("+faultsCompetitorA+")";
+        score += "TeamB: ";
+        for (Score s : hitsFromCompetitorB) {
+            score += s.getAbbreviature() + " ";
+        }
+        score+="("+faultsCompetitorB+")";
+        return score;
     }
 }

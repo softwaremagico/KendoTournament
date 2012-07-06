@@ -315,4 +315,8 @@ public class Fight implements Serializable {
         }
         return true;
     }
+    
+    public String showFight(){
+        return "'"+team1.returnName() + " vs " + team2.returnName()+"'";
+    }
 }

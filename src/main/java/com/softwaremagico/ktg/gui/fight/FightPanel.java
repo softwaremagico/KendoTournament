@@ -527,6 +527,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         try {
+            Log.finest("Next button is pressed.");
             Fight currentFight = getCurrentFight();
             KendoTournamentGenerator.getInstance().fightManager.setFightAsOver(currentFight);
 
