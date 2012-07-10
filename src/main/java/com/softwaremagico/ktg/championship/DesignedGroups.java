@@ -1090,8 +1090,7 @@ public class DesignedGroups implements Serializable {
     }
 
     public void deleteUsedDesigner() {
-        MyFile designer = new MyFile(FOLDER + File.separator + championship.name + ".dsg");
-        designer.deleteFile();
+        MyFile.deleteFile(FOLDER + File.separator + championship.name + ".dsg");
     }
 
     /**

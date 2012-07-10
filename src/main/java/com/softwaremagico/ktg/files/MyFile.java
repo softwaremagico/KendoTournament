@@ -40,39 +40,35 @@ import javax.swing.JOptionPane;
  */
 public class MyFile {
 
-    String nombreFichero;
-    private boolean read = false;
-
     /**
-     * Creates a new instance of LecturaFicheros
+     * Creates a new instance of MyFile
      */
-    public MyFile(String tmp_file) {
-        nombreFichero = tmp_file;
+    private MyFile() {
     }
 
     /**
      * Devuelve las lineas de un fichero leido anteriormente.
      */
-    public List<String> InLines(boolean verbose) throws IOException {
+    public static List<String> InLines(String filename, boolean verbose) throws IOException {
         String OS = System.getProperty("os.name");
         if (OS.contains("Windows Vista")) {
-            return ReadTextFileInLines("ISO8859_1", verbose);
+            return ReadTextFileInLines(filename, "ISO8859_1", verbose);
         } else if (OS.contains("Windows")) {
-            return ReadTextFileInLines("Cp1252", verbose);
+            return ReadTextFileInLines(filename, "Cp1252", verbose);
         }
-        return ReadTextFileInLines("UTF8", verbose);
+        return ReadTextFileInLines(filename, "UTF8", verbose);
     }
 
     /**
      * Devuelve las lineas de un fichero leido anteriormente.
      */
-    public List<String> InLines(boolean verbose, String mode) throws IOException {
-        return ReadTextFileInLines(mode, verbose);
+    public static List<String> InLines(String filename, boolean verbose, String mode) throws IOException {
+        return ReadTextFileInLines(filename, mode, verbose);
     }
 
-    public String InString(boolean verbose) throws IOException {
+    public static String InString(String filename, boolean verbose) throws IOException {
         String OS = System.getProperty("os.name");
-        return ReadTextFile("ISO8859_1", verbose);
+        return ReadTextFile(filename, "ISO8859_1", verbose);
         /*
          * if (OS.contains("Windows Vista") || (OS.contains("Windows 7"))) {
          * return ReadTextFile("ISO8859_1", verbose); } else if
@@ -84,22 +80,20 @@ public class MyFile {
     /**
      * Devuelve el fichero leido como una lista de lineas.
      */
-    private List<String> ReadTextFileInLines(String mode, boolean verbose) {
+    private static List<String> ReadTextFileInLines(String filename, String mode, boolean verbose) {
         List<String> contents = new ArrayList<>();
 
         BufferedReader input = null;
         try {
-            input = new BufferedReader(new InputStreamReader(new FileInputStream(new File(nombreFichero)), mode));
+            input = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filename)), mode));
             String line;
             while ((line = input.readLine()) != null) {
                 contents.add(line);
             }
-            read = true;
         } catch (FileNotFoundException ex) {
             if (verbose) {
-                MessageManager.customMessage("Impossible to read the file: " + nombreFichero, "Error", JOptionPane.ERROR_MESSAGE);
+                MessageManager.customMessage("Impossible to read the file: " + filename, "Error", JOptionPane.ERROR_MESSAGE);
             }
-            read = false;
         } catch (IOException ex) {
         } finally {
             try {
@@ -116,12 +110,12 @@ public class MyFile {
     /**
      * Devuelve el fichero leido como un unico string.
      */
-    private String ReadTextFile(boolean verbose) {
-        File licence = new File(nombreFichero);
-        String text = "Error opening the file:" + nombreFichero;
+    public static String ReadTextFile(String filename, boolean verbose) {
+        File file = new File(filename);
+        String text="";
         try {
-            try (FileInputStream inputData = new FileInputStream(licence)) {
-                byte bt[] = new byte[(int) licence.length()];
+            try (FileInputStream inputData = new FileInputStream(file)) {
+                byte bt[] = new byte[(int) file.length()];
                 int numBytes = inputData.read(bt);    /*
                  * If not this line, the file is no readed propetly.
                  */
@@ -129,7 +123,7 @@ public class MyFile {
             }
         } catch (IOException ex) {
             if (verbose) {
-                MessageManager.errorMessage(text, "File Error");
+                MessageManager.errorMessage("Error opening the file:" + filename, "File Error");
             }
         }
         return text;
@@ -138,9 +132,9 @@ public class MyFile {
     /**
      * Devuelve el fichero leido como un unico string.
      */
-    private String ReadTextFile(String mode, boolean verbose) {
+    private static String ReadTextFile(String filename, String mode, boolean verbose) {
         String text = "";
-        List<String> doc = ReadTextFileInLines(mode, verbose);
+        List<String> doc = ReadTextFileInLines(filename, mode, verbose);
 
         for (int i = 0; i < doc.size(); i++) {
             if (!doc.get(i).startsWith("[") && !doc.get(i).startsWith("]") && !doc.get(i).startsWith("<")) {
@@ -151,16 +145,16 @@ public class MyFile {
         return text;
     }
 
-    public void deleteFile() {
-        File f = new File(nombreFichero);
+    public static void deleteFile(String filename) {
+        File f = new File(filename);
         if (f.exists() && f.canWrite()) {
             f.delete();
         }
     }
 
-    public boolean successInReadingFile() {
+    /*public boolean successInReadingFile() {
         return read;
-    }
+    }*/
 
     public static String convertStreamToString(InputStream is) throws IOException {
         /*

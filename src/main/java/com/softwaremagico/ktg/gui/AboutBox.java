@@ -43,7 +43,7 @@ public final class AboutBox extends javax.swing.JFrame {
     public AboutBox() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        VersionLabel.setText("v" + KendoTournamentGenerator.getInstance().getVersion());
+        VersionLabel.setText("v " + KendoTournamentGenerator.getInstance().getVersion() + " ");
         setLanguage(KendoTournamentGenerator.getInstance().language);
         UpdateLogo();
     }
@@ -114,7 +114,7 @@ public final class AboutBox extends javax.swing.JFrame {
         Pizarra.setToolTipText("My last words...");
         TextScrollPane.setViewportView(Pizarra);
 
-        jLabel2.setText("(Designed by Jorge Hortelano)");
+        jLabel2.setText("(by Jorge Hortelano)");
 
         VersionLabel.setText("version");
 
@@ -130,12 +130,12 @@ public final class AboutBox extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(VersionLabel)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(VersionLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jLabel2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 131, Short.MAX_VALUE)
+                        .add(194, 194, 194)
                         .add(CloseButton, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, TextScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, TextScrollPane))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(LogoPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 120, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)

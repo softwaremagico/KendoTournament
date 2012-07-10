@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.File;
@@ -42,7 +43,6 @@ import java.util.List;
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
-    private final String version = "0.9.7.2";
     private boolean debugMode = true;
     public Database database = null;
     private String password = "";
@@ -130,7 +130,7 @@ public class KendoTournamentGenerator {
     }
 
     public String getVersion() {
-        return version;
+        return MyFile.ReadTextFile("version.txt",false);
     }
 
     /**
@@ -190,14 +190,9 @@ public class KendoTournamentGenerator {
     private void obtainStoredDatabaseConnection() {
         try {
             List<String> connectionData;
-            Folder f = null;
-            try {
-                f = new Folder("");
-            } catch (Exception ex) {
-            }
 
             Configuration conf = new Configuration();
-            connectionData = f.ReadFileLines(conf.getPathConfigInHome() + "connection.txt", false);
+            connectionData = Folder.ReadFileLines(conf.getPathConfigInHome() + "connection.txt", false);
 
             for (int i = 0; i < connectionData.size(); i++) {
                 if (connectionData.get(i).contains("User:")) {
@@ -332,13 +327,9 @@ public class KendoTournamentGenerator {
     private String obtainStoredDataInConfig(String tag) {
         try {
             List<String> tournamentConfigFile;
-            Folder f = null;
-            try {
-                f = new Folder("");
-            } catch (Exception ex) {
-            }
+
             Configuration conf = new Configuration();
-            tournamentConfigFile = f.ReadFileLines(conf.getPathConfigInHome() + File.separator + "config.txt", false);
+            tournamentConfigFile = Folder.ReadFileLines(conf.getPathConfigInHome() + File.separator + "config.txt", false);
 
             for (int i = 0; i < tournamentConfigFile.size(); i++) {
                 if (tournamentConfigFile.get(i).contains(tag)) {

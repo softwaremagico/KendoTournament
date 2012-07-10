@@ -183,8 +183,7 @@ public class Controller {
                 } catch (NullPointerException npe) {
                 }
                 aboutGui = new AboutBox();
-                MyFile myFile = new MyFile(Path.returnRootPath() + "Readme.txt");
-                aboutGui.UpdateText(myFile.InString(true));
+                aboutGui.UpdateText(MyFile.InString(Path.returnRootPath() + "Readme.txt", true));
                 aboutGui.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,16 +200,20 @@ public class Controller {
             } catch (NullPointerException npe) {
             }
             helpWindow = new HelpWindow();
-            MyFile myFile = new MyFile(Path.returnManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().language.toUpperCase() + ".txt");
-
+            String filename = Path.returnManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().language.toUpperCase() + ".txt";
+            String text = "";
             try {
-                helpWindow.UpdateText(myFile.InString(true));
-                if (!myFile.successInReadingFile()) {
-                    myFile = new MyFile(Path.returnManualPath() + "Guia_EN.txt");
-                    helpWindow.UpdateText(myFile.InString(true));
-                }
+                text = MyFile.InString(filename, true);
             } catch (IOException ex) {
-                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (text.length() > 0) {
+                helpWindow.UpdateText(text);
+            } else {
+                try {
+                    helpWindow.UpdateText(MyFile.InString(Path.returnManualPath() + "Guia_EN.txt", true));
+                } catch (IOException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             helpWindow.setVisible(true);
         }

@@ -3,3 +3,8 @@
 /target/
 /install_linux/
 /install_windows/
+/target/
+*.svg
+*.*~
+*.log*
+*.lck

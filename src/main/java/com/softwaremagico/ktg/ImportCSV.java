@@ -48,9 +48,8 @@ public class ImportCSV {
         trans = new Translator("gui.xml");
         String path = exploreWindowsForCsv(JFileChooser.FILES_AND_DIRECTORIES, "");
         if (path.length() > 0) {
-            MyFile file = new MyFile(path);
             try {
-                text = file.InString(true);
+                text = MyFile.InString(path,true);
                 text = text.replace("\\s", "");
                 text = text.replace("\\n", "");
                 fields = text.split(";");

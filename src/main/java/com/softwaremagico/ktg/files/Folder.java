@@ -92,15 +92,13 @@ public class Folder {
         return files;
     }
 
-    public List<String> ReadFileLines(String fichero, boolean verbose) throws IOException {
-        MyFile file = new MyFile(fichero);
-        return file.InLines(verbose);
+    public static List<String> ReadFileLines(String filename, boolean verbose) throws IOException {
+        return MyFile.InLines(filename, verbose);
 
     }
 
-    public String ReadFileAsText(String fichero, boolean verbose) throws IOException {
-        MyFile ficheroALeer = new MyFile(fichero);
-        return ficheroALeer.InString(verbose).trim();
+    public String ReadFileAsText(String filename, boolean verbose) throws IOException {
+        return MyFile.InString(filename, verbose).trim();
     }
 
     /**
@@ -111,7 +109,7 @@ public class Folder {
     public void SaveListInFile(List dataList, String file) {
         File outputFile;
         byte b[];
-        //Se guarda en el fichero
+        //Se guarda en el filename
         outputFile = new File(file);
         try {
             FileOutputStream outputChannel = new FileOutputStream(outputFile);
@@ -141,7 +139,7 @@ public class Folder {
     public void SaveTextInFile(String text, String file) {
         File outputFile;
         byte b[];
-        //Se guarda en el fichero
+        //Se guarda en el filename
         outputFile = new File(file);
         try {
             FileOutputStream outputChannel = new FileOutputStream(outputFile);
