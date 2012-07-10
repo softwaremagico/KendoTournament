@@ -455,7 +455,7 @@ public class NewRingTournament extends javax.swing.JFrame {
             } else {
                 KendoTournamentGenerator.getInstance().database.storeFights(obtainRingFightsWithoutRepetition(), true, true);
             }
-            KendoTournamentGenerator.getInstance().database.cleanLeague(competition.name, listTeams);
+            KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(competition.name, listTeams);
             competition.mode = "simple";
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();

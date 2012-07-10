@@ -533,7 +533,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (fights.size() > 0) {
             KendoTournamentGenerator.getInstance().database.storeFights(fights, true, true);
-            KendoTournamentGenerator.getInstance().database.cleanLeague(competition.name, listTeams);
+            KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(competition.name, listTeams);
             competition.mode = "simple";
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();

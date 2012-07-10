@@ -293,7 +293,7 @@ public abstract class Database {
 
     public abstract List<Tournament> searchTournamentsByName(String name, boolean verbose);
 
-    public abstract void cleanLeague(String league, List<Team> teams);
+    public abstract void deleteGroupsOfTournament(String league, List<Team> teams);
 
     public abstract void storeDiplomaImage(Tournament t, InputStream Image, long imageSize);
 
