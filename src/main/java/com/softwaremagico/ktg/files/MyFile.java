@@ -66,8 +66,15 @@ public class MyFile {
         return ReadTextFileInLines(filename, mode, verbose);
     }
 
+    /**
+     * Return the text of a file in one string. 
+     * @param filename
+     * @param verbose
+     * @return
+     * @throws IOException 
+     */
     public static String InString(String filename, boolean verbose) throws IOException {
-        String OS = System.getProperty("os.name");
+        //String OS = System.getProperty("os.name");
         return ReadTextFile(filename, "ISO8859_1", verbose);
         /*
          * if (OS.contains("Windows Vista") || (OS.contains("Windows 7"))) {
@@ -145,16 +152,16 @@ public class MyFile {
         return text;
     }
 
+    /**
+     * Removes a file. 
+     * @param filename 
+     */
     public static void deleteFile(String filename) {
         File f = new File(filename);
         if (f.exists() && f.canWrite()) {
             f.delete();
         }
     }
-
-    /*public boolean successInReadingFile() {
-        return read;
-    }*/
 
     public static String convertStreamToString(InputStream is) throws IOException {
         /*
@@ -183,6 +190,11 @@ public class MyFile {
         }
     }
 
+    /**
+     * Check if the file already exists. 
+     * @param path
+     * @return 
+     */
     public static boolean fileExist(String path) {
         File f = new File(path);
         if (f.exists()) {

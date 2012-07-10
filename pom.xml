@@ -41,8 +41,7 @@
         <linux.releasedir>install_linux</linux.releasedir>
         <linux.origin>linux-basic-files</linux.origin>
         <windows.releasedir>install_windows</windows.releasedir>
-        <windows.origin>windows-basic-files</windows.origin>
-        
+        <windows.origin>windows-basic-files</windows.origin>        
     </properties>
     
     <profiles>
