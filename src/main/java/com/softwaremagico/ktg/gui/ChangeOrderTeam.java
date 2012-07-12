@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("TitleOrderTeam"));
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
         SelectButton.setText(trans.returnTag("SelectButton"));

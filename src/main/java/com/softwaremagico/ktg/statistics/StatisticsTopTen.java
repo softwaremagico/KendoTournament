@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         } else {
             competitorTopTen = getCompetitorsOrderByScoreInChampionship(tmp_championship);
         }
-        transl = new Translator("gui.xml");
+        transl = LanguagePool.getTranslator("gui.xml");
         start();
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
@@ -71,7 +72,7 @@ public class StatisticsTopTen extends StatisticsGUI {
     public StatisticsTopTen() {
         //usa la formula vieja!! 
         competitorTopTen = getCompetitorsOrderByScore();
-        transl = new Translator("gui.xml");
+        transl = LanguagePool.getTranslator("gui.xml");
         start();
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);

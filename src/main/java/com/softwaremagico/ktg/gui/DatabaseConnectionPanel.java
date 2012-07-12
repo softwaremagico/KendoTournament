@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.DatabaseEngine;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.event.KeyListener;
 
@@ -43,7 +44,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     }
 
     private void setLanguage() {
-        Translator trans = new Translator("gui.xml");
+        Translator trans = LanguagePool.getTranslator("gui.xml");
         UserLabel.setText(trans.returnTag("UserLabel"));
         ServerLabel.setText(trans.returnTag("ServerLabel"));
         PasswordLabel.setText(trans.returnTag("PasswordLabel"));

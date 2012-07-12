@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.Club;
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -55,7 +56,7 @@ public class NewClub extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleClub"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));
         CancelButton.setText(trans.returnTag("CancelButton"));

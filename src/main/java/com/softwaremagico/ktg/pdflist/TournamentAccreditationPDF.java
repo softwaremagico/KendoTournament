@@ -25,6 +25,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
 import java.util.List;
@@ -62,7 +63,7 @@ public class TournamentAccreditationPDF {
         TournamentAccreditation ta;
 
         public ThreadAccreditation(TimerPanel tp, String p, boolean printAll) {
-            transl = new Translator("gui.xml");
+            transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
             tp.updateTitle(transl.returnTag("AccreditationProgressBarTitle"));
             tp.updateLabel(transl.returnTag("AccreditationProgressBarLabel"));

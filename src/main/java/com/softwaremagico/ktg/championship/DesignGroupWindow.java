@@ -9,6 +9,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.gui.NewTeam;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -50,7 +51,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }
 
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleDesignGroupWindow"));
         UpButton.setText(trans.returnTag("UpButton"));
         DeleteButton.setText(trans.returnTag("DeleteButton"));

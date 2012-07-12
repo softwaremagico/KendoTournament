@@ -7,6 +7,7 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public abstract class StatisticsHits extends StatisticsGUI {
     }
 
     protected JFreeChart createChart(DefaultPieDataset dataset, String tag) {
-        Translator transl = new Translator("gui.xml");
+        Translator transl = LanguagePool.getTranslator("gui.xml");
         String title;
         if (competitor != null) {
             title = transl.returnTag(tag) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico

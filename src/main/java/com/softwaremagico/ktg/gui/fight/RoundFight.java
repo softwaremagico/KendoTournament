@@ -23,6 +23,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -76,7 +77,7 @@ public class RoundFight extends JPanel {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage(String language) {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
     }
 
     private void decoration(boolean selected) {

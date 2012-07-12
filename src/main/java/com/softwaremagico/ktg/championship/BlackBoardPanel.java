@@ -6,6 +6,7 @@ package com.softwaremagico.ktg.championship;
 
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -24,7 +25,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private String last_championship;
     private int titleColumn = 1;
     private int titleRow = 2;
-    transient private Translator trans = new Translator("gui.xml");
+    transient private Translator trans = LanguagePool.getTranslator("gui.xml");
 
     public BlackBoardPanel() {
         setLayout(new java.awt.GridBagLayout());

@@ -20,6 +20,7 @@
 package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
 import java.awt.BorderLayout;
@@ -79,7 +80,7 @@ public class NewTeam extends KendoFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewTeam"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));
         CancelButton.setText(trans.returnTag("CancelButton"));

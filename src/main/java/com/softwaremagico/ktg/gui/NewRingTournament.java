@@ -19,14 +19,13 @@
 package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -58,7 +57,7 @@ public class NewRingTournament extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewFight"));
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
         Team1Label.setText(trans.returnTag("Team1Label"));

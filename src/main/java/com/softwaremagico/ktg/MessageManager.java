@@ -4,6 +4,7 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 public class MessageManager {
 
     private static final int LINE = 50;
-    private static final Translator trans = new Translator("messages.xml");
+    private static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
     /**
      * Show an error message translated to the language stored

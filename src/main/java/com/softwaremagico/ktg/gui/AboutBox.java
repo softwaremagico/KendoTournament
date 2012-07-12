@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -52,7 +53,7 @@ public final class AboutBox extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleAboutBox"));
         CloseButton.setText(trans.returnTag("CloseButton"));
     }

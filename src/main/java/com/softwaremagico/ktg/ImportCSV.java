@@ -19,6 +19,7 @@
 package com.softwaremagico.ktg;
 
 import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class ImportCSV {
     ImportCSV(String champions) {
         championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(champions, false);
         //CorrectNIF nif = new CorrectNIF(tournam);
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         String path = exploreWindowsForCsv(JFileChooser.FILES_AND_DIRECTORIES, "");
         if (path.length() > 0) {
             try {

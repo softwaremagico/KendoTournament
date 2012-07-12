@@ -19,6 +19,7 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 
@@ -41,7 +42,7 @@ public final class HelpWindow extends javax.swing.JFrame {
     }
 
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleHelp"));
         CloseButton.setText(trans.returnTag("CloseButton"));
     }

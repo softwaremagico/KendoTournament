@@ -20,6 +20,7 @@
 package com.softwaremagico.ktg;
 
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
 import java.util.Date;
@@ -27,7 +28,7 @@ import java.util.logging.*;
 
 public class Log {
 
-    private static final Translator trans = new Translator("messages.xml");
+    private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static final Logger logger = Logger.getLogger("KendoLog");
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
     private static final int maxLines = 5000;

@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.RoleTags;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.GridBagConstraints;
 import java.awt.Rectangle;
@@ -57,7 +58,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleDiplomaEditor"));
         CloseButton.setText(trans.returnTag("CloseButton"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));

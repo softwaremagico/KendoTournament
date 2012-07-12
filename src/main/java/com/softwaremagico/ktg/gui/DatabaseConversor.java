@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.ConvertDatabase;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseEngine;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -56,7 +57,7 @@ public class DatabaseConversor extends javax.swing.JFrame {
     }
 
     private void setLanguage() {
-        Translator trans = new Translator("gui.xml");
+        Translator trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("ConvertDatabase"));
         FromDatabaseLabel.setText(trans.returnTag("FromDatabaseLabel"));
         ToDatabaseLabel.setText(trans.returnTag("ToDatabaseLabel"));

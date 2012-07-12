@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -60,7 +61,7 @@ public class ShortNewFight extends javax.swing.JFrame {
     }
 
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleShortFight"));
         Team1Label.setText(trans.returnTag("Team1Label"));
         Team2Label.setText(trans.returnTag("Team2Label"));

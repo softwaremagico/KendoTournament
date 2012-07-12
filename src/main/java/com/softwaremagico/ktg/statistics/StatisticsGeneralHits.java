@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
     }
 
     private JFreeChart createChart(DefaultPieDataset dataset) {
-        Translator transl = new Translator("gui.xml");
+        Translator transl = LanguagePool.getTranslator("gui.xml");
         // create the chart…
         JFreeChart chart = ChartFactory.createPieChart(
                 transl.returnTag("TitleHits")+": " + championship, // Titulo de grafico

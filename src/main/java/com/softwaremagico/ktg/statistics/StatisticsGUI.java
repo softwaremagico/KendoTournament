@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -55,7 +56,7 @@ public abstract class StatisticsGUI extends KendoFrame {
     }
 
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleStatistics"));
         CloseButton.setText(trans.returnTag("CloseButton"));
         SaveButton.setText(trans.returnTag("SaveButton"));

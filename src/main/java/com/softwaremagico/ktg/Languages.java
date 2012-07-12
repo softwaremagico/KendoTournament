@@ -18,6 +18,7 @@
  */
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Languages {
     private List<Language> languages = null;
 
     Languages() {
-        Translator trans = new Translator("languages.xml");
+        Translator trans = LanguagePool.getTranslator("languages.xml");
         languages = trans.returnAvailableLanguages();
     }
 

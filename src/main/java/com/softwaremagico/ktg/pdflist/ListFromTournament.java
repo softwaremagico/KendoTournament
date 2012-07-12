@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.pdflist;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -53,7 +54,7 @@ public abstract class ListFromTournament extends KendoFrame {
     }
 
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
         ArenaLabel.setText(trans.returnTag("ArenaLabel"));
         CancelButton.setText(trans.returnTag("CancelButton"));

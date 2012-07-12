@@ -11,6 +11,7 @@ import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Rectangle;
@@ -52,7 +53,7 @@ public final class Monitor extends javax.swing.JFrame {
         } else {
             fightArea = shiaijos;
         }
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         initComponents();
         //setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
         //        (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -91,7 +92,7 @@ public final class Monitor extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleFightPanel"));
         InverseCheckBox.setText(trans.returnTag("InverseCheckBox"));
         ColourCheckBox.setText(trans.returnTag("ColourCheckBox"));

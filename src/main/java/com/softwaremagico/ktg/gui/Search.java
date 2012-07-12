@@ -18,7 +18,7 @@
  */
 package com.softwaremagico.ktg.gui;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -50,7 +50,7 @@ public abstract class Search<T> extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleSearch"));
         CancelButton.setText(trans.returnTag("CancelButton"));
         SearchButton.setText(trans.returnTag("SearchButton"));

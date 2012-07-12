@@ -13,7 +13,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
-import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ public class FightListPDF extends ParentList {
 
     public FightListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
     }
 
     public PdfPTable fightTable(Fight f, String font, int fontSize) {

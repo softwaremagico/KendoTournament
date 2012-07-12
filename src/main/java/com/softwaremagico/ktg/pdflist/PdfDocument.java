@@ -24,6 +24,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
 import java.io.FileOutputStream;
@@ -46,7 +47,7 @@ public abstract class PdfDocument {
     protected int bottomMargin = 55;
     protected Image bgImage;
     private float opacity = 0.6f;
-    static Translator trans = new Translator("gui.xml");
+    static Translator trans = LanguagePool.getTranslator("gui.xml");
 
     PdfDocument() {
     }

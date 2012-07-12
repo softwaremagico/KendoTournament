@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -91,7 +92,7 @@ public class CompetitorFight extends JPanel {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
     }
 
     private void fillRightToLeft(String name) {

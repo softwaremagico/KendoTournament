@@ -18,6 +18,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
 import java.awt.Image;
@@ -91,7 +92,7 @@ public class StoreDatabase implements Serializable {
         private int current = 0;
 
         LoadDatabase(TimerPanel tp, String fileName) {
-            transl = new Translator("gui.xml");
+            transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
             file = fileName;
             timerPanel.updateTitle(transl.returnTag("ImportDatabaseProgressBarTitle"));
@@ -259,7 +260,7 @@ public class StoreDatabase implements Serializable {
 
         SaveDatabase(StoreDatabase sd, TimerPanel tp, String fileName) {
             storeDatabase = sd;
-            transl = new Translator("gui.xml");
+            transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
             file = fileName;
             timerPanel.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle"));

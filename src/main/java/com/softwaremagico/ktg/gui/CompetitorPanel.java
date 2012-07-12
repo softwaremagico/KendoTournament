@@ -18,6 +18,7 @@
  */
 package com.softwaremagico.ktg.gui;
 
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -72,7 +73,7 @@ public class CompetitorPanel extends JPanel {
     }
 
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         competitorLabel.setText(position + "º " + trans.returnTag("CompetitorLabel"));
 
     }

@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -84,7 +85,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }
 
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleLeagueDesigner"));
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
         PassLabel.setText(trans.returnTag("PassLabel"));

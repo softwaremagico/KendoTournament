@@ -23,6 +23,7 @@ import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -83,7 +84,7 @@ public final class FightPanel extends javax.swing.JFrame {
      * Translate the GUI to the selected language.
      */
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleFightPanel"));
         CloseButton.setText(trans.returnTag("CloseButton"));
         TreeButton.setText(trans.returnTag("TreeButton"));

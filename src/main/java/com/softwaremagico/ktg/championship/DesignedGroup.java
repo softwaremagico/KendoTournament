@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -86,7 +87,7 @@ public class DesignedGroup extends Group implements Serializable {
     }
 
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         if (level == 0) {
             this.setToolTipText(trans.returnTag("ToolTipEditable"));
         } else {

@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.List;
@@ -55,7 +56,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
     }
 
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("Hits"));
         ClassicRadioButton.setText(trans.returnTag("ClassicRadioButton"));
         EuropeanRadioButton.setText(trans.returnTag("EuropeanRadioButton"));

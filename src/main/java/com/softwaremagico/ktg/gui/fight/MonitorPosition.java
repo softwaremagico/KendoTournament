@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.awt.Dimension;
@@ -57,7 +58,7 @@ public class MonitorPosition extends JFrame {
 
     public MonitorPosition(Tournament tmp_championship) {
         championship = tmp_championship;
-        transl = new Translator("gui.xml");
+        transl = LanguagePool.getTranslator("gui.xml");
         initComponents();
         //setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
         //        (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));

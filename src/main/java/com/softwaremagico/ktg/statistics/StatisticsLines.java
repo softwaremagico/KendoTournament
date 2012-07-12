@@ -19,6 +19,7 @@
 package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -38,7 +39,7 @@ public class StatisticsLines extends StatisticsGUI {
     Translator transl;
 
     public StatisticsLines(KendoTournamentGenerator tmp_tournament) {
-        transl = new Translator("gui.xml");
+        transl = LanguagePool.getTranslator("gui.xml");
         start();
     }
 

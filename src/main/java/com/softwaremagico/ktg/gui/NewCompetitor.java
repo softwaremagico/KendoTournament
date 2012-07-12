@@ -20,6 +20,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -85,7 +86,7 @@ public class NewCompetitor extends KendoFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewCompetitor"));
         ExploreButton.setText(trans.returnTag("ExploreButton"));
         CleanButton.setText(trans.returnTag("CleanPhoto"));

@@ -23,6 +23,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
 import java.awt.Toolkit;
@@ -53,7 +54,7 @@ public class NewTournament extends KendoFrame {
      * Translate the GUI to the selected language.
      */
     public final void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewTournament"));
         ExploreButton.setText(trans.returnTag("ExploreButton"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));

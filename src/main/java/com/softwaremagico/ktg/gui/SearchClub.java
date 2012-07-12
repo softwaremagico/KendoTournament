@@ -21,7 +21,7 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.Club;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
@@ -46,7 +46,7 @@ public final class SearchClub extends Search<Club> {
      * Translate the GUI to the selected language.
      */
     private void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         CountryLabel.setText(trans.returnTag("CountryLabel"));
         CityLabel.setText(trans.returnTag("CityLabel"));
         NameLabel.setText(trans.returnTag("NameLabel"));

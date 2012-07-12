@@ -21,6 +21,7 @@ package com.softwaremagico.ktg.pdflist;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -45,7 +46,7 @@ public abstract class ListFromTeams extends KendoFrame {
     }
 
     public void setLanguage() {
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
         TeamLabel.setText(trans.returnTag("TeamLabel"));
         CancelButton.setText(trans.returnTag("CancelButton"));
         GenerateButton.setText(trans.returnTag("GenerateButton"));

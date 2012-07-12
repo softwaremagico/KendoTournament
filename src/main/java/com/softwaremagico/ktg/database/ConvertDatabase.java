@@ -5,6 +5,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class ConvertDatabase {
         Translator transl;
 
         public ThreadConversion(TimerPanel tp) {
-            transl = new Translator("gui.xml");
+            transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
             tp.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle"));
             tp.updateLabel(transl.returnTag("ExportDatabaseProgressBarLabelTournament"));

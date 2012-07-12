@@ -28,6 +28,7 @@ import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.List;
@@ -43,7 +44,7 @@ public class ScoreListPDF extends ParentList {
 
     public ScoreListPDF(Tournament tmp_championship) {
         championship = tmp_championship;
-        trans = new Translator("gui.xml");
+        trans = LanguagePool.getTranslator("gui.xml");
     }
 
     private PdfPTable simpleTable(PdfPTable mainTable) {

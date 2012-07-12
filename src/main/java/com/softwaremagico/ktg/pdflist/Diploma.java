@@ -25,6 +25,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.CompetitorRanking;
 import com.softwaremagico.ktg.statistics.TeamRanking;
@@ -99,7 +100,7 @@ public class Diploma {
         Translator transl;
 
         public ThreadDiploma(TimerPanel tp, Document d, String p) {
-            transl = new Translator("gui.xml");
+            transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
             tp.updateTitle(transl.returnTag("DiplomaProgressBarTitle"));
             tp.updateLabel(transl.returnTag("DiplomaProgressBarLabel"));

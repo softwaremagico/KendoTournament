@@ -22,6 +22,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
 import javax.swing.JPanel;
@@ -54,7 +55,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         } else {
             teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.getAllFights());
         }
-        transl = new Translator("gui.xml");
+        transl = LanguagePool.getTranslator("gui.xml");
         start();
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
