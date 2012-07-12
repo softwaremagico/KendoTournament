@@ -32,7 +32,7 @@ public final class SearchTeam extends Search<Team> {
     public SearchTeam() {
         super();
         fillSearchFieldPanel();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments();
 
         TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -47,10 +47,10 @@ public final class SearchTeam extends Search<Team> {
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        NameLabel.setText(trans.returnTag("NameLabel", language));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        NameLabel.setText(trans.returnTag("NameLabel"));
     }
 
     private void fillTournaments() {
@@ -87,7 +87,7 @@ public final class SearchTeam extends Search<Team> {
         if (NameTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchTeamsByNameAndTournament(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {

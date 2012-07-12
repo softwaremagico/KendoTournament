@@ -48,7 +48,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments();
         update();
     }
@@ -56,13 +56,13 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("TitleOrderTeam", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        SelectButton.setText(trans.returnTag("SelectButton", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        AvailableTeamLabel.setText(trans.returnTag("AvailableTeam", language));
+        this.setTitle(trans.returnTag("TitleOrderTeam"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        SelectButton.setText(trans.returnTag("SelectButton"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        AvailableTeamLabel.setText(trans.returnTag("AvailableTeam"));
     }
 
     private void fillTournaments() {

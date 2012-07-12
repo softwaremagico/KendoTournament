@@ -18,8 +18,6 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-
 /**
  *
  * @author Jorge
@@ -28,7 +26,7 @@ public class ClubList extends ListFromTournament {
 
     public ClubList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleSummary", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleSummary"));
     }
 
     @Override

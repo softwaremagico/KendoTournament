@@ -40,7 +40,7 @@ public class DatabaseConnection extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         //this.setBounds(this.getBounds().x, this.getBounds().y, (int) ContentPanel.getBounds().getWidth() + 40, this.getBounds().height);
         connectionPanel.setBounds(new Rectangle(mainPanel.getSize().width, mainPanel.getSize().height));
         mainPanel.add(connectionPanel);
@@ -51,11 +51,11 @@ public class DatabaseConnection extends javax.swing.JFrame {
         }
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         Translator trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleDatabaseConnection", language));
-        ConnectButton.setText(trans.returnTag("ConnectButton", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
+        this.setTitle(trans.returnTag("titleDatabaseConnection"));
+        ConnectButton.setText(trans.returnTag("ConnectButton"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
     }
 
     public void performConnection() {

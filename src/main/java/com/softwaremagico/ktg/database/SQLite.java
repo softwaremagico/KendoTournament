@@ -50,7 +50,7 @@ public class SQLite extends SQL {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (Exception e) {
-            MessageManager.errorMessage("Sqlite driver for Java is not installed. Check your configuration.", "SQLite");
+            MessageManager.basicErrorMessage("Sqlite driver for Java is not installed. Check your configuration.", "SQLite");
             error = true;
         }
 
@@ -68,9 +68,9 @@ public class SQLite extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("databaseConnected", "SQLite", KendoTournamentGenerator.getInstance().language, "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("databaseConnected", "SQLite", "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("databaseConnected", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
+            Log.info("databaseConnected", this.getClass().getName());
         }
         return !error;
     }
@@ -219,7 +219,7 @@ public class SQLite extends SQL {
         boolean answer = false;
         try {
             if (verbose) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!");
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
@@ -239,7 +239,7 @@ public class SQLite extends SQL {
 
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("storeFights", this.getClass().getName());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
         return !error;
@@ -258,7 +258,7 @@ public class SQLite extends SQL {
         boolean answer = false;
         try {
             if (verbose) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!");
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
@@ -276,7 +276,7 @@ public class SQLite extends SQL {
             }
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("storeFights", this.getClass().getName());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
         return !error;
@@ -295,7 +295,7 @@ public class SQLite extends SQL {
         boolean answer = false;
         try {
             if (verbose) {
-                answer = MessageManager.questionMessage("deleteOneFight", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteOneFight", "Warning!");
             }
             if (answer || !verbose) {
                 deleteDuelsOfFight(fight);
@@ -306,15 +306,15 @@ public class SQLite extends SQL {
 
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("deleteFight", this.getClass().getName(), KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("deleteFight", this.getClass().getName());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
 
         if (!error && answer) {
             if (verbose) {
-                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("fightDeleted", this.getClass().getName(), KendoTournamentGenerator.getInstance().language, fight.competition.name);
+            Log.info("fightDeleted", this.getClass().getName(), fight.competition.name);
         }
 
         return (answer && !error);
@@ -337,28 +337,28 @@ public class SQLite extends SQL {
         System.out.println("Error: " + numberError);
         switch (numberError) {
             case 1045:
-                MessageManager.errorMessage("deniedUser", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("deniedUser", "SQLite");
                 return true;
             case 1049:
-                MessageManager.errorMessage("noDatabase", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noDatabase", "SQLite");
                 return true;
             case 1062:
-                MessageManager.errorMessage("repeatedCompetitor", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("repeatedCompetitor", "SQLite");
                 return true;
             case 1054:
-                MessageManager.errorMessage("unknownColumn", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("unknownColumn", "SQLite");
                 return true;
             case 1146:
-                MessageManager.errorMessage("corruptedDatabase", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("corruptedDatabase", "SQLite");
                 return true;
             case 1130:
-                MessageManager.errorMessage("noAccessUser", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noAccessUser", "SQLite");
                 return true;
             case 1044:
-                MessageManager.errorMessage("noUserPrivileges", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noUserPrivileges", "SQLite");
                 return true;
             case 0:
-                MessageManager.errorMessage("noDatabase", "SQLite", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noDatabase", "SQLite");
                 return true;
         }
 

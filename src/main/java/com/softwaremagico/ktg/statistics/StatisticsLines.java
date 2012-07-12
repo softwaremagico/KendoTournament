@@ -90,7 +90,7 @@ public class StatisticsLines extends StatisticsGUI {
     private JFreeChart createChart(XYDataset dataset) {
         // create the chart…
         JFreeChart chart = ChartFactory.createXYLineChart(
-                transl.returnTag("TopTenTitle", KendoTournamentGenerator.getInstance().language), // Titulo de grafico
+                transl.returnTag("TopTenTitle"), // Titulo de grafico
                 "X", // Etiqueta del eje x
                 "Y", // Etiqueta del eje y
                 dataset, // data

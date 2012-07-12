@@ -82,7 +82,7 @@ public class Diploma {
             path += ".pdf";
         }
 
-        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!")) {
             TimerPanel tp = new TimerPanel();
             //tp.dispose();
             ThreadDiploma td = new ThreadDiploma(tp, document, path);
@@ -101,8 +101,8 @@ public class Diploma {
         public ThreadDiploma(TimerPanel tp, Document d, String p) {
             transl = new Translator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("DiplomaProgressBarTitle", KendoTournamentGenerator.getInstance().language));
-            tp.updateLabel(transl.returnTag("DiplomaProgressBarLabel", KendoTournamentGenerator.getInstance().language));
+            tp.updateTitle(transl.returnTag("DiplomaProgressBarTitle"));
+            tp.updateLabel(transl.returnTag("DiplomaProgressBarLabel"));
             document = d;
             path = p;
         }
@@ -117,15 +117,15 @@ public class Diploma {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
-                MessageManager.translatedMessage("diplomaOK", "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
                 KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, championship.name);
                 error = false;
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 error = true;
             } catch (Exception ex) {
-                MessageManager.errorMessage("diplomaBad", "PDF", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("diplomaBad", "PDF");
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 error = true;
             }
@@ -180,7 +180,7 @@ public class Diploma {
             }
 
             for (int i = 0; i < competitors.size(); i++) {
-                timerPanel.updateText(transl.returnTag("DiplomaProgressBarLabel", KendoTournamentGenerator.getInstance().language) + ": " + (i + 1) + "/" + competitors.size(), i, competitors.size());
+                timerPanel.updateText(transl.returnTag("DiplomaProgressBarLabel") + ": " + (i + 1) + "/" + competitors.size(), i, competitors.size());
                 diplomaTable(document, writer, competitors.get(i), font, fontSize);
                 if (statistics) {
                     statisticsTable(document, writer, competitors.get(i), font, fontSize);
@@ -220,7 +220,7 @@ public class Diploma {
                 document.newPage();
 
                 //General hits.
-                Image image = com.itextpdf.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.returnTag("TitleHits", KendoTournamentGenerator.getInstance().language)), null, false);
+                Image image = com.itextpdf.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.returnTag("TitleHits")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -234,7 +234,7 @@ public class Diploma {
                 duelsTeamLeft = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), false);
 
                 //Performed hits.
-                image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -242,7 +242,7 @@ public class Diploma {
 
 
                 //Received hits.
-                image = com.itextpdf.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("ReceivedHitsStatisticsMenuItem", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("ReceivedHitsStatisticsMenuItem")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -257,7 +257,7 @@ public class Diploma {
                 mainTable.addCell(cell);
 
                 //Team ranking.
-                image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.returnTag("TopTenTeamTitle", KendoTournamentGenerator.getInstance().language), transl.returnTag("NumberOfWinnedTopTen", KendoTournamentGenerator.getInstance().language)), null, false);
+                image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.returnTag("TopTenTeamTitle"), transl.returnTag("NumberOfWinnedTopTen")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setColspan(3);
@@ -392,11 +392,11 @@ public class Diploma {
 
         private CategoryDataset createTeamRankingDataset(Competitor competitor) {
             // row keys...
-            final String series1 = transl.returnTag("WonMatchs", KendoTournamentGenerator.getInstance().language);
-            final String series2 = transl.returnTag("DrawMatchs", KendoTournamentGenerator.getInstance().language);
-            final String series3 = transl.returnTag("WonFights", KendoTournamentGenerator.getInstance().language);
-            final String series4 = transl.returnTag("DrawFights", KendoTournamentGenerator.getInstance().language);
-            final String series5 = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language);
+            final String series1 = transl.returnTag("WonMatchs");
+            final String series2 = transl.returnTag("DrawMatchs");
+            final String series3 = transl.returnTag("WonFights");
+            final String series4 = transl.returnTag("DrawFights");
+            final String series5 = transl.returnTag("PerformedHitStatistics");
 
             // create the dataset...
             final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -523,7 +523,7 @@ public class Diploma {
             int files = 7;
 
 
-            Paragraph p = new Paragraph(transl.returnTag("TopTenCompetitorTitle", KendoTournamentGenerator.getInstance().language));
+            Paragraph p = new Paragraph(transl.returnTag("TopTenCompetitorTitle"));
             cell = new PdfPCell(p);
             cell.setBorderWidth(1);
             cell.setColspan(columns);
@@ -534,19 +534,19 @@ public class Diploma {
                 float[] width2 = {(float) 0.3, (float) 0.3, (float) 0.3};
                 PdfPTable table2 = new PdfPTable(width2);
 
-                p = new Paragraph(transl.returnTag("TopTenCompetitorNumber", KendoTournamentGenerator.getInstance().language), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.returnTag("TopTenCompetitorNumber"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell);
 
-                p = new Paragraph(transl.returnTag("Fights", KendoTournamentGenerator.getInstance().language), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.returnTag("Fights"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell);
 
-                p = new Paragraph(transl.returnTag("Hits", KendoTournamentGenerator.getInstance().language), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.returnTag("Hits"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);

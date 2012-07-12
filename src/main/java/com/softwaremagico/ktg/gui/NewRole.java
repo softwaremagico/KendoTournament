@@ -47,7 +47,7 @@ public class NewRole extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments();
         fillCompetitors();
         fillRoles();
@@ -59,7 +59,7 @@ public class NewRole extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments(tournaments);
         fillCompetitors();
         fillRoles();
@@ -69,16 +69,16 @@ public class NewRole extends KendoFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewRole", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        CompetitorLabel.setText(trans.returnTag("CompetitorLabel", language));
-        RoleLabel.setText(trans.returnTag("RoleLabel", language));
+        this.setTitle(trans.returnTag("titleNewRole"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        CompetitorLabel.setText(trans.returnTag("CompetitorLabel"));
+        RoleLabel.setText(trans.returnTag("RoleLabel"));
     }
 
     private void fillTournaments() {
@@ -159,7 +159,7 @@ public class NewRole extends KendoFrame {
             }
         } catch (ArrayIndexOutOfBoundsException aiofb) {
             KendoTournamentGenerator.getInstance().showErrorInformation(aiofb);
-            MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL");
             try {
                 RoleComboBox.setSelectedItem("");
             } catch (IllegalArgumentException iae) {
@@ -345,7 +345,7 @@ public class NewRole extends KendoFrame {
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId(), false);
                 CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF(c, listTournaments.get(TournamentComboBox.getSelectedIndex()));

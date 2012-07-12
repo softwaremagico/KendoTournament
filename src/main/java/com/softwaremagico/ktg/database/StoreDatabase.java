@@ -94,13 +94,13 @@ public class StoreDatabase implements Serializable {
             transl = new Translator("gui.xml");
             timerPanel = tp;
             file = fileName;
-            timerPanel.updateTitle(transl.returnTag("ImportDatabaseProgressBarTitle", KendoTournamentGenerator.getInstance().language));
+            timerPanel.updateTitle(transl.returnTag("ImportDatabaseProgressBarTitle"));
         }
 
         @Override
         public void run() {
             if(!saveFileInDatabase()){
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("corruptedDatabase", "MySQL");
             }
             timerPanel.dispose();
         }
@@ -110,7 +110,7 @@ public class StoreDatabase implements Serializable {
             try {
                 StoreDatabase sd = load();
                 if (sd != null) {
-                    timerPanel.updateTitle(transl.returnTag("ReadFile", KendoTournamentGenerator.getInstance().language));
+                    timerPanel.updateTitle(transl.returnTag("ReadFile"));
                     clubs = sd.clubs;
                     competitors = sd.competitors;
                     photos = sd.photos;
@@ -126,14 +126,14 @@ public class StoreDatabase implements Serializable {
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 error = true;
-                MessageManager.errorMessage("corruptedDatabase", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("corruptedDatabase", "MySQL");
             }
             return !error;
         }
 
         private boolean convertPhotos() {
             for (int i = 0; i < photos.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertPhotosProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + photos.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertPhotosProgressBarLabel") + " " + (i + 1) + "/" + photos.size(), current, total);
                 if (photos.get(i) != null) {
                     competitors.get(i).setPhoto(photos.get(i).getImage());
                 }
@@ -141,21 +141,21 @@ public class StoreDatabase implements Serializable {
             }
 
             for (int i = 0; i < banners.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertBannersProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + banners.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertBannersProgressBarLabel") + " " + (i + 1) + "/" + banners.size(), current, total);
                 if (banners.get(i) != null) {
                     tournaments.get(i).addBanner(banners.get(i).getImage());
                 }
                 current++;
             }
             for (int i = 0; i < accreditations.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertAccreditationsProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + banners.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertAccreditationsProgressBarLabel") + " " + (i + 1) + "/" + banners.size(), current, total);
                 if (accreditations.get(i) != null) {
                     tournaments.get(i).addAccreditation(accreditations.get(i).getImage());
                 }
                 current++;
             }
             for (int i = 0; i < diplomas.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertDiplomasProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + banners.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertDiplomasProgressBarLabel") + " " + (i + 1) + "/" + banners.size(), current, total);
                 if (diplomas.get(i) != null) {
                     tournaments.get(i).addBanner(diplomas.get(i).getImage());
                 }
@@ -167,7 +167,7 @@ public class StoreDatabase implements Serializable {
 
         private boolean storeInDatabase() {
             for (int i = 0; i < clubs.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelClub", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + clubs.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelClub") + " " + (i + 1) + "/" + clubs.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.storeClub(clubs.get(i), false)) {
                     return false;
                 }
@@ -175,7 +175,7 @@ public class StoreDatabase implements Serializable {
             }
 
             for (int i = 0; i < tournaments.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTournament", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + tournaments.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTournament") + " " + (i + 1) + "/" + tournaments.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.storeTournament(tournaments.get(i), false)) {
                     return false;
                 }
@@ -183,7 +183,7 @@ public class StoreDatabase implements Serializable {
             }
 
             for (int i = 0; i < competitors.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelCompetitor", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + competitors.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelCompetitor") + " " + (i + 1) + "/" + competitors.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.insertCompetitor(competitors.get(i))) {
                     return false;
                 }
@@ -192,7 +192,7 @@ public class StoreDatabase implements Serializable {
 
 
             for (int i = 0; i < roles.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelRole", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + roles.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelRole") + " " + (i + 1) + "/" + roles.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.storeRole(roles.get(i), false)) {
                     return false;
                 }
@@ -200,7 +200,7 @@ public class StoreDatabase implements Serializable {
             }
             
             for (int i = 0; i < teams.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTeam", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + roles.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTeam") + " " + (i + 1) + "/" + roles.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.insertTeam(teams.get(i), false)) {
                     System.out.println("false");
                     return false;
@@ -212,7 +212,7 @@ public class StoreDatabase implements Serializable {
             // KendoTournamentGenerator.getInstance().database.storeFights(fightManager, false, false);
 
             for (int i = 0; i < fights.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelFight", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + fights.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelFight") + " " + (i + 1) + "/" + fights.size(), current, total);
                 if (KendoTournamentGenerator.getInstance().database.storeFight(fights.get(i), false)) {
                     if (!KendoTournamentGenerator.getInstance().database.storeDuelsOfFight(fights.get(i))) {
                         return false;
@@ -232,7 +232,7 @@ public class StoreDatabase implements Serializable {
             if (readFile()) {
                 total = photos.size() + banners.size() + clubs.size() + competitors.size() + tournaments.size() + roles.size() + teams.size() + fights.size() + diplomas.size() + accreditations.size();
                 current++;
-                timerPanel.updateText(transl.returnTag("DeleteDatabaseProgressBarLabel", KendoTournamentGenerator.getInstance().language), current, total);
+                timerPanel.updateText(transl.returnTag("DeleteDatabaseProgressBarLabel"), current, total);
                 KendoTournamentGenerator.getInstance().database.clearDatabase();
                 if (convertPhotos()) {
                     if (storeInDatabase()) {
@@ -242,7 +242,7 @@ public class StoreDatabase implements Serializable {
             }
 
             if (!error) {
-                MessageManager.translatedMessage("databaseImported", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("databaseImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
             return !error;
         }
@@ -262,7 +262,7 @@ public class StoreDatabase implements Serializable {
             transl = new Translator("gui.xml");
             timerPanel = tp;
             file = fileName;
-            timerPanel.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle", KendoTournamentGenerator.getInstance().language));
+            timerPanel.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle"));
         }
 
         @Override
@@ -275,7 +275,7 @@ public class StoreDatabase implements Serializable {
         private boolean getCompetitorsPhotos() {
             photos = new ArrayList<>();
             for (int i = 0; i < competitors.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertPhotosProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + competitors.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertPhotosProgressBarLabel") + " " + (i + 1) + "/" + competitors.size(), current, total);
                 try {
                     Image photo = competitors.get(i).photo();
                     if (photo != null) {
@@ -296,7 +296,7 @@ public class StoreDatabase implements Serializable {
             accreditations = new ArrayList<>();
             diplomas = new ArrayList<>();
             for (int i = 0; i < tournaments.size(); i++) {
-                timerPanel.updateText(transl.returnTag("ConvertBannersProgressBarLabel", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + "/" + tournaments.size(), current, total);
+                timerPanel.updateText(transl.returnTag("ConvertBannersProgressBarLabel") + " " + (i + 1) + "/" + tournaments.size(), current, total);
                 try {
                     Image banner = tournaments.get(i).banner();
                     if (banner != null) {
@@ -334,13 +334,13 @@ public class StoreDatabase implements Serializable {
 
         private boolean saveDatabaseInFile() {
             boolean error = false;
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), current, total);
             clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
             current += 10;
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), current, total);
             competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitorsWithPhoto();
             current += 10;
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), current, total);
             current += 10;
             tournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
             //Progress bar is only useful when changing the photos. 
@@ -351,22 +351,22 @@ public class StoreDatabase implements Serializable {
             }
             getCompetitorsPhotos();
             getTournamentBanners();
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), current, total);
             teams = KendoTournamentGenerator.getInstance().database.getAllTeams();
             current += 10;
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), current, total);
             fights = KendoTournamentGenerator.getInstance().database.getAllFights();
             current += 10;
-            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole", KendoTournamentGenerator.getInstance().language), current, total);
+            timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), current, total);
             roles = KendoTournamentGenerator.getInstance().database.getAllRoles();
             current += 10;
             try {
-                timerPanel.updateText(transl.returnTag("WriteFile", KendoTournamentGenerator.getInstance().language), current, total);
+                timerPanel.updateText(transl.returnTag("WriteFile"), current, total);
                 write(storeDatabase);
-                MessageManager.translatedMessage("exportDatabase", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("exportDatabase", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 error = true;
-                MessageManager.errorMessage("exportDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("exportDatabaseFail", "MySQL");
             }
             return !error;
         }

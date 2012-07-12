@@ -51,7 +51,7 @@ public class CompetitorFight extends JPanel {
         competitor = c;
         fight = f;
         teamFight = tf;
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         decoration();
         try {
             if (left) {
@@ -78,7 +78,7 @@ public class CompetitorFight extends JPanel {
     CompetitorFight(boolean left) {
         competitor = null;
         fight = null;
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         decoration();
         if (left) {
             fillLeftToRight(" --- --- ");
@@ -90,7 +90,7 @@ public class CompetitorFight extends JPanel {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
     }
 
@@ -261,7 +261,7 @@ public class CompetitorFight extends JPanel {
             }
 
             menMenu = new JMenuItem();
-            menMenu.setText(trans.returnTag(Score.EMPTY.getName(), KendoTournamentGenerator.getInstance().language));
+            menMenu.setText(trans.returnTag(Score.EMPTY.getName()));
             menMenu.addActionListener(new MenuListener(player, round));
             contextMenu.add(menMenu);
         } catch (IndexOutOfBoundsException iofb) {
@@ -284,7 +284,7 @@ public class CompetitorFight extends JPanel {
         public void actionPerformed(ActionEvent e) {
             JMenuItem sourceItem = (JMenuItem) e.getSource();
 
-            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName(), KendoTournamentGenerator.getInstance().language))) {
+            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName()))) {
                 updateDuel(Score.EMPTY, round);
             } else {
                 updateDuel(Score.getScore(sourceItem.getText()), round);
@@ -369,9 +369,9 @@ public class CompetitorFight extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             JMenuItem sourceItem = (JMenuItem) e.getSource();
-            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName(), KendoTournamentGenerator.getInstance().language))) {
+            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName()))) {
                 resetFault();
-            } else if (sourceItem.getText().equals(trans.returnTag(Score.FAULT.getName(), KendoTournamentGenerator.getInstance().language))) {
+            } else if (sourceItem.getText().equals(trans.returnTag(Score.FAULT.getName()))) {
                 increaseFault();
             }
         }
@@ -382,12 +382,12 @@ public class CompetitorFight extends JPanel {
         JMenuItem menMenu = new JMenuItem();
         try {
 
-            menMenu.setText(trans.returnTag(Score.FAULT.getName(), KendoTournamentGenerator.getInstance().language));
+            menMenu.setText(trans.returnTag(Score.FAULT.getName()));
             menMenu.addActionListener(new FaultMenuListener());
             contextMenu.add(menMenu);
 
             menMenu = new JMenuItem();
-            menMenu.setText(trans.returnTag(Score.EMPTY.getName(), KendoTournamentGenerator.getInstance().language));
+            menMenu.setText(trans.returnTag(Score.EMPTY.getName()));
             menMenu.addActionListener(new FaultMenuListener());
             contextMenu.add(menMenu);
 

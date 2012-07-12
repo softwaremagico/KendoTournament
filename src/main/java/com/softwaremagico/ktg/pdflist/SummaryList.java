@@ -28,7 +28,7 @@ public class SummaryList extends ListFromTournament {
 
     public SummaryList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleSummary", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleSummary"));
         ArenaComboBox.setEnabled(true);
     }
 

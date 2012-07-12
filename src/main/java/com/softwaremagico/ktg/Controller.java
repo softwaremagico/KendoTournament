@@ -70,8 +70,8 @@ public class Controller {
     private StatisticsGeneralHits statisticsHits = null;
     private StatisticsTopTen statisticsTopTen = null;
     private StatisticsTeamTopTen statisticsTeamTopTen = null;
-    private StatisticsPerformedHits statisticsPerformedHits = null;
-    private StatisticsReceivedHits statisticsReceivedHits = null;
+    private StatisticsHitsPerformed statisticsPerformedHits = null;
+    private StatisticsHitsReceived statisticsReceivedHits = null;
     private SelectTournamentForHitsStatistics selectTournament = null;
     private SelectTournamentForTopTen selectTournamentTopTen = null;
     private SelectTournamentForTeamTopTen selectTournamentForTeamTopTen = null;
@@ -169,7 +169,7 @@ public class Controller {
             Locale.setDefault(new Locale(KendoTournamentGenerator.getInstance().language));
             Configuration langConf = new Configuration();
             langConf.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
-            main.setLanguage(KendoTournamentGenerator.getInstance().language);
+            main.setLanguage();
         }
     }
 
@@ -1234,7 +1234,7 @@ public class Controller {
                 statisticsPerformedHits.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsPerformedHits = new StatisticsPerformedHits(selectPerformedHitsOfCompetitor.returnSelectedCompetitor());
+            statisticsPerformedHits = new StatisticsHitsPerformed(selectPerformedHitsOfCompetitor.returnSelectedCompetitor());
             statisticsPerformedHits.setVisible(true);
             selectPerformedHitsOfCompetitor.dispose();
         }
@@ -1255,7 +1255,7 @@ public class Controller {
                 statisticsReceivedHits.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsReceivedHits = new StatisticsReceivedHits(selectReceivedHitsOfCompetitor.returnSelectedCompetitor());
+            statisticsReceivedHits = new StatisticsHitsReceived(selectReceivedHitsOfCompetitor.returnSelectedCompetitor());
             statisticsReceivedHits.setVisible(true);
             selectReceivedHitsOfCompetitor.dispose();
         }

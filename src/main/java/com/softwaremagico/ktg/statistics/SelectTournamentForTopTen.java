@@ -18,7 +18,6 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
 import com.softwaremagico.ktg.pdflist.ParentList;
 
@@ -30,7 +29,7 @@ public class SelectTournamentForTopTen extends ListFromTournament {
 
     public SelectTournamentForTopTen() {
         Start(true);
-        this.setTitle(trans.returnTag("titleHitStatistics", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleHitStatistics"));
     }
 
     @Override

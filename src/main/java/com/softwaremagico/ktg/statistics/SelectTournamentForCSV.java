@@ -18,7 +18,6 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
 import com.softwaremagico.ktg.pdflist.ParentList;
 
@@ -30,8 +29,8 @@ public class SelectTournamentForCSV extends ListFromTournament {
 
     public SelectTournamentForCSV() {
         Start(false);
-        this.setTitle(trans.returnTag("CvsMenuItem", KendoTournamentGenerator.getInstance().language));
-        GenerateButton.setText(trans.returnTag("ImportMenu", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("CvsMenuItem"));
+        GenerateButton.setText(trans.returnTag("ImportMenu"));
     }
 
     @Override

@@ -19,7 +19,6 @@
  */
 package com.softwaremagico.ktg.gui.fight;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
 import com.softwaremagico.ktg.pdflist.ParentList;
 
@@ -31,8 +30,8 @@ public class SelectTournamentForTreeMonitor extends ListFromTournament {
 
     public SelectTournamentForTreeMonitor() {
         Start(false);
-        this.setTitle(trans.returnTag("titleMonitorTournament", KendoTournamentGenerator.getInstance().language));
-        GenerateButton.setText(trans.returnTag("ButtonMonitorTreeTournament", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleMonitorTournament"));
+        GenerateButton.setText(trans.returnTag("ButtonMonitorTreeTournament"));
     }
 
     @Override

@@ -38,7 +38,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);
         } else {
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championshipName);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false), KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false));
             ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(fights);
             KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);
@@ -80,11 +80,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
             Separator s;
             if (i < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-                s = new Separator(trans.returnTag("Round", KendoTournamentGenerator.getInstance().language) + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - i));
+                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - i));
             } else if (i == KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-                s = new Separator(trans.returnTag("SemiFinalLabel", KendoTournamentGenerator.getInstance().language));
+                s = new Separator(trans.returnTag("SemiFinalLabel"));
             } else {
-                s = new Separator(trans.returnTag("FinalLabel", KendoTournamentGenerator.getInstance().language));
+                s = new Separator(trans.returnTag("FinalLabel"));
             }
             s.updateFont("sansserif", 24);
             add(s, c);
@@ -97,8 +97,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             c.gridy = i + 2;
             //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfArenas());
 
-            Separator s = new Separator(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1)
-                    + "<br>" + trans.returnTag("ArenaString", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
+            Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
+                    + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
             s.updateFont("sansserif", 24);
             add(s, c);
         }

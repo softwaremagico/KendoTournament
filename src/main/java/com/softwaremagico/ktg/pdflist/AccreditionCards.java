@@ -23,9 +23,9 @@ public class AccreditionCards extends ListFromTournament {
 
     public AccreditionCards() {
         Start(false);
-        this.setTitle(trans.returnTag("titleAccreditionCard", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleAccreditionCard"));
         CheckBox.setVisible(true);
-        changeCheckBoxText(trans.returnTag("PrintAll", KendoTournamentGenerator.getInstance().language));
+        changeCheckBoxText(trans.returnTag("PrintAll"));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class AccreditionCards extends ListFromTournament {
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
 
                 /*

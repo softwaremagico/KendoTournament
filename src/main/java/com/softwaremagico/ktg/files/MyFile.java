@@ -130,7 +130,7 @@ public class MyFile {
             }
         } catch (IOException ex) {
             if (verbose) {
-                MessageManager.errorMessage("Error opening the file:" + filename, "File Error");
+                MessageManager.basicErrorMessage("Error opening the file:" + filename, "File Error");
             }
         }
         return text;

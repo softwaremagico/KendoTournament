@@ -54,8 +54,8 @@ public class ConvertDatabase {
         public ThreadConversion(TimerPanel tp) {
             transl = new Translator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle", KendoTournamentGenerator.getInstance().language));
-            tp.updateLabel(transl.returnTag("ExportDatabaseProgressBarLabelTournament", KendoTournamentGenerator.getInstance().language));
+            tp.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle"));
+            tp.updateLabel(transl.returnTag("ExportDatabaseProgressBarLabelTournament"));
         }
 
         @Override
@@ -65,49 +65,49 @@ public class ConvertDatabase {
 
         private boolean dumpData() {
             try {
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament", KendoTournamentGenerator.getInstance().language), 1, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), 1, 7);
                 List<Tournament> tournaments = fromDatabase.getAllTournaments();
                 if (!toDatabase.storeAllTournaments(tournaments)) {
                     return false;
                 }
                 tournaments.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub", KendoTournamentGenerator.getInstance().language), 2, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), 2, 7);
                 List<Club> clubs = fromDatabase.getAllClubs();
                 if (!toDatabase.storeAllClubs(clubs)) {
                     return false;
                 }
                 clubs.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor", KendoTournamentGenerator.getInstance().language), 3, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), 3, 7);
                 List<CompetitorWithPhoto> competitors = fromDatabase.getAllCompetitorsWithPhoto();
                 if (!toDatabase.storeAllCompetitors(competitors)) {
                     return false;
                 }
                 competitors.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole", KendoTournamentGenerator.getInstance().language), 4, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), 4, 7);
                 List<Role> roles = fromDatabase.getAllRoles();
                 if (!toDatabase.storeAllRoles(roles)) {
                     return false;
                 }
                 roles.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam", KendoTournamentGenerator.getInstance().language), 5, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), 5, 7);
                 List<Team> teams = fromDatabase.getAllTeams();
                 if (!toDatabase.storeAllTeams(teams)) {
                     return false;
                 }
                 teams.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight", KendoTournamentGenerator.getInstance().language), 6, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 6, 7);
                 ArrayList<Fight> fights = fromDatabase.getAllFights();
                 if (!toDatabase.storeAllFightsAndDeleteOldOnes(fights)) {
                     return false;
                 }
                 fights.clear();
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight", KendoTournamentGenerator.getInstance().language), 7, 7);
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 7, 7);
                 List<Undraw> undraws = fromDatabase.getAllUndraws();
                 if (!toDatabase.storeAllUndraws(undraws)) {
                     return false;
@@ -115,7 +115,7 @@ public class ConvertDatabase {
                 undraws.clear();
 
                 timerPanel.dispose();
-                MessageManager.informationManager("ConversionCompleted", "Database", KendoTournamentGenerator.getInstance().language);
+                MessageManager.informationMessage("ConversionCompleted", "Database");
             } catch (Exception e) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(e);
                 timerPanel.dispose();

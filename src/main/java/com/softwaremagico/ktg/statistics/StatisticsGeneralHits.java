@@ -18,13 +18,13 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JPanel;
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.language.Translator;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -36,7 +36,7 @@ import org.jfree.data.general.DefaultPieDataset;
  */
 public class StatisticsGeneralHits extends StatisticsGUI {
 
-    private List<Duel> duels = new ArrayList<Duel>();
+    private List<Duel> duels = new ArrayList<>();
     private String championship;
 
     public StatisticsGeneralHits(String tmp_championship) {
@@ -75,7 +75,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
         Translator transl = new Translator("gui.xml");
         // create the chart…
         JFreeChart chart = ChartFactory.createPieChart(
-                transl.returnTag("TitleHits", KendoTournamentGenerator.getInstance().language)+": " + championship, // Titulo de grafico
+                transl.returnTag("TitleHits")+": " + championship, // Titulo de grafico
                 dataset, // data
                 true, // incluye leyenda
                 true, // visualiza tooltips

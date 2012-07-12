@@ -27,7 +27,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 
 
@@ -84,7 +83,7 @@ public class OrderTeam extends NewTeam {
     }
 
     public final void setLanguage2(String language) {
-        this.setTitle(trans.returnTag("titleOrderTeam", language));
+        this.setTitle(trans.returnTag("titleOrderTeam"));
     }
 
     public void updateOrderWindow(Team t) {
@@ -126,14 +125,14 @@ public class OrderTeam extends NewTeam {
             }
 
             if (repeatedCompetitor()) {
-                MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("repeatedCompetitor", "League");
             } else {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
                 if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
                     KendoTournamentGenerator.getInstance().fightManager.updateFightsWithNewOrderOfTeam(team);
-                    MessageManager.translatedMessage("orderChanged", "League", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.informationMessage("orderChanged", "League");
                     this.dispose();
                 }
             }

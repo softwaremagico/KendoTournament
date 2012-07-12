@@ -44,7 +44,7 @@ public abstract class ListFromTournament extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         voidTournament = tmp_voidTournament;
         fillTournaments();
         updateArena();
@@ -52,12 +52,12 @@ public abstract class ListFromTournament extends KendoFrame {
         ArenaComboBox.setEnabled(false);
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        ArenaLabel.setText(trans.returnTag("ArenaLabel", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        GenerateButton.setText(trans.returnTag("GenerateButton", language));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        ArenaLabel.setText(trans.returnTag("ArenaLabel"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        GenerateButton.setText(trans.returnTag("GenerateButton"));
     }
 
     private void fillTournaments() {
@@ -65,7 +65,7 @@ public abstract class ListFromTournament extends KendoFrame {
         try {
             listTournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
             if (voidTournament) {
-                TournamentComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
+                TournamentComboBox.addItem(trans.returnTag("All"));
             }
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i).name);
@@ -113,7 +113,7 @@ public abstract class ListFromTournament extends KendoFrame {
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 ParentList pdf = getPdfGenerator();
                 if (pdf.createFile(file)) {
@@ -130,7 +130,7 @@ public abstract class ListFromTournament extends KendoFrame {
         try {
             int selectedTourn = returnSelectedTournamentOfList();
             if (selectedTourn >= 0 && listTournaments.get(selectedTourn).fightingAreas > 1) {
-                ArenaComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
+                ArenaComboBox.addItem(trans.returnTag("All"));
             }
 
             if (selectedTourn >= 0) {

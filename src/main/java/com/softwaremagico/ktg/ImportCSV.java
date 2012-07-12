@@ -219,19 +219,19 @@ public class ImportCSV {
         while (index < fields.length) {
             if (fields[index].trim().toLowerCase().equals("delegado")
                     || fields[index].trim().toLowerCase().equals("delegate")
-                    || fields[index].trim().equals(trans.returnTag("RepresentativeLabel", KendoTournamentGenerator.getInstance().language).replace(":", ""))) {
+                    || fields[index].trim().equals(trans.returnTag("RepresentativeLabel").replace(":", ""))) {
                 index++;
                 if (!obtainDelegate()) {
                     error = true;
-                    MessageManager.errorMessage("clubNotStored", "MySQL", KendoTournamentGenerator.getInstance().language);
+                    MessageManager.errorMessage("clubNotStored", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("equipo")
                     || fields[index].trim().toLowerCase().equals("equipo")
                     || fields[index].trim().toLowerCase().equals("team")
-                    || fields[index].trim().equals(trans.returnTag("Team", KendoTournamentGenerator.getInstance().language).replace(":", ""))) {
+                    || fields[index].trim().equals(trans.returnTag("Team").replace(":", ""))) {
                 if (!obtainTeam()) {
                     error = true;
-                    MessageManager.errorMessage("storeTeam", "MySQL", KendoTournamentGenerator.getInstance().language);
+                    MessageManager.errorMessage("storeTeam", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("arbitro")
                     || fields[index].trim().toLowerCase().equals("arbitro")
@@ -240,7 +240,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainReferee()) {
                     error = true;
-                    MessageManager.errorMessage("storeRefereeBad", "MySQL", KendoTournamentGenerator.getInstance().language);
+                    MessageManager.errorMessage("storeRefereeBad", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("seminar")
                     || fields[index].trim().toLowerCase().equals("seminar")
@@ -248,7 +248,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainSeminar()) {
                     error = true;
-                    MessageManager.errorMessage("storeSeminarBad", "MySQL", KendoTournamentGenerator.getInstance().language);
+                    MessageManager.errorMessage("storeSeminarBad", "MySQL");
                 }
             } else {
                 //Unknown field, choose the next one. 
@@ -256,7 +256,7 @@ public class ImportCSV {
             }
         }
         if (!error) {
-            MessageManager.translatedMessage("csvInserted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage("csvInserted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -266,7 +266,7 @@ public class ImportCSV {
             fc = new JFileChooser(new File(KendoTournamentGenerator.getInstance().getDefaultDirectory() + File.separator));
             fc.setFileFilter(new CsvFilter());
             fc.setFileSelectionMode(mode);
-            String title = trans.returnTag("ImportMenu", KendoTournamentGenerator.getInstance().language);
+            String title = trans.returnTag("ImportMenu");
             if (file.length() == 0) {
                 fc.setSelectedFile(new File(defaultFileName()));
             } else {

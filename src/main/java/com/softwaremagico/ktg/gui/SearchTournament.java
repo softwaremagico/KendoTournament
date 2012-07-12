@@ -25,15 +25,15 @@ public final class SearchTournament extends Search<Tournament> {
     public SearchTournament() {
         super();
         fillSearchFieldPanel();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
     }
 
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        NameLabel.setText(trans.returnTag("NameLabel", language));
+        NameLabel.setText(trans.returnTag("NameLabel"));
     }
 
     @Override
@@ -57,7 +57,7 @@ public final class SearchTournament extends Search<Tournament> {
         if (NameTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchTournamentsByName(NameTextField.getText(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("fillFields", "Search");
         }
         fillResults(results);
     }

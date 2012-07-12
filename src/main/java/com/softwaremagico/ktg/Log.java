@@ -41,7 +41,7 @@ public class Log {
             //fh.setFormatter(new SimpleFormatter());
             fh.setFormatter(getCustomFormatter());
         } catch (IOException | SecurityException ex) {
-            MessageManager.errorMessage("Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage(), "Logger");
+            MessageManager.basicErrorMessage("Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage(), "Logger");
         }
     }
 
@@ -65,95 +65,95 @@ public class Log {
         logger.info(message);
     }
 
-    public static void info(String tag, String title, String language) {
-        info(title + ": " + trans.returnTag(tag, language));
+    public static void info(String tag, String title) {
+        info(title + ": " + trans.returnTag(tag));
     }
 
-    public static void info(String tag, String title, String language, String message) {
-        info(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void info(String tag, String title, String message) {
+        info(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void config(String message) {
         logger.config(message);
     }
 
-    public static void config(String tag, String title, String language) {
-        config(title + ": " + trans.returnTag(tag, language));
+    public static void config(String tag, String title) {
+        config(title + ": " + trans.returnTag(tag));
     }
 
-    public static void config(String tag, String title, String language, String message) {
-        config(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void config(String tag, String title, String message) {
+        config(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void warning(String message) {
         logger.warning(message);
     }
 
-    public static void warning(String tag, String title, String language) {
-        warning(title + ": " + trans.returnTag(tag, language));
+    public static void warning(String tag, String title) {
+        warning(title + ": " + trans.returnTag(tag));
     }
 
-    public static void warning(String tag, String title, String language, String message) {
-        warning(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void warning(String tag, String title, String message) {
+        warning(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void debug(String message) {
         logger.severe(message);
     }
 
-    public static void debug(String tag, String title, String language) {
-        debug(title + ": " + trans.returnTag(tag, language));
+    public static void debug(String tag, String title) {
+        debug(title + ": " + trans.returnTag(tag));
     }
 
-    public static void debug(String tag, String title, String language, String message) {
-        debug(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void debug(String tag, String title, String message) {
+        debug(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void severe(String message) {
         logger.severe(message);
     }
 
-    public static void severe(String tag, String title, String language) {
-        severe(title + ": " + trans.returnTag(tag, language));
+    public static void severe(String tag, String title) {
+        severe(title + ": " + trans.returnTag(tag));
     }
 
-    public static void severe(String tag, String title, String language, String message) {
-        severe(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void severe(String tag, String title, String message) {
+        severe(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void fine(String message) {
         logger.fine(message);
     }
 
-    public static void fine(String tag, String title, String language) {
-        fine(title + ": " + trans.returnTag(tag, language));
+    public static void fine(String tag, String title) {
+        fine(title + ": " + trans.returnTag(tag));
     }
 
-    public static void fine(String tag, String title, String language, String message) {
-        fine(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void fine(String tag, String title, String message) {
+        fine(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void finer(String message) {
         logger.finer(message);
     }
 
-    public static void finer(String tag, String title, String language) {
-        finer(title + ": " + trans.returnTag(tag, language));
+    public static void finer(String tag, String title) {
+        finer(title + ": " + trans.returnTag(tag));
     }
 
-    public static void finer(String tag, String title, String language, String message) {
-        finer(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void finer(String tag, String title, String message) {
+        finer(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 
     public static void finest(String messsage) {
         logger.finest(messsage);
     }
 
-    public static void finest(String tag, String title, String language) {
-        finest(title + ": " + trans.returnTag(tag, language));
+    public static void finest(String tag, String title) {
+        finest(title + ": " + trans.returnTag(tag));
     }
 
-    public static void finest(String tag, String title, String language, String message) {
-        finest(title + ": " + trans.returnTag(tag, language) + " -> " + message);
+    public static void finest(String tag, String title, String message) {
+        finest(title + ": " + trans.returnTag(tag) + " -> " + message);
     }
 }

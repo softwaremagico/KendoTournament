@@ -18,8 +18,6 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-
 /**
  *
  * @author Jorge
@@ -28,7 +26,7 @@ public class TeamList extends ListFromTournament {
 
     public TeamList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleListTeams", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleListTeams"));
     }
 
     @Override
@@ -44,5 +42,4 @@ public class TeamList extends ListFromTournament {
     protected ParentList getPdfGenerator() {
         return new TeamListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
     }
-
 }

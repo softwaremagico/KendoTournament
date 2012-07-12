@@ -28,7 +28,7 @@ public class RefereeList extends ListFromTournament {
 
     public RefereeList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleListReferee", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleListReferee"));
     }
 
     @Override

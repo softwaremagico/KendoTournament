@@ -39,17 +39,17 @@ public final class SearchClub extends Search<Club> {
     public SearchClub() {
         super();
         fillSearchFieldPanel();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
     }
 
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        CountryLabel.setText(trans.returnTag("CountryLabel", language));
-        CityLabel.setText(trans.returnTag("CityLabel", language));
-        NameLabel.setText(trans.returnTag("NameLabel", language));
+        CountryLabel.setText(trans.returnTag("CountryLabel"));
+        CityLabel.setText(trans.returnTag("CityLabel"));
+        NameLabel.setText(trans.returnTag("NameLabel"));
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class SearchClub extends Search<Club> {
         } else if (CityTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchClubByCity(CityTextField.getText(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {

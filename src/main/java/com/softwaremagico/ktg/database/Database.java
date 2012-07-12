@@ -337,7 +337,7 @@ public abstract class Database {
 
     public abstract boolean deleteTeam(Team t, boolean verbose);
 
-    public abstract boolean deleteTeam(String team, String competition, boolean verbose);
+    public abstract boolean deleteTeamByName(String team, String competition, boolean verbose);
 
     public abstract void setIndividualTeams(String championship);
 

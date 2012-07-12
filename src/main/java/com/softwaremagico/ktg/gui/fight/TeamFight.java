@@ -151,7 +151,7 @@ public class TeamFight extends JPanel {
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             }else{
-                MessageManager.errorMessage("waitNewLevel", "Team", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("waitNewLevel", "Team");
             }
         }
     }

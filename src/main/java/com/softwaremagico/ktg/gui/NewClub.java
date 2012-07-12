@@ -46,7 +46,7 @@ public class NewClub extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         FillCompetitors();
         updateClubOfCompetitor = true;
     }
@@ -54,19 +54,19 @@ public class NewClub extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleClub", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        NameLabel.setText(trans.returnTag("NameLabel", language));
-        CountryLabel.setText(trans.returnTag("CountryLabel", language));
-        CityLabel.setText(trans.returnTag("CityLabel", language));
-        AddressLabel.setText(trans.returnTag("AddressLabel", language));
-        RepresentativeLabel.setText(trans.returnTag("RepresentativeLabel", language));
-        PhoneLabel.setText(trans.returnTag("PhoneLabel", language));
-        MailLabel.setText(trans.returnTag("MailLabel", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
+        this.setTitle(trans.returnTag("titleClub"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        NameLabel.setText(trans.returnTag("NameLabel"));
+        CountryLabel.setText(trans.returnTag("CountryLabel"));
+        CityLabel.setText(trans.returnTag("CityLabel"));
+        AddressLabel.setText(trans.returnTag("AddressLabel"));
+        RepresentativeLabel.setText(trans.returnTag("RepresentativeLabel"));
+        PhoneLabel.setText(trans.returnTag("PhoneLabel"));
+        MailLabel.setText(trans.returnTag("MailLabel"));
+        SearchButton.setText(trans.returnTag("SearchButton"));
     }
 
     public void UpdateWindow(Club tmp_c) {
@@ -157,7 +157,7 @@ public class NewClub extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                MessageManager.errorMessage("noClubFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noClubFieldsFilled", "MySQL");
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);

@@ -39,16 +39,16 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         initComponents();
         fillEngines();
         setDefaultText();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         Translator trans = new Translator("gui.xml");
-        UserLabel.setText(trans.returnTag("UserLabel", language));
-        ServerLabel.setText(trans.returnTag("ServerLabel", language));
-        PasswordLabel.setText(trans.returnTag("PasswordLabel", language));
-        DatabaseLabel.setText(trans.returnTag("DatabaseLabel", language));
-        EngineLabel.setText(trans.returnTag("DatabaseEngineLabel", language));
+        UserLabel.setText(trans.returnTag("UserLabel"));
+        ServerLabel.setText(trans.returnTag("ServerLabel"));
+        PasswordLabel.setText(trans.returnTag("PasswordLabel"));
+        DatabaseLabel.setText(trans.returnTag("DatabaseLabel"));
+        EngineLabel.setText(trans.returnTag("DatabaseEngineLabel"));
     }
 
     private void setDefaultText() {

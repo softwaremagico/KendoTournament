@@ -77,7 +77,7 @@ public class FightListPDF extends ParentList {
         PdfPCell cell;
 
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
+        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship);
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
         for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels(); l++) {
@@ -86,13 +86,13 @@ public class FightListPDF extends ParentList {
              */
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
-            mainTable.addCell(getHeader1(trans.returnTag("Round", KendoTournamentGenerator.getInstance().language) + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
+            mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
             List<DesignedGroup> groups = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(l);
 
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString", KendoTournamentGenerator.getInstance().language) + " " + (i + 1) + " (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())) + ")", 0));
+                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())) + ")", 0));
 
                 for (int j = 0; j < KendoTournamentGenerator.getInstance().fightManager.size(); j++) {
                     if (groups.get(i).isFightOfGroup(KendoTournamentGenerator.getInstance().fightManager.get(j))) {

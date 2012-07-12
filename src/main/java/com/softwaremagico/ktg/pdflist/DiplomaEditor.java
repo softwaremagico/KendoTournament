@@ -47,7 +47,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         Slider.setValue(KendoTournamentGenerator.getInstance().getLastNamePositionOnDiploma());
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         addRoles();
         DiplomaPanel.setBounds(new Rectangle(mainPanel.getSize().width,mainPanel.getSize().height));
         mainPanel.add(DiplomaPanel);
@@ -56,14 +56,14 @@ public class DiplomaEditor extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleDiplomaEditor", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        InformationLabel.setText(trans.returnTag("InformationDiplomaLabel", language));
-        StatisticsCheckBox.setText(trans.returnTag("StatisticsCheckBox", language));
-        RoleLabel.setText(trans.returnTag("DiplomaRole", language));
+        this.setTitle(trans.returnTag("titleDiplomaEditor"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        InformationLabel.setText(trans.returnTag("InformationDiplomaLabel"));
+        StatisticsCheckBox.setText(trans.returnTag("StatisticsCheckBox"));
+        RoleLabel.setText(trans.returnTag("DiplomaRole"));
     }
 
     private void addRoles() {

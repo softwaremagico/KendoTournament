@@ -49,14 +49,13 @@ public abstract class PdfDocument {
     static Translator trans = new Translator("gui.xml");
 
     PdfDocument() {
-        
     }
 
     private void startBackgroundImage() {
         try {
             bgImage = Image.getInstance(Path.returnBackgroundPath());
         } catch (BadElementException | IOException ex) {
-            MessageManager.errorMessage("imageNotFound", "Error", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("imageNotFound", "Error");
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
@@ -85,18 +84,18 @@ public abstract class PdfDocument {
         if (!path.endsWith(".pdf")) {
             path += ".pdf";
         }
-        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!")) {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 TableFooter event = new TableFooter();
                 writer.setPageEvent(event);
                 generatePDF(document, writer);
-                MessageManager.translatedMessage(fileCreatedOkTag(), "PDF", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 return false;
             } catch (Exception ex) {
-                MessageManager.errorMessage(fileCreatedBadTag(), "PDF", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage(fileCreatedBadTag(), "PDF");
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                 return false;
             }
@@ -390,8 +389,8 @@ public abstract class PdfDocument {
                 table.addCell(header);
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 //table.addCell(String.format("Page %d of", writer.getPageNumber()));
-                table.addCell(String.format(trans.returnTag("Page", KendoTournamentGenerator.getInstance().language)
-                        + " %d " + trans.returnTag("Of", KendoTournamentGenerator.getInstance().language), writer.getPageNumber()));
+                table.addCell(String.format(trans.returnTag("Page")
+                        + " %d " + trans.returnTag("Of"), writer.getPageNumber()));
                 PdfPCell cell = new PdfPCell(Image.getInstance(total));
                 cell.setBorder(Rectangle.TOP);
                 table.addCell(cell);

@@ -42,7 +42,7 @@ public class DatabaseConversor extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         SourcePanel.add(fromDatabaseConnectionPanel);
         fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
         //fromDatabaseConnectionPanel.resetPassword();
@@ -55,12 +55,12 @@ public class DatabaseConversor extends javax.swing.JFrame {
         
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         Translator trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("ConvertDatabase", language));
-        FromDatabaseLabel.setText(trans.returnTag("FromDatabaseLabel", language));
-        ToDatabaseLabel.setText(trans.returnTag("ToDatabaseLabel", language));
-        ExportButton.setText(trans.returnTag("ConvertButton", language));
+        this.setTitle(trans.returnTag("ConvertDatabase"));
+        FromDatabaseLabel.setText(trans.returnTag("FromDatabaseLabel"));
+        ToDatabaseLabel.setText(trans.returnTag("ToDatabaseLabel"));
+        ExportButton.setText(trans.returnTag("ConvertButton"));
     }
 
     /**

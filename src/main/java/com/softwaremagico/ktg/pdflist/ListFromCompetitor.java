@@ -38,23 +38,23 @@ public abstract class ListFromCompetitor extends KendoFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         voidTournament = tmp_voidTournament;
         fillCompetitors();
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        CompetitorLabel.setText(trans.returnTag("CompetitorLabel", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        GenerateButton.setText(trans.returnTag("GenerateButton", language));
+        CompetitorLabel.setText(trans.returnTag("CompetitorLabel"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        GenerateButton.setText(trans.returnTag("GenerateButton"));
     }
 
     private void fillCompetitors() {
         try {
             listCompetitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
             if (voidTournament) {
-                CompetitorComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
+                CompetitorComboBox.addItem(trans.returnTag("All"));
             }
             for (int i = 0; i < listCompetitors.size(); i++) {
                 CompetitorComboBox.addItem(listCompetitors.get(i).getSurname() + ", " + listCompetitors.get(i).getName());

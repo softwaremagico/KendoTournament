@@ -36,8 +36,8 @@ public final class Monitor extends javax.swing.JFrame {
     private final int seconds = 5;
     Translator trans = null;
     //private int useOnlyShiaijo = -1;
-    private List<DesignedGroup> finishedGroups = new ArrayList<DesignedGroup>();
-    private List<DesignedGroup> showedRanking = new ArrayList<DesignedGroup>();
+    private List<DesignedGroup> finishedGroups = new ArrayList<>();
+    private List<DesignedGroup> showedRanking = new ArrayList<>();
     private ScorePanel scorePanel;
     private boolean showAllArenas = false;
 
@@ -57,7 +57,7 @@ public final class Monitor extends javax.swing.JFrame {
         //setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
         //        (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         this.setSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         pack();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -90,21 +90,21 @@ public final class Monitor extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleFightPanel", language));
-        InverseCheckBox.setText(trans.returnTag("InverseCheckBox", language));
-        ColourCheckBox.setText(trans.returnTag("ColourCheckBox", language));
+        this.setTitle(trans.returnTag("titleFightPanel"));
+        InverseCheckBox.setText(trans.returnTag("InverseCheckBox"));
+        ColourCheckBox.setText(trans.returnTag("ColourCheckBox"));
     }
 
     private void updateArenaLabel() {
-        ArenaLabel.setText(trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language) + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fightArea));
+        ArenaLabel.setText(trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fightArea));
     }
 
     private void showRemainingStatistics() {
         for (int i = 0; i < finishedGroups.size(); i++) {
             if (!showedRanking.contains(finishedGroups.get(i))) {
-                MonitorFightPosition mfp = new MonitorFightPosition(KendoTournamentGenerator.getInstance().fightManager.getFights(), finishedGroups.get(i), true);
+                MonitorFightPosition mfp = new MonitorFightPosition(finishedGroups.get(i), true);
                 mfp.setVisible(true);
                 showedRanking.add(finishedGroups.get(i));
                 break; //Only show one window each timer loop. 
@@ -146,7 +146,7 @@ public final class Monitor extends javax.swing.JFrame {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
 
         if (KendoTournamentGenerator.getInstance().designedGroups == null || !KendoTournamentGenerator.getInstance().designedGroups.returnTournament().name.equals(selectedTournament.name)) {
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
         }
 

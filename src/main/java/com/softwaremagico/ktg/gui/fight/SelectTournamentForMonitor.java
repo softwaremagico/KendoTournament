@@ -19,7 +19,6 @@ Created on agost of 2008.
  */
 package com.softwaremagico.ktg.gui.fight;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
 import com.softwaremagico.ktg.pdflist.ParentList;
 
@@ -31,8 +30,8 @@ public class SelectTournamentForMonitor extends ListFromTournament {
 
     public SelectTournamentForMonitor() {
         Start(false);
-        this.setTitle(trans.returnTag("titleMonitorTournament", KendoTournamentGenerator.getInstance().language));
-        GenerateButton.setText(trans.returnTag("ButtonMonitorTournament", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleMonitorTournament"));
+        GenerateButton.setText(trans.returnTag("ButtonMonitorTournament"));
         ArenaComboBox.setEnabled(true);
     }
 

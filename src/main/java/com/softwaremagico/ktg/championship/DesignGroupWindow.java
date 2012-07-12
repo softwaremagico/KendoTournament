@@ -31,7 +31,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillGroupArea();
         PassSpinner.setValue(dg.returnMaxNumberOfWinners());
         fillFightingAreas();
@@ -49,17 +49,17 @@ public class DesignGroupWindow extends javax.swing.JFrame {
         FightAreaComboBox.setSelectedIndex(dg.arena);
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleDesignGroupWindow", language));
-        UpButton.setText(trans.returnTag("UpButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
-        DownButton.setText(trans.returnTag("DownButton", language));
-        PassLabel.setText(trans.returnTag("PassLabel", language));
-        ArenaLabel.setText(trans.returnTag("ArenaLabel", language));
-        ShowButton.setText(trans.returnTag("ShowTeam", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        TeamLabel.setText(trans.returnTag("Teams", language));
+        this.setTitle(trans.returnTag("titleDesignGroupWindow"));
+        UpButton.setText(trans.returnTag("UpButton"));
+        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        DownButton.setText(trans.returnTag("DownButton"));
+        PassLabel.setText(trans.returnTag("PassLabel"));
+        ArenaLabel.setText(trans.returnTag("ArenaLabel"));
+        ShowButton.setText(trans.returnTag("ShowTeam"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        TeamLabel.setText(trans.returnTag("Teams"));
     }
 
     private void fillGroupArea() {
@@ -70,7 +70,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
             }
         }
         if (dg.teams.isEmpty()) {
-            groupModel.addElement(trans.returnTag("noTeams", KendoTournamentGenerator.getInstance().language));
+            groupModel.addElement(trans.returnTag("noTeams"));
             disable(true);
         } else {
             GroupList.setSelectedIndex(0);
@@ -305,7 +305,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_FightAreaComboBoxActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        if (MessageManager.questionMessage("questionRemoveTeam", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (MessageManager.questionMessage("questionRemoveTeam", "Warning!")) {
             int index = GroupList.getSelectedIndex();
             Team t = dg.teams.remove(index);
             fillGroupArea();

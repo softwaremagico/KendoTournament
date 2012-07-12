@@ -50,21 +50,21 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         fillTournaments();
         selectStyle();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         refreshing = false;
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("Hits", language));
-        ClassicRadioButton.setText(trans.returnTag("ClassicRadioButton", language));
-        EuropeanRadioButton.setText(trans.returnTag("EuropeanRadioButton", language));
-        CustomRadioButton.setText(trans.returnTag("CustomRadioButton", language));
-        WinLabel.setText(trans.returnTag("WinTag", language));
-        DrawLabel.setText(trans.returnTag("DrawTag", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        EuropeanUndrawLabel.setText(trans.returnTag("EuropeanUndrawLabel", language));
+        this.setTitle(trans.returnTag("Hits"));
+        ClassicRadioButton.setText(trans.returnTag("ClassicRadioButton"));
+        EuropeanRadioButton.setText(trans.returnTag("EuropeanRadioButton"));
+        CustomRadioButton.setText(trans.returnTag("CustomRadioButton"));
+        WinLabel.setText(trans.returnTag("WinTag"));
+        DrawLabel.setText(trans.returnTag("DrawTag"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        EuropeanUndrawLabel.setText(trans.returnTag("EuropeanUndrawLabel"));
     }
 
     private void selectStyle() {

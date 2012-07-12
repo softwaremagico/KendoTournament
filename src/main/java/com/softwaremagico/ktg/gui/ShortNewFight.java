@@ -52,21 +52,21 @@ public class ShortNewFight extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(competitionName, false);
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();
     }
 
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleShortFight", language));
-        Team1Label.setText(trans.returnTag("Team1Label", language));
-        Team2Label.setText(trans.returnTag("Team2Label", language));
-        AddButton.setText(trans.returnTag("AddButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        FightAreaLabel.setText(trans.returnTag("FightArea", language));
+        this.setTitle(trans.returnTag("titleShortFight"));
+        Team1Label.setText(trans.returnTag("Team1Label"));
+        Team2Label.setText(trans.returnTag("Team2Label"));
+        AddButton.setText(trans.returnTag("AddButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        FightAreaLabel.setText(trans.returnTag("FightArea"));
     }
 
     private void fillTeam1ComboBox() {

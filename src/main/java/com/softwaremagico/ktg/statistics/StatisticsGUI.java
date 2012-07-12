@@ -18,6 +18,9 @@
  */
 package com.softwaremagico.ktg.statistics;
 
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -31,9 +34,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import com.softwaremagico.ktg.gui.KendoFrame;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.language.Translator;
 
 /**
  *
@@ -48,19 +48,17 @@ public abstract class StatisticsGUI extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         //this.setExtendedState(this.getExtendedState() | StatisticsGUI.MAXIMIZED_BOTH);
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         SelectComboBox.setVisible(false);
         NumberSpinner.setVisible(false);
         NumberLabel.setVisible(false);
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleStatistics", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        //GenerateButton.setText(trans.returnTag("GenerateButton", language));
-        SaveButton.setText(trans.returnTag("SaveButton", language));
-        //NumberLabel.setText(trans.returnTag("NumberTeamsLabel", language));
+        this.setTitle(trans.returnTag("titleStatistics"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        SaveButton.setText(trans.returnTag("SaveButton"));
     }
 
     public abstract void generateStatistics();
@@ -184,7 +182,7 @@ public abstract class StatisticsGUI extends KendoFrame {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         String file = "";
         try {
-            if (!(file = exploreWindowsForPng(trans.returnTag("ExportPNG", KendoTournamentGenerator.getInstance().language),
+            if (!(file = exploreWindowsForPng(trans.returnTag("ExportPNG"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
             }
         } catch (Exception ex) {

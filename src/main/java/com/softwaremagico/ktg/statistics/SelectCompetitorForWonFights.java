@@ -18,14 +18,13 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.pdflist.ListFromCompetitor;
 
 public class SelectCompetitorForWonFights extends ListFromCompetitor {
 
     public SelectCompetitorForWonFights() {
         Start(true);
-        this.setTitle(trans.returnTag("titleWonStatistics", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleWonStatistics"));
     }
 
     @Override

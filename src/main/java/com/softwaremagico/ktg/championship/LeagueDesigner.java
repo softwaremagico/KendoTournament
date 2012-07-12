@@ -66,7 +66,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             initComponents();
             setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                     (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-            setLanguage(KendoTournamentGenerator.getInstance().language);
+            setLanguage();
             bbp = new BlackBoardPanel();
             BlackBoardScrollPane.setViewportView(bbp);
             PassSpinner.setValue(numberMaxOfWinners);
@@ -83,27 +83,27 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleLeagueDesigner", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        PassLabel.setText(trans.returnTag("PassLabel", language));
-        AddButton.setText(trans.returnTag("AddGroupButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteGroupButton", language));
-        CleanButton.setText(trans.returnTag("CleanButton", language));
-        CleanAllButton.setText(trans.returnTag("CleanAllButton", language));
-        AddTeamButton.setText(trans.returnTag("AddTeamButton", language));
-        AcceptButton.setText(trans.returnTag("GenerateMatchButton", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        ChampionshipRadioButton.setText(trans.returnTag("ChampionshipRadioButton", language));
-        TreeRadioButton.setText(trans.returnTag("TreeRadioButton", language));
-        SimpleRadioButton.setText(trans.returnTag("SimpleRadioButton", language));
-        CleanLinksButton.setText(trans.returnTag("CleanLinks", language));
-        DeleteLevelLabel.setText(trans.returnTag("DeleteLevelLabel", language));
-        DeleteLevelButton.setText(trans.returnTag("DeleteButton", language));
-        LoadButton.setText(trans.returnTag("ButtonLoadTournament", language));
-        TreeEditionLabel.setText(trans.returnTag("TournamentLabel", language));
-        GroupEditionLabel.setText(trans.returnTag("GroupLabel", language));
+        this.setTitle(trans.returnTag("titleLeagueDesigner"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        PassLabel.setText(trans.returnTag("PassLabel"));
+        AddButton.setText(trans.returnTag("AddGroupButton"));
+        DeleteButton.setText(trans.returnTag("DeleteGroupButton"));
+        CleanButton.setText(trans.returnTag("CleanButton"));
+        CleanAllButton.setText(trans.returnTag("CleanAllButton"));
+        AddTeamButton.setText(trans.returnTag("AddTeamButton"));
+        AcceptButton.setText(trans.returnTag("GenerateMatchButton"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        ChampionshipRadioButton.setText(trans.returnTag("ChampionshipRadioButton"));
+        TreeRadioButton.setText(trans.returnTag("TreeRadioButton"));
+        SimpleRadioButton.setText(trans.returnTag("SimpleRadioButton"));
+        CleanLinksButton.setText(trans.returnTag("CleanLinks"));
+        DeleteLevelLabel.setText(trans.returnTag("DeleteLevelLabel"));
+        DeleteLevelButton.setText(trans.returnTag("DeleteButton"));
+        LoadButton.setText(trans.returnTag("ButtonLoadTournament"));
+        TreeEditionLabel.setText(trans.returnTag("TournamentLabel"));
+        GroupEditionLabel.setText(trans.returnTag("GroupLabel"));
     }
 
     private void fillTournaments() {
@@ -253,7 +253,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void updateInterface() {
         try {
             championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship);
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(TournamentComboBox.getSelectedItem().toString(), false);
 
             if (!championship.mode.equals("simple")) {
@@ -380,14 +380,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
         LevelComboBox.removeAllItems();
         for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels(); i++) {
             if (i < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-                LevelComboBox.addItem(trans.returnTag("Round", KendoTournamentGenerator.getInstance().language) + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - i));
+                LevelComboBox.addItem(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - i));
             } else if (i == KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-                LevelComboBox.addItem(trans.returnTag("SemiFinalLabel", KendoTournamentGenerator.getInstance().language));
+                LevelComboBox.addItem(trans.returnTag("SemiFinalLabel"));
             } else {
-                LevelComboBox.addItem(trans.returnTag("FinalLabel", KendoTournamentGenerator.getInstance().language));
+                LevelComboBox.addItem(trans.returnTag("FinalLabel"));
             }
         }
-        LevelComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
+        LevelComboBox.addItem(trans.returnTag("All"));
     }
 
     private void focus(int x, int y) {
@@ -905,7 +905,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
             if (!(KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual")) || KendoTournamentGenerator.getInstance().designedGroups.allGroupsHaveManualLink()) {
-                if (MessageManager.questionMessage("questionCreateFight", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+                if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
                     KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, false);
                     if (KendoTournamentGenerator.getInstance().fightManager.setAll(KendoTournamentGenerator.getInstance().designedGroups.generateLevelFights(0), true)) {
                         //Delete inner levels when delete old fightManager.
@@ -915,7 +915,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                     }
                 }
             } else {
-                MessageManager.errorMessage("noLinkFinished", "Error", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noLinkFinished", "Error");
             }
         } catch (NullPointerException npe) {
         }
@@ -940,7 +940,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void CleanAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanAllButtonActionPerformed
         try {
             KendoTournamentGenerator.getInstance().fightManager.deleteAllFightsButNotFromDatabase(championship.name, false);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship, KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship);
             KendoTournamentGenerator.getInstance().designedGroups.mode = championship.mode;
             KendoTournamentGenerator.getInstance().designedGroups.setNumberOfTeamsPassNextRound(numberMaxOfWinners);
             updateMode();
@@ -1013,12 +1013,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             if (KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, true)) {
                 KendoTournamentGenerator.getInstance().designedGroups.deleteTeamsOfLevel(0);
-                MessageManager.translatedMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             if (KendoTournamentGenerator.getInstance().fightManager.deleteFightsOfLevel(championship.name, LevelComboBox.getSelectedIndex(), true)) {
                 KendoTournamentGenerator.getInstance().designedGroups.deleteTeamsOfLevel(LevelComboBox.getSelectedIndex());
-                MessageManager.translatedMessage("fightDeleted", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         updateBlackBoard();
@@ -1026,7 +1026,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteLevelButtonActionPerformed
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
-        if (MessageManager.questionMessage("questionLoadDesign", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+        if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
             KendoTournamentGenerator.getInstance().fightManager.setAll(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name), false);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
             KendoTournamentGenerator.getInstance().designedGroups.mode = championship.mode;

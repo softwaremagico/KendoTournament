@@ -111,23 +111,23 @@ public class MonitorPosition extends JFrame {
     }
 
     void addTitle(int fontSize) {
-        nameLabel = new JLabel(transl.returnTag("TeamTopTenMenuItem", KendoTournamentGenerator.getInstance().language));
+        nameLabel = new JLabel(transl.returnTag("TeamTopTenMenuItem"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
 
-        nameLabel = new JLabel(transl.returnTag("WonMatchs", KendoTournamentGenerator.getInstance().language));
+        nameLabel = new JLabel(transl.returnTag("WonMatchs"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("WonFights", KendoTournamentGenerator.getInstance().language));
+        nameLabel = new JLabel(transl.returnTag("WonFights"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language));
+        nameLabel = new JLabel(transl.returnTag("PerformedHitStatistics"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);

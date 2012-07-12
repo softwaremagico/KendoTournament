@@ -44,7 +44,7 @@ import javax.swing.border.EtchedBorder;
  */
 public class RoundFight extends JPanel {
 
-    private List<TeamFight> teamFights = new ArrayList<TeamFight>();
+    private List<TeamFight> teamFights = new ArrayList<>();
     private Fight fight;
     private int height = 65;
     Translator trans = null;
@@ -94,7 +94,7 @@ public class RoundFight extends JPanel {
     private void fillCurrentFightPanel(Fight f, boolean selected, boolean menu, int fight_number, int fight_total) {
         fight = f;
         removeAll();
-        teamFights = new ArrayList<TeamFight>();
+        teamFights = new ArrayList<>();
         TeamFight tf;
         if (!KendoTournamentGenerator.getInstance().fightManager.inverseTeams) {
             tf = new TeamFight(this, f.team1, f, true, selected, menu, fight_number, fight_total);
@@ -120,7 +120,7 @@ public class RoundFight extends JPanel {
 
     private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total) {
         removeAll();
-        teamFights = new ArrayList<TeamFight>();
+        teamFights = new ArrayList<>();
         TeamFight tf = new TeamFight(true, teamSize, fight_number, fight_total);
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
@@ -168,8 +168,8 @@ public class RoundFight extends JPanel {
         }
 
         private void createDrawsPanel() {
-            draws = new ArrayList<PanelBackground>();
-            drawsAnnoted = new ArrayList<Boolean>();
+            draws = new ArrayList<>();
+            drawsAnnoted = new ArrayList<>();
 
             Dimension minSize = new Dimension(0, 5);
             Dimension prefSize = new Dimension(5, 12);
@@ -220,13 +220,13 @@ public class RoundFight extends JPanel {
             JMenuItem drawMenu = new JMenuItem();
             try {
 
-                drawMenu.setText(trans.returnTag("DrawMenuItem", KendoTournamentGenerator.getInstance().language));
+                drawMenu.setText(trans.returnTag("DrawMenuItem"));
                 drawMenu.addActionListener(new MenuListener(fight));
                 contextMenu.add(drawMenu);
 
 
                 drawMenu = new JMenuItem();
-                drawMenu.setText(trans.returnTag("ClearMenuItem", KendoTournamentGenerator.getInstance().language));
+                drawMenu.setText(trans.returnTag("ClearMenuItem"));
                 drawMenu.addActionListener(new MenuListener(fight));
                 contextMenu.add(drawMenu);
             } catch (IndexOutOfBoundsException iofb) {
@@ -246,9 +246,9 @@ public class RoundFight extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JMenuItem sourceItem = (JMenuItem) e.getSource();
-                if (sourceItem.getText().equals(trans.returnTag("DrawMenuItem", KendoTournamentGenerator.getInstance().language))) {
+                if (sourceItem.getText().equals(trans.returnTag("DrawMenuItem"))) {
                     updateFight('X');
-                } else if (sourceItem.getText().equals(trans.returnTag("ClearMenuItem", KendoTournamentGenerator.getInstance().language))) {
+                } else if (sourceItem.getText().equals(trans.returnTag("ClearMenuItem"))) {
                     updateFight(' ');
                 }
             }

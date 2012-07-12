@@ -44,17 +44,17 @@ public final class AboutBox extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         VersionLabel.setText("v " + KendoTournamentGenerator.getInstance().getVersion() + " ");
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         UpdateLogo();
     }
     
     /**
      * Translate the GUI to the selected language.
      */
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleAboutBox", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
+        this.setTitle(trans.returnTag("titleAboutBox"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
     }
 
     public void UpdateText(String texto) {

@@ -64,8 +64,8 @@ public class TournamentAccreditationPDF {
         public ThreadAccreditation(TimerPanel tp, String p, boolean printAll) {
             transl = new Translator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("AccreditationProgressBarTitle", KendoTournamentGenerator.getInstance().language));
-            tp.updateLabel(transl.returnTag("AccreditationProgressBarLabel", KendoTournamentGenerator.getInstance().language));
+            tp.updateTitle(transl.returnTag("AccreditationProgressBarTitle"));
+            tp.updateLabel(transl.returnTag("AccreditationProgressBarLabel"));
             path = p;
             all = printAll;
         }
@@ -114,7 +114,7 @@ public class TournamentAccreditationPDF {
                 List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship.name, all);
 
                 for (int i = 0; i < competitors.size(); i++) {
-                    timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel", KendoTournamentGenerator.getInstance().language), i, competitors.size());
+                    timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());
                     CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship);
                     PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
                      competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
@@ -125,7 +125,7 @@ public class TournamentAccreditationPDF {
                     cell.addElement(competitorTable);
                     mainTable.addCell(cell);
                 }
-                timerPanel.updateLabel(transl.returnTag("WrittingToDisk", KendoTournamentGenerator.getInstance().language));
+                timerPanel.updateLabel(transl.returnTag("WrittingToDisk"));
                 mainTable.completeRow();
                 return mainTable;
             }

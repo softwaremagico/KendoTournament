@@ -45,18 +45,18 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
     public SearchCompetitor() {
         super();
         fillSearchFieldPanel();
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
     }
 
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        NameLabel.setText(trans.returnTag("NameLabel", language));
-        SurnameLabel.setText(trans.returnTag("SurnameLabel", language));
-        IDLabel.setText(trans.returnTag("IDLabel", language));
-        ClubLabel.setText(trans.returnTag("ClubLabel", language));
+        NameLabel.setText(trans.returnTag("NameLabel"));
+        SurnameLabel.setText(trans.returnTag("SurnameLabel"));
+        IDLabel.setText(trans.returnTag("IDLabel"));
+        ClubLabel.setText(trans.returnTag("ClubLabel"));
     }
 
     @Override
@@ -87,7 +87,7 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
         } else if (ClubTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {

@@ -43,19 +43,19 @@ public abstract class Search<T> extends javax.swing.JFrame {
         addListerners();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
     }
 
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleSearch", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
-        SelectButton.setText(trans.returnTag("SelectButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
+        this.setTitle(trans.returnTag("titleSearch"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        SearchButton.setText(trans.returnTag("SearchButton"));
+        SelectButton.setText(trans.returnTag("SelectButton"));
+        DeleteButton.setText(trans.returnTag("DeleteButton"));
     }
 
     protected abstract void fillSearchFieldPanel();

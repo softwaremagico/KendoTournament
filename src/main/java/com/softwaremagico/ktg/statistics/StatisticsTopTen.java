@@ -65,7 +65,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         }
         fillSelectComboBox();
         changesAllowed = true;
-        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel", KendoTournamentGenerator.getInstance().language));
+        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
     }
 
     public StatisticsTopTen() {
@@ -79,12 +79,12 @@ public class StatisticsTopTen extends StatisticsGUI {
         competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
         fillSelectComboBox();
         changesAllowed = true;
-        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel", KendoTournamentGenerator.getInstance().language));
+        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
     }
 
     private List<CompetitorRanking> getCompetitorsOrderByScore() {
         List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
-        List<CompetitorRanking> ranking = new ArrayList<CompetitorRanking>();
+        List<CompetitorRanking> ranking = new ArrayList<>();
         List<Fight> fights = KendoTournamentGenerator.getInstance().database.getAllFights();
         for (int i = 0; i < competitorsList.size(); i++) {
             if (competitorsList.get(i) != null) {
@@ -99,7 +99,7 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(String competition) {
         List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(competition);
-        List<CompetitorRanking> ranking = new ArrayList<CompetitorRanking>();
+        List<CompetitorRanking> ranking = new ArrayList<>();
         List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(competition);
         for (int i = 0; i < competitorsList.size(); i++) {
             if (competitorsList.get(i) != null) {
@@ -113,7 +113,7 @@ public class StatisticsTopTen extends StatisticsGUI {
     }
 
     private List<CompetitorRanking> OrderCompetitorRanking(List<CompetitorRanking> competitorsScore) {
-        List<CompetitorRanking> ordered = new ArrayList<CompetitorRanking>();
+        List<CompetitorRanking> ordered = new ArrayList<>();
         while (!competitorsScore.isEmpty()) {
             int max = 0;
             int maxVictories = 0;
@@ -192,8 +192,8 @@ public class StatisticsTopTen extends StatisticsGUI {
     private CategoryDataset createDataset() {
 
         // row keys...
-        final String series1 = transl.returnTag("WonFights", KendoTournamentGenerator.getInstance().language);
-        final String series2 = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language);
+        final String series1 = transl.returnTag("WonFights");
+        final String series2 = transl.returnTag("PerformedHitStatistics");
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -201,9 +201,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         int centerValue;
         try {
             centerValue = searchForCompetitorPosition(competitors.get(SelectComboBox.getSelectedIndex()));
-        } catch (NullPointerException npe) {
-            centerValue = 0;
-        } catch (ArrayIndexOutOfBoundsException aiob) {
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
             centerValue = 0;
         }
         int startValue = centerValue - returnNumberOfSpinner() / 2;
@@ -235,10 +233,9 @@ public class StatisticsTopTen extends StatisticsGUI {
     private JFreeChart createChart(CategoryDataset dataset) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-                transl.returnTag("TopTenTitle", KendoTournamentGenerator.getInstance().language), // chart title
-                //transl.returnTag("PlayerTopTen", KendoTournamentGenerator.getInstance().language), // range axis label
+                transl.returnTag("TopTenTitle"), // chart title
                 "",
-                transl.returnTag("NumberOfWinnedTopTen", KendoTournamentGenerator.getInstance().language), // domain axis label
+                transl.returnTag("NumberOfWinnedTopTen"), // domain axis label
                 dataset, // data
                 PlotOrientation.VERTICAL, // orientation
                 true, // include legend
@@ -297,8 +294,7 @@ public class StatisticsTopTen extends StatisticsGUI {
 
         try {
             SelectComboBox.setSelectedItem(competitorTopTen.get(0).surname + ", " + competitorTopTen.get(0).name + " (" + competitorTopTen.get(0).id + ")");
-        } catch (NullPointerException npe) {
-        } catch (IndexOutOfBoundsException iob) {
+        } catch (NullPointerException | IndexOutOfBoundsException npe) {
         }
     }
 

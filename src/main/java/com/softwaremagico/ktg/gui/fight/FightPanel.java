@@ -55,7 +55,7 @@ public final class FightPanel extends javax.swing.JFrame {
         listTournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments();
         createBanner();
 
@@ -64,7 +64,7 @@ public final class FightPanel extends javax.swing.JFrame {
             scorePanel = new ScorePanel(selectedTournament);
             updateTournament();
             if (KendoTournamentGenerator.getInstance().designedGroups == null) {
-                KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language);
+                KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament);
                 KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(TournamentComboBox.getSelectedItem().toString()));
             }
         } catch (NullPointerException npe) {
@@ -82,21 +82,21 @@ public final class FightPanel extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleFightPanel", language));
-        CloseButton.setText(trans.returnTag("CloseButton", language));
-        TreeButton.setText(trans.returnTag("TreeButton", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        FightAreaLabel.setText(trans.returnTag("FightArea", language));
-        PreviousButton.setText(trans.returnTag("PreviousButton", language));
-        NextButton.setText(trans.returnTag("NextButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteFigthtButton", language));
-        AddButton.setText(trans.returnTag("AddFigthtButton", language));
-        InverseCheckBox.setText(trans.returnTag("InverseCheckBox", language));
-        ColourCheckBox.setText(trans.returnTag("ColourCheckBox", language));
-        RefreshButton.setText(trans.returnTag("RefreshButton", language));
-        RankingButton.setText(trans.returnTag("NumberOfWinnedTopTen", language));
+        this.setTitle(trans.returnTag("titleFightPanel"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
+        TreeButton.setText(trans.returnTag("TreeButton"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        FightAreaLabel.setText(trans.returnTag("FightArea"));
+        PreviousButton.setText(trans.returnTag("PreviousButton"));
+        NextButton.setText(trans.returnTag("NextButton"));
+        DeleteButton.setText(trans.returnTag("DeleteFigthtButton"));
+        AddButton.setText(trans.returnTag("AddFigthtButton"));
+        InverseCheckBox.setText(trans.returnTag("InverseCheckBox"));
+        ColourCheckBox.setText(trans.returnTag("ColourCheckBox"));
+        RefreshButton.setText(trans.returnTag("RefreshButton"));
+        RankingButton.setText(trans.returnTag("NumberOfWinnedTopTen"));
     }
 
     private void hideTreeButton() {
@@ -159,7 +159,7 @@ public final class FightPanel extends javax.swing.JFrame {
             selectedTournament = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), true);
             scorePanel.updateTournament(selectedTournament);
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(selectedTournament.name);
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament, KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(TournamentComboBox.getSelectedItem().toString()));
             updateTournament();
         } catch (IllegalArgumentException | NullPointerException iae) {
@@ -235,16 +235,16 @@ public final class FightPanel extends javax.swing.JFrame {
             text += winnersOfGroup.get(i).returnName();
         }
         if (message) {
-            MessageManager.translatedMessage("winnerOfgroup", "!!!!!!!", KendoTournamentGenerator.getInstance().language, text, JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage("winnerOfgroup", "!!!!!!!", text, JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private void changeNextButtonText() {
         //Change label of next button when is last fight.
         if (KendoTournamentGenerator.getInstance().fightManager.currentArenaFight(FightAreaComboBox.getSelectedIndex()) >= KendoTournamentGenerator.getInstance().fightManager.arenaSize(FightAreaComboBox.getSelectedIndex()) - 1) {
-            NextButton.setText(trans.returnTag("FinishtButton", KendoTournamentGenerator.getInstance().language));
+            NextButton.setText(trans.returnTag("FinishtButton"));
         } else {
-            NextButton.setText(trans.returnTag("NextButton", KendoTournamentGenerator.getInstance().language));
+            NextButton.setText(trans.returnTag("NextButton"));
         }
     }
 
@@ -256,7 +256,7 @@ public final class FightPanel extends javax.swing.JFrame {
         //When a group is finished, show different messages with the winner, score, etc.
         if (isThisGroupOver(currentGroup)) {
             //Show score.
-            MonitorFightPosition mfp = new MonitorFightPosition(KendoTournamentGenerator.getInstance().fightManager.getFights(), currentGroup, true);
+            MonitorFightPosition mfp = new MonitorFightPosition(currentGroup, true);
             mfp.setVisible(true);
             mfp.setExtendedState(mfp.getExtendedState() | JFrame.MAXIMIZED_BOTH);
             boolean message;
@@ -614,7 +614,7 @@ public final class FightPanel extends javax.swing.JFrame {
         fillFightsPanel();
         changeNextButtonText();
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
-        MessageManager.translatedMessage("RefresehdData", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+        MessageManager.translatedMessage("RefresehdData", "MySQL", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_RefreshButtonActionPerformed
 
     private void RankingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankingButtonActionPerformed
@@ -630,7 +630,7 @@ public final class FightPanel extends javax.swing.JFrame {
                     KendoTournamentGenerator.getInstance().fightManager.currentFight(FightAreaComboBox.getSelectedIndex())));
         }
 
-        MonitorFightPosition mfp = new MonitorFightPosition(KendoTournamentGenerator.getInstance().fightManager.getFights(), groupFinished, false);
+        MonitorFightPosition mfp = new MonitorFightPosition(groupFinished, false);
         mfp.setVisible(true);
     }//GEN-LAST:event_RankingButtonActionPerformed
 

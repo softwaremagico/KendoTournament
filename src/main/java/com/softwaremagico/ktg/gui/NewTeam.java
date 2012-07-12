@@ -58,7 +58,7 @@ public class NewTeam extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
 
     }
 
@@ -78,17 +78,17 @@ public class NewTeam extends KendoFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewTeam", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton", language));
-        NameLabel.setText(trans.returnTag("NameTeamLabel", language));
-        IndividualTeamsCheckBox.setText(trans.returnTag("IndividualTeamsCheckBox", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
+        this.setTitle(trans.returnTag("titleNewTeam"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        SearchButton.setText(trans.returnTag("SearchButton"));
+        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
+        NameLabel.setText(trans.returnTag("NameTeamLabel"));
+        IndividualTeamsCheckBox.setText(trans.returnTag("IndividualTeamsCheckBox"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
     }
 
     void fillTournaments() {
@@ -465,7 +465,7 @@ public class NewTeam extends KendoFrame {
 
             try {
                 String file;
-                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TeamAccreditationCardPDF pdf = new TeamAccreditationCardPDF(t, listTournaments.get(TournamentComboBox.getSelectedIndex()));
                     pdf.createFile(file);
@@ -476,7 +476,7 @@ public class NewTeam extends KendoFrame {
             }
 
         } else {
-            MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noTeamFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 
@@ -495,7 +495,7 @@ public class NewTeam extends KendoFrame {
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         try {
-            KendoTournamentGenerator.getInstance().database.deleteTeam(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
+            KendoTournamentGenerator.getInstance().database.deleteTeamByName(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
             refreshTournament();
             NameTextField.setText("");
             NameTextField.setEnabled(true);
@@ -511,7 +511,7 @@ public class NewTeam extends KendoFrame {
                         KendoTournamentGenerator.getInstance().database.setIndividualTeams(TournamentComboBox.getSelectedItem().toString());
                         championship.teamSize = 1;
                         KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
-                        MessageManager.informationManager("teamsStored", "Team", KendoTournamentGenerator.getInstance().language);
+                        MessageManager.informationMessage("teamsStored", "Team");
                         this.dispose();
                     }
                     //No competitors exist. 
@@ -528,10 +528,10 @@ public class NewTeam extends KendoFrame {
                         }
 
                         if (repeatedCompetitor()) {
-                            MessageManager.errorMessage("repeatedCompetitor", "League", KendoTournamentGenerator.getInstance().language);
+                            MessageManager.errorMessage("repeatedCompetitor", "League");
                         }
                         if (!checkTeam()) {
-                            MessageManager.errorMessage("notEnoughCompetitors", "League", KendoTournamentGenerator.getInstance().language);
+                            MessageManager.errorMessage("notEnoughCompetitors", "League");
                         } else {
                             t.addMembers(participants, 0);
                             if (KendoTournamentGenerator.getInstance().database.storeTeam(t, true)) {
@@ -539,7 +539,7 @@ public class NewTeam extends KendoFrame {
                             }
                         }
                     } else {
-                        MessageManager.errorMessage("noTeamFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+                        MessageManager.errorMessage("noTeamFieldsFilled", "MySQL");
                     }
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 

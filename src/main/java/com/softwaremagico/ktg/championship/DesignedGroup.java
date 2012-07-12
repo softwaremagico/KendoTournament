@@ -78,19 +78,19 @@ public class DesignedGroup extends Group implements Serializable {
         setBackground(new Color(200, 200, 200));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         updateText();
         removeAll();
         label.setHorizontalTextPosition(JLabel.LEFT);
         add(label, c);
     }
 
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
         if (level == 0) {
-            this.setToolTipText(trans.returnTag("ToolTipEditable", language));
+            this.setToolTipText(trans.returnTag("ToolTipEditable"));
         } else {
-            this.setToolTipText(trans.returnTag("ToolTipNotEditable", language));
+            this.setToolTipText(trans.returnTag("ToolTipNotEditable"));
         }
     }
 
@@ -126,7 +126,7 @@ public class DesignedGroup extends Group implements Serializable {
 
     public boolean load(Tournament c) {
         championship = c;
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         List<Team> updatedTeams = new ArrayList<>();
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
@@ -178,11 +178,11 @@ public class DesignedGroup extends Group implements Serializable {
         //Select label
         String s;
         if (level < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-            s = trans.returnTag("Round", KendoTournamentGenerator.getInstance().language) + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - level);
+            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - level);
         } else if (level == KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-            s = trans.returnTag("SemiFinalLabel", KendoTournamentGenerator.getInstance().language);
+            s = trans.returnTag("SemiFinalLabel");
         } else {
-            s = trans.returnTag("FinalLabel", KendoTournamentGenerator.getInstance().language);
+            s = trans.returnTag("FinalLabel");
         }
         return s;
     }
@@ -769,8 +769,8 @@ public class DesignedGroup extends Group implements Serializable {
         Object[] options = optionsList.toArray();
 
         int n = JOptionPane.showOptionDialog(frame,
-                trans.returnTag("DrawText", KendoTournamentGenerator.getInstance().language),
-                trans.returnTag("DrawTitle", KendoTournamentGenerator.getInstance().language),
+                trans.returnTag("DrawText"),
+                trans.returnTag("DrawTitle"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

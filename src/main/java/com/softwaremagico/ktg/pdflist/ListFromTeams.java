@@ -38,24 +38,24 @@ public abstract class ListFromTeams extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         voidTournament = tmp_voidTournament;
         fillTeams();
         CheckBox.setVisible(false);
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage() {
         trans = new Translator("gui.xml");
-        TeamLabel.setText(trans.returnTag("TeamLabel", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        GenerateButton.setText(trans.returnTag("GenerateButton", language));
+        TeamLabel.setText(trans.returnTag("TeamLabel"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        GenerateButton.setText(trans.returnTag("GenerateButton"));
     }
 
     private void fillTeams() {
         try {
             listTeams = KendoTournamentGenerator.getInstance().database.getAllTeams();
             if (voidTournament) {
-                TeamComboBox.addItem(trans.returnTag("All", KendoTournamentGenerator.getInstance().language));
+                TeamComboBox.addItem(trans.returnTag("All"));
             }
             for (int i = 0; i < listTeams.size(); i++) {
                 TeamComboBox.addItem(listTeams.get(i).returnName() + " (" + listTeams.get(i).competition.name + ")");

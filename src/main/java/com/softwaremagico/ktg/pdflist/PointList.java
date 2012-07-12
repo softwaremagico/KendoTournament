@@ -18,9 +18,6 @@
  */
 package com.softwaremagico.ktg.pdflist;
 
-
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-
 /**
  *
  * @author Jorge
@@ -29,7 +26,7 @@ public class PointList extends ListFromTournament {
 
     public PointList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleListPoints", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleListPoints"));
     }
 
     @Override

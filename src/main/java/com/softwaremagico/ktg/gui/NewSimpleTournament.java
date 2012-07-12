@@ -48,7 +48,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillTournaments();
         RefreshTournament();
         fillTeam1ComboBox();
@@ -59,21 +59,21 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    private void setLanguage(String language) {
+    private void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewFight", language));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel", language));
-        Team1Label.setText(trans.returnTag("Team1Label", language));
-        Team2Label.setText(trans.returnTag("Team2Label", language));
-        AddButton.setText(trans.returnTag("AddButton", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        DeleteButton.setText(trans.returnTag("DeleteButton", language));
-        RandomButton.setText(trans.returnTag("RandomButton", language));
-        FightAreaLabel.setText(trans.returnTag("FightArea", language));
-        UpButton.setText(trans.returnTag("UpButton", language));
-        DownButton.setText(trans.returnTag("DownButton", language));
-        DeleteAllButton.setText(trans.returnTag("CleanAllButton", language));
-        SortedButton.setText(trans.returnTag("SortedButton", language));
+        this.setTitle(trans.returnTag("titleNewFight"));
+        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        Team1Label.setText(trans.returnTag("Team1Label"));
+        Team2Label.setText(trans.returnTag("Team2Label"));
+        AddButton.setText(trans.returnTag("AddButton"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        RandomButton.setText(trans.returnTag("RandomButton"));
+        FightAreaLabel.setText(trans.returnTag("FightArea"));
+        UpButton.setText(trans.returnTag("UpButton"));
+        DownButton.setText(trans.returnTag("DownButton"));
+        DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
+        SortedButton.setText(trans.returnTag("SortedButton"));
     }
 
     private void fillTournaments() {
@@ -191,7 +191,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             for (int i = 0; i < fights.size(); i++) {
                 String text = fights.get(i).team1.returnName() + " - " + fights.get(i).team2.returnName();
                 if (competition.fightingAreas > 1) {
-                    text += "  (" + trans.returnTag("FightArea", KendoTournamentGenerator.getInstance().language)
+                    text += "  (" + trans.returnTag("FightArea")
                             + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";
 
                 }
@@ -444,7 +444,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             boolean answer = false;
             if (!competition.mode.equals("simple")) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
                     competition.mode = "simple";
@@ -490,7 +490,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             boolean answer = false;
             if (!competition.mode.equals("simple") || fightsModel.size() > 0) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language);
+                answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
                     competition.mode = "simple";
@@ -538,7 +538,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();
         } else {
-            MessageManager.errorMessage("noFight", "New Fight", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noFight", "New Fight");
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
@@ -574,7 +574,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
             int ind = FightsList.getSelectedIndex();
 
-            if (fightsModel.size() > 0 && ShowAlert("deleteFights", "Warning!", KendoTournamentGenerator.getInstance().language)) {
+            if (fightsModel.size() > 0 && MessageManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
             }
 
@@ -610,15 +610,4 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private javax.swing.JButton UpButton;
     // End of variables declaration//GEN-END:variables
 
-    public boolean ShowAlert(String code, String title, String language) {
-        JFrame frame = null;
-        int n = JOptionPane.showConfirmDialog(frame, trans.returnTag(code, language), title, JOptionPane.YES_NO_OPTION);
-        if (n == JOptionPane.YES_OPTION) {
-            return true;
-        } else if (n == JOptionPane.NO_OPTION) {
-            return false;
-        } else {
-            return false;
-        }
-    }
 }

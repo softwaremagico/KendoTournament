@@ -72,7 +72,7 @@ public class Translator {
             usedDoc.getDocumentElement().normalize();
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
-            MessageManager.errorMessage(text, "Language");
+            MessageManager.basicErrorMessage(text, "Language");
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         } catch (SAXException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
@@ -87,8 +87,12 @@ public class Translator {
         }
         return usedDoc;
     }
+    
+    public String returnTag(String tag){
+        return returnTag(tag, KendoTournamentGenerator.getInstance().language);
+    }
 
-    public String returnTag(String tag, String language) {
+    private String returnTag(String tag, String language) {
         try {
             NodeList nodeLst = doc.getElementsByTagName(tag);
             for (int s = 0; s < nodeLst.getLength(); s++) {
@@ -121,7 +125,7 @@ public class Translator {
                             return returnTag(tag, DEFAULT_LANGUAGE);
                         } else {
                             if (!errorShowed) {
-                                MessageManager.errorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator");
+                                MessageManager.basicErrorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator");
                                 errorShowed = true;
                             }
                             return null;
@@ -130,7 +134,7 @@ public class Translator {
 
                 }
             }
-            MessageManager.errorMessage("No tag for: " + tag + ".", "Translator");
+            MessageManager.basicErrorMessage("No tag for: " + tag + ".", "Translator");
             return null;
         } catch (NullPointerException npe) {
             return null;
@@ -150,7 +154,7 @@ public class Translator {
                         fstNode.getAttributes().getNamedItem("flag").getNodeValue());
                 languagesList.add(lang);
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage("errorLanguage", "Language");
+                MessageManager.basicErrorMessage("errorLanguage", "Language");
             }
         }
         return languagesList;

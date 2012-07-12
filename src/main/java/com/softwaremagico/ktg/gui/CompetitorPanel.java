@@ -44,7 +44,7 @@ public class CompetitorPanel extends JPanel {
         competitorLabel = new JLabel();
         position = tmp_position;
 
-        setLanguage(language);
+        setLanguage();
 
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -71,9 +71,9 @@ public class CompetitorPanel extends JPanel {
         setMinimumSize(new Dimension(0, 0));
     }
 
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        competitorLabel.setText(position + "º " + trans.returnTag("CompetitorLabel", language));
+        competitorLabel.setText(position + "º " + trans.returnTag("CompetitorLabel"));
 
     }
 }

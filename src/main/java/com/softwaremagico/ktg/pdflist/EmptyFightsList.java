@@ -14,10 +14,10 @@ public class EmptyFightsList extends ListFromTournament {
     
      public EmptyFightsList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleSummary", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleSummary"));
         ArenaComboBox.setEnabled(true);
         CheckBox.setVisible(true);
-        changeCheckBoxText(trans.returnTag("ShowEndFights", KendoTournamentGenerator.getInstance().language));
+        changeCheckBoxText(trans.returnTag("ShowEndFights"));
     }
 
     @Override

@@ -44,7 +44,7 @@ public class NewTournament extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         CreateBanner();
         NameTextField.setEditable(true);
     }
@@ -52,18 +52,18 @@ public class NewTournament extends KendoFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewTournament", language));
-        ExploreButton.setText(trans.returnTag("ExploreButton", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        NameLabel.setText(trans.returnTag("NameTournamentLabel", language));
-        NumberCompetitorsLabel.setText(trans.returnTag("NumberLabel", language));
-        BannerLabel.setText(trans.returnTag("BannerLabel", language));
-        FightingAreasLabel.setText(trans.returnTag("FightingAreas", language));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
+        this.setTitle(trans.returnTag("titleNewTournament"));
+        ExploreButton.setText(trans.returnTag("ExploreButton"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        NameLabel.setText(trans.returnTag("NameTournamentLabel"));
+        NumberCompetitorsLabel.setText(trans.returnTag("NumberLabel"));
+        BannerLabel.setText(trans.returnTag("BannerLabel"));
+        FightingAreasLabel.setText(trans.returnTag("FightingAreas"));
+        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
+        SearchButton.setText(trans.returnTag("SearchButton"));
     }
 
     /**
@@ -137,7 +137,7 @@ public class NewTournament extends KendoFrame {
                 return true;
             }
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
         }
         return false;
     }
@@ -363,7 +363,7 @@ public class NewTournament extends KendoFrame {
 
             try {
                 String file;
-                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(t);
                     pdf.setPrintAll(true);
@@ -373,7 +373,7 @@ public class NewTournament extends KendoFrame {
                 KendoTournamentGenerator.getInstance().showErrorInformation(ex);
             }
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 

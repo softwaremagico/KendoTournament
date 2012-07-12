@@ -14,30 +14,38 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *  Created on 27-Abr-2009.
+ *  Created on 24-feb-2009.
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.pdflist.ListFromCompetitor;
+import com.softwaremagico.ktg.Competitor;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 
-public class SelectCompetitorForPerformedHits extends ListFromCompetitor {
+public class StatisticsHitsPerformed extends StatisticsHits {
 
-    public SelectCompetitorForPerformedHits() {
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        Start(true);
-        this.setTitle(trans.returnTag("titleHitStatistics"));
+    public StatisticsHitsPerformed(Competitor competitor) {
+        obtainDuels(competitor);
+        start();
+    }
+
+    @Override
+    public void generateStatistics() {
+    }
+
+    @Override
+    public JPanel createPanel() {
+        JFreeChart chart = createChart(createDataset(true), "PerformedHitStatistics");
+        return new ChartPanel(chart);
     }
 
     @Override
     public String defaultFileName() {
-        try {
-            return null;
-        } catch (NullPointerException npe) {
-            return null;
-        }
+        return "PercentageOfPerformedHits.png";
     }
 
     @Override
-    public void Generate() {
+    void numberSpinnedChanged() {
     }
 }

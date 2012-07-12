@@ -24,13 +24,13 @@ public class MessageManager {
      * @param title
      * @param language
      */
-    public static void errorMessage(String code, String title, String language) {
-        customMessage(trans.returnTag(code, language), title, JOptionPane.ERROR_MESSAGE);
-        Log.finest(code, title, language);
+    public static void errorMessage(String code, String title) {
+        customMessage(trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
+        Log.finest(code, title);
     }
 
-    public static void translatedMessage(String code, String title, String language, String finalText, int option) {
-        String text = trans.returnTag(code, language);
+    public static void translatedMessage(String code, String title, String finalText, int option) {
+        String text = trans.returnTag(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
@@ -46,11 +46,11 @@ public class MessageManager {
      * @param language
      * @param option
      */
-    public static void translatedMessage(String code, String title, String language, int option) {
-        customMessage(trans.returnTag(code, language), title, option);
+    public static void translatedMessage(String code, String title, int option) {
+        customMessage(trans.returnTag(code), title, option);
     }
 
-    public static void errorMessage(String text, String title) {
+    public static void basicErrorMessage(String text, String title) {
         Log.finest(text);
         showGraphicMessage(text, title, JOptionPane.ERROR_MESSAGE);
     }
@@ -84,17 +84,17 @@ public class MessageManager {
         }
     }
 
-    public static void informationManager(String code, String title, String language) {
-        MessageManager.translatedMessage(code, title, KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+    public static void informationMessage(String code, String title) {
+        MessageManager.translatedMessage(code, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void informationManager(String code, String title, String language, String finalText) {
-        MessageManager.translatedMessage(code, title, KendoTournamentGenerator.getInstance().language, finalText, JOptionPane.INFORMATION_MESSAGE);
+    public static void informationMessage(String code, String title, String finalText) {
+        MessageManager.translatedMessage(code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static boolean questionMessage(String code, String title, String language) {
+    public static boolean questionMessage(String code, String title) {
         JFrame frame = null;
-        int n = JOptionPane.showConfirmDialog(frame, trans.returnTag(code, language), title, JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(frame, trans.returnTag(code), title, JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             return true;
         } else if (n == JOptionPane.NO_OPTION) {

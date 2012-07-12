@@ -28,7 +28,7 @@ public class FightList extends ListFromTournament {
 
     public FightList() {
         Start(false);
-        this.setTitle(trans.returnTag("titleListFights", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleListFights"));
     }
 
     @Override

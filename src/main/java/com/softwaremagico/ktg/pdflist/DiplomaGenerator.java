@@ -29,7 +29,7 @@ public class DiplomaGenerator extends ListFromTournament {
         statistics = printStatistics;
         selectedRoles = roles;
         Start(false);
-        this.setTitle(trans.returnTag("titleDiplomas", KendoTournamentGenerator.getInstance().language));
+        this.setTitle(trans.returnTag("titleDiplomas"));
         CheckBox.setVisible(true);
         prepareCheckBox();
     }
@@ -47,7 +47,7 @@ public class DiplomaGenerator extends ListFromTournament {
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF", KendoTournamentGenerator.getInstance().language),
+            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 Diploma pdf = new Diploma(listTournaments.get(TournamentComboBox.getSelectedIndex()), statistics && TournamentComboBox.getSelectedIndex() != 0, CheckBox.isSelected(), selectedRoles);
 
@@ -74,7 +74,7 @@ public class DiplomaGenerator extends ListFromTournament {
 
     private void prepareCheckBox() {
         CheckBox.setEnabled(true);
-        CheckBox.setText(trans.returnTag("PrintAll", KendoTournamentGenerator.getInstance().language));
+        CheckBox.setText(trans.returnTag("PrintAll"));
     }
 
     @Override

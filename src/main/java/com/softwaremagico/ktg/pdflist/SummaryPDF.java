@@ -133,7 +133,7 @@ public class SummaryPDF extends ParentList {
                  */
                 if (lastLevel != fights.get(i).level && !championship.mode.equals("simple")) {
                     mainTable.addCell(getEmptyRow());
-                    mainTable.addCell(getHeader1(trans.returnTag("Round", KendoTournamentGenerator.getInstance().language) + " " + (fights.get(i).level + 1) + ":", 0, Element.ALIGN_LEFT));
+                    mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (fights.get(i).level + 1) + ":", 0, Element.ALIGN_LEFT));
                     lastLevel = fights.get(i).level;
                 }
 

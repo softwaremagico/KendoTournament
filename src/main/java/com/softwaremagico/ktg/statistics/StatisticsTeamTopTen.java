@@ -18,7 +18,10 @@
  */
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Ranking;
+import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
 import javax.swing.JPanel;
@@ -64,7 +67,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         }
         fillSelectComboBox();
         changesAllowed = true;
-        NumberLabel.setText(trans.returnTag("NumberTeamsLabel", KendoTournamentGenerator.getInstance().language));
+        NumberLabel.setText(trans.returnTag("NumberTeamsLabel"));
         } catch (NullPointerException npe) {
     }
     }
@@ -86,11 +89,11 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
     private CategoryDataset createDataset() {
 
         // row keys...
-        final String series1 = transl.returnTag("WonMatchs", KendoTournamentGenerator.getInstance().language);
-        final String series2 = transl.returnTag("DrawMatchs", KendoTournamentGenerator.getInstance().language);
-        final String series3 = transl.returnTag("WonFights", KendoTournamentGenerator.getInstance().language);
-        final String series4 = transl.returnTag("DrawFights", KendoTournamentGenerator.getInstance().language);
-        final String series5 = transl.returnTag("PerformedHitStatistics", KendoTournamentGenerator.getInstance().language);
+        final String series1 = transl.returnTag("WonMatchs");
+        final String series2 = transl.returnTag("DrawMatchs");
+        final String series3 = transl.returnTag("WonFights");
+        final String series4 = transl.returnTag("DrawFights");
+        final String series5 = transl.returnTag("PerformedHitStatistics");
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -118,7 +121,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
             startValue = 0;
         }
         for (int i = startValue; i < endValue; i++) {
-            String c = "";
+            String c;
             if (championship == null) {
                 c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
             } else {
@@ -136,9 +139,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
     private JFreeChart createChart(CategoryDataset dataset) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-                transl.returnTag("TopTenTitle", KendoTournamentGenerator.getInstance().language), // chart title
+                transl.returnTag("TopTenTitle"), // chart title
                 "",
-                transl.returnTag("NumberOfWinnedTopTen", KendoTournamentGenerator.getInstance().language), // domain axis label
+                transl.returnTag("NumberOfWinnedTopTen"), // domain axis label
                 dataset, // data
                 PlotOrientation.VERTICAL, // orientation
                 true, // include legend
@@ -207,8 +210,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
             } else {
                 SelectComboBox.setSelectedItem(teamTopTen.get(0).name);
             }
-        } catch (NullPointerException npe) {
-        } catch (IndexOutOfBoundsException iob) {
+        } catch (NullPointerException | IndexOutOfBoundsException npe) {
         }
     }
 

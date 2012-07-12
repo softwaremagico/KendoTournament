@@ -52,7 +52,7 @@ public class MainGUI extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         completeLanguageMenu();
         setPhoto();
         isConnectedToDatabase();
@@ -62,65 +62,65 @@ public class MainGUI extends KendoFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        TournamentMenu.setText(trans.returnTag("FileMenu", language));
-        LanguageMenu.setText(trans.returnTag("LanguageMenu", language));
-        OptionsMenu.setText(trans.returnTag("OptionsMenu", language));
-        StatisticsMenu.setText(trans.returnTag("StatisticsMenu", language));
-        InsertMenu.setText(trans.returnTag("InsertMenu", language));
-        TournamentMenu.setText(trans.returnTag("TournamentMenu", language));
-        TournamentPanelMenuItem.setText(trans.returnTag("TournamentPanelMenuItem", language));
-        HelpMenu.setText(trans.returnTag("HelpMenu", language));
-        AboutMenuItem.setText(trans.returnTag("AboutMenu", language));
-        CompetitorMenuItem.setText(trans.returnTag("CompetitorMenuItem", language));
-        RoleMenuItem.setText(trans.returnTag("RoleMenuItem", language));
-        TournamentMenuItem.setText(trans.returnTag("TournamentMenuItem", language));
-        ClubMenuItem.setText(trans.returnTag("ClubMenuItem", language));
-        TeamMenuItem.setText(trans.returnTag("TeamMenuItem", language));
-        FightMenuItem.setText(trans.returnTag("FightMenuItem", language));
-        DatabaseMenu.setText(trans.returnTag("DatabaseMenu", language));
-        DatabaseConnectMenuItem.setText(trans.returnTag("DatabaseConnectMenuItem", language));
-        DatabaseDisconnectMenuItem.setText(trans.returnTag("DatabaseDisconnectMenuItem", language));
-        DatabaseUpdateMenuItem.setText(trans.returnTag("DatabaseUpdateMenuItem", language));
-        ListMenu.setText(trans.returnTag("ListMenu", language));
-        TeamListMenuItem.setText(trans.returnTag("TeamListMenuItem", language));
-        FightListMenuItem.setText(trans.returnTag("FightListMenuItem", language));
-        PointListMenuItem.setText(trans.returnTag("PointListMenuItem", language));
-        DiplomaMenuItem.setText(trans.returnTag("DiplomaMenuItem", language));
-        CompetitorStatisticsMenu.setText(trans.returnTag("CompetitorStatisticsMenu", language));
-        PerformedHitsMenuItem.setText(trans.returnTag("PerformedHitsStatisticsMenuItem", language));
-        ReceivedHitsMenuItem.setText(trans.returnTag("ReceivedHitsStatisticsMenuItem", language));
-        WonLostMenuItem.setText(trans.returnTag("WonLostMenuItem", language));
-        TournamentStatisticsMenu.setText(trans.returnTag("TournamentStatisticsMenu", language));
-        TeamStatisticsMenu.setText(trans.returnTag("TeamStatisticsMenu", language));
-        TournamentTopTenMenuItem.setText(trans.returnTag("TournamentTopTenMenuItem", language));
-        TournamentHitsStatisticsMenuItem.setText(trans.returnTag("TournamentHitsStatisticsMenuItem", language));
-        DefineFightsMenu.setText(trans.returnTag("DefineFightsMenu", language));
-        ProgramMenu.setText(trans.returnTag("ProgramMenu", language));
-        ExitMenuItem.setText(trans.returnTag("ExitMenuItem", language));
-        ManualFightsMenuItem.setText(trans.returnTag("ManualFightsMenuItem", language));
-        RingMenuItem.setText(trans.returnTag("RingMenuItem", language));
-        DesignerMenuItem.setText(trans.returnTag("DesignerMenuItem", language));
-        TeamTopTenMenuItem.setText(trans.returnTag("TeamTopTenMenuItem", language));
-        MonitorMenu.setText(trans.returnTag("MonitorMenuItem", language));
-        ScoreMonitorMenuItem.setText(trans.returnTag("ScoreMonitorMenuItem", language));
-        TreeMonitorMenuItem.setText(trans.returnTag("TreeMonitorMenuItem", language));
-        AccreditationMenuItem.setText(trans.returnTag("AccreditationMenuItem", language));
-        HelpMenuItem.setText(trans.returnTag("HelpMenuItem", language));
-        SummaryMenuItem.setText(trans.returnTag("SummaryMenuItem", language));
-        ClubListMenuItem.setText(trans.returnTag("ClubListMenuItem", language));
-        RefereeListMenuItem.setText(trans.returnTag("RefereeListMenuItem", language));
-        ScoreMenuItem.setText(trans.returnTag("ScoreMenuItem", language));
-        ImportMenu.setText(trans.returnTag("ImportMenu", language));
-        CsvMenuItem.setText(trans.returnTag("CvsMenuItem", language));
-        ExportMenuItem.setText(trans.returnTag("ExportDatabase", language));
-        ImportMenuItem.setText(trans.returnTag("ImportDatabase", language));
-        ChangeTeamMenuItem.setText(trans.returnTag("ChangeTeamOrder", language));
-        LogMenuCheckBox.setText(trans.returnTag("LogOption", language));
-        DebugMenuCheckBox.setText(trans.returnTag("DebugOption", language));
-        ConvertDatabaseMenuItem.setText(trans.returnTag("ConvertDatabase", language));
-        FightsCardMenuItem.setText(trans.returnTag("FightsCard", language));
+        TournamentMenu.setText(trans.returnTag("FileMenu"));
+        LanguageMenu.setText(trans.returnTag("LanguageMenu"));
+        OptionsMenu.setText(trans.returnTag("OptionsMenu"));
+        StatisticsMenu.setText(trans.returnTag("StatisticsMenu"));
+        InsertMenu.setText(trans.returnTag("InsertMenu"));
+        TournamentMenu.setText(trans.returnTag("TournamentMenu"));
+        TournamentPanelMenuItem.setText(trans.returnTag("TournamentPanelMenuItem"));
+        HelpMenu.setText(trans.returnTag("HelpMenu"));
+        AboutMenuItem.setText(trans.returnTag("AboutMenu"));
+        CompetitorMenuItem.setText(trans.returnTag("CompetitorMenuItem"));
+        RoleMenuItem.setText(trans.returnTag("RoleMenuItem"));
+        TournamentMenuItem.setText(trans.returnTag("TournamentMenuItem"));
+        ClubMenuItem.setText(trans.returnTag("ClubMenuItem"));
+        TeamMenuItem.setText(trans.returnTag("TeamMenuItem"));
+        FightMenuItem.setText(trans.returnTag("FightMenuItem"));
+        DatabaseMenu.setText(trans.returnTag("DatabaseMenu"));
+        DatabaseConnectMenuItem.setText(trans.returnTag("DatabaseConnectMenuItem"));
+        DatabaseDisconnectMenuItem.setText(trans.returnTag("DatabaseDisconnectMenuItem"));
+        DatabaseUpdateMenuItem.setText(trans.returnTag("DatabaseUpdateMenuItem"));
+        ListMenu.setText(trans.returnTag("ListMenu"));
+        TeamListMenuItem.setText(trans.returnTag("TeamListMenuItem"));
+        FightListMenuItem.setText(trans.returnTag("FightListMenuItem"));
+        PointListMenuItem.setText(trans.returnTag("PointListMenuItem"));
+        DiplomaMenuItem.setText(trans.returnTag("DiplomaMenuItem"));
+        CompetitorStatisticsMenu.setText(trans.returnTag("CompetitorStatisticsMenu"));
+        PerformedHitsMenuItem.setText(trans.returnTag("PerformedHitsStatisticsMenuItem"));
+        ReceivedHitsMenuItem.setText(trans.returnTag("ReceivedHitsStatisticsMenuItem"));
+        WonLostMenuItem.setText(trans.returnTag("WonLostMenuItem"));
+        TournamentStatisticsMenu.setText(trans.returnTag("TournamentStatisticsMenu"));
+        TeamStatisticsMenu.setText(trans.returnTag("TeamStatisticsMenu"));
+        TournamentTopTenMenuItem.setText(trans.returnTag("TournamentTopTenMenuItem"));
+        TournamentHitsStatisticsMenuItem.setText(trans.returnTag("TournamentHitsStatisticsMenuItem"));
+        DefineFightsMenu.setText(trans.returnTag("DefineFightsMenu"));
+        ProgramMenu.setText(trans.returnTag("ProgramMenu"));
+        ExitMenuItem.setText(trans.returnTag("ExitMenuItem"));
+        ManualFightsMenuItem.setText(trans.returnTag("ManualFightsMenuItem"));
+        RingMenuItem.setText(trans.returnTag("RingMenuItem"));
+        DesignerMenuItem.setText(trans.returnTag("DesignerMenuItem"));
+        TeamTopTenMenuItem.setText(trans.returnTag("TeamTopTenMenuItem"));
+        MonitorMenu.setText(trans.returnTag("MonitorMenuItem"));
+        ScoreMonitorMenuItem.setText(trans.returnTag("ScoreMonitorMenuItem"));
+        TreeMonitorMenuItem.setText(trans.returnTag("TreeMonitorMenuItem"));
+        AccreditationMenuItem.setText(trans.returnTag("AccreditationMenuItem"));
+        HelpMenuItem.setText(trans.returnTag("HelpMenuItem"));
+        SummaryMenuItem.setText(trans.returnTag("SummaryMenuItem"));
+        ClubListMenuItem.setText(trans.returnTag("ClubListMenuItem"));
+        RefereeListMenuItem.setText(trans.returnTag("RefereeListMenuItem"));
+        ScoreMenuItem.setText(trans.returnTag("ScoreMenuItem"));
+        ImportMenu.setText(trans.returnTag("ImportMenu"));
+        CsvMenuItem.setText(trans.returnTag("CvsMenuItem"));
+        ExportMenuItem.setText(trans.returnTag("ExportDatabase"));
+        ImportMenuItem.setText(trans.returnTag("ImportDatabase"));
+        ChangeTeamMenuItem.setText(trans.returnTag("ChangeTeamOrder"));
+        LogMenuCheckBox.setText(trans.returnTag("LogOption"));
+        DebugMenuCheckBox.setText(trans.returnTag("DebugOption"));
+        ConvertDatabaseMenuItem.setText(trans.returnTag("ConvertDatabase"));
+        FightsCardMenuItem.setText(trans.returnTag("FightsCard"));
     }
 
     private void setPhoto() {
@@ -698,9 +698,9 @@ public class MainGUI extends KendoFrame {
             KendoTournamentGenerator.getInstance().database.disconnect();
             KendoTournamentGenerator.getInstance().databaseConnected = false;
             isConnectedToDatabase();
-            MessageManager.translatedMessage("databaseDisconnected", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage("databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            MessageManager.errorMessage("disconnectDatabaseFail", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("disconnectDatabaseFail", "MySQL");
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
@@ -711,7 +711,7 @@ public class MainGUI extends KendoFrame {
 
     private void ImportMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportMenuItemActionPerformed
         String file;
-        if (!(file = exploreWindowsForKtg(trans.returnTag("ImportSQL", KendoTournamentGenerator.getInstance().language),
+        if (!(file = exploreWindowsForKtg(trans.returnTag("ImportSQL"),
                 JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
             //KendoTournament.getInstance().database.importDatabase(file);
             new StoreDatabase().load(file);
@@ -726,7 +726,7 @@ public class MainGUI extends KendoFrame {
         int year = calendar.get(Calendar.YEAR);
 
         String date = year + "-" + month + "-" + day;
-        if (!(file = exploreWindowsForKtg(trans.returnTag("ExportSQL", KendoTournamentGenerator.getInstance().language),
+        if (!(file = exploreWindowsForKtg(trans.returnTag("ExportSQL"),
                 JFileChooser.FILES_AND_DIRECTORIES, "KendoTournament_" + date + ".ktg")).equals("")) {
             //KendoTournament.getInstance().database.exportDatabase(file);
             new StoreDatabase().save(file);

@@ -48,7 +48,7 @@ public class NewCompetitor extends KendoFrame {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         fillClub();
         createPhoto();
     }
@@ -65,7 +65,7 @@ public class NewCompetitor extends KendoFrame {
             ClubComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedClub());
         } else {
             NewClub newClub;
-            MessageManager.errorMessage("noClubsInserted", "MySQL", KendoTournamentGenerator.getInstance().language);
+            MessageManager.errorMessage("noClubsInserted", "MySQL");
             newClub = new NewClub();
             newClub.setVisible(true);
             newClub.updateClubsInCompetitor(this);
@@ -84,19 +84,19 @@ public class NewCompetitor extends KendoFrame {
     /**
      * Translate the GUI to the selected language.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = new Translator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewCompetitor", language));
-        ExploreButton.setText(trans.returnTag("ExploreButton", language));
-        CleanButton.setText(trans.returnTag("CleanPhoto", language));
-        AcceptButton.setText(trans.returnTag("AcceptButton", language));
-        CancelButton.setText(trans.returnTag("CancelButton", language));
-        SearchButton.setText(trans.returnTag("SearchButton", language));
-        NameLabel.setText(trans.returnTag("NameLabel", language));
-        SurnameLabel.setText(trans.returnTag("SurnameLabel", language));
-        IDLabel.setText(trans.returnTag("IDLabel", language));
-        ClubLabel.setText(trans.returnTag("ClubLabel", language));
-        PhotoLabel.setText(trans.returnTag("PhotoLabel", language));
+        this.setTitle(trans.returnTag("titleNewCompetitor"));
+        ExploreButton.setText(trans.returnTag("ExploreButton"));
+        CleanButton.setText(trans.returnTag("CleanPhoto"));
+        AcceptButton.setText(trans.returnTag("AcceptButton"));
+        CancelButton.setText(trans.returnTag("CancelButton"));
+        SearchButton.setText(trans.returnTag("SearchButton"));
+        NameLabel.setText(trans.returnTag("NameLabel"));
+        SurnameLabel.setText(trans.returnTag("SurnameLabel"));
+        IDLabel.setText(trans.returnTag("IDLabel"));
+        ClubLabel.setText(trans.returnTag("ClubLabel"));
+        PhotoLabel.setText(trans.returnTag("PhotoLabel"));
     }
 
     /**
@@ -183,7 +183,7 @@ public class NewCompetitor extends KendoFrame {
                     return comp;
                 }
             } else {
-                MessageManager.errorMessage("noCompetitiorFieldsFilled", "MySQL", KendoTournamentGenerator.getInstance().language);
+                MessageManager.errorMessage("noCompetitiorFieldsFilled", "MySQL");
             }
         }
         return null;
@@ -193,7 +193,7 @@ public class NewCompetitor extends KendoFrame {
         try {
             Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
-                if (MessageManager.questionMessage("isDNI", "DNI -> NIF", KendoTournamentGenerator.getInstance().language)) {
+                if (MessageManager.questionMessage("isDNI", "DNI -> NIF")) {
                     IDTextField.setText(Competitor.nifFromDni(dni));
                 }
             }

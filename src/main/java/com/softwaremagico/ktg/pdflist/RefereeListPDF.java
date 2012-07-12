@@ -53,7 +53,7 @@ public class RefereeListPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(trans.returnTag("RefereeTitle", KendoTournamentGenerator.getInstance().language), FontFactory.getFont(font, fontSize + 26, Font.BOLD));
+        p = new Paragraph(trans.returnTag("RefereeTitle"), FontFactory.getFont(font, fontSize + 26, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setBorderWidth(headerBorder);
         cell.setColspan(getTableWidths().length);
