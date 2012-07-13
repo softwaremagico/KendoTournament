@@ -7,6 +7,6 @@
 *.*~
 *.log*
 *.lck
-kendotournament.sqlite
-Thumbs.db
+/database/kendotournament.sqlite
+**/Thumbs.db
 

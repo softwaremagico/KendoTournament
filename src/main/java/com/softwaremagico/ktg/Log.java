@@ -31,12 +31,12 @@ public class Log {
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static final Logger logger = Logger.getLogger("KendoLog");
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
-    private static final int maxLines = 5000;
+    private static final int maxBytes = 500000;
     private static final int numLogFiles = 10;
 
     static {
         try {
-            FileHandler fh = new FileHandler(Path.returnLogFile(), maxLines, numLogFiles, true);
+            FileHandler fh = new FileHandler(Path.returnLogFile(), maxBytes, numLogFiles, true);
             logger.addHandler(fh);
             logger.setLevel(logLevel);
             //fh.setFormatter(new SimpleFormatter());

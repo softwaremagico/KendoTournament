@@ -28,8 +28,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 /**
  *
  * @author jorge
@@ -62,6 +60,7 @@ public class OrderTeam extends NewTeam {
     }
 
     public OrderTeam(String tourn, int levelOrder) {
+        System.out.println("------------------------------------------");
         level = levelOrder;
         newTeam = false;
         start();
@@ -104,10 +103,8 @@ public class OrderTeam extends NewTeam {
                     } else {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
-                } catch (NullPointerException npe) {
-                    competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
-                } catch (IndexOutOfBoundsException iob) {
-                    KendoTournamentGenerator.getInstance().showErrorInformation(iob);
+                } catch (NullPointerException | IndexOutOfBoundsException npe) {
+                    KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
