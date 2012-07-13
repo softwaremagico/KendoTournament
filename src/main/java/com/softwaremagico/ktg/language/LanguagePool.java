@@ -18,6 +18,7 @@ public class LanguagePool {
     }
 
     public static Translator getTranslator(String xmlFile) {
+        System.out.println(existingTranslators.size());
         Translator translator = existingTranslators.get(xmlFile);
         if (translator == null) {
             translator = new Translator(xmlFile);

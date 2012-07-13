@@ -31,6 +31,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.swing.*;
 
 /**
@@ -175,19 +176,9 @@ public class CompetitorFight extends JPanel {
         setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
     }
 
-    private File getBackground(String image) {
-        File file = new File(image);
-        if (!file.exists()) {
-            file = new File(Path.returnImagePath() + image);
-            if (!file.exists()) {
-            }
-        }
-        return file;
-    }
-
     private void updateScorePanel(PanelBackground panel, Score hit) {
         try {
-            panel.setBackground(getBackground(Path.returnScoreFolder() + hit.getImageName()));
+            panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + hit.getImageName()));
             panel.revalidate();
             panel.repaint();
         } catch (IOException ex) {
@@ -198,9 +189,9 @@ public class CompetitorFight extends JPanel {
     private void updateFaultPanel(PanelBackground panel, int fault) {
         try {
             if (fault > 0) {
-                panel.setBackground(getBackground(Path.returnScoreFolder() + Score.FAULT.getImageName()));
+                panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + Score.FAULT.getImageName()));
             } else {
-                panel.setBackground(getBackground(Path.returnScoreFolder() + Score.EMPTY.getImageName()));
+                panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + Score.EMPTY.getImageName()));
             }
             panel.revalidate();
             panel.repaint();
@@ -232,38 +223,32 @@ public class CompetitorFight extends JPanel {
     }
 
     private void addAllMenus() {
-        int player;
         if (fight.team1.getNumberOfMembers(fight.level) > 0
                 || fight.team2.getNumberOfMembers(fight.level) > 0) {
-            if ((player = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
-                addPopUpMenu(player);
-            }
-            if ((player = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
-                addPopUpMenu(player);
-            }
+            addPopUpMenu();
         }
     }
 
-    private void addPopUpMenu(int player) {
-        round1.setComponentPopupMenu(createContextMenu(player, 0));
-        round2.setComponentPopupMenu(createContextMenu(player, 1));
+    private void addPopUpMenu() {
+        round1.setComponentPopupMenu(createContextMenu(0));
+        round2.setComponentPopupMenu(createContextMenu(1));
         faults.setComponentPopupMenu(createFaultMenu());
     }
 
-    private JPopupMenu createContextMenu(int player, int round) {
+    private JPopupMenu createContextMenu(int round) {
         JPopupMenu contextMenu = new JPopupMenu();
         JMenuItem menMenu;
         try {
             for (Score s : Score.getValidPoints()) {
                 menMenu = new JMenuItem();
                 menMenu.setText(s.getName());
-                menMenu.addActionListener(new MenuListener(player, round));
+                menMenu.addActionListener(new MenuListener(round));
                 contextMenu.add(menMenu);
             }
 
             menMenu = new JMenuItem();
             menMenu.setText(trans.returnTag(Score.EMPTY.getName()));
-            menMenu.addActionListener(new MenuListener(player, round));
+            menMenu.addActionListener(new MenuListener(round));
             contextMenu.add(menMenu);
         } catch (IndexOutOfBoundsException iofb) {
         }
@@ -273,11 +258,9 @@ public class CompetitorFight extends JPanel {
 
     private class MenuListener implements ActionListener {
 
-        private int player;
         private int round;
 
-        MenuListener(int tmp_player, int tmp_round) {
-            player = tmp_player;  //Player1, Player2 or Player3.
+        MenuListener(int tmp_round) {
             round = tmp_round;
         }
 
