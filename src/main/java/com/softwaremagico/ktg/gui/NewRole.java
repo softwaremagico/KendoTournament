@@ -159,7 +159,6 @@ public class NewRole extends KendoFrame {
             } catch (IllegalArgumentException iae) {
             }
         } catch (ArrayIndexOutOfBoundsException aiofb) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(aiofb);
             MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL");
             try {
                 RoleComboBox.setSelectedItem("");

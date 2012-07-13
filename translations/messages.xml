@@ -842,5 +842,12 @@
 		<de>The new teams have been stored into the database.</de>
 		<ca>S'ha agregat els nous equips a la base de dades.</ca>
 	</teamsStored>
+	<noTournament>
+		<en>There is not any tournament created.</en>
+		<es>No hay ningún torneo en la base de datos.</es>
+		<nl>There is not any tournament created.</nl>
+		<de>There is not any tournament created.</de>
+		<ca>No hi ha cap torneig en la base de dades.</ca>
+	</noTournament>
 </translator>
 

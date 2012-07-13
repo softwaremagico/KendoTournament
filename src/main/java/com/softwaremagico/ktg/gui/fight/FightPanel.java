@@ -68,16 +68,18 @@ public final class FightPanel extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament);
                 KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(TournamentComboBox.getSelectedItem().toString()));
             }
+            changeNextButtonText();
+            hideTreeButton();
+
+            scorePanel.setBounds(new Rectangle(FightsPanel.getSize().width, FightsPanel.getSize().height));
+            FightsPanel.add(scorePanel);
+
+            ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseColours);
+            InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseTeams);
         } catch (NullPointerException npe) {
+            MessageManager.errorMessage("noTournament", "Panel");
+            dispose();
         }
-        changeNextButtonText();
-        hideTreeButton();
-
-        scorePanel.setBounds(new Rectangle(FightsPanel.getSize().width, FightsPanel.getSize().height));
-        FightsPanel.add(scorePanel);
-
-        ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseColours);
-        InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseTeams);
     }
 
     /**
@@ -114,7 +116,10 @@ public final class FightPanel extends javax.swing.JFrame {
     }
 
     public void fillFightsPanel() {
-        scorePanel.fillFightsPanel(FightAreaComboBox.getSelectedIndex());
+        try {
+            scorePanel.fillFightsPanel(FightAreaComboBox.getSelectedIndex());
+        } catch (NullPointerException npe) {
+        }
     }
 
     private void fillTournaments() {
