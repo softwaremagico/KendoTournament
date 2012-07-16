@@ -52,9 +52,11 @@ public class DesignedGroups implements Serializable {
     }
 
     public void update() {
+        Log.finest("Current number of fights over before updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
         for (int i = 0; i < designedGroups.size(); i++) {
             designedGroups.get(i).update();
         }
+        Log.finest("Current number of fights over after updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
     }
 
     public void color(boolean color) {
@@ -639,14 +641,20 @@ public class DesignedGroups implements Serializable {
         try {
             //Not finished the championship.
             if (nextLevel >= 0 && nextLevel < returnNumberOfLevels()) {
+                Log.finer("Tournament not finished!");
                 //Update fightManager to load the fightManager of other arenas and computers.
                 if (championship.fightingAreas > 1) {
+                    Log.finest("Retrieven data from other arenas.");
+                    Log.finest("Current number of fights over before updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
                     KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
+                    Log.finest("Current number of fights over after updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
                 }
 
-                //But the level is over and need more fightManager.
+                //But the level is over and need more fights.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver()) {
+                    Log.finer("All fights are over.");
                     if (MessageManager.questionMessage("nextLevel", "Warning!")) {
+                        Log.finest("Current number of fights over before updating winners: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
                         int start = levels.get(nextLevel);
                         int end;
                         if (nextLevel + 1 < levels.size()) {
@@ -657,6 +665,7 @@ public class DesignedGroups implements Serializable {
                         for (int i = start; i < end; i++) {
                             fillGroupWithWinnersPreviousLevel(i, KendoTournamentGenerator.getInstance().fightManager.getFights(), true);
                         }
+                        Log.finest("Current number of fights over after updating winners: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
                     }
                     //set the team members order in the new level.
                     //updateOrderTeamsOfLevel(nextLevel);
@@ -666,16 +675,17 @@ public class DesignedGroups implements Serializable {
                         MessageManager.translatedMessage("waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
+                Log.finest("Current number of fights over at the end updating fights: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
             } else {
+                Log.finer("League finished");
                 //Finished! The winner is...
                 Team winner = winnerOfLastFight(fights);
                 String winnername = "";
                 try {
                     winnername = winner.returnName();
-
-
                 } catch (NullPointerException npe) {
                     //npe.printStackTrace();
+                    Log.severe("No winner obtained!");
                 }
                 //Show message when last fight is selected.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
@@ -687,7 +697,10 @@ public class DesignedGroups implements Serializable {
         } catch (NullPointerException npe) {
         }
         update();
-        return generateLevelFights(nextLevel);
+        Log.finest("Current number of fights over before generating next level fights: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+        ArrayList<Fight> newFights = generateLevelFights(nextLevel);
+        Log.finest("Current number of fights over after generating next level fights: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+        return newFights;
     }
 
     /**

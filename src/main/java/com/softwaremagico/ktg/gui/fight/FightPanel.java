@@ -542,6 +542,8 @@ public final class FightPanel extends javax.swing.JFrame {
                 //Store score into database.
                 KendoTournamentGenerator.getInstance().fightManager.storeNotUpdatedFightsAndDuels();
             }
+            
+            Log.finest("Current number of fights over: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
             //If championship or similar...
             if (!selectedTournament.mode.equals("simple") && KendoTournamentGenerator.getInstance().designedGroups.size() > 1) {
@@ -551,7 +553,9 @@ public final class FightPanel extends javax.swing.JFrame {
 
                 //If all arena fights are over.
                 if (KendoTournamentGenerator.getInstance().fightManager.areArenaOver(FightAreaComboBox.getSelectedIndex())) {
+                    Log.finer("All fights in this arena are over!");
                     //Obtain next fightManager.
+                    Log.finest("Calculating next fights for arena " + FightAreaComboBox.getSelectedIndex() + " in " + selectedTournament.name);
                     KendoTournamentGenerator.getInstance().fightManager.add(KendoTournamentGenerator.getInstance().designedGroups.nextLevel(
                             KendoTournamentGenerator.getInstance().fightManager.getFights(), FightAreaComboBox.getSelectedIndex(), selectedTournament));
                 }
@@ -559,9 +563,12 @@ public final class FightPanel extends javax.swing.JFrame {
                 messagesFinishedSimpleChampionship();
             }
 
+            Log.finest("Current number of fights over before GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            Log.finest("Updating the GUI.");
             //Update GUI
             fillFightsPanel();
             changeNextButtonText();
+            Log.finest("Current number of fights over after GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
             KendoTournamentGenerator.getInstance().showErrorInformation(iob);

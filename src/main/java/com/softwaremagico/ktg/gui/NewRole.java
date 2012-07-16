@@ -44,6 +44,16 @@ public class NewRole extends KendoFrame {
      * Creates new form NewRole
      */
     public NewRole(boolean closeAfterUpdate) {
+        createWindow(closeAfterUpdate);
+        refreshRole();
+    }
+
+    public NewRole(boolean closeAfterUpdate, Competitor competitor) {
+        createWindow(closeAfterUpdate);
+        defaultSelect(competitor);
+    }
+
+    private void createWindow(boolean closeAfterUpdate) {
         close = closeAfterUpdate;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
@@ -52,19 +62,6 @@ public class NewRole extends KendoFrame {
         fillTournaments();
         fillCompetitors();
         fillRoles();
-        refreshRole(true);
-    }
-
-    public NewRole(boolean closeAfterUpdate, List<Tournament> tournaments) {
-        close = closeAfterUpdate;
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage();
-        fillTournaments(tournaments);
-        fillCompetitors();
-        fillRoles();
-        refreshRole(true);
     }
 
     /**
@@ -83,6 +80,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void fillTournaments() {
+        Log.finest("Updating tournament list of NewRole");
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
@@ -96,21 +94,8 @@ public class NewRole extends KendoFrame {
         refreshTournament = true;
     }
 
-    private void fillTournaments(List<Tournament> tournaments) {
-        refreshTournament = false;
-        try {
-            TournamentComboBox.removeAllItems();
-            listTournaments = tournaments;
-            for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i).name);
-            }
-            TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        } catch (NullPointerException npe) {
-        }
-        refreshTournament = true;
-    }
-
     private void fillCompetitors() {
+        Log.finest("Updating competitors list of NewRole");
         refreshCompetitor = false;
         try {
             CompetitorComboBox.removeAllItems();
@@ -125,6 +110,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void fillRoles() {
+        Log.finest("Updating role list of NewRole");
         try {
             RoleComboBox.removeAllItems();
             RoleComboBox.addItem("");
@@ -145,7 +131,8 @@ public class NewRole extends KendoFrame {
         }
     }
 
-    private void refreshRole(boolean verbose) {
+    private void refreshRole() {
+        Log.finest("Obtaining role of selected Competitor");
         try {
             String role = KendoTournamentGenerator.getInstance().database.getTagRole(listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             try {
@@ -170,6 +157,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void deleteRole() {
+        Log.finest("Deleting role");
         try {
             KendoTournamentGenerator.getInstance().database.deleteRole(listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             if (RoleComboBox.getItemCount() > 0) {
@@ -179,15 +167,12 @@ public class NewRole extends KendoFrame {
         }
     }
 
-    public void defaultSelect(Competitor competitor) {
+    private void defaultSelect(Competitor competitor) {
+        Log.finest("Selecting default " + competitor.getSurnameName());
+        refreshTournament = false;
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+        refreshTournament = true;
         CompetitorComboBox.setSelectedItem(competitor.getSurname() + ", " + competitor.getName());
-    }
-
-    private void nextOne() {
-        if (CompetitorComboBox.getSelectedIndex() < CompetitorComboBox.getItemCount() - 1) {
-            CompetitorComboBox.setSelectedIndex(CompetitorComboBox.getSelectedIndex() + 1);
-        }
     }
 
     /**
@@ -319,7 +304,6 @@ public class NewRole extends KendoFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
-            //if (KendoTournamentGenerator.getInstance().database.storeRole(KendoTournamentGenerator.getInstance().getAvailableRoles().get(RoleComboBox.getSelectedIndex()), listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()), true)) {
             int role = RoleComboBox.getSelectedIndex();
             if (role > 0) {
                 if (KendoTournamentGenerator.getInstance().database.storeRole(KendoTournamentGenerator.getInstance().getAvailableRoles().get(role - 1), listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()), true)) {
@@ -338,7 +322,7 @@ public class NewRole extends KendoFrame {
 
     private void CompetitorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompetitorComboBoxActionPerformed
         if (refreshCompetitor) {
-            refreshRole(false);
+            refreshRole();
         }
     }//GEN-LAST:event_CompetitorComboBoxActionPerformed
 
@@ -359,7 +343,7 @@ public class NewRole extends KendoFrame {
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            refreshRole(false);
+            refreshRole();
         }
     }//GEN-LAST:event_TournamentComboBoxActionPerformed
 

@@ -263,6 +263,16 @@ public class FightManager {
         }
     }
 
+    public int numberOfFightsOver() {
+        int over=0;
+        for (int i = 0; i < fights.size(); i++) {
+            if (fights.get(i).isOver()) {
+                over++;
+            }
+        }
+        return over;
+    }
+
     public boolean areAllOver() {
         for (int i = 0; i < fights.size(); i++) {
             if (!fights.get(i).isOver()) {

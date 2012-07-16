@@ -51,9 +51,11 @@ public class Log {
      */
     public static Formatter getCustomFormatter() {
         return new Formatter() {
+            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+
             @Override
             public String format(LogRecord record) {
-                String text = record.getLevel() + " [" + new Date() + "] " + record.getSourceClassName() + " -> " + record.getSourceMethodName() + " - " + record.getMessage() + "\n";
+                String text = record.getLevel() + " [" + new Date() + "] " + record.getSourceClassName() + " " + stackTraceElements[6] + " -> " + record.getSourceMethodName() + " - " + record.getMessage() + "\n";
                 return text;
             }
         };

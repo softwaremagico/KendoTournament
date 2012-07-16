@@ -727,7 +727,7 @@ public class Controller {
      */
     private void AddNewCompetitorListeners() {
         newCompetitor.addSearchListener(new SearchListener());
-        newCompetitor.addAcceptListener(new AcceptCompetitorListener());
+        newCompetitor.addAcceptListener(new AcceptNewCompetitorListener());
     }
 
     class SearchListener implements ActionListener {
@@ -745,21 +745,22 @@ public class Controller {
         }
     }
 
-    class AcceptCompetitorListener implements ActionListener {
+    class AcceptNewCompetitorListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             Competitor c;
             newCompetitor.testNIF();
             if ((c = newCompetitor.acceptCompetitor()) != null) {
+                Log.info("New competitor added!");
                 try {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
                 }
                 if ((KendoTournamentGenerator.getInstance().database.getAllTournaments()).size() > 0) {
-                    participantFunction = new NewRole(true);
+                    participantFunction = new NewRole(true, c);
                     participantFunction.setVisible(true);
-                    participantFunction.defaultSelect(c);
+                    //participantFunction.defaultSelect(c);
                 }
             }
         }
