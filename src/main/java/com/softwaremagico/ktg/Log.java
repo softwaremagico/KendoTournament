@@ -51,7 +51,7 @@ public class Log {
      */
     public static Formatter getCustomFormatter() {
         return new Formatter() {
-            StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+            //StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 
             @Override
             public String format(LogRecord record) {
