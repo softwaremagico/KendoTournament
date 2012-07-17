@@ -41,7 +41,9 @@
         <linux.releasedir>install_linux</linux.releasedir>
         <linux.origin>linux-basic-files</linux.origin>
         <windows.releasedir>install_windows</windows.releasedir>
-        <windows.origin>windows-basic-files</windows.origin>        
+        <windows.origin>windows-basic-files</windows.origin> 
+        <license.licenseName>softwaremagico</license.licenseName>
+        <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
     </properties>
     
     <profiles>
@@ -251,7 +253,26 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <inceptionYear>2008</inceptionYear>
+                    <excludes>
+                        <exclude>licenses.properties</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>first</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
