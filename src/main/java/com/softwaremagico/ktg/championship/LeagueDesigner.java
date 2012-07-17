@@ -18,10 +18,7 @@
  */
 package com.softwaremagico.ktg.championship;
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
@@ -905,13 +902,15 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
+            System.out.println(KendoTournamentGenerator.getInstance().designedGroups.mode);
             if (!(KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual")) || KendoTournamentGenerator.getInstance().designedGroups.allGroupsHaveManualLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
+                    Log.finer("Deleting old fights");
                     KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, false);
                     if (KendoTournamentGenerator.getInstance().fightManager.setAll(KendoTournamentGenerator.getInstance().designedGroups.generateLevelFights(0), true)) {
                         //Delete inner levels when delete old fightManager.
+                        Log.finest("Deleting inner levels of old tournament");
                         KendoTournamentGenerator.getInstance().designedGroups.emptyInnerLevels();
-                        KendoTournamentGenerator.getInstance().database.deleteDrawsOfTournament(TournamentComboBox.getSelectedItem().toString());
                         this.dispose();
                     }
                 }

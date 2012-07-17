@@ -981,7 +981,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             Tournament t = searchTournament.returnSelectedItem();
             newTournament.setVisible(true);
-            newTournament.UpdateWindow(t);
+            newTournament.updateWindow(t);
             searchTournament.dispose();
         }
     }

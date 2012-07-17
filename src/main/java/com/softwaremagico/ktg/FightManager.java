@@ -244,8 +244,9 @@ public class FightManager {
         return true;
     }
 
-    public boolean deleteFightsOfLevel(String championship, int level, boolean verbose) {
-        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(championship, level, verbose)) {
+    public boolean deleteFightsOfLevel(String tournamentName, int level, boolean verbose) {
+        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(tournamentName, level, verbose)) {
+            Log.finer("Delete fights in memory.");
             for (int i = 0; i < fights.size(); i++) {
                 if (fights.get(i).level >= level) {
                     fights.remove(i);

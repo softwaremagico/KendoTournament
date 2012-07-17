@@ -2138,7 +2138,7 @@ public abstract class SQL extends Database {
         try {
             Statement s = connection.createStatement();
             String query="SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'";
-            System.out.println(query);
+            Log.finest(query);
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
                 int level = rs.getInt("level");
@@ -2857,13 +2857,14 @@ public abstract class SQL extends Database {
      * Delete fights must delete duels. MySQL use foreign key, but SQLite need
      * to delete one by one
      *
-     * @param championship
+     * @param tournamentName
      * @param level
      * @param verbose
      * @return
      */
     @Override
-    public boolean deleteFightsOfLevelOfTournament(String championship, int level, boolean verbose) {
+    public boolean deleteFightsOfLevelOfTournament(String tournamentName, int level, boolean verbose) {
+        Log.fine("Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
         try {
@@ -2872,11 +2873,12 @@ public abstract class SQL extends Database {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + championship + "' AND LeagueLevel >=" + level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournamentName + "' AND LeagueLevel >=" + level);
                 }
+                Log.finer("Delete draw fights of tournament.");
                 List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevelOrMore(level);
                 for (int i = 0; i < groups.size(); i++) {
-                    deleteDrawsOfGroupOfTournament(championship, i);
+                    deleteDrawsOfGroupOfTournament(tournamentName, i);
                 }
                 return true;
             } else {
@@ -3459,6 +3461,7 @@ public abstract class SQL extends Database {
 
     @Override
     public void deleteDrawsOfGroupOfTournament(String championship, int group) {
+        Log.fine("Deleting undraws of group " + group);
         try {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM undraw WHERE Championship='" + championship + "' AND UndrawGroup=" + group);

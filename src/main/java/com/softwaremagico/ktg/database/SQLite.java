@@ -303,7 +303,6 @@ public class SQLite extends SQL {
                     s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
-
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("deleteFight", this.getClass().getName());

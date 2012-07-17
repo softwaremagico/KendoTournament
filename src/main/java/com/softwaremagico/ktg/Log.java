@@ -31,7 +31,7 @@ public class Log {
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static final Logger logger = Logger.getLogger("KendoLog");
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
-    private static final int maxBytes = 500000;
+    private static final int maxBytes = 1000000;
     private static final int numLogFiles = 10;
 
     static {
@@ -55,7 +55,7 @@ public class Log {
 
             @Override
             public String format(LogRecord record) {
-                String text = record.getLevel() + " [" + new Date() + "] " + record.getSourceClassName() + " " + stackTraceElements[6] + " -> " + record.getSourceMethodName() + " - " + record.getMessage() + "\n";
+                String text = record.getLevel() + " [" + new Date() + "] " + " - " + record.getMessage() + "\n";
                 return text;
             }
         };

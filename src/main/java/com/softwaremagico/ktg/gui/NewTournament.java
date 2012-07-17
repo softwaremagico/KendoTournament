@@ -37,6 +37,7 @@ public class NewTournament extends KendoFrame {
 
     Translator trans = null;
     private PhotoFrame banner;
+    private Integer maxCompetitorTeam = null;
 
     /**
      * Creates new form NewTournament
@@ -93,22 +94,23 @@ public class NewTournament extends KendoFrame {
         CreateBanner();
     }
 
-    public void UpdateWindow(Tournament t) {
+    public void updateWindow(Tournament tournament) {
         try {
-            NameTextField.setText(t.name);
+            maxCompetitorTeam = tournament.teamSize;
+            NameTextField.setText(tournament.name);
             NameTextField.setEditable(false);
-            NumCompetitorsSpinner.setValue(t.teamSize);
+            NumCompetitorsSpinner.setValue(tournament.teamSize);
             BannerTextField.setText("");
             banner.CleanPhoto();
             try {
-                banner.ChangePhoto(t.banner(), t.bannerInput, t.bannerSize);
+                banner.ChangePhoto(tournament.banner(), tournament.bannerInput, tournament.bannerSize);
                 //banner.ChangeInputStream(t.BannerInput, t.bannerSize);
                 banner.repaint();
                 BannerPanel.repaint();
                 BannerPanel.revalidate();
             } catch (IllegalArgumentException iae) {
             }
-            AreasSpinner.setValue(t.fightingAreas);
+            AreasSpinner.setValue(tournament.fightingAreas);
         } catch (IOException ex) {
             Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException npe) {
@@ -130,13 +132,19 @@ public class NewTournament extends KendoFrame {
 
     public boolean storeTournament() {
         if (NameTextField.getText().length() > 0) {
-            Tournament t = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), "simple");
-            t.addBanner(banner.photoInput, banner.size);
-            if (KendoTournamentGenerator.getInstance().database.storeTournament(t, true)) {
+            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), "simple");
+            tournament.addBanner(banner.photoInput, banner.size);
+            //Store tournament into database
+            if (KendoTournamentGenerator.getInstance().database.storeTournament(tournament, true)) {
                 KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
                 cleanWindow();
-                return true;
             }
+            //If tournamnet team size has changed (tournament update), delete old teams of tournament.
+            System.out.println(maxCompetitorTeam);
+            if(maxCompetitorTeam != null && maxCompetitorTeam != tournament.teamSize){
+                KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament.name, false);
+            }
+            return true;
         } else {
             MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
         }
