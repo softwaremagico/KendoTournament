@@ -42,7 +42,7 @@
         <linux.origin>linux-basic-files</linux.origin>
         <windows.releasedir>install_windows</windows.releasedir>
         <windows.origin>windows-basic-files</windows.origin> 
-        <license.licenseName>softwaremagico</license.licenseName>
+        <license.licenseName>gnugpl</license.licenseName>
         <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
     </properties>
     
@@ -260,7 +260,7 @@
                 <configuration>
                     <inceptionYear>2008</inceptionYear>
                     <excludes>
-                        <exclude>licenses.properties</exclude>
+                        <exclude>**/licenses.properties</exclude>
                     </excludes>
                 </configuration>
                 <executions>
