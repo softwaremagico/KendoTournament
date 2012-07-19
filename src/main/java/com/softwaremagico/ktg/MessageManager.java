@@ -25,7 +25,6 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import javax.swing.ImageIcon;
@@ -40,6 +39,7 @@ public class MessageManager {
 
     private static final int LINE = 50;
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
+    private static ImageIcon winnerIcon = new ImageIcon(MessageManager.class.getResource("/cup.png"));
 
     /**
      * Show an error message translated to the language stored
@@ -65,7 +65,7 @@ public class MessageManager {
         JFrame frame = null;
         JOptionPane.showMessageDialog(frame,
                 text.trim() + ":\n" + finalText.trim(), title,
-                JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Path.returnIconFolder() + "highscores.png"));
+                JOptionPane.INFORMATION_MESSAGE, winnerIcon);
     }
 
     public static void translatedMessage(String code, String title, String finalText, int option) {

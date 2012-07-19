@@ -61,6 +61,7 @@ public class MainGUI extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
+        setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
         completeLanguageMenu();
         setPhoto();
         isConnectedToDatabase();
