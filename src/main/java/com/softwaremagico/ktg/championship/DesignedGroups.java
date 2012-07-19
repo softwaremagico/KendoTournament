@@ -696,7 +696,7 @@ public class DesignedGroups implements Serializable {
                 }
                 //Show message when last fight is selected.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-                    MessageManager.translatedMessage("leagueFinished", "Finally!", winnername, JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.winnerMessage("leagueFinished", "Finally!", winnername, JOptionPane.INFORMATION_MESSAGE);
                 }
                 update();
                 return new ArrayList<>();

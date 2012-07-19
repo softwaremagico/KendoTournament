@@ -25,8 +25,10 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -49,6 +51,21 @@ public class MessageManager {
     public static void errorMessage(String code, String title) {
         customMessage(trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
         Log.finest(code, title);
+    }
+
+    public static void winnerMessage(String code, String title, String finalText, int option) {
+        String text = trans.returnTag(code);
+        if (text.endsWith(".")) {
+            text = text.substring(0, text.length() - 1);
+        }
+        //customMessage(text.trim() + ": " + finalText.trim(), title, option);
+
+        Log.finest(title + ": " + text);
+
+        JFrame frame = null;
+        JOptionPane.showMessageDialog(frame,
+                text.trim() + ":\n" + finalText.trim(), title,
+                JOptionPane.INFORMATION_MESSAGE, new ImageIcon(Path.returnIconFolder() + "highscores.png"));
     }
 
     public static void translatedMessage(String code, String title, String finalText, int option) {

@@ -44,7 +44,7 @@ public class SummaryPDF extends ParentList {
     private Tournament championship;
     private final int border = 0;
     private int useOnlyShiaijo = -1;
-    protected boolean showfinishedFights = true; //If true, only show finished fights, if false only show not finished fights.
+    protected boolean showNotFinishedFights = true; //If true, only show not finished fights, if false only show finished fights.
     protected boolean showAll = true; //If true, show finished and not finished fights;
 
     public SummaryPDF(Tournament tmp_championship, int shiaijo) {
@@ -148,7 +148,7 @@ public class SummaryPDF extends ParentList {
 
 
         for (int i = 0; i < fights.size(); i++) {
-            if ((fights.get(i).isOver() == showfinishedFights) || (showAll)) {
+            if ((showAll) || (fights.get(i).isOver() == !showNotFinishedFights)) {
                 /*
                  * Header of the phase
                  */
