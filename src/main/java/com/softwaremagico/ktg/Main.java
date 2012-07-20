@@ -58,12 +58,11 @@ public class Main {
             }
         }
 
-        Configuration langConf = new Configuration();
-        langConf.readLanguageConfiguration();
+        Configuration.readLanguageConfiguration();
 
         MainGUI gui = new MainGUI();
         try {
-            new Controller(gui);
+            Controller controller = new Controller(gui);
         } catch (Exception ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }

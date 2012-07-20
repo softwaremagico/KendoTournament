@@ -31,26 +31,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- * @author Jorge Hortelano
- */
 public class Folder {
 
     public String folderName;
     private List<String> files = new ArrayList<>();
 
-    /** Creates a new instance of Folder */
+    /**
+     * Creates a new instance of Folder
+     */
     public Folder(String tmp_directory) throws Exception {
         folderName = tmp_directory;
-    //files = BuscafilesExistentes();
     }
 
     public String ReturnFolder() {
         return folderName;
     }
 
-    public List<String> ObtainFolders(String src) throws Exception {
+    public static List<String> obtainFolders(String src) throws Exception {
         //Creamos el Objeto File con la URL que queremos desplegar
         File dir = new File(src);
         List<String> lista = new ArrayList<>();
@@ -66,8 +63,8 @@ public class Folder {
         return lista;
     }
 
-    private List<String> Searchfiles(String directory) throws Exception {
-        List<String> filesDisponibles = ObtainFolders(directory);
+    private static List<String> searchfiles(String directory) throws Exception {
+        List<String> filesDisponibles = obtainFolders(directory);
         List<String> listaDatos = new ArrayList<>();
         for (int i = 0; i < filesDisponibles.size(); i++) {
             String dato = filesDisponibles.get(i);
@@ -81,29 +78,29 @@ public class Folder {
         return listaDatos;
     }
 
-    public List<String> ObtainfilesSubdirectory(String subdirectory) throws Exception {
-        return Searchfiles(subdirectory);
+    public static List<String> ObtainfilesSubdirectory(String subdirectory) throws Exception {
+        return searchfiles(subdirectory);
     }
 
     public List<String> Disponiblesfiles() {
         return files;
     }
 
-    public static List<String> ReadFileLines(String filename, boolean verbose) throws IOException {
+    public static List<String> readFileLines(String filename, boolean verbose) throws IOException {
         return MyFile.InLines(filename, verbose);
 
     }
 
-    public String ReadFileAsText(String filename, boolean verbose) throws IOException {
+    public static String readFileAsText(String filename, boolean verbose) throws IOException {
         return MyFile.InString(filename, verbose).trim();
     }
 
     /**
      * Store text in a file. The text must be written in a String list.
-     * @param dataList The text to be written
-     * @file the path to the file.
+     *
+     * @param dataList The text to be written @file the path to the file.
      */
-    public void SaveListInFile(List dataList, String file) {
+    public static void saveListInFile(List dataList, String file) {
         File outputFile;
         byte b[];
         //Se guarda en el filename
@@ -122,18 +119,18 @@ public class Folder {
             } catch (IOException ex) {
             }
         } catch (FileNotFoundException ex) {
-            String text = "Impossible to generate the file:\n\t" + file +
-                    "\nCheck the Folder.\n";
+            String text = "Impossible to generate the file:\n\t" + file
+                    + "\nCheck the Folder.\n";
             MessageManager.basicErrorMessage(text, "Directories");
         }
     }
 
     /**
      * Store text in a file. The text must be written in a String list.
-     * @param dataList The text to be written
-     * @file the path to the file.
+     *
+     * @param dataList The text to be written @file the path to the file.
      */
-    public void SaveTextInFile(String text, String file) {
+    public static void saveTextInFile(String text, String file) {
         File outputFile;
         byte b[];
         //Se guarda en el filename
@@ -152,14 +149,14 @@ public class Folder {
             } catch (IOException ex) {
             }
         } catch (FileNotFoundException ex) {
-            String msg = "Impossible to generate file:\n\t" + file +
-                    ". \nIs the working directory created properly?\n" +
-                    "Check into \"Configuration -> Configurate the Computer\"";
+            String msg = "Impossible to generate file:\n\t" + file
+                    + ". \nIs the working directory created properly?\n"
+                    + "Check into \"Configuration -> Configurate the Computer\"";
             MessageManager.basicErrorMessage(msg, "directories");
         }
     }
 
-    public void AppendTextToFile(String text, String file) {
+    public static void appendTextToFile(String text, String file) {
         FileWriter fw = null;
         try {
             boolean append = true;
@@ -172,5 +169,37 @@ public class Folder {
             } catch (IOException ex) {
             }
         }
+    }
+
+    /**
+     * Get all files in a subfolder with the defined extension.
+     *
+     * @param folder
+     * @param extension if extension is null, will return all files in the folder.
+     * @return
+     */
+    public static List<String> obtainFilesInFolder(String folder, final String extension) {
+        File dir = new File(folder);
+        List<String> fileNames = new ArrayList<>();
+
+        File[] files;
+
+        if (extension != null) {
+            files = dir.listFiles(new FilenameFilter() {
+
+                @Override
+                public boolean accept(File dir, String filename) {
+                    return filename.endsWith(extension);
+                }
+            });
+        } else {
+            files = dir.listFiles();
+        }
+        
+        for(File f:files){
+            fileNames.add(f.getName());
+        }
+
+        return fileNames;
     }
 }

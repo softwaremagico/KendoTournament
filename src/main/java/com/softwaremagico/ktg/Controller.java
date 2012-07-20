@@ -174,8 +174,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             KendoTournamentGenerator.getInstance().language = main.ReturnSelectedLanguage();
             Locale.setDefault(new Locale(KendoTournamentGenerator.getInstance().language));
-            Configuration langConf = new Configuration();
-            langConf.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
+            Configuration.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
             main.setLanguage();
         }
     }

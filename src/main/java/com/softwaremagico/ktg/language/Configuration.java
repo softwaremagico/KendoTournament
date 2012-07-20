@@ -38,19 +38,9 @@ import java.util.logging.Logger;
  */
 public class Configuration {
 
-    private Folder directory;
-    private final String CONFIG_FOLDER = "configuration";
-    private final String LANGUAGE_FILE = "language.txt";
-    private final String directory_STORE_USER_DATA = "kendoTournament";
-
-    public Configuration() {
-        try {
-            directory = new Folder(CONFIG_FOLDER);
-        } catch (Exception ex) {
-            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    private static final String CONFIG_FOLDER = "configuration";
+    private static final String LANGUAGE_FILE = "language.txt";
+    private static final String directory_STORE_USER_DATA = "kendoTournament";
 
     /************************************************
      *
@@ -60,17 +50,17 @@ public class Configuration {
     /**
      * Stores into a file the language selected.
      */
-    public void storeLanguageConfiguration(String language) {
+    public static void storeLanguageConfiguration(String language) {
         getPathConfigInHome();
-        directory.SaveTextInFile(language, getPathConfigInHome() + LANGUAGE_FILE);
+        Folder.saveTextInFile(language, getPathConfigInHome() + LANGUAGE_FILE);
     }
 
     /**
      * Restore from a file the language selected.
      */
-    public void readLanguageConfiguration() {
+    public static void readLanguageConfiguration() {
         try {
-            String text = directory.ReadFileAsText(getPathConfigInHome() + LANGUAGE_FILE, false);
+            String text = Folder.readFileAsText(getPathConfigInHome() + LANGUAGE_FILE, false);
             if (text.length() > 1) {
                 KendoTournamentGenerator.getInstance().language = text;
             }
@@ -86,12 +76,12 @@ public class Configuration {
         
     }
 
-    private void makeFolderIfNotExist(String file) {
+    private static void makeFolderIfNotExist(String file) {
         File f = new File(file);
         f.mkdir();
     }
 
-    public String getPathConfigInHome() {
+    public static String getPathConfigInHome() {
         String config = System.getProperty("user.home");
         String soName = System.getProperty("os.name");
         if (soName.toLowerCase().contains("linux")) {

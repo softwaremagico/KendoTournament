@@ -1,35 +1,46 @@
 package com.softwaremagico.ktg.gui;
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
- * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
- * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
+ * This software is designed by Jorge Hortelano Otero.
+ * Jorge Hortelano Otero <softwaremagico@gmail.com>
+ * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *  
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with this program; If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.DatabaseEngine;
+import com.softwaremagico.ktg.database.SQLite;
+import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.event.KeyListener;
+import java.util.List;
 
 /**
  *
  * @author LOCAL\jhortelano
  */
 public class DatabaseConnectionPanel extends javax.swing.JPanel {
-
+    
     private boolean engineUpdate = true;
     private String selectedEngine = "MySQL";
 
@@ -42,7 +53,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         setDefaultText();
         setLanguage();
     }
-
+    
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
         UserLabel.setText(trans.returnTag("UserLabel"));
@@ -51,15 +62,14 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         DatabaseLabel.setText(trans.returnTag("DatabaseLabel"));
         EngineLabel.setText(trans.returnTag("DatabaseEngineLabel"));
     }
-
+    
     private void setDefaultText() {
         ServerTextField.setText(KendoTournamentGenerator.getInstance().server);
         UserTextField.setText(KendoTournamentGenerator.getInstance().user);
         //DatabaseTextField.setText(KendoTournamentGenerator.getInstance().databaseName);
-        fillDatabaseList();
         //PasswordField.setText(KendoTournamentGenerator.getInstance().password);
     }
-
+    
     private void fillEngines() {
         engineUpdate = false;
         int i = 0, index = 0;
@@ -74,20 +84,29 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         EngineComboBox.setSelectedIndex(index); //Update the window with the event and the selected database. 
         hasNetworkConnection(KendoTournamentGenerator.getInstance().getDatabaseEngine());
     }
-
+    
     private void fillDatabaseList() {
         DatabaseComboBox.removeAllItems();
         if (!DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()).getHasNetworkConnection()) {
-            
-        }else{
+            List<String> files = Folder.obtainFilesInFolder(Path.returnDatabasePath(), SQLite.defaultSQLiteExtension);
+            files.remove(SQLite.defaultDatabaseName + "." + SQLite.defaultSQLiteExtension);
+            DatabaseComboBox.addItem("");
+            for (String file : files) {
+                System.out.println(file +" " + file.indexOf('.'));
+                DatabaseComboBox.addItem(file.substring(0, file.indexOf('.')));                
+            }
+            DatabaseComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().databaseName);
+        } else {
+            DatabaseComboBox.addItem("");
             DatabaseComboBox.addItem(KendoTournamentGenerator.getInstance().databaseName);
+            DatabaseComboBox.setSelectedIndex(1);
         }
     }
-
+    
     public char[] password() {
         return PasswordField.getPassword();
     }
-
+    
     public String getPassword() {
         String p = "";
         for (int i = 0; i < PasswordField.getPassword().length; i++) {
@@ -95,43 +114,43 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         }
         return p;
     }
-
+    
     public String getUser() {
         return UserTextField.getText();
     }
-
+    
     public String getServer() {
         return ServerTextField.getText();
     }
-
+    
     public String getDatabase() {
         //return DatabaseTextField.getText();
         return DatabaseComboBox.getSelectedItem().toString();
     }
-
+    
     public void resetPassword() {
         PasswordField.setText("");
     }
-
+    
     private void hasNetworkConnection(DatabaseEngine engine) {
         ServerTextField.setEnabled(engine.getHasNetworkConnection());
         UserTextField.setEnabled(engine.getHasNetworkConnection());
         PasswordField.setEnabled(engine.getHasNetworkConnection());
     }
-
+    
     public String getSelectedEngine() {
         return selectedEngine;
     }
-
+    
     public void setSelectedEngine(String selectedEngine) {
         EngineComboBox.setSelectedItem(selectedEngine);
         this.selectedEngine = selectedEngine;
     }
-
+    
     public void setFocusOnPassword() {
         PasswordField.requestFocusInWindow();
     }
-
+    
     public boolean getPasswordEnabled() {
         return PasswordField.isEnabled();
     }
@@ -265,11 +284,11 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             resetPassword();
         }
     }//GEN-LAST:event_EngineComboBoxActionPerformed
-
+    
     private void ServerTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ServerTextFieldKeyReleased
         KendoTournamentGenerator.getInstance().server = ServerTextField.getText();
     }//GEN-LAST:event_ServerTextFieldKeyReleased
-
+    
     private void UserTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UserTextFieldKeyReleased
         KendoTournamentGenerator.getInstance().user = UserTextField.getText();
     }//GEN-LAST:event_UserTextFieldKeyReleased
