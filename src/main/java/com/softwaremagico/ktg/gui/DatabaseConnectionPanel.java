@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg.gui;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
@@ -62,7 +55,8 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     private void setDefaultText() {
         ServerTextField.setText(KendoTournamentGenerator.getInstance().server);
         UserTextField.setText(KendoTournamentGenerator.getInstance().user);
-        DatabaseTextField.setText(KendoTournamentGenerator.getInstance().databaseName);
+        //DatabaseTextField.setText(KendoTournamentGenerator.getInstance().databaseName);
+        fillDatabaseList();
         //PasswordField.setText(KendoTournamentGenerator.getInstance().password);
     }
 
@@ -79,6 +73,15 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         engineUpdate = true;
         EngineComboBox.setSelectedIndex(index); //Update the window with the event and the selected database. 
         hasNetworkConnection(KendoTournamentGenerator.getInstance().getDatabaseEngine());
+    }
+
+    private void fillDatabaseList() {
+        DatabaseComboBox.removeAllItems();
+        if (!DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()).getHasNetworkConnection()) {
+            
+        }else{
+            DatabaseComboBox.addItem(KendoTournamentGenerator.getInstance().databaseName);
+        }
     }
 
     public char[] password() {
@@ -102,7 +105,8 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     }
 
     public String getDatabase() {
-        return DatabaseTextField.getText();
+        //return DatabaseTextField.getText();
+        return DatabaseComboBox.getSelectedItem().toString();
     }
 
     public void resetPassword() {
@@ -127,8 +131,8 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     public void setFocusOnPassword() {
         PasswordField.requestFocusInWindow();
     }
-    
-    public boolean getPasswordEnabled(){
+
+    public boolean getPasswordEnabled() {
         return PasswordField.isEnabled();
     }
 
@@ -162,11 +166,11 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         ServerTextField = new javax.swing.JTextField();
         ServerLabel = new javax.swing.JLabel();
         DatabaseLabel = new javax.swing.JLabel();
-        DatabaseTextField = new javax.swing.JTextField();
         UserTextField = new javax.swing.JTextField();
         UserLabel = new javax.swing.JLabel();
         PasswordLabel = new javax.swing.JLabel();
         PasswordField = new javax.swing.JPasswordField();
+        DatabaseComboBox = new javax.swing.JComboBox();
 
         setMinimumSize(new java.awt.Dimension(400, 180));
 
@@ -189,13 +193,6 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
 
         DatabaseLabel.setText("Database:");
 
-        DatabaseTextField.setText("KendoTournament");
-        DatabaseTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                DatabaseTextFieldKeyReleased(evt);
-            }
-        });
-
         UserTextField.setText("root");
         UserTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -208,6 +205,8 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         PasswordLabel.setText("Password:");
 
         PasswordField.setText("password");
+
+        DatabaseComboBox.setEditable(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,11 +222,11 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
                     .addComponent(EngineLabel))
                 .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DatabaseTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                     .addComponent(PasswordField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(UserTextField)
-                    .addComponent(ServerTextField)
-                    .addComponent(EngineComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(ServerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                    .addComponent(EngineComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DatabaseComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -242,9 +241,9 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
                     .addComponent(ServerLabel)
                     .addComponent(ServerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DatabaseLabel)
-                    .addComponent(DatabaseTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(DatabaseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(UserLabel)
@@ -262,6 +261,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             //KendoTournamentGenerator.getInstance().setDatabaseEngine(EngineComboBox.getSelectedItem().toString());
             setSelectedEngine(EngineComboBox.getSelectedItem().toString());
             hasNetworkConnection(DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()));
+            fillDatabaseList();
             resetPassword();
         }
     }//GEN-LAST:event_EngineComboBoxActionPerformed
@@ -270,16 +270,12 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         KendoTournamentGenerator.getInstance().server = ServerTextField.getText();
     }//GEN-LAST:event_ServerTextFieldKeyReleased
 
-    private void DatabaseTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DatabaseTextFieldKeyReleased
-        KendoTournamentGenerator.getInstance().databaseName = DatabaseTextField.getText();
-    }//GEN-LAST:event_DatabaseTextFieldKeyReleased
-
     private void UserTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UserTextFieldKeyReleased
         KendoTournamentGenerator.getInstance().user = UserTextField.getText();
     }//GEN-LAST:event_UserTextFieldKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox DatabaseComboBox;
     private javax.swing.JLabel DatabaseLabel;
-    private javax.swing.JTextField DatabaseTextField;
     private javax.swing.JComboBox<String> EngineComboBox;
     private javax.swing.JLabel EngineLabel;
     private javax.swing.JPasswordField PasswordField;
