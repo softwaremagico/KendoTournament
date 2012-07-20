@@ -97,7 +97,7 @@
                                                 <filter value="${project.version}" token="version" />
                                                 <filter value="${project.name}" token="projectname" />
                                                 <filter value="${project.build.sourceEncoding}" token="encoding" />
-                                                <filter value="${description}" token="description" />
+                                                <filter value="${project.description}" token="description" />
                                             </filterset>
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
