@@ -359,7 +359,7 @@ public abstract class SQL extends Database {
     protected void executeScript(String fileName) {
         String query = "";
         try {
-            List<String> lines = MyFile.InLines(fileName, false);
+            List<String> lines = MyFile.inLines(fileName, false);
             for (int i = 0; i < lines.size(); i++) {
                 if (!lines.get(i).startsWith("--")) {
                     if (!lines.get(i).endsWith(";")) {

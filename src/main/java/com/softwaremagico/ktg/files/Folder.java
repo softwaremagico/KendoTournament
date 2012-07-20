@@ -87,12 +87,12 @@ public class Folder {
     }
 
     public static List<String> readFileLines(String filename, boolean verbose) throws IOException {
-        return MyFile.InLines(filename, verbose);
+        return MyFile.inLines(filename, verbose);
 
     }
 
     public static String readFileAsText(String filename, boolean verbose) throws IOException {
-        return MyFile.InString(filename, verbose).trim();
+        return MyFile.inString(filename, verbose).trim();
     }
 
     /**

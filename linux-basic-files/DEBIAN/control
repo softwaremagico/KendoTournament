@@ -1,5 +1,5 @@
 Package: kendo-tournament-generator
-Version: ${project.version}
+Version: @version@
 Section: Utility
 Priority: optional
 Architecture: all
