@@ -125,8 +125,7 @@ public class Translator {
                         if (!language.equals(DEFAULT_LANGUAGE)) {
                             if (!errorShowed) {
                                 MessageManager.customMessage("Selecting english language by default. You can change it later in Options->Language ", "Translator", JOptionPane.PLAIN_MESSAGE);
-                                Configuration langConf = new Configuration();
-                                langConf.storeLanguageConfiguration(language);
+                                Configuration.storeLanguageConfiguration(language);
                                 errorShowed = true;
                             }
                             return returnTag(tag, DEFAULT_LANGUAGE);

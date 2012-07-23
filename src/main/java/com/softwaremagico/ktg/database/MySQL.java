@@ -242,7 +242,7 @@ public class MySQL extends SQL {
                     return updateDatabaseAction(allMyFolderObjects[o].getPath());
                 } else {
                     if (!allMyFolderObjects[o].getPath().endsWith("~")) {
-                        List<String> lines = MyFile.InLines(allMyFolderObjects[o].getPath(), false);
+                        List<String> lines = MyFile.inLines(allMyFolderObjects[o].getPath(), false);
                         for (int i = 0; i < lines.size(); i++) {
                             if (!lines.get(i).startsWith("--")) {
                                 if (!lines.get(i).endsWith(";")) {

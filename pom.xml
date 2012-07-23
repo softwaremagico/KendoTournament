@@ -37,11 +37,13 @@
     </developers>
 	
     <properties>
+        <url>http://kendotournament.sourceforge.net/</url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <linux.releasedir>install_linux</linux.releasedir>
         <linux.origin>linux-basic-files</linux.origin>
         <windows.releasedir>install_windows</windows.releasedir>
-        <windows.origin>windows-basic-files</windows.origin> 
+        <windows.origin>windows-basic-files</windows.origin>
+        <winexe>KendoTournamentGenerator.exe</winexe>
         <license.licenseName>gnugpl</license.licenseName>
         <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
     </properties>
@@ -55,8 +57,8 @@
                 </os>
             </activation>
             <build>
-                <resources>
-            <!-- Filter the file control.txt -->
+                <!-- <resources>
+        
                     <resource>
                         <directory>${linux.origin}</directory>
                         <filtering>true</filtering>
@@ -65,7 +67,6 @@
                             <include>**/*.desktop</include>
                         </includes>
                     </resource>
-            <!-- Not filtering the other files -->
                     <resource>
                         <directory>${linux.origin}</directory>
                         <filtering>false</filtering>
@@ -74,7 +75,7 @@
                             <exclude>**/*.desktop</exclude>
                         </excludes>
                     </resource>
-                </resources>
+                </resources> -->
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -85,16 +86,25 @@
                                 <configuration>
                                     <tasks>
                                         <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/DEBIAN" includes="**/*" />
+                                            <fileset dir="${linux.origin}/DEBIAN" includes="**/*" />
+                                            <filterset>
+                                                <filter value="${project.version}" token="version" />
+                                            </filterset>
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/usr" includes="**/*" />
+                                            <fileset dir="${linux.origin}/usr" includes="**/*" />
+                                            <filterset>
+                                                <filter value="${project.version}" token="version" />
+                                                <filter value="${project.name}" token="projectname" />
+                                                <filter value="${project.build.sourceEncoding}" token="encoding" />
+                                                <filter value="${project.description}" token="description" />
+                                            </filterset>
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
+                                            <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/lib" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/../lib" includes="**/*.jar" />
+                                            <fileset dir="./target/lib" includes="**/*.jar" />
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/translations" overwrite="true" >
                                             <fileset dir="./translations" includes="**/*.xml" />
@@ -137,19 +147,6 @@
                 </os>
             </activation>
             <build>
-                <resources>
-            <!-- No filtering the other files -->
-                    <resource>
-                        <directory>${windows.origin}</directory>
-                        <filtering>false</filtering>
-                        <includes>
-                            <include>**/*.ico</include>
-                            <include>**/KendoTournamentGenerator.exe</include>
-                            <include>**/*.iss</include>
-                            <include>**/*.txt</include>
-                        </includes>
-                    </resource>
-                </resources>
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
@@ -160,10 +157,10 @@
                                 <configuration>
                                     <tasks>
                                         <copy todir="${windows.releasedir}" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/../" includes="**/KendoTournamentGenerator.jar" />
+                                            <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
                                         <copy todir="${windows.releasedir}/lib" overwrite="true" >
-                                            <fileset dir="${project.build.outputDirectory}/../lib" includes="**/*.jar" />
+                                            <fileset dir="./target/lib" includes="**/*.jar" />
                                         </copy>
                                         <copy todir="${windows.releasedir}/translations" overwrite="true" >
                                             <fileset dir="./translations" includes="**/*.xml" />
@@ -187,13 +184,20 @@
                                             <fileset dir="./" includes="**/Readme.txt" />
                                         </copy>   
                                         <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${project.build.outputDirectory}/" includes="**/icon.ico" />
+                                            <fileset dir="${windows.origin}/" includes="**/icon.ico" />
                                         </copy>  
                                         <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${project.build.outputDirectory}/" includes="**/KendoTournamentGenerator.exe" />
+                                            <fileset dir="${windows.origin}/" includes="**/KendoTournamentGenerator.exe" />
                                         </copy>  
                                         <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${project.build.outputDirectory}/" includes="**/InstallScript.iss" />
+                                            <fileset dir="${windows.origin}/" includes="**/InstallScript.iss" />
+                                            <filterset>
+                                                <filter value="${project.version}" token="version" />
+                                                <filter value="${project.name}" token="projectname" />
+                                                <filter value="${project.groupId}" token="group" />
+                                                <filter value="${url}" token="url" />
+                                                <filter value="${winexe}" token="winexe" />
+                                            </filterset>
                                         </copy>  
                                     </tasks>
                                 </configuration>
@@ -214,9 +218,7 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/version.txt</exclude>
-                </excludes>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
@@ -259,6 +261,13 @@
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
+                    <excludes>
+                        <exclude>**/DEBIAN/*</exclude>
+                        <exclude>**/usr/*</exclude>
+                        <exclude>**/*.exe</exclude>
+                        <exclude>**/*.bat</exclude>
+                        <exclude>**/*.iss</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -280,6 +289,26 @@
                         <phase>process-sources</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${linux.releasedir}</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>${windows.releasedir}</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>

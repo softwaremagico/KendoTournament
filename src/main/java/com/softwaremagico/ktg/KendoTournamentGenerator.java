@@ -137,7 +137,8 @@ public class KendoTournamentGenerator {
     }
 
     public String getVersion() {
-        return MyFile.ReadTextFile("version.txt",false);
+        return MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath(), false);
+        //return MyFile.readTextFile("/version.txt",false);
     }
 
     /**
@@ -198,8 +199,7 @@ public class KendoTournamentGenerator {
         try {
             List<String> connectionData;
 
-            Configuration conf = new Configuration();
-            connectionData = Folder.ReadFileLines(conf.getPathConfigInHome() + "connection.txt", false);
+            connectionData = Folder.readFileLines(Configuration.getPathConfigInHome() + "connection.txt", false);
 
             for (int i = 0; i < connectionData.size(); i++) {
                 if (connectionData.get(i).contains("User:")) {
@@ -237,13 +237,7 @@ public class KendoTournamentGenerator {
         connectionData.add("Machine:" + server);
         connectionData.add("Database:" + databaseName);
         connectionData.add("Engine:" + databaseEngine);
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        Configuration conf = new Configuration();
-        f.SaveListInFile(connectionData, conf.getPathConfigInHome() + "connection.txt");
+        Folder.saveListInFile(connectionData, Configuration.getPathConfigInHome() + "connection.txt");
     }
 
     public boolean isLocallyConnected() {
@@ -335,8 +329,7 @@ public class KendoTournamentGenerator {
         try {
             List<String> tournamentConfigFile;
 
-            Configuration conf = new Configuration();
-            tournamentConfigFile = Folder.ReadFileLines(conf.getPathConfigInHome() + File.separator + "config.txt", false);
+            tournamentConfigFile = Folder.readFileLines(Configuration.getPathConfigInHome() + File.separator + "config.txt", false);
 
             for (int i = 0; i < tournamentConfigFile.size(); i++) {
                 if (tournamentConfigFile.get(i).contains(tag)) {
@@ -396,13 +389,7 @@ public class KendoTournamentGenerator {
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        Configuration conf = new Configuration();
-        f.SaveListInFile(configData, conf.getPathConfigInHome() + File.separator + "config.txt");
+        Folder.saveListInFile(configData, Configuration.getPathConfigInHome() + File.separator + "config.txt");
     }
 
     public boolean existCompetitor(List<Competitor> competitors, Competitor competitor) {

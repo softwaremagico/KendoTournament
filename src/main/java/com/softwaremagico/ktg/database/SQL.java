@@ -106,21 +106,16 @@ public abstract class SQL extends Database {
     }
 
     private void exportClubs(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `club` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `club` WRITE;\n", file);
         List<Club> clubs = getAllClubs();
         for (int i = 0; i < clubs.size(); i++) {
-            f.AppendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).returnName() + "','" + clubs.get(i).returnCountry() + "','"
+            Folder.appendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).returnName() + "','" + clubs.get(i).returnCountry() + "','"
                     + clubs.get(i).representativeID + "','" + clubs.get(i).email + "','"
                     + clubs.get(i).phone + "','" + clubs.get(i).returnCity() + "',"
                     + "NULL" + ",'" + clubs.get(i).returnAddress() + "');\n", file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     private void exportCompetitors(String file) {
@@ -129,7 +124,7 @@ public abstract class SQL extends Database {
             f = new Folder("");
         } catch (Exception ex) {
         }
-        f.AppendTextToFile("LOCK TABLES `competitor` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `competitor` WRITE;\n", file);
         List<CompetitorWithPhoto> competitors = getAllCompetitorsWithPhoto();
         for (int i = 0; i < competitors.size(); i++) {
             //FileOutputStream fos;
@@ -142,12 +137,12 @@ public abstract class SQL extends Database {
                 }
             }
             //Select Photo from competitor where competitor.ListOrder=1 into dumpfile '/tmp/image.jpg';
-            f.AppendTextToFile("INSERT INTO `competitor` VALUES('" + competitors.get(i).getId() + "','" + competitors.get(i).getName() + "','"
+            Folder.appendTextToFile("INSERT INTO `competitor` VALUES('" + competitors.get(i).getId() + "','" + competitors.get(i).getName() + "','"
                     + competitors.get(i).getSurname() + "','" + competitors.get(i).club + "','" + convertInputStream2String(competitors.get(i).photoInput) + "',"
                     + competitors.get(i).photoSize + "," + i + ");\n", file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     /**
@@ -237,37 +232,27 @@ public abstract class SQL extends Database {
     }
 
     private void exportTournaments(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `tournament` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `tournament` WRITE;\n", file);
         List<Tournament> tournaments = getAllTournaments();
         for (int i = 0; i < tournaments.size(); i++) {
-            f.AppendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).name + "','" + convertInputStream2String(tournaments.get(i).bannerInput) + "',"
+            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).name + "','" + convertInputStream2String(tournaments.get(i).bannerInput) + "',"
                     + tournaments.get(i).bannerSize + "," + tournaments.get(i).fightingAreas + "," + tournaments.get(i).howManyTeamsOfGroupPassToTheTree + ","
                     + tournaments.get(i).teamSize + ",'" + tournaments.get(i).mode + "'," + (int) tournaments.get(i).getScoreForWin() + ","
                     + tournaments.get(i).getScoreForDraw() + ",'" + tournaments.get(i).getChoosedScore() + "',NULL,NULL"
                     + ");\n", file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     private void exportRole(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `role` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `role` WRITE;\n", file);
         List<String> commands = getRoleSqlCommands();
         for (int i = 0; i < commands.size(); i++) {
-            f.AppendTextToFile(commands.get(i), file);
+            Folder.appendTextToFile(commands.get(i), file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     /**
@@ -300,12 +285,7 @@ public abstract class SQL extends Database {
     }
 
     private void exportTeams(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `team` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `team` WRITE;\n", file);
         List<Team> teams = getAllTeams();
         for (int i = 0; i < teams.size(); i++) {
             for (int levelIndex = 0; levelIndex < teams.get(i).levelChangesSize(); levelIndex++) {
@@ -314,49 +294,39 @@ public abstract class SQL extends Database {
                     if (teams.get(i).getMember(member, levelIndex) != null) {
                         memberID = teams.get(i).getMember(member, levelIndex).getId();
                     }
-                    f.AppendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).returnName() + "','"
+                    Folder.appendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).returnName() + "','"
                             + memberID + "'," + member + "," + levelIndex + ",'"
                             + teams.get(i).competition.name + "'," + teams.get(i).group
                             + ");\n", file);
                 }
             }
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     private void exportFights(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
         ArrayList<Fight> fights = getAllFights();
         for (int i = 0; i < fights.size(); i++) {
-            f.AppendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.returnName() + "','"
+            Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.returnName() + "','"
                     + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "',"
                     + fights.get(i).asignedFightArea + "," + i + ","
                     + fights.get(i).returnWinner() + "," + fights.get(i).level + ","
                     + fights.get(i).getMaxWinners()
                     + ");\n", file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     private void exportDuels(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `duel` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `duel` WRITE;\n", file);
         ArrayList<Fight> fights = getAllFights();
         int id = 0;
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < fights.get(i).duels.size(); j++) {
-                f.AppendTextToFile("INSERT INTO `duel` VALUES(" + id + "," + i + ","
+                Folder.appendTextToFile("INSERT INTO `duel` VALUES(" + id + "," + i + ","
                         + j + ",'" + fights.get(i).duels.get(j).hitsFromCompetitorA.get(0).getAbbreviature() + "','"
                         + fights.get(i).duels.get(j).hitsFromCompetitorA.get(1).getAbbreviature() + "','"
                         + fights.get(i).duels.get(j).hitsFromCompetitorB.get(0).getAbbreviature() + "','"
@@ -367,23 +337,18 @@ public abstract class SQL extends Database {
                 id++;
             }
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     private void exportUndraws(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
-        f.AppendTextToFile("LOCK TABLES `undraw` WRITE;\n", file);
+        Folder.appendTextToFile("LOCK TABLES `undraw` WRITE;\n", file);
         List<String> commands = getUndrawMySQLCommands();
         for (int i = 0; i < commands.size(); i++) {
-            f.AppendTextToFile(commands.get(i), file);
+            Folder.appendTextToFile(commands.get(i), file);
         }
-        f.AppendTextToFile("UNLOCK TABLES;\n", file);
-        f.AppendTextToFile("--------------------\n", file);
+        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
+        Folder.appendTextToFile("--------------------\n", file);
     }
 
     public void importDatabase(String fileName) {
@@ -394,7 +359,7 @@ public abstract class SQL extends Database {
     protected void executeScript(String fileName) {
         String query = "";
         try {
-            List<String> lines = MyFile.InLines(fileName, false);
+            List<String> lines = MyFile.inLines(fileName, false);
             for (int i = 0; i < lines.size(); i++) {
                 if (!lines.get(i).startsWith("--")) {
                     if (!lines.get(i).endsWith(";")) {

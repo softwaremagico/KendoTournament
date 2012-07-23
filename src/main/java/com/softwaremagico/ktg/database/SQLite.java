@@ -44,6 +44,9 @@ import javax.swing.JOptionPane;
  */
 public class SQLite extends SQL {
 
+    public static final String defaultDatabaseName = "kendotournament_empty";
+    public static final String defaultSQLiteExtension = "sqlite";
+
     public SQLite() {
     }
 
@@ -77,7 +80,7 @@ public class SQLite extends SQL {
 
         try {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + Path.returnDatabasePath() + tmp_database + ".sqlite");
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Path.returnDatabasePath() + tmp_database + "." + defaultSQLiteExtension);
 
             if (!isDatabaseInstalledCorrectly(false)) {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
@@ -132,7 +135,7 @@ public class SQLite extends SQL {
     @Override
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
-            copyFile(new File("database/kendotournament_empty.sqlite"), new File("database/" + tmp_database + ".sqlite"));
+            copyFile(new File("database/" + defaultDatabaseName + "." + defaultSQLiteExtension), new File("database/" + tmp_database + "."+defaultSQLiteExtension));
         } catch (IOException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }

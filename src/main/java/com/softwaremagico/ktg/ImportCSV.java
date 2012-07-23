@@ -57,7 +57,7 @@ public class ImportCSV {
         String path = exploreWindowsForCsv(JFileChooser.FILES_AND_DIRECTORIES, "");
         if (path.length() > 0) {
             try {
-                text = MyFile.InString(path,true);
+                text = MyFile.inString(path,true);
                 text = text.replace("\\s", "");
                 text = text.replace("\\n", "");
                 fields = text.split(";");
