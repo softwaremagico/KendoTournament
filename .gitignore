@@ -9,4 +9,5 @@
 *.lck
 /database/kendotournament.sqlite
 **/Thumbs.db
+*.class
 
