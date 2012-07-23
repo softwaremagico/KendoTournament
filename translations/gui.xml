@@ -1470,20 +1470,20 @@
 		<de>Only for Undraw</de>
 		<ca>Sols per desempatar</ca>
 	</EuropeanUndrawLabel>
-	<ExportDatabase>
+	<Export>
 		<en>Export to...</en>
 		<es>Exportar a...</es>
 		<nl>Exporteren naar...</nl>
 		<de>Exportieren nach ...</de>
 		<ca>Exportar a...</ca>
-	</ExportDatabase>	
-	<ImportDatabase>
+	</Export>	
+	<Import>
 		<en>Import from...</en>
 		<es>Importar de...</es>
 		<nl>Importeren van...</nl>
 		<de>Importieren von</de>
 		<ca>Importar de...</ca>
-	</ImportDatabase>
+	</Import>
 	<ImportSQL>
 		<en>Import from SQL</en>
 		<es>Importar de SQL</es>
@@ -1788,5 +1788,12 @@
 		<de>of</de>
 		<ca>de</ca>
 	</Of>
+	<DataExchange>
+		<en>Import/Export</en>
+		<es>Importar/Exportar</es>
+		<nl>Import/Export</nl>
+		<de>Import/Export</de>
+		<ca>Importar/Exportar</ca>
+	</DataExchange>
 	
 </translator>

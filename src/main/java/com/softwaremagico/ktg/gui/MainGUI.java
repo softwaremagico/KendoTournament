@@ -121,15 +121,18 @@ public class MainGUI extends KendoFrame {
         ClubListMenuItem.setText(trans.returnTag("ClubListMenuItem"));
         RefereeListMenuItem.setText(trans.returnTag("RefereeListMenuItem"));
         ScoreMenuItem.setText(trans.returnTag("ScoreMenuItem"));
-        ImportMenu.setText(trans.returnTag("ImportMenu"));
-        CsvMenuItem.setText(trans.returnTag("CvsMenuItem"));
-        ExportMenuItem.setText(trans.returnTag("ExportDatabase"));
-        ImportMenuItem.setText(trans.returnTag("ImportDatabase"));
+        DataExchangeMenu.setText(trans.returnTag("DataExchange"));
+        ImportCsvMenuItem.setText(trans.returnTag("CvsMenuItem"));
+        ExportMenuItem.setText(trans.returnTag("Export"));
+        ImportMenuItem.setText(trans.returnTag("Import"));
         ChangeTeamMenuItem.setText(trans.returnTag("ChangeTeamOrder"));
         LogMenuCheckBox.setText(trans.returnTag("LogOption"));
         DebugMenuCheckBox.setText(trans.returnTag("DebugOption"));
         ConvertDatabaseMenuItem.setText(trans.returnTag("ConvertDatabase"));
         FightsCardMenuItem.setText(trans.returnTag("FightsCard"));
+        ImportMenu.setText(trans.returnTag("Import"));
+        ExportMenu.setText(trans.returnTag("Export"));
+        ExchangeFightMenu.setText(trans.returnTag("Fights"));
     }
 
     private void setPhoto() {
@@ -195,8 +198,8 @@ public class MainGUI extends KendoFrame {
         ScoreMenuItem.setEnabled(connected);
         SummaryMenuItem.setEnabled(connected);
         RefereeListMenuItem.setEnabled(connected);
-        ImportMenu.setEnabled(connected);
-        CsvMenuItem.setEnabled(connected);
+        DataExchangeMenu.setEnabled(connected);
+        ImportCsvMenuItem.setEnabled(connected);
         ClubListMenuItem.setEnabled(connected);
         ExportMenuItem.setEnabled(connected);
         ImportMenuItem.setEnabled(connected);
@@ -359,7 +362,7 @@ public class MainGUI extends KendoFrame {
     }
 
     public void addCsvMenuItemListener(ActionListener al) {
-        CsvMenuItem.addActionListener(al);
+        ImportCsvMenuItem.addActionListener(al);
     }
 
     public void addChangeTeamMenuItemListener(ActionListener al) {
@@ -399,8 +402,14 @@ public class MainGUI extends KendoFrame {
         MonitorMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"monitor.png"));
         ScoreMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));
         TreeMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
+        DataExchangeMenu = new javax.swing.JMenu();
+        ExchangeFightMenu = new javax.swing.JMenu();
+        ExportMenu = new javax.swing.JMenu();
+        ExportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"export2.png"));
+        ExportCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ImportMenu = new javax.swing.JMenu();
-        CsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
+        ImportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
+        ImportCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ExitMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"exit.png"));
         InsertMenu = new javax.swing.JMenu();
         ClubMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"club.png"));
@@ -510,13 +519,28 @@ public class MainGUI extends KendoFrame {
 
         ProgramMenu.add(MonitorMenu);
 
+        DataExchangeMenu.setText("Data Exchange");
+        DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
+
+        ExchangeFightMenu.setText("Fights");
+
+        ExportMenu.setText("Export");
+
+        ExportCsvMenuItem.setText("CSV");
+        ExportMenu.add(ExportCsvMenuItem);
+
+        ExchangeFightMenu.add(ExportMenu);
+
         ImportMenu.setText("Import");
-        ImportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
 
-        CsvMenuItem.setText("CSV");
-        ImportMenu.add(CsvMenuItem);
+        ImportCsvMenuItem.setText("CSV");
+        ImportMenu.add(ImportCsvMenuItem);
 
-        ProgramMenu.add(ImportMenu);
+        ExchangeFightMenu.add(ImportMenu);
+
+        DataExchangeMenu.add(ExchangeFightMenu);
+
+        ProgramMenu.add(DataExchangeMenu);
 
         ExitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         ExitMenuItem.setText("Exit");
@@ -762,7 +786,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem CompetitorMenuItem;
     private javax.swing.JMenu CompetitorStatisticsMenu;
     private javax.swing.JMenuItem ConvertDatabaseMenuItem;
-    private javax.swing.JMenuItem CsvMenuItem;
+    private javax.swing.JMenu DataExchangeMenu;
     private javax.swing.JMenuItem DatabaseConnectMenuItem;
     private javax.swing.JMenuItem DatabaseDisconnectMenuItem;
     private javax.swing.JMenu DatabaseMenu;
@@ -771,13 +795,17 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenu DefineFightsMenu;
     private javax.swing.JMenuItem DesignerMenuItem;
     private javax.swing.JMenuItem DiplomaMenuItem;
+    private javax.swing.JMenu ExchangeFightMenu;
     private javax.swing.JMenuItem ExitMenuItem;
+    private javax.swing.JMenuItem ExportCsvMenuItem;
+    private javax.swing.JMenu ExportMenu;
     private javax.swing.JMenuItem ExportMenuItem;
     private javax.swing.JMenuItem FightListMenuItem;
     private javax.swing.JMenuItem FightMenuItem;
     private javax.swing.JMenuItem FightsCardMenuItem;
     private javax.swing.JMenu HelpMenu;
     private javax.swing.JMenuItem HelpMenuItem;
+    private javax.swing.JMenuItem ImportCsvMenuItem;
     private javax.swing.JMenu ImportMenu;
     private javax.swing.JMenuItem ImportMenuItem;
     private javax.swing.JMenu InsertMenu;

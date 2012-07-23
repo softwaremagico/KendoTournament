@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="LanguageButtonGroup">
     </Component>
@@ -110,22 +110,57 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="ImportMenu">
+            <Menu class="javax.swing.JMenu" name="DataExchangeMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Import"/>
+                <Property name="text" type="java.lang.String" value="Data Exchange"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="ImportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
               </AuxValues>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="CsvMenuItem">
+                <Menu class="javax.swing.JMenu" name="ExchangeFightMenu">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="CSV"/>
+                    <Property name="text" type="java.lang.String" value="Fights"/>
                   </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text.png&quot;));"/>
-                  </AuxValues>
-                </MenuItem>
+                  <SubComponents>
+                    <Menu class="javax.swing.JMenu" name="ExportMenu">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Export"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ExportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;export2.png&quot;));"/>
+                      </AuxValues>
+                      <SubComponents>
+                        <MenuItem class="javax.swing.JMenuItem" name="ExportCsvMenuItem">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="CSV"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text.png&quot;));"/>
+                          </AuxValues>
+                        </MenuItem>
+                      </SubComponents>
+                    </Menu>
+                    <Menu class="javax.swing.JMenu" name="ImportMenu">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Import"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ImportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
+                      </AuxValues>
+                      <SubComponents>
+                        <MenuItem class="javax.swing.JMenuItem" name="ImportCsvMenuItem">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="CSV"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text.png&quot;));"/>
+                          </AuxValues>
+                        </MenuItem>
+                      </SubComponents>
+                    </Menu>
+                  </SubComponents>
+                </Menu>
               </SubComponents>
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="ExitMenuItem">
