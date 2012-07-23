@@ -115,23 +115,26 @@
                 <Property name="text" type="java.lang.String" value="Data Exchange"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;importExport.png&quot;));"/>
               </AuxValues>
               <SubComponents>
-                <Menu class="javax.swing.JMenu" name="ExchangeFightMenu">
+                <Menu class="javax.swing.JMenu" name="ExchangeParticipantsMenu">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Fights"/>
+                    <Property name="text" type="java.lang.String" value="Participants"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="ExchangeParticipantsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;boy.png&quot;));"/>
+                  </AuxValues>
                   <SubComponents>
-                    <Menu class="javax.swing.JMenu" name="ExportMenu">
+                    <Menu class="javax.swing.JMenu" name="ImportParticipantMenu">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Export"/>
+                        <Property name="text" type="java.lang.String" value="Import"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ExportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;export2.png&quot;));"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ImportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
                       </AuxValues>
                       <SubComponents>
-                        <MenuItem class="javax.swing.JMenuItem" name="ExportCsvMenuItem">
+                        <MenuItem class="javax.swing.JMenuItem" name="ImportParticpantCsvMenuItem1">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="CSV"/>
                           </Properties>
@@ -141,15 +144,61 @@
                         </MenuItem>
                       </SubComponents>
                     </Menu>
-                    <Menu class="javax.swing.JMenu" name="ImportMenu">
+                    <Menu class="javax.swing.JMenu" name="ExportParticipantMenu">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Export"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ExportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;export2.png&quot;));"/>
+                      </AuxValues>
+                      <SubComponents>
+                        <MenuItem class="javax.swing.JMenuItem" name="ExportParticipantCsvMenuItem1">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="CSV"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text.png&quot;));"/>
+                          </AuxValues>
+                        </MenuItem>
+                      </SubComponents>
+                    </Menu>
+                  </SubComponents>
+                </Menu>
+                <Menu class="javax.swing.JMenu" name="ExchangeFightsMenu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Fights"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="ExchangeFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;highscores.png&quot;));"/>
+                  </AuxValues>
+                  <SubComponents>
+                    <Menu class="javax.swing.JMenu" name="ExportFightMenu">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Export"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ExportFightMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;export2.png&quot;));"/>
+                      </AuxValues>
+                      <SubComponents>
+                        <MenuItem class="javax.swing.JMenuItem" name="ExportFightCsvMenuItem">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="CSV"/>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text.png&quot;));"/>
+                          </AuxValues>
+                        </MenuItem>
+                      </SubComponents>
+                    </Menu>
+                    <Menu class="javax.swing.JMenu" name="ImportFightMenu">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Import"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ImportMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="ImportFightMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;import2.png&quot;));"/>
                       </AuxValues>
                       <SubComponents>
-                        <MenuItem class="javax.swing.JMenuItem" name="ImportCsvMenuItem">
+                        <MenuItem class="javax.swing.JMenuItem" name="ImportFightCsvMenuItem">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="CSV"/>
                           </Properties>

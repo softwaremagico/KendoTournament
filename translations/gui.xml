@@ -469,6 +469,13 @@
 		<de>Teilnehmer:</de>
 		<ca>Competidor:</ca>
 	</CompetitorLabel>
+	<CompetitorMenu>
+		<en>Competitor</en>
+		<es>Competidor</es>
+		<nl>Deelnemer</nl>
+		<de>Teilnehmer</de>
+		<ca>Competidor</ca>
+	</CompetitorMenu>
 	<RoleLabel>
 		<en>Role:</en>
 		<es>Rol:</es>
