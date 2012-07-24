@@ -1,4 +1,6 @@
-package com.softwaremagico.ktg.statistics;
+package com.softwaremagico.ktg.gui;
+
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -34,10 +36,10 @@ import com.softwaremagico.ktg.pdflist.ParentList;
  */
 public class SelectTournamentForCSV extends ListFromTournament {
 
-    public SelectTournamentForCSV() {
+    public SelectTournamentForCSV(String tag, String tagImportExport) {
         Start(false);
-        this.setTitle(trans.returnTag("CvsMenuItem"));
-        GenerateButton.setText(trans.returnTag("ImportMenu"));
+        this.setTitle(trans.returnTag(tag));
+        GenerateButton.setText(trans.returnTag(tagImportExport));
     }
 
     @Override

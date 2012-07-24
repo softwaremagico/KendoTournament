@@ -560,6 +560,13 @@
 		<de>Importieren</de>
 		<ca>Importar</ca>
 	</ImportMenu>
+	<ExportMenu>
+		<en>Export</en>
+		<es>Exportar</es>
+		<nl>Export</nl>
+		<de>Exportieren</de>
+		<ca>Exportar</ca>
+	</ExportMenu>
 	<CvsMenuItem>
 		<en>CSV</en>
 		<es>CSV</es>
@@ -1802,5 +1809,4 @@
 		<de>Import/Export</de>
 		<ca>Importar/Exportar</ca>
 	</DataExchange>
-	
 </translator>

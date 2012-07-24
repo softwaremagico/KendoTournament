@@ -163,7 +163,10 @@ public class Controller {
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
         main.addScoreMenuItemListener(new ChooseScoreListener());
-        main.addCsvMenuItemListener(new CsvListener());
+        main.addImportFightCsvMenuItemListener(new CsvListener("CvsMenuItem","ImportMenu"));
+        main.addExportFightCsvMenuItemListener(new CsvListener("CvsMenuItem","ExportMenu"));
+        main.addImportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem","ImportMenu"));
+        main.addExportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem","ExportMenu"));
         main.addChangeTeamMenuItemListener(new ChangeTeamListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
     }
@@ -628,13 +631,21 @@ public class Controller {
 
     class CsvListener implements ActionListener {
 
+        private String tag = "";
+        private String tagImportExport = "";
+
+        public CsvListener(String tag, String tagImportExport) {
+            this.tag = tag;
+            this.tagImportExport = tagImportExport;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 selectTournamentForCSV.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentForCSV = new SelectTournamentForCSV();
+            selectTournamentForCSV = new SelectTournamentForCSV(tag, tagImportExport);
             selectTournamentForCSV.setVisible(true);
             AddSelectTournamentCSVListeners();
 

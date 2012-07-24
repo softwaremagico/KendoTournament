@@ -67,7 +67,7 @@ public abstract class ListFromTournament extends KendoFrame {
         CancelButton.setText(trans.returnTag("CancelButton"));
         GenerateButton.setText(trans.returnTag("GenerateButton"));
     }
-
+    
     private void fillTournaments() {
         refreshTournament = false;
         try {
@@ -260,13 +260,13 @@ public abstract class ListFromTournament extends KendoFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(TournamentLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TournamentComboBox, 0, 282, Short.MAX_VALUE)))
+                        .addComponent(TournamentComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()

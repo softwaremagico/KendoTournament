@@ -364,8 +364,20 @@ public class MainGUI extends KendoFrame {
         ScoreMenuItem.addActionListener(al);
     }
 
-    public void addCsvMenuItemListener(ActionListener al) {
+    public void addImportFightCsvMenuItemListener(ActionListener al) {
         ImportFightCsvMenuItem.addActionListener(al);
+    }
+
+    public void addExportFightCsvMenuItemListener(ActionListener al) {
+        ExportFightCsvMenuItem.addActionListener(al);
+    }
+
+    public void addImportParticipantCsvMenuItemListener(ActionListener al) {
+        ImportParticpantCsvMenuItem.addActionListener(al);
+    }
+
+    public void addExportParticipantCsvMenuItemListener(ActionListener al) {
+        ExportParticipantCsvMenuItem.addActionListener(al);
     }
 
     public void addChangeTeamMenuItemListener(ActionListener al) {
@@ -407,12 +419,12 @@ public class MainGUI extends KendoFrame {
         TreeMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
         DataExchangeMenu = new javax.swing.JMenu();
         ExchangeParticipantsMenu = new javax.swing.JMenu();
-        ImportParticipantMenu = new javax.swing.JMenu();
-        ImportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
-        ImportParticpantCsvMenuItem1 = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ExportParticipantMenu = new javax.swing.JMenu();
         ExportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"export2.png"));
-        ExportParticipantCsvMenuItem1 = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
+        ExportParticipantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
+        ImportParticipantMenu = new javax.swing.JMenu();
+        ImportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
+        ImportParticpantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ExchangeFightsMenu = new javax.swing.JMenu();
         ExportFightMenu = new javax.swing.JMenu();
         ExportFightMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"export2.png"));
@@ -535,19 +547,19 @@ public class MainGUI extends KendoFrame {
         ExchangeParticipantsMenu.setText("Participants");
         ExchangeParticipantsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"boy.png"));
 
-        ImportParticipantMenu.setText("Import");
-
-        ImportParticpantCsvMenuItem1.setText("CSV");
-        ImportParticipantMenu.add(ImportParticpantCsvMenuItem1);
-
-        ExchangeParticipantsMenu.add(ImportParticipantMenu);
-
         ExportParticipantMenu.setText("Export");
 
-        ExportParticipantCsvMenuItem1.setText("CSV");
-        ExportParticipantMenu.add(ExportParticipantCsvMenuItem1);
+        ExportParticipantCsvMenuItem.setText("CSV");
+        ExportParticipantMenu.add(ExportParticipantCsvMenuItem);
 
         ExchangeParticipantsMenu.add(ExportParticipantMenu);
+
+        ImportParticipantMenu.setText("Import");
+
+        ImportParticpantCsvMenuItem.setText("CSV");
+        ImportParticipantMenu.add(ImportParticpantCsvMenuItem);
+
+        ExchangeParticipantsMenu.add(ImportParticipantMenu);
 
         DataExchangeMenu.add(ExchangeParticipantsMenu);
 
@@ -831,7 +843,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem ExportFightCsvMenuItem;
     private javax.swing.JMenu ExportFightMenu;
     private javax.swing.JMenuItem ExportMenuItem;
-    private javax.swing.JMenuItem ExportParticipantCsvMenuItem1;
+    private javax.swing.JMenuItem ExportParticipantCsvMenuItem;
     private javax.swing.JMenu ExportParticipantMenu;
     private javax.swing.JMenuItem FightListMenuItem;
     private javax.swing.JMenuItem FightMenuItem;
@@ -842,7 +854,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenu ImportFightMenu;
     private javax.swing.JMenuItem ImportMenuItem;
     private javax.swing.JMenu ImportParticipantMenu;
-    private javax.swing.JMenuItem ImportParticpantCsvMenuItem1;
+    private javax.swing.JMenuItem ImportParticpantCsvMenuItem;
     private javax.swing.JMenu InsertMenu;
     private javax.swing.ButtonGroup LanguageButtonGroup;
     private javax.swing.JMenu LanguageMenu;
