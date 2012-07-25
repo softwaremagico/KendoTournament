@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg.gui;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.*;
@@ -39,19 +32,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
-
-
 /**
  *
- * @author  jorge
+ * @author jorge
  */
 public class NewCompetitor extends KendoFrame {
 
     private Translator trans = null;
-    private PhotoFrame photo;
+    private PhotoFrame photo = null;
     private boolean refreshClub;
 
-    /** Creates new form NewCompetitor */
+    /**
+     * Creates new form NewCompetitor
+     */
     public NewCompetitor() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
@@ -111,23 +104,29 @@ public class NewCompetitor extends KendoFrame {
      * Show the photo of the selected user or a default one.
      */
     public final void createPhoto() {
-        photo = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
+        //photo = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
+        PhotoFrame pFrame;
+        if (photo == null) {
+            pFrame = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
+        } else {
+            pFrame = photo;
+        }
         Dimension d;
         try {
-            if (PhotoPanel.getWidth() / photo.getWidth() > photo.getHeight() / photo.getHeight()) {
-                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / photo.getWidth()) * photo.getHeight());
+            if (PhotoPanel.getWidth() / pFrame.getWidth() > pFrame.getHeight() / pFrame.getHeight()) {
+                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / pFrame.getWidth()) * pFrame.getHeight());
             } else {
-                d = new Dimension((PhotoPanel.getHeight() / photo.getHeight()) * photo.getWidth(), PhotoPanel.getHeight());
+                d = new Dimension((PhotoPanel.getHeight() / pFrame.getHeight()) * pFrame.getWidth(), PhotoPanel.getHeight());
             }
         } catch (ArithmeticException ae) {
             d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
         }
-        photo.setPreferredSize(d);
+        pFrame.setPreferredSize(d);
         PhotoPanel.removeAll();
         PhotoPanel.setBackground(new Color(255, 255, 255));
-        PhotoPanel.add(photo, 0);
+        PhotoPanel.add(pFrame, 0);
         PhotoPanel.revalidate();
-        photo.repaint();
+        pFrame.repaint();
         PhotoPanel.repaint();
     }
 
@@ -169,10 +168,12 @@ public class NewCompetitor extends KendoFrame {
         PhotoTextField.setText("");
         photo.CleanPhoto();
         createPhoto();
-        /*PhotoPanel.removeAll();
-        PhotoPanel.add(photo, 0);*/
-        /*photo.repaint();
-        PhotoPanel.repaint();*/
+        /*
+         * PhotoPanel.removeAll(); PhotoPanel.add(photo, 0);
+         */
+        /*
+         * photo.repaint(); PhotoPanel.repaint();
+         */
         this.repaint();
     }
 
@@ -191,13 +192,13 @@ public class NewCompetitor extends KendoFrame {
                     return comp;
                 }
             } else {
-                MessageManager.errorMessage("noCompetitiorFieldsFilled", "MySQL");
+                MessageManager.errorMessage("noCompetitiorFieldsFilled", "SQL");
             }
         }
         return null;
     }
-    
-    public void testNIF(){
+
+    public void testNIF() {
         try {
             Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
@@ -209,13 +210,16 @@ public class NewCompetitor extends KendoFrame {
         }
     }
 
-    /************************************************
+    /**
+     * **********************************************
      *
-     *                    LISTENERS
+     * LISTENERS
      *
-     ************************************************/
+     ***********************************************
+     */
     /**
      * Add the same action listener to all langugaes of the menu.
+     *
      * @param al
      */
     public void addSearchListener(ActionListener al) {
@@ -226,10 +230,10 @@ public class NewCompetitor extends KendoFrame {
         AcceptButton.addActionListener(al);
     }
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -466,7 +470,6 @@ public class NewCompetitor extends KendoFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AcceptButton;
     private javax.swing.JButton CancelButton;

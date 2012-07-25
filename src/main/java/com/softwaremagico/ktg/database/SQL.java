@@ -175,10 +175,10 @@ public abstract class SQL extends Database {
             if (offset != length) {
                 throw new IOException("Only read " + offset + " bytes; Expected " + length + " bytes");
             }
-            try (FileOutputStream out = new FileOutputStream("/tmp/test.jpg")) {
+            /*try (FileOutputStream out = new FileOutputStream("/tmp/test.jpg")) {
                 out.write(data);
                 out.flush();
-            }
+            }*/
         } catch (IOException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
