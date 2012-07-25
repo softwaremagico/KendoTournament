@@ -51,22 +51,15 @@ public class PanelBackground extends JPanel {
         int srcWidth = input.getWidth();
         imageBackground = imageBackground.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
     }
-    
+
     public void setBackground(Image image) {
         int srcHeight = image.getHeight(this);
         int srcWidth = image.getWidth(this);
         imageBackground = image.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
     }
 
-    public void setBackgroundExtended(File file) throws IOException {
-        if (file == null) {
-            imageBackground = null;
-        } else {
-            imageBackground = ImageIO.read(file);
-        }
-        FileInputStream imageInput = new FileInputStream(file.getPath());
-        BufferedImage input = ImageIO.read(imageInput);
-        imageBackground = imageBackground.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
+    public void setBackgroundExtended(Image image) {
+        imageBackground = image.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
     }
 
     public void removeBackground() {

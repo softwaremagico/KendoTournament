@@ -295,20 +295,16 @@ public class RoundFight extends JPanel {
         }
 
         private void updateDrawPanel(PanelBackground panel, int winner, int over, boolean nextStarted, int index) {
-            try {
-                if ((winner == 0 && over != 2) || //fight over and the duel is draw.
-                        (winner == 0 && nextStarted) || //fight not over, but next duel started
-                        (drawsAnnoted.get(index) && winner == 0)) { //Set by the user.
-                    panel.setBackgroundExtended(getBackground(Path.returnScoreFolder() + Score.DRAW.getImageName()));
-                } else {
-                    drawsAnnoted.set(index, false);
-                    panel.removeBackground();
-                }
-                panel.revalidate();
-                panel.repaint();
-            } catch (IOException ex) {
-                //Logger.getLogger(CompetitorFight.class.getName()).log(Level.SEVERE, null, ex);
+            if ((winner == 0 && over != 2) || //fight over and the duel is draw.
+                    (winner == 0 && nextStarted) || //fight not over, but next duel started
+                    (drawsAnnoted.get(index) && winner == 0)) { //Set by the user.
+                panel.setBackgroundExtended(Score.getImage(Score.DRAW.getImageName()));
+            } else {
+                drawsAnnoted.set(index, false);
+                panel.removeBackground();
             }
+            panel.revalidate();
+            panel.repaint();
         }
 
         @Override
