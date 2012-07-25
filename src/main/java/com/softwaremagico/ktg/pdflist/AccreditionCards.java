@@ -37,13 +37,13 @@ import javax.swing.JFileChooser;
  *
  * @author Jorge
  */
-public class AccreditionCards extends ListFromTournament {
+public class AccreditionCards extends ListFromTournamentPDF {
 
     InputStream photoInput;
     long size;
 
     public AccreditionCards() {
-        Start(false);
+        super();
         this.setTitle(trans.returnTag("titleAccreditionCard"));
         CheckBox.setVisible(true);
         changeCheckBoxText(trans.returnTag("PrintAll"));

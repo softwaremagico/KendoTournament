@@ -79,9 +79,6 @@ public class Controller {
     private StatisticsTeamTopTen statisticsTeamTopTen = null;
     private StatisticsHitsPerformed statisticsPerformedHits = null;
     private StatisticsHitsReceived statisticsReceivedHits = null;
-    private SelectTournamentForHitsStatistics selectTournament = null;
-    private SelectTournamentForTopTen selectTournamentTopTen = null;
-    private SelectTournamentForTeamTopTen selectTournamentForTeamTopTen = null;
     private SelectCompetitorForPerformedHits selectPerformedHitsOfCompetitor = null;
     private SelectCompetitorForReceivedHits selectReceivedHitsOfCompetitor = null;
     private SelectCompetitorForWonFights selectWonFightsOfCompetitor = null;
@@ -96,7 +93,7 @@ public class Controller {
     private Monitor monitor = null;
     private SelectTournamentForMonitor selectTournamentForMonitor = null;
     private SelectTournamentForTreeMonitor selectTournamentForTreeMonitor = null;
-    private SelectTournamentForCSV selectTournamentForCSV = null;
+    private SelectTournament selectTournament = null;
     private ChangeOrderTeam changeTeam = null;
     private DatabaseConversor databaseConversor = null;
 
@@ -163,10 +160,10 @@ public class Controller {
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
         main.addScoreMenuItemListener(new ChooseScoreListener());
-        main.addImportFightCsvMenuItemListener(new CsvListener("CvsMenuItem","ImportMenu"));
-        main.addExportFightCsvMenuItemListener(new CsvListener("CvsMenuItem","ExportMenu"));
-        main.addImportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem","ImportMenu"));
-        main.addExportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem","ExportMenu"));
+        main.addImportFightCsvMenuItemListener(new CsvListener("CvsMenuItem", "ImportMenu"));
+        main.addExportFightCsvMenuItemListener(new CsvListener("CvsMenuItem", "ExportMenu"));
+        main.addImportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem", "ImportMenu"));
+        main.addExportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem", "ExportMenu"));
         main.addChangeTeamMenuItemListener(new ChangeTeamListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
     }
@@ -469,7 +466,7 @@ public class Controller {
                 selectTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournament = new SelectTournamentForHitsStatistics();
+            selectTournament = new SelectTournament("titleHitStatistics");
             selectTournament.setVisible(true);
             AddSelectTournamentListeners();
         }
@@ -522,11 +519,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentTopTen.dispose();
+                selectTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentTopTen = new SelectTournamentForTopTen();
-            selectTournamentTopTen.setVisible(true);
+            selectTournament = new SelectTournament("titleHitStatistics");
+            selectTournament.setVisible(true);
             AddSelectTournamentTopTenListeners();
         }
     }
@@ -536,11 +533,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentForTeamTopTen.dispose();
+                selectTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentForTeamTopTen = new SelectTournamentForTeamTopTen();
-            selectTournamentForTeamTopTen.setVisible(true);
+            selectTournament = new SelectTournament("titleTeamTopTen");
+            selectTournament.setVisible(true);
             AddSelectTournamentForTeamTopTenListeners();
         }
     }
@@ -642,13 +639,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentForCSV.dispose();
+                selectTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentForCSV = new SelectTournamentForCSV(tag, tagImportExport);
-            selectTournamentForCSV.setVisible(true);
+            selectTournament = new SelectTournament(tag, tagImportExport);
+            selectTournament.setVisible(true);
             AddSelectTournamentCSVListeners();
-
         }
     }
 
@@ -1088,7 +1084,7 @@ public class Controller {
      * Add all listeners to GUI.
      */
     private void AddSelectTournamentTopTenListeners() {
-        selectTournamentTopTen.addGenerateButtonListener(new SelectTournamentTopTenListener());
+        selectTournament.addGenerateButtonListener(new SelectTournamentTopTenListener());
     }
 
     class SelectTournamentTopTenListener implements ActionListener {
@@ -1099,9 +1095,9 @@ public class Controller {
                 statisticsTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTopTen = new StatisticsTopTen(selectTournamentTopTen.returnSelectedTournamentName());
+            statisticsTopTen = new StatisticsTopTen(selectTournament.returnSelectedTournamentName());
             statisticsTopTen.setVisible(true);
-            selectTournamentTopTen.dispose();
+            selectTournament.dispose();
         }
     }
 
@@ -1190,15 +1186,16 @@ public class Controller {
      * Add all listeners to GUI.
      */
     private void AddSelectTournamentCSVListeners() {
-        selectTournamentForCSV.addGenerateButtonListener(new SelectTournamentCSVListener());
+        selectTournament.addGenerateButtonListener(new SelectTournamentCSVListener());
     }
 
     class SelectTournamentCSVListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            ImportCSV csv = new ImportCSV(selectTournamentForCSV.returnSelectedTournamentName());
-            selectTournamentForCSV.dispose();
+            //ImportCSV csv = new ImportCSV(selectTournamentForCSV.returnSelectedTournamentName());
+            //selectTournamentForCSV.dispose();
+            selectTournament.dispose();
         }
     }
 
@@ -1213,7 +1210,7 @@ public class Controller {
      * Add all listeners to GUI.
      */
     private void AddSelectTournamentForTeamTopTenListeners() {
-        selectTournamentForTeamTopTen.addGenerateButtonListener(new selectTournamentForTeamTopTenListener());
+        selectTournament.addGenerateButtonListener(new selectTournamentForTeamTopTenListener());
     }
 
     class selectTournamentForTeamTopTenListener implements ActionListener {
@@ -1224,9 +1221,9 @@ public class Controller {
                 statisticsTeamTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTeamTopTen = new StatisticsTeamTopTen(selectTournamentForTeamTopTen.returnSelectedTournament());
+            statisticsTeamTopTen = new StatisticsTeamTopTen(selectTournament.returnSelectedTournament());
             statisticsTeamTopTen.setVisible(true);
-            selectTournamentForTeamTopTen.dispose();
+            selectTournament.dispose();
         }
     }
 

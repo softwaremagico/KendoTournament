@@ -31,10 +31,10 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
  *
  * @author Jorge
  */
-public class FightList extends ListFromTournament {
+public class FightList extends ListFromTournamentPDF {
 
     public FightList() {
-        Start(false);
+        super();
         this.setTitle(trans.returnTag("titleListFights"));
     }
 

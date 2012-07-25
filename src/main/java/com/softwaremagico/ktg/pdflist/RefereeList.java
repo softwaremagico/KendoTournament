@@ -31,17 +31,17 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
  *
  * @author Jorge
  */
-public class RefereeList extends ListFromTournament {
+public class RefereeList extends ListFromTournamentPDF {
 
     public RefereeList() {
-        Start(false);
+        super();
         this.setTitle(trans.returnTag("titleListReferee"));
     }
 
     @Override
     public String defaultFileName() {
         try {
-            return TournamentComboBox.getSelectedItem().toString() +"_" +KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Referee").name;
+            return TournamentComboBox.getSelectedItem().toString() + "_" + KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Referee").name;
         } catch (NullPointerException npe) {
             return null;
         }
@@ -51,5 +51,4 @@ public class RefereeList extends ListFromTournament {
     protected ParentList getPdfGenerator() {
         return new RefereeListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
     }
-
 }

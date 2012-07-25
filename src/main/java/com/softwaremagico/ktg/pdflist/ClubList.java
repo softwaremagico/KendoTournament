@@ -29,10 +29,10 @@ package com.softwaremagico.ktg.pdflist;
  *
  * @author Jorge
  */
-public class ClubList extends ListFromTournament {
+public class ClubList extends ListFromTournamentPDF {
 
     public ClubList() {
-        Start(false);
+        super();
         this.setTitle(trans.returnTag("titleSummary"));
     }
 

@@ -31,10 +31,10 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
  *
  * @author Jorge
  */
-public class SummaryList extends ListFromTournament {
+public class SummaryList extends ListFromTournamentPDF {
 
     public SummaryList() {
-        Start(false);
+        super();
         this.setTitle(trans.returnTag("titleSummary"));
         ArenaComboBox.setEnabled(true);
     }

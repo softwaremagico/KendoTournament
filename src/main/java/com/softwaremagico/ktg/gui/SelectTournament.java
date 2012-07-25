@@ -1,4 +1,6 @@
-package com.softwaremagico.ktg.statistics;
+package com.softwaremagico.ktg.gui;
+
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -24,35 +26,43 @@ package com.softwaremagico.ktg.statistics;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
 import com.softwaremagico.ktg.pdflist.ParentList;
+
 
 /**
  *
  * @author Jorge
  */
-public class SelectTournamentForTeamTopTen extends ListFromTournament {
+public class SelectTournament extends ListFromTournament {
 
-    public SelectTournamentForTeamTopTen() {
-        Start(true);
-        this.setTitle(trans.returnTag("titleTeamTopTen"));
+    public SelectTournament(String title, String buttonTag) {
+        createGui(false);
+        this.setTitle(trans.returnTag(title));
+        GenerateButton.setText(trans.returnTag(buttonTag));
+    }
+    
+    public SelectTournament(String title) {
+        createGui(true);
+        this.setTitle(trans.returnTag(title));
     }
 
     @Override
     public String defaultFileName() {
-        return null;
+        return "exportedData";
     }
 
-    @Override
+    /*@Override
     public void generate() {
-    }
-
-    @Override
-    protected ParentList getPdfGenerator() {
-        return null;
-    }
-
+        try {
+            String file;
+            if (!(file = exploreWindowsForCsv("CSV",
+                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
+            }
+        } catch (Exception ex) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        }
+    }*/
 
 }
 

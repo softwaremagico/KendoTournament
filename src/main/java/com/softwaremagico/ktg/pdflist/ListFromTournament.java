@@ -34,7 +34,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFileChooser;
 
 /**
  *
@@ -47,7 +46,7 @@ public abstract class ListFromTournament extends KendoFrame {
     public boolean voidTournament;  //Add "All tournaments" option.
     private boolean refreshTournament = true;
 
-    public void Start(boolean tmp_voidTournament) {
+    public void createGui(boolean tmp_voidTournament) {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -113,23 +112,6 @@ public abstract class ListFromTournament extends KendoFrame {
             }
         } else {
             return TournamentComboBox.getSelectedIndex();
-        }
-    }
-
-    protected abstract ParentList getPdfGenerator();
-    
-    public void generate() {
-        try {
-            String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                ParentList pdf = getPdfGenerator();
-                if (pdf.createFile(file)) {
-                    this.dispose();
-                }
-            }
-        } catch (Exception ex) {
-          KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
     }
 
@@ -237,11 +219,6 @@ public abstract class ListFromTournament extends KendoFrame {
         });
 
         GenerateButton.setText("Generate List");
-        GenerateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GenerateButtonActionPerformed(evt);
-            }
-        });
 
         CheckBox.setText("CheckBox");
         CheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -302,10 +279,6 @@ public abstract class ListFromTournament extends KendoFrame {
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-
-    private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GenerateButtonActionPerformed
-        generate();
-    }//GEN-LAST:event_GenerateButtonActionPerformed
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {

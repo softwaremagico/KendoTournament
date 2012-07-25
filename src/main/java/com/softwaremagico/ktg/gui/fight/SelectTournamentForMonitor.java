@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.pdflist.ListFromTournament;
-import com.softwaremagico.ktg.pdflist.ParentList;
 
 /**
  *
@@ -35,24 +34,15 @@ import com.softwaremagico.ktg.pdflist.ParentList;
 public class SelectTournamentForMonitor extends ListFromTournament {
 
     public SelectTournamentForMonitor() {
-        Start(false);
+        createGui(false);
         this.setTitle(trans.returnTag("titleMonitorTournament"));
         GenerateButton.setText(trans.returnTag("ButtonMonitorTournament"));
         ArenaComboBox.setEnabled(true);
     }
 
     @Override
-    public void generate() {
-    }
-
-    @Override
     public String defaultFileName() {
         return "";
-    }
-
-    @Override
-    protected ParentList getPdfGenerator() {
-       return null;
     }
 
 }

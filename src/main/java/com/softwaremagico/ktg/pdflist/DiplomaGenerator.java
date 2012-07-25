@@ -37,7 +37,7 @@ import javax.swing.JFileChooser;
  *
  * @author Jorge
  */
-public class DiplomaGenerator extends ListFromTournament {
+public class DiplomaGenerator extends ListFromTournamentPDF {
 
     float nameposition = 100;
     InputStream photoInput;
@@ -46,10 +46,10 @@ public class DiplomaGenerator extends ListFromTournament {
     private RoleTags selectedRoles = null;
 
     public DiplomaGenerator(float nposition, boolean printStatistics, RoleTags roles) {
+        super();
         nameposition = nposition;
         statistics = printStatistics;
         selectedRoles = roles;
-        Start(false);
         this.setTitle(trans.returnTag("titleDiplomas"));
         CheckBox.setVisible(true);
         prepareCheckBox();
