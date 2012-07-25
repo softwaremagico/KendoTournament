@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -36,9 +35,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 import javax.swing.*;
 
 /**
@@ -105,7 +101,7 @@ public class CompetitorFight extends JPanel {
 
     private void fillRightToLeft(String name) {
         add(Box.createRigidArea(new Dimension(6, 0)));
-        
+
         round1 = new PanelBackground();
         round1.setBackground(new Color(255, 255, 255));
         round1.setMinimumSize(new Dimension(40, 40));
@@ -184,27 +180,19 @@ public class CompetitorFight extends JPanel {
     }
 
     private void updateScorePanel(PanelBackground panel, Score hit) {
-        try {
-            panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + hit.getImageName()));
-            panel.revalidate();
-            panel.repaint();
-        } catch (IOException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
+        panel.setBackground(Score.getImage(hit.getImageName()));
+        panel.revalidate();
+        panel.repaint();
     }
 
     private void updateFaultPanel(PanelBackground panel, int fault) {
-        try {
-            if (fault > 0) {
-                panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + Score.FAULT.getImageName()));
-            } else {
-                panel.setBackground(ScorePool.getScoreImage(Path.returnScoreFolder() + Score.EMPTY.getImageName()));
-            }
-            panel.revalidate();
-            panel.repaint();
-        } catch (IOException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+        if (fault > 0) {
+            panel.setBackground(Score.getImage(Score.FAULT.getImageName()));
+        } else {
+            panel.setBackground(Score.getImage(Score.EMPTY.getImageName()));
         }
+        panel.revalidate();
+        panel.repaint();
     }
 
     void updateScorePanels() {

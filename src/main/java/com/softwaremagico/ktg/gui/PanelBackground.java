@@ -37,42 +37,48 @@ import javax.swing.JPanel;
 
 public class PanelBackground extends JPanel {
 
-    Image imagen = null;
+    Image imageBackground = null;
 
     public void setBackground(File file) throws IOException {
         if (file == null) {
-            imagen = null;
+            imageBackground = null;
         } else {
-            imagen = ImageIO.read(file);
+            imageBackground = ImageIO.read(file);
         }
         FileInputStream imageInput = new FileInputStream(file.getPath());
         BufferedImage input = ImageIO.read(imageInput);
         int srcHeight = input.getHeight();
         int srcWidth = input.getWidth();
-        imagen = imagen.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+        imageBackground = imageBackground.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+    }
+    
+    public void setBackground(Image image) {
+        int srcHeight = image.getHeight(this);
+        int srcWidth = image.getWidth(this);
+        imageBackground = image.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
     }
 
     public void setBackgroundExtended(File file) throws IOException {
         if (file == null) {
-            imagen = null;
+            imageBackground = null;
         } else {
-            imagen = ImageIO.read(file);
+            imageBackground = ImageIO.read(file);
         }
         FileInputStream imageInput = new FileInputStream(file.getPath());
         BufferedImage input = ImageIO.read(imageInput);
-        imagen = imagen.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
+        imageBackground = imageBackground.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
     }
 
     public void removeBackground() {
-        imagen = null;
+        imageBackground = null;
     }
 
     @Override
     public void paint(Graphics g) {
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
-        if (imagen != null) {
-            g.drawImage(imagen, 0, 0, null);
+        if (imageBackground != null) {
+            g.drawImage(imageBackground, 0, 0, null);
         }
         Component c;
         for (int i = 0; i < getComponentCount(); i++) {
