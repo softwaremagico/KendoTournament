@@ -421,17 +421,17 @@ public class MainGUI extends KendoFrame {
         ExchangeParticipantsMenu = new javax.swing.JMenu();
         ExportParticipantMenu = new javax.swing.JMenu();
         ExportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"export2.png"));
-        ExportParticipantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"csv.png"));
+        ExportParticipantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ImportParticipantMenu = new javax.swing.JMenu();
         ImportParticipantMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
-        ImportParticpantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"csv.png"));
+        ImportParticpantCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ExchangeFightsMenu = new javax.swing.JMenu();
         ExportFightMenu = new javax.swing.JMenu();
         ExportFightMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"export2.png"));
-        ExportFightCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"csv.png"));
+        ExportFightCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ImportFightMenu = new javax.swing.JMenu();
         ImportFightMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"import2.png"));
-        ImportFightCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"csv.png"));
+        ImportFightCsvMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text.png"));
         ExitMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"exit.png"));
         InsertMenu = new javax.swing.JMenu();
         ClubMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"club.png"));
@@ -545,6 +545,7 @@ public class MainGUI extends KendoFrame {
         DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"importExport.png"));
 
         ExchangeParticipantsMenu.setText("Participants");
+        ExchangeParticipantsMenu.setEnabled(false);
         ExchangeParticipantsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"boy.png"));
 
         ExportParticipantMenu.setText("Export");
