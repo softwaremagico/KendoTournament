@@ -37,7 +37,7 @@ import javax.swing.JFileChooser;
  *
  * @author Jorge
  */
-public class AccreditionCards extends ListFromTournamentPDF {
+public class AccreditionCards extends ListFromTournamentCreatePDF {
 
     InputStream photoInput;
     long size;

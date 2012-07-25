@@ -25,13 +25,13 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.pdflist.ListFromTournament;
+import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 
 /**
  *
  * @author jorge
  */
-public class SelectTournamentForTreeMonitor extends ListFromTournament {
+public class SelectTournamentForTreeMonitor extends ListFromTournamentCreateFile {
 
     public SelectTournamentForTreeMonitor() {
         createGui(false);

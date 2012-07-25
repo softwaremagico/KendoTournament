@@ -160,10 +160,10 @@ public class Controller {
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
         main.addScoreMenuItemListener(new ChooseScoreListener());
-        main.addImportFightCsvMenuItemListener(new CsvListener("CvsMenuItem", "ImportMenu"));
-        main.addExportFightCsvMenuItemListener(new CsvListener("CvsMenuItem", "ExportMenu"));
-        main.addImportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem", "ImportMenu"));
-        main.addExportParticipantCsvMenuItemListener(new CsvListener("CvsMenuItem", "ExportMenu"));
+        main.addExportFightCsvMenuItemListener(new ExportFightCsvListener("CvsMenuItem", "ExportMenu"));
+        main.addImportFightCsvMenuItemListener(new ImportFightCsvListener("CvsMenuItem", "ImportMenu"));
+        main.addExportParticipantCsvMenuItemListener(new ExportParticipantCsvListener("CvsMenuItem", "ExportMenu"));
+        main.addImportParticipantCsvMenuItemListener(new ImportParticipantCsvListener("CvsMenuItem", "ImportMenu"));
         main.addChangeTeamMenuItemListener(new ChangeTeamListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
     }
@@ -626,12 +626,12 @@ public class Controller {
         }
     }
 
-    class CsvListener implements ActionListener {
+    class ExportFightCsvListener implements ActionListener {
 
         private String tag = "";
         private String tagImportExport = "";
 
-        public CsvListener(String tag, String tagImportExport) {
+        public ExportFightCsvListener(String tag, String tagImportExport) {
             this.tag = tag;
             this.tagImportExport = tagImportExport;
         }
@@ -644,7 +644,73 @@ public class Controller {
             }
             selectTournament = new SelectTournament(tag, tagImportExport);
             selectTournament.setVisible(true);
-            AddSelectTournamentCSVListeners();
+            selectTournament.addGenerateButtonListener(new SelectTournamentExportFightCSVListener());
+        }
+    }
+
+    class ImportFightCsvListener implements ActionListener {
+
+        private String tag = "";
+        private String tagImportExport = "";
+
+        public ImportFightCsvListener(String tag, String tagImportExport) {
+            this.tag = tag;
+            this.tagImportExport = tagImportExport;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                selectTournament.dispose();
+            } catch (NullPointerException npe) {
+            }
+            selectTournament = new SelectTournament(tag, tagImportExport);
+            selectTournament.setVisible(true);
+            selectTournament.addGenerateButtonListener(new SelectTournamentImportFightCSVListener());
+        }
+    }
+
+    class ExportParticipantCsvListener implements ActionListener {
+
+        private String tag = "";
+        private String tagImportExport = "";
+
+        public ExportParticipantCsvListener(String tag, String tagImportExport) {
+            this.tag = tag;
+            this.tagImportExport = tagImportExport;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                selectTournament.dispose();
+            } catch (NullPointerException npe) {
+            }
+            selectTournament = new SelectTournament(tag, tagImportExport);
+            selectTournament.setVisible(true);
+            selectTournament.addGenerateButtonListener(new SelectTournamentExportParticipantsCSVListener());
+        }
+    }
+
+    class ImportParticipantCsvListener implements ActionListener {
+
+        private String tag = "";
+        private String tagImportExport = "";
+
+        public ImportParticipantCsvListener(String tag, String tagImportExport) {
+            this.tag = tag;
+            this.tagImportExport = tagImportExport;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                selectTournament.dispose();
+            } catch (NullPointerException npe) {
+            }
+            selectTournament = new SelectTournament(tag, tagImportExport);
+            selectTournament.setVisible(true);
+            selectTournament.addGenerateButtonListener(new SelectTournamentImportParticipantsCSVListener());
         }
     }
 
@@ -1178,23 +1244,67 @@ public class Controller {
     /**
      * *******************************************************************
      *
-     * SELECT TOURNAMENT FOR CSV
+     * SELECT TOURNAMENT FOR EXPORTING FIGHTS TO CSV
      *
      ********************************************************************
      */
-    /**
-     * Add all listeners to GUI.
-     */
-    private void AddSelectTournamentCSVListeners() {
-        selectTournament.addGenerateButtonListener(new SelectTournamentCSVListener());
-    }
 
-    class SelectTournamentCSVListener implements ActionListener {
+    class SelectTournamentExportFightCSVListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //ImportCSV csv = new ImportCSV(selectTournamentForCSV.returnSelectedTournamentName());
-            //selectTournamentForCSV.dispose();
+            //TODO
+            selectTournament.dispose();
+        }
+    }
+
+    /**
+     * *******************************************************************
+     *
+     * SELECT TOURNAMENT FOR IMPORTING FIGHTS TO CSV
+     *
+     ********************************************************************
+     */
+
+    class SelectTournamentImportFightCSVListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //TODO
+            selectTournament.dispose();
+        }
+    }
+
+    /**
+     * *******************************************************************
+     *
+     * SELECT TOURNAMENT FOR EXPORTING PARTICIPANTS TO CSV
+     *
+     ********************************************************************
+     */
+
+    class SelectTournamentExportParticipantsCSVListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //TODO
+            selectTournament.dispose();
+        }
+    }
+
+    /**
+     * *******************************************************************
+     *
+     * SELECT TOURNAMENT FOR IMPORTING PARTICIPANTS TO CSV
+     *
+     ********************************************************************
+     */
+
+    class SelectTournamentImportParticipantsCSVListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //TODO
             selectTournament.dispose();
         }
     }

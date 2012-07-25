@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.gui;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -27,7 +27,6 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.gui.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -39,7 +38,7 @@ import java.util.List;
  *
  * @author jorge
  */
-public abstract class ListFromTournament extends KendoFrame {
+public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
     public Translator trans = null;
     public List<Tournament> listTournaments = new ArrayList<>();
@@ -153,11 +152,11 @@ public abstract class ListFromTournament extends KendoFrame {
     private void comboBoxAction() {
     }
 
-    boolean isCheckBoxSelected() {
+    public boolean isCheckBoxSelected() {
         return CheckBox.isSelected();
     }
 
-    void changeCheckBoxText(String text) {
+    public void changeCheckBoxText(String text) {
         CheckBox.setText(text);
     }
 

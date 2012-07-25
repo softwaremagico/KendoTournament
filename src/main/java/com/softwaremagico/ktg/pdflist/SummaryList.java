@@ -31,7 +31,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
  *
  * @author Jorge
  */
-public class SummaryList extends ListFromTournamentPDF {
+public class SummaryList extends ListFromTournamentCreatePDF {
 
     public SummaryList() {
         super();

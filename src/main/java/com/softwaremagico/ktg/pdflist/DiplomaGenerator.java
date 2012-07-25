@@ -37,7 +37,7 @@ import javax.swing.JFileChooser;
  *
  * @author Jorge
  */
-public class DiplomaGenerator extends ListFromTournamentPDF {
+public class DiplomaGenerator extends ListFromTournamentCreatePDF {
 
     float nameposition = 100;
     InputStream photoInput;

@@ -29,7 +29,7 @@ package com.softwaremagico.ktg.pdflist;
  *
  * @author Jorge
  */
-public class TeamList extends ListFromTournamentPDF {
+public class TeamList extends ListFromTournamentCreatePDF {
 
     public TeamList() {
         super();

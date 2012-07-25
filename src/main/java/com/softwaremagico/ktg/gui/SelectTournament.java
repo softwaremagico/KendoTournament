@@ -26,15 +26,9 @@ package com.softwaremagico.ktg.gui;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.pdflist.ListFromTournament;
-import com.softwaremagico.ktg.pdflist.ParentList;
 
 
-/**
- *
- * @author Jorge
- */
-public class SelectTournament extends ListFromTournament {
+public class SelectTournament extends ListFromTournamentCreateFile {
 
     public SelectTournament(String title, String buttonTag) {
         createGui(false);
