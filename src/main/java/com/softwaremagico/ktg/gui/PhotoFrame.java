@@ -135,25 +135,31 @@ public class PhotoFrame extends JPanel {
         }
     }
 
-    public void ChangePhoto(Image tmp_photo, InputStream tmp_photoInput, long tmp_size) {
-        try {
-            CleanPhoto();
-            photo = tmp_photo;
-            tmp_photoInput.reset();
-            photoInput = tmp_photoInput;
-            size = tmp_size;
-            BufferedImage input = (BufferedImage) tmp_photo;
-            //BufferedImage input = ImageIO.read(photoInput);
-            int srcHeight = input.getHeight();
-            int srcWidth = input.getWidth();
-            if ((double) parentFrame.getHeight() / srcHeight < (double) parentFrame.getWidth() / srcWidth) {
-                photo = photo.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
-            } else {
-                photo = photo.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
+    public void ChangePhoto(Image imagePhoto, InputStream tmp_photoInput, long tmp_size) {
+        if (imagePhoto != null) {
+            try {
+                CleanPhoto();
+                photo = imagePhoto;
+                tmp_photoInput.reset();
+                photoInput = tmp_photoInput;
+                size = tmp_size;
+                BufferedImage input = (BufferedImage) imagePhoto;
+                //BufferedImage input = ImageIO.read(photoInput);
+                int srcHeight = input.getHeight();
+                int srcWidth = input.getWidth();
+                if ((double) parentFrame.getHeight() / srcHeight < (double) parentFrame.getWidth() / srcWidth) {
+                    photo = photo.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
+                } else {
+                    photo = photo.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NullPointerException npe) {
             }
-        } catch (IOException ex) {
-            Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NullPointerException npe) {
+        } else {
+            photo = null;
+            photoInput = null;
+            size = 0;
         }
     }
 

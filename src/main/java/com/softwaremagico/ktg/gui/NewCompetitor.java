@@ -1,21 +1,28 @@
 package com.softwaremagico.ktg.gui;
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
- * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
- * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
+ * This software is designed by Jorge Hortelano Otero.
+ * Jorge Hortelano Otero <softwaremagico@gmail.com>
+ * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *  
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *  
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *  
+ * You should have received a copy of the GNU General Public License
+ * along with this program; If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 
 import com.softwaremagico.ktg.*;
@@ -105,12 +112,7 @@ public class NewCompetitor extends KendoFrame {
      */
     public final void createPhoto() {
         //photo = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
-        PhotoFrame pFrame;
-        if (photo == null) {
-            pFrame = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
-        } else {
-            pFrame = photo;
-        }
+        PhotoFrame pFrame = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
         Dimension d;
         try {
             if (PhotoPanel.getWidth() / pFrame.getWidth() > pFrame.getHeight() / pFrame.getHeight()) {
@@ -119,6 +121,7 @@ public class NewCompetitor extends KendoFrame {
                 d = new Dimension((PhotoPanel.getHeight() / pFrame.getHeight()) * pFrame.getWidth(), PhotoPanel.getHeight());
             }
         } catch (ArithmeticException ae) {
+            ae.printStackTrace();
             d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
         }
         pFrame.setPreferredSize(d);
@@ -145,17 +148,21 @@ public class NewCompetitor extends KendoFrame {
             photo.CleanPhoto();
             try {
                 //photo.ChangeInputStream(c.photoInput, c.photoSize);
-                photo.ChangePhoto(c.photo(), c.photoInput, c.photoSize);
                 PhotoPanel.removeAll();
                 PhotoPanel.setBackground(new Color(255, 255, 255));
-                PhotoPanel.add(photo, 0);
+                if (c.photo() != null) {
+                    photo.ChangePhoto(c.photo(), c.photoInput, c.photoSize);
+                    PhotoPanel.add(photo, 0);
+                    photo.repaint();
+                } else {
+                    photo.ChangePhoto(null, null, 0);
+                }
             } catch (IOException ex) {
                 Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalArgumentException iae) {
                 //iae.printStackTrace();
                 createPhoto();
             }
-            photo.repaint();
             PhotoPanel.repaint();
         } catch (NullPointerException npe) {
         }
@@ -166,7 +173,9 @@ public class NewCompetitor extends KendoFrame {
         SurnameTextField.setText("");
         IDTextField.setText("");
         PhotoTextField.setText("");
-        photo.CleanPhoto();
+        if (photo != null) {
+            photo.CleanPhoto();
+        }
         createPhoto();
         /*
          * PhotoPanel.removeAll(); PhotoPanel.add(photo, 0);
@@ -182,9 +191,12 @@ public class NewCompetitor extends KendoFrame {
             if (IDTextField.getText().length() > 0 && NameTextField.getText().length() > 0 && SurnameTextField.getText().length() > 0) {
                 CompetitorWithPhoto comp = new CompetitorWithPhoto(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim(), ClubComboBox.getSelectedItem().toString());
                 try {
-                    comp.addImage(photo.photoInput, photo.photoInput.available());
+                    if (photo != null) {
+                        comp.addImage(photo.photoInput, photo.photoInput.available());
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
+                    Log.severe(NewCompetitor.class.getName() + " : " + ex.getMessage());
                 }
                 if (KendoTournamentGenerator.getInstance().database.storeCompetitor(comp, true)) {
                     cleanWindow();
