@@ -121,7 +121,6 @@ public class NewCompetitor extends KendoFrame {
                 d = new Dimension((PhotoPanel.getHeight() / pFrame.getHeight()) * pFrame.getWidth(), PhotoPanel.getHeight());
             }
         } catch (ArithmeticException ae) {
-            ae.printStackTrace();
             d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
         }
         pFrame.setPreferredSize(d);

@@ -175,10 +175,11 @@ public abstract class SQL extends Database {
             if (offset != length) {
                 throw new IOException("Only read " + offset + " bytes; Expected " + length + " bytes");
             }
-            /*try (FileOutputStream out = new FileOutputStream("/tmp/test.jpg")) {
-                out.write(data);
-                out.flush();
-            }*/
+            /*
+             * try (FileOutputStream out = new
+             * FileOutputStream("/tmp/test.jpg")) { out.write(data);
+             * out.flush(); }
+             */
         } catch (IOException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -617,9 +618,13 @@ public abstract class SQL extends Database {
                     try {
                         CompetitorWithPhoto c = new CompetitorWithPhoto(rs.getObject("ID").toString(), name, surname, rs.getObject("Club").toString());
                         c.addOrder(rs.getInt("ListOrder"));
-                        InputStream sImage = getBinaryStream(rs, "Photo");
-                        Long size = rs.getLong("PhotoSize");
-                        c.addImage(sImage, size);
+                        try {
+                            InputStream sImage = getBinaryStream(rs, "Photo");
+                            Long size = rs.getLong("PhotoSize");
+                            c.addImage(sImage, size);
+                        } catch (NullPointerException npe) {
+                            c.addImage(null, 0);
+                        }
                         results.add(c);
                     } catch (NullPointerException npe) {
                         MessageManager.basicErrorMessage("Error in: " + name + " " + surname, this.getClass().getName());
@@ -855,9 +860,13 @@ public abstract class SQL extends Database {
                 if (rs.next()) {
                     c = new CompetitorWithPhoto(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString(), rs.getObject("Club").toString());
                     c.addOrder(rs.getInt("ListOrder"));
-                    InputStream sImage = getBinaryStream(rs, "Photo");
-                    Long size = rs.getLong("PhotoSize");
-                    c.addImage(sImage, size);
+                    try {
+                        InputStream sImage = getBinaryStream(rs, "Photo");
+                        Long size = rs.getLong("PhotoSize");
+                        c.addImage(sImage, size);
+                    } catch (NullPointerException npe) {
+                        c.addImage(null, 0);
+                    }
                 }
             }
             return c;
@@ -2109,7 +2118,7 @@ public abstract class SQL extends Database {
         List<List<Competitor>> membersPerLevel = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
-            String query="SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'";
+            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'";
             Log.finest(query);
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {

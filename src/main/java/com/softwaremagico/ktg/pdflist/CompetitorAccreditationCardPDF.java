@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -54,6 +53,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
     }
 
+    @Override
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
         PdfPTable table = pageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         table.setWidthPercentage(100);
@@ -63,33 +63,20 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
     private PdfPTable createNameTable(String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
         Paragraph p;
-        float[] widths = {0.05f, 0.35f, 0.05f, 0.60f};
+        float[] widths = {0.03f, 0.35f, 0.03f, 0.64f};
         PdfPTable table = new PdfPTable(widths);
-        com.itextpdf.text.Image img;
+        com.itextpdf.text.Image competitorImage;
 
-        try {
-            img = Image.getInstance(competitor.photo(), null);
-        } catch (NullPointerException npe) {
-            /*
-             * If we do not redo the competitor object each time, when trying to
-             * generate two times the accredtion card, the second one fails and
-             * loss the photo!!!
-             */
-            competitor = KendoTournamentGenerator.getInstance().database.selectCompetitor(competitor.getId(), false);
-            try {
-                img = Image.getInstance(competitor.photo(), null);
-            } catch (NullPointerException npe2) {
-                    img = Image.getInstance(Path.returnDefaultPhoto());
-            } catch (IllegalArgumentException ie) {
-                    img = Image.getInstance(Path.returnDefaultPhoto());
-            }
+        if (competitor.photoSize > 0) {
+            competitorImage = Image.getInstance(competitor.photo(), null);
+        } else {
+            competitorImage = defaultPhoto;
         }
+
 
         table.addCell(this.getEmptyCell(1));
 
-
-
-        cell = new PdfPCell(img, true);
+        cell = new PdfPCell(competitorImage, true);
         cell.setBorderWidth(border);
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -97,7 +84,6 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table.addCell(cell);
 
         table.addCell(this.getEmptyCell(1));
-
 
         float[] widths2 = {0.90f, 0.10f};
         PdfPTable table2 = new PdfPTable(widths2);

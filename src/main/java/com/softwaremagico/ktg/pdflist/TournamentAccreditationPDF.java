@@ -125,7 +125,7 @@ public class TournamentAccreditationPDF {
                     timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());
                     CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship);
                     PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
-                     competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
+                    competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
                     cell = new PdfPCell(competitorTable);
                     cell.setBorderWidth(border);
                     cell.setColspan(1);

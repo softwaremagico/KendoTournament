@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.pdflist;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Log;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
@@ -55,6 +56,15 @@ public abstract class PdfDocument {
     protected Image bgImage;
     private float opacity = 0.6f;
     static Translator trans = LanguagePool.getTranslator("gui.xml");
+    protected static com.itextpdf.text.Image defaultPhoto;
+
+    static {
+        try {
+            defaultPhoto = Image.getInstance(Path.returnDefaultPhoto());
+        } catch (BadElementException | IOException ex) {
+            Log.severe("Default photo not found when creating accreditation.");
+        }
+    }
 
     PdfDocument() {
     }

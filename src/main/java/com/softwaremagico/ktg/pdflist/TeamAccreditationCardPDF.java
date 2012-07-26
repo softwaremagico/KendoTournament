@@ -46,6 +46,7 @@ public class TeamAccreditationCardPDF extends PdfDocument {
         competition = tmp_competition;
     }
 
+    @Override
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
         //addBackGroundImage(document, Path.returnBackgroundPath());
         PdfPTable table = pageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);

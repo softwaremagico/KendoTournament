@@ -53,12 +53,12 @@ public class PhotoFrame extends JPanel {
         photo(container, defaultImage);
     }
 
-    private void photo(JPanel container, String defaultImage) {
+    private void photo(JPanel container, String inputImage) {
         try {
             parentFrame = container;
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            photo = toolkit.getImage(defaultImage);
-            photoInput = new FileInputStream(defaultImage);
+            photo = toolkit.getImage(inputImage);
+            photoInput = new FileInputStream(inputImage);
             BufferedImage input = ImageIO.read(photoInput);
             int srcHeight = input.getHeight();
             int srcWidth = input.getWidth();
@@ -71,9 +71,9 @@ public class PhotoFrame extends JPanel {
                     photo = photo.getScaledInstance(parentFrame.getPreferredSize().width, (int) ((((double) parentFrame.getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
                 }
             }
-            File file = new File(defaultImage);
+            File file = new File(inputImage);
             size = file.length();
-            photoInput = new FileInputStream(defaultImage);
+            photoInput = new FileInputStream(inputImage);
         } catch (StackOverflowError | IOException sof) {
         }
     }
