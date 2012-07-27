@@ -106,6 +106,10 @@ public class Folder {
         //Se guarda en el filename
         outputFile = new File(file);
         try {
+            outputFile.delete();
+        } catch (Exception e) {
+        }
+        try {
             FileOutputStream outputChannel = new FileOutputStream(outputFile);
             for (int i = 0; i < dataList.size(); i++) {
                 b = (dataList.get(i).toString() + System.getProperty("line.separator")).getBytes();
@@ -175,7 +179,8 @@ public class Folder {
      * Get all files in a subfolder with the defined extension.
      *
      * @param folder
-     * @param extension if extension is null, will return all files in the folder.
+     * @param extension if extension is null, will return all files in the
+     * folder.
      * @return
      */
     public static List<String> obtainFilesInFolder(String folder, final String extension) {
@@ -195,8 +200,8 @@ public class Folder {
         } else {
             files = dir.listFiles();
         }
-        
-        for(File f:files){
+
+        for (File f : files) {
             fileNames.add(f.getName());
         }
 

@@ -321,8 +321,17 @@ public class Fight implements Serializable {
         }
         return true;
     }
-    
-    public String showFight(){
-        return "'"+team1.returnName() + " vs " + team2.returnName()+"'";
+
+    public String showFight() {
+        return "'" + team1.returnName() + " vs " + team2.returnName() + "'";
+    }
+
+    public List<String> convert2Csv(int order) {
+        List<String> Csv = new ArrayList<>();
+        Csv.add("FIGHT;"+ order +";"+ team1.returnName() + ";" + team2.returnName());
+        for (Duel d : duels) {
+            Csv.add(d.convert2Csv());
+        }
+        return Csv;
     }
 }

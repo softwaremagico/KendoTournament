@@ -342,14 +342,10 @@ public abstract class PdfDocument {
         @Override
         public void tableLayout(PdfPTable ppt, float[][] widths, float[] heights, int headerRows, int rowStart, PdfContentByte[] pcbs) {
             try {
-                //bgImage = Image.getInstance(Path.returnBackgroundPath());
                 if (bgImage != null) {
                     int row = 0;
                     int columns = widths[row].length - 1;
                     Rectangle rect = new Rectangle(widths[row][0], heights[0], widths[row][columns], heights[row + 1]);
-                    //Rectangle rect = new Rectangle(ppt.getTotalWidth(), ppt.getTotalWidth());
-                    //bgImage.scaleAbsolute(rect.getWidth(), rect.getHeight());
-                    //pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, rect.getHeight(), rect.getLeft(), rect.getBottom());
                     pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, -rect.getHeight(), rect.getLeft(), rect.getTop());
                 }
             } catch (Exception e) {

@@ -343,13 +343,27 @@ public class Duel implements Serializable {
         for (Score s : hitsFromCompetitorA) {
             score += s.getAbbreviature() + " ";
         }
-        
-        score+="("+faultsCompetitorA+")";
+
+        score += "(" + faultsCompetitorA + ")";
         score += "TeamB: ";
         for (Score s : hitsFromCompetitorB) {
             score += s.getAbbreviature() + " ";
         }
-        score+="("+faultsCompetitorB+")";
+        score += "(" + faultsCompetitorB + ")";
         return score;
+    }
+
+    public String convert2Csv() {
+        String Csv = "";
+        for (Score s : hitsFromCompetitorA) {
+            Csv += s.getAbbreviature() + ";";
+        }
+        Csv += ((faultsCompetitorA == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature())+ ";";
+
+        for (Score s : hitsFromCompetitorB) {
+            Csv += s.getAbbreviature() + ";";
+        }
+        Csv += ((faultsCompetitorB == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature())+ ";";
+        return Csv;
     }
 }

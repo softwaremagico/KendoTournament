@@ -59,7 +59,7 @@ public class MyFile {
     /**
      * Devuelve las lineas de un fichero leido anteriormente.
      */
-    public static List<String> IinLines(String filename, boolean verbose, String mode) throws IOException {
+    public static List<String> inLines(String filename, boolean verbose, String mode) throws IOException {
         return readTextFileInLines(filename, mode, verbose);
     }
 

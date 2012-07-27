@@ -273,7 +273,7 @@ public class FightManager {
     }
 
     public int numberOfFightsOver() {
-        int over=0;
+        int over = 0;
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).isOver()) {
                 over++;
@@ -741,6 +741,14 @@ public class FightManager {
             }
         }
         return true;
+    }
+
+    public List<String> convert2Csv() {
+        List<String> Csv = new ArrayList<>();
+        for (int i = 0; i < fights.size(); i++) {
+            Csv.addAll(fights.get(i).convert2Csv(i));
+        }
+        return Csv;
     }
 
     /**

@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.championship.DesignedGroup;
 import com.softwaremagico.ktg.championship.DesignedGroups;
+import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -35,6 +36,7 @@ import com.softwaremagico.ktg.language.Translator;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -299,6 +301,14 @@ public final class FightPanel extends javax.swing.JFrame {
     }
 
     /**
+     * Save the information in a temp file. This is to not loose information if window is closed and database is not updated.
+     */
+    private void store2Cvs() {
+        String tempDir = System.getProperty("java.io.tmpdir");
+        Folder.saveListInFile(KendoTournamentGenerator.getInstance().fightManager.convert2Csv(),tempDir+File.separator+"KTG.cvs");
+    }
+
+    /**
      * **********************************************
      *
      * LISTENERS
@@ -544,12 +554,14 @@ public final class FightPanel extends javax.swing.JFrame {
             Fight currentFight = getCurrentFight();
             KendoTournamentGenerator.getInstance().fightManager.setFightAsOver(currentFight);
 
+            store2Cvs();
+
             //If all arena fightManager are over.
             if (KendoTournamentGenerator.getInstance().fightManager.areArenaOver(FightAreaComboBox.getSelectedIndex())) {
                 //Store score into database.
                 KendoTournamentGenerator.getInstance().fightManager.storeNotUpdatedFightsAndDuels();
             }
-            
+
             Log.finest("Current number of fights over: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
             //If championship or similar...
