@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg.championship;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.*;
@@ -40,7 +33,8 @@ import javax.swing.JOptionPane;
  */
 public class TournamentGroupManager implements Serializable {
 
-    private List<TournamentGroup> tournamentGroups = new ArrayList<>();
+    //private List<TournamentGroup> tournamentGroups = new ArrayList<>();
+    private List<LevelGroups> levels;
     //private List<Integer> levels = new ArrayList<>();  //"Index" to the designedGroup that is the first one of the next level. Each element of the list is a leve and the value is the number of designedgrou
     transient Tournament championship;
     public String mode = "tree";
@@ -54,43 +48,41 @@ public class TournamentGroupManager implements Serializable {
             championship = tmp_championship;
             //levels.add(0);
             links = new Links();
+            levels = new ArrayList<>();
         } catch (NullPointerException npe) {
         }
     }
 
     public void update() {
         Log.debug("Current number of fights over before updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            tournamentGroups.get(i).update();
+        for (int i = 0; i < levels.size(); i++) {
+            levels.get(i).updateGroups();
         }
         Log.debug("Current number of fights over after updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
     }
 
     public void color(boolean color) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            tournamentGroups.get(i).activateColor(color);
+        for (int i = 0; i < levels.size(); i++) {
+            levels.get(i).activateGroupsColor(color);
         }
     }
 
-    public int sizeOfTournament(String championship) {
-        int size = 0;
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).championship.name.equals(championship) && getLevelOfGroup(i) == 0) {
-                size++;
-            }
+    public int sizeOfTournamentLevelZero(String championship) {
+        if (levels.size() > 0) {
+            return levels.size();
         }
-        return size;
+        return 0;
     }
 
     public void enhance(boolean yes) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            tournamentGroups.get(i).enhance(yes);
+        for (int i = 0; i < levels.size(); i++) {
+            levels.get(i).enhanceGroups(yes);
         }
     }
 
     public void onlyShow() {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            tournamentGroups.get(i).onlyShow();
+        for (int i = 0; i < levels.size(); i++) {
+            levels.get(i).onlyShow();
         }
     }
 
@@ -477,7 +469,7 @@ public class TournamentGroupManager implements Serializable {
                 maxLevel = t.getLevel();
             }
         }
-        return maxLevel+1;
+        return maxLevel + 1;
     }
 
     private int calculateNumberOfLevels() {
