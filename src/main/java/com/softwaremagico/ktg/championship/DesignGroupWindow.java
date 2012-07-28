@@ -42,12 +42,12 @@ import javax.swing.DefaultListModel;
 public class DesignGroupWindow extends javax.swing.JFrame {
 
     private DefaultListModel<String> groupModel = new DefaultListModel<>();
-    DesignedGroup dg;
+    TournamentGroup dg;
     private Translator trans = null;
     private boolean refresh = true;
 
     /** Creates new form DesignGroupWindow */
-    public DesignGroupWindow(DesignedGroup tmp_dg) {
+    public DesignGroupWindow(TournamentGroup tmp_dg) {
         dg = tmp_dg;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),

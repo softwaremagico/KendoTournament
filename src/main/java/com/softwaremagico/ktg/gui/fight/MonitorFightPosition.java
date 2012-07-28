@@ -28,7 +28,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.championship.DesignedGroup;
+import com.softwaremagico.ktg.championship.TournamentGroup;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
@@ -55,12 +55,12 @@ public class MonitorFightPosition extends JFrame {
     private List<TeamRanking> teamTopTen = new ArrayList<>();
     private static int minRows = 10;
     private List<Team> teams = new ArrayList<>();
-    private DesignedGroup group;
+    private TournamentGroup group;
 
     /**
      * Creates new form MonitorPosition
      */
-    public MonitorFightPosition(DesignedGroup designedGroup, boolean endTime) {
+    public MonitorFightPosition(TournamentGroup designedGroup, boolean endTime) {
         group = designedGroup;
         transl = LanguagePool.getTranslator("gui.xml");
         initComponents();

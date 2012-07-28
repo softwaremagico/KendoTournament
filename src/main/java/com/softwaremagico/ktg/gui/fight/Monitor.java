@@ -27,8 +27,8 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.championship.DesignedGroup;
-import com.softwaremagico.ktg.championship.DesignedGroups;
+import com.softwaremagico.ktg.championship.TournamentGroup;
+import com.softwaremagico.ktg.championship.TournamentGroupManager;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -57,8 +57,8 @@ public final class Monitor extends javax.swing.JFrame {
     private final int seconds = 5;
     Translator trans = null;
     //private int useOnlyShiaijo = -1;
-    private List<DesignedGroup> finishedGroups = new ArrayList<>();
-    private List<DesignedGroup> showedRanking = new ArrayList<>();
+    private List<TournamentGroup> finishedGroups = new ArrayList<>();
+    private List<TournamentGroup> showedRanking = new ArrayList<>();
     private ScorePanel scorePanel;
     private boolean showAllArenas = false;
 
@@ -167,7 +167,7 @@ public final class Monitor extends javax.swing.JFrame {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
 
         if (KendoTournamentGenerator.getInstance().designedGroups == null || !KendoTournamentGenerator.getInstance().designedGroups.returnTournament().name.equals(selectedTournament.name)) {
-            KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(selectedTournament);
+            KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(selectedTournament);
             KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
         }
 

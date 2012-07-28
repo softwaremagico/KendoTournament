@@ -33,8 +33,8 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.championship.DesignedGroup;
-import com.softwaremagico.ktg.championship.DesignedGroups;
+import com.softwaremagico.ktg.championship.TournamentGroup;
+import com.softwaremagico.ktg.championship.TournamentGroupManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.List;
@@ -73,11 +73,11 @@ public class ScoreListPDF extends ParentList {
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new DesignedGroups(championship);
+        KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(championship);
         KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels(); l++) {
-            List<DesignedGroup> groups = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(l);
+        for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); l++) {
+            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).areFightsOver()) {

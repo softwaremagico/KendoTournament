@@ -655,7 +655,7 @@ public class FightManager {
         return results;
     }
 
-    public static int getLevelOfFights(ArrayList<Fight> fightsList) {
+    public static int getMaxLevelOfFights(ArrayList<Fight> fightsList) {
         int level = 0;
         for (Fight f : fightsList) {
             if (f.level > level) {

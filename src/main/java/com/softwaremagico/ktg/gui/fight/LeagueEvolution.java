@@ -105,7 +105,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels();
+            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels();
             rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0).size();
         } catch (ArithmeticException ae) {
         }
@@ -118,12 +118,12 @@ public class LeagueEvolution extends javax.swing.JFrame {
             designedgroupIndex = KendoTournamentGenerator.getInstance().designedGroups.size() - 1;
         }
         if (KendoTournamentGenerator.getInstance().designedGroups.default_max_winners < 2) {
-            y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.returnLevelOfGroup(designedgroupIndex)));
+            y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.getLevelOfGroup(designedgroupIndex)));
         } else {
-            if (KendoTournamentGenerator.getInstance().designedGroups.returnLevelOfGroup(designedgroupIndex) == 0) {
-                y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.returnLevelOfGroup(designedgroupIndex)));
+            if (KendoTournamentGenerator.getInstance().designedGroups.getLevelOfGroup(designedgroupIndex) == 0) {
+                y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.getLevelOfGroup(designedgroupIndex)));
             } else {
-                y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.returnLevelOfGroup(designedgroupIndex) - 1));
+                y = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(designedgroupIndex) * (int) (Math.pow(2, KendoTournamentGenerator.getInstance().designedGroups.getLevelOfGroup(designedgroupIndex) - 1));
             }
         }
 

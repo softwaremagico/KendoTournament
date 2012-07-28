@@ -37,6 +37,7 @@ import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -45,7 +46,7 @@ import javax.swing.JOptionPane;
  *
  * @author jorge
  */
-public class DesignedGroup extends Group implements Serializable {
+public class TournamentGroup extends Group implements Serializable {
 
     transient Tournament championship;
     transient DesignGroupWindow dgw;
@@ -69,7 +70,7 @@ public class DesignedGroup extends Group implements Serializable {
     private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
     private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
 
-    DesignedGroup(Integer tmp_numberMaxOfTeams, Integer tmp_numberMaxOfWinners, Tournament tmp_championship, Integer tmp_level, Integer tmp_arena) {
+    TournamentGroup(Integer tmp_numberMaxOfTeams, Integer tmp_numberMaxOfWinners, Tournament tmp_championship, Integer tmp_level, Integer tmp_arena) {
         championship = tmp_championship;
         numberMaxOfTeams = tmp_numberMaxOfTeams;
         level = tmp_level;
@@ -185,9 +186,9 @@ public class DesignedGroup extends Group implements Serializable {
     public String getDefaultLabel() {
         //Select label
         String s;
-        if (level < KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
-            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - level);
-        } else if (level == KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfLevels() - 2) {
+        if (level < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
+            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - level);
+        } else if (level == KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
             s = trans.returnTag("SemiFinalLabel");
         } else {
             s = trans.returnTag("FinalLabel");
@@ -215,7 +216,7 @@ public class DesignedGroup extends Group implements Serializable {
         return new Color(0, 0, 0);
     }
 
-    public void setSelected(DesignedGroups ds) {
+    public void setSelected(TournamentGroupManager ds) {
         if (level == 0) {
             ds.unselectDesignedGroups();
             selected = true;
@@ -292,7 +293,7 @@ public class DesignedGroup extends Group implements Serializable {
         return teams.size();
     }
 
-    public void cleanTeams() {
+    public void deleteTeams() {
         teams = new ArrayList<>();
         label.setText(returnText());
         updateSize();
@@ -848,5 +849,48 @@ public class DesignedGroup extends Group implements Serializable {
             blackboard.fillTeams();
             blackboard.repaint();
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TournamentGroup other = (TournamentGroup) obj;
+
+        if (this.level != other.level) {
+            return false;
+        }
+
+        
+          if (this.teams != other.teams) { return false;
+        }
+         
+
+        /*for (Team t1 : this.teams) {
+            boolean found = false;
+            for (Team t2 : other.teams) {
+                t1.returnName().equals(t2.returnName());
+                found = true;
+                break;
+            }
+            if (!found) {
+                return false;
+            }
+        }*/
+
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.teams);
+        hash = 17 * hash + Objects.hashCode(this.level);
+        return hash;
     }
 }
