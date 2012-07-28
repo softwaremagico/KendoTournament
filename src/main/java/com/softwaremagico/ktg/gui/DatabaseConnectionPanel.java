@@ -92,7 +92,6 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             files.remove(SQLite.defaultDatabaseName + "." + SQLite.defaultSQLiteExtension);
             DatabaseComboBox.addItem("");
             for (String file : files) {
-                System.out.println(file +" " + file.indexOf('.'));
                 DatabaseComboBox.addItem(file.substring(0, file.indexOf('.')));                
             }
             DatabaseComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().databaseName);

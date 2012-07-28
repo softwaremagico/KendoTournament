@@ -222,7 +222,7 @@ public class StoreDatabase implements Serializable {
 
             for (int i = 0; i < fights.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelFight") + " " + (i + 1) + "/" + fights.size(), current, total);
-                if (KendoTournamentGenerator.getInstance().database.storeFight(fights.get(i), false)) {
+                if (KendoTournamentGenerator.getInstance().database.storeFight(fights.get(i), false, false)) {
                     if (!KendoTournamentGenerator.getInstance().database.storeDuelsOfFight(fights.get(i))) {
                         return false;
                     }

@@ -304,8 +304,14 @@ public final class FightPanel extends javax.swing.JFrame {
      * Save the information in a temp file. This is to not loose information if window is closed and database is not updated.
      */
     private void store2Cvs() {
-        String tempDir = System.getProperty("java.io.tmpdir");
-        Folder.saveListInFile(KendoTournamentGenerator.getInstance().fightManager.convert2Csv(),tempDir+File.separator+"KTG.cvs");
+        store2Cvs(System.getProperty("java.io.tmpdir"));
+    }
+    
+        /**
+     * Save the information in a temp file. This is to not loose information if window is closed and database is not updated.
+     */
+    private void store2Cvs(String folder) {
+        Folder.saveListInFile(KendoTournamentGenerator.getInstance().fightManager.convert2Csv(),folder+File.separator+"KTG.cvs");
     }
 
     /**
@@ -550,7 +556,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         try {
-            Log.finest("Next button is pressed.");
+            Log.debug("Next button is pressed.");
             Fight currentFight = getCurrentFight();
             KendoTournamentGenerator.getInstance().fightManager.setFightAsOver(currentFight);
 
@@ -562,7 +568,7 @@ public final class FightPanel extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().fightManager.storeNotUpdatedFightsAndDuels();
             }
 
-            Log.finest("Current number of fights over: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            Log.debug("Current number of fights over: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
             //If championship or similar...
             if (!selectedTournament.mode.equals("simple") && KendoTournamentGenerator.getInstance().designedGroups.size() > 1) {
@@ -579,15 +585,16 @@ public final class FightPanel extends javax.swing.JFrame {
                             KendoTournamentGenerator.getInstance().fightManager.getFights(), FightAreaComboBox.getSelectedIndex(), selectedTournament));
                 }
             } else { //Simple championship
+                Log.info("Tournament over!");
                 messagesFinishedSimpleChampionship();
             }
 
-            Log.finest("Current number of fights over before GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            Log.debug("Current number of fights over before GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
             Log.finest("Updating the GUI.");
             //Update GUI
             fillFightsPanel();
             changeNextButtonText();
-            Log.finest("Current number of fights over after GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            Log.debug("Current number of fights over after GUI: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
             KendoTournamentGenerator.getInstance().showErrorInformation(iob);

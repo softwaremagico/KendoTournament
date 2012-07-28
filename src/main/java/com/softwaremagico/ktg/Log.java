@@ -107,7 +107,7 @@ public class Log {
     }
 
     public static void debug(String message) {
-        logger.severe(message);
+        logger.finest(message);
     }
 
     public static void debug(String tag, String title) {

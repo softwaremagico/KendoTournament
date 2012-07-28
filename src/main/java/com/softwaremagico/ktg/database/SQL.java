@@ -2635,11 +2635,13 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeFight(Fight fight, boolean verbose) {
+    public boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne) {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
-                deleteFight(fight, false);
+                if (deleteOldOne) {
+                    deleteFight(fight, false);
+                }
                 s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.competition.name + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
                 fight.setOverStored(true);
             }
@@ -2742,8 +2744,10 @@ public abstract class SQL extends Database {
     public int obtainFightID(Fight f) {
         int ID = -1;
         try {
+            String query = "SELECT ID FROM fight WHERE Tournament='" + f.competition.name + "' AND Team1='" + f.team1.returnName() + "' AND Team2='" + f.team2.returnName() + "' AND LeagueLevel=" + f.level;
+            Log.finest(query);
             try (Statement s = connection.createStatement();
-                    ResultSet rts = s.executeQuery("SELECT ID FROM fight WHERE Tournament='" + f.competition.name + "' AND Team1='" + f.team1.returnName() + "' AND Team2='" + f.team2.returnName() + "' AND LeagueLevel=" + f.level)) {
+                    ResultSet rts = s.executeQuery(query)) {
                 if (rts.next()) {
                     ID = rts.getInt("ID");
                 }
@@ -2751,7 +2755,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Log.finest("Id of fight " + f.showFight() + " is " + ID);
+        Log.debug("Id of fight " + f.showFight() + " is " + ID);
         return ID;
     }
 

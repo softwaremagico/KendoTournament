@@ -376,7 +376,7 @@ public abstract class Database {
 
     public abstract boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights);
 
-    public abstract boolean storeFight(Fight fight, boolean verbose);
+    public abstract boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne);
 
     public abstract boolean deleteFightsOfTournament(String championship, boolean verbose);
 

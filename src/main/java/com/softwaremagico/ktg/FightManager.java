@@ -60,7 +60,7 @@ public class FightManager {
     public void addNewFight(Fight f) {
         if (!existFight(f)) {
             fights.add(f);
-            KendoTournamentGenerator.getInstance().database.storeFight(f, false);
+            KendoTournamentGenerator.getInstance().database.storeFight(f, false, false);
         }
     }
 
@@ -294,7 +294,7 @@ public class FightManager {
     public boolean areArenaOver(int arena) {
         for (int i = 0; i < fights.size(); i++) {
             if (!fights.get(i).isOver() && fights.get(i).asignedFightArea == arena) {
-                Log.finest("Fight '" + fights.get(i).team1 + " vs " + fights.get(i).team2 + "' is not over.");
+                Log.finest("Fight '" + fights.get(i).team1.returnName() + " vs " + fights.get(i).team2.returnName() + "' is not over.");
                 return false;
             }
         }
@@ -678,7 +678,7 @@ public class FightManager {
      * @param f
      */
     private boolean storeFight(Fight f) {
-        return KendoTournamentGenerator.getInstance().database.storeFight(f, false);
+        return KendoTournamentGenerator.getInstance().database.storeFight(f, false, false);
     }
 
     private ArrayList<Fight> notUpdatedFights() {
@@ -699,7 +699,7 @@ public class FightManager {
 
     public void setFightAsOver(Fight fight) {
         fight.setOver();
-        Log.finest("Fight '" + fight.team1 + " vs " + fight.team2 + "' is set to over.");
+        Log.finest("Fight '" + fight.team1.returnName() + " vs " + fight.team2.returnName() + "' is set to over.");
         //KendoTournamentGenerator.getInstance().database.updateFightAsOver(fight);
     }
 
