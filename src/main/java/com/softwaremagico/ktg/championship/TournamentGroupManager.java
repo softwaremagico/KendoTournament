@@ -75,14 +75,14 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void enhance(boolean yes) {
-        for (int i = 0; i < levels.size(); i++) {
-            levels.get(i).enhanceGroups(yes);
+        for (LevelGroups l : levels) {
+            l.enhanceGroups(yes);
         }
     }
 
     public void onlyShow() {
-        for (int i = 0; i < levels.size(); i++) {
-            levels.get(i).onlyShow();
+        for (LevelGroups l : levels) {
+            l.onlyShow();
         }
     }
 
@@ -285,14 +285,10 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public List<TournamentGroup> returnGroupsOfLevel(Integer level) {
-        List<TournamentGroup> groups = new ArrayList<>();
-
-        for (TournamentGroup t : tournamentGroups) {
-            if (t.getLevel() == level) {
-                groups.add(t);
-            }
+        if (level >= 0 && level < levels.size()) {
+            return levels.get(level).getGroups();
         }
-        return groups;
+        return null;
     }
 
     public List<Integer> returnIndexOfGroupsOfLevel(Integer level) {
@@ -453,31 +449,33 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Return the las group of the level.
      */
-    TournamentGroup getLastGroupOfLevel(Integer level) {
-        List<TournamentGroup> groups = returnGroupsOfLevel(level);
-        if (groups.size() > 0) {
-            return groups.get(groups.size() - 1);
+    private TournamentGroup getLastGroupOfLevel(Integer level) {
+        if (level >= 0 && level < levels.size()) {
+            return levels.get(level).getLastGroupOfLevel();
         } else {
             return null;
         }
     }
 
+    /**
+     * Return the number of levels. Levels start in zero but has size one.
+     *
+     * @return
+     */
     public int getNumberOfLevels() {
-        int maxLevel = 0;
-        for (TournamentGroup t : tournamentGroups) {
-            if (t.getLevel() > maxLevel) {
-                maxLevel = t.getLevel();
-            }
-        }
-        return maxLevel + 1;
+        return levels.size();
     }
 
     private int calculateNumberOfLevels() {
         return (int) (Math.log(getSizeOfLevel(0)) / Math.log(2)) + default_max_winners;
     }
 
-    public int getSizeOfLevel(Integer level) {
-        return returnGroupsOfLevel(level).size();
+    public Integer getSizeOfLevel(Integer level) {
+        if (level >= 0 && level < levels.size()) {
+            return levels.get(level).size();
+        } else {
+            return null;
+        }
     }
 
     public int returnCalculatedSizeOfLevel(int level) {
@@ -492,18 +490,12 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void updateInnerLevels() {
-        updateInnerLevels(0);
-    }
-
-    public void updateInnerLevels(int level) {
-        for (int i = level; i < calculateNumberOfLevels(); i++) {
-            updateInnerLevel(i);
-        }
+        updateInnerLevel(0);
     }
 
     public void updateInnerLevel(int level) {
         int arena = 0;
-        if (tournamentGroups.size() > 0) {
+        if (levels.size() > 0) {
             //Next Level has the half groups, distributed in X arenas.
             //int groupsPerArena = (returnCalculatedSizeOfLevel(level + 1)) / championship.fightingAreas;
             //double sizeOfNextLevel = returnCalculatedSizeOfLevel(level + 1);
@@ -540,23 +532,27 @@ public class TournamentGroupManager implements Serializable {
     }
 
     void emptyInnerLevels() {
-        List<TournamentGroup> groupsOfLevel = returnGroupsOfLevel(1);
-        for (TournamentGroup g : groupsOfLevel) {
-            g.deleteTeams();
+        for (int i = 1; i < levels.size(); i++) {
+            levels.get(i).deleteTeams();
         }
     }
 
-    public int getLevelOfFight(Fight f) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).isFightOfGroup(f)) {
-                return tournamentGroups.get(i).getLevel();
+    public Integer getLevelOfFight(Fight fight) {
+        for (int i = 0; i < levels.size(); i++) {
+            if (levels.get(i).isFightOfLevel(fight)) {
+                return i;
             }
         }
-        return -1;
+        return null;
     }
 
-    public int getLevelOfGroup(Integer groupIndex) {
-        return tournamentGroups.get(groupIndex).getLevel();
+    public Integer getLevelOfGroup(TournamentGroup group) {
+        for (int i = 0; i < levels.size(); i++) {
+            if (levels.get(i).isGroupOfLevel(group)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     /**
@@ -590,15 +586,11 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public boolean isLevelFinished(ArrayList<Fight> fights, int level) {
-        List<TournamentGroup> designedGroupsOfLevel = returnGroupsOfLevel(level);
-
-        for (int i = 0; i < designedGroupsOfLevel.size(); i++) {
-            if (!designedGroupsOfLevel.get(i).areFightsOverOrNull(fights)) {
-                return false;
-            }
+    public Boolean isLevelFinished(ArrayList<Fight> fights, int level) {
+        if (level >= 0 && level < levels.size()) {
+            return levels.get(level).isLevelFinished(fights);
         }
-        return true;
+        return null;
     }
 
     public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
@@ -766,7 +758,7 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    private int obtainMaxLevel(ArrayList<Fight> fights) {
+    /*private int obtainMaxLevel(ArrayList<Fight> fights) {
         int max = 0;
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).level > max) {
@@ -774,7 +766,7 @@ public class TournamentGroupManager implements Serializable {
             }
         }
         return max;
-    }
+    }*/
 
     public int getGroupOfFight(ArrayList<Fight> fights, int fightIndex) {
         for (int i = tournamentGroups.size() - 1; i >= 0; i--) {
