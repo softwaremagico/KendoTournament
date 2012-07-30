@@ -133,7 +133,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
     }
 
-    public boolean load(Tournament c) {
+    protected boolean load(Tournament c) {
         championship = c;
         setLanguage();
         List<Team> updatedTeams = new ArrayList<>();
@@ -844,7 +844,7 @@ public class TournamentGroup extends Group implements Serializable {
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
-            KendoTournamentGenerator.getInstance().designedGroups.updateArenaInnerLevels();
+            KendoTournamentGenerator.getInstance().designedGroups.updateArenas(1);
             blackboard.updateBlackBoard();
             blackboard.fillTeams();
             blackboard.repaint();

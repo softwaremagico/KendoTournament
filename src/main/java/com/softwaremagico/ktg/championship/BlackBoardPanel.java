@@ -172,7 +172,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                         if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual") || i > 0) {
                             //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
                             destination = (int) KendoTournamentGenerator.getInstance().designedGroups.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().designedGroups.obtainGlobalPositionWinner(i, j, k),
-                                    KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfTotalTeamsPassNextRound(i), i);
+                                    KendoTournamentGenerator.getInstance().designedGroups.getNumberOfTotalTeamsPassNextRound(i), i);
                         } else {
                             destination = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(
                                     KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), k)));

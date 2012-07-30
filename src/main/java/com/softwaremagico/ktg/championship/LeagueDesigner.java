@@ -164,7 +164,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
                 KendoTournamentGenerator.getInstance().designedGroups.add(designedFight, true, true);
                 designedFight.setSelected(KendoTournamentGenerator.getInstance().designedGroups);
-                KendoTournamentGenerator.getInstance().designedGroups.updateArenasInLevelZero();
+                KendoTournamentGenerator.getInstance().designedGroups.updateArenas(0);
                 updateBlackBoard();
                 updateDesignerGroups();
                 updateListeners();
@@ -305,7 +305,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void consistentTree() {
         try {
             //It is impossible in a tree league that are more than one winner. If it is, change to a championship.
-            if (KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfmaxTeamsGroupPassNextRound(0) > 1 && KendoTournamentGenerator.getInstance().designedGroups.mode.equals("tree")) {
+            if (KendoTournamentGenerator.getInstance().designedGroups.default_max_winners  > 1 && KendoTournamentGenerator.getInstance().designedGroups.mode.equals("tree")) {
                 ChampionshipRadioButton.setSelected(true);
                 KendoTournamentGenerator.getInstance().designedGroups.mode = "championship";
                 championship.mode = KendoTournamentGenerator.getInstance().designedGroups.mode;
@@ -475,7 +475,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         } else {
             //Clicking in the second level is only useful for defining links. 
             if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual")) {
-                KendoTournamentGenerator.getInstance().designedGroups.addLink(KendoTournamentGenerator.getInstance().designedGroups.returnLastSelected(), d);
+                KendoTournamentGenerator.getInstance().designedGroups.addLink(KendoTournamentGenerator.getInstance().designedGroups.getLastGroupSelected(), d);
                 updateBlackBoard();
             }
         }

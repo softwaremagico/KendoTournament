@@ -5,6 +5,7 @@
 package com.softwaremagico.ktg.championship;
 
 import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,17 +108,31 @@ public class LevelGroups {
 
     protected void addGroup(TournamentGroup group, boolean selected) {
         tournamentGroups.add(group);
+        nextLevel.updateGroupsSize();
+    }
+
+    protected void removeGroup() {
+        if (tournamentGroups.size() > 0) {
+            tournamentGroups.remove(tournamentGroups.size() - 1);
+            nextLevel.updateGroupsSize();
+        }
     }
 
     /**
      * Update the number of groups according of the size of the previous level.
      */
     protected void updateGroupsSize() {
-        while ((previousLevel != null) && (previousLevel.size() > 1) && ((float) previousLevel.returnNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
+        while ((previousLevel != null) && ((float) previousLevel.returnNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
             addGroup(new TournamentGroup(2, 1, tournament, level, 0), false);
         }
+
+        //When we remove two groups in one level, we must remove one in the next one.
+        while ((previousLevel != null) && (Math.ceil((float) previousLevel.returnNumberOfTotalTeamsPassNextRound() / 2) < this.size())) {
+            removeGroup();
+        }
+
         updateArenaOfGroups();
-        nextLevel.updateGroups();
+        nextLevel.updateGroupsSize();
     }
 
     protected int returnNumberOfTotalTeamsPassNextRound() {
@@ -128,7 +143,7 @@ public class LevelGroups {
         return teams;
     }
 
-    private void updateArenaOfGroups() {
+    protected void updateArenaOfGroups() {
         if (tournamentGroups.size() > 0) {
             /**
              * The arena of a group in a level > 1 is the same arena of the
@@ -149,5 +164,58 @@ public class LevelGroups {
                 }
             }
         }
+        nextLevel.updateArenaOfGroups();
+    }
+
+    protected boolean loadLevel(Tournament tournament) {
+        for (TournamentGroup group : tournamentGroups) {
+            if (!group.load(tournament)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected void updateScoreOfTeams(ArrayList<Fight> fights) {
+        for (TournamentGroup group : tournamentGroups) {
+            group.updateScoreForTeams(fights);
+        }
+    }
+
+    protected TournamentGroup getGroupOfFight(Fight fight) {
+        for (int i = 0; i < tournamentGroups.size(); i++) {
+            boolean team1Exist = false;
+            boolean team2Exist = false;
+
+            for (int j = 0; j < tournamentGroups.get(i).teams.size(); j++) {
+                if (fight.team1.returnName().equals(tournamentGroups.get(i).teams.get(j).returnName())) {
+                    team1Exist = true;
+                }
+                if (fight.team2.returnName().equals(tournamentGroups.get(i).teams.get(j).returnName())) {
+                    team2Exist = true;
+                }
+            }
+            if (team1Exist && team2Exist) {
+                return tournamentGroups.get(i);
+            }
+        }
+        return null;
+    }
+
+    protected List<Team> getUsedTeams() {
+        List<Team> usedTeams = new ArrayList<>();
+        for (TournamentGroup group : tournamentGroups) {
+            usedTeams.addAll(group.teams);
+        }
+        return usedTeams;
+    }
+
+    protected TournamentGroup getLastSelected() {
+        for (int i = 0; i < tournamentGroups.size(); i++) {
+            if (tournamentGroups.get(i).isSelected()) {
+                return tournamentGroups.get(i);
+            }
+        }
+        return null;
     }
 }

@@ -572,7 +572,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
             //If championship or similar...
             if (!selectedTournament.mode.equals("simple") && KendoTournamentGenerator.getInstance().designedGroups.size() > 1) {
-                TournamentGroup currentGroup = KendoTournamentGenerator.getInstance().designedGroups.returnGroupOfFight(currentFight);
+                TournamentGroup currentGroup = KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(currentFight);
                 //Show scores, messages, etc. 
                 messagesFinishedGroup(currentGroup);
 
