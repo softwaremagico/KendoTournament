@@ -214,24 +214,15 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Add a new group box to the designer.
      *
-     * @param d
+     * @param group
      * @param level
      */
-    public void add(TournamentGroup d, boolean selected, boolean autocomplete) {
+    public void add(TournamentGroup group, boolean selected) {
         //Intermediate level
-        if (d.getLevel() < getNumberOfLevels() - 1) {
-            //Store it at the end or in the selected group.
-            if (d.getLevel() == 0 && selected) {
-                tournamentGroups.add(returnIndexLastSelected() + 1, d);
-            } else {
-                tournamentGroups.add(getLastPositionOfLevel(d.getLevel()) + 1, d);
-            }
+        if (group.getLevel() == 0 && selected) {
+            levels.get(group.getLevel()).addGroup(group, returnIndexLastSelected() + 1, selected);
         } else {
-            //Last level only needs to store it. All "pointers" all ok.
-            tournamentGroups.add(d);
-        }
-        if (autocomplete) {
-            updateInnerLevel(d.getLevel());
+            levels.get(group.getLevel()).addGroup(group, selected);
         }
     }
 
@@ -361,34 +352,33 @@ public class TournamentGroupManager implements Serializable {
         return true;
     }
 
-    public void deleteGroupsOfLevel(Integer level) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).getLevel() >= level) {
-                tournamentGroups.remove(i);
+    /**
+     * A level is not used if there are not any team assigned.
+     *
+     * @return
+     */
+    public Integer getIndexLastLevelUsed() {
+        for (int i = 0; i < levels.size(); i++) {
+            if (levels.get(i).getUsedTeams().isEmpty()) {
+                return i;
             }
         }
-        updateInnerLevels();
+        return null;
     }
 
-    public int returnLastGroupUsed() {
+    /*public Integer getIndexLastGroupUsed() {
         int last = 0;
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).areFightsOver()) {
-                last = i;
+        Integer level = getIndexLastLevelUsed();
+        if (level != null) {
+            List<TournamentGroup> tournamentGroups = levels.get(level).getGroups();
+            for (int i = 0; i < tournamentGroups.size(); i++) {
+                if (tournamentGroups.get(i).areFightsOver()) {
+                    last = i;
+                }
             }
         }
         return last;
-    }
-
-    public int getLastPositionOfLevel(int level) {
-        int index = 0;
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).getLevel() == index) {
-                index = tournamentGroups.get(i).getLevel();
-            }
-        }
-        return index;
-    }
+    }*/
 
     /**
      * ********************************************
@@ -474,37 +464,6 @@ public class TournamentGroupManager implements Serializable {
         return null;
     }
 
-    /**
-     * Obtain the level of the tree where the program must continue.
-     *
-     * @param fightManager
-     * @return int -1 if the tournament is finished. Other value is the level to
-     * continue.
-     */
-    public int firstLevelNotFinished(ArrayList<Fight> fights) {
-        //Fight defined but not finished.
-        try {
-            for (int i = 0; i < fights.size(); i++) {
-                if (!fights.get(i).isOver()) {
-                    return fights.get(i).level;
-                }
-            }
-
-            // Not fightManager defined yet.
-            if (fights.isEmpty()) {
-                return 0;
-            } else {
-                //The tournament is over. It is over if the previous level is the final (only one group)
-                if ((returnGroupsOfLevel(fights.get(fights.size() - 1).level)).size() == 1) {
-                    return getNumberOfLevels();
-                } //All fightManager finished. We assume that a level is completed.
-                return fights.get(fights.size() - 1).level + 1;
-            }
-        } catch (NullPointerException npe) {
-            return 0;
-        }
-    }
-
     public Boolean isLevelFinished(ArrayList<Fight> fights, int level) {
         if (level >= 0 && level < levels.size()) {
             return levels.get(level).isLevelFinished(fights);
@@ -513,7 +472,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
-        int nextLevel = firstLevelNotFinished(fights);
+        int nextLevel = getIndexLastLevelUsed();
         int arena;
         try {
             //Not finished the tournament.
@@ -755,24 +714,29 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Restore a designer with the data stored in a database.
      */
-    public void refillDesigner(ArrayList<Fight> tmp_fights) {
+    public void refillDesigner(ArrayList<Fight> fights) {
         //if (!loadDesigner(FOLDER + File.separator + KendoTournamentGenerator.getInstance().getLastSelectedTournament() + ".dsg", tournament)) {
         levels = new ArrayList<>();
 
         //Fill levels with fights defined.
-        int maxFightLevel = FightManager.getMaxLevelOfFights(tmp_fights);
+        int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
         for (int i = 0; i <= maxFightLevel; i++) {
-            refillLevel(tmp_fights, i);
+            if (i == 0) {
+                levels.add(new LevelGroups(tournament, i, null, null, this));
+            } else {
+                levels.add(new LevelGroups(tournament, i, null, levels.get(levels.size() - 1), this));
+            }
+            refillLevel(fights, i);
         }
 
         //defautl Max winners. Not important this variable now.
-        if (tmp_fights.size() > 0) {
-            default_max_winners = tmp_fights.get(0).getMaxWinners();
+        if (fights.size() > 0) {
+            default_max_winners = fights.get(0).getMaxWinners();
         }
 
         //Fill Inner Levels
-        for (int i = maxFightLevel; i < calculateNumberOfLevels(); i++) {
-            updateInnerLevel(i);
+        if (levels.size() > 0) {
+            levels.get(0).updateGroupsSize();
         }
 
         unselectDesignedGroups();
@@ -780,42 +744,46 @@ public class TournamentGroupManager implements Serializable {
         update();
     }
 
-    private void refillLevel(ArrayList<Fight> tmp_fights, int level) {
-        ArrayList<Fight> fights = getFightsOfLevel(tmp_fights, level);
+    private void fillLevel(TournamentGroup group) {
+        levels.get(group.getLevel()).addGroup(group, false);
+    }
+
+    private void refillLevel(ArrayList<Fight> fights, int level) {
+        ArrayList<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
         List<Team> teamsOfGroup = new ArrayList<>();
 
-        for (int i = 0; i < fights.size(); i++) {
+        for (int i = 0; i < fightsOfLevel.size(); i++) {
             //If one team exist in the group, then this fight is also of this group.
-            if (isTeamIncludedInList(teamsOfGroup, fights.get(i).team1)) {
-                if (!isTeamIncludedInList(teamsOfGroup, fights.get(i).team2)) {
-                    teamsOfGroup.add(fights.get(i).team2);
+            if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team1)) {
+                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team2)) {
+                    teamsOfGroup.add(fightsOfLevel.get(i).team2);
                 }
-            } else if (isTeamIncludedInList(teamsOfGroup, fights.get(i).team2)) {
-                if (!isTeamIncludedInList(teamsOfGroup, fights.get(i).team1)) {
-                    teamsOfGroup.add(fights.get(i).team1);
+            } else if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team2)) {
+                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team1)) {
+                    teamsOfGroup.add(fightsOfLevel.get(i).team1);
                 }
             } else {
                 //If no team exist in this group, means that we find the fightManager of a new group.
                 //Store the previous group.
                 if (teamsOfGroup.size() > 0) {
-                    TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fights.get(i).getMaxWinners(), tournament, level, fights.get(i - 1).asignedFightArea);
+                    TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(i).getMaxWinners(), tournament, level, fightsOfLevel.get(i - 1).asignedFightArea);
                     designedFight.addTeams(teamsOfGroup);
                     designedFight.update();
-                    add(designedFight, false, false);
+                    fillLevel(designedFight);
                 }
                 //Start generating the next group.
                 teamsOfGroup = new ArrayList<>();
-                teamsOfGroup.add(fights.get(i).team1);
-                teamsOfGroup.add(fights.get(i).team2);
+                teamsOfGroup.add(fightsOfLevel.get(i).team1);
+                teamsOfGroup.add(fightsOfLevel.get(i).team2);
             }
         }
         //Insert the last group.
         try {
-            if (!fights.isEmpty()) {
-                TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fights.get(fights.size() - 1).getMaxWinners(), tournament, level, fights.get(fights.size() - 1).asignedFightArea);
+            if (!fightsOfLevel.isEmpty()) {
+                TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(fightsOfLevel.size() - 1).getMaxWinners(), tournament, level, fightsOfLevel.get(fightsOfLevel.size() - 1).asignedFightArea);
                 designedFight.addTeams(teamsOfGroup);
                 designedFight.update();
-                add(designedFight, false, false);
+                fillLevel(designedFight);
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
             KendoTournamentGenerator.getInstance().showErrorInformation(aiob);

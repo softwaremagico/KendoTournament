@@ -155,7 +155,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 int defaultArena = 0;
                 TournamentGroup designedFight = new TournamentGroup(obtainMaxNumberOfTeamsByGroup(), numberMaxOfWinners, championship, 0, defaultArena);
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
-                KendoTournamentGenerator.getInstance().designedGroups.add(designedFight, true, true);
+                KendoTournamentGenerator.getInstance().designedGroups.add(designedFight, true);
                 designedFight.setSelected(KendoTournamentGenerator.getInstance().designedGroups);
                 KendoTournamentGenerator.getInstance().designedGroups.updateArenas(0);
                 updateBlackBoard();

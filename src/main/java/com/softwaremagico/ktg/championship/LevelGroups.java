@@ -109,7 +109,11 @@ public class LevelGroups {
     }
 
     protected void addGroup(TournamentGroup group, boolean selected) {
-        tournamentGroups.add(group);
+        addGroup(group, tournamentGroups.size(), selected);
+    }
+
+    protected void addGroup(TournamentGroup group, int index, boolean selected) {
+        tournamentGroups.add(index, group);
         if ((nextLevel == null) && (returnNumberOfTotalTeamsPassNextRound() > 1)) {
             nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
@@ -146,17 +150,14 @@ public class LevelGroups {
 
         updateArenaOfGroups();
 
-        //If there are no groups left, delete this level and the next one..
-        if (size() == 0) {
-            for (int i = groupManager.getLevels().size() - 1; i >= level; i--) {
-                groupManager.getLevels().remove(i);
-            }
-        }
-
         if (nextLevel != null) {
             nextLevel.updateGroupsSize();
         }
 
+        //If there are no groups left, delete this level..
+        if (size() == 0) {
+            groupManager.getLevels().remove(level);
+        }
     }
 
     protected int returnNumberOfTotalTeamsPassNextRound() {
