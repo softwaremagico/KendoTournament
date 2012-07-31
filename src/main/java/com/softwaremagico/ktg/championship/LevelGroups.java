@@ -21,13 +21,15 @@ public class LevelGroups {
     private List<TournamentGroup> tournamentGroups;
     private LevelGroups nextLevel;
     private LevelGroups previousLevel;
+    private TournamentGroupManager groupManager;
 
-    LevelGroups(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel) {
+    LevelGroups(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         this.tournament = tournament;
         tournamentGroups = new ArrayList<>();
         this.level = level;
         this.nextLevel = nextLevel;
         this.previousLevel = previousLevel;
+        this.groupManager = groupManager;
     }
 
     protected void updateGroups() {
@@ -108,13 +110,24 @@ public class LevelGroups {
 
     protected void addGroup(TournamentGroup group, boolean selected) {
         tournamentGroups.add(group);
-        nextLevel.updateGroupsSize();
+        if ((nextLevel == null) && (returnNumberOfTotalTeamsPassNextRound() > 1)) {
+            nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
+            groupManager.getLevels().add(nextLevel);
+            nextLevel.updateGroupsSize();
+        } else {
+            nextLevel.updateGroupsSize();
+        }
     }
 
     protected void removeGroup() {
         if (tournamentGroups.size() > 0) {
             tournamentGroups.remove(tournamentGroups.size() - 1);
-            nextLevel.updateGroupsSize();
+            if (nextLevel != null) {
+                nextLevel.updateGroupsSize();
+                if (nextLevel.size() == 0) {
+                    nextLevel = null;
+                }
+            }
         }
     }
 
