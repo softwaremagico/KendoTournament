@@ -145,7 +145,18 @@ public class LevelGroups {
         }
 
         updateArenaOfGroups();
-        nextLevel.updateGroupsSize();
+
+        //If there are no groups left, delete this level and the next one..
+        if (size() == 0) {
+            for (int i = groupManager.getLevels().size() - 1; i >= level; i--) {
+                groupManager.getLevels().remove(i);
+            }
+        }
+
+        if (nextLevel != null) {
+            nextLevel.updateGroupsSize();
+        }
+
     }
 
     protected int returnNumberOfTotalTeamsPassNextRound() {
