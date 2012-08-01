@@ -274,4 +274,8 @@ public class LevelGroups {
         return null;
     }
     
+    protected Integer getDestinationOfWinner(TournamentGroup group){
+        int groupIndex = getIndexOfGroup(group);
+        
+    }
 }

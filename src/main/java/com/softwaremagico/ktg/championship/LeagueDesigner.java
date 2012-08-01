@@ -124,7 +124,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         try {
             teamModel.removeAllElements();
             for (int i = 0; i < teams.size(); i++) {
-                if (!KendoTournamentGenerator.getInstance().designedGroups.containTeamInTournament(teams.get(i), TournamentComboBox.getSelectedItem().toString())) {
+                if (!KendoTournamentGenerator.getInstance().designedGroups.isTeamContainedInTournament(teams.get(i), TournamentComboBox.getSelectedItem().toString())) {
                     teamModel.addElement(teams.get(i).returnName());
                 }
             }

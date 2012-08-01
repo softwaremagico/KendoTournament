@@ -116,7 +116,7 @@ public class TournamentGroupManager implements Serializable {
         return new ArrayList<>();
     }
 
-    public boolean containTeamInTournament(Team team, String Championship) {
+    public boolean isTeamContainedInTournament(Team team, String Championship) {
         return getUsedTeams().contains(team);
     }
 
@@ -252,13 +252,7 @@ public class TournamentGroupManager implements Serializable {
         }
         return size;
     }
-
-    /*
-     * public int returnIndexOfGroup(TournamentGroup d) { for (int i = 0; i <
-     * tournamentGroups.size(); i++) { if (tournamentGroups.get(i).equals(d)) {
-     * return i; } } return -1; }
-     */
-    
+   
     public Integer returnIndexOfGroup(TournamentGroup group){
         LevelGroups level = levels.get(group.getLevel());
         return level.getIndexOfGroup(group);
@@ -617,11 +611,6 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    /*
-     * private int obtainMaxLevel(ArrayList<Fight> fights) { int max = 0; for
-     * (int i = 0; i < fights.size(); i++) { if (fights.get(i).level > max) {
-     * max = fights.get(i).level; } } return max; }
-     */
     public TournamentGroup getGroupOfFight(ArrayList<Fight> fights, int fightIndex) {
         if (fightIndex >= 0 && fightIndex < fights.size()) {
             return getGroupOfFight(fights.get(fightIndex));
