@@ -253,9 +253,10 @@ DROP TABLE IF EXISTS `undraw`;
 CREATE TABLE `undraw` (
   `Championship` char(50) NOT NULL,
   `UndrawGroup` int(11) NOT NULL,
+  `LevelUndraw` int(11) NOT NULL,
   `Team` varchar(50) NOT NULL,
   `Player` int(11) NOT NULL,
-  PRIMARY KEY (`Championship`,`UndrawGroup`,`Team`) USING BTREE,
+  PRIMARY KEY (`Championship`,`UndrawGroup`,`LevelUndraw`,`Team`) USING BTREE,
   KEY `Team` (`Team`),
   CONSTRAINT `TeamDraw` FOREIGN KEY (`Team`) REFERENCES `team` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `TournamentUndraw` FOREIGN KEY (`Championship`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE

@@ -135,6 +135,18 @@ public class LevelGroups {
         }
     }
 
+    protected void removeGroup(TournamentGroup group) {
+        if (tournamentGroups.size() > 0) {
+            tournamentGroups.remove(group);
+            if (nextLevel != null) {
+                nextLevel.updateGroupsSize();
+                if (nextLevel.size() == 0) {
+                    nextLevel = null;
+                }
+            }
+        }
+    }
+
     /**
      * Update the number of groups according of the size of the previous level.
      */
@@ -243,4 +255,23 @@ public class LevelGroups {
         }
         return null;
     }
+
+    protected Integer getIndexLastSelected() {
+        for (int i = 0; i < tournamentGroups.size(); i++) {
+            if (tournamentGroups.get(i).isSelected()) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    protected Integer getIndexOfGroup(TournamentGroup group) {
+        for (int i = 0; i < tournamentGroups.size(); i++) {
+            if (tournamentGroups.get(i).equals(group)) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
 }

@@ -179,8 +179,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void removeSelectedPanel() {
         try {
-            Integer select = KendoTournamentGenerator.getInstance().designedGroups.returnIndexLastSelected();
-            KendoTournamentGenerator.getInstance().designedGroups.remove(select);
+            TournamentGroup group = KendoTournamentGenerator.getInstance().designedGroups.getLastGroupSelected();
+            Integer select = KendoTournamentGenerator.getInstance().designedGroups.getIndexLastSelected();
+            KendoTournamentGenerator.getInstance().designedGroups.removeGroupOfLevelZero(group);
             if ((select == null) || (select < 0) || (select > KendoTournamentGenerator.getInstance().designedGroups.getSizeOfLevel(0) - 1)) {
                 //Select the last group.
                 KendoTournamentGenerator.getInstance().designedGroups.selectLastGroup();
@@ -275,7 +276,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     void updateBlackBoard() {
         try {
-            Integer select = KendoTournamentGenerator.getInstance().designedGroups.returnIndexLastSelected();
+            Integer select = KendoTournamentGenerator.getInstance().designedGroups.getIndexLastSelected();
             if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("simple")) {
                 bbp.updateBlackBoard(TournamentComboBox.getSelectedItem().toString(), false);
                 KendoTournamentGenerator.getInstance().designedGroups.enhance(false);

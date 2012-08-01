@@ -473,4 +473,6 @@ public abstract class Database {
     public abstract void deleteDrawsOfTournament(String championship);
 
     public abstract void deleteDrawsOfGroupOfTournament(String championship, int group);
+    
+    public abstract void deleteDrawsOfLevelOfTournament(String championship, int level);
 }

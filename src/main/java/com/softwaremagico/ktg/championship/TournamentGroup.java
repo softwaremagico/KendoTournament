@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg.championship;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.Fight;
@@ -669,6 +662,9 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public Team getTeamInOrderOfScore(int order, List<Fight> fights, boolean resolvDraws) {
+        if (teams.isEmpty()) {
+            return null;
+        }
         updateScoreForTeams(fights);
         List<Team> sortedTeams = getTeamsOrderedByScore();
         try {
@@ -865,22 +861,18 @@ public class TournamentGroup extends Group implements Serializable {
             return false;
         }
 
-        
-          if (this.teams != other.teams) { return false;
-        }
-         
 
-        /*for (Team t1 : this.teams) {
-            boolean found = false;
-            for (Team t2 : other.teams) {
-                t1.returnName().equals(t2.returnName());
-                found = true;
-                break;
-            }
-            if (!found) {
-                return false;
-            }
-        }*/
+        if (this.teams != other.teams) {
+            return false;
+        }
+
+
+        /*
+         * for (Team t1 : this.teams) { boolean found = false; for (Team t2 :
+         * other.teams) { t1.returnName().equals(t2.returnName()); found = true;
+         * break; } if (!found) { return false; }
+        }
+         */
 
 
         return true;

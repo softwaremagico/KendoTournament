@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg.database;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.Fight;
@@ -135,7 +128,7 @@ public class SQLite extends SQL {
     @Override
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
-            copyFile(new File("database/" + defaultDatabaseName + "." + defaultSQLiteExtension), new File("database/" + tmp_database + "."+defaultSQLiteExtension));
+            copyFile(new File("database/" + defaultDatabaseName + "." + defaultSQLiteExtension), new File("database/" + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
@@ -232,13 +225,14 @@ public class SQLite extends SQL {
      * Delete fights must delete duels. MySQL use foreign key, but SQLite need
      * to delete one by one
      *
-     * @param championship
+     * @param tournamentName
      * @param level
      * @param verbose
      * @return
      */
     @Override
-    public boolean deleteFightsOfLevelOfTournament(String championship, int level, boolean verbose) {
+    public boolean deleteFightsOfLevelOfTournament(String tournamentName, int level, boolean verbose) {
+        Log.fine("Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
         try {
@@ -247,15 +241,13 @@ public class SQLite extends SQL {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    List<Fight> fightsOfTournament = searchFightsByTournamentNameLevelEqualOrGreater(championship, level);
+                    List<Fight> fightsOfTournament = searchFightsByTournamentNameLevelEqualOrGreater(tournamentName, level);
                     for (Fight f : fightsOfTournament) {
                         deleteFight(f, false);
                     }
                 }
-                List<Integer> groups = KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroupsOfLevelOrMore(level);
-                for (int i = 0; i < groups.size(); i++) {
-                    deleteDrawsOfGroupOfTournament(championship, i);
-                }
+                Log.finer("Delete draw fights of tournament.");
+                deleteDrawsOfLevelOfTournament(tournamentName, level);
                 return true;
             } else {
                 return false;
