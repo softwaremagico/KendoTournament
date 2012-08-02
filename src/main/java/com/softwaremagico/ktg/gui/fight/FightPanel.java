@@ -236,7 +236,7 @@ public final class FightPanel extends javax.swing.JFrame {
         String text = "";
         //int groupFinished = KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
         List<Team> winnersOfGroup = new ArrayList<>();
-        for (int i = 0; i < groupFinished.returnMaxNumberOfWinners(); i++) {
+        for (int i = 0; i < groupFinished.getMaxNumberOfWinners(); i++) {
             winnersOfGroup.add(groupFinished.getTeamInOrderOfScore(i, KendoTournamentGenerator.getInstance().fightManager.getFights(), true));
         }
         for (int i = 0; i < winnersOfGroup.size(); i++) {

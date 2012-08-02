@@ -237,7 +237,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
     }
 
-    public int returnMaxNumberOfWinners() {
+    public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
         }

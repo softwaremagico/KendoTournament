@@ -54,7 +54,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
         fillGroupArea();
-        PassSpinner.setValue(dg.returnMaxNumberOfWinners());
+        PassSpinner.setValue(dg.getMaxNumberOfWinners());
         fillFightingAreas();
         refresh = false;
     }

@@ -108,74 +108,10 @@ public class LevelGroups {
         return true;
     }
 
-    protected void addGroup(TournamentGroup group, boolean selected) {
-        addGroup(group, tournamentGroups.size(), selected);
-    }
-
-    protected void addGroup(TournamentGroup group, int index, boolean selected) {
-        tournamentGroups.add(index, group);
-        if ((nextLevel == null) && (returnNumberOfTotalTeamsPassNextRound() > 1)) {
-            nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
-            groupManager.getLevels().add(nextLevel);
-            nextLevel.updateGroupsSize();
-        } else {
-            nextLevel.updateGroupsSize();
-        }
-    }
-
-    protected void removeGroup() {
-        if (tournamentGroups.size() > 0) {
-            tournamentGroups.remove(tournamentGroups.size() - 1);
-            if (nextLevel != null) {
-                nextLevel.updateGroupsSize();
-                if (nextLevel.size() == 0) {
-                    nextLevel = null;
-                }
-            }
-        }
-    }
-
-    protected void removeGroup(TournamentGroup group) {
-        if (tournamentGroups.size() > 0) {
-            tournamentGroups.remove(group);
-            if (nextLevel != null) {
-                nextLevel.updateGroupsSize();
-                if (nextLevel.size() == 0) {
-                    nextLevel = null;
-                }
-            }
-        }
-    }
-
-    /**
-     * Update the number of groups according of the size of the previous level.
-     */
-    protected void updateGroupsSize() {
-        while ((previousLevel != null) && ((float) previousLevel.returnNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
-            addGroup(new TournamentGroup(2, 1, tournament, level, 0), false);
-        }
-
-        //When we remove two groups in one level, we must remove one in the next one.
-        while ((previousLevel != null) && (Math.ceil((float) previousLevel.returnNumberOfTotalTeamsPassNextRound() / 2) < this.size())) {
-            removeGroup();
-        }
-
-        updateArenaOfGroups();
-
-        if (nextLevel != null) {
-            nextLevel.updateGroupsSize();
-        }
-
-        //If there are no groups left, delete this level..
-        if (size() == 0) {
-            groupManager.getLevels().remove(level);
-        }
-    }
-
-    protected int returnNumberOfTotalTeamsPassNextRound() {
+    protected int getNumberOfTotalTeamsPassNextRound() {
         int teams = 0;
         for (int i = 0; i < tournamentGroups.size(); i++) {
-            teams += tournamentGroups.get(i).returnMaxNumberOfWinners();
+            teams += tournamentGroups.get(i).getMaxNumberOfWinners();
         }
         return teams;
     }
@@ -273,9 +209,177 @@ public class LevelGroups {
         }
         return null;
     }
-    
-    protected Integer getDestinationOfWinner(TournamentGroup group){
-        int groupIndex = getIndexOfGroup(group);
-        
+
+    protected int getGlobalPositionWinner(TournamentGroup group, int winner) {
+        int total = 0;
+
+        for (int i = 0; i < tournamentGroups.size() && i < getIndexOfGroup(group); i++) {
+            if (level > 0) {
+                total++;
+            } else {
+                total += tournamentGroups.get(i).getMaxNumberOfWinners();
+            }
+        }
+        total += winner;
+        return total;
     }
+
+    /**
+     *********************************************
+     *
+     * GROUPS MANIPULATION
+     *
+     *********************************************
+     */
+    /**
+     * Update the number of groups according of the size of the previous level.
+     */
+    protected void updateGroupsSize() {
+        while ((previousLevel != null) && ((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
+            addGroup(new TournamentGroup(2, 1, tournament, level, 0), false);
+        }
+
+        //When we remove two groups in one level, we must remove one in the next one.
+        while ((previousLevel != null) && (Math.ceil((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2) < this.size())) {
+            removeGroup();
+        }
+
+        updateArenaOfGroups();
+
+        if (nextLevel != null) {
+            nextLevel.updateGroupsSize();
+        }
+
+        //If there are no groups left, delete this level..
+        if (size() == 0) {
+            groupManager.getLevels().remove(level);
+        }
+    }
+
+    protected void addGroup(TournamentGroup group, boolean selected) {
+        addGroup(group, tournamentGroups.size(), selected);
+    }
+
+    protected void addGroup(TournamentGroup group, int index, boolean selected) {
+        tournamentGroups.add(index, group);
+        if ((nextLevel == null) && (getNumberOfTotalTeamsPassNextRound() > 1)) {
+            nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
+            groupManager.getLevels().add(nextLevel);
+            nextLevel.updateGroupsSize();
+        } else {
+            nextLevel.updateGroupsSize();
+        }
+    }
+
+    protected void removeGroup() {
+        if (tournamentGroups.size() > 0) {
+            tournamentGroups.remove(tournamentGroups.size() - 1);
+            if (nextLevel != null) {
+                nextLevel.updateGroupsSize();
+                if (nextLevel.size() == 0) {
+                    nextLevel = null;
+                }
+            }
+        }
+    }
+
+    protected void removeGroup(TournamentGroup group) {
+        if (tournamentGroups.size() > 0) {
+            tournamentGroups.remove(group);
+            if (nextLevel != null) {
+                nextLevel.updateGroupsSize();
+                if (nextLevel.size() == 0) {
+                    nextLevel = null;
+                }
+            }
+        }
+    }
+
+    /**
+     *********************************************
+     *
+     * WINNER DESTINATION
+     *
+     *********************************************
+     */
+    private Integer obtainPositionOfOneWinnerInTreeLevelZero(int branch, int branchs) {
+        if (branch % 2 == 0) {
+            return branch;
+        } else {
+            return branchs - branch;
+        }
+    }
+
+    private Integer obtainPositionOfOneWinnerInTreeLevelZeroOdd(int branch, int branchs) {
+        if (branch % 2 == 0) {
+            return branch;
+        } else {
+            return ((branch + 1) % branchs);
+        }
+    }
+
+    private Integer obtainPositionOfOneWinnerInTreeMoreThanLevelZero(int branch, int branchs) {
+        //Desgin a tree grouping the designed groups by two.
+        if (branchs % 2 == 0) {
+            return (branch);
+        } else {
+            //If the number of groups are odd, are one group that never fights. Then, shuffle it.
+            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
+        }
+    }
+
+    private Integer obtainPositionOfOneWinnerInTreeOdd(int branch, int branchs) {
+        return ((branch + 1) % branchs);
+    }
+
+    private Integer obtainPositionOfOneWinnerInTree(int branch, int branchs) {
+        //Design a tree grouping the designed groups by two.
+        if ((branchs / 2) % 2 == 0) {
+            return (branch);
+        } else {
+            //If the number of groups are odd, are one group that never fightManager. Then, shuffle it.
+            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
+        }
+    }
+
+    private Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
+        if (groupManager.mode.equals("championship")) {
+            if (level == 0) {
+                //If the number of groups are odd, then some teams fights again between them. 
+                if ((branchs / 2) % 2 != 0 && getNumberOfTotalTeamsPassNextRound() > size()) {
+                    return obtainPositionOfOneWinnerInTreeLevelZeroOdd(branch, branchs) / 2;
+                } else {
+                    return obtainPositionOfOneWinnerInTreeLevelZero(branch, branchs) / 2;
+                }
+            } else {
+                return obtainPositionOfOneWinnerInTreeMoreThanLevelZero(branch, branchs) / 2;
+            }
+        } else {
+            return obtainPositionOfOneWinnerInTree(branch, branchs) / 2;
+        }
+    }
+
+    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
+        int winnerTeams = getNumberOfTotalTeamsPassNextRound();
+        int winnerIndex = getGlobalPositionWinner(group, winner);
+        return getPositonOfOneWinnerInTournament(winnerIndex, winnerTeams);
+    }
+
+    protected TournamentGroup getGroupDestinationOfWinner(TournamentGroup group, int winner) {
+        return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));
+    }
+
+    protected Integer getGroupIndexSourceOfWinner(TournamentGroup group, int winner) {
+        if (level > 0) {
+            for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
+                for (int winnerIndex = 0; winnerIndex < previousLevel.tournamentGroups.get(groupIndex).getMaxNumberOfWinners(); winnerIndex++) {
+                    if (getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winnerIndex).equals(group)) {
+                        return groupIndex;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
 }

@@ -34,18 +34,18 @@ import java.util.List;
  * @author Jorge
  */
 public class BlackBoardPanel extends javax.swing.JPanel {
-    
+
     private GridBagConstraints c = new GridBagConstraints();
     private String last_championship;
     private int titleColumn = 1;
     private int titleRow = 2;
     transient private Translator trans = LanguagePool.getTranslator("gui.xml");
-    
+
     public BlackBoardPanel() {
         setLayout(new java.awt.GridBagLayout());
         setBackground(new Color(255, 255, 255));
     }
-    
+
     public void updateBlackBoard(String championshipName, boolean refill) {
         last_championship = championshipName;
         //removeAll();
@@ -61,11 +61,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         paintDesignedGroups();
         paintSpaces();
     }
-    
+
     public void clearBlackBoard() {
         this.removeAll();
     }
-    
+
     private void paintDesignedGroups() {
         removeAll();
         c.gridx = 0;
@@ -81,12 +81,12 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          * Font("sansserif", Font.BOLD, 24)); lc.gridwidth =
          * GridBagConstraints.REMAINDER; add(l, lc);
          */
-        
+
         Separator sp = new Separator(last_championship);
         sp.updateFont("sansserif", 44);
         lc.gridwidth = GridBagConstraints.REMAINDER;
         add(sp, lc);
-        
+
         add(new Separator(), c);
 
         /*
@@ -95,7 +95,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
             c.gridx = (i + 1) * 2;
             c.gridy = 1;
-            
+
             Separator s;
             if (i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
                 s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - i));
@@ -143,7 +143,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                                 c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + titleRow;
                             }
                         }
-                        
+
                         c.weightx = 0.5;
                         add(KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups().get(groupIndex), c);
                         if (level == 0 && groupIndex == 0) {
@@ -156,7 +156,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void paintSpaces() {
         for (int i = 1; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
             c.gridx = i * 2 + titleColumn;
@@ -164,14 +164,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             add(new Separator(), c);
         }
     }
-    
+
     private void paintLinks(Graphics g) {
         int destination;
         for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
             List<TournamentGroup> designedGroupsOfLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i);
             List<TournamentGroup> designedGroupsOfNextLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i + 1);
             for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
-                for (int k = 0; k < designedGroupsOfLevel.get(j).returnMaxNumberOfWinners(); k++) {
+                for (int k = 0; k < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); k++) {
                     if (designedGroupsOfNextLevel.size() > 1) {
                         if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual") || i > 0) {
                             //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
@@ -179,7 +179,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                                     KendoTournamentGenerator.getInstance().designedGroups.getNumberOfTotalTeamsPassNextRound(i), i);
                         } else {
                             destination = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(
-                                    KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), k)));
+                                    KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), k));
                         }
                     } else {
                         destination = 0;
@@ -191,7 +191,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void paintArrow(Graphics g, double x0, double y0, double x1, double y1) {
         double deltaX = x1 - x0;
         double deltaY = y1 - y0;
@@ -211,7 +211,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          */
         deltaX = deltaXUnit * mult;
         deltaY = deltaYUnit * mult;
-        
+
         g.drawLine((int) x0, (int) y0, (int) x1, (int) y1);
         int xpoints[] = {(int) x1,
             (int) x1 - (int) ((1 - frac) * deltaX + frac / 3 * deltaY),
@@ -223,12 +223,12 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             //(int) y1 - (int) ((1 - frac / 2) * deltaY),
             (int) y1 - (int) ((1 - frac) * deltaY + frac / 3 * deltaX)
         };
-        
+
         int npoints = 3;
         //System.out.println("(" + xpoints[0] + "," + ypoints[0] + ")" + " " + "(" + xpoints[1] + "," + ypoints[1] + ")" + " " + "(" + xpoints[2] + "," + ypoints[2] + ")");
         g.fillPolygon(xpoints, ypoints, npoints);
     }
-    
+
     private void paintSeparationLines(Graphics g) {
         List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0);
         g.setColor(Color.black);
@@ -240,7 +240,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void customPaintingMethod(Graphics g) {
         try {
             //paintDesignedGroups();
@@ -250,17 +250,17 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         } catch (NullPointerException npe) {
         }
     }
-    
+
     private void drawLink(Graphics g, TournamentGroup d1, TournamentGroup d2, int winner, int originNumber, int destinationNumber, boolean half) {
         Rectangle r1 = d1.getBounds();
         Rectangle r2 = d2.getBounds();
         g.setColor(d1.obtainWinnerColor(winner, false));
-        if (d1.returnMaxNumberOfWinners() > 1) {
-            //paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.returnMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2);
+        if (d1.getMaxNumberOfWinners() > 1) {
+            //paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.getMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2);
             if ((originNumber < destinationNumber) || (half && originNumber == destinationNumber)) {
-                paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.returnMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2 - 4);
+                paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.getMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2 - 4);
             } else {
-                paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.returnMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2 + 4);
+                paintArrow(g, r1.x + r1.width, r1.y + ((r1.height / (d1.getMaxNumberOfWinners() + 1)) * (winner + 1)), r2.x, r2.y + r2.height / 2 + 4);
             }
         } else {
             //paintArrow(g, r1.x + r1.width, r1.y + r1.height / 2, r2.x, r2.y + r2.height / 2);
@@ -271,7 +271,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
