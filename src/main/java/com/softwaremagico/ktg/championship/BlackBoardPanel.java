@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.championship;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -119,15 +117,17 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          * Paint information column
          */
         List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0);
-        for (int i = 0; i < grps.size(); i++) {
-            c.gridx = 0;
-            c.gridy = i + 2;
-            //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfArenas());
+        if (grps != null) {
+            for (int i = 0; i < grps.size(); i++) {
+                c.gridx = 0;
+                c.gridy = i + 2;
+                //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfArenas());
 
-            Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
-                    + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
-            s.updateFont("sansserif", 24);
-            add(s, c);
+                Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
+                        + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
+                s.updateFont("sansserif", 24);
+                add(s, c);
+            }
         }
 
         /*
@@ -178,21 +178,26 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             List<TournamentGroup> designedGroupsOfLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i);
             List<TournamentGroup> designedGroupsOfNextLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i + 1);
             for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
-                for (int k = 0; k < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); k++) {
+                for (int winners = 0; winners < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); winners++) {
                     if (designedGroupsOfNextLevel.size() > 1) {
                         if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual") || i > 0) {
                             //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
-                            destination = (int) KendoTournamentGenerator.getInstance().designedGroups.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().designedGroups.obtainGlobalPositionWinner(i, j, k),
-                                    KendoTournamentGenerator.getInstance().designedGroups.getNumberOfTotalTeamsPassNextRound(i), i);
+                            /*
+                             * destination = (int)
+                             * KendoTournamentGenerator.getInstance().designedGroups.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().designedGroups.obtainGlobalPositionWinner(i,
+                             * designedGroupsOfLevel.get(j), winners),
+                             * KendoTournamentGenerator.getInstance().designedGroups.getNumberOfTotalTeamsPassNextRound(i), i);
+                             */
+                            destination = KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(designedGroupsOfLevel.get(j).getLevel()).getGroupIndexSourceOfWinner(designedGroupsOfLevel.get(j), winners);
                         } else {
                             destination = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(
-                                    KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), k));
+                                    KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), winners));
                         }
                     } else {
                         destination = 0;
                     }
                     if (destination < designedGroupsOfNextLevel.size() && destination >= 0) {
-                        drawLink(g, designedGroupsOfLevel.get(j), designedGroupsOfNextLevel.get(destination), k, j, destination, j < designedGroupsOfLevel.size() / 2);
+                        drawLink(g, designedGroupsOfLevel.get(j), designedGroupsOfNextLevel.get(destination), winners, j, destination, j < designedGroupsOfLevel.size() / 2);
                     }
                 }
             }

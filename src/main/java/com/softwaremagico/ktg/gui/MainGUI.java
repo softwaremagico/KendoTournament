@@ -218,7 +218,7 @@ public class MainGUI extends KendoFrame {
     private void updateConfig() {
         refresh = false;
         LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
-        DebugMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getDebugOptionSelected());
+        DebugMenuCheckBox.setState(KendoTournamentGenerator.getInstance().isDebugOptionSelected());
         refresh = true;
     }
 

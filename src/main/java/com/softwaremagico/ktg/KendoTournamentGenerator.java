@@ -152,13 +152,12 @@ public class KendoTournamentGenerator {
      * If debug is activated, show information about the error.
      */
     public void showErrorInformation(Exception ex) {
-        if (getDebugOptionSelected()) {
-            MessageManager.basicErrorMessage(ex.getMessage(), "Error");
-            Log.debug(ex.getMessage());
+        if (isDebugOptionSelected()) {
+            MessageManager.basicErrorMessage(ex.getMessage() + ": " +ex.getStackTrace().toString(), "Error");
         }
     }
 
-    public boolean getDebugOptionSelected() {
+    public boolean isDebugOptionSelected() {
         return debugMode;
     }
 

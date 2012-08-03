@@ -661,12 +661,12 @@ public final class FightPanel extends javax.swing.JFrame {
 
         TournamentGroup groupFinished;
         if (!KendoTournamentGenerator.getInstance().fightManager.getSelectedFight(FightAreaComboBox.getSelectedIndex()).equals(currentFight)) {
-            groupFinished = KendoTournamentGenerator.getInstance().designedGroups.get(KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(),
-                    KendoTournamentGenerator.getInstance().fightManager.getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex())));
+            groupFinished = KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(),
+                    KendoTournamentGenerator.getInstance().fightManager.getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
         } else {
             //Last fight of the panel is a special case.
-            groupFinished = KendoTournamentGenerator.getInstance().designedGroups.get(KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(),
-                    KendoTournamentGenerator.getInstance().fightManager.currentFight(FightAreaComboBox.getSelectedIndex())));
+            groupFinished = KendoTournamentGenerator.getInstance().designedGroups.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(),
+                    KendoTournamentGenerator.getInstance().fightManager.currentFight(FightAreaComboBox.getSelectedIndex()));
         }
 
         MonitorFightPosition mfp = new MonitorFightPosition(groupFinished, false);

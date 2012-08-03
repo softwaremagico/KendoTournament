@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.championship;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -96,7 +94,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         AddButton.setText(trans.returnTag("AddGroupButton"));
         DeleteButton.setText(trans.returnTag("DeleteGroupButton"));
         CleanButton.setText(trans.returnTag("CleanButton"));
-        CleanAllButton.setText(trans.returnTag("CleanAllButton"));
+        DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
         AddTeamButton.setText(trans.returnTag("AddTeamButton"));
         AcceptButton.setText(trans.returnTag("GenerateMatchButton"));
         CloseButton.setText(trans.returnTag("CloseButton"));
@@ -170,6 +168,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 updateListeners();
             }
         } catch (NullPointerException npe) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
     }
 
@@ -294,8 +293,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().designedGroups.selectGroup(select);
             }
 
-            // KendoTournamentGenerator.getInstance().designedGroups.get(29).scrollRectToVisible(new Rectangle(0,0,getWidth(), getHeight()));
-
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
         } catch (NullPointerException npe) {
@@ -362,7 +359,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (KendoTournamentGenerator.getInstance().designedGroups.mode.equals("simple")) {
                 AddButton.setVisible(false);
                 DeleteButton.setVisible(false);
-                CleanAllButton.setVisible(false);
+                DeleteAllButton.setVisible(false);
                 CleanButton.setVisible(false);
                 AddTeamButton.setVisible(false);
                 AcceptButton.setVisible(false);
@@ -370,7 +367,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             } else {
                 AddButton.setVisible(true);
                 DeleteButton.setVisible(true);
-                CleanAllButton.setVisible(true);
+                DeleteAllButton.setVisible(true);
                 CleanButton.setVisible(true);
                 AddTeamButton.setVisible(true);
                 AcceptButton.setVisible(true);
@@ -516,7 +513,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         DeleteLevelButton = new javax.swing.JButton();
         AddButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
-        CleanAllButton = new javax.swing.JButton();
+        DeleteAllButton = new javax.swing.JButton();
         TreeEditionLabel = new javax.swing.JLabel();
         PassLabel = new javax.swing.JLabel();
         PassSpinner = new javax.swing.JSpinner();
@@ -641,10 +638,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
         });
 
-        CleanAllButton.setText("Clean All");
-        CleanAllButton.addActionListener(new java.awt.event.ActionListener() {
+        DeleteAllButton.setText("Delete All");
+        DeleteAllButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CleanAllButtonActionPerformed(evt);
+                DeleteAllButtonActionPerformed(evt);
             }
         });
 
@@ -673,7 +670,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                             .addComponent(TreeEditionLabel)
                             .addComponent(AddButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                             .addComponent(DeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                            .addComponent(CleanAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                            .addComponent(DeleteAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(DeleteLevelLabel)
                             .addComponent(LevelComboBox, 0, 149, Short.MAX_VALUE)
@@ -686,7 +683,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AddButton, CleanAllButton, DeleteButton, LevelComboBox});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AddButton, DeleteAllButton, DeleteButton, LevelComboBox});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -701,7 +698,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DeleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CleanAllButton)
+                        .addComponent(DeleteAllButton)
                         .addGap(18, 18, 18)
                         .addComponent(DeleteLevelLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -715,7 +712,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {AddButton, CleanAllButton, DeleteButton, DeleteLevelButton, LevelComboBox});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {AddButton, DeleteAllButton, DeleteButton, DeleteLevelButton, LevelComboBox});
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -947,7 +944,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
          */
     }//GEN-LAST:event_formWindowClosing
 
-    private void CleanAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanAllButtonActionPerformed
+    private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
         try {
             KendoTournamentGenerator.getInstance().fightManager.deleteAllFightsButNotFromDatabase(championship.name, false);
             KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(championship);
@@ -957,8 +954,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
-    }//GEN-LAST:event_CleanAllButtonActionPerformed
+    }//GEN-LAST:event_DeleteAllButtonActionPerformed
 
     private void TournamentComboBoxFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TournamentComboBoxFocusGained
         /*
@@ -1059,10 +1057,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JButton AddTeamButton;
     private javax.swing.JScrollPane BlackBoardScrollPane;
     private javax.swing.JRadioButton ChampionshipRadioButton;
-    private javax.swing.JButton CleanAllButton;
     private javax.swing.JButton CleanButton;
     private javax.swing.JButton CleanLinksButton;
     private javax.swing.JButton CloseButton;
+    private javax.swing.JButton DeleteAllButton;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton DeleteLevelButton;
     private javax.swing.JLabel DeleteLevelLabel;

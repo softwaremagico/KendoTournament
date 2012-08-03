@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.championship;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -153,27 +151,25 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Fill a group with the winners of the previous level.
      *
-     * @param group position of the group to complete relative to the level.
+     * @param group group to complete relative to the level.
      */
     private void fillGroupWithWinnersPreviousLevel(TournamentGroup group, ArrayList<Fight> fights, boolean resolvDraw) {
         updateScoreForTeams(fights);
         //TournamentGroup dg = tournamentGroups.get(groupIndex);
         if (group.getLevel() > 0) {
             List<TournamentGroup> groups = returnGroupsOfLevel(group.getLevel() - 1);
-            for (int i = 0; i < groups.size(); i++) {
-                for (int k = 0; k < groups.get(i).getMaxNumberOfWinners(); k++) {
-                    int destination;
+            for (TournamentGroup previousGroup : groups) {
+                for (int winners = 0; winners < previousGroup.getMaxNumberOfWinners(); winners++) {
+                    TournamentGroup destination;
                     if (!mode.equals("manual") || group.getLevel() - 1 > 0) {
-                        destination = (int) obtainPositonOfOneWinnerInTournament(obtainGlobalPositionWinner(group.getLevel() - 1, group, k),
-                                getNumberOfTotalTeamsPassNextRound(group.getLevel() - 1), group.getLevel() - 1);
+                        destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
                     } else {
-                        destination = returnPositionOfGroupInItsLevel(obtainManualDestination(groups.get(i), k));
+                        destination = obtainManualDestination(previousGroup, winners);
                     }
                     //System.out.println("Group:" + i + " winner:" + k + " destination: " + destination);
                     //If the searched dg's destination point to the group to complete, then means it is a source. 
-                    if (destination == returnPositionOfGroupInItsLevel(group)) {
-                        TournamentGroup previousDg = groups.get(i);
-                        group.addTeam(previousDg.getTeamInOrderOfScore(k, fights, resolvDraw));
+                    if (destination.equals(group)) {
+                        group.addTeam(previousGroup.getTeamInOrderOfScore(winners, fights, resolvDraw));
                         //  System.out.println(previousDg.getTeamInOrderOfScore(k, fightManager, true).returnName());
                     }
                 }
@@ -217,7 +213,10 @@ public class TournamentGroupManager implements Serializable {
      */
     public void add(TournamentGroup group, boolean selected) {
         //Intermediate level
-        if (group.getLevel() == 0 && selected) {
+        if (levels.isEmpty()) {
+            levels.add(new LevelGroups(tournament, 0, null, null, this));
+        }
+        if (group.getLevel() == 0 && selected && getIndexLastSelected() != null) {
             levels.get(group.getLevel()).addGroup(group, getIndexLastSelected() + 1, selected);
         } else {
             levels.get(group.getLevel()).addGroup(group, selected);
@@ -542,7 +541,7 @@ public class TournamentGroupManager implements Serializable {
         }
         return fights;
     }
-    
+
     public void updateScoreForTeams(ArrayList<Fight> fights) {
         for (LevelGroups level : levels) {
             level.updateScoreOfTeams(fights);

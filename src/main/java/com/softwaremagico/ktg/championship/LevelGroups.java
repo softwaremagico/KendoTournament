@@ -9,23 +9,21 @@ package com.softwaremagico.ktg.championship;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -162,7 +160,9 @@ public class LevelGroups {
                 }
             }
         }
-        nextLevel.updateArenaOfGroups();
+        if (nextLevel != null) {
+            nextLevel.updateArenaOfGroups();
+        }
     }
 
     protected boolean loadLevel(Tournament tournament) {
@@ -287,11 +287,13 @@ public class LevelGroups {
 
     protected void addGroup(TournamentGroup group, int index, boolean selected) {
         tournamentGroups.add(index, group);
-        if ((nextLevel == null) && (getNumberOfTotalTeamsPassNextRound() > 1)) {
+
+        if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
             nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
-            nextLevel.updateGroupsSize();
-        } else {
+        }
+
+        if (nextLevel != null) {
             nextLevel.updateGroupsSize();
         }
     }
@@ -397,14 +399,15 @@ public class LevelGroups {
     protected Integer getGroupIndexSourceOfWinner(TournamentGroup group, int winner) {
         if (level > 0) {
             for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
-                for (int winnerIndex = 0; winnerIndex < previousLevel.tournamentGroups.get(groupIndex).getMaxNumberOfWinners(); winnerIndex++) {
-                    if (getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winnerIndex).equals(group)) {
-                        return groupIndex;
-                    }
+                if (getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
+                    return groupIndex;
                 }
             }
         }
         return null;
     }
-    
+
+    protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, int winner) {
+        return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
+    }
 }

@@ -200,7 +200,7 @@
                               <Component id="TreeEditionLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="AddButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
                               <Component id="DeleteButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
-                              <Component id="CleanAllButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
+                              <Component id="DeleteAllButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="DeleteLevelLabel" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -232,7 +232,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="DeleteButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="CleanAllButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="DeleteAllButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="DeleteLevelLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -302,12 +302,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="CleanAllButton">
+        <Component class="javax.swing.JButton" name="DeleteAllButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Clean All"/>
+            <Property name="text" type="java.lang.String" value="Delete All"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CleanAllButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteAllButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="TreeEditionLabel">

@@ -90,7 +90,7 @@ public class MessageManager {
     }
 
     public static void basicErrorMessage(String text, String title) {
-        Log.finest(text);
+        Log.severe(text);
         showGraphicMessage(text, title, JOptionPane.ERROR_MESSAGE);
     }
 
