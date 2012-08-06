@@ -55,13 +55,13 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         last_championship = championshipName;
         //removeAll();
         if (!refill) {
-            KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);
+            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         } else {
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championshipName);
-            KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false));
+            KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false));
             ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-            KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(fights);
-            KendoTournamentGenerator.getInstance().designedGroups.updateInnerLevel(0);
+            KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(fights);
+            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         }
         paintDesignedGroups();
         paintSpaces();
@@ -97,14 +97,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint information row
          */
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
+        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); i++) {
             c.gridx = (i + 1) * 2;
             c.gridy = 1;
 
             Separator s;
-            if (i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
-                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - i));
-            } else if (i == KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
+            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 1) {
+                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - i + 1));
+            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 1) {
                 s = new Separator(trans.returnTag("SemiFinalLabel"));
             } else {
                 s = new Separator(trans.returnTag("FinalLabel"));
@@ -116,12 +116,12 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint information column
          */
-        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0);
+        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0);
         if (grps != null) {
             for (int i = 0; i < grps.size(); i++) {
                 c.gridx = 0;
                 c.gridy = i + 2;
-                //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().designedGroups.returnNumberOfArenas());
+                //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().tournamentManager.returnNumberOfArenas());
 
                 Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
                         + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
@@ -133,15 +133,15 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint teams group
          */
-        for (int level = 0; level < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); level++) {
-            //for (TournamentGroup group : KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups()) {
-            for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups().size(); groupIndex++) {
-                //for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.size(); i++) {
+        for (int level = 0; level < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); level++) {
+            //for (TournamentGroup group : KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups()) {
+            for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().size(); groupIndex++) {
+                //for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
                 try {
-                    if (KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups().get(groupIndex).championship.name.equals(last_championship)) {
+                    if (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).championship.name.equals(last_championship)) {
                         c.anchor = GridBagConstraints.WEST;
                         c.gridx = level * 2 + 1 + titleColumn;
-                        if (KendoTournamentGenerator.getInstance().designedGroups.default_max_winners < 2) {
+                        if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners < 2) {
                             c.gridy = groupIndex * (int) (Math.pow(2, level)) + titleRow;
                         } else {
                             if (level == 0) {
@@ -152,9 +152,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                         }
 
                         c.weightx = 0.5;
-                        add(KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups().get(groupIndex), c);
+                        add(KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex), c);
                         if (level == 0 && groupIndex == 0) {
-                            KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(level).getGroups().get(groupIndex).setSelected(KendoTournamentGenerator.getInstance().designedGroups);
+                            KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).setSelected(KendoTournamentGenerator.getInstance().tournamentManager);
                         }
                     }
                 } catch (NullPointerException npe) {
@@ -165,7 +165,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     private void paintSpaces() {
-        for (int i = 1; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
+        for (int i = 1; i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); i++) {
             c.gridx = i * 2 + titleColumn;
             c.gridy = 0;
             add(new Separator(), c);
@@ -174,24 +174,24 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
     private void paintLinks(Graphics g) {
         int destination;
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); i++) {
-            List<TournamentGroup> designedGroupsOfLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i);
-            List<TournamentGroup> designedGroupsOfNextLevel = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(i + 1);
+        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); i++) {
+            List<TournamentGroup> designedGroupsOfLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i);
+            List<TournamentGroup> designedGroupsOfNextLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i + 1);
             for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
                 for (int winners = 0; winners < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); winners++) {
                     if (designedGroupsOfNextLevel.size() > 1) {
-                        if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("manual") || i > 0) {
+                        if (!KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("manual") || i > 0) {
                             //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
                             /*
                              * destination = (int)
-                             * KendoTournamentGenerator.getInstance().designedGroups.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().designedGroups.obtainGlobalPositionWinner(i,
+                             * KendoTournamentGenerator.getInstance().tournamentManager.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().tournamentManager.obtainGlobalPositionWinner(i,
                              * designedGroupsOfLevel.get(j), winners),
-                             * KendoTournamentGenerator.getInstance().designedGroups.getNumberOfTotalTeamsPassNextRound(i), i);
+                             * KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfTotalTeamsPassNextRound(i), i);
                              */
-                            destination = KendoTournamentGenerator.getInstance().designedGroups.getLevels().get(designedGroupsOfLevel.get(j).getLevel()).getGroupIndexSourceOfWinner(designedGroupsOfLevel.get(j), winners);
+                            destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(designedGroupsOfLevel.get(j).getLevel()).getGroupIndexSourceOfWinner(designedGroupsOfLevel.get(j), winners);
                         } else {
-                            destination = KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(
-                                    KendoTournamentGenerator.getInstance().designedGroups.obtainManualDestination(designedGroupsOfLevel.get(j), winners));
+                            destination = KendoTournamentGenerator.getInstance().tournamentManager.returnPositionOfGroupInItsLevel(
+                                    KendoTournamentGenerator.getInstance().tournamentManager.obtainManualDestination(designedGroupsOfLevel.get(j), winners));
                         }
                     } else {
                         destination = 0;
@@ -242,7 +242,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     private void paintSeparationLines(Graphics g) {
-        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0);
+        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0);
         g.setColor(Color.black);
         for (int i = 0; i < grps.size(); i++) {
             if (i > 0) {

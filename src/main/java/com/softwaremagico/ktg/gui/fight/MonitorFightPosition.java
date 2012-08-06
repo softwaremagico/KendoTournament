@@ -148,7 +148,7 @@ public class MonitorFightPosition extends JFrame {
 
     void addTitle(int fontSize) {
         JLabel nameLabel;
-        nameLabel = new JLabel(transl.returnTag("GroupString") + " " + (KendoTournamentGenerator.getInstance().designedGroups.returnPositionOfGroupInItsLevel(group) + 1) + " / "
+        nameLabel = new JLabel(transl.returnTag("GroupString") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.returnPositionOfGroupInItsLevel(group) + 1) + " / "
                 + transl.returnTag("ArenaLabel") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(group.arena));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);

@@ -40,7 +40,6 @@ public class TournamentGroupManager implements Serializable {
 
     //private List<TournamentGroup> tournamentGroups = new ArrayList<>();
     private List<LevelGroups> levels;
-    //private List<Integer> levels = new ArrayList<>();  //"Index" to the designedGroup that is the first one of the next level. Each element of the list is a leve and the value is the number of designedgrou
     transient Tournament tournament;
     public String mode = "tree";
     private Links links;
@@ -54,11 +53,14 @@ public class TournamentGroupManager implements Serializable {
             //levels.add(0);
             links = new Links();
             levels = new ArrayList<>();
-            //Create level zero. 
-            levels.add(new LevelGroups(tournament, 0, null, null, this));
         } catch (NullPointerException npe) {
             Log.severe("Error when creating a Tournament:" + this.getClass());
         }
+    }
+
+    public void createLevelZero() {
+        //Create level zero. 
+        levels.add(getNewLevel(tournament, 0, null, null, this));
     }
 
     public List<LevelGroups> getLevels() {
@@ -67,8 +69,8 @@ public class TournamentGroupManager implements Serializable {
 
     public void update() {
         Log.debug("Current number of fights over before updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-        for (int i = 0; i < levels.size(); i++) {
-            levels.get(i).updateGroups();
+        for (LevelGroups level : levels) {
+            level.updateGroups();
         }
         Log.debug("Current number of fights over after updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
     }
@@ -214,7 +216,7 @@ public class TournamentGroupManager implements Serializable {
     public void add(TournamentGroup group, boolean selected) {
         //Intermediate level
         if (levels.isEmpty()) {
-            levels.add(new LevelGroups(tournament, 0, null, null, this));
+            levels.add(getNewLevel(tournament, 0, null, null, this));
         }
         if (group.getLevel() == 0 && selected && getIndexLastSelected() != null) {
             levels.get(group.getLevel()).addGroup(group, getIndexLastSelected() + 1, selected);
@@ -275,7 +277,7 @@ public class TournamentGroupManager implements Serializable {
 
     public Integer getIndexLastSelected() {
         if (levels.size() > 0) {
-            levels.get(0).getIndexLastSelected();
+            return levels.get(0).getIndexLastSelected();
         }
         return null;
     }
@@ -367,6 +369,16 @@ public class TournamentGroupManager implements Serializable {
      * 0 && level < levels.size()) { return
      * levels.get(level).getLastGroupOfLevel(); } else { return null; } }
      */
+    private LevelGroups getNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+        switch (mode) {
+            case "tree":
+                return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+            case "championship":
+                return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+        }
+        return null;
+    }
+
     /**
      * Return the number of levels. Levels start in zero but has size one.
      *
@@ -410,8 +422,8 @@ public class TournamentGroupManager implements Serializable {
     }
 
     void emptyInnerLevels() {
-        for (int i = 1; i < levels.size(); i++) {
-            levels.get(i).deleteTeams();
+        for (LevelGroups level : levels) {
+            level.deleteTeams();
         }
     }
 
@@ -624,14 +636,15 @@ public class TournamentGroupManager implements Serializable {
     public void refillDesigner(ArrayList<Fight> fights) {
         //if (!loadDesigner(FOLDER + File.separator + KendoTournamentGenerator.getInstance().getLastSelectedTournament() + ".dsg", tournament)) {
         levels = new ArrayList<>();
+        createLevelZero();
 
         //Fill levels with fights defined.
         int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
         for (int i = 0; i <= maxFightLevel; i++) {
             if (i == 0) {
-                levels.add(new LevelGroups(tournament, i, null, null, this));
+                levels.add(getNewLevel(tournament, i, null, null, this));
             } else {
-                levels.add(new LevelGroups(tournament, i, null, levels.get(levels.size() - 1), this));
+                levels.add(getNewLevel(tournament, i, null, levels.get(levels.size() - 1), this));
             }
             refillLevel(fights, i);
         }
@@ -764,9 +777,9 @@ public class TournamentGroupManager implements Serializable {
         List l;
         try {
             l = new SerialDesignerStream(path).load();
-            KendoTournamentGenerator.getInstance().designedGroups = (TournamentGroupManager) l.get(0);
+            KendoTournamentGenerator.getInstance().tournamentManager = (TournamentGroupManager) l.get(0);
 
-            if (KendoTournamentGenerator.getInstance().designedGroups.load(tournament)) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.load(tournament)) {
                 return true;
             }
         } catch (ClassNotFoundException ex) {

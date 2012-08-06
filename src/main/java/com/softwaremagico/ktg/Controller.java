@@ -1439,7 +1439,7 @@ public class Controller {
                 KendoTournamentGenerator.getInstance().fightManager.add(f);
                 MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
-                KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(shortFight.getTournament().name));
+                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(shortFight.getTournament().name));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             }

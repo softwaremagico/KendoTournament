@@ -60,7 +60,7 @@ public class KendoTournamentGenerator {
     private DatabaseEngine databaseEngine = null;
     public Languages languages = new Languages();
     private String explorationFolder = null;
-    public TournamentGroupManager designedGroups = null;
+    public TournamentGroupManager tournamentManager = null;
     private char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
@@ -153,7 +153,7 @@ public class KendoTournamentGenerator {
      */
     public void showErrorInformation(Exception ex) {
         if (isDebugOptionSelected()) {
-            MessageManager.basicErrorMessage(ex.getMessage() + ": " +ex.getStackTrace().toString(), "Error");
+            MessageManager.basicErrorMessage(ex.getMessage() + ": " +ex.getLocalizedMessage(), "Error");
         }
     }
 

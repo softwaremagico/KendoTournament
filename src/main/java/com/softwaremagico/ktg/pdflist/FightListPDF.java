@@ -98,10 +98,10 @@ public class FightListPDF extends ParentList {
         PdfPCell cell;
 
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(championship);
-        KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
+        KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
+        KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); l++) {
+        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); l++) {
             /*
              * Header of the phase
              */
@@ -109,7 +109,7 @@ public class FightListPDF extends ParentList {
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
-            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(l);
+            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(l);
 
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());

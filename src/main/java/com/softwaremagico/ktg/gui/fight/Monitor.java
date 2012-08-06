@@ -139,14 +139,14 @@ public final class Monitor extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 //Show the winner of the group
-                for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.size(); i++) {
+                for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
                     //Only groups of this arena. 
-                    if (KendoTournamentGenerator.getInstance().designedGroups.get(i).arena == fightArea || fightArea == -1) {
+                    if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).arena == fightArea || fightArea == -1) {
                         //Only groups of this level.
-                        if (KendoTournamentGenerator.getInstance().designedGroups.get(i).getLevel() == KendoTournamentGenerator.getInstance().fightManager.getLastLevel()) {
-                            if (KendoTournamentGenerator.getInstance().designedGroups.get(i).areFightsOver()) {
-                                if (!finishedGroups.contains(KendoTournamentGenerator.getInstance().designedGroups.get(i))) {
-                                    finishedGroups.add(KendoTournamentGenerator.getInstance().designedGroups.get(i));
+                        if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).getLevel() == KendoTournamentGenerator.getInstance().fightManager.getLastLevel()) {
+                            if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).areFightsOver()) {
+                                if (!finishedGroups.contains(KendoTournamentGenerator.getInstance().tournamentManager.get(i))) {
+                                    finishedGroups.add(KendoTournamentGenerator.getInstance().tournamentManager.get(i));
                                 }
                             }
                         }
@@ -166,13 +166,13 @@ public final class Monitor extends javax.swing.JFrame {
         }
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
 
-        if (KendoTournamentGenerator.getInstance().designedGroups == null || !KendoTournamentGenerator.getInstance().designedGroups.returnTournament().name.equals(selectedTournament.name)) {
-            KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(selectedTournament);
-            KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
+        if (KendoTournamentGenerator.getInstance().tournamentManager == null || !KendoTournamentGenerator.getInstance().tournamentManager.returnTournament().name.equals(selectedTournament.name)) {
+            KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(selectedTournament);
+            KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
         }
 
         //If the designedgroups are not loaded, we use the default number of shiaijos.
-        if (KendoTournamentGenerator.getInstance().designedGroups == null) {
+        if (KendoTournamentGenerator.getInstance().tournamentManager == null) {
             try {
                 if (fightArea >= selectedTournament.fightingAreas) {
                     fightArea = 0;
@@ -183,7 +183,7 @@ public final class Monitor extends javax.swing.JFrame {
         } else {
             //If the designedgroups are loaded, we can select only the shiaijos used in this level.
             try {
-                if (fightArea >= KendoTournamentGenerator.getInstance().designedGroups.getArenasOfLevel(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level)) {
+                if (fightArea >= KendoTournamentGenerator.getInstance().tournamentManager.getArenasOfLevel(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level)) {
                     fightArea = 0;
                 }
             } catch (NullPointerException npe2) {

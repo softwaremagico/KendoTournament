@@ -186,9 +186,9 @@ public class TournamentGroup extends Group implements Serializable {
     public String getDefaultLabel() {
         //Select label
         String s;
-        if (level < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
-            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - level);
-        } else if (level == KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels() - 2) {
+        if (level < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
+            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - level);
+        } else if (level == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
             s = trans.returnTag("SemiFinalLabel");
         } else {
             s = trans.returnTag("FinalLabel");
@@ -588,7 +588,7 @@ public class TournamentGroup extends Group implements Serializable {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(championship.name, KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(this), team.returnName());
+        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(championship.name, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this), team.returnName());
         score += (double) SCORE_GOLDEN_POINT * multiplier;
         return score;
     }
@@ -773,7 +773,7 @@ public class TournamentGroup extends Group implements Serializable {
         for (int i = 0; i < drawTeams.size(); i++) {
             optionsList.add(drawTeams.get(i).returnName());
 //            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, level);
-            //KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(this));
+            //KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
 
         }
 
@@ -789,7 +789,7 @@ public class TournamentGroup extends Group implements Serializable {
                 options,
                 options[0]);
         if (n >= 0) {
-            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(n).returnName(), 0, KendoTournamentGenerator.getInstance().designedGroups.returnIndexOfGroup(this));
+            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(n).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
             //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(championship.name, drawTeams.get(n).returnName(), level, drawTeams);
         }
         return n;
@@ -847,7 +847,7 @@ public class TournamentGroup extends Group implements Serializable {
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
-            KendoTournamentGenerator.getInstance().designedGroups.updateArenas(1);
+            KendoTournamentGenerator.getInstance().tournamentManager.updateArenas(1);
             blackboard.updateBlackBoard();
             blackboard.fillTeams();
             blackboard.repaint();

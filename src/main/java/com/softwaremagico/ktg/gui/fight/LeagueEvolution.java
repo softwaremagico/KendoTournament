@@ -60,13 +60,13 @@ public class LeagueEvolution extends javax.swing.JFrame {
     }
 
     public void updateBlackBoard(String championship, boolean refill) {
-        if (!KendoTournamentGenerator.getInstance().designedGroups.mode.equals("simple")) {
-            KendoTournamentGenerator.getInstance().designedGroups.color(true);
-            KendoTournamentGenerator.getInstance().designedGroups.update();
+        if (!KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("simple")) {
+            KendoTournamentGenerator.getInstance().tournamentManager.color(true);
+            KendoTournamentGenerator.getInstance().tournamentManager.update();
             bbp.updateBlackBoard(championship, refill);
-            KendoTournamentGenerator.getInstance().designedGroups.unselectDesignedGroups();
-            KendoTournamentGenerator.getInstance().designedGroups.enhance(true);
-            KendoTournamentGenerator.getInstance().designedGroups.onlyShow();
+            KendoTournamentGenerator.getInstance().tournamentManager.unselectDesignedGroups();
+            KendoTournamentGenerator.getInstance().tournamentManager.enhance(true);
+            KendoTournamentGenerator.getInstance().tournamentManager.onlyShow();
 
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
@@ -92,9 +92,9 @@ public class LeagueEvolution extends javax.swing.JFrame {
     }
 
     final void updateListeners() {
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().designedGroups.size(); i++) {
-            if (KendoTournamentGenerator.getInstance().designedGroups.get(i).listenerAdded) {
-                KendoTournamentGenerator.getInstance().designedGroups.get(i).removeMouseClickListener();
+        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).listenerAdded) {
+                KendoTournamentGenerator.getInstance().tournamentManager.get(i).removeMouseClickListener();
             }
         }
     }
@@ -105,15 +105,15 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels();
-            rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(0).size();
+            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels();
+            rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size();
         } catch (ArithmeticException ae) {
         }
 
-        int x = KendoTournamentGenerator.getInstance().designedGroups.getIndexLastLevelUsed();
+        int x = KendoTournamentGenerator.getInstance().tournamentManager.getIndexLastLevelUsed();
         int y;
        
-        if (KendoTournamentGenerator.getInstance().designedGroups.default_max_winners < 2) {
+        if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners < 2) {
             y = (int) (Math.pow(2, x + 1));
         } else {
             if (x == 0) {

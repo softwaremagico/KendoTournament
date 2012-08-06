@@ -37,9 +37,9 @@ import java.util.List;
  *
  * @author jorge
  */
-public class LevelGroups {
+public abstract class LevelGroups {
 
-    private int level;
+    protected int level;
     private Tournament tournament;
     private List<TournamentGroup> tournamentGroups;
     private LevelGroups nextLevel;
@@ -148,7 +148,11 @@ public class LevelGroups {
             if (previousLevel != null) {
                 for (int j = 0; j < tournamentGroups.size(); j++) {
                     //tournamentGroups.get(j).arena = grpsLevelZero.get(j * grpsLevelZero.size() / grps.size()).arena;
-                    tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2).arena;
+                    if (level == 1) {
+                        tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2 / groupManager.default_max_winners).arena;
+                    } else {
+                        tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2).arena;
+                    }
                 }
             } else {
                 /**
@@ -220,7 +224,7 @@ public class LevelGroups {
     protected Integer getIndexLastSelected() {
         for (int i = 0; i < tournamentGroups.size(); i++) {
             if (tournamentGroups.get(i).isSelected()) {
-                return i;
+                return new Integer(i);
             }
         }
         return null;
@@ -229,7 +233,7 @@ public class LevelGroups {
     protected Integer getIndexOfGroup(TournamentGroup group) {
         for (int i = 0; i < tournamentGroups.size(); i++) {
             if (tournamentGroups.get(i).equals(group)) {
-                return i;
+                return new Integer(i);
             }
         }
         return null;
@@ -281,6 +285,8 @@ public class LevelGroups {
         }
     }
 
+    protected abstract LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager);
+
     protected void addGroup(TournamentGroup group, boolean selected) {
         addGroup(group, tournamentGroups.size(), selected);
     }
@@ -289,7 +295,7 @@ public class LevelGroups {
         tournamentGroups.add(index, group);
 
         if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
-            nextLevel = new LevelGroups(tournament, level + 1, null, this, groupManager);
+            nextLevel = addNewLevel(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
         }
 
@@ -329,62 +335,11 @@ public class LevelGroups {
      *
      *********************************************
      */
-    private Integer obtainPositionOfOneWinnerInTreeLevelZero(int branch, int branchs) {
-        if (branch % 2 == 0) {
-            return branch;
-        } else {
-            return branchs - branch;
-        }
-    }
-
-    private Integer obtainPositionOfOneWinnerInTreeLevelZeroOdd(int branch, int branchs) {
-        if (branch % 2 == 0) {
-            return branch;
-        } else {
-            return ((branch + 1) % branchs);
-        }
-    }
-
-    private Integer obtainPositionOfOneWinnerInTreeMoreThanLevelZero(int branch, int branchs) {
-        //Desgin a tree grouping the designed groups by two.
-        if (branchs % 2 == 0) {
-            return (branch);
-        } else {
-            //If the number of groups are odd, are one group that never fights. Then, shuffle it.
-            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
-        }
-    }
-
-    private Integer obtainPositionOfOneWinnerInTreeOdd(int branch, int branchs) {
+    protected Integer obtainPositionOfOneWinnerInTreeOdd(int branch, int branchs) {
         return ((branch + 1) % branchs);
     }
 
-    private Integer obtainPositionOfOneWinnerInTree(int branch, int branchs) {
-        //Design a tree grouping the designed groups by two.
-        if ((branchs / 2) % 2 == 0) {
-            return (branch);
-        } else {
-            //If the number of groups are odd, are one group that never fightManager. Then, shuffle it.
-            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
-        }
-    }
-
-    private Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
-        if (groupManager.mode.equals("championship")) {
-            if (level == 0) {
-                //If the number of groups are odd, then some teams fights again between them. 
-                if ((branchs / 2) % 2 != 0 && getNumberOfTotalTeamsPassNextRound() > size()) {
-                    return obtainPositionOfOneWinnerInTreeLevelZeroOdd(branch, branchs) / 2;
-                } else {
-                    return obtainPositionOfOneWinnerInTreeLevelZero(branch, branchs) / 2;
-                }
-            } else {
-                return obtainPositionOfOneWinnerInTreeMoreThanLevelZero(branch, branchs) / 2;
-            }
-        } else {
-            return obtainPositionOfOneWinnerInTree(branch, branchs) / 2;
-        }
-    }
+    protected abstract Integer getPositonOfOneWinnerInTournament(int branch, int branchs);
 
     protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
         int winnerTeams = getNumberOfTotalTeamsPassNextRound();

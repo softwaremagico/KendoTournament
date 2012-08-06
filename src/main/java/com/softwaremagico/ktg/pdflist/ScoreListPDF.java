@@ -73,11 +73,11 @@ public class ScoreListPDF extends ParentList {
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-        KendoTournamentGenerator.getInstance().designedGroups = new TournamentGroupManager(championship);
-        KendoTournamentGenerator.getInstance().designedGroups.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
+        KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
+        KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().designedGroups.getNumberOfLevels(); l++) {
-            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().designedGroups.returnGroupsOfLevel(l);
+        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); l++) {
+            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).areFightsOver()) {
