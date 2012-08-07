@@ -87,7 +87,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
                     ClassicRadioButton.setSelected(true);
                     break;
             }
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException aiob) {
         }
         refreshing = false;
     }
