@@ -34,13 +34,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jorge
- */
 public class BlackBoardPanel extends javax.swing.JPanel {
 
-    private GridBagConstraints c = new GridBagConstraints();
+	private static final long serialVersionUID = -6193257530262904629L;
+	private GridBagConstraints c = new GridBagConstraints();
     private String last_championship;
     private int titleColumn = 1;
     private int titleRow = 2;
@@ -102,9 +99,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             c.gridy = 1;
 
             Separator s;
-            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 1) {
-                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - i + 1));
-            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 1) {
+            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
+                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - i));
+            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
                 s = new Separator(trans.returnTag("SemiFinalLabel"));
             } else {
                 s = new Separator(trans.returnTag("FinalLabel"));
