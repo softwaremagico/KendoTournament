@@ -6,6 +6,7 @@
 		<nl>Verbonden met database</nl>
 		<de>Datenbankverbindung</de>
 		<ca>Conexió a la base de dades</ca>
+		<it>Connessione al database</it>
 	</titleDatabaseConnection>
 	<titleAboutBox>
 		<en>About ...</en>
@@ -13,6 +14,7 @@
 		<nl>Over ...</nl>
 		<de>Über ...</de>
 		<ca>Quan a...</ca>
+		<it>Informazioni su...</it>
 	</titleAboutBox>
 	<titleHelp>
 		<en>Help</en>
@@ -20,6 +22,7 @@
 		<nl>Help</nl>
 		<de>Hilfe</de>
 		<ca>Ajuda</ca>
+		<it>Aiuto</it>
 	</titleHelp>
 	<titleNewRole>
 		<en>Add/Change the competitor's role</en>
@@ -27,6 +30,7 @@
 		<nl>Voeg toe/wijzig rol deelnemers</nl>
 		<de>Hinzufügen/Ändern der Teilnehmerrolle</de>
 		<ca>Afegir/Canviar el rol del competidor</ca>
+		<it>Aggiungi/Cambia il ruolo del competitore</it>
 	</titleNewRole>
 	<titleClub>
 		<en>Add new club into the database</en>
@@ -34,13 +38,15 @@
 		<nl>Voeg een nieuwe club aan de database toe</nl>
 		<de>Neuen Klub in der Datenbank hinzufügen</de>
 		<ca>Afegir un nou club a la base de dades</ca>
+		<it>Aggiunger un nuovo club nel database</it>
 	</titleClub>
 	<titleNewFight>
 		<en>Generate different fights for a league</en>
-		<es>Crea nuevos combates para una liga</es>
+		<es>Crea nuevos combates para una campeonato</es>
 		<nl>Genereer wedstrijden in de poule</nl>
 		<de>Erstelle verschiedene Kämpfe für den Wettbewerb</de>
 		<ca>Crea nous combats oer a una lliga</ca>
+		<it>Crea un nuovo combatte per un campionato</it>
 	</titleNewFight>
 	<titleNewTeam>
 		<en>Add a new team</en>
@@ -48,13 +54,15 @@
 		<nl>Voeg nieuw team toe</nl>
 		<de>Neues Team hinzufügen</de>
 		<ca>Afegir un nou equip</ca>
+		<it>Aggiungi una nuova squadra</it>
 	</titleNewTeam>
 	<titleNewTournament>
 		<en>Generate a new league</en>
-		<es>Crea una nueva liga</es>
+		<es>Crea un nuevo campeonato</es>
 		<nl>Genereer nieuwe poule</nl>
 		<de>Neuen Wettbewerb erstellen</de>
 		<ca>Crea una nova lliga</ca>
+		<it>Crea un nuovo campionato</it>
 	</titleNewTournament>
 	<titleSearch>
 		<en>Search in the database</en>
@@ -62,6 +70,7 @@
 		<nl>Zoek in de database</nl>
 		<de>In der Datenbank suchen</de>
 		<ca>Busca a la base de dades</ca>
+		<it>Cerca nel database</it>
 	</titleSearch>
 	<titleNewCompetitor>
 		<en>Add new competitor into the database</en>
@@ -69,6 +78,7 @@
 		<nl>Voeg een deelnemer toe aan de database</nl>
 		<de>Neuen Teilnehmer hinzufügen</de>
 		<ca>Afegir un nou competidor a la base de dades</ca>
+		<it>Aggiungere un nuovo competitore nel database</it>
 	</titleNewCompetitor>
 	<titleFightPanel>
 		<en>Score panel</en>
@@ -76,6 +86,7 @@
 		<nl>Scorebord</nl>
 		<de>Ergebnisansicht</de>
 		<ca>Panell de puntuacions</ca>
+		<it>Panello della puntuazione</it>
 	</titleFightPanel>
 	<titleStatistics>
 		<en>Graphical statistics</en>
@@ -83,6 +94,7 @@
 		<nl>Grafieken</nl>
 		<de>Grafische Ansicht</de>
 		<ca>Estadístiques</ca>
+		<it>Statistica </it>
 	</titleStatistics>
 	<TitleHits>
 		<en>Percentage of hits</en>
@@ -90,6 +102,7 @@
 		<nl>Scores in percentage</nl>
 		<de>Prozentuale Treffer</de>
 		<ca>Percentatge de punts totals</ca>
+		<it>Percentuale del totale dei punti</it>
 	</TitleHits>
 	<titleListTeams>
 		<en>Generate the list of teams</en>
@@ -97,6 +110,7 @@
 		<nl>Genereer scheidsrechterslist</nl>
 		<de>Erstelle Liste der Teams</de>
 		<ca>Crear la llista d'equips</ca>
+		<it>Creare la lista delle squadre</it>
 	</titleListTeams>
 	<titleListReferee>
 		<en>Generate the list of referees</en>
@@ -104,6 +118,7 @@
 		<nl>Genereer teamlist</nl>
 		<de>Erstelle Liste der Kampfrichter</de>
 		<ca>Crear la llista d'àrbitres</ca>
+		<it>Creare la lista degli arbitri</it>
 	</titleListReferee>
 	<titleDiplomas>
 		<en>Generate all Diplomas of the league</en>
@@ -111,6 +126,7 @@
 		<nl>Genereer alle diploma's van het toernooi</nl>
 		<de>Erstellen aller Urkunden des Wettbewerbs</de>
 		<ca>Crear la llista de diplomes del campionat</ca>
+		<it>Creare la lista dei Diploma del campionato</it>
 	</titleDiplomas>
 	<titleListFights>
 		<en>Generate the list of fights</en>
@@ -118,6 +134,7 @@
 		<nl>Genereer de wedstrijdenlijst</nl>
 		<de>Erstelle Liste der Kämpfe</de>
 		<ca>Crear la llista de combats</ca>
+		<it>Creare la lista degli incontri</it>
 	</titleListFights>
 	<titleListPoints>
 		<en>Generate the list of scores</en>
@@ -125,6 +142,7 @@
 		<nl>Genereer de scorelijst</nl>
 		<de>Erstelle Liste der Ergebnisse</de>
 		<ca>Crear la llista de puntuacions</ca>
+		<it>Creare la lista dei punteggi</it>
 	</titleListPoints>
 	<titleHitStatistics>
 		<en>Generate hits statistics</en>
@@ -132,6 +150,7 @@
 		<nl>Genereer statistieken van de treffers</nl>
 		<de>Erstelle Trefferstatistik</de>
 		<ca>Crear les estadístiques de cops</ca>
+		<it>Creare le statistiche dei colpi</it>
 	</titleHitStatistics>
 	<titleSummary>
 		<en>Generate a summary of fights</en>
@@ -139,6 +158,7 @@
 		<nl>genereer een samenvatting van de wedstrijden</nl>
 		<de>Erstelle Zusammenfassung der Kämpfe</de>
 		<ca>Crear un resum dels combats</ca>
+		<it>Creare un riassunto degli incontri</it>
 	</titleSummary>
 	<titleAccreditionCard>
 		<en>Generate accredition cards</en>
@@ -146,6 +166,7 @@
 		<nl>Genereer deelnemerskaarten</nl>
 		<de>Erstellen Akkreditierungskarten</de>
 		<ca>Crear les acreditacions</ca>
+		<it>Creare i badge</it>
 	</titleAccreditionCard>
 	<titleTeamTopTen>
 		<en>Generate team's ranking</en>
@@ -153,6 +174,7 @@
 		<nl>Genereer standenlijst per team</nl>
 		<de>Erstelle Team Ranking</de>
 		<ca>Crear el rànquing d'equips</ca>
+		<it>Creare il ranking delle squadre</it>
 	</titleTeamTopTen>
 	<titleWonStatistics>
 		<en>Generate won fights statistics</en>
@@ -160,13 +182,15 @@
 		<nl>Genereer statistieken van gewonnenwedstrijden</nl>
 		<de>Erstelle Gewonnene Kämpfe Statistik</de>
 		<ca>Crear llistat de combats guanyats</ca>
+		<it>Creare la lista degli incontri vinti</it>
 	</titleWonStatistics>
 	<titleMonitorTournament>
 		<en>Select the league</en>
-		<es>Selecciona una liga</es>
+		<es>Selecciona un campeonato</es>
 		<nl>Selecteer de poule</nl>
 		<de>Auswahl Wettbewerb</de>
 		<ca>Seleccionar una lliga</ca>
+		<it>Seleziona un campionato</it>
 	</titleMonitorTournament>
 	<titleShortFight>
 		<en>Select teams</en>
@@ -174,6 +198,7 @@
 		<nl>Selecteer teams</nl>
 		<de>Auswahl Teams</de>
 		<ca>Selecciona els equips</ca>
+		<it>Seleziona una squadra</it>
 	</titleShortFight>
 	<TopTenTitle>
 		<en>Top ten</en>
@@ -181,13 +206,15 @@
 		<nl>Top tien</nl>
 		<de>Top ten</de>
 		<ca>Classificació</ca>
+		<it>Classifica</it>
 	</TopTenTitle>
 	<titleLeagueDesigner>
 		<en>Design a new league</en>
-		<es>Diseña una nueva liga</es>
+		<es>Diseña un nuevo campeonato</es>
 		<nl>Creëer een nieuwe poule</nl>
 		<de>Erstelle einen neuen Wettbewerb</de>
 		<ca>Disenya una nova lliga</ca>
+		<it>Crea un nuovo campionato</it>
 	</titleLeagueDesigner>
 	<titleDesignGroupWindow>
 		<en>Change options of the pool</en>
@@ -195,6 +222,7 @@
 		<nl>Wijzig groep oties</nl>
 		<de>Verändern der Optionen des Pools</de>
 		<ca>Canviar les opcions del grup</ca>
+		<it>Cambiare le posizioni del gruppo</it>
 	</titleDesignGroupWindow>	
 	<titleOrderTeam>
 		<en>Change the order of the members of a team</en>
@@ -202,6 +230,7 @@
 		<nl>Wijzig de deelnemers volgorde van een team</nl>
 		<de>Verändere die Reihenfolge der Teilnehmer in einem Team</de>
 		<ca>Canviar l'ordre dels membres d'un equip</ca>
+		<it>Cambiare l'ordine dei membri di una squadra</it>
 	</titleOrderTeam>
 	<ConnectButton>
 		<en>Connect</en>
@@ -209,6 +238,7 @@
 		<nl>Verbinden</nl>
 		<de>Verbinden</de>
 		<ca>Connectar</ca>
+		<it>Connettere</it>
 	</ConnectButton>
 	<AcceptButton>
 		<en>Accept</en>
@@ -216,6 +246,7 @@
 		<nl>Accepteren</nl>
 		<de>Bestätigen</de>
 		<ca>Acceptar</ca>
+		<it>Accettare</it>
 	</AcceptButton>
 	<CancelButton>
 		<en>Cancel</en>
@@ -223,6 +254,7 @@
 		<nl>Wijgeren</nl>
 		<de>Abbruch</de>
 		<ca>Cancel·lar</ca>
+		<it>Cancellare</it>
 	</CancelButton>
 	<DeleteButton>
 		<en>Delete</en>
@@ -230,6 +262,7 @@
 		<nl>Verwijderen</nl>
 		<de>Löschen</de>
 		<ca>Esborrar</ca>
+		<it>Eliminare</it>
 	</DeleteButton>
 	<CloseButton>
 		<en>Close</en>
@@ -237,6 +270,7 @@
 		<nl>Sluiten</nl>
 		<de>Schließen</de>
 		<ca>Tancar</ca>
+		<it>Chiudere</it>
 	</CloseButton>
 	<SearchButton>
 		<en>Search</en>
@@ -244,6 +278,7 @@
 		<nl>Zoeken</nl>
 		<de>Suchen</de>
 		<ca>Buscar</ca>
+		<it>Cercare</it>
 	</SearchButton>
 	<UpButton>
 		<en>Up</en>
@@ -251,6 +286,7 @@
 		<nl>Naar boven</nl>
 		<de>Auf</de>
 		<ca>Pujar</ca>
+		<it>Su</it>
 	</UpButton>
 	<DownButton>
 		<en>Down</en>
@@ -258,6 +294,7 @@
 		<nl>Naar beneden</nl>
 		<de>Ab</de>
 		<ca>Baixar</ca>
+		<it>Giú</it>
 	</DownButton>
 	<AddButton>
 		<en>Add</en>
@@ -265,6 +302,7 @@
 		<nl>Toevoegen</nl>
 		<de>Hinzufügen</de>
 		<ca>Afegir</ca>
+		<it>Aggiungere</it>
 	</AddButton>
 	<RandomButton>
 		<en>Random</en>
@@ -272,6 +310,7 @@
 		<nl>Willekeurig</nl>
 		<de>Zufällig</de>
 		<ca>Aleatori</ca>
+		<it>Casuale</it>
 	</RandomButton>
 	<SortedButton>
 		<en>Sorted</en>
@@ -279,6 +318,7 @@
 		<nl>Gesorteerd</nl>
 		<de>Sortiert</de>
 		<ca>Ordenats</ca>
+		<it>Ordinato</it>
 	</SortedButton>
 	<ExploreButton>
 		<en>Explore</en>
@@ -286,6 +326,7 @@
 		<nl>Onderzoek</nl>
 		<de>Untersuchen</de>
 		<ca>Explorar</ca>
+		<it>Esplorare</it>
 	</ExploreButton>
 	<SelectButton>
 		<en>Select</en>
@@ -293,6 +334,7 @@
 		<nl>Selecteer</nl>
 		<de>Auswahl</de>
 		<ca>Seleccionar</ca>
+		<it>Selecionare</it>
 	</SelectButton>
 	<ServerLabel>
 		<en>Server:</en>
@@ -300,6 +342,7 @@
 		<nl>Server:</nl>
 		<de>Server:</de>
 		<ca>Servidor:</ca>
+		<it>Server:</it>
 	</ServerLabel>
 	<TreeButton>
 		<en>Tree</en>
@@ -307,6 +350,7 @@
 		<nl>Lijst</nl>
 		<de>Baum</de>
 		<ca>Arbre</ca>
+		<it>Albero</it>
 	</TreeButton>
 	<PreviousButton>
 		<en>Previous Match</en>
@@ -314,6 +358,7 @@
 		<nl>Vorige wedstrijd</nl>
 		<de>Vorheriger Kampf</de>
 		<ca>Partit anterior</ca>
+		<it>Incontro anteriore</it>
 	</PreviousButton>
 	<NextButton>
 		<en>Next Match</en>
@@ -321,6 +366,7 @@
 		<nl>Volgende wedstrijd</nl>
 		<de>Nächster Kampf</de>
 		<ca>Partit següent</ca>
+		<it>Incontro successivo</it>
 	</NextButton>
 	<FinishtButton>
 		<en>Finish Match</en>
@@ -328,6 +374,7 @@
 		<nl>Einde wedstrijd</nl>
 		<de>Kampfende</de>
 		<ca>Concloure el partit</ca>
+		<it>Fine incontro</it>
 	</FinishtButton>
 	<DeleteFigthtButton>
 		<en>Delete Match</en>
@@ -335,6 +382,7 @@
 		<nl>Verwijder wedstrijd</nl>
 		<de>Lösche Kampf</de>
 		<ca>Esborrar el partit</ca>
+		<it>Cancellare incontro</it>
 	</DeleteFigthtButton>
 	<AddFigthtButton>
 		<en>Add Match</en>
@@ -342,6 +390,7 @@
 		<nl>Voeg wedstrijd toe</nl>
 		<de>Kampf hinzufügen</de>
 		<ca>Afegir partit</ca>
+		<it>Aggiungere incontro</it>
 	</AddFigthtButton>
 	<GenerateButton>
 		<en>Generate List</en>
@@ -349,6 +398,7 @@
 		<nl>Genereer overzicht</nl>
 		<de>Liste erstellen</de>
 		<ca>Generar llistat</ca>
+		<it>Generare lista</it>
 	</GenerateButton>
 	<SaveButton>
 		<en>Save</en>
@@ -356,6 +406,7 @@
 		<nl>Opslaan</nl>
 		<de>Speichern</de>
 		<ca>Guardar</ca>
+		<it>Salvare</it>
 	</SaveButton>
 	<CleanPhoto>
 		<en>Clean</en>
@@ -363,13 +414,15 @@
 		<nl>Opruimen</nl>
 		<de>Aufräumen</de>
 		<ca>Esborrar</ca>
+		<it>Cancellare</it>
 	</CleanPhoto>
 	<CleanButton>
 		<en>Clean Teams</en>
-		<es>Limpiar Equipos</es>
+		<es>Borrar Equipos</es>
 		<nl>Wis teams</nl>
 		<de>Lösche Teams</de>
 		<ca>Netejar equips</ca>
+		<it>Cancellare squadra</it>
 	</CleanButton>
 	<CleanAllButton>
 		<en>Delete All</en>
@@ -377,6 +430,7 @@
 		<nl>Alles verwijderen</nl>
 		<de>Lösche alles</de>
 		<ca>Esborrar tot</ca>
+		<it>Cancellare tutto</it>
 	</CleanAllButton>
 	<AddTeamButton>
 		<en>Add Team</en>
@@ -384,6 +438,7 @@
 		<nl>Voeg team toe</nl>
 		<de>Team hinzufügen</de>
 		<ca>Afegir equip</ca>
+		<it>Aggiungere squadra</it>
 	</AddTeamButton>titleShortFight
 	<GenerateMatchButton>
 		<en>Generate Match</en>
@@ -391,6 +446,7 @@
 		<nl>Genereer wedstrijd</nl>
 		<de>Erstelle Kampf</de>
 		<ca>Generar partits</ca>
+		<it>Generare incontro</it>
 	</GenerateMatchButton>
 	<AddGroupButton>
 		<en>Add Pool</en>
@@ -398,6 +454,7 @@
 		<nl>Voeg groep toe</nl>
 		<de>Pool hinzufügen</de>
 		<ca>Afegir grup</ca>
+		<it>Aggiungere gruppo</it>
 	</AddGroupButton>
 	<DeleteGroupButton>
 		<en>Delete Pool</en>
@@ -405,6 +462,7 @@
 		<nl>Verwijder groep</nl>
 		<de>Lösche Pool</de>
 		<ca>Esborrar grup</ca>
+		<it>Cancellare gruppo</it>
 	</DeleteGroupButton>
 	<ButtonLoadTournament>
 		<en>Load Previous Design</en>
@@ -412,6 +470,7 @@
 		<nl>Laadt vorig ontwerp</nl>
 		<de>Lade letztes Design</de>
 		<ca>Carregar diseny anterior</ca>
+		<it>Caricare il progetto anteriore</it>
 	</ButtonLoadTournament>
 	<ButtonMonitorTournament>
 		<en>Load Score</en>
@@ -419,6 +478,7 @@
 		<nl>Laadt Score</nl>
 		<de>Lade Ergebnisse</de>
 		<ca>Carregar puntuacions</ca>
+		<it>Caricare il punteggio</it>
 	</ButtonMonitorTournament>
 	<ButtonMonitorTreeTournament>
 		<en>Ranking</en>
@@ -426,6 +486,7 @@
 		<nl>Rang</nl>
 		<de>Rang</de>
 		<ca>Classificació</ca>
+		<it>Classifica</it>
 	</ButtonMonitorTreeTournament>
 	<RefreshButton>
 		<en>Refresh</en>
@@ -433,6 +494,7 @@
 		<nl>Ophalen</nl>
 		<de>Neu laden</de>
 		<ca>Refrescar</ca>
+		<it>Aggiorna</it>
 	</RefreshButton>	
 	<UserLabel>
 		<en>User:</en>
@@ -440,6 +502,7 @@
 		<nl>Gebruiker:</nl>
 		<de>Benutzer:</de>
 		<ca>Usuari:</ca>
+		<it>Utente:</it>
 	</UserLabel>
 	<PasswordLabel>
 		<en>Password:</en>
@@ -447,6 +510,7 @@
 		<nl>Wachtwoord:</nl>
 		<de>Passwort:</de>
 		<ca>Contrasenya:</ca>
+		<it>Password:</it>
 	</PasswordLabel>
 	<DatabaseLabel>
 		<en>Database:</en>
@@ -454,13 +518,15 @@
 		<nl>Database:</nl>
 		<de>Datenbank:</de>
 		<ca>base de dades:</ca>
+		<it>Database</it>
 	</DatabaseLabel>
 	<TournamentLabel>
 		<en>League:</en>
-		<es>Liga:</es>
+		<es>Campeonato:</es>
 		<nl>Poule:</nl>
 		<de>Wettbewerb:</de>
 		<ca>Lliga:</ca>
+		<it>Campionato:</it>
 	</TournamentLabel>
 	<CompetitorLabel>
 		<en>Competitor:</en>
@@ -468,6 +534,7 @@
 		<nl>Deelnemer:</nl>
 		<de>Teilnehmer:</de>
 		<ca>Competidor:</ca>
+		<it>Competitore:</it>
 	</CompetitorLabel>
 	<CompetitorMenu>
 		<en>Competitor</en>
@@ -475,6 +542,7 @@
 		<nl>Deelnemer</nl>
 		<de>Teilnehmer</de>
 		<ca>Competidor</ca>
+		<it>Competitore</it>
 	</CompetitorMenu>
 	<RoleLabel>
 		<en>Role:</en>
@@ -482,6 +550,7 @@
 		<nl>Rol:</nl>
 		<de>Rolle:</de>
 		<ca>Rol:</ca>
+		<it>Ruolo:</it>
 	</RoleLabel>	
 	<AccreditationPDFButton>
 		<en>Accreditation</en>
@@ -489,6 +558,7 @@
 		<nl>Bewijs van deelname</nl>
 		<de>Akkreditierung</de>
 		<ca>Acreditació</ca>
+		<it>Accreditamento</it>
 	</AccreditationPDFButton>
 	<FileMenu>
 		<en>File</en>
@@ -496,6 +566,7 @@
 		<nl>Bestand</nl>
 		<de>Datei</de>
 		<ca>Arxiu</ca>
+		<it>File</it>
 	</FileMenu>
 	<LanguageMenu>
 		<en>Language</en>
@@ -503,6 +574,7 @@
 		<nl>Taal</nl>
 		<de>Sprache</de>
 		<ca>Idioma</ca>
+		<it>Lingua</it>
 	</LanguageMenu>
 	<OptionsMenu>
 		<en>Options</en>
@@ -510,6 +582,7 @@
 		<nl>Opties</nl>
 		<de>Optionen</de>
 		<ca>Opcions</ca>
+		<it>Opzioni</it>
 	</OptionsMenu>
 	<StatisticsMenu>
 		<en>Graphics</en>
@@ -517,6 +590,7 @@
 		<nl>Grafieken</nl>
 		<de>Grafiken</de>
 		<ca>Gráfiques</ca>
+		<it>Grafica</it>
 	</StatisticsMenu>
 	<InsertMenu>
 		<en>Insert</en>
@@ -524,20 +598,23 @@
 		<nl>Invoegen</nl>
 		<de>Einfügen</de>
 		<ca>Inserir</ca>
+		<it>Inserire</it>
 	</InsertMenu>
 	<TournamentMenu>
 		<en>League</en>
-		<es>Liga</es>
+		<es>Campeonato</es>
 		<nl>Wedstrijd</nl>
 		<de>Wettbewerb</de>
 		<ca>Lliga</ca>
+		<it>Campionato</it>
 	</TournamentMenu>
 	<TournamentPanelMenuItem>
 		<en>League panel</en>
-		<es>Marcador de la liga</es>
+		<es>Marcador del campeonato</es>
 		<nl>Wedstrijdpanel</nl>
 		<de>Eingabefeld Wettbewerb</de>
 		<ca>Marcador de la lliga</ca>
+		<it>Pannello del campionato</it>
 	</TournamentPanelMenuItem>
 	<HelpMenu>
 		<en>Help</en>
@@ -545,6 +622,7 @@
 		<nl>Help</nl>
 		<de>Hilfe</de>
 		<ca>Ajuda</ca>
+		<it>Aiuto</it>
 	</HelpMenu>
 	<AboutMenu>
 		<en>About ...</en>
@@ -552,6 +630,7 @@
 		<nl>Over ...</nl>
 		<de>Über ...</de>
 		<ca>Quan a...</ca>
+		<it>Informazioni su ...</it>
 	</AboutMenu>
 	<ImportMenu>
 		<en>Import</en>
@@ -559,6 +638,7 @@
 		<nl>Import</nl>
 		<de>Importieren</de>
 		<ca>Importar</ca>
+		<it>Importare</it>
 	</ImportMenu>
 	<ExportMenu>
 		<en>Export</en>
@@ -566,6 +646,7 @@
 		<nl>Export</nl>
 		<de>Exportieren</de>
 		<ca>Exportar</ca>
+		<it>Esportare</it>
 	</ExportMenu>
 	<CvsMenuItem>
 		<en>CSV</en>
@@ -573,6 +654,7 @@
 		<nl>CSV</nl>
 		<de>CSV</de>
 		<ca>CSV</ca>
+		<it>CSV</it>
 	</CvsMenuItem>
 	<CompetitorMenuItem>
 		<en>Add new participant</en>
@@ -580,6 +662,7 @@
 		<nl>Voeg deelnemer toe</nl>
 		<de>Neuen Teilnehmer anlegen</de>
 		<ca>Afegir un nou participant</ca>
+		<it>Aggiungere un nuovo partecipante</it>
 	</CompetitorMenuItem>
 	<RoleMenuItem>
 		<en>Define a participant's role</en>
@@ -587,13 +670,15 @@
 		<nl>Gevens deelnemers</nl>
 		<de>Rolle des Teilnehmers</de>
 		<ca>definir el rol d'un participant</ca>
+		<it>Definire il ruolo di un partecipante</it>
 	</RoleMenuItem>
 	<TournamentMenuItem>
 		<en>Add new league</en>
-		<es>Añadir una nueva liga</es>
+		<es>Añadir un nuev campeonato</es>
 		<nl>Voeg wedstrijd toe</nl>
 		<de>Neuen Wettbewerb hinzufügen</de>
 		<ca>Afegir una nova lliga</ca>
+		<it>Aggiungere un nuovo campionato</it>
 	</TournamentMenuItem>
 	<ClubMenuItem>
 		<en>Add new club</en>
@@ -601,13 +686,15 @@
 		<nl>Voeg club toe</nl>
 		<de>Neuen Klub anlegen</de>
 		<ca>Afegir un nou club</ca>
+		<it>Aggiungere un nuovo club</it>
 	</ClubMenuItem>	
 	<TeamMenuItem>
 		<en>Add new team to the league</en>
-		<es>Añadir un nuevo equipo a la liga</es>
+		<es>Añadir un nuevo equipo al campeonato</es>
 		<nl>Voeg team toe</nl>
 		<de>Neues Team zum Wettbewerb hinzufügen</de>
 		<ca>Afegir un nou equip a la lliga</ca>
+		<it>Aggiungere una nuova squadra al campionato</it>
 	</TeamMenuItem>	
 	<DatabaseMenu>
 		<en>Database</en>
@@ -615,6 +702,7 @@
 		<nl>Database</nl>
 		<de>Datenbank</de>
 		<ca>Base de dades</ca>
+		<it>Database</it>
 	</DatabaseMenu>
 	<DatabaseConnectMenuItem>
 		<en>Connect</en>
@@ -622,6 +710,7 @@
 		<nl>Verbinden</nl>
 		<de>Verbinden</de>
 		<ca>Connectar</ca>
+		<it>Connettere</it>
 	</DatabaseConnectMenuItem>
 	<DatabaseDisconnectMenuItem>
 		<en>Disconnect</en>
@@ -629,6 +718,7 @@
 		<nl>Verbinding verbreken</nl>
 		<de>Verbindung schließen</de>
 		<ca>Desconnectar</ca>
+		<it>Disconnettere</it>
 	</DatabaseDisconnectMenuItem>
 	<DatabaseUpdateMenuItem>
 		<en>Update</en>
@@ -636,6 +726,7 @@
 		<nl>Update</nl>
 		<de>Update</de>
 		<ca>Actualitzar</ca>
+		<it>Aggiornare</it>
 	</DatabaseUpdateMenuItem>
 	<InstallDatabaseMenuItem>
 		<en>Install</en>
@@ -643,6 +734,7 @@
 		<nl>Installeren</nl>
 		<de>Installieren</de>
 		<ca>Instal·lar</ca>
+		<it>Installare</it>
 	</InstallDatabaseMenuItem>
 	<DataMenu>
 		<en>Statistics</en>
@@ -650,6 +742,7 @@
 		<nl>Statistieken</nl>
 		<de>Statistiken</de>
 		<ca>Estadístiques</ca>
+		<it>Statistiche</it>
 	</DataMenu>
 	<ListMenu>
 		<en>Lists</en>
@@ -657,6 +750,7 @@
 		<nl>Overzicht</nl>
 		<de>Listen</de>
 		<ca>Llistes</ca>
+		<it>Liste</it>
 	</ListMenu>
 	<FightListMenuItem>
 		<en>List of figts</en>
@@ -664,6 +758,7 @@
 		<nl>Overzicht wedstrijden</nl>
 		<de>Liste der Kämpfe</de>
 		<ca>Llista de combats</ca>
+		<it>Lista degli incontri</it>
 	</FightListMenuItem>
 	<RefereeListMenuItem>
 		<en>List of referees</en>
@@ -671,6 +766,7 @@
 		<nl>Lijst van scheidsrechters</nl>
 		<de>Liste der Kampfrichter</de>
 		<ca>Llista d'àrbitres</ca>
+		<it>Lista degli arbitri</it>
 	</RefereeListMenuItem>
 	<TeamListMenuItem>
 		<en>List of teams</en>
@@ -678,6 +774,7 @@
 		<nl>Overzicht van teams</nl>
 		<de>Liste der Teams</de>
 		<ca>Llista d'equips</ca>
+		<it>Lista delle squadre</it>
 	</TeamListMenuItem>
 	<PointListMenuItem>
 		<en>Score list</en>
@@ -685,6 +782,7 @@
 		<nl>Scorelijst</nl>
 		<de>Ergebnisliste</de>
 		<ca>Llista de puntuacions</ca>
+		<it>Lista dei punteggi</it>
 	</PointListMenuItem>
 	<DiplomaMenuItem>
 		<en>Diplomas</en>
@@ -692,6 +790,7 @@
 		<nl>Diploma</nl>
 		<de>Urkunden</de>
 		<ca>Diplomes</ca>
+		<it>Diplomi</it>
 	</DiplomaMenuItem>	
 	<SummaryMenuItem>
 		<en>Fights summary</en>
@@ -699,6 +798,7 @@
 		<nl>Samenvatting van de wedtrijden</nl>
 		<de>Kampfzusammenfassung</de>
 		<ca>Resum de combats</ca>
+		<it>Riassunto degli incontri</it>
 	</SummaryMenuItem>	
 	<ClubListMenuItem>
 		<en>List of clubs</en>
@@ -706,6 +806,7 @@
 		<nl>Overzicht van de clubs</nl>
 		<de>Liste der Klubs</de>
 		<ca>Llista de clubs</ca>
+		<it>Lista dei club</it>
 	</ClubListMenuItem>
 	<TournamentHitsStatisticsMenuItem>
 		<en>Percentage of  hits</en>
@@ -713,6 +814,7 @@
 		<nl>Percentage treffers</nl>
 		<de>Prozentuale Treffer</de>
 		<ca>Percentatge de cops</ca>
+		<it>Percentuale dei colpi</it>
 	</TournamentHitsStatisticsMenuItem>
 	<TeamStatisticsMenu>
 		<en>By team</en>
@@ -720,6 +822,7 @@
 		<nl>Per team</nl>
 		<de>pro Team</de>
 		<ca>Per equip</ca>
+		<it>Per squadra</it>
 	</TeamStatisticsMenu>
 	<CompetitorStatisticsMenu>
 		<en>By competitor</en>
@@ -727,6 +830,7 @@
 		<nl>Per deelnemer</nl>
 		<de>pro Teilnehmer</de>
 		<ca>Per competidor</ca>
+		<it>Per competitore</it>
 	</CompetitorStatisticsMenu>
 	<PerformedHitsStatisticsMenuItem>
 		<en>Percentage of performed hits</en>
@@ -734,6 +838,7 @@
 		<nl>Percentage geplaatste treffers</nl>
 		<de>Erteilte Treffer %</de>
 		<ca>Percentatge de cops donats</ca>
+		<it>Percentuale dei golpi dati</it>
 	</PerformedHitsStatisticsMenuItem>
 	<ReceivedHitsStatisticsMenuItem>
 		<en>Percentage of received hits</en>
@@ -741,6 +846,7 @@
 		<nl>Percentage ontvangen treffers</nl>
 		<de>Erhaltene Treffer %</de>
 		<ca>Percentatge de cops rebuts</ca>
+		<it>Percentuale dei golpi ricevuti</it>
 	</ReceivedHitsStatisticsMenuItem>	
 	<WonLostMenuItem>
 		<en>Won fights (Total)</en>
@@ -748,6 +854,7 @@
 		<nl>Gewonnen wedstrijden (Totaal)</nl>
 		<de>Gewonnene Kämpfe (Total)</de>
 		<ca>Combats guanyats (Total)</ca>
+		<it>Incontri vinti (Totale)</it>
 	</WonLostMenuItem>	
 	<TournamentStatisticsMenu>
 		<en>By tournament</en>
@@ -755,6 +862,7 @@
 		<nl>Per toernooi</nl>
 		<de>pro Wettkampf</de>
 		<ca>Campionat</ca>
+		<it>Per campionato</it>
 	</TournamentStatisticsMenu>	
 	<TeamTopTenMenuItem>
 		<en>Ranking</en>
@@ -762,6 +870,7 @@
 		<nl>Standen</nl>
 		<de>Klassifikation</de>
 		<ca>Classificació</ca>
+		<it>Classificazione</it>
 	</TeamTopTenMenuItem>	
 	<TournamentTopTenMenuItem>
 		<en>Ranking by competitors</en>
@@ -769,6 +878,7 @@
 		<nl>Standen per deelnemer</nl>
 		<de>Klassifikation nach Teilnehmer</de>
 		<ca>Classificació per competidors</ca>
+		<it>Classificazione per competitore</it>
 	</TournamentTopTenMenuItem>	
 	<TournamentHitsStatisticsMenuItem>
 		<en>Percentage of  hits</en>
@@ -776,27 +886,31 @@
 		<nl>Percentage treffers</nl>
 		<de>Treffer in %</de>
 		<ca>Percentatge de cops</ca>
+		<it>Percentuale dei colpi</it>
 	</TournamentHitsStatisticsMenuItem>
 	<DefineFightsMenu>
 		<en>Define league as</en>
-		<es>Definir liga como</es>
+		<es>Definir campeonato como</es>
 		<nl>Definiëer poule als</nl>
 		<de>Erstelle Wettkampf als</de>
 		<ca>Definir lliga</ca>
+		<it>Definire campionato come</it>
 	</DefineFightsMenu>	
 	<FightMenuItem>
 		<en>Simple league</en>
-		<es>Liga sencilla</es>
+		<es>Campeonato sencillo</es>
 		<nl>Eenvoudige poule</nl>
 		<de>Einfachen Wettkampf</de>
 		<ca>Lliga senzilla</ca>
+		<it>Campionato semplice</it>
 	</FightMenuItem>	
 	<LeagueTreeMenuItem>
 		<en>League tree</en>
-		<es>Liga en árbol</es>
+		<es>Campeonato en árbol</es>
 		<nl>Poule overzicht</nl>
 		<de>Wettkampf Baum</de>
 		<ca>Lliga en arbre</ca>
+		<it>Campionato a albero</it>
 	</LeagueTreeMenuItem>
 	<ProgramMenu>
 		<en>Program</en>
@@ -804,6 +918,7 @@
 		<nl>Programma</nl>
 		<de>Programm</de>
 		<ca>Programa</ca>
+		<it>Programma</it>
 	</ProgramMenu>
 	<ExitMenuItem>
 		<en>Exit</en>
@@ -811,13 +926,15 @@
 		<nl>Einde</nl>
 		<de>Ende</de>
 		<ca>Eixir</ca>
+		<it>Uscire</it>
 	</ExitMenuItem>
 	<LeagueMenuItem>
-		<en>Champions</en>
+		<en>League</en>
 		<es>Campeonato</es>
 		<nl>Winnaars</nl>
 		<de>Gewinner</de>
 		<ca>Campionat</ca>
+		<it>Campionato</it>
 	</LeagueMenuItem>
 	<ManualFightsMenuItem>
 		<en>Manual</en>
@@ -825,6 +942,7 @@
 		<nl>Beschrijving</nl>
 		<de>Handbuch</de>
 		<ca>Manual</ca>
+		<it>Manuale</it>
 	</ManualFightsMenuItem>
 	<DesignerMenuItem>
 		<en>Designer</en>
@@ -832,13 +950,15 @@
 		<nl>Ontwerper</nl>
 		<de>Designer</de>
 		<ca>Disenyador</ca>
+		<it>Designer</it>
 	</DesignerMenuItem>
 	<RingMenuItem>
 		<en>Ring League</en>
-		<es>Liga en círculo</es>
+		<es>Campeonato en círculo</es>
 		<nl>Kring poule</nl>
 		<de>Ring League</de>
 		<ca>Lliga en cercle</ca>
+		<it>Campionato ad anello</it>
 	</RingMenuItem>
 	<MonitorMenuItem>
 		<en>Monitor</en>
@@ -846,6 +966,7 @@
 		<nl>Beeldscherm</nl>
 		<de>Monitor</de>
 		<ca>Monitor</ca>
+		<it>Monitor</it>
 	</MonitorMenuItem>
 	<ScoreMenuItem>
 		<en>Score rules</en>
@@ -853,6 +974,7 @@
 		<nl>Score</nl>
 		<de>Punkte Regeln</de>
 		<ca>Regles de les puntuacions</ca>
+		<it>Regole per il punteggio</it>
 	</ScoreMenuItem>
 	<ScoreMonitorMenuItem>
 		<en>Score</en>
@@ -860,6 +982,7 @@
 		<nl>Score</nl>
 		<de>Punkte</de>
 		<ca>Puntuació</ca>
+		<it>Punteggio</it>
 	</ScoreMonitorMenuItem>
 	<TreeMonitorMenuItem>
 		<en>Ranking</en>
@@ -867,6 +990,7 @@
 		<nl>Rang</nl>
 		<de>Klassifikation</de>
 		<ca>Classificació</ca>
+		<it>Classifica</it>
 	</TreeMonitorMenuItem>
 	<AccreditationMenuItem>
 		<en>Accredition cards</en>
@@ -874,6 +998,7 @@
 		<nl>Deelnemerskaarten</nl>
 		<de>Akkreditierungskarten</de>
 		<ca>Acreditacions</ca>
+		<it>Badge</it>
 	</AccreditationMenuItem>
 	<HelpMenuItem>
 		<en>Help</en>
@@ -881,6 +1006,7 @@
 		<nl>Help</nl>
 		<de>Hilfe</de>
 		<ca>Ajuda</ca>
+		<it>Aiuto</it>
 	</HelpMenuItem>
 	<NameLabel>
 		<en>First Name:</en>
@@ -888,6 +1014,7 @@
 		<nl>Voornaam:</nl>
 		<de>Vorname:</de>
 		<ca>Nom:</ca>
+		<it>Nome:</it>
 	</NameLabel>
 	<SurnameLabel>
 		<en>Last Name:</en>
@@ -895,6 +1022,7 @@
 		<nl>Achternaam:</nl>
 		<de>Nachname:</de>
 		<ca>Cognoms:</ca>
+		<it>Cognome:</it>
 	</SurnameLabel>
 	<CountryLabel>
 		<en>Country:</en>
@@ -902,6 +1030,7 @@
 		<nl>Land:</nl>
 		<de>Land:</de>
 		<ca>Païs:</ca>
+		<it>Paese:</it>
 	</CountryLabel>
 	<CityLabel>
 		<en>City:</en>
@@ -909,6 +1038,7 @@
 		<nl>Stad:</nl>
 		<de>Stadt:</de>
 		<ca>Ciutat:</ca>
+		<it>Cittá</it>
 	</CityLabel>
 	<AddressLabel>
 		<en>Address:</en>
@@ -916,6 +1046,7 @@
 		<nl>Adres:</nl>
 		<de>Adresse:</de>
 		<ca>Adressa:</ca>
+		<it>Indirizzo</it>
 	</AddressLabel>
 	<IDLabel>
 		<en>Identification Number:</en>
@@ -923,6 +1054,7 @@
 		<nl>ID-nummer</nl>
 		<de>ID/Passnummer:</de>
 		<ca>DNI/Passaport:</ca>
+		<it>Carta D'Identitá/Passaporto:</it>
 	</IDLabel>
 	<RepresentativeLabel>
 		<en>Representative:</en>
@@ -930,6 +1062,7 @@
 		<nl>Vertegenwoordigd:</nl>
 		<de>Ansprechpartner:</de>
 		<ca>Representant:</ca>
+		<it>Rappresentante:</it>
 	</RepresentativeLabel>
 	<PhoneLabel>
 		<en>Phone:</en>
@@ -937,6 +1070,7 @@
 		<nl>Telefoonnummer:</nl>
 		<de>Telefon:</de>
 		<ca>Telèfon:</ca>
+		<it>Telefono:</it>
 	</PhoneLabel>
 	<MailLabel>
 		<en>E-Mail:</en>
@@ -944,6 +1078,7 @@
 		<nl>E-mail:</nl>
 		<de>E-Mail:</de>
 		<ca>E-Mail:</ca>
+		<it>E-Mail:</it>
 	</MailLabel>
 	<ClubLabel>
 		<en>Club:</en>
@@ -951,6 +1086,7 @@
 		<nl>Vereniging:</nl>
 		<de>Klub:</de>
 		<ca>Club:</ca>
+		<it>Club:</it>
 	</ClubLabel>
 	<FightArea>
 		<en>Fight Area:</en>
@@ -958,6 +1094,7 @@
 		<nl>Wedstrijdveld</nl>
 		<de>Shiaijo:</de>
 		<ca>Shiaijo:</ca>
+		<it>Shiaijo:</it>
 	</FightArea>
 	<deleteFights>
 		<en>Do you want to remove the previous generated fights?</en>
@@ -965,6 +1102,7 @@
 		<nl>Wil je de eerder aangemaakte wedstrijden verwijderen?</nl>
 		<de>Wollen Sie die zuletzt erstellten Kämpfe löschen?</de>
 		<ca>Vols eliminar els combats prèviament creats?</ca>
+		<it>Si vuole eliminare gli incontri precedentemente creati?</it>
 	</deleteFights>
 	<Team1Label>
 		<en>Team 1st:</en>
@@ -972,6 +1110,7 @@
 		<nl>Team 1:</nl>
 		<de>Team 1:</de>
 		<ca>Equip 1:</ca>
+		<it>Squadra 1:</it>
 	</Team1Label>
 	<Team2Label>
 		<en>Team 2nd:</en>
@@ -979,6 +1118,7 @@
 		<nl>Team 2:</nl>
 		<de>Team 2:</de>
 		<ca>Equip 2:</ca>
+		<it>Squadra 2:</it>
 	</Team2Label>
 	<NameTeamLabel>
 		<en>Name:</en>
@@ -986,6 +1126,7 @@
 		<nl>Naam:</nl>
 		<de>Name:</de>
 		<ca>Nom:</ca>
+		<it>Nome:</it>
 	</NameTeamLabel>
 	<IndividualTeamsCheckBox>
 		<en>Use competitor's name as name of team</en>
@@ -993,6 +1134,7 @@
 		<nl>Gebruik naam deelnemer als naam voor team</nl>
 		<de>Benutze Teilnehmername als Teamname (Einzelmodus)</de>
 		<ca>Emprar el  nom del competidor com el de l'equip</ca>
+		<it>Usare il nome del competitore come nome della squadrea?</it>
 	</IndividualTeamsCheckBox>
 	<NameTournamentLabel>
 		<en>Name:</en>
@@ -1000,6 +1142,7 @@
 		<nl>Naam:</nl>
 		<de>Name:</de>
 		<ca>Nom:</ca>
+		<it>Nome:</it>
 	</NameTournamentLabel>
 	<NumberLabel>
 		<en>Num Competitors:</en>
@@ -1007,6 +1150,7 @@
 		<nl>Aantal deelnemers:</nl>
 		<de>Anzahl Teilnehmer:</de>
 		<ca>Competidors:</ca>
+		<it>Num competitori:</it>
 	</NumberLabel>
 	<BannerLabel>
 		<en>Banner:</en>
@@ -1014,6 +1158,7 @@
 		<nl>Afbeelding:</nl>
 		<de>Banner:</de>
 		<ca>Patrocinador</ca>
+		<it>Sponsor:</it>
 	</BannerLabel>
 	<FightingAreas>
 		<en>Fighting Areas:</en>
@@ -1021,6 +1166,7 @@
 		<nl>Wedstrijdveld:</nl>
 		<de>Shiaijo:</de>
 		<ca>Shiaijo:</ca>
+		<it>Shiaijo:</it>
 	</FightingAreas>
 	<PhotoLabel>
 		<en>Photo:</en>
@@ -1028,6 +1174,7 @@
 		<nl>Foto:</nl>
 		<de>Foto:</de>
 		<ca>Foto:</ca>
+		<it>Foto:</it>
 	</PhotoLabel>
 	<ClearMenuItem>
 		<en>Clear</en>
@@ -1035,6 +1182,7 @@
 		<nl>Herstel</nl>
 		<de>Löschen</de>
 		<ca>Eliminar</ca>
+		<it>Eliminare</it>
 	</ClearMenuItem>
 	<DrawMenuItem>
 		<en>Draw</en>
@@ -1042,6 +1190,7 @@
 		<nl>Trekken</nl>
 		<de>Unentschieden</de>
 		<ca>Empat</ca>
+		<it>Pareggio</it>
 	</DrawMenuItem>
 	<FaultMenuItem>
 		<en>Fault</en>
@@ -1049,6 +1198,7 @@
 		<nl>Straf</nl>
 		<de>Hansoku</de>
 		<ca>Hansoku</ca>
+		<it>Fallo</it>
 	</FaultMenuItem>
 	<DrawGame>
 		<en>There is a draw fight.</en>
@@ -1056,6 +1206,7 @@
 		<nl>Gelijkspel.</nl>
 		<de>Es gibt Kämpfe, die unentschieden sind.</de>
 		<ca>Hi ha un empat!</ca>
+		<it>Si ha un pareggio!</it>
 	</DrawGame>
 	<fightsWon>
 		<en>Won matches</en>
@@ -1063,6 +1214,7 @@
 		<nl>Wedstrijd gewonnen door:</nl>
 		<de>Gewonnene Kämpfe</de>
 		<ca>Partits guanyats</ca>
+		<it>Incontri vinti</it>
 	</fightsWon>
 	<duelsWon>
 		<en>Won duels</en>
@@ -1070,6 +1222,7 @@
 		<nl>Aantal wedstrijden gewonnen:</nl>
 		<de>Gewonnene Duelle</de>
 		<ca>Duels guanyats</ca>
+		<it>Duelli vinti</it>
 	</duelsWon>
 	<histsWon>
 		<en>Hits</en>
@@ -1077,6 +1230,7 @@
 		<nl>Behaalde punten:</nl>
 		<de>Treffer</de>
 		<ca>Punts realitzats:</ca>
+		<it>Punti realizzati</it>
 	</histsWon>
 	<All>
 		<en>All</en>
@@ -1084,6 +1238,7 @@
 		<nl>Totaal</nl>
 		<de>Alle</de>
 		<ca>Tots</ca>
+		<it>Tutti</it>
 	</All>
 		<PerformedHitStatistics>
 		<en>Performed hits</en>
@@ -1091,6 +1246,7 @@
 		<nl>Geplaatste terffers</nl>
 		<de>Erteilte Treffer</de>
 		<ca>Cops donats</ca>
+		<it>Colpi dati</it>
 	</PerformedHitStatistics>
 	<ReceivedHitStatistics>
 		<en>Received hits</en>
@@ -1098,6 +1254,7 @@
 		<nl>Ontvangen treffers</nl>
 		<de>Erhaltene Treffer</de>
 		<ca>Cops rebuts</ca>
+		<it>Colpi ricevuti</it>
 	</ReceivedHitStatistics>
 	<WonStatistics>
 		<en>Won/lost fights</en>
@@ -1105,6 +1262,7 @@
 		<nl>Gewonnen/verloren wedtsrijden</nl>
 		<de>Gewonnene/Verlorene Kämpfe</de>
 		<ca>Combats guanyats/perduts</ca>
+		<it>Incontri vinti/persi</it>
 	</WonStatistics>
 	<TopTenTitle>
 		<en>Player list</en>
@@ -1112,6 +1270,7 @@
 		<nl>Overzicht van deelnemers</nl>
 		<de>Teilnehmerliste</de>
 		<ca>Llistat de participants</ca>
+		<it>Lista dei partecipanti</it>
 	</TopTenTitle>
 	<NumberOfWinnedTopTen>
 		<en>Score</en>
@@ -1119,6 +1278,7 @@
 		<nl>Score</nl>
 		<de>Punkte</de>
 		<ca>Puntuació</ca>
+		<it>Punteggio</it>
 	</NumberOfWinnedTopTen>
 	<PlayerTopTen>
 		<en>Players</en>
@@ -1126,6 +1286,7 @@
 		<nl>Deelnemers</nl>
 		<de>Teilnehmer</de>
 		<ca>jugadors</ca>
+		<it>Partecipanti</it>
 	</PlayerTopTen>
 	<WonFights>
 		<en>Won fights</en>
@@ -1133,6 +1294,7 @@
 		<nl>Gewonnen wedstrijden</nl>
 		<de>Gewonnene Kämpfe</de>
 		<ca>Combats guanyats</ca>
+		<it>Incontri vinti</it>
 	</WonFights>
 	<DrawFights>
 		<en>Draw fights</en>
@@ -1140,6 +1302,7 @@
 		<nl>Gelijke wedstrijden</nl>
 		<de>Unentschiedene Kämpfe</de>
 		<ca>Combats empatats</ca>
+		<it>Incontri pareggiati</it>
 	</DrawFights>
 	<WonMatchs>
 		<en>Won matches</en>
@@ -1147,6 +1310,7 @@
 		<nl>Gewonnen competitie</nl>
 		<de>Gewonnene Wettkämpfe</de>
 		<ca>Partits guanyats</ca>
+		<it>Incontri vinti</it>
 	</WonMatchs>
 	<DrawMatchs>
 		<en>Draw matches</en>
@@ -1154,6 +1318,7 @@
 		<nl>Gelijke competitie</nl>
 		<de>Unentschiedene Wettkämpfe</de>
 		<ca>Partits empatats</ca>
+		<it>Incontri pareggiati</it>
 	</DrawMatchs>
 	<LostFights>
 		<en>Lost fights</en>
@@ -1161,6 +1326,7 @@
 		<nl>Verloren wedstrijden</nl>
 		<de>Verlorene Kämpfe</de>
 		<ca>Combats perduts</ca>
+		<it>Incontri persi</it>
 	</LostFights>
 	<PassLabel>
 		<en>Number of winners:</en>
@@ -1168,13 +1334,15 @@
 		<nl>Aantal gewonnen:</nl>
 		<de>Anzahl Gewinne:</de>
 		<ca>Nombre de guanyadors:</ca>
+		<it>Numero di vincitori</it>
 	</PassLabel>
 	<nextLevel>
-		<en>All round's fights are over. Do you want to continue in the next phase of the tournament?</en>
+		<en>All round's fights are over. Do you want to continue in the next phase of the league?</en>
 		<es>Los combates the esta ronda han acabado. ¿Quieres pasar a la siguiente fase del campeonato?</es>
 		<nl>Alle wedstrijden in de poule zijn voorbij. Wil je verder gaan met het toernooi?</nl>
 		<de>Alle Kämpfe der Runde sind zuende. Wollen Sie mit der nächsten Runde weitermachen?</de>
 		<ca>Els combats d'aquesta ronda han finalitzat. Vols passar a la següent fase del campionat?</ca>
+		<it>Gli incontri di questa ronda sono finiti. Si vuole passare alla fase successiva del campionato</it>
 	</nextLevel>
 	<GroupString>
 		<en>Pool</en>
@@ -1182,6 +1350,7 @@
 		<nl>Groep</nl>
 		<de>Pool</de>
 		<ca>Grup</ca>
+		<it>Gruppo</it>
 	</GroupString>
 	<GroupLabel>
 		<en>Pool:</en>
@@ -1189,6 +1358,7 @@
 		<nl>Groep:</nl>
 		<de>Pool:</de>
 		<ca>Grup:</ca>
+		<it>Gruppo</it>
 	</GroupLabel>
 	<ToolTipEditable>
 		<en>Double click for more options.</en>
@@ -1196,6 +1366,7 @@
 		<nl>Dubbelklik voor meer opties.</nl>
 		<de>Doppelklick für mehr Optionen.</de>
 		<ca>Feu doble clik per obtindre opcions extra.</ca>
+		<it>Fare doppio click per ottenere le opzioni extra</it>
 	</ToolTipEditable>
 	<ToolTipNotEditable>
 		<en>Teams will be inserted while the combats are solved.</en>
@@ -1203,6 +1374,7 @@
 		<nl>Teams zullen worden toegevoegd als de wedstrijden voorbij zijn.</nl>
 		<de>Die Teams werden eingesetzt, während die Kämpfe erstellt werden.</de>
 		<ca>Els equips aniran completant-se automàticament segons es resolguen els combats.</ca>
+		<it>Le squadre si completeranno automaticamente mentre si realizzano gli incontri</it>
 	</ToolTipNotEditable>
 	<noTeams>
 		<en>There is not teams inserted on this pool!</en>
@@ -1210,6 +1382,7 @@
 		<nl>Er is geen team toegevoegd aan deze groep!</nl>
 		<de>Es sind keine Teams in diesem Pool eingefügt!</de>
 		<ca>No hi ha equips dins d'aquest grup!</ca>
+		<it>Non ci sono squadre dentro questo gruppo!</it>
 	</noTeams>
 	<Round>
 		<en>Round</en>
@@ -1217,6 +1390,7 @@
 		<nl>Ronde</nl>
 		<de>Runde</de>
 		<ca>Fase</ca>
+		<it>Ronda</it>
 	</Round>
 	<DrawTitle>
 		<en>Draw Result</en>
@@ -1224,6 +1398,7 @@
 		<nl>Gelijke stand</nl>
 		<de>Ergebnis unentschieden</de>
 		<ca>Equips empatats</ca>
+		<it>Squadre in parità</it>
 	</DrawTitle>
 	<DrawText>
 		<en>Some teams has the same score. Who will pass to the next round?</en>
@@ -1231,13 +1406,15 @@
 		<nl>Er zijn teams met gelijke score. Wie gaat door naar de volgende ronde?</nl>
 		<de>Einige Teams haben die gleiche Anzahl von Punkten. Welches Team soll in die nächste Runde?</de>
 		<ca>Diversos equips tenen el mateix resultat. Quin deu de passar a la següent ronda?</ca>
+		<it>Varie sqadre hanno lo stesso risultato. Chi deve passare alla ronda successiva?</it>
 	</DrawText>
 	<ChampionshipRadioButton>
-		<en>Championship</en>
+		<en>League</en>
 		<es>Campeonato</es>
 		<nl>Kampioenschap</nl>
 		<de>Meisterschaft</de>
 		<ca>Campionat</ca>
+		<it>Campionato</it>
 	</ChampionshipRadioButton>
 	<TreeRadioButton>
 		<en>Tree</en>
@@ -1245,6 +1422,7 @@
 		<nl>Overzicht</nl>
 		<de>Baum</de>
 		<ca>Arbre</ca>
+		<it>Albero</it>
 	</TreeRadioButton>
 	<SimpleRadioButton>
 		<en>Simple</en>
@@ -1252,6 +1430,7 @@
 		<nl>Eenvoudig</nl>
 		<de>Einfach</de>
 		<ca>Simple</ca>
+		<it>Semplice</it>
 	</SimpleRadioButton>
 	<ArenaLabel>
 		<en>Arena:</en>
@@ -1259,6 +1438,7 @@
 		<nl>Wedstrijdveld:</nl>
 		<de>Shiaijo:</de>
 		<ca>Shiaijo:</ca>
+		<it>Shiaijo:</it>
 	</ArenaLabel>
 	<ArenaString>
 		<en>Arena</en>
@@ -1266,6 +1446,7 @@
 		<nl>Wedstrijdveld</nl>
 		<de>Shiaijo:</de>
 		<ca>Shiaijo:</ca>
+		<it>Shiaijo:</it>
 	</ArenaString>
 	<CleanLinks>
 		<en>Clean winners</en>
@@ -1273,6 +1454,7 @@
 		<nl>Winnaars</nl>
 		<de>Lösche Gewinner</de>
 		<ca>Esborrar guanyador</ca>
+		<it>Cancellare vincitori</it>
 	</CleanLinks>
 	<StatisticsCheckBox>
 		<en>Add statistics</en>
@@ -1280,6 +1462,7 @@
 		<nl>Statistieken toevoegen</nl>
 		<de>Statistiken hinzufügen</de>
 		<ca>Incloure estadístiques</ca>
+		<it>Includere statistiche</it>
 	</StatisticsCheckBox>
 	<DiplomaProgressBarLabel>
 		<en>Generating</en>
@@ -1287,6 +1470,7 @@
 		<nl>Genereren</nl>
 		<de>Erstelle</de>
 		<ca>Generant</ca>
+		<it>Generando</it>
 	</DiplomaProgressBarLabel>
 	<DiplomaProgressBarTitle>
 		<en>Creating diplomas</en>
@@ -1294,6 +1478,7 @@
 		<nl>Diploma's samenstellen</nl>
 		<de>Erstelle Urkunden als PDF</de>
 		<ca>Generant diplomes en PDF</ca>
+		<it>Generando diploma in PDF</it>
 	</DiplomaProgressBarTitle>
 	<AccreditationProgressBarLabel>
 		<en>Generating</en>
@@ -1301,6 +1486,7 @@
 		<nl>Creëren</nl>
 		<de>Erstelle</de>
 		<ca>Generant</ca>
+		<it>Generando</it>
 	</AccreditationProgressBarLabel>
 	<AccreditationProgressBarTitle>
 		<en>Creating accreditations</en>
@@ -1308,6 +1494,7 @@
 		<nl>Deelnemersbewijzen aanmaken</nl>
 		<de>Erstelle Akkreditierungskarten als PDF</de>
 		<ca>Generant acreditacions en PDF</ca>
+		<it>Generando badge in PDF</it>
 	</AccreditationProgressBarTitle>
 	<titleDiplomaEditor>
 		<en>Names insertion</en>
@@ -1315,6 +1502,7 @@
 		<nl>Namen invoegen</nl>
 		<de>Namen einfügen</de>
 		<ca>Insertar noms</ca>
+		<it>Inserimento dei nomi</it>
 	</titleDiplomaEditor>
 	<InformationDiplomaLabel>
 		<en>Position of the name:</en>
@@ -1322,6 +1510,7 @@
 		<nl>Positie van de naam:</nl>
 		<de>Position des Namenfeldes:</de>
 		<ca>Posició del nom:</ca>
+		<it>Posizione del nome</it>
 	</InformationDiplomaLabel>
 	<TopTenCompetitorTitle>
 		<en>Competitor Ranking</en>
@@ -1329,6 +1518,7 @@
 		<nl>Plaatsing van deelnemer</nl>
 		<de>Kalssifikation des Teilnehmers</de>
 		<ca>Classificació de competidors</ca>
+		<it>Classificazione dei competitori</it>
 	</TopTenCompetitorTitle>
 	<TopTenCompetitorNumber>
 		<en>Ranking</en>
@@ -1336,6 +1526,7 @@
 		<nl>Plaatsing</nl>
 		<de>Klassifikation</de>
 		<ca>Posició</ca>
+		<it>Posizione</it>
 	</TopTenCompetitorNumber>
 	<TopTenTeamTitle>
 		<en>Ranking of teams</en>
@@ -1343,6 +1534,7 @@
 		<nl>Plaatsing van teams</nl>
 		<de>Klassifikation Team</de>
 		<ca>Classificació per equips</ca>
+		<it>Classificazione per squadra</it>
 	</TopTenTeamTitle>
 	<Hits>
 		<en>Score</en>
@@ -1350,6 +1542,7 @@
 		<nl>Score</nl>
 		<de>Punkte</de>
 		<ca>Punts</ca>
+		<it>Punti</it>
 	</Hits>
 	<Fights>
 		<en>Fights</en>
@@ -1357,6 +1550,7 @@
 		<nl>Wedstrijden</nl>
 		<de>Kämpfe</de>
 		<ca>Combats</ca>
+		<it>Incontri</it>
 	</Fights>
 	<Team>
 		<en>Team</en>
@@ -1364,6 +1558,7 @@
 		<nl>Team</nl>
 		<de>Team</de>
 		<ca>Equip</ca>
+		<it>Squadra</it>
 	</Team>
 	<InverseCheckBox>
 		<en>Inverse Teams</en>
@@ -1371,6 +1566,7 @@
 		<nl>Selectie teams omkeren</nl>
 		<de>Auswahl Teams umkehren</de>
 		<ca>Invertir equips</ca>
+		<it>Invertire squadre</it>
 	</InverseCheckBox>
 	<ColourCheckBox>
 		<en>Inverse Colours</en>
@@ -1378,6 +1574,7 @@
 		<nl>kleuren omkeren</nl>
 		<de>Farben umkehren</de>
 		<ca>Invertir colors</ca>
+		<it>Invertire colori</it>
 	</ColourCheckBox>
 	<RefereeTitle>
 		<en>List of referees</en>
@@ -1385,13 +1582,15 @@
 		<nl>Overzicht van scheidsrechters</nl>
 		<de>Liste der Kampfrichter</de>
 		<ca>Llistat d'àrbitres</ca>
+		<it>Lista degli arbitri</it>
 	</RefereeTitle>
 	<DeleteLevelLabel>
 		<en>Delete Round:</en>
-		<es>Limpiar Fase:</es>
+		<es>Borrar Fase:</es>
 		<nl>Verwijder Ronde:</nl>
 		<de>Lösche Runde:</de>
 		<ca>Netejar fase:</ca>
+		<it>Cancellare ronda</it>
 	</DeleteLevelLabel>
 	<ClassicRadioButton>
 		<en>Classic:</en>
@@ -1399,6 +1598,7 @@
 		<nl>Classikaal:</nl>
 		<de>Klassik:</de>
 		<ca>Classificació:</ca>
+		<it>Classico</it>
 	</ClassicRadioButton>
 	<EuropeanRadioButton>
 		<en>European:</en>
@@ -1406,6 +1606,7 @@
 		<nl>Europeaan:</nl>
 		<de>Europäisch:</de>
 		<ca>Europeu:</ca>
+		<it>Europeo:</it>
 	</EuropeanRadioButton>
 	<CustomRadioButton>
 		<en>Custom:</en>
@@ -1413,6 +1614,7 @@
 		<nl>Aangepaste:</nl>
 		<de>Angepasst:</de>
 		<ca>Personalitzat:</ca>
+		<it>Personalizzato:</it>
 	</CustomRadioButton>
 	<WinTag>
 		<en>Win:</en>
@@ -1420,6 +1622,7 @@
 		<nl>Win:</nl>
 		<de>Gewonnen:</de>
 		<ca>Guanyar:</ca>
+		<it>Vince:</it>
 	</WinTag>
 	<DrawTag>
 		<en>Draw:</en>
@@ -1427,6 +1630,7 @@
 		<nl>Das:</nl>
 		<de>Unentschieden:</de>
 		<ca>Empatar:</ca>
+		<it>Pareggia:</it>
 	</DrawTag>
 	<ExportPNG>
 		<en>Export to PNG</en>
@@ -1434,6 +1638,7 @@
 		<nl>Export naar PNG</nl>
 		<de>Exportieren als PNG</de>
 		<ca>Exportar a PNG</ca>
+		<it>Esportare a PNG</it>
 	</ExportPNG>
 	<ExportPDF>
 		<en>Export to PDF</en>
@@ -1441,6 +1646,7 @@
 		<nl>Export naar PDF</nl>
 		<de>Exportieren als PDF</de>
 		<ca>Exportar a PDF</ca>
+		<it>Esportare a PDF</it>
 	</ExportPDF>
 	<ExportSQL>
 		<en>Export to SQL</en>
@@ -1448,6 +1654,7 @@
 		<nl>Export naar SQL</nl>
 		<de>Exportieren zu SQL</de>
 		<ca>Exportat a SQL</ca>
+		<it>Esportare a SQL</it>
 	</ExportSQL>
 	<PrintAll>
 		<en>Print all</en>
@@ -1455,6 +1662,7 @@
 		<nl>Alles Printen</nl>
 		<de>Drucke alles</de>
 		<ca>Imprimir totes</ca>
+		<it>Stampare tutto</it>
 	</PrintAll>
 	<ShowTeam>
 		<en>Show Team</en>
@@ -1462,6 +1670,7 @@
 		<nl>Toon Team</nl>
 		<de>Zeige Team</de>
 		<ca>Mostrar</ca>
+		<it>Mostrare</it>
 	</ShowTeam>
 	<FinalLabel>
 		<en>Final</en>
@@ -1469,6 +1678,7 @@
 		<nl>Finale</nl>
 		<de>Finale</de>
 		<ca>Final</ca>
+		<it>Finale</it>
 	</FinalLabel>	
 	<SemiFinalLabel>
 		<en>Semifinal</en>
@@ -1476,6 +1686,7 @@
 		<nl>Halvefinale</nl>
 		<de>Halbfinale</de>
 		<ca>Semifinal</ca>
+		<it>Semifinale</it>
 	</SemiFinalLabel>
 	<EuropeanUndrawLabel>
 		<en>Only for Undraw</en>
@@ -1483,6 +1694,7 @@
 		<nl>Alleen voor Undraw</nl>
 		<de>Only for Undraw</de>
 		<ca>Sols per desempatar</ca>
+		<it>Solo per lo spareggio</it>
 	</EuropeanUndrawLabel>
 	<Export>
 		<en>Export to...</en>
@@ -1490,6 +1702,7 @@
 		<nl>Exporteren naar...</nl>
 		<de>Exportieren nach ...</de>
 		<ca>Exportar a...</ca>
+		<it>Esportare a ...</it>
 	</Export>	
 	<Import>
 		<en>Import from...</en>
@@ -1497,6 +1710,7 @@
 		<nl>Importeren van...</nl>
 		<de>Importieren von</de>
 		<ca>Importar de...</ca>
+		<it>Importare da ...</it>
 	</Import>
 	<ImportSQL>
 		<en>Import from SQL</en>
@@ -1504,20 +1718,23 @@
 		<nl>Importeren van SQL</nl>
 		<de>Importieren von SQL</de>
 		<ca>Importar de SQL</ca>
+		<it>Importare da SQL</it>
 	</ImportSQL>
 	<Teams>
 		<en>Teams:</en>
 		<es>Equipos:</es>
 		<nl>Teams:</nl>
 		<de>Teams:</de>
-		<ca>Equips</ca>
+		<ca>Equips:</ca>
+		<it>Squadre:</it>
 	</Teams>
 	<NumberTeamsLabel>
 		<en>Number of teams:</en>
 		<es>Numero de equipos:</es>
 		<nl>Aantal teams:</nl>
 		<de>Anzahl der Teams:</de>
-		<ca>Número d'equips.</ca>
+		<ca>Número d'equips:</ca>
+		<it>Numero di squadre:</it>
 	</NumberTeamsLabel>
 	<NumberCompetitorsLabel>
 		<en>Number of competitors:</en>
@@ -1525,6 +1742,7 @@
 		<nl>Aantal deelnemers:</nl>
 		<de>Anzahl der Teilnehmer:</de>
 		<ca>Número de participants:</ca>
+		<it>Numero dei competitori:</it>
 	</NumberCompetitorsLabel>
 	<ChangeTeamOrder>
 		<en>Change the order of a team</en>
@@ -1532,13 +1750,15 @@
 		<nl>Wijzig volgorde van teams</nl>
 		<de>Verändere Reihenfolge der Teams</de>
 		<ca>Canviar l'ordre d'un equip</ca>
+		<it>Cambiare l'ordine di una squadra</it>
 	</ChangeTeamOrder>
 	<AvailableTeam>
-		<en>Teams still in the championship:</en>
+		<en>Teams still in the League:</en>
 		<es>Equipos no eliminados:</es>
 		<nl>Teams die nog deelnemen:</nl>
 		<de>Teams, die noch am Wettkampf teilnehmen:</de>
 		<ca>Equips no eliminats:</ca>
+		<it>Squadre no eliminate</it>
 	</AvailableTeam>
 	<LogOption>
 		<en>Activity log</en>
@@ -1546,6 +1766,7 @@
 		<nl>Activiteiten Log</nl>
 		<de>Aktivitäts Log</de>
 		<ca>Registre d'activitats</ca>
+		<it>Logs</it>
 	</LogOption>
 	<DebugOption>
 		<en>Debug mode</en>
@@ -1553,6 +1774,7 @@
 		<nl>Foutopsporings modus</nl>
 		<de>Debug Modus</de>
 		<ca>Mode debug</ca>
+		<it>Modalitá debug</it>
 	</DebugOption>
 	<TitleOrderTeam>
 		<en>Change a team.</en>
@@ -1560,6 +1782,7 @@
 		<nl>Wijzig een team.</nl>
 		<de>Ändere ein Team.</de>
 		<ca>Canviar un nou equip.</ca>
+		<it>Cambiare una nuova squadra</it>
 	</TitleOrderTeam>
 	
 	
@@ -1570,6 +1793,7 @@
 		<nl>Exporting database.</nl>
 		<de>Exporting database.</de>
 		<ca>Exportant la base de dades.</ca>
+		<it>Esportando il database</it>
 	</ExportDatabaseProgressBarTitle>
 	<ImportDatabaseProgressBarTitle>
 		<en>Importing database.</en>
@@ -1577,6 +1801,7 @@
 		<nl>Importing database.</nl>
 		<de>Importing database.</de>
 		<ca>Important la base de dades.</ca>
+		<it>Importando il database</it>
 	</ImportDatabaseProgressBarTitle>
 	<DeleteDatabaseProgressBarLabel>
 		<en>Deleting old database:</en>
@@ -1584,6 +1809,7 @@
 		<nl>Deleting old database:</nl>
 		<de>Deleting old database:</de>
 		<ca>Sborran la base de dades:</ca>
+		<it>Cancellando il  database anteriore:</it>
 	</DeleteDatabaseProgressBarLabel>
 	<ExportDatabaseProgressBarLabelClub>
 		<en>Exporting clubs:</en>
@@ -1591,6 +1817,7 @@
 		<nl>Exporting clubs:</nl>
 		<de>Exporting clubs:</de>
 		<ca>Exportant els clubs:</ca>
+		<it>Esportando i club</it>
 	</ExportDatabaseProgressBarLabelClub>
 	<ImportDatabaseProgressBarLabelClub>
 		<en>Importing clubs:</en>
@@ -1598,6 +1825,7 @@
 		<nl>Importing clubs:</nl>
 		<de>Importing clubs:</de>
 		<ca>Important els clubs:</ca>
+		<it>Importando i club</it>
 	</ImportDatabaseProgressBarLabelClub>
 	<ExportDatabaseProgressBarLabelCompetitor>
 		<en>Exporting competitors:</en>
@@ -1605,6 +1833,7 @@
 		<nl>Exporting competitors:</nl>
 		<de>Exporting competitors:</de>
 		<ca>Exportant els competidors:</ca>
+		<it>Esportando i competitori</it>
 	</ExportDatabaseProgressBarLabelCompetitor>
 	<ImportDatabaseProgressBarLabelCompetitor>
 		<en>Importing competitors:</en>
@@ -1612,20 +1841,23 @@
 		<nl>Importing competitors:</nl>
 		<de>Importing competitors:</de>
 		<ca>Important els competidors:</ca>
+		<it>Importando i competitori</it>
 	</ImportDatabaseProgressBarLabelCompetitor>
 	<ExportDatabaseProgressBarLabelTournament>
-		<en>Exporting tournament:</en>
+		<en>Exporting leagues:</en>
 		<es>Exportando los campeonatos:</es>
 		<nl>Exporting tournament:</nl>
 		<de>Exporting tournament:</de>
 		<ca>Exportant els campeonats:</ca>
+		<it>Esportando i campionati</it>
 	</ExportDatabaseProgressBarLabelTournament>
 	<ImportDatabaseProgressBarLabelTournament>
-		<en>Importing tournament:</en>
+		<en>Importing leagues:</en>
 		<es>Importando los campeonatos:</es>
 		<nl>Importing tournament:</nl>
 		<de>Importing tournament:</de>
 		<ca>Important els campeonats:</ca>
+		<it>Importando i campionati</it>
 	</ImportDatabaseProgressBarLabelTournament>	
 	<ConvertPhotosProgressBarLabel>
 		<en>Converting competitors photos:</en>
@@ -1633,6 +1865,7 @@
 		<nl>Converting competitors photos:</nl>
 		<de>Converting competitors photos:</de>
 		<ca>Convertint les fotos dels competidors:</ca>
+		<it>Conversione delle foto dei competitori</it>
 	</ConvertPhotosProgressBarLabel>
 	<ConvertBannersProgressBarLabel>
 		<en>Converting tournaments banners:</en>
@@ -1640,6 +1873,7 @@
 		<nl>Converting tournaments banners:</nl>
 		<de>Converting tournaments banners:</de>
 		<ca>Convertint els banners dels campionats:</ca>
+		<it>Conversione degli sponsor dei campionati:</it>
 	</ConvertBannersProgressBarLabel>
 	<ConvertAccreditationsProgressBarLabel>
 		<en>Converting accreditations:</en>
@@ -1647,6 +1881,7 @@
 		<nl>Converting tacreditaciones:</nl>
 		<de>Converting acreditaciones:</de>
 		<ca>Convertint les accreditacions:</ca>
+		<it>Conversione dei badge:</it>
 	</ConvertAccreditationsProgressBarLabel>
 	<ConvertDiplomasProgressBarLabel>
 		<en>Converting diplomas:</en>
@@ -1654,6 +1889,7 @@
 		<nl>Converting diplomas:</nl>
 		<de>Converting diplomas:</de>
 		<ca>Convertint els diplomes:</ca>
+		<it>Conversione dei diploma:</it>
 	</ConvertDiplomasProgressBarLabel>
 	<ExportDatabaseProgressBarLabelClub>
 		<en>Exporting clubs:</en>
@@ -1661,6 +1897,7 @@
 		<nl>Exporting clubs:</nl>
 		<de>Exporting clubs:</de>
 		<ca>Exportant els clubs:</ca>
+		<it>Esportando i club:</it>
 	</ExportDatabaseProgressBarLabelClub>
 	<ExportDatabaseProgressBarLabelTeam>
 		<en>Exporting teams:</en>
@@ -1668,6 +1905,7 @@
 		<nl>Exporting teams:</nl>
 		<de>Exporting teams:</de>
 		<ca>Exportant els equips:</ca>
+		<it>Esportando le squadre:</it>
 	</ExportDatabaseProgressBarLabelTeam>
 	<ImportDatabaseProgressBarLabelTeam>
 		<en>Importing teams:</en>
@@ -1675,6 +1913,7 @@
 		<nl>Importing teams:</nl>
 		<de>Importing teams:</de>
 		<ca>Important els equips:</ca>
+		<it>Importando le squadre:</it>
 	</ImportDatabaseProgressBarLabelTeam>		
 	<ExportDatabaseProgressBarLabelFight>
 		<en>Exporting fights:</en>
@@ -1682,6 +1921,7 @@
 		<nl>Exporting fights:</nl>
 		<de>Exporting fights:</de>
 		<ca>Exportant els combats:</ca>
+		<it>Esportando gli incontri:</it>
 	</ExportDatabaseProgressBarLabelFight>
 	<ImportDatabaseProgressBarLabelFight>
 		<en>Importing fights:</en>
@@ -1689,6 +1929,7 @@
 		<nl>Importing fights:</nl>
 		<de>Importing fights:</de>
 		<ca>Important els combats:</ca>
+		<it>Importando gli incontri:</it>
 	</ImportDatabaseProgressBarLabelFight>
 	<ExportDatabaseProgressBarLabelRole>
 		<en>Exporting roles:</en>
@@ -1696,6 +1937,7 @@
 		<nl>Exporting roles:</nl>
 		<de>Exporting roles:</de>
 		<ca>Exportant els rols:</ca>
+		<it>Esportando i ruoli:</it>
 	</ExportDatabaseProgressBarLabelRole>
 	<ImportDatabaseProgressBarLabelRole>
 		<en>Importing roles:</en>
@@ -1703,6 +1945,7 @@
 		<nl>Importing roles:</nl>
 		<de>Importing roles:</de>
 		<ca>Important els rols:</ca>
+		<it>Importando i ruoli:</it>
 	</ImportDatabaseProgressBarLabelRole>	
 	<WriteFile>
 		<en>Writting to a file:</en>
@@ -1710,6 +1953,7 @@
 		<nl>Writting to a file:</nl>
 		<de>Writting to a file:</de>
 		<ca>Exportant l'arxiu:</ca>
+		<it>Scrivendo il file:</it>
 	</WriteFile>
 	<ReadFile>
 		<en>Reading the file:</en>
@@ -1717,6 +1961,7 @@
 		<nl>Reading the file:</nl>
 		<de>Reading the file:</de>
 		<ca>Llegint l'arxiu:</ca>
+		<it>Leggendo il file:</it>
 	</ReadFile>	
 	<AvoidRepetitions>
 		<en>Avoid repetitions</en>
@@ -1724,6 +1969,7 @@
 		<nl>Avoid repetitions</nl>
 		<de>Avoid repetitions</de>
 		<ca>Avoid repetitions</ca>
+		<it>Evitare ripetizioni</it>
 	</AvoidRepetitions>	
 	<DatabaseEngineLabel>
 		<en>Engine:</en>
@@ -1731,6 +1977,7 @@
 		<nl>Engine:</nl>
 		<de>Engine:</de>
 		<ca>Motor:</ca>
+		<it>Engine</it>
 	</DatabaseEngineLabel>
 	<DiplomaRole>
 		<en>Print the diplomas of:</en>
@@ -1738,6 +1985,7 @@
 		<nl>Print the diplomas of:</nl>
 		<de>Print the diplomas of:</de>
 		<ca>Imprimeix els diplomes de:</ca>
+		<it>Stampando il diploma di:</it>
 	</DiplomaRole>	
 	<ConvertDatabase>
 		<en>Convert database to...</en>
@@ -1745,6 +1993,7 @@
 		<nl>Convert database  to...</nl>
 		<de>Convert database  to...</de>
 		<ca>Converteix la base de dades a...</ca>
+		<it>Conversione del database a ...</it>
 	</ConvertDatabase>	
 	<FromDatabaseLabel>
 		<en>Source database:</en>
@@ -1752,6 +2001,7 @@
 		<nl>Source database:</nl>
 		<de>Source database:</de>
 		<ca>Base de dades de origen:</ca>
+		<it>Database origine</it>
 	</FromDatabaseLabel>	
 	<ToDatabaseLabel>
 		<en>Address database:</en>
@@ -1759,6 +2009,7 @@
 		<nl>Address database:</nl>
 		<de>Address database:</de>
 		<ca>Base de dades de destí:</ca>
+		<it>Database destino</it>
 	</ToDatabaseLabel>	
 		<ConvertButton>
 		<en>Convert</en>
@@ -1766,6 +2017,7 @@
 		<nl>Convert</nl>
 		<de>Convert</de>
 		<ca>Convertir</ca>
+		<it>Conversione</it>
 	</ConvertButton>	
 	<WrittingToDisk>
 		<en>Writting to disk...</en>
@@ -1773,6 +2025,7 @@
 		<nl>Writting to disk...</nl>
 		<de>Writting to disk...</de>
 		<ca>Escribint al disc...</ca>
+		<it>Scrivendo nel disco...</it>
 	</WrittingToDisk>
 	<FightsCard>
 		<en>Fights card</en>
@@ -1780,6 +2033,7 @@
 		<nl>Fights card</nl>
 		<de>Fights card</de>
 		<ca>Fitxa de combats</ca>
+		<it>Scheda dell'incontro</it>
 	</FightsCard>
 	<ShowEndFights>
 		<en>Add ended fights</en>
@@ -1787,6 +2041,7 @@
 		<nl>Add ended fights</nl>
 		<de>Add ended fights</de>
 		<ca>Incluoure combats finalitzats</ca>
+		<it>Aggiungere gli incontri conclusi</it>
 	</ShowEndFights>
 	<Page>
 		<en>Page</en>
@@ -1794,6 +2049,7 @@
 		<nl>Page</nl>
 		<de>Page</de>
 		<ca>Pàgina</ca>
+		<it>Pagina</it>
 	</Page>
 	<Of>
 		<en>of</en>
@@ -1801,6 +2057,7 @@
 		<nl>of</nl>
 		<de>of</de>
 		<ca>de</ca>
+		<it>di</it>
 	</Of>
 	<DataExchange>
 		<en>Import/Export</en>
@@ -1808,5 +2065,6 @@
 		<nl>Import/Export</nl>
 		<de>Import/Export</de>
 		<ca>Importar/Exportar</ca>
+		<it>Importare/Esportare</it>
 	</DataExchange>
 </translator>
