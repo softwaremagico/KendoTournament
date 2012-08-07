@@ -34,51 +34,39 @@ public class LevelGroupsChampionship extends LevelGroups {
     LevelGroupsChampionship(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         super(tournament, level, nextLevel, previousLevel, groupManager);
     }
-    
-    
+
     @Override
     protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
-        return new LevelGroupsChampionship(tournament, level, nextLevel,previousLevel, groupManager);
+        return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
-    private Integer obtainPositionOfOneWinnerInTreeLevelZero(int branch, int branchs) {
+    private Integer obtainPositionOfOneWinnerInTreeLevelZeroPair(int branch, int branchs) {
         if (branch % 2 == 0) {
-            return branch;
+            return branch/2;
         } else {
-            return branchs - branch;
+            return (branchs - branch)/2;
         }
     }
 
     private Integer obtainPositionOfOneWinnerInTreeLevelZeroOdd(int branch, int branchs) {
         if (branch % 2 == 0) {
-            return branch;
+            return branch/2;
         } else {
-            return ((branch + 1) % branchs);
-        }
-    }
-
-    private Integer obtainPositionOfOneWinnerInTreeMoreThanLevelZero(int branch, int branchs) {
-        //Desgin a tree grouping the designed groups by two.
-        if (branchs % 2 == 0) {
-            return (branch);
-        } else {
-            //If the number of groups are odd, are one group that never fights. Then, shuffle it.
-            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
+            return ((branch + 1) % branchs)/2;
         }
     }
 
     @Override
     protected Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
         if (level == 0) {
-            //If the number of groups are odd, then some teams fights again between them. 
-            if ((branchs / 2) % 2 != 0 && getNumberOfTotalTeamsPassNextRound() > size()) {
-                return obtainPositionOfOneWinnerInTreeLevelZeroOdd(branch, branchs) / 2;
+            if ((size() % 2) == 0) {
+                return obtainPositionOfOneWinnerInTreeLevelZeroPair(branch, branchs);
             } else {
-                return obtainPositionOfOneWinnerInTreeLevelZero(branch, branchs) / 2;
+                return obtainPositionOfOneWinnerInTreeLevelZeroOdd(branch, branchs);
             }
         } else {
-            return obtainPositionOfOneWinnerInTreeMoreThanLevelZero(branch, branchs) / 2;
+            return obtainPositionOfOneWinnerInTree(branch, branchs);
         }
-    }
 
+    }
 }

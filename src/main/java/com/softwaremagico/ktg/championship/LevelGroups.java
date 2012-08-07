@@ -44,7 +44,7 @@ public abstract class LevelGroups {
     private List<TournamentGroup> tournamentGroups;
     private LevelGroups nextLevel;
     private LevelGroups previousLevel;
-    private TournamentGroupManager groupManager;
+    protected TournamentGroupManager groupManager;
 
     LevelGroups(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         this.tournament = tournament;
@@ -147,7 +147,6 @@ public abstract class LevelGroups {
              */
             if (previousLevel != null) {
                 for (int j = 0; j < tournamentGroups.size(); j++) {
-                    //tournamentGroups.get(j).arena = grpsLevelZero.get(j * grpsLevelZero.size() / grps.size()).arena;
                     if (level == 1) {
                         tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2 / groupManager.default_max_winners).arena;
                     } else {
@@ -336,14 +335,28 @@ public abstract class LevelGroups {
      *********************************************
      */
     protected Integer obtainPositionOfOneWinnerInTreeOdd(int branch, int branchs) {
-        return ((branch + 1) % branchs);
+        return ((branch + 1) % branchs)/2;
+    }
+    
+    protected Integer obtainPositionOfOneWinnerInTreePair(int branch, int branchs){
+        return (branch/2);
+    }
+    
+    protected Integer obtainPositionOfOneWinnerInTree(int branch, int branchs){
+         //Design a tree grouping the designed groups by two.
+        if ((branchs / 2) % 2 == 0) {
+            return obtainPositionOfOneWinnerInTreePair(branch, branchs);
+        } else {
+            //If the number of groups are odd, are one group that never fights. Then, shuffle it.
+            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
+        }
     }
 
     protected abstract Integer getPositonOfOneWinnerInTournament(int branch, int branchs);
 
     protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
-        int winnerTeams = getNumberOfTotalTeamsPassNextRound();
-        int winnerIndex = getGlobalPositionWinner(group, winner);
+        int winnerTeams = getNumberOfTotalTeamsPassNextRound();     //[1..teams]
+        int winnerIndex = getGlobalPositionWinner(group, winner);   //[0..teams-1]
         return getPositonOfOneWinnerInTournament(winnerIndex, winnerTeams);
     }
 

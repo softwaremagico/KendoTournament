@@ -43,19 +43,9 @@ public class LevelGroupsTreeChampionship extends LevelGroups {
     protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
     }
-
-    private Integer obtainPositionOfOneWinnerInTree(int branch, int branchs) {
-        //Design a tree grouping the designed groups by two.
-        if ((branchs / 2) % 2 == 0) {
-            return (branch);
-        } else {
-            //If the number of groups are odd, are one group that never fightManager. Then, shuffle it.
-            return obtainPositionOfOneWinnerInTreeOdd(branch, branchs);
-        }
-    }
-
+    
     @Override
     protected Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
-        return obtainPositionOfOneWinnerInTree(branch, branchs) / 2;
+       return obtainPositionOfOneWinnerInTree(branch, branchs);
     }
 }

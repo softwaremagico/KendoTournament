@@ -188,7 +188,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                              * designedGroupsOfLevel.get(j), winners),
                              * KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfTotalTeamsPassNextRound(i), i);
                              */
-                            destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(designedGroupsOfLevel.get(j).getLevel()).getGroupIndexSourceOfWinner(designedGroupsOfLevel.get(j), winners);
+                            destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsOfLevel.get(j), winners);
                         } else {
                             destination = KendoTournamentGenerator.getInstance().tournamentManager.returnPositionOfGroupInItsLevel(
                                     KendoTournamentGenerator.getInstance().tournamentManager.obtainManualDestination(designedGroupsOfLevel.get(j), winners));

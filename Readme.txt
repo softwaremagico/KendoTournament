@@ -109,6 +109,7 @@ Version:
 0.971	Some minor bugs solved.
 
 0.972	Italian language added.
+		Performance improvements. 
 
 
 
