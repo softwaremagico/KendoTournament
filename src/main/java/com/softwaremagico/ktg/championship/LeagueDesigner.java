@@ -265,9 +265,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
             if (!championship.mode.equals("simple")) {
                 //If it is not stored in a file, generate it. 
-                //if (!KendoTournamentGenerator.getInstance().tournamentManager.loadDesigner()) {
                 KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
-                //}
             }
 
             KendoTournamentGenerator.getInstance().tournamentManager.mode = championship.mode;
@@ -332,6 +330,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateMode() {
         try {
+        	String oldMode = KendoTournamentGenerator.getInstance().tournamentManager.mode;
             if (ManualRadioButton.isSelected()) {
                 KendoTournamentGenerator.getInstance().tournamentManager.mode = "manual";
                 championship.mode = "manual";
@@ -355,6 +354,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
             } else {
                 //PassSpinner.setEnabled(true);
             }
+            
+        	//Mode has changed. Update Levels
+        	if(!oldMode.equals(KendoTournamentGenerator.getInstance().tournamentManager.mode)){
+        		
+        	}
+
 
             if (KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("simple")) {
                 AddButton.setVisible(false);
@@ -378,6 +383,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
             KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevels();
         } catch (NullPointerException npe) {
+        	npe.printStackTrace();
         }
     }
 

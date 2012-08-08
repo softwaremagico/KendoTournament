@@ -42,19 +42,23 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jorge
- */
 public class TournamentGroup extends Group implements Serializable {
 
-    transient Tournament championship;
+	private static final long serialVersionUID = -8425766161404716635L;
+    private static final Float SCORE_WON_FIGHTS = new Float(1000000);
+    private static final Float SCORE_WON_DUELS = new Float(10000);
+    private static final Float SCORE_HITS = new Float(1);
+    private static final Float SCORE_DRAW_FIGHTS = new Float(0.001);
+    private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
+    private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
+    
+	transient Tournament championship;
     transient DesignGroupWindow dgw;
     public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
     Integer numberMaxOfTeams;
     private Integer numberMaxOfWinners = 1;
-    Integer numberMaxOfWinnersLeague = 1;
+    //Integer numberMaxOfWinnersLeague = 1;
     transient private Translator trans = null;
     private Integer level;
     transient public boolean listenerAdded = false;
@@ -63,12 +67,6 @@ public class TournamentGroup extends Group implements Serializable {
     public int arena = 0;
     transient private boolean color = true;
     transient private java.awt.event.MouseAdapter ma;
-    private static final Float SCORE_WON_FIGHTS = new Float(1000000);
-    private static final Float SCORE_WON_DUELS = new Float(10000);
-    private static final Float SCORE_HITS = new Float(1);
-    private static final Float SCORE_DRAW_FIGHTS = new Float(0.001);
-    private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
-    private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
 
     TournamentGroup(Integer tmp_numberMaxOfTeams, Integer tmp_numberMaxOfWinners, Tournament tmp_championship, Integer tmp_level, Integer tmp_arena) {
         championship = tmp_championship;
@@ -79,7 +77,7 @@ public class TournamentGroup extends Group implements Serializable {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.LINE_START;
         numberMaxOfWinners = tmp_numberMaxOfWinners;
-        numberMaxOfWinnersLeague = tmp_numberMaxOfWinners;
+        //numberMaxOfWinnersLeague = tmp_numberMaxOfWinners;
 
         updateSize();
         setDefaultScore();
@@ -269,6 +267,17 @@ public class TournamentGroup extends Group implements Serializable {
         dgw.setVisible(true);
     }
 
+    public TournamentGroup convertToMode(){
+    	int maxWinners;
+    	switch(championship.name){
+    	case "tree":
+    		maxWinners=1;
+    	case "championship":
+    		maxWinners=2;
+    	}
+    	return new TournamentGroup(numberMaxOfTeams,numberMaxOfTeams,championship,level,arena);
+    }
+    
     /**
      * ********************************************
      *
