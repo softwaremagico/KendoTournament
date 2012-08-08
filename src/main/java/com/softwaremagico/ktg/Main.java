@@ -36,9 +36,6 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class Main {
 
-    Main() {
-    }
-
     /**
      * @param args the command line arguments
      */
