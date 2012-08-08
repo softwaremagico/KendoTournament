@@ -41,14 +41,14 @@ public class TournamentGroupManager implements Serializable {
     private static final long serialVersionUID = 8486984938854712658L;
     private List<LevelGroups> levels;
     transient Tournament tournament;
-    public String mode = "tree";
+    //private String mode = "tree";
     private Links links;
     private final String FOLDER = "designer";
     public int default_max_winners = 1;
 
     public TournamentGroupManager(Tournament championship) {
         try {
-            mode = championship.mode;
+            //mode = championship.mode;
             tournament = championship;
             // levels.add(0);
             links = new Links();
@@ -60,6 +60,7 @@ public class TournamentGroupManager implements Serializable {
 
     public void createLevelZero() {
         // Create level zero.
+        levels = new ArrayList<>();
         levels.add(getNewLevel(tournament, 0, null, null, this));
     }
 
@@ -102,6 +103,14 @@ public class TournamentGroupManager implements Serializable {
 
     public Tournament returnTournament() {
         return tournament;
+    }
+
+    public String getMode() {
+        return tournament.mode;
+    }
+
+    public void setMode(String mode) {
+        this.tournament.mode = mode;
     }
 
     /**
@@ -163,7 +172,7 @@ public class TournamentGroupManager implements Serializable {
             for (TournamentGroup previousGroup : groups) {
                 for (int winners = 0; winners < previousGroup.getMaxNumberOfWinners(); winners++) {
                     TournamentGroup destination;
-                    if (!mode.equals("manual") || group.getLevel() - 1 > 0) {
+                    if (!getMode().equals("manual") || group.getLevel() - 1 > 0) {
                         destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
                     } else {
                         destination = obtainManualDestination(previousGroup, winners);
@@ -365,7 +374,7 @@ public class TournamentGroupManager implements Serializable {
      * Create a new level.
      */
     private LevelGroups getNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
-        switch (mode) {
+        switch (getMode()) {
             case "tree":
                 return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
             case "championship":
@@ -572,7 +581,7 @@ public class TournamentGroupManager implements Serializable {
 
         for (int i = 0; i < groups.size(); i++) {
             if (answer) {
-                if (!mode.equals("manual") || level > 0) {
+                if (!getMode().equals("manual") || level > 0) {
                     arena = i / (int) Math.ceil((double) getSizeOfLevel(level) / (double) tournament.fightingAreas);
                 } else {
                     // grouped by the destination group of the next level.
@@ -668,33 +677,28 @@ public class TournamentGroupManager implements Serializable {
      */
     public void refillDesigner(ArrayList<Fight> fights) {
         // if (!loadDesigner(FOLDER + File.separator + KendoTournamentGenerator.getInstance().getLastSelectedTournament() + ".dsg", tournament)) {
-        levels = new ArrayList<>();
-        createLevelZero();
 
-        // Fill levels with fights defined.
-        int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
-        for (int i = 0; i <= maxFightLevel; i++) {
-            levels.add(createNextLevel(i));
-            refillLevel(fights, i);
-        }
-
-        // default Max winners. Not important this variable now.
         if (fights.size() > 0) {
             default_max_winners = fights.get(0).getMaxWinners();
         }
 
-        // Fill Inner Levels
-        if (levels.size() > 0) {
-            levels.get(0).updateGroupsSize();
+        if (fights.size() > 0) {
+            tournament = fights.get(0).competition;
+            createLevelZero();
+
+            // Fill levels with fights defined.
+            int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
+            for (int i = 0; i <= maxFightLevel; i++) {
+                if (i >= levels.size()) {   //LevelZero has been added previously
+                    levels.add(createNextLevel(i));
+                }
+                refillLevel(fights, i);
+            }
+
+            unselectDesignedGroups();
+            selectLastGroup();
+            update();
         }
-
-        unselectDesignedGroups();
-        selectLastGroup();
-        update();
-    }
-
-    private void fillLevel(TournamentGroup group) {
-        levels.get(group.getLevel()).addGroup(group, false);
     }
 
     private void refillLevel(ArrayList<Fight> fights, int level) {
@@ -718,8 +722,8 @@ public class TournamentGroupManager implements Serializable {
                     TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(i).getMaxWinners(), tournament, level,
                             fightsOfLevel.get(i - 1).asignedFightArea);
                     designedFight.addTeams(teamsOfGroup);
+                    add(designedFight, false);
                     designedFight.update();
-                    fillLevel(designedFight);
                 }
                 // Start generating the next group.
                 teamsOfGroup = new ArrayList<>();
@@ -733,8 +737,8 @@ public class TournamentGroupManager implements Serializable {
                 TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(fightsOfLevel.size() - 1).getMaxWinners(),
                         tournament, level, fightsOfLevel.get(fightsOfLevel.size() - 1).asignedFightArea);
                 designedFight.addTeams(teamsOfGroup);
+                add(designedFight, false);
                 designedFight.update();
-                fillLevel(designedFight);
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
             KendoTournamentGenerator.getInstance().showErrorInformation(aiob);

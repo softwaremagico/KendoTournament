@@ -383,4 +383,21 @@ public abstract class LevelGroups {
     protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, int winner) {
         return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
     }
+    
+    public String levelInfo(){
+        String info = "Level: " + level +" Groups: ";
+        
+        for(TournamentGroup group: tournamentGroups){
+            info+=group.teams.size()+"\t";
+        }
+        
+        return info;
+    }
+    
+    public void showTree(){
+        System.out.println(levelInfo());
+        if(nextLevel!=null){
+            nextLevel.showTree();
+        }        
+    }
 }

@@ -122,9 +122,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          * Paint teams group
          */
         for (int level = 0; level < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); level++) {
-            //for (TournamentGroup group : KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups()) {
             for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().size(); groupIndex++) {
-                //for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
                 try {
                     if (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).championship.name.equals(last_championship)) {
                         c.anchor = GridBagConstraints.WEST;
@@ -168,7 +166,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
                 for (int winners = 0; winners < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); winners++) {
                     if (designedGroupsOfNextLevel.size() > 1) {
-                        if (!KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("manual") || i > 0) {
+                        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("manual") || i > 0) {
                             //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
                             /*
                              * destination = (int)
