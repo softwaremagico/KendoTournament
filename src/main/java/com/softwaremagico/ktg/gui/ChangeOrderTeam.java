@@ -132,7 +132,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void initComponents() {
 
         TournamentLabel = new javax.swing.JLabel();
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<>();
         TeamPanel = new javax.swing.JPanel();
         TeamScrollPane = new javax.swing.JScrollPane();
         TeamList = new javax.swing.JList();

@@ -306,7 +306,7 @@ public class NewTeam extends KendoFrame {
         TeamPanel = new javax.swing.JPanel();
         NameLabel = new javax.swing.JLabel();
         NameTextField = new javax.swing.JTextField();
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<>();
         TournamentLabel = new javax.swing.JLabel();
         IndividualTeamsCheckBox = new javax.swing.JCheckBox();
         CompetitorsFrame = new javax.swing.JPanel();

@@ -130,7 +130,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
         DrawSpinner = new javax.swing.JSpinner();
         CloseButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<>();
         TournamentLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

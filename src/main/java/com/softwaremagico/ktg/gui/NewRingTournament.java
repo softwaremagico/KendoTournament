@@ -207,11 +207,11 @@ public class NewRingTournament extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<>();
         TournamentLabel = new javax.swing.JLabel();
         NewFightPanel = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
-        Team1ComboBox = new javax.swing.JComboBox<String>();
+        Team1ComboBox = new javax.swing.JComboBox<>();
         Team1Label = new javax.swing.JLabel();
         RandomButton = new javax.swing.JButton();
         AvoidRepetitionCheckBox = new javax.swing.JCheckBox();

@@ -35,13 +35,10 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import javax.swing.DefaultListModel;
 
-/**
- *
- * @author  jorge
- */
 public class DesignGroupWindow extends javax.swing.JFrame {
 
-    private DefaultListModel<String> groupModel = new DefaultListModel<>();
+	private static final long serialVersionUID = 9161777233520978498L;
+	private DefaultListModel<String> groupModel = new DefaultListModel<>();
     TournamentGroup dg;
     private Translator trans = null;
     private boolean refresh = true;
@@ -135,13 +132,13 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         GroupScrollPane = new javax.swing.JScrollPane();
-        GroupList = new javax.swing.JList<String>();
+        GroupList = new javax.swing.JList<>();
         UpButton = new javax.swing.JButton();
         DownButton = new javax.swing.JButton();
         PassLabel = new javax.swing.JLabel();
         PassSpinner = new javax.swing.JSpinner();
         ArenaLabel = new javax.swing.JLabel();
-        FightAreaComboBox = new javax.swing.JComboBox<String>();
+        FightAreaComboBox = new javax.swing.JComboBox<>();
         DeleteButton = new javax.swing.JButton();
         ShowButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();
@@ -328,7 +325,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         if (MessageManager.questionMessage("questionRemoveTeam", "Warning!")) {
             int index = GroupList.getSelectedIndex();
-            Team t = dg.teams.remove(index);
+            dg.teams.remove(index);
             fillGroupArea();
             index--;
             if (index < dg.teams.size() && index >= 0) {

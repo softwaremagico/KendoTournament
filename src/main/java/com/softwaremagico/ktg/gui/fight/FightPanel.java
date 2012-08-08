@@ -346,10 +346,10 @@ public final class FightPanel extends javax.swing.JFrame {
         CloseButton = new javax.swing.JButton();
         PreviousButton = new javax.swing.JButton();
         NextButton = new javax.swing.JButton();
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<>();
         TournamentLabel = new javax.swing.JLabel();
         BannerPanel = new javax.swing.JPanel();
-        FightAreaComboBox = new javax.swing.JComboBox<String>();
+        FightAreaComboBox = new javax.swing.JComboBox<>();
         FightAreaLabel = new javax.swing.JLabel();
         TreeButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
