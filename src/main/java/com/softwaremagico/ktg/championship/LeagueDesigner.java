@@ -396,10 +396,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateLevel() {
         LevelComboBox.removeAllItems();
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); i++) {
-            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
-                LevelComboBox.addItem(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - i));
-            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
+        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
+            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
+                LevelComboBox.addItem(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - i));
+            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
                 LevelComboBox.addItem(trans.returnTag("SemiFinalLabel"));
             } else {
                 LevelComboBox.addItem(trans.returnTag("FinalLabel"));
@@ -414,7 +414,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         Dimension de = viewport.getExtentSize();
 
 
-        int columnsWide = this.getWidth() / KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels();
+        int columnsWide = this.getWidth() / KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size();
         int rowsWide;
         if (KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size() > 0) {
             rowsWide = this.getWidth() / KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size();

@@ -562,7 +562,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
             store2Cvs();
 
-            //If all arena fightManager are over.
+            //If all arena fights are over.
             if (KendoTournamentGenerator.getInstance().fightManager.areArenaOver(FightAreaComboBox.getSelectedIndex())) {
                 //Store score into database.
                 KendoTournamentGenerator.getInstance().fightManager.storeNotUpdatedFightsAndDuels();

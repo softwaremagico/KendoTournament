@@ -76,7 +76,7 @@ public class ScoreListPDF extends ParentList {
         KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
         KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); l++) {
+        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); l++) {
             List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {

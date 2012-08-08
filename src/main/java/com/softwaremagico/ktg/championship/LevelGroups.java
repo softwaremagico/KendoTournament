@@ -257,6 +257,20 @@ public abstract class LevelGroups {
     }
 
     /**
+     * Not in all levels the arenas used are the arenas available.
+     * @return 
+     */
+    protected int getArenasUsed(){
+        List<Integer> arenas = new ArrayList<>();
+        for(int i=0; i<tournamentGroups.size();i++){
+            if(!arenas.contains(tournamentGroups.get(i).arena)){
+                arenas.add(tournamentGroups.get(i).arena);
+            }
+        }
+        return arenas.size();
+    }
+    
+    /**
      *********************************************
      *
      * GROUPS MANIPULATION

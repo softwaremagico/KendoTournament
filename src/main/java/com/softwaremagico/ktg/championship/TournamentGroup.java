@@ -183,9 +183,9 @@ public class TournamentGroup extends Group implements Serializable {
     public String getDefaultLabel() {
         //Select label
         String s;
-        if (level < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
-            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - level);
-        } else if (level == KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels() - 2) {
+        if (level < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
+            s = trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - level);
+        } else if (level == KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
             s = trans.returnTag("SemiFinalLabel");
         } else {
             s = trans.returnTag("FinalLabel");

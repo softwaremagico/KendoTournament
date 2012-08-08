@@ -41,7 +41,6 @@ public class TournamentGroupManager implements Serializable {
     private static final long serialVersionUID = 8486984938854712658L;
     private List<LevelGroups> levels;
     transient Tournament tournament;
-    //private String mode = "tree";
     private Links links;
     private final String FOLDER = "designer";
     public int default_max_winners = 1;
@@ -355,14 +354,6 @@ public class TournamentGroupManager implements Serializable {
         return null;
     }
 
-    /*
-     * public Integer getIndexLastGroupUsed() { int last = 0; Integer level =
-     * getIndexLastLevelUsed(); if (level != null) { List<TournamentGroup>
-     * tournamentGroups = levels.get(level).getGroups(); for (int i = 0; i <
-     * tournamentGroups.size(); i++) { if
-     * (tournamentGroups.get(i).areFightsOver()) { last = i; } } } return last;
-     * }
-     */
     /**
      * ********************************************
      *
@@ -415,19 +406,6 @@ public class TournamentGroupManager implements Serializable {
         update();
     }
 
-    /**
-     * Return the number of levels. Levels start in zero but has size one.
-     *
-     * @return
-     */
-    public int getNumberOfLevels() {
-        return levels.size();
-    }
-
-    /*
-     * private int calculateNumberOfLevels() { return (int)
-     * (Math.log(getSizeOfLevel(0)) / Math.log(2)) + default_max_winners; }
-     */
     public Integer getSizeOfLevel(Integer level) {
         if (level >= 0 && level < levels.size()) {
             return levels.get(level).size();
@@ -436,56 +414,10 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public int returnCalculatedSizeOfLevel(int level) {
-        switch (level) {
-            case 0:
-                return getSizeOfLevel(0);
-            case 1:
-                return (getNumberOfTotalTeamsPassNextRound(0)) / 2;
-            default:
-                return getSizeOfLevel(level - 1) / 2;
-        }
-    }
-
-    public void updateInnerLevels() {
-        updateInnerLevel(0);
-    }
-
-    public void updateInnerLevel(int level) {
-        if (levels.size() > 0 && level < levels.size()) {
-            levels.get(level).updateGroupsSize();
-        }
-    }
-
-    void emptyInnerLevels() {
+    protected void emptyInnerLevels() {
         for (LevelGroups level : levels) {
             level.deleteTeams();
         }
-    }
-
-    public Integer getLevelOfFight(Fight fight) {
-        for (int i = 0; i < levels.size(); i++) {
-            if (levels.get(i).isFightOfLevel(fight)) {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public Integer getLevelOfGroup(TournamentGroup group) {
-        for (int i = 0; i < levels.size(); i++) {
-            if (levels.get(i).isGroupOfLevel(group)) {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public Boolean isLevelFinished(ArrayList<Fight> fights, int level) {
-        if (level >= 0 && level < levels.size()) {
-            return levels.get(level).isLevelFinished(fights);
-        }
-        return null;
     }
 
     public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
@@ -493,7 +425,7 @@ public class TournamentGroupManager implements Serializable {
         int arena;
         try {
             // Not finished the tournament.
-            if (nextLevel >= 0 && nextLevel < getNumberOfLevels()) {
+            if (nextLevel >= 0 && nextLevel < getLevels().size()) {
                 Log.finer("Tournament not finished!");
                 // Update fightManager to load the fightManager of other arenas and computers.
                 if (championship.fightingAreas > 1) {
@@ -626,24 +558,6 @@ public class TournamentGroupManager implements Serializable {
         return fightsOfLevel;
     }
 
-    public int getArenasOfLevel(ArrayList<Fight> fights, int level) {
-        ArrayList<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
-        List<Integer> arenas = new ArrayList<>();
-        for (int i = 0; i < fightsOfLevel.size(); i++) {
-            boolean found = false;
-            for (int j = 0; j < arenas.size(); j++) {
-                if (arenas.get(j) == fightsOfLevel.get(i).asignedFightArea) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                arenas.add(fightsOfLevel.get(i).asignedFightArea);
-            }
-        }
-        return arenas.size();
-    }
-
     /**
      * ********************************************
      *
@@ -663,6 +577,10 @@ public class TournamentGroupManager implements Serializable {
 
     public int returnNumberOfArenas() {
         return tournament.fightingAreas;
+    }
+
+    public int getArenasOfLevel(ArrayList<Fight> fights, int level) {
+        return levels.get(level).getArenasUsed();
     }
 
     /**
@@ -745,34 +663,6 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    /**
-     * Groups that only have one team.
-     *
-     * @param tmp_fights
-     * @param level
-     */
-    /*
-     * private void completeGroupsWithOneTeam(ArrayList<Fight> tmp_fights, int
-     * level) { List<Team> winners = new ArrayList<>(); if (level > 0 &&
-     * (getFightsOfLevel(tmp_fights, level - 1).size() > 0) &&
-     * (getFightsOfLevel(tmp_fights, level).size() > 0)) { //obtain all winners
-     * of previous level. List<TournamentGroup> groupsPrev =
-     * returnGroupsOfLevel(level - 1); for (int i = 0; i < groupsPrev.size();
-     * i++) { if (groupsPrev.get(i).areFightsOverOrNull(tmp_fights)) {
-     * winners.addAll(groupsPrev.get(i).getWinners()); } }
-     *
-     * //Delete the winners inserted in a group of this level.
-     * List<TournamentGroup> groups = returnGroupsOfLevel(level); for (int i =
-     * 0; i < groups.size(); i++) { for (int j = 0; j <
-     * groups.get(i).teams.size(); j++) { for (int k = 0; k < winners.size();
-     * k++) { if
-     * (winners.get(k).returnName().equals(groups.get(i).teams.get(j).returnName()))
-     * { winners.remove(k); k--; } } } }
-     *
-     * //Add the winner without group to the last one. TournamentGroup lastg =
-     * groups.get(groups.size() - 1); if (lastg != null) { for (int i = 0; i <
-     * winners.size(); i++) { lastg.addTeam(winners.get(i)); } } } }
-     */
     /**
      * *************************************************************
      *

@@ -105,7 +105,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels();
+            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size();
             rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size();
         } catch (ArithmeticException ae) {
         }

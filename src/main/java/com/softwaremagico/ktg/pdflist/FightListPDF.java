@@ -101,7 +101,7 @@ public class FightListPDF extends ParentList {
         KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
         KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfLevels(); l++) {
+        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); l++) {
             /*
              * Header of the phase
              */
