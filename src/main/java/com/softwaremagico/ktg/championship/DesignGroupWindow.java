@@ -306,8 +306,8 @@ public class DesignGroupWindow extends javax.swing.JFrame {
             PassSpinner.setValue(1);
         }
         if (dg.teams.isEmpty()) {
-            if ((Integer) PassSpinner.getValue() > dg.numberMaxOfWinnersLeague) {
-                PassSpinner.setValue(dg.numberMaxOfWinnersLeague);
+            if ((Integer) PassSpinner.getValue() > dg.getMaxNumberOfWinners()) {
+                PassSpinner.setValue(dg.getMaxNumberOfWinners());
             }
         } else if ((Integer) PassSpinner.getValue() > dg.teams.size()) {
             if (dg.teams.size() > 0) {

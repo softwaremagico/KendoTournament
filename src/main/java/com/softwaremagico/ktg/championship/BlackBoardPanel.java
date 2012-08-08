@@ -36,8 +36,8 @@ import java.util.List;
 
 public class BlackBoardPanel extends javax.swing.JPanel {
 
-	private static final long serialVersionUID = -6193257530262904629L;
-	private GridBagConstraints c = new GridBagConstraints();
+    private static final long serialVersionUID = -6193257530262904629L;
+    private GridBagConstraints c = new GridBagConstraints();
     private String last_championship;
     private int titleColumn = 1;
     private int titleRow = 2;
@@ -52,13 +52,13 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         last_championship = championshipName;
         //removeAll();
         if (!refill) {
-            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
+            //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         } else {
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championshipName);
             KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false));
             ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(fights);
-            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
+            //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         }
         paintDesignedGroups();
         paintSpaces();
@@ -73,16 +73,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         c.gridx = 0;
         c.gridy = 1;
 
-
-        //Separator ts = new Separator(last_championship, 24);
-
         GridBagConstraints lc = new GridBagConstraints();
-
-        /*
-         * Label l = new Label(last_championship); l.setFont(new
-         * Font("sansserif", Font.BOLD, 24)); lc.gridwidth =
-         * GridBagConstraints.REMAINDER; add(l, lc);
-         */
 
         Separator sp = new Separator(last_championship);
         sp.updateFont("sansserif", 44);
@@ -183,7 +174,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                              * destination = (int)
                              * KendoTournamentGenerator.getInstance().tournamentManager.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().tournamentManager.obtainGlobalPositionWinner(i,
                              * designedGroupsOfLevel.get(j), winners),
-                             * KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfTotalTeamsPassNextRound(i), i);
+                             * KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfTotalTeamsPassNextRound(i),
+                             * i);
                              */
                             destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsOfLevel.get(j), winners);
                         } else {
@@ -193,6 +185,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                     } else {
                         destination = 0;
                     }
+                    //if(i==0)
+                    //System.out.println(j +"(" + winners + ")" + " -> " + destination);
                     if (destination < designedGroupsOfNextLevel.size() && destination >= 0) {
                         drawLink(g, designedGroupsOfLevel.get(j), designedGroupsOfNextLevel.get(destination), winners, j, destination, j < designedGroupsOfLevel.size() / 2);
                     }

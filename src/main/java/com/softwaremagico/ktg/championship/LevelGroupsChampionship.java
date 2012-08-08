@@ -42,17 +42,17 @@ public class LevelGroupsChampionship extends LevelGroups {
 
     private Integer obtainPositionOfOneWinnerInTreeLevelZeroPair(int branch, int branchs) {
         if (branch % 2 == 0) {
-            return branch/2;
+            return branch / 2;
         } else {
-            return (branchs - branch)/2;
+            return (branchs - branch) / 2;
         }
     }
 
     private Integer obtainPositionOfOneWinnerInTreeLevelZeroOdd(int branch, int branchs) {
         if (branch % 2 == 0) {
-            return branch/2;
+            return branch / 2;
         } else {
-            return ((branch + 1) % branchs)/2;
+            return ((branch + 1) % branchs) / 2;
         }
     }
 

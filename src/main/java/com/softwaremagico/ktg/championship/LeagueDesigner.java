@@ -59,6 +59,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     //private final String FOLDER = "designer";
     private Point p;
     private JViewport viewport;
+    private boolean refreshSpinner = true;
 
     /**
      * Creates new form LeagueDesigner
@@ -330,7 +331,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateMode() {
         try {
-        	String oldMode = KendoTournamentGenerator.getInstance().tournamentManager.mode;
+            String oldMode = KendoTournamentGenerator.getInstance().tournamentManager.mode;
             if (ManualRadioButton.isSelected()) {
                 KendoTournamentGenerator.getInstance().tournamentManager.mode = "manual";
                 championship.mode = "manual";
@@ -348,17 +349,21 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 championship.mode = "simple";
                 CleanLinksButton.setVisible(false);
             }
+
+            //Mode has changed. Update Levels
+            if (!oldMode.equals(KendoTournamentGenerator.getInstance().tournamentManager.mode) && KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() > 0) {
+                LevelGroups levelZero = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(0);
+                KendoTournamentGenerator.getInstance().tournamentManager.convertFirstLevelsToCurrentChampionship(levelZero);
+            }
+
+            refreshSpinner = false;
             if (KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("tree") || KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("simple")) {
                 PassSpinner.setValue(1);
                 PassSpinner.setEnabled(false);
             } else {
                 //PassSpinner.setEnabled(true);
             }
-            
-        	//Mode has changed. Update Levels
-        	if(!oldMode.equals(KendoTournamentGenerator.getInstance().tournamentManager.mode)){
-        		
-        	}
+            refreshSpinner = true;
 
 
             if (KendoTournamentGenerator.getInstance().tournamentManager.mode.equals("simple")) {
@@ -381,10 +386,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 //Update tournament.
                 KendoTournamentGenerator.getInstance().database.updateTournament(championship, false);
             }
-            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevels();
+            //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevels();
         } catch (NullPointerException npe) {
-        	npe.printStackTrace();
+            npe.printStackTrace();
         }
+
+        updateBlackBoard();
     }
 
     private void updateLevel() {
@@ -901,12 +908,16 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 PassSpinner.setValue(2);
             }
 
-            numberMaxOfWinners = (Integer) PassSpinner.getValue();
-            KendoTournamentGenerator.getInstance().tournamentManager.setNumberOfTeamsPassNextRound(numberMaxOfWinners);
+            if (refreshSpinner) {
+                numberMaxOfWinners = (Integer) PassSpinner.getValue();
+                KendoTournamentGenerator.getInstance().tournamentManager.setNumberOfTeamsPassNextRound(numberMaxOfWinners);
 
-            consistentTree();
-            KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
-            updateBlackBoard();
+                /*
+                 * consistentTree();
+                 * KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
+                updateBlackBoard();
+                 */
+            }
         } catch (NullPointerException npe) {
         }
     }//GEN-LAST:event_PassSpinnerStateChanged

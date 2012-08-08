@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.championship;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -44,15 +42,14 @@ import javax.swing.JOptionPane;
 
 public class TournamentGroup extends Group implements Serializable {
 
-	private static final long serialVersionUID = -8425766161404716635L;
+    private static final long serialVersionUID = -8425766161404716635L;
     private static final Float SCORE_WON_FIGHTS = new Float(1000000);
     private static final Float SCORE_WON_DUELS = new Float(10000);
     private static final Float SCORE_HITS = new Float(1);
     private static final Float SCORE_DRAW_FIGHTS = new Float(0.001);
     private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
     private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
-    
-	transient Tournament championship;
+    transient Tournament championship;
     transient DesignGroupWindow dgw;
     public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
@@ -68,27 +65,29 @@ public class TournamentGroup extends Group implements Serializable {
     transient private boolean color = true;
     transient private java.awt.event.MouseAdapter ma;
 
-    TournamentGroup(Integer tmp_numberMaxOfTeams, Integer tmp_numberMaxOfWinners, Tournament tmp_championship, Integer tmp_level, Integer tmp_arena) {
-        championship = tmp_championship;
-        numberMaxOfTeams = tmp_numberMaxOfTeams;
-        level = tmp_level;
-        arena = tmp_arena;
+    TournamentGroup(Integer numberMaxOfTeams, Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
+        this.championship = championship;
+        this.numberMaxOfTeams = numberMaxOfTeams;
+        this.level = level;
+        this.arena = arena;
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.LINE_START;
-        numberMaxOfWinners = tmp_numberMaxOfWinners;
+        this.numberMaxOfWinners = numberMaxOfWinners;
         //numberMaxOfWinnersLeague = tmp_numberMaxOfWinners;
 
         updateSize();
         setDefaultScore();
 
-        setBackground(new Color(200, 200, 200));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setBackground(new Color(230, 230, 230));
+        //setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
 
         setLanguage();
         updateText();
         removeAll();
         label.setHorizontalTextPosition(JLabel.LEFT);
+        label.setForeground(Color.BLACK);
         add(label, c);
     }
 
@@ -218,13 +217,21 @@ public class TournamentGroup extends Group implements Serializable {
         if (level == 0) {
             ds.unselectDesignedGroups();
             selected = true;
-            setBackground(new Color(230, 230, 230));
+            setBackground(new Color(200, 200, 200));
+            //setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+            setBorder(javax.swing.BorderFactory.createLoweredBevelBorder());
         }
     }
 
     public void setUnselected() {
         selected = false;
-        setBackground(new Color(200, 200, 200));
+        setBackground(new Color(230, 230, 230));
+        //setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        if (listenerAdded) {
+            setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
+        } else {
+            setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+        }
     }
 
     public boolean isSelected() {
@@ -267,17 +274,17 @@ public class TournamentGroup extends Group implements Serializable {
         dgw.setVisible(true);
     }
 
-    public TournamentGroup convertToMode(){
-    	int maxWinners;
-    	switch(championship.name){
-    	case "tree":
-    		maxWinners=1;
-    	case "championship":
-    		maxWinners=2;
-    	}
-    	return new TournamentGroup(numberMaxOfTeams,numberMaxOfTeams,championship,level,arena);
+    public TournamentGroup convertToMode() {
+        int maxWinners = 1;
+        switch (championship.name) {
+            case "tree":
+                maxWinners = 1;
+            case "championship":
+                maxWinners = 2;
+        }
+        return new TournamentGroup(numberMaxOfTeams, maxWinners, championship, level, arena);
     }
-    
+
     /**
      * ********************************************
      *
@@ -816,7 +823,7 @@ public class TournamentGroup extends Group implements Serializable {
      ***********************************************
      */
     /**
-     * Add the same action listener to all langugaes of the menu.
+     * Add Listeners
      *
      * @param al
      */
@@ -886,8 +893,7 @@ public class TournamentGroup extends Group implements Serializable {
         /*
          * for (Team t1 : this.teams) { boolean found = false; for (Team t2 :
          * other.teams) { t1.returnName().equals(t2.returnName()); found = true;
-         * break; } if (!found) { return false; }
-        }
+         * break; } if (!found) { return false; } }
          */
 
 
