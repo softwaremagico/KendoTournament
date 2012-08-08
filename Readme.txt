@@ -118,12 +118,13 @@ Thanks to
 The Kendo Club of the University of Valencia, for all lessons of kendo.
 Jos Maas for the dutch translation.
 Stefan Schürrle for the german translation.
-Jose Vicente Aparicio, for the translation to catalonian and valencian.
+Jose Vicente Aparicio, for the translation to catalonian.
+Paola Lonetti, for the translation to italian. 
 
 
 Others
 -------------------------
-Icons obtained of the Gartoon Gnome Icon Theme.
+Icons obtained of the Gartoon Gnome Icon Theme (by Zeus Box (Kuswanto)).
 
 
 More info
