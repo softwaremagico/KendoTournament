@@ -166,25 +166,10 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
                 for (int winners = 0; winners < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); winners++) {
                     if (designedGroupsOfNextLevel.size() > 1) {
-                        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("manual") || i > 0) {
-                            //    destination = (int) KendoTournamentGenerator.getInstance().fightManager.obtainPositonOfOneWinnerInTree(j, designedGroupsOfLevel.size()) / 2;
-                            /*
-                             * destination = (int)
-                             * KendoTournamentGenerator.getInstance().tournamentManager.obtainPositonOfOneWinnerInTournament(KendoTournamentGenerator.getInstance().tournamentManager.obtainGlobalPositionWinner(i,
-                             * designedGroupsOfLevel.get(j), winners),
-                             * KendoTournamentGenerator.getInstance().tournamentManager.getNumberOfTotalTeamsPassNextRound(i),
-                             * i);
-                             */
-                            destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsOfLevel.get(j), winners);
-                        } else {
-                            destination = KendoTournamentGenerator.getInstance().tournamentManager.returnPositionOfGroupInItsLevel(
-                                    KendoTournamentGenerator.getInstance().tournamentManager.obtainManualDestination(designedGroupsOfLevel.get(j), winners));
-                        }
+                        destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsOfLevel.get(j), winners);
                     } else {
                         destination = 0;
                     }
-                    //if(i==0)
-                    //System.out.println(j +"(" + winners + ")" + " -> " + destination);
                     if (destination < designedGroupsOfNextLevel.size() && destination >= 0) {
                         drawLink(g, designedGroupsOfLevel.get(j), designedGroupsOfNextLevel.get(destination), winners, j, destination, j < designedGroupsOfLevel.size() / 2);
                     }

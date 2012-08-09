@@ -41,7 +41,6 @@ public class TournamentGroupManager implements Serializable {
     private static final long serialVersionUID = 8486984938854712658L;
     private List<LevelGroups> levels;
     transient Tournament tournament;
-    private Links links;
     private final String FOLDER = "designer";
     public int default_max_winners = 1;
 
@@ -50,7 +49,6 @@ public class TournamentGroupManager implements Serializable {
             //mode = championship.mode;
             tournament = championship;
             // levels.add(0);
-            links = new Links();
             levels = new ArrayList<>();
         } catch (NullPointerException npe) {
             Log.severe("Error when creating a Tournament:" + this.getClass());
@@ -163,7 +161,7 @@ public class TournamentGroupManager implements Serializable {
      *
      * @param group group to complete relative to the level.
      */
-    private void fillGroupWithWinnersPreviousLevel(TournamentGroup group, ArrayList<Fight> fights, boolean resolvDraw) {
+    protected void fillGroupWithWinnersPreviousLevel(TournamentGroup group, ArrayList<Fight> fights, boolean resolvDraw) {
         updateScoreForTeams(fights);
         // TournamentGroup dg = tournamentGroups.get(groupIndex);
         if (group.getLevel() > 0) {
@@ -171,11 +169,7 @@ public class TournamentGroupManager implements Serializable {
             for (TournamentGroup previousGroup : groups) {
                 for (int winners = 0; winners < previousGroup.getMaxNumberOfWinners(); winners++) {
                     TournamentGroup destination;
-                    if (!getMode().equals("manual") || group.getLevel() - 1 > 0) {
-                        destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
-                    } else {
-                        destination = obtainManualDestination(previousGroup, winners);
-                    }
+                    destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
                     // System.out.println("Group:" + i + " winner:" + k + " destination: " + destination);
                     // If the searched dg's destination point to the group to complete, then means it is a source.
                     if (destination.equals(group)) {
@@ -354,6 +348,26 @@ public class TournamentGroupManager implements Serializable {
         return null;
     }
 
+    public boolean allGroupsHaveManualLink() {
+        if (!getMode().equals("manual")) {
+            return false;
+        } else {
+            return ((LevelGroupsManual)levels.get(0)).allGroupsHaveManualLink();
+        }
+    }
+    
+    public void cleanLinksSelectedGroup(){
+        if (getMode().equals("manual")) {
+            ((LevelGroupsManual)levels.get(0)).cleanLinksSelectedGroup();
+        }
+    }
+    
+    public void addLink(TournamentGroup source, TournamentGroup address){
+         if (getMode().equals("manual")) {
+             ((LevelGroupsManual)levels.get(0)).addLink(source, address);
+         }
+    }
+
     /**
      * ********************************************
      *
@@ -370,6 +384,8 @@ public class TournamentGroupManager implements Serializable {
                 return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
             case "championship":
                 return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+            case "manual":
+                return new LevelGroupsManual(tournament, level, nextLevel, previousLevel, groupManager);
         }
         return null;
     }
@@ -637,7 +653,7 @@ public class TournamentGroupManager implements Serializable {
                 // If no team exist in this group, means that we find the fightManager of a new group.
                 // Store the previous group.
                 if (teamsOfGroup.size() > 0) {
-                    TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(i).getMaxWinners(), tournament, level,
+                    TournamentGroup designedFight = new TournamentGroup(fightsOfLevel.get(i).getMaxWinners(), tournament, level,
                             fightsOfLevel.get(i - 1).asignedFightArea);
                     designedFight.addTeams(teamsOfGroup);
                     add(designedFight, false);
@@ -652,7 +668,7 @@ public class TournamentGroupManager implements Serializable {
         // Insert the last group.
         try {
             if (!fightsOfLevel.isEmpty()) {
-                TournamentGroup designedFight = new TournamentGroup(teamsOfGroup.size(), fightsOfLevel.get(fightsOfLevel.size() - 1).getMaxWinners(),
+                TournamentGroup designedFight = new TournamentGroup(fightsOfLevel.get(fightsOfLevel.size() - 1).getMaxWinners(),
                         tournament, level, fightsOfLevel.get(fightsOfLevel.size() - 1).asignedFightArea);
                 designedFight.addTeams(teamsOfGroup);
                 add(designedFight, false);
@@ -729,7 +745,6 @@ public class TournamentGroupManager implements Serializable {
     public void deleteUsedDesigner() {
         MyFile.deleteFile(FOLDER + File.separator + tournament.name + ".dsg");
     }
-
     /**
      * *************************************************************
      *
@@ -737,154 +752,4 @@ public class TournamentGroupManager implements Serializable {
      *
      **************************************************************
      */
-    /**
-     * Stores the arrows of the designer.
-     */
-    class Links implements Serializable {
-
-        private List<Link> links = new ArrayList<>();
-
-        Links() {
-        }
-
-        void add(TournamentGroup from, TournamentGroup to) {
-            if (to.getLevel() == from.getLevel() + 1) {
-                links.add(new Link(from, to));
-            }
-        }
-
-        int size() {
-            return links.size();
-        }
-
-        Link get(int index) {
-            return links.get(index);
-        }
-
-        void remove(int index) {
-            links.remove(index);
-        }
-
-        void showlinks() {
-            System.out.println("---");
-            for (int i = 0; i < links.size(); i++) {
-                System.out.println(" (" + returnPositionOfGroupInItsLevel(links.get(i).source) + ")" + " ("
-                        + returnPositionOfGroupInItsLevel(links.get(i).address) + ")");
-            }
-        }
-
-        class Link implements Serializable {
-
-            TournamentGroup source;
-            TournamentGroup address;
-
-            Link(TournamentGroup from, TournamentGroup to) {
-                source = from;
-                address = to;
-            }
-        }
-    }
-
-    void addLink(TournamentGroup from, TournamentGroup to) {
-        if (from.getLevel() == to.getLevel() - 1) {
-            if (numberOfSourcesOfLink(from) >= from.getMaxNumberOfWinners()) {
-                removefirstSourceLink(from);
-            }
-            if (numberOfAddressesOfLink(to) >= 2) {
-                removefirstAddressLink(to);
-            }
-            links.add(from, to);
-
-        }
-    }
-
-    int numberOfSourcesOfLink(TournamentGroup from) {
-        int number = 0;
-
-        for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(from)) {
-                number++;
-            }
-        }
-        return number;
-
-    }
-
-    int numberOfAddressesOfLink(TournamentGroup to) {
-        int number = 0;
-        for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).address.equals(to)) {
-                number++;
-            }
-        }
-        return number;
-
-    }
-
-    void removefirstSourceLink(TournamentGroup from) {
-        for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(from)) {
-                links.remove(i);
-                break;
-            }
-        }
-    }
-
-    void removefirstAddressLink(TournamentGroup to) {
-        for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).address.equals(to)) {
-                links.remove(i);
-                break;
-            }
-        }
-    }
-
-    boolean allGroupsHaveManualLink() {
-        try {
-            List<TournamentGroup> groupslvl = returnGroupsOfLevel(0);
-            for (int i = 0; i < groupslvl.size(); i++) {
-                boolean found = false;
-
-                for (int j = 0; j < links.size(); j++) {
-                    if (links.get(j).source.equals(groupslvl.get(i))) {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    return false;
-                }
-            }
-            return true;
-        } catch (NullPointerException npe) {
-            return false;
-        }
-    }
-
-    void cleanLinksSelectedGroup() {
-        try {
-            for (int i = 0; i < links.size(); i++) {
-                if (links.get(i).source.equals(getLastGroupSelected())) {
-                    links.remove(i);
-                    i--;
-                }
-            }
-        } catch (NullPointerException npe) {
-        }
-    }
-
-    TournamentGroup obtainManualDestination(TournamentGroup source, int winner) {
-        int found = 0; // Winners in the manual linking are stored by order.
-
-        for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(source)) {
-                if (found == winner) {
-                    return links.get(i).address;
-                }
-                found++;
-            }
-        }
-        return null;
-
-    }
 }

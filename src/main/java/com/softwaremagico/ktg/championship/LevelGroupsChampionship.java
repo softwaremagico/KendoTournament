@@ -37,10 +37,13 @@ public class LevelGroupsChampionship extends LevelGroups {
 
     @Override
     protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+        if (level > 0) {
+            return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+        }
         return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
-    private Integer obtainPositionOfOneWinnerInTreeLevelZeroPair(int branch, int branchs) {
+    private Integer obtainPositionOfOneWinnerPair(int branch, int branchs) {
         if (branch % 2 == 0) {
             return branch / 2;
         } else {
@@ -48,25 +51,22 @@ public class LevelGroupsChampionship extends LevelGroups {
         }
     }
 
-    private Integer obtainPositionOfOneWinnerInTreeLevelZeroOdd(int branch, int branchs) {
+    private Integer obtainPositionOfOneWinnerOdd(int branch, int branchs) {
         if (branch % 2 == 0) {
             return branch / 2;
         } else {
             return ((branch + 1) % branchs) / 2;
         }
     }
-
+   
     @Override
-    protected Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
-        if (level == 0) {
-            if ((size() % 2) == 0) {
-                return obtainPositionOfOneWinnerInTreeLevelZeroPair(branch, branchs);
-            } else {
-                return obtainPositionOfOneWinnerInTreeLevelZeroOdd(branch, branchs);
-            }
+    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
+        int winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
+        int winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
+        if ((size() % 2) == 0) {
+            return obtainPositionOfOneWinnerPair(winnerIndex, winnerTeams);
         } else {
-            return obtainPositionOfOneWinnerInTree(branch, branchs);
+            return obtainPositionOfOneWinnerOdd(winnerIndex, winnerTeams);
         }
-
     }
 }

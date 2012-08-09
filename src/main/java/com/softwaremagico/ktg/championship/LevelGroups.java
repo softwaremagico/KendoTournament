@@ -41,7 +41,7 @@ public abstract class LevelGroups {
 
     protected int level;
     private Tournament tournament;
-    private List<TournamentGroup> tournamentGroups;
+    protected List<TournamentGroup> tournamentGroups;
     private LevelGroups nextLevel;
     private LevelGroups previousLevel;
     protected TournamentGroupManager groupManager;
@@ -258,18 +258,19 @@ public abstract class LevelGroups {
 
     /**
      * Not in all levels the arenas used are the arenas available.
-     * @return 
+     *
+     * @return
      */
-    protected int getArenasUsed(){
+    protected int getArenasUsed() {
         List<Integer> arenas = new ArrayList<>();
-        for(int i=0; i<tournamentGroups.size();i++){
-            if(!arenas.contains(tournamentGroups.get(i).arena)){
+        for (int i = 0; i < tournamentGroups.size(); i++) {
+            if (!arenas.contains(tournamentGroups.get(i).arena)) {
                 arenas.add(tournamentGroups.get(i).arena);
             }
         }
         return arenas.size();
     }
-    
+
     /**
      *********************************************
      *
@@ -282,7 +283,7 @@ public abstract class LevelGroups {
      */
     protected void updateGroupsSize() {
         while ((previousLevel != null) && ((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
-            addGroup(new TournamentGroup(2, 1, tournament, level, 0), false);
+            addGroup(new TournamentGroup(1, tournament, level, 0), false);
         }
 
         // When we remove two groups in one level, we must remove one in the next one.
@@ -371,13 +372,7 @@ public abstract class LevelGroups {
         }
     }
 
-    protected abstract Integer getPositonOfOneWinnerInTournament(int branch, int branchs);
-
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
-        int winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..teams]
-        int winnerIndex = getGlobalPositionWinner(group, winner); // [0..teams-1]
-        return getPositonOfOneWinnerInTournament(winnerIndex, winnerTeams);
-    }
+    protected abstract Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner);
 
     protected TournamentGroup getGroupDestinationOfWinner(TournamentGroup group, int winner) {
         return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));
@@ -397,21 +392,21 @@ public abstract class LevelGroups {
     protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, int winner) {
         return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
     }
-    
-    public String levelInfo(){
-        String info = "Level: " + level +" Groups: ";
-        
-        for(TournamentGroup group: tournamentGroups){
-            info+=group.teams.size()+"\t";
+
+    public String levelInfo() {
+        String info = "Level: " + level + " Groups: ";
+
+        for (TournamentGroup group : tournamentGroups) {
+            info += group.teams.size() + "\t";
         }
-        
+
         return info;
     }
-    
-    public void showTree(){
+
+    public void showTree() {
         System.out.println(levelInfo());
-        if(nextLevel!=null){
+        if (nextLevel != null) {
             nextLevel.showTree();
-        }        
+        }
     }
 }

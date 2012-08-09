@@ -53,7 +53,7 @@ public class TournamentGroup extends Group implements Serializable {
     transient DesignGroupWindow dgw;
     public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
-    Integer numberMaxOfTeams;
+    //Integer numberMaxOfTeams;
     private Integer numberMaxOfWinners = 1;
     //Integer numberMaxOfWinnersLeague = 1;
     transient private Translator trans = null;
@@ -65,9 +65,9 @@ public class TournamentGroup extends Group implements Serializable {
     transient private boolean color = true;
     transient private java.awt.event.MouseAdapter ma;
 
-    TournamentGroup(Integer numberMaxOfTeams, Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
+    TournamentGroup(Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
         this.championship = championship;
-        this.numberMaxOfTeams = numberMaxOfTeams;
+        //this.numberMaxOfTeams = numberMaxOfTeams;
         this.level = level;
         this.arena = arena;
         setLayout(new GridBagLayout());
@@ -239,11 +239,6 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public void updateMaxNumberOfWinners(int value) {
-        if (value <= numberMaxOfTeams) {
-            numberMaxOfWinners = value;
-        } else {
-            numberMaxOfWinners = numberMaxOfTeams;
-        }
         if (numberMaxOfWinners < 1) {
             numberMaxOfWinners = 1;
         }
@@ -253,7 +248,10 @@ public class TournamentGroup extends Group implements Serializable {
         if (level > 0) {
             return 1;
         }
-        return numberMaxOfWinners;
+        if (numberMaxOfWinners <= teams.size()) {
+            return numberMaxOfWinners;
+        }
+        return teams.size();
     }
 
     public int getLevel() {
@@ -282,7 +280,7 @@ public class TournamentGroup extends Group implements Serializable {
             case "championship":
                 maxWinners = 2;
         }
-        return new TournamentGroup(numberMaxOfTeams, maxWinners, championship, level, arena);
+        return new TournamentGroup(maxWinners, championship, level, arena);
     }
 
     /**
@@ -298,8 +296,7 @@ public class TournamentGroup extends Group implements Serializable {
      * @param value
      */
     public void setNumberMaxOfTeams(int value) {
-        numberMaxOfTeams = value;
-        for (int i = numberMaxOfTeams; i < teams.size(); i++) {
+        for (int i = value; i < teams.size(); i++) {
             teams.remove(i);
         }
         update();

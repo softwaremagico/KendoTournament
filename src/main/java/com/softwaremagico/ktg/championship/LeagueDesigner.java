@@ -1,26 +1,21 @@
 package com.softwaremagico.ktg.championship;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *  
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *  
+ *
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import com.softwaremagico.ktg.*;
@@ -159,7 +154,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (KendoTournamentGenerator.getInstance().tournamentManager.sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
-                TournamentGroup designedFight = new TournamentGroup(obtainMaxNumberOfTeamsByGroup(), numberMaxOfWinners, championship, 0, defaultArena);
+                TournamentGroup designedFight = new TournamentGroup(numberMaxOfWinners, championship, 0, defaultArena);
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
                 KendoTournamentGenerator.getInstance().tournamentManager.add(designedFight, true);
                 designedFight.setSelected(KendoTournamentGenerator.getInstance().tournamentManager);
@@ -357,11 +352,16 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             refreshSpinner = false;
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("tree") || KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("tree")
+                    || KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
                 PassSpinner.setValue(1);
                 PassSpinner.setEnabled(false);
+            }
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("championship")) {
+                PassSpinner.setValue(2);
+                PassSpinner.setEnabled(false);
             } else {
-                //PassSpinner.setEnabled(true);
+                PassSpinner.setEnabled(true);
             }
             refreshSpinner = true;
 
@@ -1041,7 +1041,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (refreshMode && TreeRadioButton.isSelected()) {
                 numberMaxOfWinners = 1;
                 PassSpinner.setValue(numberMaxOfWinners);
-                KendoTournamentGenerator.getInstance().tournamentManager.setNumberOfTeamsPassNextRound(1);
+                KendoTournamentGenerator.getInstance().tournamentManager.setNumberOfTeamsPassNextRound(numberMaxOfWinners);
                 updateMode();
                 updateBlackBoard();
             }

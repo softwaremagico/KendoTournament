@@ -43,9 +43,11 @@ public class LevelGroupsTreeChampionship extends LevelGroups {
     protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
     }
-    
+
     @Override
-    protected Integer getPositonOfOneWinnerInTournament(int branch, int branchs) {
-       return obtainPositionOfOneWinnerInTree(branch, branchs);
+    protected  Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
+        int winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
+        int winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
+        return obtainPositionOfOneWinnerInTree(winnerIndex, winnerTeams);
     }
 }
