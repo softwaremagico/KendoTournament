@@ -23,6 +23,7 @@ package com.softwaremagico.ktg.championship;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import java.io.File;
@@ -102,11 +103,11 @@ public class TournamentGroupManager implements Serializable {
         return tournament;
     }
 
-    public String getMode() {
+    public TournamentTypes getMode() {
         return tournament.mode;
     }
 
-    public void setMode(String mode) {
+    public void setMode(TournamentTypes mode) {
         this.tournament.mode = mode;
     }
 
@@ -349,7 +350,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public boolean allGroupsHaveManualLink() {
-        if (!getMode().equals("manual")) {
+        if (!getMode().equals(TournamentTypes.MANUAL)) {
             return false;
         } else {
             return ((LevelGroupsManual)levels.get(0)).allGroupsHaveManualLink();
@@ -357,13 +358,13 @@ public class TournamentGroupManager implements Serializable {
     }
     
     public void cleanLinksSelectedGroup(){
-        if (getMode().equals("manual")) {
+        if (getMode().equals(TournamentTypes.MANUAL)) {
             ((LevelGroupsManual)levels.get(0)).cleanLinksSelectedGroup();
         }
     }
     
     public void addLink(TournamentGroup source, TournamentGroup address){
-         if (getMode().equals("manual")) {
+         if (getMode().equals(TournamentTypes.MANUAL)) {
              ((LevelGroupsManual)levels.get(0)).addLink(source, address);
          }
     }
@@ -380,11 +381,11 @@ public class TournamentGroupManager implements Serializable {
      */
     private LevelGroups getNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
         switch (getMode()) {
-            case "tree":
+            case LEAGUE_TREE:
                 return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
-            case "championship":
+            case CHAMPIONSHIP:
                 return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
-            case "manual":
+            case MANUAL:
                 return new LevelGroupsManual(tournament, level, nextLevel, previousLevel, groupManager);
         }
         return null;
@@ -529,7 +530,7 @@ public class TournamentGroupManager implements Serializable {
 
         for (int i = 0; i < groups.size(); i++) {
             if (answer) {
-                if (!getMode().equals("manual") || level > 0) {
+                if (!getMode().equals(TournamentTypes.MANUAL) || level > 0) {
                     arena = i / (int) Math.ceil((double) getSizeOfLevel(level) / (double) tournament.fightingAreas);
                 } else {
                     // grouped by the destination group of the next level.

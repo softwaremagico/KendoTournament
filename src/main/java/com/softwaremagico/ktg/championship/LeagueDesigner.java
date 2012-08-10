@@ -1,21 +1,26 @@
 package com.softwaremagico.ktg.championship;
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
+ *  
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *
+ *  
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *
+ *  
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 
 import com.softwaremagico.ktg.*;
@@ -89,7 +94,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         PassLabel.setText(trans.returnTag("PassLabel"));
         AddButton.setText(trans.returnTag("AddGroupButton"));
         DeleteButton.setText(trans.returnTag("DeleteGroupButton"));
-        CleanButton.setText(trans.returnTag("CleanButton"));
+        DeleteTeamsButton.setText(trans.returnTag("CleanButton"));
         DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
         AddTeamButton.setText(trans.returnTag("AddTeamButton"));
         AcceptButton.setText(trans.returnTag("GenerateMatchButton"));
@@ -198,17 +203,18 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void cleanSelectedPanel() {
+    private void DeleteTeamsOfSelectedPanel() {
         try {
             for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
                 if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).isSelected()) {
                     KendoTournamentGenerator.getInstance().tournamentManager.get(i).deleteTeams();
                 }
-
             }
             updateTeams();
         } catch (NullPointerException npe) {
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
+        updateBlackBoard();
     }
 
     private Team returnTeamByName(String name) {
@@ -259,7 +265,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(TournamentComboBox.getSelectedItem().toString(), false);
 
-            if (!championship.mode.equals("simple")) {
+            if (!championship.mode.equals(TournamentTypes.SIMPLE)) {
                 //If it is not stored in a file, generate it. 
                 KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
             }
@@ -277,7 +283,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     void updateBlackBoard() {
         try {
             Integer select = KendoTournamentGenerator.getInstance().tournamentManager.getIndexLastSelected();
-            if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+            if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
                 bbp.updateBlackBoard(TournamentComboBox.getSelectedItem().toString(), false);
                 KendoTournamentGenerator.getInstance().tournamentManager.enhance(false);
             } else {
@@ -297,9 +303,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void consistentTree() {
         try {
             //It is impossible in a tree league that are more than one winner. If it is, change to a tournament.
-            if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners > 1 && KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("tree")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners > 1 && KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.LEAGUE_TREE)) {
                 ChampionshipRadioButton.setSelected(true);
-                KendoTournamentGenerator.getInstance().tournamentManager.setMode("championship");
+                KendoTournamentGenerator.getInstance().tournamentManager.setMode(TournamentTypes.CHAMPIONSHIP);
                 championship.mode = KendoTournamentGenerator.getInstance().tournamentManager.getMode();
                 updateBlackBoard();
             }
@@ -309,16 +315,16 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateRadioButton() {
         switch (KendoTournamentGenerator.getInstance().tournamentManager.getMode()) {
-            case "championship":
+            case CHAMPIONSHIP:
                 ChampionshipRadioButton.setSelected(true);
                 break;
-            case "manual":
+            case MANUAL:
                 ManualRadioButton.setSelected(true);
                 break;
-            case "tree":
+            case LEAGUE_TREE:
                 TreeRadioButton.setSelected(true);
                 break;
-            case "simple":
+            case SIMPLE:
                 SimpleRadioButton.setSelected(true);
                 break;
         }
@@ -326,22 +332,22 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateMode() {
         try {
-            String oldMode = KendoTournamentGenerator.getInstance().tournamentManager.getMode();
+            TournamentTypes oldMode = KendoTournamentGenerator.getInstance().tournamentManager.getMode();
             if (ManualRadioButton.isSelected()) {
-                KendoTournamentGenerator.getInstance().tournamentManager.setMode("manual");
-                championship.mode = "manual";
+                KendoTournamentGenerator.getInstance().tournamentManager.setMode(TournamentTypes.MANUAL);
+                championship.mode = TournamentTypes.MANUAL;
                 CleanLinksButton.setVisible(true);
             } else if (ChampionshipRadioButton.isSelected()) {
-                KendoTournamentGenerator.getInstance().tournamentManager.setMode("championship");
-                championship.mode = "championship";
+                KendoTournamentGenerator.getInstance().tournamentManager.setMode(TournamentTypes.CHAMPIONSHIP);
+                championship.mode = TournamentTypes.CHAMPIONSHIP;
                 CleanLinksButton.setVisible(false);
             } else if (TreeRadioButton.isSelected()) {
-                KendoTournamentGenerator.getInstance().tournamentManager.setMode("tree");
-                championship.mode = "tree";
+                KendoTournamentGenerator.getInstance().tournamentManager.setMode(TournamentTypes.LEAGUE_TREE);
+                championship.mode = TournamentTypes.LEAGUE_TREE;
                 CleanLinksButton.setVisible(false);
             } else if (SimpleRadioButton.isSelected()) {
-                KendoTournamentGenerator.getInstance().tournamentManager.setMode("simple");
-                championship.mode = "simple";
+                KendoTournamentGenerator.getInstance().tournamentManager.setMode(TournamentTypes.SIMPLE);
+                championship.mode = TournamentTypes.SIMPLE;
                 CleanLinksButton.setVisible(false);
             }
 
@@ -352,12 +358,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             refreshSpinner = false;
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("tree")
-                    || KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.LEAGUE_TREE)
+                    || KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
                 PassSpinner.setValue(1);
                 PassSpinner.setEnabled(false);
             }
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("championship")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.CHAMPIONSHIP)) {
                 PassSpinner.setValue(2);
                 PassSpinner.setEnabled(false);
             } else {
@@ -366,11 +372,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
             refreshSpinner = true;
 
 
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
                 AddButton.setVisible(false);
                 DeleteButton.setVisible(false);
                 DeleteAllButton.setVisible(false);
-                CleanButton.setVisible(false);
+                DeleteTeamsButton.setVisible(false);
                 AddTeamButton.setVisible(false);
                 AcceptButton.setVisible(false);
                 bbp.clearBlackBoard();
@@ -378,7 +384,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 AddButton.setVisible(true);
                 DeleteButton.setVisible(true);
                 DeleteAllButton.setVisible(true);
-                CleanButton.setVisible(true);
+                DeleteTeamsButton.setVisible(true);
                 AddTeamButton.setVisible(true);
                 AcceptButton.setVisible(true);
             }
@@ -482,9 +488,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             group.setSelected(KendoTournamentGenerator.getInstance().tournamentManager);
-        } else {
+        } else if (group.getLevel() == 1) {
             //Clicking in the second level is only useful for defining links. 
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("manual")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.MANUAL)) {
                 KendoTournamentGenerator.getInstance().tournamentManager.addLink(KendoTournamentGenerator.getInstance().tournamentManager.getLastGroupSelected(), group);
                 updateBlackBoard();
             }
@@ -531,7 +537,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         TeamScrollPane = new javax.swing.JScrollPane();
         TeamList = new javax.swing.JList<String>();
         AddTeamButton = new javax.swing.JButton();
-        CleanButton = new javax.swing.JButton();
+        DeleteTeamsButton = new javax.swing.JButton();
         CleanLinksButton = new javax.swing.JButton();
         GroupEditionLabel = new javax.swing.JLabel();
         ButtonPanel = new javax.swing.JPanel();
@@ -749,10 +755,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
         });
 
-        CleanButton.setText("Clear");
-        CleanButton.addActionListener(new java.awt.event.ActionListener() {
+        DeleteTeamsButton.setText("Clear");
+        DeleteTeamsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CleanButtonActionPerformed(evt);
+                DeleteTeamsButtonActionPerformed(evt);
             }
         });
 
@@ -775,14 +781,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(GroupEditionLabel)
                     .addComponent(AddTeamButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CleanButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteTeamsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CleanLinksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TeamScrollPane)
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AddTeamButton, CleanButton, CleanLinksButton});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AddTeamButton, CleanLinksButton, DeleteTeamsButton});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -794,14 +800,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(AddTeamButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CleanButton)
+                        .addComponent(DeleteTeamsButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CleanLinksButton))
                     .addComponent(TeamScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {AddTeamButton, CleanButton, CleanLinksButton});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {AddTeamButton, CleanLinksButton, DeleteTeamsButton});
 
         AcceptButton.setText("Accept");
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
@@ -906,9 +912,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
         updateBlackBoard();
     }//GEN-LAST:event_AddTeamButtonActionPerformed
 
-    private void CleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanButtonActionPerformed
-        cleanSelectedPanel();
-    }//GEN-LAST:event_CleanButtonActionPerformed
+    private void DeleteTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteTeamsButtonActionPerformed
+        DeleteTeamsOfSelectedPanel();
+    }//GEN-LAST:event_DeleteTeamsButtonActionPerformed
 
     private void PassSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PassSpinnerStateChanged
         try {
@@ -935,7 +941,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeamListMouseClicked
-        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }
@@ -956,7 +962,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
-            if (!(KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("manual")) || KendoTournamentGenerator.getInstance().tournamentManager.allGroupsHaveManualLink()) {
+            if (!(KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.MANUAL)) || KendoTournamentGenerator.getInstance().tournamentManager.allGroupsHaveManualLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
                     Log.finer("Deleting old fights");
                     KendoTournamentGenerator.getInstance().fightManager.deleteAllFights(championship.name, false);
@@ -1107,13 +1113,13 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JPanel ButtonPanel;
     private javax.swing.JPanel ChampionshipPanel;
     private javax.swing.JRadioButton ChampionshipRadioButton;
-    private javax.swing.JButton CleanButton;
     private javax.swing.JButton CleanLinksButton;
     private javax.swing.JButton CloseButton;
     private javax.swing.JButton DeleteAllButton;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton DeleteLevelButton;
     private javax.swing.JLabel DeleteLevelLabel;
+    private javax.swing.JButton DeleteTeamsButton;
     private javax.swing.JLabel GroupEditionLabel;
     private javax.swing.JComboBox<String> LevelComboBox;
     private javax.swing.JButton LoadButton;

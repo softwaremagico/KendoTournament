@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.championship.TournamentGroup;
 import com.softwaremagico.ktg.championship.TournamentGroupManager;
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.util.List;
 
@@ -137,7 +138,7 @@ public class FightListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (championship.mode.equals("simple")) {
+        if (championship.mode.equals(TournamentTypes.SIMPLE)) {
             simpleTable(mainTable);
         } else {
             championshipTable(mainTable);

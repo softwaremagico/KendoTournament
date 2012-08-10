@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.championship.BlackBoardPanel;
+import com.softwaremagico.ktg.TournamentTypes;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -60,7 +61,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
     }
 
     public void updateBlackBoard(String championship, boolean refill) {
-        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals("simple")) {
+        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
             KendoTournamentGenerator.getInstance().tournamentManager.color(true);
             KendoTournamentGenerator.getInstance().tournamentManager.update();
             bbp.updateBlackBoard(championship, refill);

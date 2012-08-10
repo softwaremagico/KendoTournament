@@ -47,17 +47,17 @@ public class Tournament implements Serializable {
     public int fightingAreas;
     public int howManyTeamsOfGroupPassToTheTree;
     public int teamSize;
-    public String mode;    //simple, championship, manual, tree
+    public TournamentTypes mode;    //simple, championship, manual, tree
     private float scoreForWin = 1;
     private float scoreForDraw = 0;
     private String choosedScore = "European";
 
-    public Tournament(String tmp_name, int areas, int passingTeams, int tmp_teamSize, String tmp_mode) {
-        name = tmp_name;
+    public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentTypes mode) {
+        this.name = name;
         fightingAreas = areas;
         howManyTeamsOfGroupPassToTheTree = passingTeams;
-        teamSize = tmp_teamSize;
-        mode = tmp_mode;
+        this.teamSize = teamSize;
+        this.mode = mode;
     }
 
     public void addBanner(InputStream tmp_photo, long size) {

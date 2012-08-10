@@ -1601,7 +1601,7 @@ public abstract class SQL extends Database {
                         stmt.setInt(4, tournament.fightingAreas);
                         stmt.setInt(5, tournament.howManyTeamsOfGroupPassToTheTree);
                         stmt.setInt(6, tournament.teamSize);
-                        stmt.setString(7, tournament.mode);
+                        stmt.setString(7, tournament.mode.getSqlName());
                         stmt.setFloat(8, tournament.getScoreForWin());
                         stmt.setFloat(9, tournament.getScoreForDraw());
                         stmt.setString(10, tournament.getChoosedScore());
@@ -1695,7 +1695,7 @@ public abstract class SQL extends Database {
                     stmt.setInt(3, tournament.fightingAreas);
                     stmt.setInt(4, tournament.howManyTeamsOfGroupPassToTheTree);
                     stmt.setInt(5, tournament.teamSize);
-                    stmt.setString(6, tournament.mode);
+                    stmt.setString(6, tournament.mode.getSqlName());
                     stmt.setFloat(7, tournament.getScoreForWin());
                     stmt.setFloat(8, tournament.getScoreForDraw());
                     stmt.setString(9, tournament.getChoosedScore());
@@ -1737,7 +1737,7 @@ public abstract class SQL extends Database {
             try (Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
                 while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
+                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                     InputStream sImage = getBinaryStream(rs, "Banner");
                     Long size = rs.getLong("Size");
@@ -1791,7 +1791,7 @@ public abstract class SQL extends Database {
             try (Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM tournament WHERE Name='" + tournamentName + "' ")) {
                 rs.next();
-                t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
+                t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
                 t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                 InputStream sImage = getBinaryStream(rs, "Banner");
                 Long size = rs.getLong("Size");
@@ -1822,7 +1822,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), rs.getObject("Type").toString());
+                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                     InputStream sImage = (InputStream) getBinaryStream(rs, "Banner");
                     Long size = rs.getLong("Size");

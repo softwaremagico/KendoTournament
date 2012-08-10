@@ -274,10 +274,10 @@ public class TournamentGroup extends Group implements Serializable {
 
     public TournamentGroup convertToMode() {
         int maxWinners = 1;
-        switch (championship.name) {
-            case "tree":
+        switch (championship.mode) {
+            case LEAGUE_TREE:
                 maxWinners = 1;
-            case "championship":
+            case CHAMPIONSHIP:
                 maxWinners = 2;
         }
         return new TournamentGroup(maxWinners, championship, level, arena);

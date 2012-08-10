@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -138,7 +139,7 @@ public class NewTournament extends KendoFrame {
 
     public boolean storeTournament() {
         if (NameTextField.getText().length() > 0) {
-            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), "simple");
+            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentTypes.SIMPLE);
             tournament.addBanner(banner.photoInput, banner.size);
             //Store tournament into database
             if (KendoTournamentGenerator.getInstance().database.storeTournament(tournament, true)) {
@@ -374,7 +375,7 @@ public class NewTournament extends KendoFrame {
 
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
-            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), "simple");
+            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentTypes.SIMPLE);
 
             try {
                 String file;

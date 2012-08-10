@@ -1226,7 +1226,7 @@ public class Controller {
 
             try {
                 Tournament championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(selectTournamentForTreeMonitor.returnSelectedTournamentName(), true);
-                if (championship.mode.equals("championship") || championship.mode.equals("tree")) {
+                if (championship.mode.equals(TournamentTypes.CHAMPIONSHIP) || championship.mode.equals(TournamentTypes.LEAGUE_TREE)) {
                     monitorTree = new MonitorTree(championship);
                     monitorTree.setVisible(true);
                     monitorTree.setExtendedState(monitorTree.getExtendedState() | JFrame.MAXIMIZED_BOTH);

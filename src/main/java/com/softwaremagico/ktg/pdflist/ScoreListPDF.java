@@ -35,6 +35,7 @@ import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.championship.TournamentGroup;
 import com.softwaremagico.ktg.championship.TournamentGroupManager;
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.List;
@@ -136,7 +137,7 @@ public class ScoreListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (championship.mode.equals("simple")) {
+        if (championship.mode.equals(TournamentTypes.SIMPLE)) {
             mainTable = simpleTable(mainTable);
         } else {
             mainTable = championshipTable(mainTable);

@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.championship.TournamentGroup;
 import com.softwaremagico.ktg.championship.TournamentGroupManager;
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
@@ -113,7 +114,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void hideTreeButton() {
         try {
-            if (KendoTournamentGenerator.getInstance().tournamentManager.size() > 1 && !selectedTournament.mode.equals("simple")) {
+            if (KendoTournamentGenerator.getInstance().tournamentManager.size() > 1 && !selectedTournament.mode.equals(TournamentTypes.SIMPLE)) {
                 TreeButton.setVisible(true);
             } else {
                 TreeButton.setVisible(false);
@@ -571,7 +572,7 @@ public final class FightPanel extends javax.swing.JFrame {
             Log.debug("Current number of fights over: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
 
             //If championship or similar...
-            if (!selectedTournament.mode.equals("simple") && KendoTournamentGenerator.getInstance().tournamentManager.size() > 1) {
+            if (!selectedTournament.mode.equals(TournamentTypes.SIMPLE) && KendoTournamentGenerator.getInstance().tournamentManager.size() > 1) {
                 TournamentGroup currentGroup = KendoTournamentGenerator.getInstance().tournamentManager.getGroupOfFight(currentFight);
                 //Show scores, messages, etc. 
                 messagesFinishedGroup(currentGroup);

@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -462,7 +463,7 @@ public class NewRingTournament extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().database.storeFights(obtainRingFightsWithoutRepetition(), true, true);
             }
             KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(competition.name, listTeams);
-            competition.mode = "simple";
+            competition.mode = TournamentTypes.SIMPLE;
             KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
             this.dispose();
         } else {
