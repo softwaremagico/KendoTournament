@@ -29,18 +29,18 @@ import com.softwaremagico.ktg.Tournament;
  *
  * @author jhortelano
  */
-public class LevelGroupsChampionship extends LevelGroups {
+public class LeagueLevelChampionship extends LeagueLevel {
 
-    LevelGroupsChampionship(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         super(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
     @Override
-    protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         if (level > 0) {
-            return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel, groupManager);
         }
-        return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+        return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
     private Integer obtainPositionOfOneWinnerPair(int branch, int branchs) {

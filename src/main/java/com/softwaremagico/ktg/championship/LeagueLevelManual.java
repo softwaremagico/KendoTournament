@@ -36,11 +36,11 @@ import java.util.List;
  *
  * @author jhortelano
  */
-public class LevelGroupsManual extends LevelGroups {
+public class LeagueLevelManual extends LeagueLevel {
 
     private Links links;
 
-    public LevelGroupsManual(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    public LeagueLevelManual(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         super(tournament, level, nextLevel, previousLevel, groupManager);
         links = new Links();
     }
@@ -65,12 +65,12 @@ public class LevelGroupsManual extends LevelGroups {
     }
 
     @Override
-    protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         //Only first level is particular. 
         if (level > 0) {
-            return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel, groupManager);
         }
-        return new LevelGroupsManual(tournament, level, nextLevel, previousLevel, groupManager);
+        return new LeagueLevelManual(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
     @Override

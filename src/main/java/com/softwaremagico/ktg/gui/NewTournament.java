@@ -70,7 +70,7 @@ public class NewTournament extends KendoFrame {
         NameLabel.setText(trans.returnTag("NameTournamentLabel"));
         NumberCompetitorsLabel.setText(trans.returnTag("NumberLabel"));
         BannerLabel.setText(trans.returnTag("BannerLabel"));
-        FightingAreasLabel.setText(trans.returnTag("FightingAreas"));
+        FightingAreasLabel.setText(trans.returnTag("FightingArea"));
         PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
         SearchButton.setText(trans.returnTag("SearchButton"));
     }

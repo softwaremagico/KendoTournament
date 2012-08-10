@@ -37,16 +37,16 @@ import java.util.List;
  *
  * @author jorge
  */
-public abstract class LevelGroups {
+public abstract class LeagueLevel {
 
     protected int level;
     private Tournament tournament;
     protected List<TournamentGroup> tournamentGroups;
-    private LevelGroups nextLevel;
-    private LevelGroups previousLevel;
+    private LeagueLevel nextLevel;
+    private LeagueLevel previousLevel;
     protected TournamentGroupManager groupManager;
 
-    LevelGroups(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    LeagueLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         this.tournament = tournament;
         tournamentGroups = new ArrayList<>();
         this.level = level;
@@ -295,7 +295,7 @@ public abstract class LevelGroups {
         }
     }
 
-    protected abstract LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel,
+    protected abstract LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel,
             TournamentGroupManager groupManager);
 
     protected void addGroup(TournamentGroup group) {

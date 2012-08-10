@@ -1054,7 +1054,7 @@
 		<nl>ID-nummer</nl>
 		<de>ID/Passnummer:</de>
 		<ca>DNI/Passaport:</ca>
-		<it>Carta D'Identitá/Passaporto:</it>
+		<it>Carta D'Identitá:</it>
 	</IDLabel>
 	<RepresentativeLabel>
 		<en>Representative:</en>
@@ -1089,7 +1089,7 @@
 		<it>Club:</it>
 	</ClubLabel>
 	<FightArea>
-		<en>Fight Area:</en>
+		<en>Shiaijo:</en>
 		<es>Shiaijo:</es>
 		<nl>Wedstrijdveld</nl>
 		<de>Shiaijo:</de>
@@ -1160,14 +1160,6 @@
 		<ca>Patrocinador</ca>
 		<it>Sponsor:</it>
 	</BannerLabel>
-	<FightingAreas>
-		<en>Fighting Areas:</en>
-		<es>Shiaijo:</es>
-		<nl>Wedstrijdveld:</nl>
-		<de>Shiaijo:</de>
-		<ca>Shiaijo:</ca>
-		<it>Shiaijo:</it>
-	</FightingAreas>
 	<PhotoLabel>
 		<en>Photo:</en>
 		<es>Foto:</es>
@@ -1432,21 +1424,13 @@
 		<ca>Simple</ca>
 		<it>Semplice</it>
 	</SimpleRadioButton>
-	<ArenaLabel>
-		<en>Arena:</en>
-		<es>Shiaijo:</es>
-		<nl>Wedstrijdveld:</nl>
-		<de>Shiaijo:</de>
-		<ca>Shiaijo:</ca>
-		<it>Shiaijo:</it>
-	</ArenaLabel>
 	<ArenaString>
-		<en>Arena</en>
+		<en>Shiaijo</en>
 		<es>Shiaijo</es>
 		<nl>Wedstrijdveld</nl>
-		<de>Shiaijo:</de>
-		<ca>Shiaijo:</ca>
-		<it>Shiaijo:</it>
+		<de>Shiaijo</de>
+		<ca>Shiaijo</ca>
+		<it>Shiaijo</it>
 	</ArenaString>
 	<CleanLinks>
 		<en>Clean winners</en>

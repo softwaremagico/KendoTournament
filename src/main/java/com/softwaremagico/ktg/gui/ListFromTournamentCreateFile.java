@@ -61,7 +61,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        ArenaLabel.setText(trans.returnTag("ArenaLabel"));
+        ArenaLabel.setText(trans.returnTag("FightArea"));
         CancelButton.setText(trans.returnTag("CancelButton"));
         GenerateButton.setText(trans.returnTag("GenerateButton"));
     }

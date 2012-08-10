@@ -74,7 +74,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
         DeleteButton.setText(trans.returnTag("DeleteButton"));
         DownButton.setText(trans.returnTag("DownButton"));
         PassLabel.setText(trans.returnTag("PassLabel"));
-        ArenaLabel.setText(trans.returnTag("ArenaLabel"));
+        ArenaLabel.setText(trans.returnTag("FightArea"));
         ShowButton.setText(trans.returnTag("ShowTeam"));
         CloseButton.setText(trans.returnTag("CloseButton"));
         TeamLabel.setText(trans.returnTag("Teams"));

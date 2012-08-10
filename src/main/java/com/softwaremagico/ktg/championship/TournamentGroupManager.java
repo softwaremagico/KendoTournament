@@ -39,7 +39,7 @@ import javax.swing.JOptionPane;
 public class TournamentGroupManager implements Serializable {
 
     private static final long serialVersionUID = 8486984938854712658L;
-    private List<LevelGroups> levels;
+    private List<LeagueLevel> levels;
     transient Tournament tournament;
     private final String FOLDER = "designer";
     public int default_max_winners = 1;
@@ -61,13 +61,13 @@ public class TournamentGroupManager implements Serializable {
         levels.add(getNewLevelZero(tournament, null, null, this));
     }
 
-    public List<LevelGroups> getLevels() {
+    public List<LeagueLevel> getLevels() {
         return levels;
     }
 
     public void update() {
         Log.debug("Current number of fights over before updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             level.updateGroups();
         }
         Log.debug("Current number of fights over after updating design groups: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
@@ -87,13 +87,13 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void enhance(boolean yes) {
-        for (LevelGroups l : levels) {
+        for (LeagueLevel l : levels) {
             l.enhanceGroups(yes);
         }
     }
 
     public void onlyShow() {
-        for (LevelGroups l : levels) {
+        for (LeagueLevel l : levels) {
             l.onlyShow();
         }
     }
@@ -230,7 +230,7 @@ public class TournamentGroupManager implements Serializable {
     public TournamentGroup get(int index) {
         List<TournamentGroup> tournamentGroups = new ArrayList<>();
 
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             tournamentGroups.addAll(level.getGroups());
         }
 
@@ -248,14 +248,14 @@ public class TournamentGroupManager implements Serializable {
 
     public int size() {
         int size = 0;
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             size += level.size();
         }
         return size;
     }
 
     public Integer returnIndexOfGroup(TournamentGroup group) {
-        LevelGroups level = levels.get(group.getLevel());
+        LeagueLevel level = levels.get(group.getLevel());
         return level.getIndexOfGroup(group);
     }
 
@@ -352,19 +352,19 @@ public class TournamentGroupManager implements Serializable {
         if (!getMode().equals(TournamentTypes.MANUAL)) {
             return false;
         } else {
-            return ((LevelGroupsManual) levels.get(0)).allGroupsHaveManualLink();
+            return ((LeagueLevelManual) levels.get(0)).allGroupsHaveManualLink();
         }
     }
 
     public void cleanLinksSelectedGroup() {
         if (getMode().equals(TournamentTypes.MANUAL)) {
-            ((LevelGroupsManual) levels.get(0)).removeLinksSelectedGroup();
+            ((LeagueLevelManual) levels.get(0)).removeLinksSelectedGroup();
         }
     }
 
     public void addLink(TournamentGroup source, TournamentGroup address) {
         if (getMode().equals(TournamentTypes.MANUAL)) {
-            ((LevelGroupsManual) levels.get(0)).addLink(source, address);
+            ((LeagueLevelManual) levels.get(0)).addLink(source, address);
         }
     }
 
@@ -378,14 +378,14 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Create a new level.
      */
-    private LevelGroups getNewLevelZero(Tournament tournament, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    private LeagueLevel getNewLevelZero(Tournament tournament, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
             switch (getMode()) {
                 case LEAGUE_TREE:
-                    return new LevelGroupsTreeChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
+                    return new LeagueLevelTree(tournament, 0, nextLevel, previousLevel, groupManager);
                 case CHAMPIONSHIP:
-                    return new LevelGroupsChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
+                    return new LeagueLevelChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
                 case MANUAL:
-                    return new LevelGroupsManual(tournament, 0, nextLevel, previousLevel, groupManager);
+                    return new LeagueLevelManual(tournament, 0, nextLevel, previousLevel, groupManager);
             }
         return null;
     }
@@ -397,7 +397,7 @@ public class TournamentGroupManager implements Serializable {
      * @param levelToCreate
      * @return
      */
-    /*private LevelGroups createNextLevel(int levelToCreate) {
+    /*private LeagueLevel createNextLevel(int levelToCreate) {
         if (levelToCreate == 0) {
             return getNewLevel(tournament, levelToCreate, null, null, this);
         } else {
@@ -410,7 +410,7 @@ public class TournamentGroupManager implements Serializable {
      *
      * @param oldLevels
      */
-    public void convertFirstLevelsToCurrentChampionship(LevelGroups oldLevelZero) {
+    public void convertFirstLevelsToCurrentChampionship(LeagueLevel oldLevelZero) {
         levels = new ArrayList<>();
 
         if (oldLevelZero != null) {
@@ -431,7 +431,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     protected void emptyInnerLevels() {
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             level.deleteTeams();
         }
     }
@@ -545,7 +545,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void updateScoreForTeams(ArrayList<Fight> fights) {
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             level.updateScoreOfTeams(fights);
         }
     }
@@ -734,7 +734,7 @@ public class TournamentGroupManager implements Serializable {
     public boolean load(Tournament tournament) {
         this.tournament = tournament;
 
-        for (LevelGroups level : levels) {
+        for (LeagueLevel level : levels) {
             if (!level.loadLevel(tournament)) {
                 return false;
             }

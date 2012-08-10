@@ -33,15 +33,15 @@ import com.softwaremagico.ktg.Tournament;
  *
  * @author jhortelano
  */
-public class LevelGroupsTreeChampionship extends LevelGroups {
+public class LeagueLevelTree extends LeagueLevel {
 
-    LevelGroupsTreeChampionship(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+    LeagueLevelTree(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         super(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
     @Override
-    protected LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
-        return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
+        return new LeagueLevelTree(tournament, level, nextLevel, previousLevel, groupManager);
     }
 
     @Override

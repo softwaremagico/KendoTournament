@@ -372,7 +372,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
             //Mode has changed. Update Levels
             if (!oldMode.equals(KendoTournamentGenerator.getInstance().tournamentManager.getMode()) && KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() > 0) {
-                LevelGroups levelZero = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(0);
+                LeagueLevel levelZero = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(0);
                 KendoTournamentGenerator.getInstance().tournamentManager.convertFirstLevelsToCurrentChampionship(levelZero);
             }
 
