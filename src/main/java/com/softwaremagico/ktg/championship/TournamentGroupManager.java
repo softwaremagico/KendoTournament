@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.championship;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import java.io.File;
@@ -59,7 +58,7 @@ public class TournamentGroupManager implements Serializable {
     public void createLevelZero() {
         // Create level zero.
         levels = new ArrayList<>();
-        levels.add(getNewLevel(tournament, 0, null, null, this));
+        levels.add(getNewLevelZero(tournament, null, null, this));
     }
 
     public List<LevelGroups> getLevels() {
@@ -219,7 +218,7 @@ public class TournamentGroupManager implements Serializable {
     public void add(TournamentGroup group, boolean selected) {
         // Intermediate level
         if (levels.isEmpty()) {
-            levels.add(getNewLevel(tournament, 0, null, null, this));
+            levels.add(getNewLevelZero(tournament, null, null, this));
         }
         if (group.getLevel() == 0 && selected && getIndexLastSelected() != null) {
             levels.get(group.getLevel()).addGroup(group, getIndexLastSelected() + 1);
@@ -353,20 +352,20 @@ public class TournamentGroupManager implements Serializable {
         if (!getMode().equals(TournamentTypes.MANUAL)) {
             return false;
         } else {
-            return ((LevelGroupsManual)levels.get(0)).allGroupsHaveManualLink();
+            return ((LevelGroupsManual) levels.get(0)).allGroupsHaveManualLink();
         }
     }
-    
-    public void cleanLinksSelectedGroup(){
+
+    public void cleanLinksSelectedGroup() {
         if (getMode().equals(TournamentTypes.MANUAL)) {
-            ((LevelGroupsManual)levels.get(0)).cleanLinksSelectedGroup();
+            ((LevelGroupsManual) levels.get(0)).removeLinksSelectedGroup();
         }
     }
-    
-    public void addLink(TournamentGroup source, TournamentGroup address){
-         if (getMode().equals(TournamentTypes.MANUAL)) {
-             ((LevelGroupsManual)levels.get(0)).addLink(source, address);
-         }
+
+    public void addLink(TournamentGroup source, TournamentGroup address) {
+        if (getMode().equals(TournamentTypes.MANUAL)) {
+            ((LevelGroupsManual) levels.get(0)).addLink(source, address);
+        }
     }
 
     /**
@@ -379,15 +378,15 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Create a new level.
      */
-    private LevelGroups getNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
-        switch (getMode()) {
-            case LEAGUE_TREE:
-                return new LevelGroupsTreeChampionship(tournament, level, nextLevel, previousLevel, groupManager);
-            case CHAMPIONSHIP:
-                return new LevelGroupsChampionship(tournament, level, nextLevel, previousLevel, groupManager);
-            case MANUAL:
-                return new LevelGroupsManual(tournament, level, nextLevel, previousLevel, groupManager);
-        }
+    private LevelGroups getNewLevelZero(Tournament tournament, LevelGroups nextLevel, LevelGroups previousLevel, TournamentGroupManager groupManager) {
+            switch (getMode()) {
+                case LEAGUE_TREE:
+                    return new LevelGroupsTreeChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
+                case CHAMPIONSHIP:
+                    return new LevelGroupsChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
+                case MANUAL:
+                    return new LevelGroupsManual(tournament, 0, nextLevel, previousLevel, groupManager);
+            }
         return null;
     }
 
@@ -398,13 +397,13 @@ public class TournamentGroupManager implements Serializable {
      * @param levelToCreate
      * @return
      */
-    private LevelGroups createNextLevel(int levelToCreate) {
+    /*private LevelGroups createNextLevel(int levelToCreate) {
         if (levelToCreate == 0) {
             return getNewLevel(tournament, levelToCreate, null, null, this);
         } else {
             return getNewLevel(tournament, levelToCreate, null, levels.get(levels.size() - 1), this);
         }
-    }
+    }*/
 
     /**
      * Convert level zero to championship or tree league.
@@ -624,9 +623,9 @@ public class TournamentGroupManager implements Serializable {
             // Fill levels with fights defined.
             int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
             for (int i = 0; i <= maxFightLevel; i++) {
-                if (i >= levels.size()) {   //LevelZero has been added previously
+                /*if (i >= levels.size()) {   //LevelZero has been added previously
                     levels.add(createNextLevel(i));
-                }
+                }*/
                 refillLevel(fights, i);
             }
 

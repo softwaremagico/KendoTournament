@@ -228,12 +228,12 @@ public abstract class LevelGroups {
     protected Integer getIndexOfGroup(TournamentGroup group) {
         for (int i = 0; i < tournamentGroups.size(); i++) {
             if (tournamentGroups.get(i).equals(group)) {
-                return new Integer(i);
+                return i;
             }
         }
         return null;
     }
-
+    
     protected int getGlobalPositionWinner(TournamentGroup group, int winner) {
         int total = 0;
 

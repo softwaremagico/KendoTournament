@@ -159,22 +159,29 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     private void paintLinks(Graphics g) {
-        int destination;
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
-            List<TournamentGroup> designedGroupsOfLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i);
-            List<TournamentGroup> designedGroupsOfNextLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i + 1);
-            for (int j = 0; j < designedGroupsOfLevel.size(); j++) {
-                for (int winners = 0; winners < designedGroupsOfLevel.get(j).getMaxNumberOfWinners(); winners++) {
-                    if (designedGroupsOfNextLevel.size() > 1) {
-                        destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsOfLevel.get(j), winners);
-                    } else {
-                        destination = 0;
-                    }
-                    if (destination < designedGroupsOfNextLevel.size() && destination >= 0) {
-                        drawLink(g, designedGroupsOfLevel.get(j), designedGroupsOfNextLevel.get(destination), winners, j, destination, j < designedGroupsOfLevel.size() / 2);
+        Integer destination;
+        try {
+            for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
+                System.out.println("Lvl " + i + " of " + KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size());
+                List<TournamentGroup> designedGroupsFromLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i);
+                List<TournamentGroup> designedGroupsToLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i + 1);
+                if (designedGroupsToLevel != null) {
+                    for (int j = 0; j < designedGroupsFromLevel.size(); j++) {
+                        for (int winners = 0; winners < designedGroupsFromLevel.get(j).getMaxNumberOfWinners(); winners++) {
+                            if (designedGroupsToLevel.size() > 1) {
+                                destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsFromLevel.get(j), winners);
+                            } else { //Final group
+                                destination = 0;
+                            }
+                            if (destination != null && destination < designedGroupsToLevel.size() && destination >= 0) {
+                                drawLink(g, designedGroupsFromLevel.get(j), designedGroupsToLevel.get(destination), winners, j, destination, j < designedGroupsFromLevel.size() / 2);
+                            }
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

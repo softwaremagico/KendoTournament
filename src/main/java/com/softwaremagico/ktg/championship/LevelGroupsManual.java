@@ -52,7 +52,7 @@ public class LevelGroupsManual extends LevelGroups {
         //Get all sources of Winner
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(group)) {
-                sources.add(links.get(i).source, group);
+                sources.add(links.get(i));
             }
         }
 
@@ -75,18 +75,19 @@ public class LevelGroupsManual extends LevelGroups {
 
     @Override
     protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {        
-        Links sources = new Links();
+        Links destinations = new Links();
 
         //Get all destination of Winner
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).source.equals(group)) {
-                sources.add(group, links.get(i).address);
+                destinations.add(links.get(i));
             }
         }
 
         // Winners in the manual linking are stored by order.
-        if (winner < sources.size()) {
-            return getIndexOfGroup(sources.get(winner).address);
+        if (winner < destinations.size()) {
+            System.out.println("Winner " +winner + " dst.size "+ destinations.get(winner).address.teams.size() + " -> " + getIndexOfGroup(destinations.get(winner).address));
+            return getIndexOfGroup(destinations.get(winner).address);
         }
 
         return null;
@@ -106,6 +107,10 @@ public class LevelGroupsManual extends LevelGroups {
             if (to.getLevel() == from.getLevel() + 1) {
                 links.add(new Link(from, to));
             }
+        }
+        
+        void add(Link link){
+            links.add(link);
         }
 
         int size() {
@@ -134,12 +139,12 @@ public class LevelGroupsManual extends LevelGroups {
 
     void addLink(TournamentGroup source, TournamentGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
-            if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
+            /*if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
             }
             if (numberOfAddressesOfLink(address) >= 2) {
                 removefirstAddressLink(address);
-            }
+            }*/
             links.add(source, address);
 
         }
@@ -207,7 +212,7 @@ public class LevelGroupsManual extends LevelGroups {
         }
     }
 
-    void cleanLinksSelectedGroup() {
+    void removeLinksSelectedGroup() {
         try {
             for (int i = 0; i < links.size(); i++) {
                 if (links.get(i).source.equals(getLastSelected())) {

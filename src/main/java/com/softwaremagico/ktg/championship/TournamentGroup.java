@@ -35,14 +35,13 @@ import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class TournamentGroup extends Group implements Serializable {
-    public static final int MAX_TEAMS_PER_GROUP = 8;
 
+    public static final int MAX_TEAMS_PER_GROUP = 8;
     private static final long serialVersionUID = -8425766161404716635L;
     private static final Float SCORE_WON_FIGHTS = new Float(1000000);
     private static final Float SCORE_WON_DUELS = new Float(10000);
@@ -250,9 +249,9 @@ public class TournamentGroup extends Group implements Serializable {
     public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
-        }else{
+        } else {
             return numberMaxOfWinners;
-        }             
+        }
     }
 
     public int getLevel() {
@@ -868,42 +867,5 @@ public class TournamentGroup extends Group implements Serializable {
             blackboard.repaint();
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TournamentGroup other = (TournamentGroup) obj;
-
-        if (this.level != other.level) {
-            return false;
-        }
-
-
-        if (this.teams != other.teams) {
-            return false;
-        }
-
-
-        /*
-         * for (Team t1 : this.teams) { boolean found = false; for (Team t2 :
-         * other.teams) { t1.returnName().equals(t2.returnName()); found = true;
-         * break; } if (!found) { return false; } }
-         */
-
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.teams);
-        hash = 17 * hash + Objects.hashCode(this.level);
-        return hash;
-    }
+    
 }

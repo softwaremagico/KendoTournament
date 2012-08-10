@@ -494,8 +494,8 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             group.setSelected(KendoTournamentGenerator.getInstance().tournamentManager);
-        } else if (group.getLevel() == 1) {
-            //Clicking in the second level is only useful for defining links. 
+        } else if (group.getLevel() == 1 && group.teams.isEmpty()) {
+            //Clicking in the second level is only useful for defining links and the championship has not started. 
             if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.MANUAL)) {
                 KendoTournamentGenerator.getInstance().tournamentManager.addLink(KendoTournamentGenerator.getInstance().tournamentManager.getLastGroupSelected(), group);
                 updateBlackBoard();
@@ -1013,7 +1013,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
-            npe.printStackTrace();
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
     }//GEN-LAST:event_DeleteAllButtonActionPerformed
