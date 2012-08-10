@@ -156,10 +156,8 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelFirstLevel() {
         try {
-            System.out.println(KendoTournamentGenerator.getInstance().tournamentManager.sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) + " -> " + obtainNumberOfGroupsOfLeague());
             if (KendoTournamentGenerator.getInstance().tournamentManager.sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
-                System.out.println("Size: " + KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size());
                 int defaultArena = 0;
                 TournamentGroup designedFight = new TournamentGroup(numberMaxOfWinners, championship, 0, defaultArena);
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));

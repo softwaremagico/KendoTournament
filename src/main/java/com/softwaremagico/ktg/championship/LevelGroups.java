@@ -305,15 +305,12 @@ public abstract class LevelGroups {
     protected void addGroup(TournamentGroup group, int index) {
         tournamentGroups.add(index, group);
 
-        System.out.println(getNumberOfTotalTeamsPassNextRound() + " / " + tournamentGroups.size());
         if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
-            System.out.println("--------------");
             nextLevel = addNewLevel(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
         }
 
         if (nextLevel != null) {
-            System.out.println("++++");
             nextLevel.updateGroupsSize();
         }
     }
