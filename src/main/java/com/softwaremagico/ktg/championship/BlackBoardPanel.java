@@ -121,6 +121,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint teams group
          */
+        try{
         for (int level = 0; level < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); level++) {
             for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().size(); groupIndex++) {
                 try {
@@ -148,6 +149,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 }
             }
         }
+        }catch(ClassCastException e){
+            
+        }
     }
 
     private void paintSpaces() {
@@ -162,7 +166,6 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         Integer destination;
         try {
             for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
-                System.out.println("Lvl " + i + " of " + KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size());
                 List<TournamentGroup> designedGroupsFromLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i);
                 List<TournamentGroup> designedGroupsToLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i + 1);
                 if (designedGroupsToLevel != null) {

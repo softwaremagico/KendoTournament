@@ -285,6 +285,10 @@ public class TournamentGroup extends Group implements Serializable {
         return new TournamentGroup(maxWinners, championship, level, arena);
     }
 
+    public List<Team> getTeams(){
+        return teams;
+    }
+    
     /**
      * ********************************************
      *

@@ -42,8 +42,8 @@ public abstract class LeagueLevel {
     protected int level;
     private Tournament tournament;
     protected List<TournamentGroup> tournamentGroups;
-    private LeagueLevel nextLevel;
-    private LeagueLevel previousLevel;
+    protected LeagueLevel nextLevel;
+    protected LeagueLevel previousLevel;
     protected TournamentGroupManager groupManager;
 
     LeagueLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {

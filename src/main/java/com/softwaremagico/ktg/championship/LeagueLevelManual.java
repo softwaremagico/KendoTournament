@@ -86,8 +86,7 @@ public class LeagueLevelManual extends LeagueLevel {
 
         // Winners in the manual linking are stored by order.
         if (winner < destinations.size()) {
-            System.out.println("Winner " +winner + " dst.size "+ destinations.get(winner).address.teams.size() + " -> " + getIndexOfGroup(destinations.get(winner).address));
-            return getIndexOfGroup(destinations.get(winner).address);
+            return nextLevel.getIndexOfGroup(destinations.get(winner).address);
         }
 
         return null;
@@ -139,14 +138,16 @@ public class LeagueLevelManual extends LeagueLevel {
 
     void addLink(TournamentGroup source, TournamentGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
-            /*if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
+            if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
+                removefirstSourceLink(source);
+            }
+            if(numberOfSourcesOfLink(source) >= source.getTeams().size()-1){
                 removefirstSourceLink(source);
             }
             if (numberOfAddressesOfLink(address) >= 2) {
                 removefirstAddressLink(address);
-            }*/
+            }
             links.add(source, address);
-
         }
     }
 
