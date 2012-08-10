@@ -222,9 +222,9 @@ public class TournamentGroupManager implements Serializable {
             levels.add(getNewLevel(tournament, 0, null, null, this));
         }
         if (group.getLevel() == 0 && selected && getIndexLastSelected() != null) {
-            levels.get(group.getLevel()).addGroup(group, getIndexLastSelected() + 1, selected);
+            levels.get(group.getLevel()).addGroup(group, getIndexLastSelected() + 1);
         } else {
-            levels.get(group.getLevel()).addGroup(group, selected);
+            levels.get(group.getLevel()).addGroup(group);
         }
     }
 

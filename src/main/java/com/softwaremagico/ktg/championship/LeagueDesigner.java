@@ -156,8 +156,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelFirstLevel() {
         try {
+            System.out.println(KendoTournamentGenerator.getInstance().tournamentManager.sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) + " -> " + obtainNumberOfGroupsOfLeague());
             if (KendoTournamentGenerator.getInstance().tournamentManager.sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
+                System.out.println("Size: " + KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size());
                 int defaultArena = 0;
                 TournamentGroup designedFight = new TournamentGroup(numberMaxOfWinners, championship, 0, defaultArena);
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
@@ -330,6 +332,25 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
+    private void enableSpinner() {
+        refreshSpinner = false;
+        switch (KendoTournamentGenerator.getInstance().tournamentManager.getMode()) {
+            case LEAGUE_TREE:
+            case SIMPLE:
+                PassSpinner.setValue(1);
+                PassSpinner.setEnabled(false);
+                break;
+            case CHAMPIONSHIP:
+                PassSpinner.setValue(2);
+                PassSpinner.setEnabled(false);
+                break;
+            case MANUAL:
+                PassSpinner.setEnabled(true);
+                break;
+        }
+        refreshSpinner = true;
+    }
+
     private void updateMode() {
         try {
             TournamentTypes oldMode = KendoTournamentGenerator.getInstance().tournamentManager.getMode();
@@ -357,20 +378,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().tournamentManager.convertFirstLevelsToCurrentChampionship(levelZero);
             }
 
-            refreshSpinner = false;
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.LEAGUE_TREE)
-                    || KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
-                PassSpinner.setValue(1);
-                PassSpinner.setEnabled(false);
-            }
-            if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.CHAMPIONSHIP)) {
-                PassSpinner.setValue(2);
-                PassSpinner.setEnabled(false);
-            } else {
-                PassSpinner.setEnabled(true);
-            }
-            refreshSpinner = true;
-
+            enableSpinner();
 
             if (KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
                 AddButton.setVisible(false);

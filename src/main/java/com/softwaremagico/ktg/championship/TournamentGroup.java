@@ -41,6 +41,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class TournamentGroup extends Group implements Serializable {
+    public static final int MAX_TEAMS_PER_GROUP = 8;
 
     private static final long serialVersionUID = -8425766161404716635L;
     private static final Float SCORE_WON_FIGHTS = new Float(1000000);
@@ -241,17 +242,17 @@ public class TournamentGroup extends Group implements Serializable {
     public void updateMaxNumberOfWinners(int value) {
         if (numberMaxOfWinners < 1) {
             numberMaxOfWinners = 1;
+        } else {
+            numberMaxOfWinners = value;
         }
     }
 
     public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
-        }
-        if (numberMaxOfWinners <= teams.size()) {
+        }else{
             return numberMaxOfWinners;
-        }
-        return teams.size();
+        }             
     }
 
     public int getLevel() {
@@ -277,8 +278,10 @@ public class TournamentGroup extends Group implements Serializable {
         switch (championship.mode) {
             case LEAGUE_TREE:
                 maxWinners = 1;
+                break;
             case CHAMPIONSHIP:
                 maxWinners = 2;
+                break;
         }
         return new TournamentGroup(maxWinners, championship, level, arena);
     }
@@ -316,9 +319,8 @@ public class TournamentGroup extends Group implements Serializable {
         //Can not be repeated.
         if (!teams.contains(team)) {
             teams.add(team);
-            //Delete one, because con not be more than maxteams.
-            //if (teams.size() > numberMaxOfTeams) {
-            if (teams.size() > 8) {
+            //Delete one, because cannot be more than eight.
+            if (teams.size() > MAX_TEAMS_PER_GROUP) {
                 teams.remove(0);
             }
         }

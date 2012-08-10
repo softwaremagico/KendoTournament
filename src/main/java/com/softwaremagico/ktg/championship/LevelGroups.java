@@ -147,15 +147,7 @@ public abstract class LevelGroups {
              */
             if (previousLevel != null) {
                 for (int j = 0; j < tournamentGroups.size(); j++) {
-                    try {
-                        if (level == 1) {
-                            tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2 / groupManager.default_max_winners).arena;
-                        } else {
-                            tournamentGroups.get(j).arena = previousLevel.getGroups().get(j * 2).arena;
-                        }
-                    } catch (IndexOutOfBoundsException aiob) {
-                        aiob.printStackTrace();
-                    }
+                    tournamentGroups.get(j).arena = previousLevel.getGroups().get((int) (j * (((long) previousLevel.size()) / size()))).arena;
                 }
             } else {
                 /**
@@ -283,7 +275,7 @@ public abstract class LevelGroups {
      */
     protected void updateGroupsSize() {
         while ((previousLevel != null) && ((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
-            addGroup(new TournamentGroup(1, tournament, level, 0), false);
+            addGroup(new TournamentGroup(1, tournament, level, 0));
         }
 
         // When we remove two groups in one level, we must remove one in the next one.
@@ -306,19 +298,22 @@ public abstract class LevelGroups {
     protected abstract LevelGroups addNewLevel(Tournament tournament, int level, LevelGroups nextLevel, LevelGroups previousLevel,
             TournamentGroupManager groupManager);
 
-    protected void addGroup(TournamentGroup group, boolean selected) {
-        addGroup(group, tournamentGroups.size(), selected);
+    protected void addGroup(TournamentGroup group) {
+        addGroup(group, tournamentGroups.size());
     }
 
-    protected void addGroup(TournamentGroup group, int index, boolean selected) {
+    protected void addGroup(TournamentGroup group, int index) {
         tournamentGroups.add(index, group);
 
+        System.out.println(getNumberOfTotalTeamsPassNextRound() + " / " + tournamentGroups.size());
         if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
+            System.out.println("--------------");
             nextLevel = addNewLevel(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
         }
 
         if (nextLevel != null) {
+            System.out.println("++++");
             nextLevel.updateGroupsSize();
         }
     }

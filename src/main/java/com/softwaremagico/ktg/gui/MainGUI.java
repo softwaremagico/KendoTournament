@@ -492,7 +492,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
-        ProgramMenu.setForeground(new java.awt.Color(110, 110, 110));
         ProgramMenu.setText("Program");
         ProgramMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -600,7 +599,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(ProgramMenu);
 
-        InsertMenu.setForeground(new java.awt.Color(110, 110, 110));
         InsertMenu.setText("Insert");
         InsertMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -616,7 +614,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(InsertMenu);
 
-        TournamentMenu.setForeground(new java.awt.Color(110, 110, 110));
         TournamentMenu.setText("Tournament");
         TournamentMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -654,7 +651,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(TournamentMenu);
 
-        ListMenu.setForeground(new java.awt.Color(110, 110, 110));
         ListMenu.setText("Lists");
         ListMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -687,7 +683,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(ListMenu);
 
-        StatisticsMenu.setForeground(new java.awt.Color(110, 110, 110));
         StatisticsMenu.setText("Statistics");
         StatisticsMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -723,7 +718,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(StatisticsMenu);
 
-        OptionsMenu.setForeground(new java.awt.Color(110, 110, 110));
         OptionsMenu.setText("Options");
         OptionsMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
@@ -750,7 +744,6 @@ public class MainGUI extends KendoFrame {
 
         MainMenuBar.add(OptionsMenu);
 
-        HelpMenu.setForeground(new java.awt.Color(110, 110, 110));
         HelpMenu.setText("Help");
         HelpMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
