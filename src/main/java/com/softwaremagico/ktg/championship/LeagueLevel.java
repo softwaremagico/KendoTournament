@@ -236,7 +236,7 @@ public abstract class LeagueLevel {
     
     protected int getGlobalPositionWinner(TournamentGroup group, int winner) {
         int total = 0;
-
+        
         for (int i = 0; i < tournamentGroups.size() && i < getIndexOfGroup(group); i++) {
             if (level > 0) {
                 total++;

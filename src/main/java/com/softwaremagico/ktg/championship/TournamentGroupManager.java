@@ -55,12 +55,6 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public void createLevelZero() {
-        // Create level zero.
-        levels = new ArrayList<>();
-        levels.add(getNewLevelZero(tournament, null, null, this));
-    }
-
     public List<LeagueLevel> getLevels() {
         return levels;
     }
@@ -163,21 +157,17 @@ public class TournamentGroupManager implements Serializable {
      */
     protected void fillGroupWithWinnersPreviousLevel(TournamentGroup group, ArrayList<Fight> fights, boolean resolvDraw) {
         updateScoreForTeams(fights);
-        // TournamentGroup dg = tournamentGroups.get(groupIndex);
         if (group.getLevel() > 0) {
             List<TournamentGroup> groups = returnGroupsOfLevel(group.getLevel() - 1);
             for (TournamentGroup previousGroup : groups) {
                 for (int winners = 0; winners < previousGroup.getMaxNumberOfWinners(); winners++) {
                     TournamentGroup destination;
                     destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
-                    // System.out.println("Group:" + i + " winner:" + k + " destination: " + destination);
                     // If the searched dg's destination point to the group to complete, then means it is a source.
                     if (destination.equals(group)) {
                         group.addTeam(previousGroup.getTeamInOrderOfScore(winners, fights, resolvDraw));
-                        // System.out.println(previousDg.getTeamInOrderOfScore(k, fightManager, true).returnName());
                     }
                 }
-                // System.out.println("----------");
             }
         }
     }
@@ -390,21 +380,13 @@ public class TournamentGroupManager implements Serializable {
         return null;
     }
 
-    /**
-     * Create a new level depending of the number of level and the championship
-     * mode.
-     *
-     * @param levelToCreate
-     * @return
-     */
-    /*private LeagueLevel createNextLevel(int levelToCreate) {
-        if (levelToCreate == 0) {
-            return getNewLevel(tournament, levelToCreate, null, null, this);
-        } else {
-            return getNewLevel(tournament, levelToCreate, null, levels.get(levels.size() - 1), this);
-        }
-    }*/
-
+    
+    public void createLevelZero() {
+        // Create level zero.
+        levels = new ArrayList<>();
+        levels.add(getNewLevelZero(tournament, null, null, this));
+    }
+    
     /**
      * Convert level zero to championship or tree league.
      *
@@ -453,6 +435,7 @@ public class TournamentGroupManager implements Serializable {
 
                 // But the level is over and need more fights.
                 if (KendoTournamentGenerator.getInstance().fightManager.areAllOver()) {
+                    try{
                     Log.finer("All fights are over.");
                     if (MessageManager.questionMessage("nextLevel", "Warning!")) {
                         Log.debug("Current number of fights over before updating winners: "
@@ -463,6 +446,9 @@ public class TournamentGroupManager implements Serializable {
                         }
                         Log.debug("Current number of fights over after updating winners: "
                                 + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+                    }
+                    }catch(Exception e){
+                        e.printStackTrace();
                     }
                     // set the team members order in the new level.
                     // updateOrderTeamsOfLevel(nextLevel);
