@@ -1,27 +1,22 @@
 package com.softwaremagico.ktg.championship;
 
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *  
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *  
+ *
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
@@ -162,7 +157,7 @@ public class TournamentGroupManager implements Serializable {
             for (TournamentGroup previousGroup : groups) {
                 for (int winners = 0; winners < previousGroup.getMaxNumberOfWinners(); winners++) {
                     TournamentGroup destination;
-                    destination = levels.get(group.getLevel()).getGroupSourceOfWinner(group, winners);
+                    destination = levels.get(previousGroup.getLevel()).getGroupDestinationOfWinner(previousGroup, winners);
                     // If the searched dg's destination point to the group to complete, then means it is a source.
                     if (destination.equals(group)) {
                         group.addTeam(previousGroup.getTeamInOrderOfScore(winners, fights, resolvDraw));
@@ -369,24 +364,23 @@ public class TournamentGroupManager implements Serializable {
      * Create a new level.
      */
     private LeagueLevel getNewLevelZero(Tournament tournament, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
-            switch (getMode()) {
-                case LEAGUE_TREE:
-                    return new LeagueLevelTree(tournament, 0, nextLevel, previousLevel, groupManager);
-                case CHAMPIONSHIP:
-                    return new LeagueLevelChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
-                case MANUAL:
-                    return new LeagueLevelManual(tournament, 0, nextLevel, previousLevel, groupManager);
-            }
+        switch (getMode()) {
+            case LEAGUE_TREE:
+                return new LeagueLevelTree(tournament, 0, nextLevel, previousLevel, groupManager);
+            case CHAMPIONSHIP:
+                return new LeagueLevelChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
+            case MANUAL:
+                return new LeagueLevelManual(tournament, 0, nextLevel, previousLevel, groupManager);
+        }
         return null;
     }
 
-    
     public void createLevelZero() {
         // Create level zero.
         levels = new ArrayList<>();
         levels.add(getNewLevelZero(tournament, null, null, this));
     }
-    
+
     /**
      * Convert level zero to championship or tree league.
      *
@@ -418,75 +412,76 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
-        int nextLevel = getIndexLastLevelUsed();
-        int arena;
+    private void leagueFinished(ArrayList<Fight> fights) {
+        Log.finer("League finished");
+        // Finished! The winner is...
+        Team winner = winnerOfLastFight(fights);
+        String winnername = "";
         try {
-            // Not finished the tournament.
-            if (nextLevel >= 0 && nextLevel < getLevels().size()) {
-                Log.finer("Tournament not finished!");
-                // Update fightManager to load the fightManager of other arenas and computers.
-                if (championship.fightingAreas > 1) {
-                    Log.finest("Retrieving data from other arenas.");
-                    Log.debug("Current number of fights over before updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-                    KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
-                    Log.debug("Current number of fights over after updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-                }
-
-                // But the level is over and need more fights.
-                if (KendoTournamentGenerator.getInstance().fightManager.areAllOver()) {
-                    try{
-                    Log.finer("All fights are over.");
-                    if (MessageManager.questionMessage("nextLevel", "Warning!")) {
-                        Log.debug("Current number of fights over before updating winners: "
-                                + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-                        List<TournamentGroup> groups = returnGroupsOfLevel(nextLevel);
-                        for (TournamentGroup g : groups) {
-                            fillGroupWithWinnersPreviousLevel(g, KendoTournamentGenerator.getInstance().fightManager.getFights(), true);
-                        }
-                        Log.debug("Current number of fights over after updating winners: "
-                                + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-                    }
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                    // set the team members order in the new level.
-                    // updateOrderTeamsOfLevel(nextLevel);
-                } else {
-                    // Only one arena is finished: show message for waiting all fightManager are over.
-                    if ((arena = KendoTournamentGenerator.getInstance().fightManager.allArenasAreOver()) != -1) {
-                        MessageManager.translatedMessage("waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
-                Log.debug("Current number of fights over at the end updating fights: "
-                        + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-            } else {
-                Log.finer("League finished");
-                // Finished! The winner is...
-                Team winner = winnerOfLastFight(fights);
-                String winnername = "";
-                try {
-                    winnername = winner.returnName();
-                } catch (NullPointerException npe) {
-                    // npe.printStackTrace();
-                    Log.severe("No winner obtained!");
-                }
-                // Show message when last fight is selected.
-                if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-                    MessageManager.winnerMessage("leagueFinished", "Finally!", winnername, JOptionPane.INFORMATION_MESSAGE);
-                }
-                update();
-                return new ArrayList<>();
-            }
+            winnername = winner.returnName();
         } catch (NullPointerException npe) {
+            // npe.printStackTrace();
+            Log.severe("No winner obtained!");
         }
-        update();
+        // Show message when last fight is selected.
+        if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
+            MessageManager.winnerMessage("leagueFinished", "Finally!", winnername, JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private ArrayList<Fight> generateNextLevelFights(int nextLevel) {
+        Log.finer("All fights are over.");
+        if (MessageManager.questionMessage("nextLevel", "Warning!")) {
+            Log.debug("Current number of fights over before updating winners: "
+                    + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            List<TournamentGroup> groups = returnGroupsOfLevel(nextLevel);
+            for (TournamentGroup g : groups) {
+                fillGroupWithWinnersPreviousLevel(g, KendoTournamentGenerator.getInstance().fightManager.getFights(), true);
+            }
+            Log.debug("Current number of fights over after updating winners: "
+                    + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+
+        }
+        // set the team members order in the new level.
+        // updateOrderTeamsOfLevel(nextLevel);
+
         Log.debug("Current number of fights over before generating next level fights: "
                 + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
         ArrayList<Fight> newFights = generateLevelFights(nextLevel);
         Log.debug("Current number of fights over after generating next level fights: "
                 + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+        return newFights;
+    }
+
+    public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
+        int nextLevel = getIndexLastLevelUsed();
+        int arena;
+        ArrayList<Fight> newFights = new ArrayList<>();
+        // Not finished the tournament.
+        if (nextLevel >= 0 && nextLevel < getLevels().size()) {
+            Log.finer("Tournament not finished!");
+            // Update fightManager to load the fightManager of other arenas and computers.
+            if (championship.fightingAreas > 1) {
+                Log.finest("Retrieving data from other arenas.");
+                Log.debug("Current number of fights over before updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+                KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
+                Log.debug("Current number of fights over after updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
+            }
+
+            // But the level is over and need more fights.
+            if (KendoTournamentGenerator.getInstance().fightManager.areAllOver()) {
+                newFights = generateNextLevelFights(nextLevel);
+            } else {
+                // Only one arena is finished: show message for waiting all fightManager are over.
+                if ((arena = KendoTournamentGenerator.getInstance().fightManager.allArenasAreOver()) != -1) {
+                    MessageManager.translatedMessage("waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            leagueFinished(fights);
+        }
+        //update();
         return newFights;
     }
 
@@ -609,9 +604,10 @@ public class TournamentGroupManager implements Serializable {
             // Fill levels with fights defined.
             int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
             for (int i = 0; i <= maxFightLevel; i++) {
-                /*if (i >= levels.size()) {   //LevelZero has been added previously
-                    levels.add(createNextLevel(i));
-                }*/
+                /*
+                 * if (i >= levels.size()) { //LevelZero has been added
+                 * previously levels.add(createNextLevel(i)); }
+                 */
                 refillLevel(fights, i);
             }
 

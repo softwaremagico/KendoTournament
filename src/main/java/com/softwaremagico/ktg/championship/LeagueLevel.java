@@ -373,7 +373,7 @@ public abstract class LeagueLevel {
     protected Integer getGroupIndexSourceOfWinner(TournamentGroup group, int winner) {
         if (level > 0) {
             for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
-                if (getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
+                if (previousLevel.getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
                     return groupIndex;
                 }
             }
@@ -391,7 +391,6 @@ public abstract class LeagueLevel {
         for (TournamentGroup group : tournamentGroups) {
             info += group.teams.size() + "\t";
         }
-
         return info;
     }
 
