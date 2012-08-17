@@ -33,6 +33,7 @@ import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
 
 public class TeamAccreditationCardPDF extends PdfDocument {
@@ -63,10 +64,11 @@ public class TeamAccreditationCardPDF extends PdfDocument {
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.setTotalWidth(width);
+        com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
 
         for (i = 0; i < team.getNumberOfMembers(0); i++) {
             CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(team.getMember(i, 0).getId(), false);
-            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(c, competition);
+            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(c, competition, banner);
             PdfPTable competitorTable = competitorPDF.pageTable(width / 2, height / 2, writer, font, fontSize);
             competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
             cell = new PdfPCell(competitorTable);

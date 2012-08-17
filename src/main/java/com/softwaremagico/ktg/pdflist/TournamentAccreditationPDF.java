@@ -32,6 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
@@ -118,12 +119,13 @@ public class TournamentAccreditationPDF {
                 PdfPTable mainTable = new PdfPTable(widths);
                 mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
                 mainTable.setTotalWidth(document.getPageSize().getWidth());
+                com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
 
                 List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship, all);
 
                 for (int i = 0; i < competitors.size(); i++) {
                     timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());
-                    CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship);
+                    CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship, banner);
                     PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
                     competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
                     cell = new PdfPCell(competitorTable);

@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.pdflist;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -46,11 +44,23 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
     CompetitorWithPhoto competitor;
     private final int border = 0;
     private String role;
+    private com.itextpdf.text.Image banner = null;
 
-    public CompetitorAccreditationCardPDF(CompetitorWithPhoto tmp_competitor, Tournament tmp_competition) throws Exception {
-        competitor = tmp_competitor;
-        competition = tmp_competition;
+    public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition) throws Exception {
+        this.competitor = competitor;
+        this.competition = competition;
         role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
+    }
+
+    public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition, com.itextpdf.text.Image banner) throws Exception {
+        this.competitor = competitor;
+        this.competition = competition;
+        role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
+        setBanner(banner);
+    }
+
+    private void setBanner(com.itextpdf.text.Image banner) {
+        this.banner = banner;
     }
 
     @Override
@@ -186,10 +196,11 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table.setTotalWidth(width);
         table.getTotalWidth();
 
-        com.itextpdf.text.Image png;
-        png = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
+        if (banner == null) {
+            banner = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
+        }
         //png.scaleAbsoluteWidth(width);
-        cell = new PdfPCell(png, true);
+        cell = new PdfPCell(banner, true);
         cell.setBorderWidth(border);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         cell.setVerticalAlignment(Element.ALIGN_BOTTOM);
