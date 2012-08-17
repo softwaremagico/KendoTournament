@@ -68,8 +68,8 @@ public final class SearchTournament extends Search<Tournament> {
     }
 
     @Override
-    protected String getResultInformation(Tournament object) {
-        return object.name;
+    protected String getResultInformation(Tournament tournament) {
+        return tournament.getName();
     }
 
     @Override
@@ -84,7 +84,7 @@ public final class SearchTournament extends Search<Tournament> {
     }
 
     @Override
-    protected boolean deleteFromDatabase(Tournament object) {
-        return KendoTournamentGenerator.getInstance().database.deleteTournament(object.name);
+    protected boolean deleteFromDatabase(Tournament tournament) {
+        return KendoTournamentGenerator.getInstance().database.deleteTournament(tournament);
     }
 }

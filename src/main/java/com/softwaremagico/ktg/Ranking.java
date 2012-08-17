@@ -81,11 +81,11 @@ public class Ranking {
             for (int k = 0; k < fight.duels.size(); k++) {
                 //Winned
                 if (fight.duels.get(k).winner() < 0) {
-                    score += SCORE_WON_DUELS * fight.competition.getScoreForWin();
+                    score += SCORE_WON_DUELS * fight.tournament.getScoreForWin();
                 }
                 //Draw
                 if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * fight.competition.getScoreForDraw();
+                    score += SCORE_WON_DUELS * fight.tournament.getScoreForDraw();
                 }
             }
         }
@@ -94,11 +94,11 @@ public class Ranking {
             for (int k = 0; k < fight.duels.size(); k++) {
                 //Winned
                 if (fight.duels.get(k).winner() > 0) {
-                    score += SCORE_WON_DUELS * fight.competition.getScoreForWin();
+                    score += SCORE_WON_DUELS * fight.tournament.getScoreForWin();
                 }
                 //Draw
                 if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * fight.competition.getScoreForDraw();
+                    score += SCORE_WON_DUELS * fight.tournament.getScoreForDraw();
                 }
             }
         }
@@ -136,10 +136,10 @@ public class Ranking {
     private Float obtainPointsForWonFights(Fight fight, Team team) {
         try {
             if (fight.winnerByDuels().returnName().equals(team.returnName())) {
-                return SCORE_WON_FIGHTS * fight.competition.getScoreForWin();
+                return SCORE_WON_FIGHTS * fight.tournament.getScoreForWin();
             } else if (fight.isDrawFight() && (fight.team1.returnName().equals(team.returnName())
                     || fight.team2.returnName().equals(team.returnName()))) {
-                return SCORE_WON_FIGHTS * fight.competition.getScoreForDraw(); //In Custom championships the draw fight also has score. 
+                return SCORE_WON_FIGHTS * fight.tournament.getScoreForDraw(); //In Custom championships the draw fight also has score. 
             }
         } catch (NullPointerException npe) {
         }
@@ -263,7 +263,7 @@ public class Ranking {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double undraws = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndraws(team.competition.name, team.returnName());
+        double undraws = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndraws(team.tournament, team.returnName());
         score += SCORE_GOLDEN_POINT * undraws;
         return score;
     }
@@ -307,7 +307,7 @@ public class Ranking {
                     teamScore += obtainPointsForWonFights(oneFight, team);
                     teamScore += obtainPointsForWonDuels(oneFight, team);
                     teamScore += obtainPointsForHits(oneFight, team);
-                    if (oneFight.competition.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
+                    if (oneFight.tournament.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
                         teamScore += obtainPointsForDrawFights(oneFight, team);
                         teamScore += obtainPointsForDrawDuels(oneFight, team);
                     }
@@ -376,7 +376,7 @@ public class Ranking {
         updateScoreForTeams(fights);
         List<Team> teamsOrd = getTeamsOrderedByScore();
         for (int i = 0; i < teamsOrd.size(); i++) {
-            teamsOrdered.add(new TeamRanking(teamsOrd.get(i).returnName(), teamsOrd.get(i).competition.name,
+            teamsOrdered.add(new TeamRanking(teamsOrd.get(i).returnName(), teamsOrd.get(i).tournament,
                     obtainWonFights(fights, teamsOrd.get(i), -1), obtainDrawFights(fights, teamsOrd.get(i), -1),
                     obtainWonDuels(fights, teamsOrd.get(i), -1), obtainDrawDuels(fights, teamsOrd.get(i), -1),
                     obtainHits(fights, teamsOrd.get(i), -1)));

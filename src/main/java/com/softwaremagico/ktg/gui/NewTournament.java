@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentTypes;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -70,7 +67,7 @@ public class NewTournament extends KendoFrame {
         NameLabel.setText(trans.returnTag("NameTournamentLabel"));
         NumberCompetitorsLabel.setText(trans.returnTag("NumberLabel"));
         BannerLabel.setText(trans.returnTag("BannerLabel"));
-        FightingAreasLabel.setText(trans.returnTag("FightingArea"));
+        FightingAreasLabel.setText(trans.returnTag("FightArea"));
         PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
         SearchButton.setText(trans.returnTag("SearchButton"));
     }
@@ -104,7 +101,7 @@ public class NewTournament extends KendoFrame {
     public void updateWindow(Tournament tournament) {
         try {
             maxCompetitorTeam = tournament.teamSize;
-            NameTextField.setText(tournament.name);
+            NameTextField.setText(tournament.getName());
             NameTextField.setEditable(false);
             NumCompetitorsSpinner.setValue(tournament.teamSize);
             BannerTextField.setText("");
@@ -144,12 +141,12 @@ public class NewTournament extends KendoFrame {
             //Store tournament into database
             if (KendoTournamentGenerator.getInstance().database.storeTournament(tournament, true)) {
                 KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
+                TournamentPool.addTournament(tournament);
                 cleanWindow();
             }
             //If tournamnet team size has changed (tournament update), delete old teams of tournament.
-            System.out.println(maxCompetitorTeam);
             if(maxCompetitorTeam != null && maxCompetitorTeam != tournament.teamSize){
-                KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament.name, false);
+                KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament, false);
             }
             return true;
         } else {

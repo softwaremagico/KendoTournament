@@ -119,7 +119,7 @@ public class TournamentAccreditationPDF {
                 mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
                 mainTable.setTotalWidth(document.getPageSize().getWidth());
 
-                List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship.name, all);
+                List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship, all);
 
                 for (int i = 0; i < competitors.size(); i++) {
                     timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());

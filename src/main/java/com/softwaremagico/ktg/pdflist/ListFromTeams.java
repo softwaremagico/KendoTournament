@@ -63,17 +63,17 @@ public abstract class ListFromTeams extends KendoFrame {
         try {
             listTeams = KendoTournamentGenerator.getInstance().database.getAllTeams();
             if (voidTournament) {
-                TeamComboBox.addItem(trans.returnTag("All"));
+                TeamComboBox.addItem(null);
             }
             for (int i = 0; i < listTeams.size(); i++) {
-                TeamComboBox.addItem(listTeams.get(i).returnName() + " (" + listTeams.get(i).competition.name + ")");
+                TeamComboBox.addItem(listTeams.get(i).returnName() + " (" + listTeams.get(i).tournament.getName() + ")");
             }
         } catch (NullPointerException npe) {
         }
     }
 
     public Team returnSelectedTeam() {
-        if (voidTournament && TeamComboBox.getSelectedIndex() == 0) {
+        if (voidTournament && TeamComboBox.getSelectedIndex() <= 0) {
             return null;
         }
         return listTeams.get(TeamComboBox.getSelectedIndex() - 1);

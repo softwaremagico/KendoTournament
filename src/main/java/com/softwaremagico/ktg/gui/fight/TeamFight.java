@@ -154,7 +154,7 @@ public class TeamFight extends JPanel {
         if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
             if (!KendoTournamentGenerator.getInstance().fightManager.someFightWithTeamAndLevelIsStarted(team, fight.level)) {
                 OrderTeam orderTeam;
-                orderTeam = new OrderTeam(fight.competition.name, fight.level, this);
+                orderTeam = new OrderTeam(fight.tournament, fight.level, this);
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             }else{

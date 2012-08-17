@@ -40,19 +40,19 @@ import java.util.List;
  */
 public class RefereeListPDF extends ParentList {
 
-    private Tournament championship;
+    private Tournament tournament;
     private final int border = 0;
 
     public RefereeListPDF(Tournament tmp_championship) {
-        championship = tmp_championship;
+        tournament = tmp_championship;
     }
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
         Paragraph p;
 
-        mainTable.addCell(getHeader2(championship.name, 0));
-        List<CompetitorWithPhoto> listReferee = KendoTournamentGenerator.getInstance().database.searchRefereeByTournament(championship.name, false, false);
+        mainTable.addCell(getHeader2(tournament.getName(), 0));
+        List<CompetitorWithPhoto> listReferee = KendoTournamentGenerator.getInstance().database.searchRefereeByTournament(tournament, false, false);
         for (int i = 0; i < listReferee.size(); i++) {
             mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).club + ")", 0));
         }

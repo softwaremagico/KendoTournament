@@ -65,7 +65,7 @@ public class Diploma {
     protected int fontSize = 17;
     private final int border = 0;
     private boolean statistics;
-    Tournament championship;
+    Tournament tournament;
     float nameposition = 100;
     List<Duel> duels = new ArrayList<>();
     static int TOTAL_RANGES = 9;
@@ -75,7 +75,7 @@ public class Diploma {
     private boolean allDiplomas;
 
     public Diploma(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, RoleTags roles) {
-        championship = tmp_championship;
+        tournament = tmp_championship;
         statistics = tmp_statistics;
         allDiplomas = printAllDiplomas;
         rolesWithDiploma = roles;
@@ -126,7 +126,7 @@ public class Diploma {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
                 MessageManager.translatedMessage("diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
-                KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, championship.name);
+                KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, tournament);
                 error = false;
             } catch (NullPointerException npe) {
                 MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
@@ -177,14 +177,14 @@ public class Diploma {
         public void pageTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
             List<Competitor> competitors;
 
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, championship.name, allDiplomas);
+            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, tournament, allDiplomas);
 
             if (statistics) {
-                duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(championship.name);
-                //teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(championship.name, false);
+                duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(tournament);
+                //teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(tournament.name, false);
                 Ranking ranking = new Ranking();
-                teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
-                competitorTopTen = KendoTournamentGenerator.getInstance().database.getCompetitorsOrderByScore(true, championship.name);
+                teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
+                competitorTopTen = KendoTournamentGenerator.getInstance().database.getCompetitorsOrderByScore(true, tournament);
             }
 
             for (int i = 0; i < competitors.size(); i++) {
@@ -386,12 +386,12 @@ public class Diploma {
             return dataset;
         }
 
-        private int searchForTeamPosition(Team t) {
-            if (t == null) {
+        private int searchForTeamPosition(Team team) {
+            if (team == null) {
                 return -1;
             }
             for (int i = 0; i < teamTopTen.size(); i++) {
-                if (teamTopTen.get(i).name.equals(t.returnName()) && teamTopTen.get(i).tournament.equals(t.competition.name)) {
+                if (teamTopTen.get(i).name.equals(team.returnName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
                     return i;
                 }
             }
@@ -411,7 +411,7 @@ public class Diploma {
 
             int centerValue;
             try {
-                centerValue = searchForTeamPosition(KendoTournamentGenerator.getInstance().database.getTeamOfCompetitor(competitor.getId(), championship.name, false));
+                centerValue = searchForTeamPosition(KendoTournamentGenerator.getInstance().database.getTeamOfCompetitor(competitor.getId(), tournament, false));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
                 centerValue = 0;
@@ -434,7 +434,7 @@ public class Diploma {
             }
             for (int i = startValue; i < endValue; i++) {
                 String c;
-                if (championship.name.equals("All")) {
+                if (tournament==null) {
                     c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
                 } else {
                     c = (i + 1) + " - " + teamTopTen.get(i).name;

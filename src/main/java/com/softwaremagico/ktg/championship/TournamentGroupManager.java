@@ -1,22 +1,27 @@
 package com.softwaremagico.ktg.championship;
 
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
+ *  
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *
+ *  
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *
+ *  
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
@@ -41,7 +46,7 @@ public class TournamentGroupManager implements Serializable {
 
     public TournamentGroupManager(Tournament championship) {
         try {
-            //mode = championship.mode;
+            //mode = tournament.mode;
             tournament = championship;
             // levels.add(0);
             levels = new ArrayList<>();
@@ -118,7 +123,7 @@ public class TournamentGroupManager implements Serializable {
         return new ArrayList<>();
     }
 
-    public boolean isTeamContainedInTournament(Team team, String Championship) {
+    public boolean isTeamContainedInTournament(Team team) {
         return getUsedTeams().contains(team);
     }
 
@@ -382,7 +387,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     /**
-     * Convert level zero to championship or tree league.
+     * Convert level zero to tournament or tree league.
      *
      * @param oldLevels
      */
@@ -453,7 +458,7 @@ public class TournamentGroupManager implements Serializable {
         return newFights;
     }
 
-    public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament championship) {
+    public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament tournament) {
         int nextLevel = getIndexLastLevelUsed();
         int arena;
         ArrayList<Fight> newFights = new ArrayList<>();
@@ -461,10 +466,10 @@ public class TournamentGroupManager implements Serializable {
         if (nextLevel >= 0 && nextLevel < getLevels().size()) {
             Log.finer("Tournament not finished!");
             // Update fightManager to load the fightManager of other arenas and computers.
-            if (championship.fightingAreas > 1) {
+            if (tournament.fightingAreas > 1) {
                 Log.finest("Retrieving data from other arenas.");
                 Log.debug("Current number of fights over before updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
-                KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship.name);
+                KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(tournament);
                 Log.debug("Current number of fights over after updating data: " + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
             }
 
@@ -598,7 +603,7 @@ public class TournamentGroupManager implements Serializable {
         }
 
         if (fights.size() > 0) {
-            tournament = fights.get(0).competition;
+            tournament = fights.get(0).tournament;
             createLevelZero();
 
             // Fill levels with fights defined.
@@ -725,7 +730,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void deleteUsedDesigner() {
-        MyFile.deleteFile(FOLDER + File.separator + tournament.name + ".dsg");
+        MyFile.deleteFile(FOLDER + File.separator + tournament.getName() + ".dsg");
     }
     /**
      * *************************************************************

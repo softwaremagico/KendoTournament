@@ -37,7 +37,7 @@ import javax.swing.ImageIcon;
  */
 public class Tournament implements Serializable {
 
-    public String name;
+    private String name;
     public transient InputStream bannerInput;
     public transient InputStream diplomaInput;
     public transient InputStream accreditationInput;
@@ -58,6 +58,10 @@ public class Tournament implements Serializable {
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
         this.mode = mode;
+    }
+    
+    public String getName(){
+        return name;
     }
 
     public void addBanner(InputStream tmp_photo, long size) {
@@ -238,5 +242,10 @@ public class Tournament implements Serializable {
         int hash = 7;
         hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
+    }
+    
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

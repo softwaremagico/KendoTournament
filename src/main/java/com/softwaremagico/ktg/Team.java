@@ -35,14 +35,14 @@ import java.util.List;
  */
 public class Team implements Serializable {
 
-    public Tournament competition;
+    public Tournament tournament;
     private List<List<Competitor>> participantsPerLevel = new ArrayList<>();
     private String name;
     public int group = 0; //for the league
 
-    public Team(String tmp_name, Tournament tmp_competition) {
-        storeName(tmp_name);
-        competition = tmp_competition;
+    public Team(String name, Tournament tournament) {
+        storeName(name);
+        this.tournament = tournament;
         participantsPerLevel.add(new ArrayList<Competitor>());
     }
 
@@ -168,7 +168,7 @@ public class Team implements Serializable {
         }
     }
 
-    public final void storeName(String value) {
+    public final void storeName(String name) {
         //name = value.substring(0, 1).toUpperCase() + value.substring(1);
         /*
          * name = ""; String[] data = value.trim().split(" "); for (int i = 0; i
@@ -177,7 +177,7 @@ public class Team implements Serializable {
          * data[i].substring(1).toLowerCase() + " "; } else { name += data[i] +
          * " "; } }
          */
-        name = value.trim();
+        this.name = name.trim();
     }
 
     public String returnName() {
@@ -233,14 +233,14 @@ public class Team implements Serializable {
             return false;
         }
         Team otherTeam = (Team) object;
-        return this.name.equals(otherTeam.name) && this.competition.equals(otherTeam.competition);
+        return this.name.equals(otherTeam.name) && this.tournament.equals(otherTeam.tournament);
 
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 17 * hash + (this.competition != null ? this.competition.hashCode() : 0);
+        hash = 17 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
         hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }

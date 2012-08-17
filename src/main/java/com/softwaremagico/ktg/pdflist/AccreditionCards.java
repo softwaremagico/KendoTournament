@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileInputStream;
@@ -76,7 +77,7 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
                 } catch (FileNotFoundException fnf) {
                     KendoTournamentGenerator.getInstance().showErrorInformation(fnf);
                 }
-                TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false));
+                TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString()));
                 pdf.setPrintAll(isCheckBoxSelected());
                 pdf.createFile(file);
             }

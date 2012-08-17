@@ -107,8 +107,8 @@ public class KendoTournamentGenerator {
         storeConfig();
     }
 
-    public String getLastSelectedTournament() {
-        return lastSelectedTournament;
+    public Tournament getLastSelectedTournament() {
+        return TournamentPool.getTournament(lastSelectedTournament);
     }
 
     public String getLastSelectedClub() {
@@ -409,10 +409,10 @@ public class KendoTournamentGenerator {
      * @param championship
      * @return
      */
-    public String getCompetitorOrder(Competitor competitor, String role, String championship) {
+    public String getCompetitorOrder(Competitor competitor, String role, Tournament tournament) {
         DecimalFormat myFormatter = new DecimalFormat("00000");
         if (role.equals("VCLO") || role.equals("VolunteerK")) {
-            Integer order = database.searchVolunteerOrder(competitor, championship);
+            Integer order = database.searchVolunteerOrder(competitor, tournament);
             if (order != null) {
                 return myFormatter.format(order);
             }

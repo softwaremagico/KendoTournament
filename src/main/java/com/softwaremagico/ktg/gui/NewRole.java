@@ -91,9 +91,9 @@ public class NewRole extends KendoFrame {
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
-            listTournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
+            listTournaments = TournamentPool.getAllTournaments();
             for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i).name);
+                TournamentComboBox.addItem(listTournaments.get(i));
             }
             TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         } catch (NullPointerException npe) {
@@ -141,7 +141,7 @@ public class NewRole extends KendoFrame {
     private void refreshRole() {
         Log.finest("Obtaining role of selected Competitor");
         try {
-            String role = KendoTournamentGenerator.getInstance().database.getTagRole(listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            String role = KendoTournamentGenerator.getInstance().database.getTagRole((Tournament)TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             try {
                 if (role == null) {
                     RoleComboBox.setSelectedIndex(0);
@@ -166,7 +166,7 @@ public class NewRole extends KendoFrame {
     private void deleteRole() {
         Log.finest("Deleting role");
         try {
-            KendoTournamentGenerator.getInstance().database.deleteRole(listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            KendoTournamentGenerator.getInstance().database.deleteRole((Tournament)TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             if (RoleComboBox.getItemCount() > 0) {
                 RoleComboBox.setSelectedIndex(0);
             }
@@ -191,7 +191,7 @@ public class NewRole extends KendoFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
         CompetitorComboBox = new javax.swing.JComboBox<String>();
         RoleComboBox = new javax.swing.JComboBox<String>();
         TournamentLabel = new javax.swing.JLabel();
@@ -366,7 +366,7 @@ public class NewRole extends KendoFrame {
     private javax.swing.JButton PDFButton;
     private javax.swing.JComboBox<String> RoleComboBox;
     private javax.swing.JLabel RoleLabel;
-    private javax.swing.JComboBox<String> TournamentComboBox;
+    private javax.swing.JComboBox<Tournament> TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     // End of variables declaration//GEN-END:variables
 }

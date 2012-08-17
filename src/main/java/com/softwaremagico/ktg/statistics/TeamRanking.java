@@ -1,4 +1,7 @@
 package com.softwaremagico.ktg.statistics;
+
+import com.softwaremagico.ktg.Tournament;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -32,7 +35,7 @@ package com.softwaremagico.ktg.statistics;
 public class TeamRanking {
 
     public String name;
-    public String tournament;
+    public Tournament tournament;
     public Integer wonMatchs;  /* partidos ganados por el equipo */
 
     public Integer drawMatchs;
@@ -42,12 +45,12 @@ public class TeamRanking {
     public Integer score; /* puntos totales del equipo */
 
 
-    public TeamRanking(String tmp_name, String tmp_tournament, Integer won, Integer draw, Integer fights_won, Integer figths_draw, Integer tmp_score) {
-        name = tmp_name;
-        tournament = tmp_tournament;
+    public TeamRanking(String name, Tournament tournament, Integer won, Integer draw, Integer fights_won, Integer figths_draw, Integer score) {
+        this.name = name;
+        this.tournament = tournament;
         wonFights = fights_won;
         drawFights = figths_draw;
-        score = tmp_score;
+        this.score = score;
         wonMatchs = won;
         drawMatchs = draw;
     }

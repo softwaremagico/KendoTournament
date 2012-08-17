@@ -70,7 +70,7 @@ public class ClubListPDF extends ParentList {
         List<Club> clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-            List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship.name, false, false);
+            List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship, false, false);
 
             if (competitors.size() > 0) {
                 if (!firstClub) {
@@ -107,7 +107,7 @@ public class ClubListPDF extends ParentList {
     public void createHeaderRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
         PdfPCell cell;
         Paragraph p;
-        p = new Paragraph(championship.name + "\n ", FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(championship.getName() + "\n ", FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(headerBorder);

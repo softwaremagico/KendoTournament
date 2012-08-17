@@ -26,8 +26,9 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.championship.BlackBoardPanel;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentTypes;
+import com.softwaremagico.ktg.championship.BlackBoardPanel;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -60,11 +61,11 @@ public class LeagueEvolution extends javax.swing.JFrame {
         updateListeners();
     }
 
-    public void updateBlackBoard(String championship, boolean refill) {
+    public void updateBlackBoard(Tournament tournament, boolean refill) {
         if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
             KendoTournamentGenerator.getInstance().tournamentManager.color(true);
             KendoTournamentGenerator.getInstance().tournamentManager.update();
-            bbp.updateBlackBoard(championship, refill);
+            bbp.updateBlackBoard(tournament, refill);
             KendoTournamentGenerator.getInstance().tournamentManager.unselectDesignedGroups();
             KendoTournamentGenerator.getInstance().tournamentManager.enhance(true);
             KendoTournamentGenerator.getInstance().tournamentManager.onlyShow();
@@ -72,19 +73,19 @@ public class LeagueEvolution extends javax.swing.JFrame {
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
             if (timer == null) {
-                startTimer(championship);
+                startTimer(tournament);
             }
         } else {
             this.dispose();
         }
     }
 
-    private void startTimer(final String championship) {
+    private void startTimer(final Tournament tournament) {
         timer = new Timer(seconds * 100, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                updateBlackBoard(championship, true);
+                updateBlackBoard(tournament, true);
                 centerImage();
             }
         });

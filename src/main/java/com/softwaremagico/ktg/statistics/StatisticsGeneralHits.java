@@ -5,29 +5,28 @@ package com.softwaremagico.ktg.statistics;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
@@ -45,14 +44,14 @@ import org.jfree.data.general.DefaultPieDataset;
 public class StatisticsGeneralHits extends StatisticsGUI {
 
     private List<Duel> duels = new ArrayList<>();
-    private String championship;
+    private Tournament tournament;
 
-    public StatisticsGeneralHits(String tmp_championship) {
-        championship = tmp_championship;
-        if (tmp_championship.equals("All")) {
+    public StatisticsGeneralHits(Tournament tournament) {
+        this.tournament = tournament;
+        if (tournament == null) { //null == all.
             duels = KendoTournamentGenerator.getInstance().database.getAllDuels();
         } else {
-            duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(tmp_championship);
+            duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(tournament);
         }
         start();
     }
@@ -83,7 +82,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
         Translator transl = LanguagePool.getTranslator("gui.xml");
         // create the chart…
         JFreeChart chart = ChartFactory.createPieChart(
-                transl.returnTag("TitleHits")+": " + championship, // Titulo de grafico
+                transl.returnTag("TitleHits") + ": " + tournament, // Titulo de grafico
                 dataset, // data
                 true, // incluye leyenda
                 true, // visualiza tooltips
@@ -106,7 +105,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
     public String defaultFileName() {
         return "PercentageOfHits.png";
     }
-    
+
     @Override
     void numberSpinnedChanged() {
     }

@@ -49,7 +49,7 @@ public class TournamentGroup extends Group implements Serializable {
     private static final Float SCORE_DRAW_FIGHTS = new Float(0.001);
     private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
     private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
-    transient Tournament championship;
+    transient Tournament tournament;
     transient DesignGroupWindow dgw;
     public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
@@ -66,7 +66,7 @@ public class TournamentGroup extends Group implements Serializable {
     transient private java.awt.event.MouseAdapter ma;
 
     TournamentGroup(Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
-        this.championship = championship;
+        this.tournament = championship;
         //this.numberMaxOfTeams = numberMaxOfTeams;
         this.level = level;
         this.arena = arena;
@@ -130,14 +130,14 @@ public class TournamentGroup extends Group implements Serializable {
         }
     }
 
-    protected boolean load(Tournament c) {
-        championship = c;
+    protected boolean load(Tournament tournament) {
+        this.tournament = tournament;
         setLanguage();
         List<Team> updatedTeams = new ArrayList<>();
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
             for (int i = 0; i < teams.size(); i++) {
-                Team t = KendoTournamentGenerator.getInstance().database.getTeamByName(teams.get(i).returnName(), c.name, false);
+                Team t = KendoTournamentGenerator.getInstance().database.getTeamByName(teams.get(i).returnName(), tournament, false);
                 if (t != null) {
                     updatedTeams.add(t);
                 } else {
@@ -263,7 +263,7 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public Tournament getChampionshipOfGroup() {
-        return championship;
+        return tournament;
     }
 
     public void openDesignGroupWindow(LeagueDesigner jf) {
@@ -274,7 +274,7 @@ public class TournamentGroup extends Group implements Serializable {
 
     public TournamentGroup convertToMode() {
         int maxWinners = 1;
-        switch (championship.mode) {
+        switch (tournament.mode) {
             case LEAGUE_TREE:
                 maxWinners = 1;
                 break;
@@ -282,7 +282,7 @@ public class TournamentGroup extends Group implements Serializable {
                 maxWinners = 2;
                 break;
         }
-        return new TournamentGroup(maxWinners, championship, level, arena);
+        return new TournamentGroup(maxWinners, tournament, level, arena);
     }
 
     public List<Team> getTeams(){
@@ -372,9 +372,9 @@ public class TournamentGroup extends Group implements Serializable {
 
         for (int j = 0; j < teams.size() - 1; j++) {
             if (count % 2 == 0) {
-                f = new Fight(teams.get(j), teams.get(j + 1), championship, fightArea, level);
+                f = new Fight(teams.get(j), teams.get(j + 1), tournament, fightArea, level);
             } else {
-                f = new Fight(teams.get(j + 1), teams.get(j), championship, fightArea, level);
+                f = new Fight(teams.get(j + 1), teams.get(j), tournament, fightArea, level);
             }
             f.changeMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
@@ -385,9 +385,9 @@ public class TournamentGroup extends Group implements Serializable {
         //Last versus first.
         if (teams.size() > 2) {
             if (count % 2 == 0) {
-                f = new Fight(teams.get(teams.size() - 1), teams.get(0), championship, fightArea, level);
+                f = new Fight(teams.get(teams.size() - 1), teams.get(0), tournament, fightArea, level);
             } else {
-                f = new Fight(teams.get(0), teams.get(teams.size() - 1), championship, fightArea, level);
+                f = new Fight(teams.get(0), teams.get(teams.size() - 1), tournament, fightArea, level);
             }
             f.changeMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
@@ -533,10 +533,10 @@ public class TournamentGroup extends Group implements Serializable {
         if (fight.team1.returnName().equals(team.returnName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 if (fight.duels.get(k).winner() < 0) {
-                    score += SCORE_WON_DUELS * championship.getScoreForWin();
+                    score += SCORE_WON_DUELS * tournament.getScoreForWin();
                 }
                 if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * championship.getScoreForDraw();
+                    score += SCORE_WON_DUELS * tournament.getScoreForDraw();
                 }
             }
         }
@@ -544,10 +544,10 @@ public class TournamentGroup extends Group implements Serializable {
         if (fight.team2.returnName().equals(team.returnName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 if (fight.duels.get(k).winner() > 0) {
-                    score += SCORE_WON_DUELS * championship.getScoreForWin();
+                    score += SCORE_WON_DUELS * tournament.getScoreForWin();
                 }
                 if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * championship.getScoreForDraw();
+                    score += SCORE_WON_DUELS * tournament.getScoreForDraw();
                 }
             }
         }
@@ -585,10 +585,10 @@ public class TournamentGroup extends Group implements Serializable {
     private Float obtainPointsForWonFights(Fight fight, Team team) {
         try {
             if (fight.winnerByDuels().returnName().equals(team.returnName())) {
-                return SCORE_WON_FIGHTS * championship.getScoreForWin();
+                return SCORE_WON_FIGHTS * tournament.getScoreForWin();
             } else if (fight.isDrawFight() && (fight.team1.returnName().equals(team.returnName())
                     || fight.team2.returnName().equals(team.returnName()))) {
-                return SCORE_WON_FIGHTS * championship.getScoreForDraw();
+                return SCORE_WON_FIGHTS * tournament.getScoreForDraw();
             }
         } catch (NullPointerException npe) {
         }
@@ -606,7 +606,7 @@ public class TournamentGroup extends Group implements Serializable {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(championship.name, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this), team.returnName());
+        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this), team.returnName());
         score += (double) SCORE_GOLDEN_POINT * multiplier;
         return score;
     }
@@ -629,7 +629,7 @@ public class TournamentGroup extends Group implements Serializable {
                         teamScore += obtainPointsForWonFights(oneFight, team);
                         teamScore += obtainPointsForWonDuels(oneFight, team);
                         teamScore += obtainPointsForHits(oneFight, team);
-                        if (oneFight.competition.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
+                        if (oneFight.tournament.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
                             teamScore += obtainPointsForDrawFights(oneFight, team);
                             teamScore += obtainPointsForDrawDuels(oneFight, team);
                         }
@@ -790,8 +790,8 @@ public class TournamentGroup extends Group implements Serializable {
         List<String> optionsList = new ArrayList<>();
         for (int i = 0; i < drawTeams.size(); i++) {
             optionsList.add(drawTeams.get(i).returnName());
-//            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, level);
-            //KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(i).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
+//            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).returnName(), 0, level);
+            //KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
 
         }
 
@@ -807,14 +807,14 @@ public class TournamentGroup extends Group implements Serializable {
                 options,
                 options[0]);
         if (n >= 0) {
-            KendoTournamentGenerator.getInstance().database.storeUndraw(championship.name, drawTeams.get(n).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
-            //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(championship.name, drawTeams.get(n).returnName(), level, drawTeams);
+            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n).returnName(), 0, KendoTournamentGenerator.getInstance().tournamentManager.returnIndexOfGroup(this));
+            //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(tournament.name, drawTeams.get(n).returnName(), level, drawTeams);
         }
         return n;
     }
 
     private String isDrawStored(List<Team> drawTeams) {
-        return KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(championship.name, level, drawTeams);
+        return KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(tournament, level, drawTeams);
     }
 
     /**

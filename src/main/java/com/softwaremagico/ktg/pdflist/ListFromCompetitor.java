@@ -62,7 +62,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
         try {
             listCompetitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
             if (voidTournament) {
-                CompetitorComboBox.addItem(trans.returnTag("All"));
+                CompetitorComboBox.addItem(null);
             }
             for (int i = 0; i < listCompetitors.size(); i++) {
                 CompetitorComboBox.addItem(listCompetitors.get(i).getSurname() + ", " + listCompetitors.get(i).getName());
@@ -72,7 +72,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
     }
 
     public Competitor returnSelectedCompetitor() {
-        if (voidTournament && CompetitorComboBox.getSelectedIndex() == 0) {
+        if (voidTournament && CompetitorComboBox.getSelectedIndex() <= 0) {
             return null;
         }
         return listCompetitors.get(CompetitorComboBox.getSelectedIndex() - 1);

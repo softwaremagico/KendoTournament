@@ -44,24 +44,22 @@ public class ShortNewFight extends javax.swing.JFrame {
 
     Translator trans = null;
     List<Tournament> listTournaments = new ArrayList<>();
-    Tournament selectedTournament = null;
     List<Team> listTeams = new ArrayList<>();
     List<Fight> fights = new ArrayList<>();
-    String competitionName;
+    Tournament tournament;
     int selectedArena;
 
     /**
      * Creates new form ShortNewFight
      */
-    public ShortNewFight(String tmp_competition, int tmp_arena) {
-        competitionName = tmp_competition;
-        selectedTournament = KendoTournamentGenerator.getInstance().database.getTournamentByName(competitionName, false);
+    public ShortNewFight(Tournament tournament, int tmp_arena) {
+        this.tournament = tournament;
         selectedArena = tmp_arena;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(competitionName, false);
+        listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();
@@ -102,7 +100,7 @@ public class ShortNewFight extends javax.swing.JFrame {
     private void fillFightingAreas() {
         FightAreaComboBox.removeAllItems();
         try {
-            for (int i = 0; i < selectedTournament.fightingAreas; i++) {
+            for (int i = 0; i < tournament.fightingAreas; i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
             FightAreaComboBox.setSelectedIndex(selectedArena);
@@ -135,7 +133,7 @@ public class ShortNewFight extends javax.swing.JFrame {
     }
 
     public Tournament getTournament() {
-        return selectedTournament;
+        return tournament;
     }
 
     public boolean filled() {

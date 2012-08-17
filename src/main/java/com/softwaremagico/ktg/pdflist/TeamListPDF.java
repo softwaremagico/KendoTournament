@@ -77,7 +77,7 @@ public class TeamListPDF extends ParentList {
 
         mainTable.addCell(getEmptyRow());
 
-        List<Team> listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(championship.name, false);
+        List<Team> listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(championship, false);
         for (int i = 0; i < listTeams.size(); i++) {
 
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));
@@ -112,7 +112,7 @@ public class TeamListPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(championship.name, FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(championship.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setBorderWidth(headerBorder);
         cell.setColspan(getTableWidths().length);

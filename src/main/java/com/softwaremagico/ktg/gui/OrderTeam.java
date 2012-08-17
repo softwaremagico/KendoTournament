@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -45,7 +42,7 @@ public class OrderTeam extends NewTeam {
     Team team = null;
     TeamFight windowParent = null;
 
-    public OrderTeam(String tourn, int levelOrder, TeamFight tf) {
+    public OrderTeam(Tournament tournament, int levelOrder, TeamFight tf) {
         level = levelOrder;
         windowParent = tf;
         newTeam = false;
@@ -54,7 +51,7 @@ public class OrderTeam extends NewTeam {
         this.addWindowListener(new closeWindows());
         refreshTournament = false;
         fillTournaments();
-        championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(tourn, false);
+        this.tournament = tournament;
         //fillCompetitors();
         inidividualTeams();
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
@@ -66,8 +63,7 @@ public class OrderTeam extends NewTeam {
         });
     }
 
-    public OrderTeam(String tourn, int levelOrder) {
-        System.out.println("------------------------------------------");
+    public OrderTeam(Tournament tournament, int levelOrder) {
         level = levelOrder;
         newTeam = false;
         start();
@@ -75,8 +71,7 @@ public class OrderTeam extends NewTeam {
         competitors.add(0, new Competitor("", "", "", ""));
         this.addWindowListener(new closeWindows());
         refreshTournament = false;
-        TournamentComboBox.addItem(tourn);
-        championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(tourn, false);
+        TournamentComboBox.addItem(tournament);
         //fillCompetitors();
         inidividualTeams();
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +90,7 @@ public class OrderTeam extends NewTeam {
     public void updateOrderWindow(Team t) {
         team = t;
         try {
-            if (t.realMembers() < championship.teamSize) {
+            if (t.realMembers() < tournament.teamSize) {
                 competitors.add(0, new Competitor("", "", "", ""));
             }
             NameTextField.setText(t.returnName());

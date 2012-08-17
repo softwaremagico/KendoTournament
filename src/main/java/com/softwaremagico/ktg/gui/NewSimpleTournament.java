@@ -5,28 +5,25 @@ package com.softwaremagico.ktg.gui;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -42,14 +39,16 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     Translator trans = null;
     DefaultListModel<String> fightsModel = new DefaultListModel<>();
-    List<Tournament> listTournaments = new ArrayList<>();
+    //List<Tournament> listTournaments = new ArrayList<>();
     List<Team> listTeams = new ArrayList<>();
     ArrayList<Fight> fights = new ArrayList<>();
-    Tournament competition = null;
+    //Tournament competition = null;
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;
 
-    /** Creates new form NewSimpleTournament */
+    /**
+     * Creates new form NewSimpleTournament
+     */
     public NewSimpleTournament() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
@@ -86,9 +85,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
-            listTournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
+            List<Tournament> listTournaments = TournamentPool.getAllTournaments();
             for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i).name);
+                TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
@@ -101,7 +100,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         refreshTeam1 = false;
         try {
             Team1ComboBox.removeAllItems();
-            listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(TournamentComboBox.getSelectedItem().toString(), false);
+            listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
             for (int i = 0; i < listTeams.size(); i++) {
                 Team1ComboBox.addItem(listTeams.get(i).returnName());
             }
@@ -124,7 +123,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                     Team2ComboBox.addItem(listTeams.get(i).returnName());
                 }
             }
-            /* Mantain the last selected index */
+            /*
+             * Mantain the last selected index
+             */
             for (int i = 0; i < Team2ComboBox.getItemCount(); i++) {
                 if (Team2ComboBox.getItemAt(i).toString().equals(selected)) {
                     Team2ComboBox.setSelectedIndex(i);
@@ -139,8 +140,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void fillFightingAreas() {
         try {
             FightAreaComboBox.removeAllItems();
-            competition = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), true);
-            for (int i = 0; i < competition.fightingAreas; i++) {
+            Tournament tournament = (Tournament) TournamentComboBox.getSelectedItem();
+            for (int i = 0; i < tournament.fightingAreas; i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
@@ -172,8 +173,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void RefreshTournament() {
         try {
             if (TournamentComboBox.getItemCount() > 0) {
-                competition = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-                fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(TournamentComboBox.getSelectedItem().toString());
+                fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament((Tournament) TournamentComboBox.getSelectedItem());
                 fillTeam1ComboBox();
                 fillTeam2ComboBox();
                 fillFightingAreas();
@@ -193,10 +193,10 @@ public class NewSimpleTournament extends javax.swing.JFrame {
      */
     public void fillFights() {
         fightsModel.removeAllElements();
-        if (competition.mode.equals(TournamentTypes.SIMPLE)) {
+        if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE)) {
             for (int i = 0; i < fights.size(); i++) {
                 String text = fights.get(i).team1.returnName() + " - " + fights.get(i).team2.returnName();
-                if (competition.fightingAreas > 1) {
+                if (((Tournament) TournamentComboBox.getSelectedItem()).fightingAreas > 1) {
                     text += "  (" + trans.returnTag("FightArea")
                             + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";
 
@@ -229,7 +229,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         DeleteAllButton = new javax.swing.JButton();
         AcceptButton = new javax.swing.JButton();
         TournamentLabel = new javax.swing.JLabel();
-        TournamentComboBox = new javax.swing.JComboBox<String>();
+        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -449,19 +449,19 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         try {
             boolean answer = false;
-            if (!competition.mode.equals(TournamentTypes.SIMPLE)) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE)) {
                 answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
-                    competition.mode = TournamentTypes.SIMPLE;
+                    ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentTypes.SIMPLE;
                     fights.clear();
                 }
             }
-            if (competition.mode.equals(TournamentTypes.SIMPLE) || (answer)) {
+            if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE) || (answer)) {
                 if (Team1ComboBox.getSelectedItem().toString().length() > 0 && Team2ComboBox.getSelectedItem().toString().length() > 0) {
-                    Fight fight = new Fight(KendoTournamentGenerator.getInstance().database.getTeamByName(Team1ComboBox.getSelectedItem().toString(), TournamentComboBox.getSelectedItem().toString(), true),
-                            KendoTournamentGenerator.getInstance().database.getTeamByName(Team2ComboBox.getSelectedItem().toString(), TournamentComboBox.getSelectedItem().toString(), true),
-                            KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false),
+                    Fight fight = new Fight(KendoTournamentGenerator.getInstance().database.getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
+                            KendoTournamentGenerator.getInstance().database.getTeamByName(Team2ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
+                            TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString()),
                             FightAreaComboBox.getSelectedIndex(),
                             fights.size()); //each fight is one new level to allow the order of teams to be changed anytime. 
                     int ind = FightsList.getSelectedIndex();
@@ -495,17 +495,17 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RandomButtonActionPerformed
         try {
             boolean answer = false;
-            if (!competition.mode.equals(TournamentTypes.SIMPLE) || fightsModel.size() > 0) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE) || fightsModel.size() > 0) {
                 answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
-                    competition.mode = TournamentTypes.SIMPLE;
+                    ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentTypes.SIMPLE;
                     fights.clear();
                 }
             }
             if (fightsModel.isEmpty() || (answer)) {
                 //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-                fights = KendoTournamentGenerator.getInstance().fightManager.obtainRandomFights(listTeams, competition);
+                fights = KendoTournamentGenerator.getInstance().fightManager.obtainRandomFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
 
                 int ind = FightsList.getSelectedIndex();
 
@@ -517,7 +517,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
-           KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
     }//GEN-LAST:event_RandomButtonActionPerformed
 
@@ -539,9 +539,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (fights.size() > 0) {
             KendoTournamentGenerator.getInstance().database.storeFights(fights, true, true);
-            KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(competition.name, listTeams);
-            competition.mode = TournamentTypes.SIMPLE;
-            KendoTournamentGenerator.getInstance().database.updateTournament(competition, false);
+            KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(((Tournament) TournamentComboBox.getSelectedItem()), listTeams);
+            ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentTypes.SIMPLE;
+            KendoTournamentGenerator.getInstance().database.updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();
         } else {
             MessageManager.errorMessage("noFight", "New Fight");
@@ -576,7 +576,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
             //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            fights = KendoTournamentGenerator.getInstance().fightManager.obtainSortedFights(listTeams, competition);
+            fights = KendoTournamentGenerator.getInstance().fightManager.obtainSortedFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
 
             int ind = FightsList.getSelectedIndex();
 
@@ -611,9 +611,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private javax.swing.JLabel Team1Label;
     private javax.swing.JComboBox<String> Team2ComboBox;
     private javax.swing.JLabel Team2Label;
-    private javax.swing.JComboBox<String> TournamentComboBox;
+    private javax.swing.JComboBox<Tournament> TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.JButton UpButton;
     // End of variables declaration//GEN-END:variables
-
 }

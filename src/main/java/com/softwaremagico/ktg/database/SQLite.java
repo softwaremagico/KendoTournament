@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Log;
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -238,7 +235,7 @@ public class SQLite extends SQL {
      * @return
      */
     @Override
-    public boolean deleteFightsOfLevelOfTournament(String tournamentName, int level, boolean verbose) {
+    public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
         Log.fine("Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
@@ -248,13 +245,13 @@ public class SQLite extends SQL {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    List<Fight> fightsOfTournament = searchFightsByTournamentNameLevelEqualOrGreater(tournamentName, level);
+                    List<Fight> fightsOfTournament = searchFightsByTournamentLevelEqualOrGreater(tournament, level);
                     for (Fight f : fightsOfTournament) {
                         deleteFight(f, false);
                     }
                 }
                 Log.finer("Delete draw fights of tournament.");
-                deleteDrawsOfLevelOfTournament(tournamentName, level);
+                deleteDrawsOfLevelOfTournament(tournament, level);
                 return true;
             } else {
                 return false;
@@ -276,7 +273,7 @@ public class SQLite extends SQL {
      * @return
      */
     @Override
-    public boolean deleteFightsOfTournament(String championship, boolean verbose) {
+    public boolean deleteFightsOfTournament(Tournament tournament, boolean verbose) {
         boolean error;
         boolean answer = false;
         try {
@@ -285,14 +282,14 @@ public class SQLite extends SQL {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    List<Fight> fightsOfTournament = searchFightsByTournamentName(championship);
+                    List<Fight> fightsOfTournament = searchFightsByTournament(tournament);
                     if (fightsOfTournament.size() > 0) {
                         for (Fight f : fightsOfTournament) {
                             deleteFight(f, false);
                         }
                     }
                 }
-                deleteDrawsOfTournament(championship);
+                deleteDrawsOfTournament(tournament);
                 return true;
             } else {
                 return false;
@@ -323,7 +320,7 @@ public class SQLite extends SQL {
             if (answer || !verbose) {
                 deleteDuelsOfFight(fight);
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
         } catch (SQLException ex) {
@@ -334,9 +331,9 @@ public class SQLite extends SQL {
 
         if (!error && answer) {
             if (verbose) {
-                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("fightDeleted", this.getClass().getName(), fight.competition.name);
+            Log.info("fightDeleted", this.getClass().getName(), fight.tournament.getName());
         }
 
         return (answer && !error);

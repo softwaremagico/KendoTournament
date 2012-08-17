@@ -95,7 +95,7 @@ public class MonitorPosition extends JFrame {
 
         //teamTopTen = tournament.database.getTeamsOrderByScore(championship.name, false);
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name));
+        teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(championship));
 
         if (teamTopTen.size() > 0) {
             if (fontSize > this.getWidth() / (teamTopTen.size() * 4)) {

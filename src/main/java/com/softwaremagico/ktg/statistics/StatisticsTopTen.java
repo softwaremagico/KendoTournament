@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -48,26 +49,26 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class StatisticsTopTen extends StatisticsGUI {
 
     Translator transl;
-    String championship;
+    Tournament tournament;
     List<CompetitorRanking> competitorTopTen;
     int startRange = 0;
     private List<Competitor> competitors;
     boolean changesAllowed = false;
 
-    public StatisticsTopTen(String tmp_championship) {
-        championship = tmp_championship;
-        if (championship.equals("All")) {
+    public StatisticsTopTen(Tournament tournament) {
+        this.tournament = tournament;
+        if (tournament==null) {
             competitorTopTen = getCompetitorsOrderByScore();
         } else {
-            competitorTopTen = getCompetitorsOrderByScoreInChampionship(tmp_championship);
+            competitorTopTen = getCompetitorsOrderByScoreInChampionship(tournament);
         }
         transl = LanguagePool.getTranslator("gui.xml");
         start();
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
         this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
-        if (!championship.equals("All")) {
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(championship);
+        if (tournament!=null) {
+            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(tournament);
         } else {
             competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
         }
@@ -105,10 +106,10 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     }
 
-    private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(String competition) {
-        List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(competition);
+    private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(Tournament tournament) {
+        List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(tournament);
         List<CompetitorRanking> ranking = new ArrayList<>();
-        List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(competition);
+        List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
         for (int i = 0; i < competitorsList.size(); i++) {
             if (competitorsList.get(i) != null) {
                 int victories = obtainWinnedDuels(competitorsList.get(i), fights);

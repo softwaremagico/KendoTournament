@@ -142,9 +142,9 @@ public class SummaryPDF extends ParentList {
 
         List<Fight> fights;
         if (useOnlyShiaijo < 0) {
-            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship.name);
+            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(championship);
         } else {
-            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentNameAndFightArea(championship.name, useOnlyShiaijo);
+            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentAndFightArea(championship, useOnlyShiaijo);
         }
 
 
@@ -191,7 +191,7 @@ public class SummaryPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(championship.name, FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(championship.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(headerBorder);

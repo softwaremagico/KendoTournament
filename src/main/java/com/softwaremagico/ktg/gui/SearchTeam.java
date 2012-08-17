@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -45,9 +42,8 @@ public final class SearchTeam extends Search<Team> {
 
     private JLabel NameLabel = new JLabel("Name:");
     private JTextField NameTextField = new JTextField();
-    private JComboBox<String> TournamentComboBox = new JComboBox();
+    private JComboBox<Tournament> TournamentComboBox = new JComboBox();
     private JLabel TournamentLabel = new JLabel("Tournament:");
-    private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
 
     public SearchTeam() {
@@ -77,9 +73,9 @@ public final class SearchTeam extends Search<Team> {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
+            List<Tournament> listTournaments = TournamentPool.getAllTournaments();
             for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i).name);
+                TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
         }
@@ -106,7 +102,7 @@ public final class SearchTeam extends Search<Team> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchTeamsByNameAndTournament(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
+            results = KendoTournamentGenerator.getInstance().database.searchTeamsByNameAndTournament(NameTextField.getText(), (Tournament)TournamentComboBox.getSelectedItem(), true);
         } else {
             MessageManager.errorMessage("fillFields", "Search");
         }

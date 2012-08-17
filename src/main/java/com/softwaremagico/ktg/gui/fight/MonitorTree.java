@@ -40,11 +40,11 @@ public class MonitorTree extends LeagueEvolution {
     public MonitorTree(Tournament selectedTournament) {
 
         try {
-            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament.name);
+            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament);
 
             if (KendoTournamentGenerator.getInstance().tournamentManager == null) {
                 KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(selectedTournament);
-                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(selectedTournament.name));
+                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(selectedTournament));
             }
         } catch (NullPointerException npe) {
         }

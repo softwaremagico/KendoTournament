@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.championship;
 
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
@@ -38,7 +39,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
     private static final long serialVersionUID = -6193257530262904629L;
     private GridBagConstraints c = new GridBagConstraints();
-    private String last_championship;
+    private Tournament tournament;
     private int titleColumn = 1;
     private int titleRow = 2;
     transient private Translator trans = LanguagePool.getTranslator("gui.xml");
@@ -48,15 +49,15 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         setBackground(new Color(255, 255, 255));
     }
 
-    public void updateBlackBoard(String championshipName, boolean refill) {
-        last_championship = championshipName;
+    public void updateBlackBoard(Tournament tournament, boolean refill) {
+        this.tournament = tournament;
         //removeAll();
         if (!refill) {
             //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         } else {
-            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championshipName);
-            KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(KendoTournamentGenerator.getInstance().database.getTournamentByName(championshipName, false));
-            ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(tournament);
+            KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(tournament);
+            ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(fights);
             //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         }
@@ -75,7 +76,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
         GridBagConstraints lc = new GridBagConstraints();
 
-        Separator sp = new Separator(last_championship);
+        Separator sp = new Separator(tournament.getName());
         sp.updateFont("sansserif", 44);
         lc.gridwidth = GridBagConstraints.REMAINDER;
         add(sp, lc);
@@ -125,7 +126,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         for (int level = 0; level < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); level++) {
             for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().size(); groupIndex++) {
                 try {
-                    if (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).championship.name.equals(last_championship)) {
+                    if (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).tournament.equals(tournament)) {
                         c.anchor = GridBagConstraints.WEST;
                         c.gridx = level * 2 + 1 + titleColumn;
                         if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners < 2) {
@@ -184,7 +185,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+           KendoTournamentGenerator.getInstance().showErrorInformation(e);
         }
     }
 

@@ -80,8 +80,8 @@ public class FightManager {
         return false;
     }
 
-    public void getFightsFromDatabase(String championship) {
-        fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(championship);
+    public void getFightsFromDatabase(Tournament tournament) {
+        fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
     }
 
     public int size() {
@@ -238,22 +238,22 @@ public class FightManager {
         }
     }
 
-    public boolean deleteAllFights(String championship, boolean verbose) {
-        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfTournament(championship, verbose)) {
-            KendoTournamentGenerator.getInstance().database.deleteAllMemberChangesInTeams(championship, verbose);
+    public boolean deleteAllFights(Tournament tournament, boolean verbose) {
+        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfTournament(tournament, verbose)) {
+            KendoTournamentGenerator.getInstance().database.deleteAllMemberChangesInTeams(tournament, verbose);
             fights = new ArrayList<>();
             return true;
         }
         return false;
     }
 
-    public boolean deleteAllFightsButNotFromDatabase(String championship, boolean verbose) {
+    public boolean deleteAllFightsButNotFromDatabase(Tournament tournament, boolean verbose) {
         fights = new ArrayList<>();
         return true;
     }
 
-    public boolean deleteFightsOfLevel(String tournamentName, int level, boolean verbose) {
-        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(tournamentName, level, verbose)) {
+    public boolean deleteFightsOfLevel(Tournament tournament, int level, boolean verbose) {
+        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(tournament, level, verbose)) {
             Log.finer("Delete fights in memory.");
             for (int i = 0; i < fights.size(); i++) {
                 if (fights.get(i).level >= level) {
@@ -407,7 +407,7 @@ public class FightManager {
     /**
      *
      * @param listTeams
-     * @param competition
+     * @param tournament
      * @return
      */
     @SuppressWarnings("unchecked")

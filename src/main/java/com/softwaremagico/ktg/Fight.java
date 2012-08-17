@@ -37,7 +37,7 @@ public class Fight implements Serializable {
 
     public Team team1;
     public Team team2;
-    public Tournament competition;
+    public Tournament tournament;
     public int asignedFightArea;
     public List<Duel> duels = new ArrayList<>();
     private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
@@ -64,7 +64,7 @@ public class Fight implements Serializable {
     public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_winner, int tmp_level) {
         team1 = tmp_team1;
         team2 = tmp_team2;
-        competition = tmp_tournament;
+        tournament = tmp_tournament;
         asignedFightArea = asignedArea;
         addDuels();
         winner = tmp_winner;
@@ -74,7 +74,7 @@ public class Fight implements Serializable {
     public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_level) {
         team1 = tmp_team1;
         team2 = tmp_team2;
-        competition = tmp_tournament;
+        tournament = tmp_tournament;
         asignedFightArea = asignedArea;
         addDuels();
         winner = 2;
@@ -84,7 +84,7 @@ public class Fight implements Serializable {
     public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea) {
         team1 = tmp_team1;
         team2 = tmp_team2;
-        competition = tmp_tournament;
+        tournament = tmp_tournament;
         asignedFightArea = asignedArea;
         addDuels();
         winner = 2;
@@ -133,7 +133,7 @@ public class Fight implements Serializable {
     public final boolean addDuels() {
         try {
             int bound;
-            for (int i = 0; i < competition.teamSize; i++) {
+            for (int i = 0; i < tournament.teamSize; i++) {
                 duels.add(new Duel());
             }
         } catch (NullPointerException npe) {
@@ -295,7 +295,7 @@ public class Fight implements Serializable {
         Fight otherFight = (Fight) object;
         return this.team1.equals(otherFight.team1)
                 && this.team2.equals(otherFight.team2)
-                && this.competition.equals(otherFight.competition)
+                && this.tournament.equals(otherFight.tournament)
                 && this.level == otherFight.level;
 
     }
@@ -305,7 +305,7 @@ public class Fight implements Serializable {
         int hash = 7;
         hash = 59 * hash + (this.team1 != null ? this.team1.hashCode() : 0);
         hash = 59 * hash + (this.team2 != null ? this.team2.hashCode() : 0);
-        hash = 59 * hash + (this.competition != null ? this.competition.hashCode() : 0);
+        hash = 59 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
         hash = 59 * hash + this.level;
         return hash;
     }

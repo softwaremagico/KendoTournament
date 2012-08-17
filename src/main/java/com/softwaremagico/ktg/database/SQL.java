@@ -236,7 +236,7 @@ public abstract class SQL extends Database {
         Folder.appendTextToFile("LOCK TABLES `tournament` WRITE;\n", file);
         List<Tournament> tournaments = getAllTournaments();
         for (int i = 0; i < tournaments.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).name + "','" + convertInputStream2String(tournaments.get(i).bannerInput) + "',"
+            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).getName() + "','" + convertInputStream2String(tournaments.get(i).bannerInput) + "',"
                     + tournaments.get(i).bannerSize + "," + tournaments.get(i).fightingAreas + "," + tournaments.get(i).howManyTeamsOfGroupPassToTheTree + ","
                     + tournaments.get(i).teamSize + ",'" + tournaments.get(i).mode + "'," + (int) tournaments.get(i).getScoreForWin() + ","
                     + tournaments.get(i).getScoreForDraw() + ",'" + tournaments.get(i).getChoosedScore() + "',NULL,NULL"
@@ -297,7 +297,7 @@ public abstract class SQL extends Database {
                     }
                     Folder.appendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).returnName() + "','"
                             + memberID + "'," + member + "," + levelIndex + ",'"
-                            + teams.get(i).competition.name + "'," + teams.get(i).group
+                            + teams.get(i).tournament.getName() + "'," + teams.get(i).group
                             + ");\n", file);
                 }
             }
@@ -311,7 +311,7 @@ public abstract class SQL extends Database {
         ArrayList<Fight> fights = getAllFights();
         for (int i = 0; i < fights.size(); i++) {
             Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.returnName() + "','"
-                    + fights.get(i).team2.returnName() + "','" + fights.get(i).competition.name + "',"
+                    + fights.get(i).team2.returnName() + "','" + fights.get(i).tournament.getName() + "',"
                     + fights.get(i).asignedFightArea + "," + i + ","
                     + fights.get(i).returnWinner() + "," + fights.get(i).level + ","
                     + fights.get(i).getMaxWinners()
@@ -760,12 +760,12 @@ public abstract class SQL extends Database {
      * Select all competitors that are not included in any team for a
      * tournament.
      *
-     * @param tournamentName
+     * @param tournament.getName()
      * @return
      */
     @Override
-    public List<Competitor> selectAllCompetitorsWithoutTeamInTournament(String tournamentName) {
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE NOT EXISTS (SELECT Member FROM team WHERE Tournament='" + tournamentName + "' AND competitor.id=team.Member) AND EXISTS (SELECT * FROM role WHERE Tournament='" + tournamentName + "' AND role.Competitor=competitor.id AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
+    public List<Competitor> selectAllCompetitorsWithoutTeamInTournament(Tournament tournament) {
+        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE NOT EXISTS (SELECT Member FROM team WHERE Tournament='" + tournament.getName() + "' AND competitor.id=team.Member) AND EXISTS (SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' AND role.Competitor=competitor.id AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
         return getCompetitors(query, false);
     }
 
@@ -773,12 +773,12 @@ public abstract class SQL extends Database {
      * Select all competitors, organizer and refereer of the tournament that
      * still have not the accreditation card.
      *
-     * @param tournamentName
+     * @param tournament.getName()
      * @return
      */
     @Override
-    public List<CompetitorWithPhoto> selectAllParticipantsInTournamentWithoutAccreditation(String tournamentName, boolean printAll) {
-        String query = "SELECT * FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournamentName + "' AND competitor.ID=role.Competitor";
+    public List<CompetitorWithPhoto> selectAllParticipantsInTournamentWithoutAccreditation(Tournament tournament, boolean printAll) {
+        String query = "SELECT * FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor";
         if (!printAll) {
             query += " AND role.ImpressCard=0 ";
         }
@@ -789,12 +789,12 @@ public abstract class SQL extends Database {
     /**
      * Select all competitors, organizer and refereer of the tournament.
      *
-     * @param tournamentName
+     * @param tournament.getName()
      * @return
      */
     @Override
-    public List<Competitor> selectAllCompetitorsInTournament(String tournamentName) {
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournamentName + "' AND competitor.ID=role.Competitor AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
+    public List<Competitor> selectAllCompetitorsInTournament(Tournament tournament) {
+        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
         return getCompetitors(query, false);
     }
 
@@ -803,14 +803,14 @@ public abstract class SQL extends Database {
      * all participants.
      *
      * @param roleTags roles that have diploma.
-     * @param tournamentName
+     * @param tournament.getName()
      * @param printAll if false select competitors without printed diploma.
      * before.
      * @return
      */
     @Override
-    public List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roleTags, String tournamentName, boolean printAll) {
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournamentName + "' AND competitor.ID=role.Competitor ";
+    public List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roleTags, Tournament tournament, boolean printAll) {
+        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor ";
 
         if (!printAll) {
             query += " AND role.Diploma=0 ";
@@ -835,12 +835,12 @@ public abstract class SQL extends Database {
     /**
      * Select all VCLO.
      *
-     * @param tournamentName
+     * @param tournament.getName()
      * @return
      */
     @Override
-    public List<Competitor> selectAllVolunteersInTournament(String tournamentName) {
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor c1 WHERE EXISTS (SELECT Competitor FROM role r1 WHERE Tournament='" + tournamentName + "' AND c1.ID=r1.Competitor AND (r1.Role='VCLO' OR r1.Role='VolunteerK')) ORDER BY Surname";
+    public List<Competitor> selectAllVolunteersInTournament(Tournament tournament) {
+        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor c1 WHERE EXISTS (SELECT Competitor FROM role r1 WHERE Tournament='" + tournament.getName() + "' AND c1.ID=r1.Competitor AND (r1.Role='VCLO' OR r1.Role='VolunteerK')) ORDER BY Surname";
         return getCompetitors(query, false);
     }
 
@@ -915,8 +915,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String clubName, String tournamentName, boolean getImage, boolean verbose) {
-        String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + clubName + "' AND r1.Tournament='" + tournamentName + "'  ORDER BY c1.Surname";
+    public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String clubName, Tournament tournament, boolean getImage, boolean verbose) {
+        String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + clubName + "' AND r1.Tournament='" + tournament.getName() + "'  ORDER BY c1.Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
 
@@ -967,10 +967,10 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, String tournamentName) {
-        Log.fine("Getting competitors ordered by score from " + tournamentName);
+    public List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, Tournament tournament) {
+        Log.fine("Getting competitors ordered by score from " + tournament.getName());
         List<CompetitorRanking> competitorsOrdered = new ArrayList<>();
-        String query = "SELECT " + "t3.Name as Name, " + "t3.Surname as Surname, " + "t3.ID as ID, " + "t1.NumVictorias, " + "TotalPtos " + "FROM( " + "SELECT " + "count(Distinct t1.IdDuelo) as NumVictorias, " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + "as  IDGanador " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor1, " + "t1.NAME as Competidor1, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador1 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournamentName + "' OR 'All' = '" + tournamentName + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t1 " + "INNER JOIN " + "(SELECT " + "t1.ID as IdCompetidor2, " + "t1.NAME as Competidor2, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador2 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournamentName + "' OR 'All' = '" + tournamentName + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t2 " + "ON t1.IdDuelo = t2.IdDuelo " + "WHERE " + "TotalJugador1 <> TotalJugador2   " + "GROUP BY " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + ") t1 " + "RIGHT OUTER JOIN " + "(SELECT " + "t1.IdCompetidor, " + "sum(TotalPtos) as TotalPtos " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournamentName + "' OR 'All' = '" + tournamentName + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + "UNION ALL " + "SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournamentName + "' OR 'All' = '" + tournamentName + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer) t1 " + "GROUP BY " + "t1.IdCompetidor " + ") " + "t2 " + "ON t2.IdCompetidor = t1.IDGanador " + "INNER JOIN " + "competitor t3 " + "ON t2.IdCompetidor = t3.ID " + "ORDER BY " + "NumVictorias DESC,TotalPtos DESC, t3.surname asc;";
+        String query = "SELECT " + "t3.Name as Name, " + "t3.Surname as Surname, " + "t3.ID as ID, " + "t1.NumVictorias, " + "TotalPtos " + "FROM( " + "SELECT " + "count(Distinct t1.IdDuelo) as NumVictorias, " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + "as  IDGanador " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor1, " + "t1.NAME as Competidor1, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador1 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t1 " + "INNER JOIN " + "(SELECT " + "t1.ID as IdCompetidor2, " + "t1.NAME as Competidor2, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador2 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t2 " + "ON t1.IdDuelo = t2.IdDuelo " + "WHERE " + "TotalJugador1 <> TotalJugador2   " + "GROUP BY " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + ") t1 " + "RIGHT OUTER JOIN " + "(SELECT " + "t1.IdCompetidor, " + "sum(TotalPtos) as TotalPtos " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + "UNION ALL " + "SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer) t1 " + "GROUP BY " + "t1.IdCompetidor " + ") " + "t2 " + "ON t2.IdCompetidor = t1.IDGanador " + "INNER JOIN " + "competitor t3 " + "ON t2.IdCompetidor = t3.ID " + "ORDER BY " + "NumVictorias DESC,TotalPtos DESC, t3.surname asc;";
 
         try {
             try (Statement s = connection.createStatement();
@@ -992,20 +992,20 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String roleName, String tournamentName, boolean getImage, boolean verbose) {
-        String query = "SELECT * FROM competitor, role WHERE competitor.ID=role.Competitor AND role.Role='" + roleName + "' AND role.Tournament='" + tournamentName + "'  ORDER BY competitor.Surname";
+    public List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String roleName, Tournament tournament, boolean getImage, boolean verbose) {
+        String query = "SELECT * FROM competitor, role WHERE competitor.ID=role.Competitor AND role.Role='" + roleName + "' AND role.Tournament='" + tournament.getName() + "'  ORDER BY competitor.Surname";
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
-    public List<CompetitorWithPhoto> searchRefereeByTournament(String tournamentName, boolean getImage, boolean verbose) {
-        return searchCompetitorsByRoleAndTournament("Referee", tournamentName, getImage, verbose);
+    public List<CompetitorWithPhoto> searchRefereeByTournament(Tournament tournament, boolean getImage, boolean verbose) {
+        return searchCompetitorsByRoleAndTournament("Referee", tournament, getImage, verbose);
     }
 
     @Override
-    public Integer searchVolunteerOrder(Competitor competitor, String tournamentName) {
+    public Integer searchVolunteerOrder(Competitor competitor, Tournament tournament) {
         Log.fine("Obtain the numeration order of the volunteer " + competitor.getSurnameName());
-        List<Competitor> allVolunteers = selectAllVolunteersInTournament(tournamentName);
+        List<Competitor> allVolunteers = selectAllVolunteersInTournament(tournament);
 
         for (int i = 0; i < allVolunteers.size(); i++) {
             if (allVolunteers.get(i).getId().equals(competitor.getId())) {
@@ -1054,15 +1054,15 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeRole(RoleTag roleTag, Tournament tournament, Participant participant, boolean verbose) {
-        Log.fine("Storing the role of participant " + participant.getSurnameName() + " in tournament " + tournament.name + " as " + roleTag.name);
+        Log.fine("Storing the role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " as " + roleTag.name);
         boolean inserted = true;
         try {
             try (Statement s = connection.createStatement()) {
-                Log.finer("Deleting role of participant " + participant.getShortSurname() + " in tournament " + tournament.name);
-                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.name + "' AND Competitor='" + participant.getId() + "'");
+                Log.finer("Deleting role of participant " + participant.getShortSurname() + " in tournament " + tournament.getName());
+                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'");
             }
             try (Statement st = connection.createStatement()) {
-                st.executeUpdate("INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + roleTag.tag + "','" + tournament.name + "','" + participant.getId() + "')");
+                st.executeUpdate("INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + roleTag.tag + "','" + tournament.getName() + "','" + participant.getId() + "')");
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -1109,14 +1109,14 @@ public abstract class SQL extends Database {
 
     @Override
     public boolean deleteRole(Tournament tournament, Participant participant) {
-        Log.fine("Deleting role of participant " + participant.getSurnameName() + " in tournament " + tournament.name);
+        Log.fine("Deleting role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
         boolean answer = false;
         try {
             Statement s = connection.createStatement();
 
             answer = MessageManager.questionMessage("roleDeleteQuestion", "Warning!");
             if (answer) {
-                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.name + "' AND Competitor='" + participant.getId() + "'");
+                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'");
                 MessageManager.translatedMessage("roleDeleted", this.getClass().getName(), participant.getName() + " " + participant.getSurname(), JOptionPane.INFORMATION_MESSAGE);
                 s.close();
             }
@@ -1133,11 +1133,11 @@ public abstract class SQL extends Database {
 
     @Override
     public String getTagRole(Tournament tournament, Participant participant) {
-        Log.fine("Getting roleTag of participant " + participant.getSurnameName() + " in tournament " + tournament.name);
+        Log.fine("Getting roleTag of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
         String role = null;
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM role WHERE Tournament='" + tournament.name + "' AND Competitor='" + participant.getId() + "'")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'")) {
                 rs.next();
                 role = rs.getObject("Role").toString();
             }
@@ -1152,16 +1152,16 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
 
-        Log.finer("RolTag obtained for participant " + participant.getSurnameName() + " in tournament " + tournament.name + " is " + role);
+        Log.finer("RolTag obtained for participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " is " + role);
         return role;
     }
 
     @Override
-    public void setAllParticipantsInTournamentAsAccreditationPrinted(String tournamentName) {
-        Log.fine("Disabling printing all accreditations cards of " + tournamentName);
+    public void setAllParticipantsInTournamentAsAccreditationPrinted(Tournament tournament) {
+        Log.fine("Disabling printing all accreditations cards of " + tournament.getName());
         try {
             try (Statement st = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournamentName + "'")) {
+                    PreparedStatement stmt = connection.prepareStatement("UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournament.getName() + "'")) {
                 stmt.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -1171,11 +1171,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, String tournamentName) {
-        Log.fine("Disabling printing the accreditation card of " + competitor.getSurnameName() + " in tournament " + tournamentName);
+    public void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, Tournament tournament) {
+        Log.fine("Disabling printing the accreditation card of " + competitor.getSurnameName() + " in tournament " + tournament.getName());
         List<Competitor> competitors = new ArrayList<>();
         competitors.add(competitor);
-        setParticipantsInTournamentAsAccreditationPrinted(competitors, tournamentName);
+        setParticipantsInTournamentAsAccreditationPrinted(competitors, tournament);
     }
 
     /**
@@ -1183,14 +1183,14 @@ public abstract class SQL extends Database {
      * competitors are selected, set all participants of the championship.
      *
      * @param competitors
-     * @param tournamentName
+     * @param tournament.getName()
      */
     @Override
-    public void setParticipantsInTournamentAsAccreditationPrinted(List<Competitor> competitors, String tournamentName) {
-        Log.fine("Disabling printing the accreditation card of a list of competitors in tournament " + tournamentName);
+    public void setParticipantsInTournamentAsAccreditationPrinted(List<Competitor> competitors, Tournament tournament) {
+        Log.fine("Disabling printing the accreditation card of a list of competitors in tournament " + tournament.getName());
         try {
             //Basic query
-            String query = "UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournamentName + "'";
+            String query = "UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournament.getName() + "'";
 
             //Select the competitors
             if (competitors != null && competitors.size() > 0) {
@@ -1217,14 +1217,14 @@ public abstract class SQL extends Database {
      * selected, set all participants of the championship.
      *
      * @param roleTags
-     * @param tournamentName
+     * @param tournament.getName()
      */
     @Override
-    public void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roleTags, String tournamentName) {
-        Log.fine("Disabling printing all diplomas of " + tournamentName + " for " + roleTags);
+    public void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roleTags, Tournament tournament) {
+        Log.fine("Disabling printing all diplomas of " + tournament.getName() + " for " + roleTags);
         try {
             //Basic query
-            String query = "UPDATE role SET Diploma=1 WHERE Tournament='" + tournamentName + "'";
+            String query = "UPDATE role SET Diploma=1 WHERE Tournament='" + tournament.getName() + "'";
 
             //Select the roles
             if (roleTags != null && roleTags.size() > 0) {
@@ -1579,10 +1579,10 @@ public abstract class SQL extends Database {
     public boolean storeTournament(Tournament tournament, boolean verbose) {
         boolean error = false;
         boolean update = false;
-        Log.fine("Storing tournament " + tournament.name);
+        Log.fine("Storing tournament " + tournament.getName());
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM tournament WHERE Name='" + tournament.name + "'")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM tournament WHERE Name='" + tournament.getName() + "'")) {
 
                 if (rs.next()) {
                     return updateTournament(tournament, verbose);
@@ -1595,7 +1595,7 @@ public abstract class SQL extends Database {
                         KendoTournamentGenerator.getInstance().showErrorInformation(ex);
                     }
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
-                        stmt.setString(1, tournament.name);
+                        stmt.setString(1, tournament.getName());
                         storeBinaryStream(stmt, 2, tournament.bannerInput, (int) tournament.bannerSize);
                         stmt.setLong(3, tournament.bannerSize);
                         stmt.setInt(4, tournament.fightingAreas);
@@ -1630,14 +1630,14 @@ public abstract class SQL extends Database {
         if (!error) {
             if (!update) {
                 if (verbose) {
-                    MessageManager.translatedMessage("tournamentStored", this.getClass().getName(), tournament.name, JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.translatedMessage("tournamentStored", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
-                Log.info("tournamentStored", this.getClass().getName(), tournament.name);
+                Log.info("tournamentStored", this.getClass().getName(), tournament.getName());
             } else {
                 if (verbose) {
-                    MessageManager.translatedMessage("tournamentUpdated", this.getClass().getName(), tournament.name, JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.translatedMessage("tournamentUpdated", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
-                Log.info("tournamentUpdated", this.getClass().getName(), tournament.name);
+                Log.info("tournamentUpdated", this.getClass().getName(), tournament.getName());
             }
         }
 
@@ -1645,21 +1645,21 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean deleteTournament(String championship) {
+    public boolean deleteTournament(Tournament tournament) {
         boolean answer = false;
-        Log.fine("Deleting tournament " + championship);
+        Log.fine("Deleting tournament " + tournament.getName());
         try {
             answer = MessageManager.questionMessage("tournamentDeleteQuestion", "Warning!");
             if (answer) {
                 try (Statement s = connection.createStatement()) {
-                    deleteFightsOfTournament(championship, false);
+                    deleteFightsOfTournament(tournament, false);
                     Log.fine("Deleting teams of tournament.");
-                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + championship + "'");
+                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + tournament.getName() + "'");
                     Log.fine("Deleting roles of tournament.");
-                    s.executeUpdate("DELETE FROM role WHERE Tournament='" + championship + "'");
+                    s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "'");
                     Log.fine("Deleting tournament.");
-                    s.executeUpdate("DELETE FROM tournament WHERE Name='" + championship + "'");
-                    MessageManager.translatedMessage("tournamentDeleted", this.getClass().getName(), championship, JOptionPane.INFORMATION_MESSAGE);
+                    s.executeUpdate("DELETE FROM tournament WHERE Name='" + tournament.getName() + "'");
+                    MessageManager.translatedMessage("tournamentDeleted", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
             }
 
@@ -1689,7 +1689,7 @@ public abstract class SQL extends Database {
                     }
                 } catch (IOException ex) {
                 }
-                try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + tournament.name + "'")) {
+                try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + tournament.getName() + "'")) {
                     storeBinaryStream(stmt, 1, tournament.bannerInput, (int) tournament.bannerSize);
                     stmt.setLong(2, tournament.bannerSize);
                     stmt.setInt(3, tournament.fightingAreas);
@@ -1721,9 +1721,9 @@ public abstract class SQL extends Database {
 
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("tournamentUpdated", this.getClass().getName(), tournament.name, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("tournamentUpdated", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("tournamentUpdated", this.getClass().getName(), tournament.name);
+            Log.info("tournamentUpdated", this.getClass().getName(), tournament.getName());
         }
 
         return !error;
@@ -1850,18 +1850,18 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void deleteGroupsOfTournament(String tournamentName, List<Team> teams) {
-        Log.fine("Deleting groups of tournament " + tournamentName);
+    public void deleteGroupsOfTournament(Tournament tournament, List<Team> teams) {
+        Log.fine("Deleting groups of tournament " + tournament.getName());
         for (int i = 0; i < teams.size(); i++) {
             Team t = teams.get(i);
             t.group = 0;
-            updateTeamGroupOfLeague(tournamentName, t);
+            updateTeamGroupOfLeague(tournament, t);
         }
     }
 
     @Override
-    public void storeDiplomaImage(Tournament t, InputStream Image, long imageSize) {
-        Log.fine("Store diploma image of " + t.name);
+    public void storeDiplomaImage(Tournament tournament, InputStream Image, long imageSize) {
+        Log.fine("Store diploma image of " + tournament.getName());
         try {
             try {
                 if (Image.markSupported()) {
@@ -1869,7 +1869,7 @@ public abstract class SQL extends Database {
                 }
             } catch (IOException ex) {
             }
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Diploma=?, DiplomaSize=? WHERE Name='" + t.name + "'")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Diploma=?, DiplomaSize=? WHERE Name='" + tournament.getName() + "'")) {
                 storeBinaryStream(stmt, 1, Image, (int) imageSize);
                 stmt.setLong(2, imageSize);
                 try {
@@ -1895,8 +1895,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void storeAccreditationImage(Tournament t, InputStream Image, long imageSize) {
-        Log.fine("Store accreditation of " + t.name);
+    public void storeAccreditationImage(Tournament tournament, InputStream Image, long imageSize) {
+        Log.fine("Store accreditation of " + tournament.getName());
         try {
             try {
                 if (Image.markSupported()) {
@@ -1904,7 +1904,7 @@ public abstract class SQL extends Database {
                 }
             } catch (IOException ex) {
             }
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Accreditation=?, AccredotationSize=? WHERE Name='" + t.name + "'")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Accreditation=?, AccredotationSize=? WHERE Name='" + tournament.getName() + "'")) {
                 storeBinaryStream(stmt, 1, Image, (int) imageSize);
                 stmt.setLong(2, imageSize);
                 try {
@@ -1930,9 +1930,9 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public int getLevelTournament(String tournamentName) {
-        Log.fine("Getting max level of " + tournamentName);
-        String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournamentName + "';";
+    public int getLevelTournament(Tournament tournament) {
+        Log.fine("Getting max level of " + tournament.getName());
+        String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournament.getName() + "';";
 
         int level = -1;
         try {
@@ -1969,14 +1969,14 @@ public abstract class SQL extends Database {
         //Delete all old entries for these team if exists.
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs1 = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'")) {
+                    ResultSet rs1 = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'")) {
                 if (rs1.next()) {
                     if (verbose) {
                         answer = MessageManager.questionMessage("questionUpdateTeam", "Warning!");
                     }
                     if (answer || !verbose) {
                         Log.finer("Deleting an existing team " + team.returnName());
-                        s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "' AND LeagueGroup=" + team.group);
+                        s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "' AND LeagueGroup=" + team.group);
                     } else {
                         return false;
                     }
@@ -2046,7 +2046,7 @@ public abstract class SQL extends Database {
                         try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
                             stmt.setString(1, team.returnName());
                             stmt.setString(2, team.getMember(indexCompetitor, levelIndex).getId());
-                            stmt.setString(3, team.competition.name);
+                            stmt.setString(3, team.tournament.getName());
                             stmt.setInt(4, indexCompetitor);
                             stmt.setInt(5, team.group);
                             stmt.setInt(6, levelIndex);
@@ -2083,7 +2083,7 @@ public abstract class SQL extends Database {
         Log.fine("Obtaining the members of team " + team.returnName() + " in level " + level);
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "' AND LevelTournament=" + level + " ORDER BY Position ASC")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "' AND LevelTournament=" + level + " ORDER BY Position ASC")) {
                 while (rs.next()) {
                     String memberID = rs.getObject("Member").toString();
                     if (!memberID.equals("")) {
@@ -2118,7 +2118,7 @@ public abstract class SQL extends Database {
         List<List<Competitor>> membersPerLevel = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
-            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'";
+            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'";
             Log.finest(query);
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
@@ -2153,7 +2153,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Team t = new Team(rs.getObject("Name").toString(), getTournamentByName(rs.getObject("Tournament").toString(), false));
+                    Team t = new Team(rs.getObject("Name").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()));
                     t.addGroup(rs.getInt("LeagueGroup"));
                     t.setMembers(searchTeamMembers(t, false));
                     results.add(t);
@@ -2175,14 +2175,14 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Team> searchTeamsByNameAndTournament(String name, String tournamentName, boolean verbose) {
-        String query = "SELECT * FROM team WHERE Name LIKE '%" + name + "%' AND Tournament='" + tournamentName + "' GROUP BY Name ORDER BY Name";
+    public List<Team> searchTeamsByNameAndTournament(String name, Tournament tournament, boolean verbose) {
+        String query = "SELECT * FROM team WHERE Name LIKE '%" + name + "%' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
         return searchTeam(query, verbose);
     }
 
     @Override
-    public Team getTeamByName(String name, String tournamentName, boolean verbose) {
-        String query = "SELECT * FROM team WHERE Name='" + name + "' AND Tournament='" + tournamentName + "' GROUP BY Name ORDER BY Name";
+    public Team getTeamByName(String name, Tournament tournament, boolean verbose) {
+        String query = "SELECT * FROM team WHERE Name='" + name + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
         List<Team> teams = searchTeam(query, verbose);
         if (!teams.isEmpty()) {
             return searchTeam(query, verbose).get(0);
@@ -2196,20 +2196,20 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Team> searchTeamsByTournament(String tournamentName, boolean verbose) {
-        String query = "SELECT * FROM team WHERE Tournament LIKE '" + tournamentName + "' GROUP BY Name ORDER BY Name ";
+    public List<Team> searchTeamsByTournament(Tournament tournament, boolean verbose) {
+        String query = "SELECT * FROM team WHERE Tournament LIKE '" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
         return searchTeam(query, verbose);
     }
 
     @Override
-    public List<Team> searchTeamsByTournamentExactName(String tournamentName, boolean verbose) {
-        String query = "SELECT * FROM team WHERE Tournament='" + tournamentName + "' GROUP BY Name ORDER BY Name";
+    public List<Team> searchTeamsByTournamentExactName(Tournament tournament, boolean verbose) {
+        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
         return searchTeam(query, verbose);
     }
 
     @Override
-    public List<Team> searchTeamsByLevel(String tournamentName, int level, boolean verbose) {
-        String query = "SELECT t1.name,t1.Tournament,t1.LeagueGroup FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournamentName + "' AND f1.Tournament='" + tournamentName + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
+    public List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose) {
+        String query = "SELECT t1.name,t1.Tournament,t1.LeagueGroup FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament.getName() + "' AND f1.Tournament='" + tournament.getName() + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
         return searchTeam(query, verbose);
     }
 
@@ -2241,10 +2241,10 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void updateTeamGroupOfLeague(String tournamentName, Team team) {
-        Log.fine("Upgrading team " + team.returnName() + " of " + tournamentName);
+    public void updateTeamGroupOfLeague(Tournament tournament, Team team) {
+        Log.fine("Upgrading team " + team.returnName() + " of " + tournament.getName());
         try {
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.returnName() + "' AND Tournament='" + tournamentName + "'")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.returnName() + "' AND Tournament='" + tournament.getName() + "'")) {
                 stmt.setInt(1, team.group);
                 stmt.executeUpdate();
             }
@@ -2270,7 +2270,7 @@ public abstract class SQL extends Database {
 
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.competition.name + "'");
+                    s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'");
                 }
             }
 
@@ -2354,13 +2354,12 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void setIndividualTeams(String tournamentName) {
-        Log.fine("Creating individual teams for tournament " + tournamentName);
-        List<Competitor> competitors = selectAllCompetitorsInTournament(tournamentName);
-        Tournament champ = getTournamentByName(tournamentName, false);
+    public void setIndividualTeams(Tournament tournament) {
+        Log.fine("Creating individual teams for tournament " + tournament.getName());
+        List<Competitor> competitors = selectAllCompetitorsInTournament(tournament);
         MessageManager.translatedMessage("oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
         for (int i = 0; i < competitors.size(); i++) {
-            Team t = new Team(competitors.get(i).getSurname() + ", " + competitors.get(i).getName(), champ);
+            Team t = new Team(competitors.get(i).getSurname() + ", " + competitors.get(i).getName(), tournament);
             t.addOneMember(competitors.get(i), 0);
             storeTeam(t, false);
         }
@@ -2368,7 +2367,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean deleteTeamsOfTournament(String tournamentName, boolean verbose) {
+    public boolean deleteTeamsOfTournament(Tournament tournament, boolean verbose) {
         boolean error = false;
         boolean answer = false;
         try {
@@ -2378,7 +2377,7 @@ public abstract class SQL extends Database {
 
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + tournamentName + "'");
+                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + tournament.getName() + "'");
                 }
             }
 
@@ -2405,15 +2404,15 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<TeamRanking> getTeamsOrderByScore(String championship, boolean verbose) {
+    public List<TeamRanking> getTeamsOrderByScore(Tournament tournament, boolean verbose) {
         List<TeamRanking> teamsOrdered = new ArrayList<>();
         //String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
-        String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
+        String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    teamsOrdered.add(new TeamRanking(rs.getObject("Equipo").toString(), championship, rs.getInt("Victorias"), 0, rs.getInt("Duelos"), 0, rs.getInt("Puntos")));
+                    teamsOrdered.add(new TeamRanking(rs.getObject("Equipo").toString(), tournament, rs.getInt("Victorias"), 0, rs.getInt("Duelos"), 0, rs.getInt("Puntos")));
                 }
             }
             if (teamsOrdered.isEmpty() && verbose) {
@@ -2426,8 +2425,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public Team getTeamOfCompetitor(String competitorID, String championship, boolean verbose) {
-        String query = "SELECT * FROM team WHERE Member='" + competitorID + "' AND Tournament='" + championship + "' GROUP BY Name";
+    public Team getTeamOfCompetitor(String competitorID, Tournament tournament, boolean verbose) {
+        String query = "SELECT * FROM team WHERE Member='" + competitorID + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name";
         try {
             return searchTeam(query, verbose).get(0);
         } catch (IndexOutOfBoundsException iob) {
@@ -2444,7 +2443,7 @@ public abstract class SQL extends Database {
                 try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
                     stmt.setString(1, t.returnName());
                     stmt.setString(2, t.getMember(indexCompetitor, level).getId());
-                    stmt.setString(3, t.competition.name);
+                    stmt.setString(3, t.tournament.getName());
                     stmt.setInt(4, indexCompetitor);
                     stmt.setInt(5, t.group);
                     stmt.setInt(6, level);
@@ -2500,7 +2499,7 @@ public abstract class SQL extends Database {
 
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team WHERE Name='" + t.returnName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.competition.name + "'");
+                s.executeUpdate("DELETE FROM team WHERE Name='" + t.returnName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.tournament.getName() + "'");
             }
 
             return true;
@@ -2523,11 +2522,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean deleteAllMemberChangesInTeams(String championship, boolean verbose) {
+    public boolean deleteAllMemberChangesInTeams(Tournament tournament, boolean verbose) {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team WHERE LevelTournament > 0  AND Tournament='" + championship + "'");
+                s.executeUpdate("DELETE FROM team WHERE LevelTournament > 0  AND Tournament='" + tournament.getName() + "'");
             }
             return true;
         } catch (SQLException ex) {
@@ -2573,8 +2572,8 @@ public abstract class SQL extends Database {
                 if (answer) {
                     try (Statement s = connection.createStatement()) {
                         if (purgeTournament) {
-                            deleteFightsOfTournament(fights.get(0).competition.name, false);
-                            s.executeUpdate("DELETE FROM team WHERE Tournament='" + fights.get(0).competition.name + "' AND LevelTournament > " + 0);
+                            deleteFightsOfTournament(fights.get(0).tournament, false);
+                            s.executeUpdate("DELETE FROM team WHERE Tournament='" + fights.get(0).tournament.getName() + "' AND LevelTournament > " + 0);
                         }
 
                         //Obtain the max level of figths.
@@ -2587,7 +2586,7 @@ public abstract class SQL extends Database {
 
                         for (Fight f : fights) {
                             //Add the fightManager that depends on the level and the teams.
-                            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.competition.name + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                             f.setOverStored(true);
                         }
                     }
@@ -2601,9 +2600,9 @@ public abstract class SQL extends Database {
 
             if (!error && answer) {
                 if (verbose) {
-                    MessageManager.translatedMessage("fightStored", this.getClass().getName(), fights.get(0).competition.name, JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.translatedMessage("fightStored", this.getClass().getName(), fights.get(0).tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
-                Log.info("fightStored", this.getClass().getName(), fights.get(0).competition.name);
+                Log.info("fightStored", this.getClass().getName(), fights.get(0).tournament.getName());
             }
         } else {
             return false;
@@ -2620,7 +2619,7 @@ public abstract class SQL extends Database {
                 s.executeUpdate("DELETE FROM fight");
                 s.executeUpdate("DELETE FROM duel");
                 for (Fight f : fights) {
-                    s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.competition.name + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                    s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                     f.setOverStored(true);
                     storeDuelsOfFight(f);
                 }
@@ -2630,7 +2629,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage("storeFights", this.getClass().getName());
             KendoTournamentGenerator.getInstance().showErrorInformation(ex);
         }
-        Log.info("fightStored", this.getClass().getName(), fights.get(0).competition.name);
+        Log.info("fightStored", this.getClass().getName(), fights.get(0).tournament.getName());
         return !error;
     }
 
@@ -2642,7 +2641,7 @@ public abstract class SQL extends Database {
                 if (deleteOldOne) {
                     deleteFight(fight, false);
                 }
-                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.competition.name + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
+                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.tournament.getName() + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
                 fight.setOverStored(true);
             }
         } catch (SQLException | NullPointerException ex) {
@@ -2652,23 +2651,23 @@ public abstract class SQL extends Database {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("fightStored", this.getClass().getName(), fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightStored", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("fightStored", this.getClass().getName(), fight.competition.name);
+            Log.info("fightStored", this.getClass().getName(), fight.tournament.getName());
         }
         return !error;
     }
 
     @Override
-    public ArrayList<Fight> searchFights(String query, String championship) {
+    public ArrayList<Fight> searchFights(String query, Tournament tournament) {
         ArrayList<Fight> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), championship, false),
-                            getTeamByName(rs.getObject("Team2").toString(), championship, false),
-                            getTournamentByName(rs.getObject("Tournament").toString(), false),
+                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), tournament, false),
+                            getTeamByName(rs.getObject("Team2").toString(), tournament, false),
+                            tournament,
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                     f.changeMaxWinners(rs.getInt("MaxWinners"));
                     f.calculateOverWithDuels();
@@ -2705,27 +2704,15 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public ArrayList<Fight> searchFightsByTournamentName(String championship) {
-        String query = "SELECT * FROM fight WHERE Tournament='" + championship + "'";
-        return searchFights(query, championship);
+    public ArrayList<Fight> searchFightsByTournament(Tournament tournament) {
+        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
+        return searchFights(query, tournament);
     }
 
     @Override
-    public ArrayList<Fight> searchFightsByTournamentNameLevelEqualOrGreater(String championship, int level) {
-        String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND LeagueLevel >=" + level;
-        return searchFights(query, championship);
-    }
-
-    /**
-     * Search all fightManager from one determined tournament.
-     *
-     * @param championship
-     * @return
-     */
-    @Override
-    public ArrayList<Fight> searchFightsByTournamentNameAndFightArea(String championship, int fightArea) {
-        String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND FightArea=" + fightArea;
-        return searchFights(query, championship);
+    public ArrayList<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level) {
+        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level;
+        return searchFights(query, tournament);
     }
 
     /**
@@ -2735,16 +2722,28 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public ArrayList<Fight> searchFightsByTournamentNameAndTeam(String championship, String team) {
-        String query = "SELECT * FROM fight WHERE Tournament='" + championship + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
-        return searchFights(query, championship);
+    public ArrayList<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea) {
+        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND FightArea=" + fightArea;
+        return searchFights(query, tournament);
+    }
+
+    /**
+     * Search all fightManager from one determined tournament.
+     *
+     * @param championship
+     * @return
+     */
+    @Override
+    public ArrayList<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team) {
+        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
+        return searchFights(query, tournament);
     }
 
     @Override
     public int obtainFightID(Fight f) {
         int ID = -1;
         try {
-            String query = "SELECT ID FROM fight WHERE Tournament='" + f.competition.name + "' AND Team1='" + f.team1.returnName() + "' AND Team2='" + f.team2.returnName() + "' AND LeagueLevel=" + f.level;
+            String query = "SELECT ID FROM fight WHERE Tournament='" + f.tournament.getName() + "' AND Team1='" + f.team1.returnName() + "' AND Team2='" + f.team2.returnName() + "' AND LeagueLevel=" + f.level;
             Log.finest(query);
             try (Statement s = connection.createStatement();
                     ResultSet rts = s.executeQuery(query)) {
@@ -2772,9 +2771,9 @@ public abstract class SQL extends Database {
                 over = 0;
             }
             try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
+                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
                 stmt.setInt(1, over);
-                Log.finest("UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                Log.finest("UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 stmt.executeUpdate();
             }
             fight.setOverStored(true);
@@ -2791,7 +2790,7 @@ public abstract class SQL extends Database {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
+                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
                 stmt.setInt(1, 2);
                 stmt.executeUpdate();
             }
@@ -2813,9 +2812,9 @@ public abstract class SQL extends Database {
                     ResultSet rs = s.executeQuery("SELECT * FROM fight")) {
 
                 while (rs.next()) {
-                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), rs.getObject("Tournament").toString(), false),
-                            getTeamByName(rs.getObject("Team2").toString(), rs.getObject("Tournament").toString(), false),
-                            getTournamentByName(rs.getObject("Tournament").toString(), false),
+                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
+                            getTeamByName(rs.getObject("Team2").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
+                            TournamentPool.getTournament(rs.getObject("Tournament").toString()),
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                     f.changeMaxWinners(rs.getInt("MaxWinners"));
                     if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
@@ -2842,13 +2841,13 @@ public abstract class SQL extends Database {
      * Delete fights must delete duels. MySQL use foreign key, but SQLite need
      * to delete one by one
      *
-     * @param tournamentName
+     * @param tournament.getName()
      * @param level
      * @param verbose
      * @return
      */
     @Override
-    public boolean deleteFightsOfLevelOfTournament(String tournamentName, int level, boolean verbose) {
+    public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
         Log.fine("Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
@@ -2858,10 +2857,10 @@ public abstract class SQL extends Database {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournamentName + "' AND LeagueLevel >=" + level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level);
                 }
                 Log.finer("Delete draw fights of tournament.");
-                deleteDrawsOfLevelOfTournament(tournamentName, level);
+                deleteDrawsOfLevelOfTournament(tournament, level);
                 return true;
             } else {
                 return false;
@@ -2883,7 +2882,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public boolean deleteFightsOfTournament(String championship, boolean verbose) {
+    public boolean deleteFightsOfTournament(Tournament tournament, boolean verbose) {
         boolean error;
         boolean answer = false;
         try {
@@ -2892,9 +2891,9 @@ public abstract class SQL extends Database {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + championship + "'");
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournament.getName() + "'");
                 }
-                deleteDrawsOfTournament(championship);
+                deleteDrawsOfTournament(tournament);
                 return true;
             } else {
                 return false;
@@ -2924,7 +2923,7 @@ public abstract class SQL extends Database {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.competition.name + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
 
@@ -2936,9 +2935,9 @@ public abstract class SQL extends Database {
 
         if (!error && answer) {
             if (verbose) {
-                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.competition.name, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("fightDeleted", this.getClass().getName(), fight.competition.name);
+            Log.info("fightDeleted", this.getClass().getName(), fight.tournament.getName());
         }
 
         return (answer && !error);
@@ -3146,11 +3145,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Duel> getDuelsOfTournament(String championship) {
+    public List<Duel> getDuelsOfTournament(Tournament tournament) {
         Statement s;
         List<Duel> results = new ArrayList<>();
 
-        ArrayList<Fight> fights = searchFightsByTournamentName(championship);
+        ArrayList<Fight> fights = searchFightsByTournament(tournament);
         for (int i = 0; i < fights.size(); i++) {
             results.addAll(getDuelsOfFight(fights.get(i)));
         }
@@ -3304,17 +3303,17 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    public boolean storeUndraw(String championship, String team, int order, int group) {
+    public boolean storeUndraw(Tournament tournament, String team, int order, int group) {
         boolean error = false;
         try {
             //Delete the undraw if exist previously.
             Statement s = connection.createStatement();
-            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + championship + "' AND Team='" + team + "'  AND UndrawGroup=" + group);
+            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team + "'  AND UndrawGroup=" + group);
             s.close();
 
             //Add the new undraw.
             s = connection.createStatement();
-            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup) VALUES ('" + championship + "', '" + team + "', " + order + ", " + group + ")");
+            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup) VALUES ('" + tournament.getName() + "', '" + team + "', " + order + ", " + group + ")");
             s.close();
         } catch (SQLException ex) {
             error = true;
@@ -3369,11 +3368,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public String getWinnerInUndraws(String championship, int group, List<Team> teams) {
+    public String getWinnerInUndraws(Tournament tournament, int group, List<Team> teams) {
         String teamWinner = null;
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + championship + "' AND UndrawGroup=" + group;
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group;
                 try (ResultSet rs = s.executeQuery(query)) {
                     if (rs.next()) {
                         teamWinner = rs.getObject("Team").toString();
@@ -3390,11 +3389,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public int getValueWinnerInUndraws(String championship, String team) {
+    public int getValueWinnerInUndraws(Tournament tournament, String team) {
         int value = 0;
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + championship + "' AND Team='" + team + "'";
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team + "'";
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
                         value++;
@@ -3410,11 +3409,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public int getValueWinnerInUndrawInGroup(String championship, int group, String team) {
+    public int getValueWinnerInUndrawInGroup(Tournament tournament, int group, String team) {
         int value = 0;
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + championship + "' AND UndrawGroup=" + group + " AND Team='" + team + "'";
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND Team='" + team + "'";
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
                         value++;
@@ -3430,10 +3429,10 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void deleteDrawsOfTournament(String championship) {
+    public void deleteDrawsOfTournament(Tournament tournament) {
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + championship + "'");
+                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "'");
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -3442,11 +3441,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void deleteDrawsOfGroupOfTournament(String championship, int group) {
+    public void deleteDrawsOfGroupOfTournament(Tournament tournament, int group) {
         Log.fine("Deleting undraws of group " + group);
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + championship + "' AND UndrawGroup=" + group);
+                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group);
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -3455,11 +3454,11 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public void deleteDrawsOfLevelOfTournament(String championship, int level) {
+    public void deleteDrawsOfLevelOfTournament(Tournament tournament, int level) {
         Log.fine("Deleting undraws of level " + level);
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + championship + "' AND LevelUndraw=" + level);
+                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND LevelUndraw=" + level);
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());

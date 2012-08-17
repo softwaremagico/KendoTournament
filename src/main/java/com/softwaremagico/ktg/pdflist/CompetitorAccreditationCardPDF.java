@@ -149,7 +149,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table2.addCell(getEmptyCell(1));
 
         String identification = KendoTournamentGenerator.getInstance().getAvailableRoles().getAbbrev(role)
-                + "-" + KendoTournamentGenerator.getInstance().getCompetitorOrder(competitor, role, competition.name);
+                + "-" + KendoTournamentGenerator.getInstance().getCompetitorOrder(competitor, role, competition);
         p = new Paragraph(identification, FontFactory.getFont(font, fontSize + 20));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border + 2);
@@ -272,7 +272,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 
         try {
-            p = new Paragraph(competition.name + " (" + sqlTime + " " + sqlDate + ")",
+            p = new Paragraph(competition.getName() + " (" + sqlTime + " " + sqlDate + ")",
                     FontFactory.getFont(font, fontSize));
         } catch (NullPointerException npen) {
             p = new Paragraph("Accredition Card (" + sqlTime + " " + sqlDate + ")",

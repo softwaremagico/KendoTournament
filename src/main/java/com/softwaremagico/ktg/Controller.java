@@ -836,7 +836,7 @@ public class Controller {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
                 }
-                if ((KendoTournamentGenerator.getInstance().database.getAllTournaments()).size() > 0) {
+                if (TournamentPool.getAllTournaments().size() > 0) {
                     participantFunction = new NewRole(true, c);
                     participantFunction.setVisible(true);
                     //participantFunction.defaultSelect(c);
@@ -1133,7 +1133,7 @@ public class Controller {
                 statisticsHits.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsHits = new StatisticsGeneralHits(selectTournament.returnSelectedTournamentName());
+            statisticsHits = new StatisticsGeneralHits(selectTournament.returnSelectedTournament());
             statisticsHits.setVisible(true);
             selectTournament.dispose();
         }
@@ -1161,7 +1161,7 @@ public class Controller {
                 statisticsTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTopTen = new StatisticsTopTen(selectTournament.returnSelectedTournamentName());
+            statisticsTopTen = new StatisticsTopTen(selectTournament.returnSelectedTournament());
             statisticsTopTen.setVisible(true);
             selectTournament.dispose();
         }
@@ -1189,7 +1189,7 @@ public class Controller {
                 monitor.dispose();
             } catch (NullPointerException npe) {
             }
-            monitor = new Monitor(KendoTournamentGenerator.getInstance().database.getTournamentByName(selectTournamentForMonitor.returnSelectedTournamentName(), false),
+            monitor = new Monitor(TournamentPool.getTournament(selectTournamentForMonitor.returnSelectedTournamentName()),
                     selectTournamentForMonitor.returnSelectedArena());
             monitor.setVisible(true);
             monitor.setExtendedState(monitor.getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -1225,12 +1225,12 @@ public class Controller {
             }
 
             try {
-                Tournament championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(selectTournamentForTreeMonitor.returnSelectedTournamentName(), true);
+                Tournament championship = TournamentPool.getTournament(selectTournamentForTreeMonitor.returnSelectedTournamentName());
                 if (championship.mode.equals(TournamentTypes.CHAMPIONSHIP) || championship.mode.equals(TournamentTypes.LEAGUE_TREE)) {
                     monitorTree = new MonitorTree(championship);
                     monitorTree.setVisible(true);
                     monitorTree.setExtendedState(monitorTree.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-                    monitorTree.updateBlackBoard(selectTournamentForTreeMonitor.returnSelectedTournamentName(), false);
+                    monitorTree.updateBlackBoard(selectTournamentForTreeMonitor.returnSelectedTournament(), false);
                 } else {
                     monitorPosition = new MonitorPosition(championship);
                     monitorPosition.setVisible(true);
@@ -1439,7 +1439,7 @@ public class Controller {
                 KendoTournamentGenerator.getInstance().fightManager.add(f);
                 MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
-                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournamentName(shortFight.getTournament().name));
+                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             }

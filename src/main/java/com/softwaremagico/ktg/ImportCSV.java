@@ -42,7 +42,7 @@ import javax.swing.JOptionPane;
  */
 public class ImportCSV {
 
-    private Tournament championship;
+    private Tournament tournament;
     private String text;
     private String[] fields;
     private int index = 0;
@@ -51,7 +51,7 @@ public class ImportCSV {
     private String lastClub = "";
 
     ImportCSV(String champions) {
-        championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(champions, false);
+        tournament = TournamentPool.getTournament(champions);
         //CorrectNIF nif = new CorrectNIF(tournam);
         trans = LanguagePool.getTranslator("gui.xml");
         String path = exploreWindowsForCsv(JFileChooser.FILES_AND_DIRECTORIES, "");
@@ -117,7 +117,7 @@ public class ImportCSV {
     private boolean obtainTeam() {
         boolean error = false;
         String teamName = fields[index].replace("EQUIPO_", "").replace("\n", "").trim();
-        Team t = new Team(teamName, championship);
+        Team t = new Team(teamName, tournament);
         index++;
         while (index < fields.length && !fields[index].toLowerCase().contains("arbitro") && !fields[index].toLowerCase().contains("seminar")) {
             //First Team
@@ -139,7 +139,7 @@ public class ImportCSV {
                 }
                 // RoleTag of members.
                 RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Competitor");
-                if (!KendoTournamentGenerator.getInstance().database.storeRole(role, championship, c, false)) {
+                if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, c, false)) {
                     error = true;
                 }
 
@@ -148,20 +148,20 @@ public class ImportCSV {
             } else {
                 //New team
                 if (fields[index].contains("EQUIPO_") && !fields[index].replace("EQUIPO_", "").replace("\n", "").trim().equals(teamName)) {
-                    t.completeTeam(championship.teamSize, 0);
+                    t.completeTeam(tournament.teamSize, 0);
                     if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
                         error = true;
                     }
 
                     teamName = fields[index].replace("EQUIPO_", "").replace("\n", "").trim();
-                    t = new Team(teamName, championship);
+                    t = new Team(teamName, tournament);
                 }
             }
             index++;
         }
         //Store last team.
         if (t.levelChangesSize() > 0) {
-            t.completeTeam(championship.teamSize, 0);
+            t.completeTeam(tournament.teamSize, 0);
             if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
                 error = true;
             }
@@ -190,7 +190,7 @@ public class ImportCSV {
 
         // RoleTag of referee.
         RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Referee");
-        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, championship, r, false)) {
+        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, r, false)) {
             error = true;
         }
         return !error;
@@ -216,7 +216,7 @@ public class ImportCSV {
 
         // RoleTag of referee.
         RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Seminar");
-        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, championship, s, false)) {
+        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, s, false)) {
             error = true;
         }
         return !error;
