@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.championship;
+package com.softwaremagico.ktg.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -553,7 +553,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);

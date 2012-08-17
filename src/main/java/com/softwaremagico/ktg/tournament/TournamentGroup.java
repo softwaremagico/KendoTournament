@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.championship;
+package com.softwaremagico.ktg.tournament;
 /*
  * #%L
  * KendoTournamentGenerator

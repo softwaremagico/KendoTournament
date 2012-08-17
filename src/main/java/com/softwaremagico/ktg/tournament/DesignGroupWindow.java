@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.championship;
+package com.softwaremagico.ktg.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -135,13 +135,13 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         GroupScrollPane = new javax.swing.JScrollPane();
-        GroupList = new javax.swing.JList<>();
+        GroupList = new javax.swing.JList<String>();
         UpButton = new javax.swing.JButton();
         DownButton = new javax.swing.JButton();
         PassLabel = new javax.swing.JLabel();
         PassSpinner = new javax.swing.JSpinner();
         ArenaLabel = new javax.swing.JLabel();
-        FightAreaComboBox = new javax.swing.JComboBox<>();
+        FightAreaComboBox = new javax.swing.JComboBox<String>();
         DeleteButton = new javax.swing.JButton();
         ShowButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();

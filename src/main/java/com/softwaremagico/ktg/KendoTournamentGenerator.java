@@ -25,7 +25,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.championship.TournamentGroupManager;
+import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.files.Folder;
@@ -155,6 +155,7 @@ public class KendoTournamentGenerator {
         if (isDebugOptionSelected()) {
             MessageManager.basicErrorMessage(ex.getMessage() + ": " +ex.getLocalizedMessage(), "Error");
         }
+        ex.printStackTrace();
     }
 
     public boolean isDebugOptionSelected() {

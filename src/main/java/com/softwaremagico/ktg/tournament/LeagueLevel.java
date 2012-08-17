@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softwaremagico.ktg.championship;
+package com.softwaremagico.ktg.tournament;
 
 /*
  * #%L
@@ -338,6 +338,10 @@ public abstract class LeagueLevel {
             }
         }
     }
+    
+    protected void removeGroups(){
+        tournamentGroups = new ArrayList<>();
+    }
 
     /**
      *********************************************
@@ -395,9 +399,11 @@ public abstract class LeagueLevel {
     }
 
     public void showTree() {
+        System.out.println("-------------------------------------");
         System.out.println(levelInfo());
         if (nextLevel != null) {
             nextLevel.showTree();
         }
+        System.out.println("-------------------------------------");
     }
 }

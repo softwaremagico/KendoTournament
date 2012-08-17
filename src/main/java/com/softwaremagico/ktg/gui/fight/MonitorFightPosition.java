@@ -28,7 +28,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.championship.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;

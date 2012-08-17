@@ -5,7 +5,7 @@
 
     <groupId>com.softwaremagico</groupId>
     <artifactId>ktg</artifactId>
-    <version>0.9.7.2</version>
+    <version>0.9.8.0</version>
     <packaging>jar</packaging>
     <description>Tool for the management of different Kendo Tournaments.</description>
 

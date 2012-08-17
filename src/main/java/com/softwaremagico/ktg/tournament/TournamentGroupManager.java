@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.championship;
+package com.softwaremagico.ktg.tournament;
 
 /*
  * #%L
@@ -217,6 +217,12 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
+    private void deleteGroups(int level) {
+        if (level < levels.size() && level >= 0) {
+            levels.get(level).removeGroups();
+        }
+    }
+
     public TournamentGroup get(int index) {
         List<TournamentGroup> tournamentGroups = new ArrayList<>();
 
@@ -329,12 +335,13 @@ public class TournamentGroupManager implements Serializable {
      *
      * @return
      */
-    public Integer getIndexLastLevelUsed() {
+    public Integer getIndexLastLevelNotUsed() {
         for (int i = 0; i < levels.size(); i++) {
             if (levels.get(i).getUsedTeams().isEmpty()) {
                 return i;
             }
         }
+        //All levels used, return last level.
         return null;
     }
 
@@ -430,12 +437,13 @@ public class TournamentGroupManager implements Serializable {
         }
         // Show message when last fight is selected.
         if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-            MessageManager.winnerMessage("leagueFinished", "Finally!", winnername, JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.winnerMessage("leagueFinished", "Finally!", "<html><b>"+winnername+"</b></html>", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     private ArrayList<Fight> generateNextLevelFights(int nextLevel) {
         Log.finer("All fights are over.");
+
         if (MessageManager.questionMessage("nextLevel", "Warning!")) {
             Log.debug("Current number of fights over before updating winners: "
                     + KendoTournamentGenerator.getInstance().fightManager.numberOfFightsOver());
@@ -459,11 +467,11 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament tournament) {
-        int nextLevel = getIndexLastLevelUsed();
+        Integer nextLevel = getIndexLastLevelNotUsed();
         int arena;
         ArrayList<Fight> newFights = new ArrayList<>();
         // Not finished the tournament.
-        if (nextLevel >= 0 && nextLevel < getLevels().size()) {
+        if (nextLevel != null && nextLevel >= 0 && nextLevel < getLevels().size()) {
             Log.finer("Tournament not finished!");
             // Update fightManager to load the fightManager of other arenas and computers.
             if (tournament.fightingAreas > 1) {
@@ -625,6 +633,7 @@ public class TournamentGroupManager implements Serializable {
     private void refillLevel(ArrayList<Fight> fights, int level) {
         ArrayList<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
         List<Team> teamsOfGroup = new ArrayList<>();
+        deleteGroups(level);
 
         for (int i = 0; i < fightsOfLevel.size(); i++) {
             // If one team exist in the group, then this fight is also of this group.

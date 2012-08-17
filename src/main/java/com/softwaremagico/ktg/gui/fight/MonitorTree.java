@@ -27,7 +27,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.championship.TournamentGroupManager;
+import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 
 /**
  *

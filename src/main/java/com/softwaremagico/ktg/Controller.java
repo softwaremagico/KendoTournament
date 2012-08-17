@@ -25,7 +25,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.championship.LeagueDesigner;
+import com.softwaremagico.ktg.tournament.LeagueDesigner;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.*;
