@@ -5,23 +5,21 @@ package com.softwaremagico.ktg.pdflist;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -60,7 +58,7 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author Jorge
  */
-public class Diploma {
+public class DiplomaPDF {
 
     protected int fontSize = 17;
     private final int border = 0;
@@ -74,7 +72,7 @@ public class Diploma {
     RoleTags rolesWithDiploma = null;
     private boolean allDiplomas;
 
-    public Diploma(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, RoleTags roles) {
+    public DiplomaPDF(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, RoleTags roles) {
         tournament = tmp_championship;
         statistics = tmp_statistics;
         allDiplomas = printAllDiplomas;
@@ -105,6 +103,7 @@ public class Diploma {
         Document document;
         String path;
         Translator transl;
+        private com.itextpdf.text.Image background;
 
         public ThreadDiploma(TimerPanel tp, Document d, String p) {
             transl = LanguagePool.getTranslator("gui.xml");
@@ -143,13 +142,15 @@ public class Diploma {
 
         void addBackGroundImage(Document document, String imagen) throws BadElementException,
                 DocumentException, MalformedURLException, IOException {
-            com.itextpdf.text.Image png;
+            //com.itextpdf.text.Image png;
 
-            png = com.itextpdf.text.Image.getInstance(imagen);
-            png.setAlignment(com.itextpdf.text.Image.UNDERLYING);
-            png.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
-            png.setAbsolutePosition(0, 0);
-            document.add(png);
+            if (background == null) {
+                background = com.itextpdf.text.Image.getInstance(imagen);
+            }
+            background.setAlignment(com.itextpdf.text.Image.UNDERLYING);
+            background.scaleToFit(document.getPageSize().getWidth(), document.getPageSize().getHeight());
+            background.setAbsolutePosition(0, 0);
+            document.add(background);
         }
 
         private Document documentData(Document document) {
@@ -289,7 +290,7 @@ public class Diploma {
 
                 document.add(mainTable);
             } catch (DocumentException | IOException ex) {
-                Logger.getLogger(Diploma.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DiplomaPDF.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -434,7 +435,7 @@ public class Diploma {
             }
             for (int i = startValue; i < endValue; i++) {
                 String c;
-                if (tournament==null) {
+                if (tournament == null) {
                     c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
                 } else {
                     c = (i + 1) + " - " + teamTopTen.get(i).name;

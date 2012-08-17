@@ -70,7 +70,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
             String file;
             if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                Diploma pdf = new Diploma(listTournaments.get(TournamentComboBox.getSelectedIndex()), statistics && TournamentComboBox.getSelectedIndex() != 0, CheckBox.isSelected(), selectedRoles);
+                DiplomaPDF pdf = new DiplomaPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), statistics && TournamentComboBox.getSelectedIndex() != 0, CheckBox.isSelected(), selectedRoles);
 
                 /*
                  * Store image for my pleasure.
