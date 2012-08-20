@@ -66,7 +66,7 @@ public abstract class ListFromTeams extends KendoFrame {
                 TeamComboBox.addItem(null);
             }
             for (int i = 0; i < listTeams.size(); i++) {
-                TeamComboBox.addItem(listTeams.get(i).returnName() + " (" + listTeams.get(i).tournament.getName() + ")");
+                TeamComboBox.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).tournament.getName() + ")");
             }
         } catch (NullPointerException npe) {
         }

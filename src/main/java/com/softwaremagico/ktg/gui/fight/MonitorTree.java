@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.Tournament;
 
 /**
@@ -39,7 +39,7 @@ public class MonitorTree extends LeagueEvolution {
     public MonitorTree(Tournament tournament) {
         super(tournament);
         try {
-            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(tournament);
+            FightPool.getManager(tournament).getFightsFromDatabase(tournament);
 
         } catch (NullPointerException npe) {
         }

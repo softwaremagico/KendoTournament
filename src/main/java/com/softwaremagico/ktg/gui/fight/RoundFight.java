@@ -5,29 +5,28 @@ package com.softwaremagico.ktg.gui.fight;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
+import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -39,7 +38,6 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -57,8 +55,10 @@ public class RoundFight extends JPanel {
     private int height = 65;
     Translator trans = null;
     DrawPanel DW = null;
+    private Tournament tournament;
 
-    RoundFight(Fight f, boolean selected, int fight_number, int fight_total) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number, int fight_total) {
+        this.tournament = tournament;
         setLanguage(KendoTournamentGenerator.getInstance().language);
         decoration(selected);
         if (f != null) {
@@ -66,7 +66,8 @@ public class RoundFight extends JPanel {
         }
     }
 
-    RoundFight(Fight f, boolean selected, boolean menu, int fight_number, int fight_total) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, int fight_total) {
+        this.tournament = tournament;
         setLanguage(KendoTournamentGenerator.getInstance().language);
         decoration(selected);
         if (f != null) {
@@ -104,20 +105,20 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
-        if (!KendoTournamentGenerator.getInstance().fightManager.inverseTeams) {
-            tf = new TeamFight(this, f.team1, f, true, selected, menu, fight_number, fight_total);
+        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+            tf = new TeamFight(tournament, this, f.team1, f, true, selected, menu, fight_number, fight_total);
         } else {
-            tf = new TeamFight(this, f.team2, f, true, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.team2, f, true, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        if (!KendoTournamentGenerator.getInstance().fightManager.inverseTeams) {
-            tf = new TeamFight(this, f.team2, f, false, selected, menu, fight_number, fight_total);
+        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+            tf = new TeamFight(tournament, this, f.team2, f, false, selected, menu, fight_number, fight_total);
         } else {
-            tf = new TeamFight(this, f.team1, f, false, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.team1, f, false, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.EAST);
         teamFights.add(tf);
@@ -129,7 +130,7 @@ public class RoundFight extends JPanel {
     private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total) {
         removeAll();
         teamFights = new ArrayList<>();
-        TeamFight tf = new TeamFight(true, teamSize, fight_number, fight_total);
+        TeamFight tf = new TeamFight(tournament, true, teamSize, fight_number, fight_total);
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
 
@@ -138,7 +139,7 @@ public class RoundFight extends JPanel {
         Dimension maxSize = new Dimension(20, 5);
         add(new Box.Filler(minSize, prefSize, maxSize));
 
-        tf = new TeamFight(false, teamSize, fight_number, fight_total);
+        tf = new TeamFight(tournament, false, teamSize, fight_number, fight_total);
         add(tf, BorderLayout.EAST);
         teamFights.add(tf);
 

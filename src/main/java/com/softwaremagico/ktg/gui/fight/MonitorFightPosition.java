@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
@@ -92,7 +93,7 @@ public class MonitorFightPosition extends JFrame {
 
     private boolean containTeam(String team) {
         for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).returnName().equals(team)) {
+            if (teams.get(i).getName().equals(team)) {
                 return true;
             }
         }
@@ -107,14 +108,14 @@ public class MonitorFightPosition extends JFrame {
         setTeams();
 //        for (int i = 0; i < teams.size(); i++) {
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(group.getFightsOfGroup(KendoTournamentGenerator.getInstance().fightManager.getFights()));
+        teamTopTen = ranking.getRanking(group.getFightsOfGroup(FightPool.getManager(group.getChampionshipOfGroup()).getFights()));
 
         /*
          * Team t = group.getTeamInOrderOfScore(i, fightManager, false); int
          * fightsWinned = group.obtainWonFights(fightManager, t); int
          * duelsWinned = group.obtainWonDuels(fightManager, t); int score =
          * (int) group.obtainHits(fightManager, t); TeamRanking tr = new
-         * TeamRanking(t.returnName(), group.getChampionshipOfGroup().name,
+         * TeamRanking(t.getName(), group.getChampionshipOfGroup().name,
          * fightsWinned, duelsWinned, score); teamTopTen.add(tr);
          */
         //     }

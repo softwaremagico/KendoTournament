@@ -84,7 +84,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
         groupModel.removeAllElements();
         if (dg.teams != null) {
             for (int i = 0; i < dg.teams.size(); i++) {
-                groupModel.addElement(dg.teams.get(i).returnName());
+                groupModel.addElement(dg.teams.get(i).getName());
             }
         }
         if (dg.teams.isEmpty()) {

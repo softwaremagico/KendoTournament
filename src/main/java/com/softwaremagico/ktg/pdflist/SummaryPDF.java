@@ -97,13 +97,13 @@ public class SummaryPDF extends ParentList {
         }
 
         //Team1
-        Table.addCell(getHeader3(f.team1.returnName(), 0, 4));
+        Table.addCell(getHeader3(f.team1.getName(), 0, 4));
 
         //Separation Draw Fights
         Table.addCell(getEmptyCell());
 
         //Team2
-        Table.addCell(getHeader3(f.team2.returnName(), 0, 4));
+        Table.addCell(getHeader3(f.team2.getName(), 0, 4));
 
         for (int i = 0; i < f.team1.getNumberOfMembers(f.level); i++) {
             //Team 1

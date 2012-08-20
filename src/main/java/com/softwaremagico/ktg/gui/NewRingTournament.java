@@ -104,7 +104,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         try {
             Team1ComboBox.removeAllItems();
             for (int i = 0; i < remainingTeams().size(); i++) {
-                Team1ComboBox.addItem(remainingTeams().get(i).returnName());
+                Team1ComboBox.addItem(remainingTeams().get(i).getName());
             }
         } catch (NullPointerException npe) {
         }
@@ -152,7 +152,7 @@ public class NewRingTournament extends javax.swing.JFrame {
     public void fillTeams() {
         teamsModel.removeAllElements();
         for (int i = 0; i < teams.size(); i++) {
-            String text = teams.get(i).returnName();
+            String text = teams.get(i).getName();
             teamsModel.addElement(text);
         }
     }

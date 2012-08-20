@@ -294,7 +294,7 @@ public class CompetitorFight extends JPanel {
                 }
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 //   updateScorePanels();
-            }
+            }            
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }

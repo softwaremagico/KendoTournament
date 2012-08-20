@@ -79,7 +79,7 @@ public class ShortNewFight extends javax.swing.JFrame {
         try {
             Team1ComboBox.removeAllItems();
             for (int i = 0; i < listTeams.size(); i++) {
-                Team1ComboBox.addItem(listTeams.get(i).returnName());
+                Team1ComboBox.addItem(listTeams.get(i).getName());
             }
         } catch (NullPointerException npe) {
         }
@@ -89,8 +89,8 @@ public class ShortNewFight extends javax.swing.JFrame {
         Team2ComboBox.removeAllItems();
         try {
             for (int i = 0; i < listTeams.size(); i++) {
-                if (!listTeams.get(i).returnName().equals(Team1ComboBox.getSelectedItem().toString())) {
-                    Team2ComboBox.addItem(listTeams.get(i).returnName());
+                if (!listTeams.get(i).getName().equals(Team1ComboBox.getSelectedItem().toString())) {
+                    Team2ComboBox.addItem(listTeams.get(i).getName());
                 }
             }
         } catch (NullPointerException npe) {
@@ -118,7 +118,7 @@ public class ShortNewFight extends javax.swing.JFrame {
 
     public Team getTeam2() {
         try {
-            if (Team2ComboBox.getSelectedItem().toString().equals(listTeams.get(Team2ComboBox.getSelectedIndex()).returnName())) {
+            if (Team2ComboBox.getSelectedItem().toString().equals(listTeams.get(Team2ComboBox.getSelectedIndex()).getName())) {
                 return listTeams.get(Team2ComboBox.getSelectedIndex());
             } else {
                 return listTeams.get(Team2ComboBox.getSelectedIndex() + 1);

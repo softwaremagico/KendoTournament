@@ -5,28 +5,26 @@ package com.softwaremagico.ktg.gui.fight;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
 import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.Tournament;
 import java.awt.Dimension;
 import javax.swing.Box;
@@ -37,25 +35,25 @@ import javax.swing.Box;
  */
 public class ScorePanel extends javax.swing.JPanel {
 
-    private Tournament selectedTournament = null;
+    private Tournament tournament = null;
 
     /**
      * Creates new form ScorePanel
      */
     public ScorePanel(Tournament selectedTournament) {
-        this.selectedTournament = selectedTournament;
+        this.tournament = selectedTournament;
         initComponents();
     }
 
     public void updateTournament(Tournament selectedTournament) {
-        this.selectedTournament = selectedTournament;
+        this.tournament = selectedTournament;
 
     }
 
     public void fillFightsPanel(int fightArena) {
         //roundFights = new ArrayList<RoundFight>();
         removeAll();
-        if (KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
+        if (FightPool.getManager(tournament).size() > 0) {
             RoundFight rf;
             Fight f;
             int showedFights = 0;
@@ -65,11 +63,11 @@ public class ScorePanel extends javax.swing.JPanel {
 
             //Penultimus
             if (numberOfFightsToShow() > 4) {
-                f = KendoTournamentGenerator.getInstance().fightManager.getPreviousOfPreviousAreaFight((Integer) fightArena);
+                f = FightPool.getManager(tournament).getPreviousOfPreviousAreaFight((Integer) fightArena);
                 if (f != null) {
-                    rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fightManager.currentArenaFight((Integer) fightArena) - 2, KendoTournamentGenerator.getInstance().fightManager.arenaSize((Integer) fightArena));
+                    rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) - 2, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                 } else {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
                 }
                 showedFights++;
                 rf.updateScorePanels();
@@ -78,11 +76,11 @@ public class ScorePanel extends javax.swing.JPanel {
             }
             //Previous
             if (numberOfFightsToShow() > 2) {
-                f = KendoTournamentGenerator.getInstance().fightManager.getPreviousAreaFight(fightArena);
+                f = FightPool.getManager(tournament).getPreviousAreaFight(fightArena);
                 if (f != null) {
-                    rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fightManager.currentArenaFight((Integer) fightArena) - 1, KendoTournamentGenerator.getInstance().fightManager.arenaSize((Integer) fightArena));
+                    rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) - 1, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                 } else {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
                 }
                 showedFights++;
                 rf.updateScorePanels();
@@ -90,8 +88,8 @@ public class ScorePanel extends javax.swing.JPanel {
                 add(new Box.Filler(minSize, prefSize, maxSize));
             }
             //Current
-            if (KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-                rf = new RoundFight(KendoTournamentGenerator.getInstance().fightManager.getSelectedFight(fightArena), true, KendoTournamentGenerator.getInstance().fightManager.currentArenaFight((Integer) fightArena), KendoTournamentGenerator.getInstance().fightManager.arenaSize((Integer) fightArena));
+            if (FightPool.getManager(tournament).size() > 0) {
+                rf = new RoundFight(tournament, FightPool.getManager(tournament).getSelectedFight(fightArena), true, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena), FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                 rf.updateScorePanels();
                 add(rf);
             }
@@ -100,13 +98,13 @@ public class ScorePanel extends javax.swing.JPanel {
 
             //Nexts
             if (numberOfFightsToShow() > 1) {
-                for (int i = KendoTournamentGenerator.getInstance().fightManager.currentArenaFight(fightArena);
-                        showedFights < numberOfFightsToShow() && i < KendoTournamentGenerator.getInstance().fightManager.arenaSize(fightArena) - 1; i++) {
-                    f = KendoTournamentGenerator.getInstance().fightManager.getNextAreaFight(i, fightArena);
+                for (int i = FightPool.getManager(tournament).currentArenaFight(fightArena);
+                        showedFights < numberOfFightsToShow() && i < FightPool.getManager(tournament).arenaSize(fightArena) - 1; i++) {
+                    f = FightPool.getManager(tournament).getNextAreaFight(i, fightArena);
                     if (f != null) {
-                        rf = new RoundFight(f, false, KendoTournamentGenerator.getInstance().fightManager.currentArenaFight((Integer) fightArena) + 1, KendoTournamentGenerator.getInstance().fightManager.arenaSize((Integer) fightArena));
+                        rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) + 1, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                     } else {
-                        rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
+                        rf = new RoundFight(tournament.teamSize, false, 0, 0);
                     }
                     showedFights++;
                     rf.updateScorePanels();
@@ -118,7 +116,7 @@ public class ScorePanel extends javax.swing.JPanel {
             //Add null fightManager to complete the panel.
             while (showedFights < numberOfFightsToShow()) {
                 try {
-                    rf = new RoundFight(selectedTournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
                     add(rf);
                     add(new Box.Filler(minSize, prefSize, maxSize));
                 } catch (NullPointerException npe) {
@@ -136,7 +134,7 @@ public class ScorePanel extends javax.swing.JPanel {
 
     private int screenSizeOfTeam() {
         try {
-            return 60 * selectedTournament.teamSize + 45;
+            return 60 * tournament.teamSize + 45;
         } catch (NullPointerException npe) {
             return 225;
         }

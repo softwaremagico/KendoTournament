@@ -94,8 +94,8 @@ public class Fight implements Serializable {
     public boolean isOver() {
         /*
          * try { Team winnerTeam = winner(); if
-         * (winnerTeam.returnName().equals(team1.returnName())) { winner = -1;
-         * return -1; } if (winnerTeam.returnName().equals(team2.returnName()))
+         * (winnerTeam.getName().equals(team1.getName())) { winner = -1;
+         * return -1; } if (winnerTeam.getName().equals(team2.getName()))
          * { winner = 1; return 1; } } catch (NullPointerException npe) { return
          * winner; } winner = 2;
          */
@@ -113,9 +113,9 @@ public class Fight implements Serializable {
         }
         try {
             Team winnerTeam = winner();
-            if (winnerTeam.returnName().equals(team1.returnName())) {
+            if (winnerTeam.getName().equals(team1.getName())) {
                 winner = -1;
-            } else if (winnerTeam.returnName().equals(team2.returnName())) {
+            } else if (winnerTeam.getName().equals(team2.getName())) {
                 winner = 1;
             } else {
                 winner = 0;
@@ -221,7 +221,7 @@ public class Fight implements Serializable {
 
     public void showDuels() {
         System.out.println("---------------");
-        System.out.println(team1.returnName() + " vs " + team2.returnName());
+        System.out.println(team1.getName() + " vs " + team2.getName());
         for (int i = 0; i < duels.size(); i++) {
             System.out.println(team1.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorA + " vs " + team2.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorB);
         }
@@ -322,13 +322,13 @@ public class Fight implements Serializable {
         return true;
     }
 
-    public String showFight() {
-        return "'" + team1.returnName() + " vs " + team2.returnName() + "'";
+    public String show() {
+        return "'" + team1.getName() + " vs " + team2.getName() + "'";
     }
 
     public List<String> convert2Csv(int order) {
         List<String> Csv = new ArrayList<>();
-        Csv.add("FIGHT;"+ order +";"+ team1.returnName() + ";" + team2.returnName());
+        Csv.add("FIGHT;"+ order +";"+ team1.getName() + ";" + team2.getName());
         for (Duel d : duels) {
             Csv.add(d.convert2Csv());
         }

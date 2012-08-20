@@ -392,7 +392,7 @@ public class DiplomaPDF {
                 return -1;
             }
             for (int i = 0; i < teamTopTen.size(); i++) {
-                if (teamTopTen.get(i).name.equals(team.returnName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
+                if (teamTopTen.get(i).name.equals(team.getName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
                     return i;
                 }
             }

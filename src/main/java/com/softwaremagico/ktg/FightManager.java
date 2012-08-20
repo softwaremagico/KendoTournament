@@ -5,23 +5,21 @@ package com.softwaremagico.ktg;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
@@ -35,11 +33,11 @@ import java.util.Random;
  */
 public class FightManager {
 
-    public boolean inverseColours = false;
-    public boolean inverseTeams = false;
     private ArrayList<Fight> fights = new ArrayList<>();
+    private Tournament tournament;
 
-    FightManager() {
+    FightManager(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     public Fight get(int i) {
@@ -60,7 +58,7 @@ public class FightManager {
     public void addNewFight(Fight f) {
         if (!existFight(f)) {
             fights.add(f);
-            KendoTournamentGenerator.getInstance().database.storeFight(f, false, false);
+            storeFight(f);
         }
     }
 
@@ -123,15 +121,23 @@ public class FightManager {
         return lastArenaFight;
     }
 
+    public boolean isLastFightOfArena(int arena) {
+        return currentArenaFight(arena) >= arenaSize(arena) - 1;
+    }
+
     public int currentArenaFight(int arena) {
         int arenacounter = 0;
-        for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).asignedFightArea == arena) {
-                if (!fights.get(i).isOver() || i == fights.size() - 1) {
+        ArrayList<Fight> arenaFights = getFightsOfArena(arena);
+        for (int i = 0; i < arenaFights.size(); i++) {
+            if (arenaFights.get(i).asignedFightArea == arena) {
+                if (!arenaFights.get(i).isOver() || i == arenaFights.size() - 1) {
                     return arenacounter;
                 }
                 arenacounter++;
             }
+        }
+        if (arenacounter >= arenaFights.size()) {
+            arenacounter = arenaFights.size() - 1;
         }
         return arenacounter;
     }
@@ -294,7 +300,7 @@ public class FightManager {
     public boolean areArenaOver(int arena) {
         for (int i = 0; i < fights.size(); i++) {
             if (!fights.get(i).isOver() && fights.get(i).asignedFightArea == arena) {
-                Log.finest("Fight '" + fights.get(i).team1.returnName() + " vs " + fights.get(i).team2.returnName() + "' is not over.");
+                Log.debug("Fight '" + fights.get(i).team1.getName() + " vs " + fights.get(i).team2.getName() + "' is not over.");
                 return false;
             }
         }
@@ -363,10 +369,10 @@ public class FightManager {
 
     public void updateFightsWithNewOrderOfTeam(Team t) {
         for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).team1.returnName().equals(t.returnName())) {
+            if (fights.get(i).team1.getName().equals(t.getName())) {
                 fights.get(i).team1 = t;
             }
-            if (fights.get(i).team2.returnName().equals(t.returnName())) {
+            if (fights.get(i).team2.getName().equals(t.getName())) {
                 fights.get(i).team2 = t;
             }
         }
@@ -384,8 +390,8 @@ public class FightManager {
             //Is a fight of this level
             if (fights.get(i).level == level) {
                 //The team is in this fight.
-                if (fights.get(i).team1.returnName().equals(t.returnName())
-                        || fights.get(i).team2.returnName().equals(t.returnName())) {
+                if (fights.get(i).team1.getName().equals(t.getName())
+                        || fights.get(i).team2.getName().equals(t.getName())) {
                     if (fights.get(i).isOver()) {
                         return true;
                     }
@@ -699,7 +705,7 @@ public class FightManager {
 
     public void setFightAsOver(Fight fight) {
         fight.setOver();
-        Log.finest("Fight '" + fight.team1.returnName() + " vs " + fight.team2.returnName() + "' is set to over.");
+        Log.finest("Fight '" + fight.team1.getName() + " vs " + fight.team2.getName() + "' is set to over.");
         //KendoTournamentGenerator.getInstance().database.updateFightAsOver(fight);
     }
 
@@ -718,7 +724,7 @@ public class FightManager {
     }
 
     private boolean storeDuelOfFights(Fight fight) {
-        Log.fine("Storing duels of fight " + fight.showFight() + ".");
+        Log.fine("Storing duels of fight " + fight.show() + ".");
         for (int i = 0; i < fight.duels.size(); i++) {
             if (!storeDuel(fight.duels.get(i), fight, i)) {
                 return false;
@@ -732,7 +738,7 @@ public class FightManager {
         ArrayList<Fight> notUpdatedFights = notUpdatedFights();
         for (Fight f : notUpdatedFights) {
             if (!f.isOverStored() && f.isOver()) {
-                Log.finest("Fight " + f.showFight() + " is not over.");
+                Log.finest("Fight " + f.show() + " is not over.");
                 KendoTournamentGenerator.getInstance().database.updateFightAsOver(f);
             }
 

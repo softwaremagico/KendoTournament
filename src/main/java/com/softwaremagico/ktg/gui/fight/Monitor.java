@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.files.Path;
@@ -85,8 +86,8 @@ public final class Monitor extends javax.swing.JFrame {
         scorePanel.setBounds(new Rectangle(FightsPanel.getSize().width, FightsPanel.getSize().height));
         FightsPanel.add(scorePanel);
 
-        ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseColours);
-        InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().fightManager.inverseTeams);
+        ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseColours);
+        InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseTeams);
 
         if (selectedTournament.fightingAreas == 1) {
             fightArea = 0;
@@ -143,7 +144,7 @@ public final class Monitor extends javax.swing.JFrame {
                     //Only groups of this arena. 
                     if (TournamentGroupPool.getManager(selectedTournament).get(i).arena == fightArea || fightArea == -1) {
                         //Only groups of this level.
-                        if (TournamentGroupPool.getManager(selectedTournament).get(i).getLevel() == KendoTournamentGenerator.getInstance().fightManager.getLastLevel()) {
+                        if (TournamentGroupPool.getManager(selectedTournament).get(i).getLevel() == FightPool.getManager(selectedTournament).getLastLevel()) {
                             if (TournamentGroupPool.getManager(selectedTournament).get(i).areFightsOver()) {
                                 if (!finishedGroups.contains(TournamentGroupPool.getManager(selectedTournament).get(i))) {
                                     finishedGroups.add(TournamentGroupPool.getManager(selectedTournament).get(i));
@@ -164,11 +165,11 @@ public final class Monitor extends javax.swing.JFrame {
         if (showAllArenas) {
             fightArea++;
         }
-        KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament);
+        FightPool.getManager(selectedTournament).getFightsFromDatabase(selectedTournament);
 
             //If the designedgroups are loaded, we can select only the shiaijos used in this level.
             try {
-                if (fightArea >= TournamentGroupPool.getManager(selectedTournament).getArenasOfLevel(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level)) {
+                if (fightArea >= TournamentGroupPool.getManager(selectedTournament).getArenasOfLevel(FightPool.getManager(selectedTournament).getFights(), FightPool.getManager(selectedTournament).get(FightPool.getManager(selectedTournament).size() - 1).level)) {
                     fightArea = 0;
                 }
             } catch (NullPointerException npe2) {
@@ -185,7 +186,7 @@ public final class Monitor extends javax.swing.JFrame {
             banner.ChangePhoto(selectedTournament.banner(), selectedTournament.bannerInput, selectedTournament.bannerSize);
             BannerPanel.repaint();
             BannerPanel.revalidate();
-            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament);
+            FightPool.getManager(selectedTournament).getFightsFromDatabase(selectedTournament);
         } catch (IOException | IllegalArgumentException | NullPointerException ex) {
             //ex.printStackTrace();
         }
@@ -330,7 +331,7 @@ public final class Monitor extends javax.swing.JFrame {
     }//GEN-LAST:event_formKeyReleased
 
     private void InverseCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InverseCheckBoxActionPerformed
-        KendoTournamentGenerator.getInstance().fightManager.inverseTeams = InverseCheckBox.isSelected();
+        KendoTournamentGenerator.getInstance().inverseTeams = InverseCheckBox.isSelected();
         fillFightsPanel();
     }//GEN-LAST:event_InverseCheckBoxActionPerformed
 
@@ -344,7 +345,7 @@ public final class Monitor extends javax.swing.JFrame {
     }//GEN-LAST:event_InverseCheckBoxKeyReleased
 
     private void ColourCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ColourCheckBoxActionPerformed
-        KendoTournamentGenerator.getInstance().fightManager.inverseColours = ColourCheckBox.isSelected();
+        KendoTournamentGenerator.getInstance().inverseColours = ColourCheckBox.isSelected();
         fillFightsPanel();
     }//GEN-LAST:event_ColourCheckBoxActionPerformed
 

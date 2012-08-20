@@ -102,7 +102,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             Team1ComboBox.removeAllItems();
             listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
             for (int i = 0; i < listTeams.size(); i++) {
-                Team1ComboBox.addItem(listTeams.get(i).returnName());
+                Team1ComboBox.addItem(listTeams.get(i).getName());
             }
         } catch (NullPointerException npe) {
             //npe.printStackTrace();
@@ -119,8 +119,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         Team2ComboBox.removeAllItems();
         try {
             for (int i = 0; i < listTeams.size(); i++) {
-                if (!listTeams.get(i).returnName().equals(Team1ComboBox.getSelectedItem().toString())) {
-                    Team2ComboBox.addItem(listTeams.get(i).returnName());
+                if (!listTeams.get(i).getName().equals(Team1ComboBox.getSelectedItem().toString())) {
+                    Team2ComboBox.addItem(listTeams.get(i).getName());
                 }
             }
             /*
@@ -195,7 +195,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         fightsModel.removeAllElements();
         if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE)) {
             for (int i = 0; i < fights.size(); i++) {
-                String text = fights.get(i).team1.returnName() + " - " + fights.get(i).team2.returnName();
+                String text = fights.get(i).team1.getName() + " - " + fights.get(i).team2.getName();
                 if (((Tournament) TournamentComboBox.getSelectedItem()).fightingAreas > 1) {
                     text += "  (" + trans.returnTag("FightArea")
                             + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";
@@ -505,7 +505,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             }
             if (fightsModel.isEmpty() || (answer)) {
                 //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-                fights = KendoTournamentGenerator.getInstance().fightManager.obtainRandomFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
+                fights = FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).obtainRandomFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
 
                 int ind = FightsList.getSelectedIndex();
 
@@ -576,7 +576,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
             //Tournament tour = KendoTournamentGenerator.getInstance().database.getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            fights = KendoTournamentGenerator.getInstance().fightManager.obtainSortedFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
+            fights = FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).obtainSortedFights(listTeams, ((Tournament) TournamentComboBox.getSelectedItem()));
 
             int ind = FightsList.getSelectedIndex();
 

@@ -180,20 +180,9 @@ public abstract class LeagueLevel {
     }
 
     protected TournamentGroup getGroupOfFight(Fight fight) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            boolean team1Exist = false;
-            boolean team2Exist = false;
-
-            for (int j = 0; j < tournamentGroups.get(i).teams.size(); j++) {
-                if (fight.team1.returnName().equals(tournamentGroups.get(i).teams.get(j).returnName())) {
-                    team1Exist = true;
-                }
-                if (fight.team2.returnName().equals(tournamentGroups.get(i).teams.get(j).returnName())) {
-                    team2Exist = true;
-                }
-            }
-            if (team1Exist && team2Exist) {
-                return tournamentGroups.get(i);
+        for (TournamentGroup group : tournamentGroups) {
+            if (group.teams.contains(fight.team1) && group.teams.contains(fight.team2)) {
+                return group;
             }
         }
         return null;
@@ -403,6 +392,20 @@ public abstract class LeagueLevel {
         System.out.println(levelInfo());
         if (nextLevel != null) {
             nextLevel.showTree();
+        }
+        System.out.println("-------------------------------------");
+    }
+
+    public void showTeams() {
+        System.out.println("-------------------------------------");
+        for (TournamentGroup group : tournamentGroups) {
+            for (Team team : group.teams) {
+                System.out.print(team.getName()+" ");
+            }
+            System.out.println();
+        }
+        if (nextLevel != null) {
+            nextLevel.showTeams();
         }
         System.out.println("-------------------------------------");
     }

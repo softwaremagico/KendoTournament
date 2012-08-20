@@ -50,7 +50,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
      * Creates new form ChangeOrderTeam
      */
     public ChangeOrderTeam() {
-        level = KendoTournamentGenerator.getInstance().fightManager.getLastLevel();
+        level = FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).getLastLevel();
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -99,7 +99,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void fillTeams() {
         teamsModel.removeAllElements();
         for (int i = 0; i < teams.size(); i++) {
-            teamsModel.addElement(teams.get(i).returnName());
+            teamsModel.addElement(teams.get(i).getName());
         }
     }
 

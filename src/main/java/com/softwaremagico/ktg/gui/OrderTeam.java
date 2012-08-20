@@ -93,7 +93,7 @@ public class OrderTeam extends NewTeam {
             if (t.realMembers() < tournament.teamSize) {
                 competitors.add(0, new Competitor("", "", "", ""));
             }
-            NameTextField.setText(t.returnName());
+            NameTextField.setText(t.getName());
             AddTeamCompetitorsSorted(t);
             fillCompetitors();
             NameTextField.setEnabled(false);
@@ -130,7 +130,7 @@ public class OrderTeam extends NewTeam {
                 team.addMembers(participants, level);
                 if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
-                    KendoTournamentGenerator.getInstance().fightManager.updateFightsWithNewOrderOfTeam(team);
+                    FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).updateFightsWithNewOrderOfTeam(team);
                     MessageManager.informationMessage("orderChanged", "League");
                     this.dispose();
                 }

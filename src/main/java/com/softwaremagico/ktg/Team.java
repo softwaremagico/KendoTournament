@@ -150,7 +150,7 @@ public class Team implements Serializable {
         }
     }
 
-    public String returnShortName() {
+    public String getShortName() {
         int length = 21;
         if (name.length() <= length) {
             return name;
@@ -159,7 +159,7 @@ public class Team implements Serializable {
         }
     }
 
-    public String returnShortName(int xSize) {
+    public String getShortName(int xSize) {
         int length = xSize / 7;
         if (name.length() <= length) {
             return name;
@@ -180,7 +180,7 @@ public class Team implements Serializable {
         this.name = name.trim();
     }
 
-    public String returnName() {
+    public String getName() {
         return name;
     }
 
@@ -213,8 +213,8 @@ public class Team implements Serializable {
     }
 
     public void showMembers() {
-        if (returnName().equals("3")) {
-            System.out.println(" +++++++ " + returnName() + " +++++++ ");
+        if (getName().equals("3")) {
+            System.out.println(" +++++++ " + getName() + " +++++++ ");
             for (int i = 0; i < participantsPerLevel.size(); i++) {
                 for (int j = 0; j < participantsPerLevel.get(i).size(); j++) {
                     System.out.println(participantsPerLevel.get(i).get(j).getSurnameName() + " LeveL: " + i);

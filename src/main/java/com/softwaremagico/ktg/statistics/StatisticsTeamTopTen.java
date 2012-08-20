@@ -192,9 +192,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     public void updateComboBox(Team team) {
         if (tournament==null) {
-            SelectComboBox.setSelectedItem(team.returnName() + " (" + team.tournament.getName() + ")");
+            SelectComboBox.setSelectedItem(team.getName() + " (" + team.tournament.getName() + ")");
         } else {
-            SelectComboBox.setSelectedItem(team.returnName());
+            SelectComboBox.setSelectedItem(team.getName());
         }
     }
 
@@ -205,9 +205,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
         for (int i = 0; i < teams.size(); i++) {
             if (tournament==null) {
-                SelectComboBox.addItem(teams.get(i).returnName() + " (" + teams.get(i).tournament.getName() + ")");
+                SelectComboBox.addItem(teams.get(i).getName() + " (" + teams.get(i).tournament.getName() + ")");
             } else {
-                SelectComboBox.addItem(teams.get(i).returnName());
+                SelectComboBox.addItem(teams.get(i).getName());
             }
         }
 
@@ -223,7 +223,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     private int searchForTeamPosition(Team team) {
         for (int i = 0; i < teamTopTen.size(); i++) {
-            if (teamTopTen.get(i).name.equals(team.returnName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
+            if (teamTopTen.get(i).name.equals(team.getName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
                 return i;
             }
         }

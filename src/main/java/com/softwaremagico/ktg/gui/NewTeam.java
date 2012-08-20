@@ -150,7 +150,7 @@ public class NewTeam extends KendoFrame {
 
     public final void updateWindow(Team team) {
         try {
-            NameTextField.setText(team.returnName());
+            NameTextField.setText(team.getName());
             TournamentComboBox.setSelectedItem(team.tournament);
             AddTeamCompetitorsSorted(team);
             fillCompetitors();

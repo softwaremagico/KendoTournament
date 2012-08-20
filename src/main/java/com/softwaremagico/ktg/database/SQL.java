@@ -295,7 +295,7 @@ public abstract class SQL extends Database {
                     if (teams.get(i).getMember(member, levelIndex) != null) {
                         memberID = teams.get(i).getMember(member, levelIndex).getId();
                     }
-                    Folder.appendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).returnName() + "','"
+                    Folder.appendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).getName() + "','"
                             + memberID + "'," + member + "," + levelIndex + ",'"
                             + teams.get(i).tournament.getName() + "'," + teams.get(i).group
                             + ");\n", file);
@@ -310,8 +310,8 @@ public abstract class SQL extends Database {
         Folder.appendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
         ArrayList<Fight> fights = getAllFights();
         for (int i = 0; i < fights.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.returnName() + "','"
-                    + fights.get(i).team2.returnName() + "','" + fights.get(i).tournament.getName() + "',"
+            Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.getName() + "','"
+                    + fights.get(i).team2.getName() + "','" + fights.get(i).tournament.getName() + "',"
                     + fights.get(i).asignedFightArea + "," + i + ","
                     + fights.get(i).returnWinner() + "," + fights.get(i).level + ","
                     + fights.get(i).getMaxWinners()
@@ -1962,21 +1962,21 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeTeam(Team team, boolean verbose) {
-        Log.fine("Storing team " + team.returnName());
+        Log.fine("Storing team " + team.getName());
         boolean error = false;
         boolean answer = false;
         boolean update = false;
         //Delete all old entries for these team if exists.
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs1 = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'")) {
+                    ResultSet rs1 = s.executeQuery("SELECT * FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'")) {
                 if (rs1.next()) {
                     if (verbose) {
                         answer = MessageManager.questionMessage("questionUpdateTeam", "Warning!");
                     }
                     if (answer || !verbose) {
-                        Log.finer("Deleting an existing team " + team.returnName());
-                        s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "' AND LeagueGroup=" + team.group);
+                        Log.finer("Deleting an existing team " + team.getName());
+                        s.executeUpdate("DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "' AND LeagueGroup=" + team.group);
                     } else {
                         return false;
                     }
@@ -2014,14 +2014,14 @@ public abstract class SQL extends Database {
         if (!error) {
             if (update) {
                 if (verbose) {
-                    MessageManager.translatedMessage("teamUpdated", this.getClass().getName(), team.returnName(), JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.translatedMessage("teamUpdated", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
-                Log.info("teamUpdated", this.getClass().getName(), team.returnName());
+                Log.info("teamUpdated", this.getClass().getName(), team.getName());
             } else {
                 if (verbose) {
-                    MessageManager.translatedMessage("teamStored", this.getClass().getName(), team.returnName(), JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.translatedMessage("teamStored", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
                 }
-                Log.info("teamStored", this.getClass().getName(), team.returnName());
+                Log.info("teamStored", this.getClass().getName(), team.getName());
             }
         }
         return !error;
@@ -2036,7 +2036,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean insertTeam(Team team, boolean verbose) {
-        Log.fine("Inserting team " + team.returnName());
+        Log.fine("Inserting team " + team.getName());
         boolean error = false;
         //Insert team.
         for (int levelIndex = 0; levelIndex < team.levelChangesSize(); levelIndex++) {
@@ -2044,7 +2044,7 @@ public abstract class SQL extends Database {
                 for (int indexCompetitor = 0; indexCompetitor < team.getNumberOfMembers(levelIndex); indexCompetitor++) {
                     try {
                         try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
-                            stmt.setString(1, team.returnName());
+                            stmt.setString(1, team.getName());
                             stmt.setString(2, team.getMember(indexCompetitor, levelIndex).getId());
                             stmt.setString(3, team.tournament.getName());
                             stmt.setInt(4, indexCompetitor);
@@ -2080,10 +2080,10 @@ public abstract class SQL extends Database {
      */
     private List<Competitor> searchTeamMembersInLevel(Team team, boolean verbose, int level) {
         List<Competitor> results = new ArrayList<>();
-        Log.fine("Obtaining the members of team " + team.returnName() + " in level " + level);
+        Log.fine("Obtaining the members of team " + team.getName() + " in level " + level);
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "' AND LevelTournament=" + level + " ORDER BY Position ASC")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "' AND LevelTournament=" + level + " ORDER BY Position ASC")) {
                 while (rs.next()) {
                     String memberID = rs.getObject("Member").toString();
                     if (!memberID.equals("")) {
@@ -2114,11 +2114,11 @@ public abstract class SQL extends Database {
      * @return
      */
     private List<List<Competitor>> searchTeamMembers(Team team, boolean verbose) {
-        Log.fine("Obtain the members of " + team.returnName());
+        Log.fine("Obtain the members of " + team.getName());
         List<List<Competitor>> membersPerLevel = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
-            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'";
+            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'";
             Log.finest(query);
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
@@ -2242,9 +2242,9 @@ public abstract class SQL extends Database {
 
     @Override
     public void updateTeamGroupOfLeague(Tournament tournament, Team team) {
-        Log.fine("Upgrading team " + team.returnName() + " of " + tournament.getName());
+        Log.fine("Upgrading team " + team.getName() + " of " + tournament.getName());
         try {
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.returnName() + "' AND Tournament='" + tournament.getName() + "'")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.getName() + "' AND Tournament='" + tournament.getName() + "'")) {
                 stmt.setInt(1, team.group);
                 stmt.executeUpdate();
             }
@@ -2260,7 +2260,7 @@ public abstract class SQL extends Database {
 
     @Override
     public boolean deleteTeam(Team team, boolean verbose) {
-        Log.fine("Deleting team " + team.returnName());
+        Log.fine("Deleting team " + team.getName());
         boolean error = false;
         boolean answer = false;
         try {
@@ -2270,7 +2270,7 @@ public abstract class SQL extends Database {
 
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team WHERE Name='" + team.returnName() + "' AND Tournament='" + team.tournament.getName() + "'");
+                    s.executeUpdate("DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'");
                 }
             }
 
@@ -2296,9 +2296,9 @@ public abstract class SQL extends Database {
         }
         if (!error && answer) {
             if (verbose) {
-                MessageManager.translatedMessage("teamDeleted", this.getClass().getName(), team.returnName(), JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("teamDeleted", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("teamDeleted", this.getClass().getName(), team.returnName());
+            Log.info("teamDeleted", this.getClass().getName(), team.getName());
         }
         return !error && (answer || !verbose);
     }
@@ -2441,7 +2441,7 @@ public abstract class SQL extends Database {
         try {
             for (int indexCompetitor = 0; indexCompetitor < t.getNumberOfMembers(level); indexCompetitor++) {
                 try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
-                    stmt.setString(1, t.returnName());
+                    stmt.setString(1, t.getName());
                     stmt.setString(2, t.getMember(indexCompetitor, level).getId());
                     stmt.setString(3, t.tournament.getName());
                     stmt.setInt(4, indexCompetitor);
@@ -2481,9 +2481,9 @@ public abstract class SQL extends Database {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("teamStored", this.getClass().getName(), t.returnName(), JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("teamStored", this.getClass().getName(), t.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("teamStored", this.getClass().getName(), t.returnName());
+            Log.info("teamStored", this.getClass().getName(), t.getName());
         }
         return !error;
     }
@@ -2499,7 +2499,7 @@ public abstract class SQL extends Database {
 
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team WHERE Name='" + t.returnName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.tournament.getName() + "'");
+                s.executeUpdate("DELETE FROM team WHERE Name='" + t.getName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.tournament.getName() + "'");
             }
 
             return true;
@@ -2586,7 +2586,7 @@ public abstract class SQL extends Database {
 
                         for (Fight f : fights) {
                             //Add the fightManager that depends on the level and the teams.
-                            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                             f.setOverStored(true);
                         }
                     }
@@ -2619,7 +2619,7 @@ public abstract class SQL extends Database {
                 s.executeUpdate("DELETE FROM fight");
                 s.executeUpdate("DELETE FROM duel");
                 for (Fight f : fights) {
-                    s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.returnName() + "','" + f.team2.returnName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
+                    s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                     f.setOverStored(true);
                     storeDuelsOfFight(f);
                 }
@@ -2641,7 +2641,7 @@ public abstract class SQL extends Database {
                 if (deleteOldOne) {
                     deleteFight(fight, false);
                 }
-                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.returnName() + "','" + fight.team2.returnName() + "','" + fight.tournament.getName() + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
+                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.getName() + "','" + fight.team2.getName() + "','" + fight.tournament.getName() + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
                 fight.setOverStored(true);
             }
         } catch (SQLException | NullPointerException ex) {
@@ -2743,7 +2743,7 @@ public abstract class SQL extends Database {
     public int obtainFightID(Fight f) {
         int ID = -1;
         try {
-            String query = "SELECT ID FROM fight WHERE Tournament='" + f.tournament.getName() + "' AND Team1='" + f.team1.returnName() + "' AND Team2='" + f.team2.returnName() + "' AND LeagueLevel=" + f.level;
+            String query = "SELECT ID FROM fight WHERE Tournament='" + f.tournament.getName() + "' AND Team1='" + f.team1.getName() + "' AND Team2='" + f.team2.getName() + "' AND LeagueLevel=" + f.level;
             Log.finest(query);
             try (Statement s = connection.createStatement();
                     ResultSet rts = s.executeQuery(query)) {
@@ -2754,7 +2754,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Log.debug("Id of fight " + f.showFight() + " is " + ID);
+        Log.debug("Id of fight " + f.show() + " is " + ID);
         return ID;
     }
 
@@ -2771,9 +2771,9 @@ public abstract class SQL extends Database {
                 over = 0;
             }
             try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
+                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level)) {
                 stmt.setInt(1, over);
-                Log.finest("UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                Log.finest("UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level);
                 stmt.executeUpdate();
             }
             fight.setOverStored(true);
@@ -2790,7 +2790,7 @@ public abstract class SQL extends Database {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level)) {
+                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level)) {
                 stmt.setInt(1, 2);
                 stmt.executeUpdate();
             }
@@ -2923,7 +2923,7 @@ public abstract class SQL extends Database {
             }
             if (answer || !verbose) {
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
 

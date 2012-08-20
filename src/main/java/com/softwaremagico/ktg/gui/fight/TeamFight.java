@@ -5,30 +5,25 @@ package com.softwaremagico.ktg.gui.fight;
  * %%
  * Copyright (C) 2008 - 2012 Softwaremagico
  * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
  *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
  *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
  *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Team;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.gui.OrderTeam;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,10 +46,12 @@ public class TeamFight extends JPanel {
     RoundFight roundFight = null;
     private boolean wasDoubleClick = true;
     Team team;
-    Timer timer;
+    private Timer timer;
     private boolean leftJustify, selectedFight, menuActive;
+    private Tournament tournament;
 
-    TeamFight(RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total) {
+    TeamFight(Tournament tournament, RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total) {
+        this.tournament = tournament;
         fight = f;
         roundFight = rf;
         team = t;
@@ -65,12 +62,13 @@ public class TeamFight extends JPanel {
 
         addMouseListener(new MouseAdapters());
         if (t != null) {
-            decoration(left, t.returnName().toUpperCase(), fight_number, fight_total);
+            decoration(left, t.getName().toUpperCase(), fight_number, fight_total);
             fill(t, left, selected, menu);
         }
     }
 
-    TeamFight(boolean left, int teamSize, int fight_number, int fight_total) {
+    TeamFight(Tournament tournament, boolean left, int teamSize, int fight_number, int fight_total) {
+        this.tournament = tournament;
         fight = null;
         decoration(left, " --- ", fight_number, fight_total);
         fill(left, teamSize);
@@ -94,7 +92,7 @@ public class TeamFight extends JPanel {
         if (left) {
             title.setTitleJustification(TitledBorder.LEFT);
 
-            if (KendoTournamentGenerator.getInstance().fightManager.inverseColours) {
+            if (KendoTournamentGenerator.getInstance().inverseColours) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
@@ -102,7 +100,7 @@ public class TeamFight extends JPanel {
         } else {
             title.setTitleJustification(TitledBorder.RIGHT);
 
-            if (!KendoTournamentGenerator.getInstance().fightManager.inverseColours) {
+            if (!KendoTournamentGenerator.getInstance().inverseColours) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
@@ -152,12 +150,12 @@ public class TeamFight extends JPanel {
     private void showTeam() {
         //Are more than one member, and fight is not over, and there is not another fight in this level already done.
         if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
-            if (!KendoTournamentGenerator.getInstance().fightManager.someFightWithTeamAndLevelIsStarted(team, fight.level)) {
+            if (!FightPool.getManager(tournament).someFightWithTeamAndLevelIsStarted(team, fight.level)) {
                 OrderTeam orderTeam;
                 orderTeam = new OrderTeam(fight.tournament, fight.level, this);
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
-            }else{
+            } else {
                 MessageManager.errorMessage("waitNewLevel", "Team");
             }
         }
@@ -168,11 +166,13 @@ public class TeamFight extends JPanel {
         updateScorePanel();
     }
 
-    /************************************************
+    /**
+     * **********************************************
      *
-     *                    LISTENERS
+     * LISTENERS
      *
-     ************************************************/
+     ***********************************************
+     */
     /**
      * When clicking to a box.
      */

@@ -50,7 +50,7 @@ public class TeamListPDF extends ParentList {
     public PdfPTable teamTable(Team t, String font, int fontSize) {
         PdfPTable teamTable = new PdfPTable(1);
 
-        teamTable.addCell(getHeader4(t.returnShortName().toUpperCase(), 0));
+        teamTable.addCell(getHeader4(t.getShortName().toUpperCase(), 0));
 
         for (int i = 0; i < t.getNumberOfMembers(0); i++) {
             String member;

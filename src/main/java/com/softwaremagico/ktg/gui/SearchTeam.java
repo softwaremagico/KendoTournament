@@ -95,7 +95,7 @@ public final class SearchTeam extends Search<Team> {
 
     @Override
     protected String getResultInformation(Team object) {
-        return object.returnName();
+        return object.getName();
     }
 
     @Override

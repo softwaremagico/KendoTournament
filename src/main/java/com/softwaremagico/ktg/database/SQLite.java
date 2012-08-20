@@ -320,7 +320,7 @@ public class SQLite extends SQL {
             if (answer || !verbose) {
                 deleteDuelsOfFight(fight);
                 try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.returnName() + "' AND Team2='" + fight.team2.returnName() + "' AND LeagueLevel=" + fight.level);
+                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level);
                 }
             }
         } catch (SQLException ex) {

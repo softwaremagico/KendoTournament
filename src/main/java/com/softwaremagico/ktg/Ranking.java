@@ -59,14 +59,14 @@ public class Ranking {
         double score = (double) 0;
 
         //Team1
-        if (fight.team1.returnName().equals(team.returnName())) {
+        if (fight.team1.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 score += fight.duels.get(k).howManyPoints(true) * SCORE_HITS;
             }
         }
 
         //Team2
-        if (fight.team2.returnName().equals(team.returnName())) {
+        if (fight.team2.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 score += fight.duels.get(k).howManyPoints(false) * SCORE_HITS;
             }
@@ -77,7 +77,7 @@ public class Ranking {
     private int obtainPointsForWonDuels(Fight fight, Team team) {
         int score = 0;
         //Team1
-        if (fight.team1.returnName().equals(team.returnName())) {
+        if (fight.team1.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 //Winned
                 if (fight.duels.get(k).winner() < 0) {
@@ -90,7 +90,7 @@ public class Ranking {
             }
         }
         //Team2
-        if (fight.team2.returnName().equals(team.returnName())) {
+        if (fight.team2.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 //Winned
                 if (fight.duels.get(k).winner() > 0) {
@@ -108,8 +108,8 @@ public class Ranking {
     private Float obtainPointsForDrawFights(Fight fight, Team team) {
         Float score = new Float(0);
         try {
-            if ((fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))) {
+            if ((fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))) {
                 for (int i = 0; i < fight.duels.size(); i++) {
                     if (fight.duels.get(i).winner() == 0) {
                         score += SCORE_DRAW_FIGHTS;
@@ -123,8 +123,8 @@ public class Ranking {
 
     private Float obtainPointsForDrawDuels(Fight fight, Team team) {
         try {
-            if ((fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))
+            if ((fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))
                     && (fight.isDrawFight())) {
                 return SCORE_DRAW_DUELS;
             }
@@ -135,10 +135,10 @@ public class Ranking {
 
     private Float obtainPointsForWonFights(Fight fight, Team team) {
         try {
-            if (fight.winnerByDuels().returnName().equals(team.returnName())) {
+            if (fight.winnerByDuels().getName().equals(team.getName())) {
                 return SCORE_WON_FIGHTS * fight.tournament.getScoreForWin();
-            } else if (fight.isDrawFight() && (fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))) {
+            } else if (fight.isDrawFight() && (fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))) {
                 return SCORE_WON_FIGHTS * fight.tournament.getScoreForDraw(); //In Custom championships the draw fight also has score. 
             }
         } catch (NullPointerException npe) {
@@ -151,8 +151,8 @@ public class Ranking {
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
             if (fights.get(j).level == level || level == -1) {
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
-                    if (oneFight.winnerByDuels() != null && oneFight.winnerByDuels().returnName().equals(team.returnName())) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
+                    if (oneFight.winnerByDuels() != null && oneFight.winnerByDuels().getName().equals(team.getName())) {
                         total++;
                     }
                 }
@@ -166,7 +166,7 @@ public class Ranking {
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
             if (fights.get(j).level == level || level == -1) {
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                     if (oneFight.isDrawFight()) {
                         total++;
                     }
@@ -182,9 +182,9 @@ public class Ranking {
             Fight oneFight = fights.get(j);
 
             if (fights.get(j).level == level || level == -1) {
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                     //Team1
-                    if (oneFight.team1.returnName().equals(team.returnName())) {
+                    if (oneFight.team1.getName().equals(team.getName())) {
                         for (int k = 0; k < oneFight.duels.size(); k++) {
                             if (oneFight.duels.get(k).winner() < 0) {
                                 total++;
@@ -192,7 +192,7 @@ public class Ranking {
                         }
                     }
                     //Team2
-                    if (oneFight.team2.returnName().equals(team.returnName())) {
+                    if (oneFight.team2.getName().equals(team.getName())) {
                         for (int k = 0; k < oneFight.duels.size(); k++) {
                             if (oneFight.duels.get(k).winner() > 0) {
                                 total++;
@@ -210,10 +210,10 @@ public class Ranking {
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
             if (fights.get(j).level == level || level == -1) {
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                     //Team1
-                    if (oneFight.team1.returnName().equals(team.returnName())
-                            || (oneFight.team2.returnName().equals(team.returnName()))) {
+                    if (oneFight.team1.getName().equals(team.getName())
+                            || (oneFight.team2.getName().equals(team.getName()))) {
                         for (int k = 0; k < oneFight.duels.size(); k++) {
                             if (oneFight.duels.get(k).winner() == 0) {
                                 total++;
@@ -232,16 +232,16 @@ public class Ranking {
         for (int j = 0; j < fights.size(); j++) {
             Fight oneFight = fights.get(j);
             if (fights.get(j).level == level || level == -1) {
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                     //Team1
-                    if (oneFight.team1.returnName().equals(team.returnName())) {
+                    if (oneFight.team1.getName().equals(team.getName())) {
                         for (int k = 0; k < oneFight.duels.size(); k++) {
                             total += oneFight.duels.get(k).howManyPoints(true);
                         }
                     }
 
                     //Team2
-                    if (oneFight.team2.returnName().equals(team.returnName())) {
+                    if (oneFight.team2.getName().equals(team.getName())) {
                         for (int k = 0; k < oneFight.duels.size(); k++) {
                             total += oneFight.duels.get(k).howManyPoints(false);
                         }
@@ -263,7 +263,7 @@ public class Ranking {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double undraws = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndraws(team.tournament, team.returnName());
+        double undraws = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndraws(team.tournament, team.getName());
         score += SCORE_GOLDEN_POINT * undraws;
         return score;
     }
@@ -274,10 +274,10 @@ public class Ranking {
             boolean inserted1 = false;
             boolean inserted2 = false;
             for (int j = 0; j < teams.size(); j++) {
-                if (teams.get(j).returnName().equals(fights.get(i).team1.returnName())) {
+                if (teams.get(j).getName().equals(fights.get(i).team1.getName())) {
                     inserted1 = true;
                 }
-                if (teams.get(j).returnName().equals(fights.get(i).team2.returnName())) {
+                if (teams.get(j).getName().equals(fights.get(i).team2.getName())) {
                     inserted2 = true;
                 }
             }
@@ -303,7 +303,7 @@ public class Ranking {
             double teamScore = (double) 0;
             for (int j = 0; j < fights.size(); j++) {
                 Fight oneFight = fights.get(j);
-                if ((oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                if ((oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                     teamScore += obtainPointsForWonFights(oneFight, team);
                     teamScore += obtainPointsForWonDuels(oneFight, team);
                     teamScore += obtainPointsForHits(oneFight, team);
@@ -333,7 +333,7 @@ public class Ranking {
 
     private void showScore() {
         for (int i = 0; i < teams.size(); i++) {
-            System.out.println(teams.get(i).returnName() + ": " + teamsScore.get(i));
+            System.out.println(teams.get(i).getName() + ": " + teamsScore.get(i));
         }
     }
 
@@ -376,7 +376,7 @@ public class Ranking {
         updateScoreForTeams(fights);
         List<Team> teamsOrd = getTeamsOrderedByScore();
         for (int i = 0; i < teamsOrd.size(); i++) {
-            teamsOrdered.add(new TeamRanking(teamsOrd.get(i).returnName(), teamsOrd.get(i).tournament,
+            teamsOrdered.add(new TeamRanking(teamsOrd.get(i).getName(), teamsOrd.get(i).tournament,
                     obtainWonFights(fights, teamsOrd.get(i), -1), obtainDrawFights(fights, teamsOrd.get(i), -1),
                     obtainWonDuels(fights, teamsOrd.get(i), -1), obtainDrawDuels(fights, teamsOrd.get(i), -1),
                     obtainHits(fights, teamsOrd.get(i), -1)));

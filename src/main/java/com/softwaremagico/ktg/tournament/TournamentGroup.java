@@ -23,10 +23,7 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.*;
@@ -137,7 +134,7 @@ public class TournamentGroup extends Group implements Serializable {
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
             for (int i = 0; i < teams.size(); i++) {
-                Team t = KendoTournamentGenerator.getInstance().database.getTeamByName(teams.get(i).returnName(), tournament, false);
+                Team t = KendoTournamentGenerator.getInstance().database.getTeamByName(teams.get(i).getName(), tournament, false);
                 if (t != null) {
                     updatedTeams.add(t);
                 } else {
@@ -154,7 +151,7 @@ public class TournamentGroup extends Group implements Serializable {
     private String returnText() {
         String text = "<html>";
 
-        updateScoreForTeams(KendoTournamentGenerator.getInstance().fightManager.getFights());
+        updateScoreForTeams(FightPool.getManager(tournament).getFights());
         List<Team> teamsO = getTeamsOrderedByScore();
         if (teamsO.isEmpty()) {
             text += "<b>" + getDefaultLabel() + "</b>";
@@ -167,7 +164,7 @@ public class TournamentGroup extends Group implements Serializable {
                     //text += "<b><font size=\"+1\" color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
                     text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
                 }
-                text += teamsO.get(i).returnShortName();
+                text += teamsO.get(i).getShortName();
                 if (color) {
                     text += "</b></font>";
                 }
@@ -195,7 +192,7 @@ public class TournamentGroup extends Group implements Serializable {
 
     public Color obtainWinnerColor(int winner, boolean check) {
         int red, green, blue;
-        if ((!check) || (winner < numberMaxOfWinners && winner >= 0 && areFightsOver(KendoTournamentGenerator.getInstance().fightManager.getFights()))) {
+        if ((!check) || (winner < numberMaxOfWinners && winner >= 0 && areFightsOver(FightPool.getManager(tournament).getFights()))) {
             if (winner == 0) {
                 red = 220;
                 green = 20;
@@ -423,8 +420,8 @@ public class TournamentGroup extends Group implements Serializable {
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < teams.size(); j++) {
                 try {
-                    if ((fights.get(i).team1.returnName().equals(teams.get(j).returnName())
-                            || fights.get(i).team2.returnName().equals(teams.get(j).returnName()))
+                    if ((fights.get(i).team1.getName().equals(teams.get(j).getName())
+                            || fights.get(i).team2.getName().equals(teams.get(j).getName()))
                             && fights.get(i).level == level) {
                         fightsG.add(fights.get(i));
                         break;
@@ -452,7 +449,7 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public boolean areFightsOver() {
-        List<Fight> fights = getFightsOfGroup(KendoTournamentGenerator.getInstance().fightManager.getFights());
+        List<Fight> fights = getFightsOfGroup(FightPool.getManager(tournament).getFights());
 
         if (fights.size() > 0) {
             for (int i = 0; i < fights.size(); i++) {
@@ -512,14 +509,14 @@ public class TournamentGroup extends Group implements Serializable {
         double score = (double) 0;
 
         //Team1
-        if (fight.team1.returnName().equals(team.returnName())) {
+        if (fight.team1.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 score += fight.duels.get(k).howManyPoints(true) * SCORE_HITS;
             }
         }
 
         //Team2
-        if (fight.team2.returnName().equals(team.returnName())) {
+        if (fight.team2.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 score += fight.duels.get(k).howManyPoints(false) * SCORE_HITS;
             }
@@ -530,7 +527,7 @@ public class TournamentGroup extends Group implements Serializable {
     private int obtainPointsForWonDuels(Fight fight, Team team) {
         int score = 0;
         //Team1
-        if (fight.team1.returnName().equals(team.returnName())) {
+        if (fight.team1.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 if (fight.duels.get(k).winner() < 0) {
                     score += SCORE_WON_DUELS * tournament.getScoreForWin();
@@ -541,7 +538,7 @@ public class TournamentGroup extends Group implements Serializable {
             }
         }
         //Team2
-        if (fight.team2.returnName().equals(team.returnName())) {
+        if (fight.team2.getName().equals(team.getName())) {
             for (int k = 0; k < fight.duels.size(); k++) {
                 if (fight.duels.get(k).winner() > 0) {
                     score += SCORE_WON_DUELS * tournament.getScoreForWin();
@@ -557,8 +554,8 @@ public class TournamentGroup extends Group implements Serializable {
     private Float obtainPointsForDrawFights(Fight fight, Team team) {
         Float score = new Float(0);
         try {
-            if ((fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))) {
+            if ((fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))) {
                 for (int i = 0; i < fight.duels.size(); i++) {
                     if (fight.duels.get(i).winner() == 0) {
                         score += SCORE_DRAW_FIGHTS;
@@ -572,8 +569,8 @@ public class TournamentGroup extends Group implements Serializable {
 
     private Float obtainPointsForDrawDuels(Fight fight, Team team) {
         try {
-            if ((fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))
+            if ((fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))
                     && (fight.isDrawFight())) {
                 return SCORE_DRAW_DUELS;
             }
@@ -584,10 +581,10 @@ public class TournamentGroup extends Group implements Serializable {
 
     private Float obtainPointsForWonFights(Fight fight, Team team) {
         try {
-            if (fight.winnerByDuels().returnName().equals(team.returnName())) {
+            if (fight.winnerByDuels().getName().equals(team.getName())) {
                 return SCORE_WON_FIGHTS * tournament.getScoreForWin();
-            } else if (fight.isDrawFight() && (fight.team1.returnName().equals(team.returnName())
-                    || fight.team2.returnName().equals(team.returnName()))) {
+            } else if (fight.isDrawFight() && (fight.team1.getName().equals(team.getName())
+                    || fight.team2.getName().equals(team.getName()))) {
                 return SCORE_WON_FIGHTS * tournament.getScoreForDraw();
             }
         } catch (NullPointerException npe) {
@@ -606,7 +603,7 @@ public class TournamentGroup extends Group implements Serializable {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this), team.returnName());
+        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this), team.getName());
         score += (double) SCORE_GOLDEN_POINT * multiplier;
         return score;
     }
@@ -625,7 +622,7 @@ public class TournamentGroup extends Group implements Serializable {
             for (int j = 0; j < fights.size(); j++) {
                 Fight oneFight = fights.get(j);
                 if (oneFight.level == level) { //Only count the points of this designed group!!
-                    if (isFightOfGroup(oneFight) && (oneFight.team1.returnName().equals(team.returnName()) || oneFight.team2.returnName().equals(team.returnName()))) {
+                    if (isFightOfGroup(oneFight) && (oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
                         teamScore += obtainPointsForWonFights(oneFight, team);
                         teamScore += obtainPointsForWonDuels(oneFight, team);
                         teamScore += obtainPointsForHits(oneFight, team);
@@ -712,7 +709,7 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     private int getOrderOfTeam(Team team) {
-        updateScoreForTeams(getFightsOfGroup(KendoTournamentGenerator.getInstance().fightManager.getFights()));
+        updateScoreForTeams(getFightsOfGroup(FightPool.getManager(tournament).getFights()));
         List<Team> sortedTeams = new ArrayList<>();
         try {
             sortedTeams = getTeamsOrderedByScore();
@@ -721,7 +718,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
 
         for (int i = 0; i < sortedTeams.size(); i++) {
-            if (sortedTeams.get(i).returnName().equals(team.returnName())) {
+            if (sortedTeams.get(i).getName().equals(team.getName())) {
                 return i;
             }
         }
@@ -780,7 +777,7 @@ public class TournamentGroup extends Group implements Serializable {
         //If the user has already define a winner. Use it.
         if ((team = isDrawStored(drawTeams)) != null) {
             for (int i = 0; i < drawTeams.size(); i++) {
-                if (drawTeams.get(i).returnName().equals(team)) {
+                if (drawTeams.get(i).getName().equals(team)) {
                     return i;
                 }
             }
@@ -789,9 +786,9 @@ public class TournamentGroup extends Group implements Serializable {
         //Ask the user who is the real winner.
         List<String> optionsList = new ArrayList<>();
         for (int i = 0; i < drawTeams.size(); i++) {
-            optionsList.add(drawTeams.get(i).returnName());
-//            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).returnName(), 0, level);
-            //KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).returnName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
+            optionsList.add(drawTeams.get(i).getName());
+//            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).getName(), 0, level);
+            //KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).getName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
 
         }
 
@@ -807,8 +804,8 @@ public class TournamentGroup extends Group implements Serializable {
                 options,
                 options[0]);
         if (n >= 0) {
-            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n).returnName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
-            //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(tournament.name, drawTeams.get(n).returnName(), level, drawTeams);
+            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n).getName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
+            //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(tournament.name, drawTeams.get(n).getName(), level, drawTeams);
         }
         return n;
     }

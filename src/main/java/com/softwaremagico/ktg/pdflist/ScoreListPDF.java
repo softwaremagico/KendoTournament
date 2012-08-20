@@ -42,16 +42,16 @@ import java.util.List;
  */
 public class ScoreListPDF extends ParentList {
 
-    private Tournament championship;
+    private Tournament tournament;
     List<TeamRanking> teamTopTen;
 
-    public ScoreListPDF(Tournament tmp_championship) {
-        championship = tmp_championship;
+    public ScoreListPDF(Tournament tournament) {
+        this.tournament = tournament;
         trans = LanguagePool.getTranslator("gui.xml");
     }
 
     private PdfPTable simpleTable(PdfPTable mainTable) {
-        teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(championship, false);
+        teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(tournament, false);
 
         mainTable.addCell(getCell(trans.returnTag("Team"), 0, Element.ALIGN_CENTER));
         mainTable.addCell(getCell(trans.returnTag("fightsWon"), 0, Element.ALIGN_CENTER));
@@ -69,10 +69,10 @@ public class ScoreListPDF extends ParentList {
     }
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
-        KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship);
+        FightPool.getManager(tournament).getFightsFromDatabase(tournament);
 
-        for (int l = 0; l < TournamentGroupPool.getManager(championship).getLevels().size(); l++) {
-            List<TournamentGroup> groups = TournamentGroupPool.getManager(championship).returnGroupsOfLevel(l);
+        for (int l = 0; l < TournamentGroupPool.getManager(tournament).getLevels().size(); l++) {
+            List<TournamentGroup> groups = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).areFightsOver()) {
@@ -90,8 +90,8 @@ public class ScoreListPDF extends ParentList {
                     if (groups.get(i).areFightsOver()) {
                         mainTable.addCell(getEmptyRow());
                         String head = trans.returnTag("GroupString") + " " + (i + 1);
-                        if (championship.fightingAreas > 1) {
-                            head += " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(KendoTournamentGenerator.getInstance().fightManager.getFights())) + ")";
+                        if (tournament.fightingAreas > 1) {
+                            head += " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(FightPool.getManager(tournament).getFights())) + ")";
                         }
 
                         mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));
@@ -101,21 +101,21 @@ public class ScoreListPDF extends ParentList {
                         mainTable.addCell(getCell(trans.returnTag("histsWon"), 1, Element.ALIGN_CENTER));
 
 
-                        String winnerUndraw = KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(championship, i, groups.get(i).teams);
+                        String winnerUndraw = KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(tournament, i, groups.get(i).teams);
 
                         for (int j = 0; j < groups.get(i).teams.size(); j++) {
                             /*
                              * Header of the teams
                              */
-                            Team t = groups.get(i).getTeamInOrderOfScore(j, KendoTournamentGenerator.getInstance().fightManager.getFights(), false);
+                            Team t = groups.get(i).getTeamInOrderOfScore(j, FightPool.getManager(tournament).getFights(), false);
 
-                            mainTable.addCell(getCell(t.returnName(), 0, Element.ALIGN_LEFT));
-                            mainTable.addCell(getCell(Ranking.obtainWonFights(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawFights(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
-                            mainTable.addCell(getCell(Ranking.obtainWonDuels(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(t.getName(), 0, Element.ALIGN_LEFT));
+                            mainTable.addCell(getCell(Ranking.obtainWonFights(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawFights(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(Ranking.obtainWonDuels(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
 
-                            String score = "" + (int) (float) (Ranking.obtainHits(KendoTournamentGenerator.getInstance().fightManager.getFights(), t, groups.get(i).getLevel()));
+                            String score = "" + (int) (float) (Ranking.obtainHits(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()));
                             if (winnerUndraw != null) {
-                                if (winnerUndraw.equals(t.returnName())) {
+                                if (winnerUndraw.equals(t.getName())) {
                                     score += "*";
                                 }
                             }
@@ -131,7 +131,7 @@ public class ScoreListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (championship.mode.equals(TournamentTypes.SIMPLE)) {
+        if (tournament.mode.equals(TournamentTypes.SIMPLE)) {
             mainTable = simpleTable(mainTable);
         } else {
             mainTable = championshipTable(mainTable);
@@ -154,7 +154,7 @@ public class ScoreListPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(championship.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(tournament.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(headerBorder);

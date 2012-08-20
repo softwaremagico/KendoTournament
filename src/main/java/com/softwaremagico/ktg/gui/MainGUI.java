@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.database.StoreDatabase;
@@ -829,6 +830,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
             KendoTournamentGenerator.getInstance().changeDebugOption(DebugMenuCheckBox.getState());
         }
     }//GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;

@@ -25,7 +25,6 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.tournament.LeagueDesigner;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.*;
@@ -33,6 +32,7 @@ import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.pdflist.*;
 import com.softwaremagico.ktg.statistics.*;
+import com.softwaremagico.ktg.tournament.LeagueDesigner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -1430,13 +1430,13 @@ public class Controller {
             try {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
                         shortFight.getTournament(), shortFight.getArena(),
-                        KendoTournamentGenerator.getInstance().fightManager.get(KendoTournamentGenerator.getInstance().fightManager.size() - 1).level + 1);
+                        FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).get(FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).size() - 1).level + 1);
             } catch (IndexOutOfBoundsException aion) {
                 f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
                         shortFight.getTournament(), shortFight.getArena(), 0);
             }
             try {
-                KendoTournamentGenerator.getInstance().fightManager.add(f);
+                FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).add(f);
                 MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
                 //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
