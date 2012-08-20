@@ -986,13 +986,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
         } catch (NullPointerException npe) {
         }
-        /*
-         * if (TournamentComboBox.getItemCount() > 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner(FOLDER
-         * + File.separator + TournamentComboBox.getSelectedItem().toString() +
-         * ".dsg"); }
-         */
-        TournamentGroupPool.getManager(tournament).deleteUsedDesigner();
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
