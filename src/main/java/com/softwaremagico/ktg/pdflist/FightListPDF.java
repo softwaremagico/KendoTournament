@@ -33,9 +33,9 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentTypes;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.util.List;
 
 /**
@@ -99,10 +99,8 @@ public class FightListPDF extends ParentList {
         PdfPCell cell;
 
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship);
-        KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
-        KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(championship));
-
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); l++) {
+        
+        for (int l = 0; l < TournamentGroupPool.getManager(championship).getLevels().size(); l++) {
             /*
              * Header of the phase
              */
@@ -110,7 +108,7 @@ public class FightListPDF extends ParentList {
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
-            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(l);
+            List<TournamentGroup> groups = TournamentGroupPool.getManager(championship).returnGroupsOfLevel(l);
 
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());

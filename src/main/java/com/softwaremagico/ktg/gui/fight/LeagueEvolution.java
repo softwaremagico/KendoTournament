@@ -23,10 +23,10 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentTypes;
 import com.softwaremagico.ktg.tournament.BlackBoardPanel;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -44,11 +44,13 @@ public class LeagueEvolution extends javax.swing.JFrame {
     Timer timer = null;
     final int seconds = 5;
     int center = 21;
+    private Tournament tournament;
 
     /**
      * Creates new form LeagueEvolution
      */
-    public LeagueEvolution() {
+    public LeagueEvolution(Tournament tournament) {
+        this.tournament = tournament;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -60,13 +62,14 @@ public class LeagueEvolution extends javax.swing.JFrame {
     }
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
-        if (!KendoTournamentGenerator.getInstance().tournamentManager.getMode().equals(TournamentTypes.SIMPLE)) {
-            KendoTournamentGenerator.getInstance().tournamentManager.color(true);
-            KendoTournamentGenerator.getInstance().tournamentManager.update();
+        this.tournament=tournament;
+        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.SIMPLE)) {
+            TournamentGroupPool.getManager(tournament).color(true);
+            TournamentGroupPool.getManager(tournament).update();
             bbp.updateBlackBoard(tournament, refill);
-            KendoTournamentGenerator.getInstance().tournamentManager.unselectDesignedGroups();
-            KendoTournamentGenerator.getInstance().tournamentManager.enhance(true);
-            KendoTournamentGenerator.getInstance().tournamentManager.onlyShow();
+            TournamentGroupPool.getManager(tournament).unselectDesignedGroups();
+            TournamentGroupPool.getManager(tournament).enhance(true);
+            TournamentGroupPool.getManager(tournament).onlyShow();
 
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
@@ -92,9 +95,9 @@ public class LeagueEvolution extends javax.swing.JFrame {
     }
 
     final void updateListeners() {
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.size(); i++) {
-            if (KendoTournamentGenerator.getInstance().tournamentManager.get(i).listenerAdded) {
-                KendoTournamentGenerator.getInstance().tournamentManager.get(i).removeMouseClickListener();
+        for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
+            if (TournamentGroupPool.getManager(tournament).get(i).listenerAdded) {
+                TournamentGroupPool.getManager(tournament).get(i).removeMouseClickListener();
             }
         }
     }
@@ -105,20 +108,20 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size();
-            rows = verticalScrollBar.getMaximum() / KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0).size();
+            columns = horizontalScrollBar.getMaximum() / TournamentGroupPool.getManager(tournament).getLevels().size();
+            rows = verticalScrollBar.getMaximum() / TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size();
         } catch (ArithmeticException ae) {
         }
 
-        Integer x = KendoTournamentGenerator.getInstance().tournamentManager.getIndexLastLevelNotUsed();
-        
-        if(x==null){
-            x=KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size()-1;
+        Integer x = TournamentGroupPool.getManager(tournament).getIndexLastLevelNotUsed();
+
+        if (x == null) {
+            x = TournamentGroupPool.getManager(tournament).getLevels().size() - 1;
         }
-        
+
         int y;
 
-        if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners < 2) {
+        if (TournamentGroupPool.getManager(tournament).default_max_winners < 2) {
             y = (int) (Math.pow(2, x + 1));
         } else {
             if (x == 0) {

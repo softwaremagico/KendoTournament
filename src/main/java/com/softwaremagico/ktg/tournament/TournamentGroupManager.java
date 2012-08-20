@@ -274,8 +274,11 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public Integer getIndexLastSelected() {
-        if (levels.size() > 0) {
-            return levels.get(0).getIndexLastSelected();
+        try {
+            if (levels.size() > 0) {
+                return levels.get(0).getIndexLastSelected();
+            }
+        } catch (NullPointerException npe) {
         }
         return null;
     }
@@ -383,8 +386,9 @@ public class TournamentGroupManager implements Serializable {
                 return new LeagueLevelChampionship(tournament, 0, nextLevel, previousLevel, groupManager);
             case MANUAL:
                 return new LeagueLevelManual(tournament, 0, nextLevel, previousLevel, groupManager);
+            default:
+                return new LeagueLevelSimple(tournament, 0, nextLevel, previousLevel, groupManager);
         }
-        return null;
     }
 
     public void createLevelZero() {
@@ -437,7 +441,7 @@ public class TournamentGroupManager implements Serializable {
         }
         // Show message when last fight is selected.
         if (KendoTournamentGenerator.getInstance().fightManager.areAllOver() && KendoTournamentGenerator.getInstance().fightManager.size() > 0) {
-            MessageManager.winnerMessage("leagueFinished", "Finally!", "<html><b>"+winnername+"</b></html>", JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.winnerMessage("leagueFinished", "Finally!", "<html><b>" + winnername + "</b></html>", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -714,9 +718,9 @@ public class TournamentGroupManager implements Serializable {
         List l;
         try {
             l = new SerialDesignerStream(path).load();
-            KendoTournamentGenerator.getInstance().tournamentManager = (TournamentGroupManager) l.get(0);
+            TournamentGroupPool.replaceGroupManager((TournamentGroupManager) l.get(0));
 
-            if (KendoTournamentGenerator.getInstance().tournamentManager.load(tournament)) {
+            if (TournamentGroupPool.getManager(tournament).load(tournament)) {
                 return true;
             }
         } catch (ClassNotFoundException ex) {

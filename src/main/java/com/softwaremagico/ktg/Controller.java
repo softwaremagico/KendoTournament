@@ -1088,7 +1088,7 @@ public class Controller {
                 leagueEvolution.dispose();
             } catch (NullPointerException npe) {
             }
-            leagueEvolution = new LeagueEvolution();
+            leagueEvolution = new LeagueEvolution(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             leagueEvolution.setVisible(true);
             leagueEvolution.setExtendedState(leagueEvolution.getExtendedState() | JFrame.MAXIMIZED_BOTH);
             leagueEvolution.updateBlackBoard(tournamentPanel.getSelectedTournament(), false);
@@ -1439,7 +1439,7 @@ public class Controller {
                 KendoTournamentGenerator.getInstance().fightManager.add(f);
                 MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
-                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
+                //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.getInstance().showErrorInformation(npe);
             }

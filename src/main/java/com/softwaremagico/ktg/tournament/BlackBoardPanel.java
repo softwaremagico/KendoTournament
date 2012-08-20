@@ -1,21 +1,26 @@
 package com.softwaremagico.ktg.tournament;
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
+ *  
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *
+ *  
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *
+ *  
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 
 import com.softwaremagico.ktg.Fight;
@@ -48,13 +53,10 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         this.tournament = tournament;
         //removeAll();
         if (!refill) {
-            //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
+            //TournamentGroupPool.getManager(selectedTournament).updateInnerLevel(0);
         } else {
             KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(tournament);
-            KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(tournament);
             ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-            KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(fights);
-            //KendoTournamentGenerator.getInstance().tournamentManager.updateInnerLevel(0);
         }
         paintDesignedGroups();
         paintSpaces();
@@ -81,14 +83,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint information row
          */
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
+        for (int i = 0; i < TournamentGroupPool.getManager(tournament).getLevels().size(); i++) {
             c.gridx = (i + 1) * 2;
             c.gridy = 1;
 
             Separator s;
-            if (i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
-                s = new Separator(trans.returnTag("Round") + " " + (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - i));
-            } else if (i == KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size() - 2) {
+            if (i < TournamentGroupPool.getManager(tournament).getLevels().size() - 2) {
+                s = new Separator(trans.returnTag("Round") + " " + (TournamentGroupPool.getManager(tournament).getLevels().size() - i));
+            } else if (i == TournamentGroupPool.getManager(tournament).getLevels().size() - 2) {
                 s = new Separator(trans.returnTag("SemiFinalLabel"));
             } else {
                 s = new Separator(trans.returnTag("FinalLabel"));
@@ -100,12 +102,12 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint information column
          */
-        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0);
+        List<TournamentGroup> grps = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0);
         if (grps != null) {
             for (int i = 0; i < grps.size(); i++) {
                 c.gridx = 0;
                 c.gridy = i + 2;
-                //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) KendoTournamentGenerator.getInstance().tournamentManager.returnNumberOfArenas());
+                //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) TournamentGroupPool.getManager(selectedTournament).returnNumberOfArenas());
 
                 Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
                         + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
@@ -118,13 +120,13 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          * Paint teams group
          */
         try {
-            for (int level = 0; level < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); level++) {
-                for (int groupIndex = 0; groupIndex < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().size(); groupIndex++) {
+            for (int level = 0; level < TournamentGroupPool.getManager(tournament).getLevels().size(); level++) {
+                for (int groupIndex = 0; groupIndex < TournamentGroupPool.getManager(tournament).getLevels().get(level).getGroups().size(); groupIndex++) {
                     try {
-                        if (KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).tournament.equals(tournament)) {
+                        if (TournamentGroupPool.getManager(tournament).getLevels().get(level).getGroups().get(groupIndex).tournament.equals(tournament)) {
                             c.anchor = GridBagConstraints.WEST;
                             c.gridx = level * 2 + 1 + titleColumn;
-                            if (KendoTournamentGenerator.getInstance().tournamentManager.default_max_winners < 2) {
+                            if (TournamentGroupPool.getManager(tournament).default_max_winners < 2) {
                                 c.gridy = groupIndex * (int) (Math.pow(2, level)) + titleRow;
                             } else {
                                 if (level == 0) {
@@ -135,9 +137,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                             }
 
                             c.weightx = 0.5;
-                            add(KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex), c);
+                            add(TournamentGroupPool.getManager(tournament).getLevels().get(level).getGroups().get(groupIndex), c);
                             if (level == 0 && groupIndex == 0) {
-                                KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(level).getGroups().get(groupIndex).setSelected(KendoTournamentGenerator.getInstance().tournamentManager);
+                                TournamentGroupPool.getManager(tournament).getLevels().get(level).getGroups().get(groupIndex).setSelected(TournamentGroupPool.getManager(tournament));
                             }
                         }
                     } catch (NullPointerException npe) {
@@ -150,7 +152,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     private void paintSpaces() {
-        for (int i = 1; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
+        for (int i = 1; i < TournamentGroupPool.getManager(tournament).getLevels().size(); i++) {
             c.gridx = i * 2 + titleColumn;
             c.gridy = 0;
             add(new Separator(), c);
@@ -160,14 +162,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private void paintLinks(Graphics g) {
         Integer destination;
         try {
-            for (int i = 0; i < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); i++) {
-                List<TournamentGroup> designedGroupsFromLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i);
-                List<TournamentGroup> designedGroupsToLevel = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(i + 1);
+            for (int i = 0; i < TournamentGroupPool.getManager(tournament).getLevels().size(); i++) {
+                List<TournamentGroup> designedGroupsFromLevel = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(i);
+                List<TournamentGroup> designedGroupsToLevel = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(i + 1);
                 if (designedGroupsToLevel != null) {
                     for (int j = 0; j < designedGroupsFromLevel.size(); j++) {
                         for (int winners = 0; winners < designedGroupsFromLevel.get(j).getMaxNumberOfWinners(); winners++) {
                             if (designedGroupsToLevel.size() > 1) {
-                                destination = KendoTournamentGenerator.getInstance().tournamentManager.getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsFromLevel.get(j), winners);
+                                destination = TournamentGroupPool.getManager(tournament).getLevels().get(i).getGroupIndexDestinationOfWinner(designedGroupsFromLevel.get(j), winners);
                             } else { //Final group
                                 destination = 0;
                             }
@@ -221,7 +223,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     private void paintSeparationLines(Graphics g) {
-        List<TournamentGroup> grps = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(0);
+        List<TournamentGroup> grps = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0);
         g.setColor(Color.black);
         for (int i = 0; i < grps.size(); i++) {
             if (i > 0) {

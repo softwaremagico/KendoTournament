@@ -30,10 +30,10 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.statistics.TeamRanking;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.util.List;
 
 /**
@@ -70,11 +70,9 @@ public class ScoreListPDF extends ParentList {
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
         KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(championship);
-        KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(championship);
-        KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(championship));
 
-        for (int l = 0; l < KendoTournamentGenerator.getInstance().tournamentManager.getLevels().size(); l++) {
-            List<TournamentGroup> groups = KendoTournamentGenerator.getInstance().tournamentManager.returnGroupsOfLevel(l);
+        for (int l = 0; l < TournamentGroupPool.getManager(championship).getLevels().size(); l++) {
+            List<TournamentGroup> groups = TournamentGroupPool.getManager(championship).returnGroupsOfLevel(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).areFightsOver()) {

@@ -25,7 +25,6 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.files.Folder;
@@ -60,7 +59,7 @@ public class KendoTournamentGenerator {
     private DatabaseEngine databaseEngine = null;
     public Languages languages = new Languages();
     private String explorationFolder = null;
-    public TournamentGroupManager tournamentManager = null;
+    //public TournamentGroupManager tournamentManager = null;
     private char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";

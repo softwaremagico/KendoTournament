@@ -27,7 +27,6 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentGroupManager;
 
 /**
  *
@@ -37,15 +36,11 @@ public class MonitorTree extends LeagueEvolution {
 
     Tournament selectedTournament = null;
 
-    public MonitorTree(Tournament selectedTournament) {
-
+    public MonitorTree(Tournament tournament) {
+        super(tournament);
         try {
-            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament);
+            KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(tournament);
 
-            if (KendoTournamentGenerator.getInstance().tournamentManager == null) {
-                KendoTournamentGenerator.getInstance().tournamentManager = new TournamentGroupManager(selectedTournament);
-                KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(selectedTournament));
-            }
         } catch (NullPointerException npe) {
         }
     }
