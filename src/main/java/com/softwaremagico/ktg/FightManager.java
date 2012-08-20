@@ -757,6 +757,15 @@ public class FightManager {
         return Csv;
     }
 
+    public boolean storeLazyFights(int arena) {
+        //If all arena fights are over or strict store is selected.
+        if (areArenaOver(arena) || !KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate()) {
+            //Store score into database.
+            return storeNotUpdatedFightsAndDuels();
+        }
+        return false;
+    }
+
     /**
      * **********************************************
      *

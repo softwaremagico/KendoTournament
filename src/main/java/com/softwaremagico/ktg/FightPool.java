@@ -39,7 +39,7 @@ public class FightPool {
 
     private FightPool() {
     }
-    
+
     public static FightManager getManager(Tournament tournament) {
         FightManager fightManager = existingManagers.get(tournament);
         if (fightManager == null) {
@@ -48,8 +48,8 @@ public class FightPool {
         }
         return fightManager;
     }
-    
-        private static FightManager createFightManager(Tournament tournament) {
+
+    private static FightManager createFightManager(Tournament tournament) {
         FightManager fightManager = new FightManager(tournament);
         fightManager.getFightsFromDatabase(tournament);
         return fightManager;

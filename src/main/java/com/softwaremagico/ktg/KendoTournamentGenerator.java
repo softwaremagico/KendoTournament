@@ -66,6 +66,7 @@ public class KendoTournamentGenerator {
     private boolean logActivated = true;
     public boolean inverseColours = false;
     public boolean inverseTeams = false;
+    private boolean databaseLazyUpdate = false;
 
     private KendoTournamentGenerator() {
         obtainStoredDatabaseConnection();
@@ -282,6 +283,15 @@ public class KendoTournamentGenerator {
         databaseEngine = DatabaseEngine.getDatabase(engine);
     }
 
+    public boolean isDatabaseLazyUpdate() {
+        return databaseLazyUpdate;
+    }
+
+    public void setDatabaseLazyUpdate(boolean value) {
+        databaseLazyUpdate = value;
+        storeConfig();
+    }
+
     /**
      * **********************************************
      *
@@ -298,6 +308,7 @@ public class KendoTournamentGenerator {
         obtainStoredNamePositionOnDiploma();
         obtainLogOption();
         obtainDebugOption();
+        obtainFightsMustBeStoredOption();
         //obtainStoredScore();
     }
 
@@ -376,6 +387,15 @@ public class KendoTournamentGenerator {
         }
     }
 
+    private boolean obtainFightsMustBeStoredOption() {
+        try {
+            databaseLazyUpdate = Boolean.parseBoolean(obtainStoredDataInConfig("StrictStore:"));
+            return databaseLazyUpdate;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
     private void storeConfig() {
         List<String> configData = new ArrayList<>();
         configData.add("Tournament:" + lastSelectedTournament);
@@ -383,6 +403,7 @@ public class KendoTournamentGenerator {
         configData.add("NameDiploma:" + nameDiplomaPosition);
         configData.add("Log:" + logActivated);
         configData.add("Debug:" + debugMode);
+        configData.add("StrictStore:" + databaseLazyUpdate);
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);

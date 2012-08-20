@@ -555,6 +555,18 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;language.png&quot;));"/>
               </AuxValues>
             </Menu>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="StoreFightsCheckBox">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Database Lazy Update"/>
+              </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="StoreFightsCheckBoxStateChanged"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="StoreFightsCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;session-save.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="LogMenuCheckBox">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>

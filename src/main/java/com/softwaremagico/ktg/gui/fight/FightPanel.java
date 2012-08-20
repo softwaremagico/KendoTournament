@@ -547,11 +547,8 @@ public final class FightPanel extends javax.swing.JFrame {
 
             store2Cvs();
 
-            //If all arena fights are over.
-            if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areArenaOver(FightAreaComboBox.getSelectedIndex())) {
-                //Store score into database.
-                FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeNotUpdatedFightsAndDuels();
-            }
+            //Store fights if it is necesary.
+            FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeLazyFights(FightAreaComboBox.getSelectedIndex());
 
             Log.debug("Current number of fights over: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
 
