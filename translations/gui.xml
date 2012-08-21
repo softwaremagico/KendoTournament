@@ -2051,4 +2051,12 @@
 		<ca>Importar/Exportar</ca>
 		<it>Importare/Esportare</it>
 	</DataExchange>
+	<StrictStore>
+		<en>Lazy database update</en>
+		<es>Actualización diferida de datos</es>
+		<nl>Lazy database update</nl>
+		<de>Lazy database update</de>
+		<ca>Actualització diferida de dades</ca>
+		<it>Agiornamento differito dei dati</it>
+	</StrictStore> 
 </translator>
