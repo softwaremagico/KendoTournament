@@ -85,7 +85,7 @@ KENDO TOURNAMENT GENERATION TOOL
 \begin_inset Newline newline
 \end_inset
 
-v0.97
+v0.9.8.0
 \end_layout
 
 \begin_layout Author
@@ -160,6 +160,8 @@ http://www.java.com/es/download/
 
 \begin_layout Description
 MySQL: Esto es un servidor de bases de datos utilizado por nuestra aplicación.
+ Será necesario instalarla siempre que se desee utilizar este motor de bases
+ de datos y no la alternativa SQLite.
  Al igual que la maquina virtual de Java, es completamente gratuito (exceptuando
  la asistencia técnica).
  Puede ser descargado aquí: 
@@ -190,8 +192,8 @@ http://dev.mysql.com/downloads/gui-tools/5.0.html
  Con estas aplicaciones podrás crear backups de tus bases de datos y evitar
  pérdidas de datos por fallos en los discos, aunque no son esenciales para
  el uso del KTG.
- Esta aplicación solo es necesaria instalarla en un ordenador, el que vaya
- a albergar los datos.
+ Esta aplicación solo es necesaria instalarla en el ordenador que vaya albergar
+ los datos cuando se quieran usar múltiples equipos.
  Consulta el capítulo 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -200,6 +202,12 @@ reference "cha:Uso-de-distintos"
 \end_inset
 
  para más información.
+\end_layout
+
+\begin_layout Description
+SQLite: el servidor de bases de datos está incluído como librería dentro
+ del KTG, por lo que no requiere de ninguna instalación.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -356,6 +364,13 @@ database
 
 .
  Instalarlo como si fuera un backup con la opción que el MySQL Admin presenta.
+ 
+\end_layout
+
+\begin_layout Standard
+En el caso de bases de datos SQLite, el uso de la base de datos es completamente
+ transparente al usuario.
+ 
 \end_layout
 
 \begin_layout Chapter
@@ -416,14 +431,15 @@ Lo primero que pide el programa son los datos para conectarse al servidor
 \end_layout
 
 \begin_layout Standard
-El usuario y contraseña es, para MySQL, el indicado en la instalación o
- el que se haya creado después.
+El usuario y contraseña es necesario cuando se use MySQL.
+ Será el indicado durante la instalación o el que se haya creado después.
  En el caso de SQLite no se utiliza usuario ni contraseña.
  
 \end_layout
 
 \begin_layout Standard
-La máquina será, para MySQL, 
+La máquina será únicamente necesaria para el uso con MySQL.
+ El valor puede ser 
 \emph on
 localhost
 \emph default
@@ -437,17 +453,18 @@ reference "cha:Uso-de-distintos"
 \end_inset
 
 ).
- SQLite solamente se puede contectar localmente a la base de datos.
+ SQLite solamente se puede contectar localmente a la base de datos, por
+ lo que este campo aparece desactivado.
  
 \end_layout
 
 \begin_layout Standard
-La base de datos será 
+Para la base de datos se recomienda dejar el nombre por defecto 
 \emph on
-kendotournament
+'kendotournament'
 \emph default
- en todos los casos, que es lo que identifica nuestra base de datos respecto
- a las de otros programas que puedan estar utilizándo el servidor.
+, así evitamos que se confunda con otras bases de datos del sistema y evitamos
+ configurar que los scripts de creación de la base de datos.
  
 \end_layout
 
@@ -767,7 +784,7 @@ Seleccionar
 \end_layout
 
 \begin_layout Subsection
-Borrado de información.
+Borrado de información
 \end_layout
 
 \begin_layout Standard
@@ -786,7 +803,7 @@ borrar
 \end_layout
 
 \begin_layout Subsection
-Ejemplo de inserción de un competidor.
+Ejemplo de inserción de un competidor
 \end_layout
 
 \begin_layout Standard
@@ -2042,6 +2059,21 @@ Por último, el programa permite configurar algunas opciones para el manejo
 
 \begin_layout Description
 Idioma: permite seleccionar el idioma en el que se visualizará la aplicación.
+\end_layout
+
+\begin_layout Description
+Actualización
+\begin_inset space ~
+\end_inset
+
+diferida: si se selecciona esta opción, la base de datos no se actualiza
+ cada vez que se realice una operación.
+ En vez de ello se actualizará únicamente cuando sea estrictamente necesario.
+ Esto incrementa notablemente la velocidad de ejecución del programa, especialme
+nte si la base de datos está en un equipo por red.
+ La desventaja de este método es que se puede perder información si, por
+ ejemplo, se cierra el programa debido a un error de ejecución.
+ 
 \end_layout
 
 \begin_layout Description
