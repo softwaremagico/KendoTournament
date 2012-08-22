@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import java.io.Serializable;
@@ -35,6 +28,7 @@ import java.util.List;
  */
 public class Fight implements Serializable {
 
+    private static final String FIGHT_TAG = "FIGHT";
     public Team team1;
     public Team team2;
     public Tournament tournament;
@@ -94,10 +88,10 @@ public class Fight implements Serializable {
     public boolean isOver() {
         /*
          * try { Team winnerTeam = winner(); if
-         * (winnerTeam.getName().equals(team1.getName())) { winner = -1;
-         * return -1; } if (winnerTeam.getName().equals(team2.getName()))
-         * { winner = 1; return 1; } } catch (NullPointerException npe) { return
-         * winner; } winner = 2;
+         * (winnerTeam.getName().equals(team1.getName())) { winner = -1; return
+         * -1; } if (winnerTeam.getName().equals(team2.getName())) { winner = 1;
+         * return 1; } } catch (NullPointerException npe) { return winner; }
+         * winner = 2;
          */
         return winner < 2;
     }
@@ -326,12 +320,21 @@ public class Fight implements Serializable {
         return "'" + team1.getName() + " vs " + team2.getName() + "'";
     }
 
+    /**
+     *
+     * @param order Order starts in 1.
+     * @return
+     */
     public List<String> convert2Csv(int order) {
-        List<String> Csv = new ArrayList<>();
-        Csv.add("FIGHT;"+ order +";"+ team1.getName() + ";" + team2.getName());
+        List<String> csv = new ArrayList<>();
+        csv.add(FIGHT_TAG + ";" + order + ";" + team1.getName() + ";" + team2.getName());
         for (Duel d : duels) {
-            Csv.add(d.convert2Csv());
+            csv.add(d.convert2Csv());
         }
-        return Csv;
+        return csv;
+    }
+
+    public static String getTag() {
+        return FIGHT_TAG;
     }
 }

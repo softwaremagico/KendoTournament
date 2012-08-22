@@ -1,28 +1,21 @@
 package com.softwaremagico.ktg;
 /*
- * #%L
- * KendoTournamentGenerator
- * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero.
- * Jorge Hortelano Otero <softwaremagico@gmail.com>
- * C/Quart 89, 3. Valencia CP:46008 (Spain).
- *  
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *  
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *  
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see
- * <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
+ * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
+ * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
  */
 
 import java.io.Serializable;
@@ -35,6 +28,7 @@ import java.util.List;
  */
 public class Duel implements Serializable {
 
+    private static final String DUEL_TAG = "DUEL";
     private final int POINTS_TO_WIN = 2;
     public List<Score> hitsFromCompetitorA = new ArrayList<>(); //M, K, T, D, H, I
     public List<Score> hitsFromCompetitorB = new ArrayList<>(); //M, K, T, D, H, I
@@ -354,16 +348,35 @@ public class Duel implements Serializable {
     }
 
     public String convert2Csv() {
-        String Csv = "";
+        String Csv = DUEL_TAG + ";";
         for (Score s : hitsFromCompetitorA) {
             Csv += s.getAbbreviature() + ";";
         }
-        Csv += ((faultsCompetitorA == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature())+ ";";
+        Csv += ((faultsCompetitorA == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
 
         for (Score s : hitsFromCompetitorB) {
             Csv += s.getAbbreviature() + ";";
         }
-        Csv += ((faultsCompetitorB == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature())+ ";";
+        Csv += ((faultsCompetitorB == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
         return Csv;
+    }
+
+    private Score getScoreFromField(String field) {
+        if (field.length() == 1) {
+            return Score.getScore(field.charAt(0));
+        }
+        return Score.EMPTY;
+    }
+
+    public void importFromCsv(String csvLine) {
+        String[] fields = csvLine.split(";");
+        for (int i = 0; i < POINTS_TO_WIN; i++) {
+            hitsFromCompetitorA.add(getScoreFromField(fields[i + 1]));
+            hitsFromCompetitorB.add(getScoreFromField(fields[i + 1 + POINTS_TO_WIN]));
+        }
+    }
+
+    public static String getCsvTag() {
+        return DUEL_TAG;
     }
 }
