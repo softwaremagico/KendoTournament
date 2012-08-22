@@ -66,7 +66,6 @@ public abstract class KendoFrame extends javax.swing.JFrame {
                 return fc.getSelectedFile().toString();
             }
         } catch (NullPointerException npe) {
-            npe.printStackTrace();
             KendoTournamentGenerator.getInstance().showErrorInformation(npe);
         }
         return "";
