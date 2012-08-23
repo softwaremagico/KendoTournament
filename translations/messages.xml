@@ -808,14 +808,22 @@
 		<ca>Pareix que a aquest DNI li falte la lletra. Vol agregar-la?</ca>
 		<it>Sembra che a questo DNI manca la lettera. Si desidera modificarlo?</it>
 	</isDNI>
-	<csvInserted>
+	<csvImported>
 		<en>The CSV file has been imported correctly!</en>
 		<es>¡El fichero CSV ha sido importado correctamente!</es>
 		<nl>Het CSV-bestand is succesvol geïmporteerd!</nl>
 		<de>Die CSV-Datei wurde korrekt importiert!</de>
 		<ca>El fitxer CSV ha sigut importat correctament!</ca>
 		<it>Il file CSV è stato importato correttamente</it>
-	</csvInserted>
+	</csvImported>
+	<csvExported>
+		<en>The CSV file has been exported correctly!</en>
+		<es>¡El fichero CSV ha sido exportado correctamente!</es>
+		<nl>Het CSV-bestand is succesvol geëxporteerd!</nl>
+		<de>Die CSV-Datei wurde korrekt geexportiert!</de>
+		<ca>El fitxer CSV ha sigut exportat correctament!</ca>
+		<it>Il file CSV è stato exportato correttamente</it>
+	</csvExported>
 	<clubNotStored>
 		<en>Error when trying to add a new club!</en>
 		<es>¡Error al intentar insertar un nuevo club!</es>

@@ -1,27 +1,31 @@
-package com.softwaremagico.ktg;
+package com.softwaremagico.ktg.gui;
 /*
- * #%L KendoTournamentGenerator %% Copyright (C) 2008 - 2012 Softwaremagico %%
+ * #%L
+ * KendoTournamentGenerator
+ * %%
+ * Copyright (C) 2008 - 2012 Softwaremagico
+ * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
- *
+ *  
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
  * Foundation; either version 2 of the License, or (at your option) any later
  * version.
- *
+ *  
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
  * details.
- *
+ *  
  * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>. #L%
+ * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
  */
 
-import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.gui.*;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.language.Configuration;
 import com.softwaremagico.ktg.pdflist.*;
@@ -88,7 +92,10 @@ public class Controller {
     private SelectTournamentForMonitor selectTournamentForMonitor = null;
     private SelectTournamentForTreeMonitor selectTournamentForTreeMonitor = null;
     private SelectTournament selectTournament = null;
-    private SelectTournamentCsv selectTournamentCsv = null;
+    private SelectTournamentExportFightsToCsv selectTournamentExportFightsToCsv = null;
+    private SelectTournamentImportFightsFromCsv selectTournamentImportFightsFromCsv = null;
+    private SelectTournamentExportParticipantsToCsv selectTournamentExportParticipantsToCsv = null;
+    private SelectTournamentImportParticipantsFromCsv selectTournamentImportParticipantsFromCsv = null;
     private ChangeOrderTeam changeTeam = null;
     private DatabaseConversor databaseConversor = null;
 
@@ -634,12 +641,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentCsv.dispose();
+                selectTournamentExportFightsToCsv.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentCsv = new SelectTournamentCsv(tag, tagImportExport);
-            selectTournamentCsv.setVisible(true);
-            selectTournamentCsv.addGenerateButtonListener(new SelectTournamentExportFightCSVListener());
+            selectTournamentExportFightsToCsv = new SelectTournamentExportFightsToCsv(tag, tagImportExport);
+            selectTournamentExportFightsToCsv.setVisible(true);
+            selectTournamentExportFightsToCsv.addGenerateButtonListener(new SelectTournamentExportFightCSVListener());
         }
     }
 
@@ -656,12 +663,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentCsv.dispose();
+                selectTournamentImportFightsFromCsv.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentCsv = new SelectTournamentCsv(tag, tagImportExport);
-            selectTournamentCsv.setVisible(true);
-            selectTournamentCsv.addGenerateButtonListener(new SelectTournamentImportFightCSVListener());
+            selectTournamentImportFightsFromCsv = new SelectTournamentImportFightsFromCsv(tag, tagImportExport);
+            selectTournamentImportFightsFromCsv.setVisible(true);
+            selectTournamentImportFightsFromCsv.addGenerateButtonListener(new SelectTournamentImportFightCSVListener());
         }
     }
 
@@ -678,12 +685,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentCsv.dispose();
+                selectTournamentExportParticipantsToCsv.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentCsv = new SelectTournamentCsv(tag, tagImportExport);
-            selectTournamentCsv.setVisible(true);
-            selectTournamentCsv.addGenerateButtonListener(new SelectTournamentExportParticipantsCSVListener());
+            selectTournamentExportParticipantsToCsv = new SelectTournamentExportParticipantsToCsv(tag, tagImportExport);
+            selectTournamentExportParticipantsToCsv.setVisible(true);
+            selectTournamentExportParticipantsToCsv.addGenerateButtonListener(new SelectTournamentExportParticipantsCSVListener());
         }
     }
 
@@ -700,12 +707,12 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                selectTournamentCsv.dispose();
+                selectTournamentImportParticipantsFromCsv.dispose();
             } catch (NullPointerException npe) {
             }
-            selectTournamentCsv = new SelectTournamentCsv(tag, tagImportExport);
-            selectTournamentCsv.setVisible(true);
-            selectTournamentCsv.addGenerateButtonListener(new SelectTournamentImportParticipantsCSVListener());
+            selectTournamentImportParticipantsFromCsv = new SelectTournamentImportParticipantsFromCsv(tag, tagImportExport);
+            selectTournamentImportParticipantsFromCsv.setVisible(true);
+            selectTournamentImportParticipantsFromCsv.addGenerateButtonListener(new SelectTournamentImportParticipantsCSVListener());
         }
     }
 
@@ -1250,17 +1257,24 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Folder.saveListInFile(FightPool.getManager(selectTournamentCsv.returnSelectedTournament()).convert2Csv(),);
-            selectTournamentCsv.dispose();
+            selectTournamentExportFightsToCsv.generate();
+            selectTournamentExportFightsToCsv.dispose();
         }
     }
 
+    /**
+     * *******************************************************************
+     *
+     * SELECT TOURNAMENT FOR IMPORTING FIGHTS TO CSV
+     *
+     ********************************************************************
+     */
     class SelectTournamentImportFightCSVListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO
-            selectTournamentCsv.dispose();
+            selectTournamentImportFightsFromCsv.generate();
+            selectTournamentImportFightsFromCsv.dispose();
         }
     }
 
@@ -1275,8 +1289,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO
-            selectTournamentCsv.dispose();
+            selectTournamentExportParticipantsToCsv.generate();
+            selectTournamentExportParticipantsToCsv.dispose();
         }
     }
 
@@ -1291,8 +1305,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO
-            selectTournamentCsv.dispose();
+            selectTournamentImportParticipantsFromCsv.generate();
+            selectTournamentImportParticipantsFromCsv.dispose();
         }
     }
 

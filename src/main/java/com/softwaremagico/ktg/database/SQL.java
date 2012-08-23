@@ -2669,7 +2669,7 @@ public abstract class SQL extends Database {
                             getTeamByName(rs.getObject("Team2").toString(), tournament, false),
                             tournament,
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
-                    f.changeMaxWinners(rs.getInt("MaxWinners"));
+                    f.setMaxWinners(rs.getInt("MaxWinners"));
                     f.calculateOverWithDuels();
                     try {
                         if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
@@ -2816,7 +2816,7 @@ public abstract class SQL extends Database {
                             getTeamByName(rs.getObject("Team2").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
                             TournamentPool.getTournament(rs.getObject("Tournament").toString()),
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
-                    f.changeMaxWinners(rs.getInt("MaxWinners"));
+                    f.setMaxWinners(rs.getInt("MaxWinners"));
                     if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
                         for (int i = 0; i < Math.max(f.team1.getNumberOfMembers(0), f.team2.getNumberOfMembers(0)); i++) {
                             Duel d = getDuel(f, i);

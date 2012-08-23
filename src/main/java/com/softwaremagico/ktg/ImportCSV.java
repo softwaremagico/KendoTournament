@@ -264,7 +264,7 @@ public class ImportCSV {
             }
         }
         if (!error) {
-            MessageManager.translatedMessage("csvInserted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage("csvImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

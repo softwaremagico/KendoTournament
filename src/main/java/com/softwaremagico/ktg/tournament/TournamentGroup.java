@@ -373,7 +373,7 @@ public class TournamentGroup extends Group implements Serializable {
             } else {
                 f = new Fight(teams.get(j + 1), teams.get(j), tournament, fightArea, level);
             }
-            f.changeMaxWinners(numberMaxOfWinners);
+            f.setMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
                 fights.add(f);
                 count++;
@@ -386,7 +386,7 @@ public class TournamentGroup extends Group implements Serializable {
             } else {
                 f = new Fight(teams.get(0), teams.get(teams.size() - 1), tournament, fightArea, level);
             }
-            f.changeMaxWinners(numberMaxOfWinners);
+            f.setMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
                 fights.add(f);
                 count++;

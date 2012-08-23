@@ -45,18 +45,5 @@ public class SelectTournament extends ListFromTournamentCreateFile {
     public String defaultFileName() {
         return "exportedData";
     }
-
-    /*@Override
-    public void generate() {
-        try {
-            String file;
-            if (!(file = exploreWindowsForCsv("CSV",
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-            }
-        } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
-        }
-    }*/
-
 }
 

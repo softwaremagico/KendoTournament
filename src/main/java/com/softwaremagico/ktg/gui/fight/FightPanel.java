@@ -289,7 +289,7 @@ public final class FightPanel extends javax.swing.JFrame {
      * window is closed and database is not updated.
      */
     private void store2Cvs(String folder) {
-        Folder.saveListInFile(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).convert2Csv(), folder + File.separator + "KTG.cvs");
+        Folder.saveListInFile(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).exportToCsv(), folder + File.separator + "KTG.cvs");
     }
 
     private void closeAction(){

@@ -37,7 +37,7 @@ public class Fight implements Serializable {
     private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     public int level;
     private int maxWinners = 1;
-    private boolean overUpdated = false; //Over value has been stored into the database or not. 
+    private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
 
     public boolean isOverStored() {
         return overUpdated;
@@ -126,7 +126,6 @@ public class Fight implements Serializable {
 
     public final boolean addDuels() {
         try {
-            int bound;
             for (int i = 0; i < tournament.teamSize; i++) {
                 duels.add(new Duel());
             }
@@ -222,7 +221,7 @@ public class Fight implements Serializable {
         System.out.println("---------------");
     }
 
-    public void changeMaxWinners(int value) {
+    public void setMaxWinners(int value) {
         maxWinners = value;
     }
 
@@ -325,11 +324,11 @@ public class Fight implements Serializable {
      * @param order Order starts in 1.
      * @return
      */
-    public List<String> convert2Csv(int order) {
+    public List<String> exportToCsv(int order) {
         List<String> csv = new ArrayList<>();
         csv.add(FIGHT_TAG + ";" + order + ";" + team1.getName() + ";" + team2.getName());
         for (Duel d : duels) {
-            csv.add(d.convert2Csv());
+            csv.add(d.exportToCsv());
         }
         return csv;
     }

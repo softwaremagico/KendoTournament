@@ -23,6 +23,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.gui.Controller;
 import com.softwaremagico.ktg.gui.MainGUI;
 import com.softwaremagico.ktg.language.Configuration;
 import java.util.logging.Level;

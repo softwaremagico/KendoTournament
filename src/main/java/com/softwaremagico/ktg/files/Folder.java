@@ -100,7 +100,7 @@ public class Folder {
      *
      * @param dataList The text to be written @file the path to the file.
      */
-    public static void saveListInFile(List dataList, String file) {
+    public static boolean saveListInFile(List dataList, String file) {
         File outputFile;
         byte b[];
         //Se guarda en el filename
@@ -121,12 +121,15 @@ public class Folder {
             try {
                 outputChannel.close();
             } catch (IOException ex) {
+                return false;
             }
         } catch (FileNotFoundException ex) {
             String text = "Impossible to generate the file:\n\t" + file
                     + "\nCheck the Folder.\n";
             MessageManager.basicErrorMessage(text, "Directories");
+            return false;
         }
+        return true;
     }
 
     /**
