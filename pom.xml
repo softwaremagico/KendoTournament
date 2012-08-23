@@ -46,6 +46,7 @@
         <winexe>KendoTournamentGenerator.exe</winexe>
         <license.licenseName>gnugpl</license.licenseName>
         <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
+        <plugin.exec.version>1.2.1</plugin.exec.version>
     </properties>
     
     <profiles>
@@ -308,6 +309,21 @@
                             </includes>
                         </fileset>
                     </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${plugin.exec.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.softwaremagico.ktg.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
