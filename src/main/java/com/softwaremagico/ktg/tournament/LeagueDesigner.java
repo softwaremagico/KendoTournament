@@ -266,9 +266,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
 
             //if (!tournament.mode.equals(TournamentTypes.SIMPLE)) {
-                //If it is not stored in a file, generate it. 
-                //TournamentGroupPool.getManager(tournament).refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
-                //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
+            //If it is not stored in a file, generate it. 
+            //TournamentGroupPool.getManager(tournament).refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
+            //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
             //}
 
             TournamentGroupPool.getManager(tournament).setMode(tournament.mode);
@@ -959,8 +959,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 /*
          * if (TournamentComboBox.getItemCount() > 0 &&
          * FightPool.getManager(tournament).size() == 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner();
-         * }
+         * TournamentGroupPool.getManager(tournament).storeDesigner(); }
          */
         //}catch(NullPointerException npe){}
         this.dispose();
@@ -992,8 +991,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         /*
          * if (TournamentComboBox.getItemCount() > 0 &&
          * FightPool.getManager(tournament).size() == 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner();
-         * }
+         * TournamentGroupPool.getManager(tournament).storeDesigner(); }
          */
     }//GEN-LAST:event_formWindowClosing
 
@@ -1014,8 +1012,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         /*
          * if (TournamentComboBox.getItemCount() > 0 &&
          * FightPool.getManager(tournament).size() == 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner();
-         * }
+         * TournamentGroupPool.getManager(tournament).storeDesigner(); }
          */
     }//GEN-LAST:event_TournamentComboBoxFocusGained
 
@@ -1073,12 +1070,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             if (FightPool.getManager(tournament).deleteAllFights(tournament, true)) {
                 TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(0);
-                MessageManager.translatedMessage("fightDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage("fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             if (FightPool.getManager(tournament).deleteFightsOfLevel(tournament, LevelComboBox.getSelectedIndex(), true)) {
-                TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex());
-                MessageManager.translatedMessage("fightDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
+                MessageManager.translatedMessage("fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         updateBlackBoard();

@@ -462,8 +462,16 @@
 		<nl>De wedstrijd is verwijderd!</nl>
 		<de>Der Kampf wurde gelöscht!</de>
 		<ca>El partit ha sigut esborrat!</ca>
-		<it>L'incotro è stato cancellato!</it>
+		<it>L'incotro sono stati cancellato!</it>
 	</fightDeleted>
+	<fightsDeleted>
+		<en>The matchs have been deleted!</en>
+		<es>¡Los partidos han sido borrados!</es>
+		<nl>De wedstrijd is verwijderd!</nl>
+		<de>Der Kampf wurde gelöscht!</de>
+		<ca>Els partits han sigut esborrats!</ca>
+		<it>L'incotri sono stato cancellato!</it>
+	</fightsDeleted>
 	<competitorDeleted>
 		<en>The competitor has been deleted!</en>
 		<es>¡El competidor ha sido borrado!</es>
