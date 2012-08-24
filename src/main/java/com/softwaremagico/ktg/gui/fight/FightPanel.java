@@ -83,6 +83,10 @@ public final class FightPanel extends javax.swing.JFrame {
             MessageManager.errorMessage("noTournament", "Panel");
             dispose();
         }
+
+        if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).isEmpty()) {
+            MessageManager.informationMessage("noFight", "Error");
+        }
     }
 
     /**
@@ -292,9 +296,10 @@ public final class FightPanel extends javax.swing.JFrame {
         Folder.saveListInFile(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).exportToCsv(), folder + File.separator + "KTG.cvs");
     }
 
-    private void closeAction(){
+    private void closeAction() {
         FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeNotUpdatedFightsAndDuels();
     }
+
     /**
      * **********************************************
      *
@@ -600,7 +605,7 @@ public final class FightPanel extends javax.swing.JFrame {
              * if (selectedTournament.fightingAreas > 1) {
              * KendoTournamentGenerator.getInstance().fightManager.getFightsFromDatabase(selectedTournament);
              * TournamentGroupPool.getManager(selectedTournament).refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
-            }
+             * }
              */
             fillFightsPanel();
             changeNextButtonText();

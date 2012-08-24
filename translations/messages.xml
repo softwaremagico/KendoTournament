@@ -986,5 +986,13 @@
 		<ca>No hi ha cap torneig en la base de dades.</ca>
 		<it>Non esiste nessun torneo nel database.</it>
 	</noTournament>
+	<csvNotImported>
+		<en>Error when importing the CSV file.</en>
+		<es>¡Error mientras se intentaba importar el fichero CSV!</es>
+		<nl>Error when importing the CSV file.</nl>
+		<de>Error when importing the CSV file.</de>
+		<ca>Error mentres s'intentava importar el fitxer CSV!</ca>
+		<it>Errore durante il tentativo di importare il file CSV!</it>
+	</csvNotImported>
 </translator>
 

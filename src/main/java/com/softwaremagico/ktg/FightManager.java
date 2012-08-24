@@ -86,6 +86,10 @@ public class FightManager {
         return fights.size();
     }
 
+    public boolean isEmpty() {
+        return fights.isEmpty();
+    }
+
     public int arenaSize(int arena) {
         return getFightsOfArena(arena).size();
     }
@@ -752,7 +756,9 @@ public class FightManager {
     public List<String> exportToCsv() {
         List<String> Csv = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            Csv.addAll(fights.get(i).exportToCsv(i));
+            if (fights.get(i).isOver()) {
+                Csv.addAll(fights.get(i).exportToCsv(i));
+            }
         }
         return Csv;
     }
@@ -760,18 +766,28 @@ public class FightManager {
     public boolean importFromCsv(List<String> csv) {
         int duelsCount = 0;
         Fight fight = null;
+        int fightsInFile = 0;
+        int fightsImported = 0;
         for (String csvLine : csv) {
             if (csvLine.startsWith(Fight.getTag())) {
+                fight = null;
+                fightsInFile++;
                 duelsCount = 0;
                 String[] fields = csvLine.split(";");
                 //Obtain fight.
-                if (Integer.parseInt(fields[1]) < fights.size()) {
-                    fight = fights.get(Integer.parseInt(fields[1]));
-                    //Fight is not correct.
-                    if (!fight.team1.getName().equals(fields[2]) || !fight.team2.getName().equals(fields[3])) {
-                        fight = null;
+                int fightNumber = Integer.parseInt(fields[1]);
+                if (fightNumber < fights.size() && fightNumber >= 0) {
+                    fight = fights.get(fightNumber);
+                    //Fight not finished and correct.
+                    if (fight.team1.getName().equals(fields[2]) && fight.team2.getName().equals(fields[3])) {
+                        if (!fight.isOver()) {
+                            fightsImported++;
+                            fight.setOver();
+                        }
+                    } else {
+                        MessageManager.errorMessage("csvNotImported", "Error");
+                        return false;
                     }
-                    fight.setOver();
                 }
             } else if (csvLine.startsWith(Duel.getCsvTag())) {
                 if (fight != null) {
@@ -780,7 +796,14 @@ public class FightManager {
                 }
             }
         }
-        return true;
+        
+        if (fightsImported > 0) {
+            MessageManager.informationMessage("csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
+            return true;
+        } else {
+            MessageManager.errorMessage("csvNotImported", "Error");
+            return false;
+        }
     }
 
     public boolean storeLazyFights(int arena) {

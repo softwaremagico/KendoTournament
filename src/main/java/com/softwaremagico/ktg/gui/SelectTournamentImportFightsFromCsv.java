@@ -52,7 +52,6 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
     protected boolean doAction(String file) {
         try {
             if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
-                MessageManager.informationMessage("csvImported", "CSV");
                 return true;
             }
         } catch (IOException ex) {
