@@ -376,8 +376,8 @@ public class Duel implements Serializable {
     public void importFromCsv(String csvLine) {
         String[] fields = csvLine.split(";");
         for (int i = 0; i < POINTS_TO_WIN; i++) {
-            hitsFromCompetitorA.set(i, getScoreFromField(fields[i + 1]));
-            hitsFromCompetitorB.set(i, getScoreFromField(fields[i + 1 + POINTS_TO_WIN]));
+            setResultInRound(i, getScoreFromField(fields[i + 1]), true);
+            setResultInRound(i, getScoreFromField(fields[i + 1 + POINTS_TO_WIN]), false);
         }
     }
 

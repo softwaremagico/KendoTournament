@@ -783,6 +783,7 @@ public class FightManager {
                         if (!fight.isOver()) {
                             fightsImported++;
                             fight.setOver();
+                            fight.setOverStored(false);
                         }
                     } else {
                         MessageManager.errorMessage("csvNotImported", "Error");
@@ -795,10 +796,14 @@ public class FightManager {
                     duelsCount++;
                 }
             }
+            
+            //Level over, we need next figths.
+            
         }
         
         if (fightsImported > 0) {
             MessageManager.informationMessage("csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
+            storeNotUpdatedFightsAndDuels();
             return true;
         } else {
             MessageManager.errorMessage("csvNotImported", "Error");
