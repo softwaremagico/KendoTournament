@@ -566,7 +566,7 @@ public final class FightPanel extends javax.swing.JFrame {
                 //If all arena fights are over.
                 if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areArenaOver(FightAreaComboBox.getSelectedIndex())) {
                     Log.finer("All fights in this arena are over!");
-                    //Obtain next fightManager.
+                    //Obtain next fights.
                     Log.finest("Calculating next fights for arena " + FightAreaComboBox.getSelectedIndex() + " in " + ((Tournament) TournamentComboBox.getSelectedItem()).getName());
                     FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).add(TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).nextLevel(
                             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(), FightAreaComboBox.getSelectedIndex(), ((Tournament) TournamentComboBox.getSelectedItem())));
