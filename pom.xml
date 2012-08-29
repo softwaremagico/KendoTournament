@@ -86,20 +86,26 @@
                                 <phase>install</phase>
                                 <configuration>
                                     <tasks>
+                                        <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
                                         <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
                                             <fileset dir="${linux.origin}/DEBIAN" includes="**/*" />
                                             <filterset>
                                                 <filter value="${project.version}" token="version" />
                                             </filterset>
                                         </copy>
+                                        <!-- exclude images because are corrupted -->
                                         <copy todir="${linux.releasedir}/usr" overwrite="true" >
-                                            <fileset dir="${linux.origin}/usr" includes="**/*" />
+                                            <fileset dir="${linux.origin}/usr" includes="**/*" excludes="**/*.ico" />
                                             <filterset>
                                                 <filter value="${project.version}" token="version" />
                                                 <filter value="${project.name}" token="projectname" />
                                                 <filter value="${project.build.sourceEncoding}" token="encoding" />
                                                 <filter value="${project.description}" token="description" />
-                                            </filterset>
+                                            </filterset> 
+                                        </copy>
+                                        <!-- copy images -->
+                                        <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                            <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
                                         </copy>
                                         <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
                                             <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
@@ -157,6 +163,7 @@
                                 <phase>install</phase>
                                 <configuration>
                                     <tasks>
+                                        <delete dir="${windows.releasedir}" failonerror="false" includeemptydirs="true" />
                                         <copy todir="${windows.releasedir}" overwrite="true" >
                                             <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
