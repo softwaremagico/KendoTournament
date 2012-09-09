@@ -281,22 +281,6 @@ public final class FightPanel extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Save the information in a temp file. This is to not loose information if
-     * window is closed and database is not updated.
-     */
-    private void store2Cvs() {
-        store2Cvs(System.getProperty("java.io.tmpdir"));
-    }
-
-    /**
-     * Save the information in a temp file. This is to not loose information if
-     * window is closed and database is not updated.
-     */
-    private void store2Cvs(String folder) {
-        Folder.saveListInFile(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).exportToCsv(), folder + File.separator + "KTG.cvs");
-    }
-
     private void closeAction() {
         FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeNotUpdatedFightsAndDuels();
     }
@@ -550,8 +534,6 @@ public final class FightPanel extends javax.swing.JFrame {
             Log.debug("Next button is pressed.");
             Fight currentFight = getCurrentFight();
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).setFightAsOver(currentFight);
-
-            store2Cvs();
 
             //Store fights if it is necesary.
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeLazyFights(FightAreaComboBox.getSelectedIndex());
