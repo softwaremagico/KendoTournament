@@ -37,7 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class TournamentGroup extends Group implements Serializable {
-
+    
     public static final int MAX_TEAMS_PER_GROUP = 8;
     private static final long serialVersionUID = -8425766161404716635L;
     private static final Float SCORE_WON_FIGHTS = new Float(1000000);
@@ -61,7 +61,7 @@ public class TournamentGroup extends Group implements Serializable {
     public int arena = 0;
     transient private boolean color = true;
     transient private java.awt.event.MouseAdapter ma;
-
+    
     TournamentGroup(Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
         this.tournament = championship;
         //this.numberMaxOfTeams = numberMaxOfTeams;
@@ -75,11 +75,11 @@ public class TournamentGroup extends Group implements Serializable {
 
         updateSize();
         setDefaultScore();
-
+        
         setBackground(new Color(230, 230, 230));
         //setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
-
+        
         setLanguage();
         updateText();
         removeAll();
@@ -87,7 +87,7 @@ public class TournamentGroup extends Group implements Serializable {
         label.setForeground(Color.BLACK);
         add(label, c);
     }
-
+    
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         if (level == 0) {
@@ -96,7 +96,7 @@ public class TournamentGroup extends Group implements Serializable {
             this.setToolTipText(trans.returnTag("ToolTipNotEditable"));
         }
     }
-
+    
     final void updateSize() {
         //xSize = 110 * Math.max(2, teams.size());
         xSize = 200;
@@ -105,20 +105,20 @@ public class TournamentGroup extends Group implements Serializable {
         setMaximumSize(new Dimension(xSize, ySize));
         setMinimumSize(new Dimension(0, 0));
     }
-
+    
     public final void updateText() {
         label.setText(returnText());
     }
-
+    
     public void update() {
         updateText();
         updateSize();
     }
-
+    
     void onlyShow() {
         this.setToolTipText("");
     }
-
+    
     void enhance(boolean yes) {
         if (yes) {
             label.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -126,7 +126,7 @@ public class TournamentGroup extends Group implements Serializable {
             label.setFont(new Font("Tahoma", Font.PLAIN, 12));
         }
     }
-
+    
     protected boolean load(Tournament tournament) {
         this.tournament = tournament;
         setLanguage();
@@ -147,10 +147,10 @@ public class TournamentGroup extends Group implements Serializable {
         teams = updatedTeams;
         return true;
     }
-
+    
     private String returnText() {
         String text = "<html>";
-
+        
         updateScoreForTeams(FightPool.getManager(tournament).getFights());
         List<Team> teamsO = getTeamsOrderedByScore();
         if (teamsO.isEmpty()) {
@@ -159,7 +159,7 @@ public class TournamentGroup extends Group implements Serializable {
             for (int i = 0; i < teamsO.size(); i++) {
                 int order = getOrderOfTeam(teamsO.get(i));
                 Color c = obtainWinnerColor(order, true);
-
+                
                 if (color) {
                     //text += "<b><font size=\"+1\" color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
                     text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
@@ -176,7 +176,7 @@ public class TournamentGroup extends Group implements Serializable {
         text += "</html>";
         return text;
     }
-
+    
     public String getDefaultLabel() {
         //Select label
         String s;
@@ -189,7 +189,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return s;
     }
-
+    
     public Color obtainWinnerColor(int winner, boolean check) {
         int red, green, blue;
         if ((!check) || (winner < numberMaxOfWinners && winner >= 0 && areFightsOver(FightPool.getManager(tournament).getFights()))) {
@@ -209,7 +209,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return new Color(0, 0, 0);
     }
-
+    
     public void setSelected(TournamentGroupManager ds) {
         if (level == 0) {
             ds.unselectDesignedGroups();
@@ -219,7 +219,7 @@ public class TournamentGroup extends Group implements Serializable {
             setBorder(javax.swing.BorderFactory.createLoweredBevelBorder());
         }
     }
-
+    
     public void setUnselected() {
         selected = false;
         setBackground(new Color(230, 230, 230));
@@ -230,11 +230,11 @@ public class TournamentGroup extends Group implements Serializable {
             setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
         }
     }
-
+    
     public boolean isSelected() {
         return selected;
     }
-
+    
     public void updateMaxNumberOfWinners(int value) {
         if (numberMaxOfWinners < 1) {
             numberMaxOfWinners = 1;
@@ -242,7 +242,7 @@ public class TournamentGroup extends Group implements Serializable {
             numberMaxOfWinners = value;
         }
     }
-
+    
     public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
@@ -250,25 +250,25 @@ public class TournamentGroup extends Group implements Serializable {
             return numberMaxOfWinners;
         }
     }
-
+    
     public int getLevel() {
         return level;
     }
-
+    
     public void activateColor(boolean value) {
         color = value;
     }
-
+    
     public Tournament getChampionshipOfGroup() {
         return tournament;
     }
-
+    
     public void openDesignGroupWindow(LeagueDesigner jf) {
         dgw = new DesignGroupWindow(this);
         addDesignGroupListeners(jf);
         dgw.setVisible(true);
     }
-
+    
     public TournamentGroup convertToMode() {
         int maxWinners = 1;
         switch (tournament.mode) {
@@ -281,11 +281,11 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return new TournamentGroup(maxWinners, tournament, level, arena);
     }
-
-    public List<Team> getTeams(){
+    
+    public List<Team> getTeams() {
         return teams;
     }
-    
+
     /**
      * ********************************************
      *
@@ -304,17 +304,17 @@ public class TournamentGroup extends Group implements Serializable {
         }
         update();
     }
-
+    
     public int numberOfTeams() {
         return teams.size();
     }
-
+    
     public void deleteTeams() {
         teams = new ArrayList<>();
         label.setText(returnText());
         updateSize();
     }
-
+    
     public void addTeam(Team team) {
         //Can not be repeated.
         if (!teams.contains(team)) {
@@ -325,15 +325,15 @@ public class TournamentGroup extends Group implements Serializable {
             }
         }
     }
-
+    
     public void addTeams(List<Team> tmp_teams) {
         teams.addAll(tmp_teams);
     }
-
+    
     private boolean isTeamOfGroup(Team team) {
         return teams.contains(team);
     }
-
+    
     public List<Team> getWinners() {
         List<Team> result = new ArrayList<>();
         List<Team> orderedTeams = getTeamsOrderedByScore();
@@ -361,12 +361,12 @@ public class TournamentGroup extends Group implements Serializable {
     public List<Fight> generateGroupFights(int level) {
         return generateGroupFights(level, arena);
     }
-
+    
     public List<Fight> generateGroupFights(int level, int fightArea) {
         List<Fight> fights = new ArrayList<>();
         int count = 0;
         Fight f;
-
+        
         for (int j = 0; j < teams.size() - 1; j++) {
             if (count % 2 == 0) {
                 f = new Fight(teams.get(j), teams.get(j + 1), tournament, fightArea, level);
@@ -394,14 +394,14 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return fights;
     }
-
+    
     public boolean isFightOfGroup(Fight f) {
         if (isTeamOfGroup(f.team1) && isTeamOfGroup(f.team2) && level == f.level) {
             return true;
         }
         return false;
     }
-
+    
     public int getShiaijo(List<Fight> fights) {
         for (int i = 0; i < fights.size(); i++) {
             if (isFightOfGroup(fights.get(i))) {
@@ -410,12 +410,16 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return 0;
     }
-
+    
     private boolean existFight(List<Fight> fights, Fight f) {
         return fights.contains(f);
     }
-
-    public List<Fight> getFightsOfGroup(List<Fight> fights) {
+    
+    public List<Fight> getFights() {
+        return getFightsOfGroup(FightPool.getManager(tournament).getFightsOfLevel(level));
+    }
+    
+    private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < teams.size(); j++) {
@@ -427,16 +431,16 @@ public class TournamentGroup extends Group implements Serializable {
                         break;
                     }
                 } catch (NullPointerException npe) {
-                    KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                    KendoTournamentGenerator.showErrorInformation(npe);
                 }
             }
         }
         return fightsG;
     }
-
+    
     public boolean areFightsOver(List<Fight> allFights) {
         List<Fight> fights = getFightsOfGroup(allFights);
-
+        
         if (fights.size() > 0) {
             for (int i = 0; i < fights.size(); i++) {
                 if (!fights.get(i).isOver()) {
@@ -447,10 +451,10 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return false;
     }
-
+    
     public boolean areFightsOver() {
-        List<Fight> fights = getFightsOfGroup(FightPool.getManager(tournament).getFights());
-
+        List<Fight> fights = getFights();
+        
         if (fights.size() > 0) {
             for (int i = 0; i < fights.size(); i++) {
                 if (!fights.get(i).isOver()) {
@@ -467,7 +471,7 @@ public class TournamentGroup extends Group implements Serializable {
      */
     public boolean areFightsOverOrNull(List<Fight> allFights) {
         List<Fight> fights = getFightsOfGroup(allFights);
-
+        
         if (fights.size() > 0) {
             for (int i = 0; i < fights.size(); i++) {
                 if (!fights.get(i).isOver()) {
@@ -523,7 +527,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return score;
     }
-
+    
     private int obtainPointsForWonDuels(Fight fight, Team team) {
         int score = 0;
         //Team1
@@ -550,7 +554,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return score;
     }
-
+    
     private Float obtainPointsForDrawFights(Fight fight, Team team) {
         Float score = new Float(0);
         try {
@@ -566,7 +570,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return score;
     }
-
+    
     private Float obtainPointsForDrawDuels(Fight fight, Team team) {
         try {
             if ((fight.team1.getName().equals(team.getName())
@@ -578,7 +582,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return new Float(0);
     }
-
+    
     private Float obtainPointsForWonFights(Fight fight, Team team) {
         try {
             if (fight.winnerByDuels().getName().equals(team.getName())) {
@@ -614,11 +618,11 @@ public class TournamentGroup extends Group implements Serializable {
      */
     void updateScoreForTeams(List<Fight> fights) {
         setDefaultScore();
-
+        
         for (int i = 0; i < teams.size(); i++) {
             Team team = teams.get(i);
             double teamScore = (double) 0;
-
+            
             for (int j = 0; j < fights.size(); j++) {
                 Fight oneFight = fights.get(j);
                 if (oneFight.level == level) { //Only count the points of this designed group!!
@@ -638,7 +642,7 @@ public class TournamentGroup extends Group implements Serializable {
             teamsScore.set(i, teamScore);
         }
     }
-
+    
     private int obtainTeamWithMaxScore(List<Double> tmp_teamsScore) {
         Double max = (double) -1;
         int index = -1;
@@ -650,7 +654,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return index;
     }
-
+    
     private double obainScoreOfTeam(int team) {
         try {
             return teamsScore.get(team);
@@ -658,16 +662,16 @@ public class TournamentGroup extends Group implements Serializable {
             return 0;
         }
     }
-
+    
     private List<Team> getTeamsOrderedByScore() {
         List<Team> sortedTeams = new ArrayList<>();
         List<Team> tmp_teams = new ArrayList<>();
         List<Double> tmp_teamsScore = new ArrayList<>();
-
+        
         tmp_teams.addAll(teams);
         tmp_teamsScore.addAll(teamsScore);
         teamsScoreOrdered = new ArrayList<>();
-
+        
         while (tmp_teams.size() > 0) {
             int index = obtainTeamWithMaxScore(tmp_teamsScore);
             if (index >= 0) {
@@ -679,10 +683,10 @@ public class TournamentGroup extends Group implements Serializable {
                 break;
             }
         }
-
+        
         return sortedTeams;
     }
-
+    
     public Team getTeamInOrderOfScore(int order, List<Fight> fights, boolean resolvDraws) {
         if (teams.isEmpty()) {
             return null;
@@ -695,6 +699,7 @@ public class TournamentGroup extends Group implements Serializable {
                 return resolvDrawTeams(order, sortedTeams);
             }
         } catch (IndexOutOfBoundsException iob) {
+            KendoTournamentGenerator.showErrorInformation(iob);
         }
         try {
             return sortedTeams.get(order);
@@ -703,20 +708,21 @@ public class TournamentGroup extends Group implements Serializable {
             try {
                 return teams.get(0);
             } catch (IndexOutOfBoundsException iob2) {
+                KendoTournamentGenerator.showErrorInformation(iob2);
                 return null;
             }
         }
     }
-
+    
     private int getOrderOfTeam(Team team) {
-        updateScoreForTeams(getFightsOfGroup(FightPool.getManager(tournament).getFights()));
+        updateScoreForTeams(getFights());
         List<Team> sortedTeams = new ArrayList<>();
         try {
             sortedTeams = getTeamsOrderedByScore();
         } catch (NullPointerException npe) {
             //npe.printStackTrace();
         }
-
+        
         for (int i = 0; i < sortedTeams.size(); i++) {
             if (sortedTeams.get(i).getName().equals(team.getName())) {
                 return i;
@@ -724,7 +730,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
         return -1;
     }
-
+    
     private Team resolvDrawTeams(int index, List<Team> sortedTeams) {
         int select = -1;
         List<Team> drawTeams = obtainDrawTeams(index, sortedTeams);
@@ -747,7 +753,7 @@ public class TournamentGroup extends Group implements Serializable {
         try {
             drawScore = teamsScoreOrdered.get(index);
         } catch (Exception e) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(e);
+            KendoTournamentGenerator.showErrorInformation(e);
             return null;
         }
         for (int i = 0; i < teamsScoreOrdered.size(); i++) {
@@ -767,7 +773,7 @@ public class TournamentGroup extends Group implements Serializable {
      */
     private int resolvDrawTeams(List<Team> drawTeams) {
         JFrame frame = null;
-        String team;
+        List<Team> teamsDrawStored;
 
         //If it is draw because there is only one team. Then it wins.
         if (drawTeams.size() == 1) {
@@ -775,9 +781,9 @@ public class TournamentGroup extends Group implements Serializable {
         }
 
         //If the user has already define a winner. Use it.
-        if ((team = isDrawStored(drawTeams)) != null) {
+        if ((teamsDrawStored = getDrawsStored()) != null) {
             for (int i = 0; i < drawTeams.size(); i++) {
-                if (drawTeams.get(i).getName().equals(team)) {
+                if (teamsDrawStored.contains(drawTeams.get(i))) {
                     return i;
                 }
             }
@@ -787,14 +793,10 @@ public class TournamentGroup extends Group implements Serializable {
         List<String> optionsList = new ArrayList<>();
         for (int i = 0; i < drawTeams.size(); i++) {
             optionsList.add(drawTeams.get(i).getName());
-//            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).getName(), 0, level);
-            //KendoTournamentGenerator.getInstance().database.storeUndraw(tournament.name, drawTeams.get(i).getName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
-
         }
-
-
+        
+        
         Object[] options = optionsList.toArray();
-
         int n = JOptionPane.showOptionDialog(frame,
                 trans.returnTag("DrawText"),
                 trans.returnTag("DrawTitle"),
@@ -805,13 +807,37 @@ public class TournamentGroup extends Group implements Serializable {
                 options[0]);
         if (n >= 0) {
             KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n).getName(), 0, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
-            //KendoTournamentGenerator.getInstance().database.defineWinnerInUndraw(tournament.name, drawTeams.get(n).getName(), level, drawTeams);
         }
         return n;
     }
+    
+    private List<Team> getDrawsStored() {
+        return KendoTournamentGenerator.getInstance().database.getWinnersInUndraws(tournament, level, TournamentGroupPool.getManager(tournament).returnIndexOfGroup(this));
+    }
 
-    private String isDrawStored(List<Team> drawTeams) {
-        return KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(tournament, level, drawTeams);
+    /**
+     * **********************************************
+     *
+     * LISTENERS
+     *
+     ***********************************************
+     */
+    /**
+     *
+     */
+    public List<String> exportToCsv() {
+        List<String> Csv = new ArrayList<>();
+        List<Fight> fights = getFights();
+        for (int i = 0; i < fights.size(); i++) {
+            if (fights.get(i).isOver()) {
+                Csv.addAll(fights.get(i).exportToCsv(i));
+            }
+        }
+        List<Team> draws = getDrawsStored();
+        for (int i = 0; i < draws.size(); i++) {
+            Csv.addAll(Undraw.exportToCsv(draws.get(i)));
+        }
+        return Csv;
     }
 
     /**
@@ -831,7 +857,7 @@ public class TournamentGroup extends Group implements Serializable {
         addMouseListener(ma);
         listenerAdded = true;
     }
-
+    
     public void removeMouseClickListener() {
         removeMouseListener(ma);
         listenerAdded = false;
@@ -850,15 +876,15 @@ public class TournamentGroup extends Group implements Serializable {
     private void addDesignGroupListeners(LeagueDesigner jf) {
         dgw.addWindowCloseListener(new closeWindows(jf));
     }
-
+    
     class closeWindows extends WindowAdapter {
-
+        
         LeagueDesigner blackboard;
-
+        
         closeWindows(LeagueDesigner jf) {
             blackboard = jf;
         }
-
+        
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
@@ -868,5 +894,4 @@ public class TournamentGroup extends Group implements Serializable {
             blackboard.repaint();
         }
     }
-    
 }

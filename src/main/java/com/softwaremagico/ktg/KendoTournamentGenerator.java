@@ -47,7 +47,7 @@ import java.util.List;
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
-    private boolean debugMode = true;
+    private static boolean debugMode = true;
     public Database database = null;
     private String password = "";
     public String user = "kendouser";
@@ -149,13 +149,13 @@ public class KendoTournamentGenerator {
     /**
      * If debug is activated, show information about the error.
      */
-    public void showErrorInformation(Exception ex) {
+    public static void showErrorInformation(Exception ex) {
         if (isDebugOptionSelected()) {
             MessageManager.errorMessage(ex);
         }
     }
 
-    public boolean isDebugOptionSelected() {
+    public static boolean isDebugOptionSelected() {
         return debugMode;
     }
 

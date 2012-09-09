@@ -85,7 +85,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                 }
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 

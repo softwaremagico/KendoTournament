@@ -1442,7 +1442,7 @@ public class Controller {
                 tournamentPanel.fillFightsPanel();
                 //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(npe);
             }
 
         }

@@ -325,7 +325,6 @@ public class Fight implements Serializable {
     }
 
     /**
-     *
      * @param order Order starts in 1.
      * @return
      */

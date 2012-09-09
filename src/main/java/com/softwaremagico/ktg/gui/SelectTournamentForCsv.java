@@ -41,7 +41,7 @@ public abstract class SelectTournamentForCsv extends SelectTournament {
                 doAction(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 }

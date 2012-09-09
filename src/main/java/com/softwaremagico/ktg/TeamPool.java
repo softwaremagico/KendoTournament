@@ -2,14 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softwaremagico.ktg.gui;
-
-import com.softwaremagico.ktg.FightPool;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.files.Folder;
-import java.io.IOException;
-
+package com.softwaremagico.ktg;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -33,30 +26,28 @@ import java.io.IOException;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+import java.util.HashMap;
+
 /**
  *
- * @author jhortelano
+ * @author jorge
  */
-public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv {
+public class TeamPool {
 
-    public SelectTournamentImportFightsFromCsv(String title, String buttonTag) {
-        super(title, buttonTag);
-    }
+    private static HashMap<Tournament, TeamManager> existingManagers = new HashMap<>();
 
-    @Override
-    public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + FightPool.getManager(returnSelectedTournament()).getLastLevel() + ".csv";
-    }
-
-    @Override
-    protected boolean doAction(String file) {
-        try {
-            if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
-                return true;
-            }
-        } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+    public static TeamManager getManager(Tournament tournament) {
+        TeamManager teamManager = existingManagers.get(tournament);
+        if (teamManager == null) {
+            teamManager = createTeamManager(tournament);
+            existingManagers.put(tournament, teamManager);
         }
-        return false;
+        return teamManager;
+    }
+
+    private static TeamManager createTeamManager(Tournament tournament) {
+        TeamManager teamManager = new TeamManager(tournament);
+        return teamManager;
     }
 }

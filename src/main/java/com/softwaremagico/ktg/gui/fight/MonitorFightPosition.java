@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.Team;
@@ -108,7 +107,7 @@ public class MonitorFightPosition extends JFrame {
         setTeams();
 //        for (int i = 0; i < teams.size(); i++) {
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(group.getFightsOfGroup(FightPool.getManager(group.getChampionshipOfGroup()).getFights()));
+        teamTopTen = ranking.getRanking(group.getFights());
 
         /*
          * Team t = group.getTeamInOrderOfScore(i, fightManager, false); int

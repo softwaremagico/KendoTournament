@@ -59,7 +59,7 @@ public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCrea
                 }
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
     

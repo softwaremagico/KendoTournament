@@ -80,14 +80,14 @@ public class Translator {
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
             MessageManager.basicErrorMessage(text, "Language");
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (SAXException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (ParserConfigurationException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (FileNotFoundException fnf) {
             String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
-            KendoTournamentGenerator.getInstance().showErrorInformation(fnf);
+            KendoTournamentGenerator.showErrorInformation(fnf);
             System.out.println(text);
         } catch (IOException ex) {
             Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);

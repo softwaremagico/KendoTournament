@@ -341,7 +341,7 @@ public class Ranking {
         try {
             return teamsScore.get(team);
         } catch (IndexOutOfBoundsException iob) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(iob);
+            KendoTournamentGenerator.showErrorInformation(iob);
             return 0;
         }
     }

@@ -106,12 +106,12 @@ public class OrderTeam extends NewTeam {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
                 } catch (NullPointerException | IndexOutOfBoundsException npe) {
-                    KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                    KendoTournamentGenerator.showErrorInformation(npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 

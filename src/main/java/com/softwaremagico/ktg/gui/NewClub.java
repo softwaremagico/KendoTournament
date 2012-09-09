@@ -168,7 +168,7 @@ public class NewClub extends javax.swing.JFrame {
                 MessageManager.errorMessage("noClubFieldsFilled", "MySQL");
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 

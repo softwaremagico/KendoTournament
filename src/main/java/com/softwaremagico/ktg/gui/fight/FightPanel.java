@@ -117,7 +117,7 @@ public final class FightPanel extends javax.swing.JFrame {
                 TreeButton.setVisible(false);
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
             TreeButton.setVisible(false);
         }
     }
@@ -137,7 +137,7 @@ public final class FightPanel extends javax.swing.JFrame {
             }
             TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         refreshTournament = true;
     }
@@ -206,7 +206,7 @@ public final class FightPanel extends javax.swing.JFrame {
                 return true;
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
             return false;
         }
         return false;
@@ -271,6 +271,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void messagesFinishedSimpleChampionship() {
         if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areAllOver()) {
+            Log.info("Tournament over!");
             //Avoid showing more than one window if the button is pressed several times. 
             if (mp != null) {
                 mp.dispose();
@@ -572,7 +573,6 @@ public final class FightPanel extends javax.swing.JFrame {
                             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(), FightAreaComboBox.getSelectedIndex(), ((Tournament) TournamentComboBox.getSelectedItem())));
                 }
             } else { //Simple championship
-                Log.info("Tournament over!");
                 messagesFinishedSimpleChampionship();
             }
 
@@ -584,7 +584,7 @@ public final class FightPanel extends javax.swing.JFrame {
             Log.debug("Current number of fights over after GUI: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
 
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(iob);
+            KendoTournamentGenerator.showErrorInformation(iob);
         }
     }//GEN-LAST:event_NextButtonActionPerformed
 
@@ -594,7 +594,7 @@ public final class FightPanel extends javax.swing.JFrame {
             fillFightsPanel();
             changeNextButtonText();
         } catch (IndexOutOfBoundsException iob) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(iob);
+            KendoTournamentGenerator.showErrorInformation(iob);
         }
     }//GEN-LAST:event_PreviousButtonActionPerformed
 

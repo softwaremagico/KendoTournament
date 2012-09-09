@@ -167,12 +167,12 @@ public class NewTeam extends KendoFrame {
                 } catch (NullPointerException npe) {
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 } catch (IndexOutOfBoundsException iob) {
-                    KendoTournamentGenerator.getInstance().showErrorInformation(iob);
+                    KendoTournamentGenerator.showErrorInformation(iob);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 
@@ -460,6 +460,7 @@ public class NewTeam extends KendoFrame {
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
             Team t = new Team(NameTextField.getText(), tournaments.get(TournamentComboBox.getSelectedIndex()));
+            //Team t = TeamPool.getManager(tournaments.get(TournamentComboBox.getSelectedIndex())).getTeam(NameTextField.getText());
 
             List<Competitor> participants = new ArrayList<>();
 
@@ -478,7 +479,7 @@ public class NewTeam extends KendoFrame {
                 }
 
             } catch (Exception ex) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
 
         } else {

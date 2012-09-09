@@ -146,7 +146,7 @@ public class MySQL extends SQL {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex1);
+            KendoTournamentGenerator.showErrorInformation(ex1);
         }
     }
 
@@ -180,7 +180,7 @@ public class MySQL extends SQL {
             executeScript(Path.returnDatabasePath() + "kendotournament_empty.sql");
 
         } catch (SQLException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 

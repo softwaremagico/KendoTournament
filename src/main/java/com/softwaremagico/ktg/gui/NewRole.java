@@ -78,7 +78,7 @@ public class NewRole extends KendoFrame {
         trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewRole"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
+        CancelButton.setText(trans.returnTag("CloseButton"));
         DeleteButton.setText(trans.returnTag("DeleteButton"));
         PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
         TournamentLabel.setText(trans.returnTag("TournamentLabel"));
@@ -111,7 +111,7 @@ public class NewRole extends KendoFrame {
                 CompetitorComboBox.addItem(listParticipants.get(i).getSurname() + ", " + listParticipants.get(i).getName());
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         refreshCompetitor = true;
     }
@@ -125,7 +125,7 @@ public class NewRole extends KendoFrame {
                 RoleComboBox.addItem(KendoTournamentGenerator.getInstance().getAvailableRoles().get(i).name);
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 
@@ -343,7 +343,7 @@ public class NewRole extends KendoFrame {
                 pdf.createFile(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 }//GEN-LAST:event_PDFButtonActionPerformed
 

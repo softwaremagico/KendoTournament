@@ -101,7 +101,7 @@ public class ScoreListPDF extends ParentList {
                         mainTable.addCell(getCell(trans.returnTag("histsWon"), 1, Element.ALIGN_CENTER));
 
 
-                        String winnerUndraw = KendoTournamentGenerator.getInstance().database.getWinnerInUndraws(tournament, i, groups.get(i).teams);
+                        List<Team> winnersUndraw = KendoTournamentGenerator.getInstance().database.getWinnersInUndraws(tournament, groups.get(i).getLevel(), i);
 
                         for (int j = 0; j < groups.get(i).teams.size(); j++) {
                             /*
@@ -114,8 +114,8 @@ public class ScoreListPDF extends ParentList {
                             mainTable.addCell(getCell(Ranking.obtainWonDuels(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
 
                             String score = "" + (int) (float) (Ranking.obtainHits(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()));
-                            if (winnerUndraw != null) {
-                                if (winnerUndraw.equals(t.getName())) {
+                            if (winnersUndraw != null) {
+                                if (winnersUndraw.contains(t)) {
                                     score += "*";
                                 }
                             }

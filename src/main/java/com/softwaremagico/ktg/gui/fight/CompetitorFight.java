@@ -73,7 +73,7 @@ public class CompetitorFight extends JPanel {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (menu) {
             addAllMenus();
@@ -213,7 +213,7 @@ public class CompetitorFight extends JPanel {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 
@@ -296,7 +296,7 @@ public class CompetitorFight extends JPanel {
                 //   updateScorePanels();
             }            
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         teamFight.roundFight.updateScorePanels();
     }

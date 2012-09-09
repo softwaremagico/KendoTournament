@@ -71,7 +71,7 @@ public abstract class Database {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex1);
+            KendoTournamentGenerator.showErrorInformation(ex1);
         }
     }
 
@@ -462,7 +462,7 @@ public abstract class Database {
 
     public abstract boolean storeAllUndraws(List<Undraw> undraws);
 
-    public abstract String getWinnerInUndraws(Tournament tournament, int group, List<Team> drawTeams);
+    public abstract List<Team> getWinnersInUndraws(Tournament tournament, int level, int group);
 
     public abstract int getValueWinnerInUndraws(Tournament tournament, String team);
 

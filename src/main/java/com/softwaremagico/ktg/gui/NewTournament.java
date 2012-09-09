@@ -383,7 +383,7 @@ public class NewTournament extends KendoFrame {
                     pdf.createFile(file);
                 }
             } catch (Exception ex) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
         } else {
             MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");

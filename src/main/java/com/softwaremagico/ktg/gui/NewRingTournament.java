@@ -87,7 +87,7 @@ public class NewRingTournament extends javax.swing.JFrame {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;

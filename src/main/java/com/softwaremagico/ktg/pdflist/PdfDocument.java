@@ -74,7 +74,7 @@ public abstract class PdfDocument {
             bgImage = Image.getInstance(Path.returnBackgroundPath());
         } catch (BadElementException | IOException ex) {
             MessageManager.errorMessage("imageNotFound", "Error");
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -110,11 +110,11 @@ public abstract class PdfDocument {
                 generatePDF(document, writer);
                 MessageManager.translatedMessage(fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(npe);
                 return false;
             } catch (Exception ex) {
                 MessageManager.errorMessage(fileCreatedBadTag(), "PDF");
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
                 return false;
             }
         }
@@ -329,7 +329,7 @@ public abstract class PdfDocument {
                 }
 
             } catch (IOException | DocumentException e) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(e);
+                KendoTournamentGenerator.showErrorInformation(e);
             }
         }
     }
@@ -349,7 +349,7 @@ public abstract class PdfDocument {
                     pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, -rect.getHeight(), rect.getLeft(), rect.getTop());
                 }
             } catch (Exception e) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(e);
+                KendoTournamentGenerator.showErrorInformation(e);
             }
         }
     }

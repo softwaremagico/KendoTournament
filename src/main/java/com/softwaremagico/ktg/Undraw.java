@@ -1,4 +1,8 @@
 package com.softwaremagico.ktg;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -31,6 +35,7 @@ package com.softwaremagico.ktg;
  */
 public class Undraw {
 
+    private static final String UNDRAW_TAG = "UNDRAW";
     private String tournament;
     private Integer group;
     private String winnerTeam;
@@ -73,5 +78,15 @@ public class Undraw {
 
     public void setWinnerTeam(String winnerTeam) {
         this.winnerTeam = winnerTeam;
+    }
+
+    public static String getCsvTag() {
+        return UNDRAW_TAG;
+    }
+    
+    public static List<String> exportToCsv(Team team) {
+        List<String> csv = new ArrayList<>();
+        csv.add(UNDRAW_TAG + ";" + team.getName());
+        return csv;
     }
 }

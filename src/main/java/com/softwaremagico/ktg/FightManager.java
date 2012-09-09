@@ -407,18 +407,19 @@ public class FightManager {
     }
 
     public void currentFightsOver(int arena) {
-        //If championship or similar...
-        if (!tournament.mode.equals(TournamentTypes.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
-            //If all arena fights are over.
-            if (areAllOver()) {
+        if (areAllOver()) {
+            //If championship or similar...
+            if (!tournament.mode.equals(TournamentTypes.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
+                //If all arena fights are over.
                 Log.finer("All fights are over!");
                 //Obtain next fights.
                 Log.finest("Calculating next fights in " + (tournament).getName());
                 add(TournamentGroupPool.getManager((tournament)).nextLevel(
                         getFights(), arena, (tournament)));
+            } else { //Simple championship
+                System.out.println("---");
+                Log.info("Tournament over!");
             }
-        } else { //Simple championship
-            Log.info("Tournament over!");
         }
     }
 
@@ -794,10 +795,10 @@ public class FightManager {
                 //Obtain fight.
                 int fightNumber = Integer.parseInt(fields[1]);
                 if (fightNumber < fights.size() && fightNumber >= 0) {
-                    fight = fights.get(fightNumber);
                     //Fight not finished and correct.
-                    if (fight.team1.getName().equals(fields[2]) && fight.team2.getName().equals(fields[3])) {
-                        if (!fight.isOver()) {
+                    if (fights.get(fightNumber).team1.getName().equals(fields[2]) && fights.get(fightNumber).team2.getName().equals(fields[3])) {
+                        if (!fights.get(fightNumber).isOver()) {
+                            fight = fights.get(fightNumber);
                             fightsImported++;
                             fight.setOver();
                             fight.setOverStored(false);
@@ -812,11 +813,7 @@ public class FightManager {
                     fight.duels.get(duelsCount).importFromCsv(csvLine);
                     duelsCount++;
                 }
-            }
-
-            //Level over, we need next figths.
-            if (fight != null) {
-                currentFightsOver(fight.asignedFightArea);
+            } else if (csvLine.startsWith(Undraw.getCsvTag())) {
             }
         }
 

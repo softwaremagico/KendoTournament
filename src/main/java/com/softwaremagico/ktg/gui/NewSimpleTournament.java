@@ -90,7 +90,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -102,10 +102,10 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             Team1ComboBox.removeAllItems();
             listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
             for (int i = 0; i < listTeams.size(); i++) {
-                Team1ComboBox.addItem(listTeams.get(i).getName());
+                Team1ComboBox.addItem(listTeams.get(i));
             }
         } catch (NullPointerException npe) {
-            //npe.printStackTrace();
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         refreshTeam1 = true;
     }
@@ -120,7 +120,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             for (int i = 0; i < listTeams.size(); i++) {
                 if (!listTeams.get(i).getName().equals(Team1ComboBox.getSelectedItem().toString())) {
-                    Team2ComboBox.addItem(listTeams.get(i).getName());
+                    Team2ComboBox.addItem(listTeams.get(i));
                 }
             }
             /*
@@ -212,8 +212,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
         NewFightPanel = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
-        Team1ComboBox = new javax.swing.JComboBox<String>();
-        Team2ComboBox = new javax.swing.JComboBox<String>();
+        Team1ComboBox = new javax.swing.JComboBox<Team>();
+        Team2ComboBox = new javax.swing.JComboBox<Team>();
         Team1Label = new javax.swing.JLabel();
         Team2Label = new javax.swing.JLabel();
         FightAreaLabel = new javax.swing.JLabel();
@@ -458,9 +458,10 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 }
             }
             if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE) || (answer)) {
-                if (Team1ComboBox.getSelectedItem().toString().length() > 0 && Team2ComboBox.getSelectedItem().toString().length() > 0) {
-                    Fight fight = new Fight(KendoTournamentGenerator.getInstance().database.getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
-                            KendoTournamentGenerator.getInstance().database.getTeamByName(Team2ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
+                if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
+                    //Fight fight = new Fight(KendoTournamentGenerator.getInstance().database.getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
+                    Fight fight = new Fight((Team) (Team1ComboBox.getSelectedItem()),
+                            (Team) (Team2ComboBox.getSelectedItem()),
                             TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString()),
                             FightAreaComboBox.getSelectedIndex(),
                             fights.size()); //each fight is one new level to allow the order of teams to be changed anytime. 
@@ -517,7 +518,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }//GEN-LAST:event_RandomButtonActionPerformed
 
@@ -607,9 +608,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private javax.swing.JPanel NewFightPanel;
     private javax.swing.JButton RandomButton;
     private javax.swing.JButton SortedButton;
-    private javax.swing.JComboBox<String> Team1ComboBox;
+    private javax.swing.JComboBox<Team> Team1ComboBox;
     private javax.swing.JLabel Team1Label;
-    private javax.swing.JComboBox<String> Team2ComboBox;
+    private javax.swing.JComboBox<Team> Team2ComboBox;
     private javax.swing.JLabel Team2Label;
     private javax.swing.JComboBox<Tournament> TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;

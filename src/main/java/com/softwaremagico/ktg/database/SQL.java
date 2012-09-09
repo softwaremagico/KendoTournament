@@ -65,7 +65,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -101,7 +101,7 @@ public abstract class SQL extends Database {
             MessageManager.translatedMessage("exportDatabase", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             MessageManager.errorMessage("exportDatabaseFail", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(e);
+            KendoTournamentGenerator.showErrorInformation(e);
         }
     }
 
@@ -119,16 +119,11 @@ public abstract class SQL extends Database {
     }
 
     private void exportCompetitors(String file) {
-        Folder f = null;
-        try {
-            f = new Folder("");
-        } catch (Exception ex) {
-        }
         Folder.appendTextToFile("LOCK TABLES `competitor` WRITE;\n", file);
         List<CompetitorWithPhoto> competitors = getAllCompetitorsWithPhoto();
         for (int i = 0; i < competitors.size(); i++) {
             //FileOutputStream fos;
-            byte[] photo = {0x0};
+            //byte[] photo = {0x0};
             if (competitors.get(i).photoInput != null) {
                 try {
                     StoreInputStream(competitors.get(i).photoInput, (int) competitors.get(i).photoSize);
@@ -373,7 +368,7 @@ public abstract class SQL extends Database {
                                     s.executeUpdate();
                                 } catch (SQLException sql) {
                                     showSQLError(1049);
-                                    KendoTournamentGenerator.getInstance().showErrorInformation(sql);
+                                    KendoTournamentGenerator.showErrorInformation(sql);
                                     break;
                                 }
                             }
@@ -449,10 +444,10 @@ public abstract class SQL extends Database {
             } else {
                 MessageManager.errorMessage("storeCompetitor", this.getClass().getName());
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
             error = true;
         }
 
@@ -505,7 +500,7 @@ public abstract class SQL extends Database {
             }
         } catch (NullPointerException npe) {
             MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
             error = true;
         }
         return !error;
@@ -543,7 +538,7 @@ public abstract class SQL extends Database {
                 } else {
                     MessageManager.errorMessage("storeCompetitor", this.getClass().getName());
                 }
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
         } else {
             return false;
@@ -568,7 +563,7 @@ public abstract class SQL extends Database {
             } catch (SQLException ex) {
                 error = true;
                 MessageManager.errorMessage("storeCompetitor", this.getClass().getName());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
         } else {
             return false;
@@ -595,7 +590,7 @@ public abstract class SQL extends Database {
             } catch (SQLException ex) {
                 error = true;
                 MessageManager.errorMessage("storeCompetitor", this.getClass().getName());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
         } else {
             return false;
@@ -639,7 +634,7 @@ public abstract class SQL extends Database {
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noDatabase", this.getClass().getName());
         }
@@ -739,7 +734,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             error = true;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -872,7 +867,7 @@ public abstract class SQL extends Database {
             return c;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 
         return null;
@@ -946,7 +941,7 @@ public abstract class SQL extends Database {
                     Log.severe("deleteCompetitor", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             if (!error) {
                 error = true;
@@ -955,7 +950,7 @@ public abstract class SQL extends Database {
                 }
                 Log.severe("noRunningDatabase", this.getClass().getName());
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (!error && answer) {
             if (verbose) {
@@ -1066,12 +1061,12 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
             inserted = false;
         } catch (NullPointerException npe) {
             inserted = false;
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         if (inserted && verbose) {
@@ -1091,12 +1086,12 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
             inserted = false;
         } catch (NullPointerException npe) {
             inserted = false;
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         if (inserted && verbose) {
@@ -1123,10 +1118,10 @@ public abstract class SQL extends Database {
 
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return answer;
     }
@@ -1166,7 +1161,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -1208,7 +1203,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -1242,7 +1237,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -1285,7 +1280,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             error = true;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -1342,17 +1337,17 @@ public abstract class SQL extends Database {
             if (verbose) {
                 MessageManager.errorMessage("nameClub", this.getClass().getName());
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(micve);
+            KendoTournamentGenerator.showErrorInformation(micve);
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             inserted = false;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             inserted = false;
             if (verbose) {
                 MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         if (inserted && verbose) {
@@ -1426,10 +1421,10 @@ public abstract class SQL extends Database {
 
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.basicErrorMessage("MySQL database connection fail", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return results;
     }
@@ -1450,7 +1445,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             error = true;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -1490,10 +1485,10 @@ public abstract class SQL extends Database {
 
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return results;
@@ -1540,7 +1535,7 @@ public abstract class SQL extends Database {
                     if (verbose) {
                         MessageManager.errorMessage("deleteClub", this.getClass().getName());
                     }
-                    KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                    KendoTournamentGenerator.showErrorInformation(ex);
                 }
 
             }
@@ -1592,7 +1587,7 @@ public abstract class SQL extends Database {
                             tournament.bannerInput.reset();
                         }
                     } catch (IOException | NullPointerException ex) {
-                        KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                        KendoTournamentGenerator.showErrorInformation(ex);
                     }
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
                         stmt.setString(1, tournament.getName());
@@ -1615,15 +1610,15 @@ public abstract class SQL extends Database {
             }
         } catch (MysqlDataTruncation mdt) {
             MessageManager.errorMessage("storeImage", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(mdt);
+            KendoTournamentGenerator.showErrorInformation(mdt);
             error = true;
         } catch (SQLException ex) {
             MessageManager.errorMessage("storeTournament", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
             error = true;
         } catch (NullPointerException npe) {
             MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
             error = true;
         }
 
@@ -1667,7 +1662,7 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return answer;
@@ -1754,7 +1749,7 @@ public abstract class SQL extends Database {
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
@@ -1778,7 +1773,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             error = true;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -1982,7 +1977,9 @@ public abstract class SQL extends Database {
                     }
                 }
 
-                insertTeam(team, verbose);
+                if(insertTeam(team, verbose)){
+                    TeamPool.getManager(team.tournament).addTeam(team);
+                }
             }
         } catch (MySQLIntegrityConstraintViolationException micve) {
             if (!error) {
@@ -1991,7 +1988,7 @@ public abstract class SQL extends Database {
                     MessageManager.errorMessage("repeatedCompetitor", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(micve);
+            KendoTournamentGenerator.showErrorInformation(micve);
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -2001,7 +1998,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             if (!error) {
                 error = true;
@@ -2009,7 +2006,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (!error) {
             if (update) {
@@ -2062,7 +2059,7 @@ public abstract class SQL extends Database {
                                 }
                             }
                         }
-                        KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                        KendoTournamentGenerator.showErrorInformation(ex);
                     }
                 }
             }
@@ -2101,7 +2098,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return results;
     }
@@ -2130,7 +2127,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return membersPerLevel;
     }
@@ -2166,10 +2163,10 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return results;
     }
@@ -2235,7 +2232,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             error = true;
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -2250,10 +2247,10 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
     }
@@ -2284,7 +2281,7 @@ public abstract class SQL extends Database {
                 }
 
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             if (!error) {
                 error = true;
@@ -2292,7 +2289,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (!error && answer) {
             if (verbose) {
@@ -2326,7 +2323,7 @@ public abstract class SQL extends Database {
                     if (verbose) {
                         MessageManager.errorMessage("deleteTeam", this.getClass().getName());
                     }
-                    KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                    KendoTournamentGenerator.showErrorInformation(ex);
                 }
 
             }
@@ -2337,7 +2334,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (!error && answer) {
             if (sol > 0) {
@@ -2390,7 +2387,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             if (!error) {
                 error = true;
@@ -2398,7 +2395,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return !error && (answer || !verbose);
     }
@@ -2459,7 +2456,7 @@ public abstract class SQL extends Database {
                     MessageManager.errorMessage("repeatedCompetitor", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(micve);
+            KendoTournamentGenerator.showErrorInformation(micve);
         } catch (SQLException ex) {
             if (!error) {
                 error = true;
@@ -2469,7 +2466,7 @@ public abstract class SQL extends Database {
                     }
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             if (!error) {
                 error = true;
@@ -2477,7 +2474,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         if (!error) {
             if (verbose) {
@@ -2504,7 +2501,7 @@ public abstract class SQL extends Database {
 
             return true;
         } catch (SQLException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
             if (!error) {
                 error = true;
             }
@@ -2515,7 +2512,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return !error;
 
@@ -2530,7 +2527,7 @@ public abstract class SQL extends Database {
             }
             return true;
         } catch (SQLException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
             if (!error) {
                 error = true;
             }
@@ -2541,7 +2538,7 @@ public abstract class SQL extends Database {
                     MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
                 }
             }
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return !error;
     }
@@ -2595,7 +2592,7 @@ public abstract class SQL extends Database {
             } catch (SQLException ex) {
                 error = true;
                 MessageManager.errorMessage("storeFights", this.getClass().getName());
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
             }
 
             if (!error && answer) {
@@ -2627,7 +2624,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         Log.info("fightStored", this.getClass().getName(), fights.get(0).tournament.getName());
         return !error;
@@ -2647,7 +2644,7 @@ public abstract class SQL extends Database {
         } catch (SQLException | NullPointerException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         if (!error) {
             if (verbose) {
@@ -2665,8 +2662,10 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), tournament, false),
-                            getTeamByName(rs.getObject("Team2").toString(), tournament, false),
+                    //Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), tournament, false),
+                    //        getTeamByName(rs.getObject("Team2").toString(), tournament, false),
+                    Fight f = new Fight(TeamPool.getManager(tournament).getTeam(rs.getObject("Team1").toString()),
+                            TeamPool.getManager(tournament).getTeam(rs.getObject("Team2").toString()),
                             tournament,
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                     f.setMaxWinners(rs.getInt("MaxWinners"));
@@ -2688,10 +2687,10 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return results;
@@ -2780,7 +2779,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -2798,7 +2797,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -2869,7 +2868,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -2901,7 +2900,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -2930,7 +2929,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("deleteFight", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 
         if (!error && answer) {
@@ -2977,7 +2976,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeDuel", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 
         return !error;
@@ -3005,7 +3004,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeDuel", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 
         return !error;
@@ -3021,7 +3020,7 @@ public abstract class SQL extends Database {
                 s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID);
             }
         } catch (SQLException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -3076,7 +3075,7 @@ public abstract class SQL extends Database {
             s.close();
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
@@ -3136,7 +3135,7 @@ public abstract class SQL extends Database {
             s.close();
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
         }
@@ -3221,10 +3220,10 @@ public abstract class SQL extends Database {
             s.close();
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return results;
@@ -3283,10 +3282,10 @@ public abstract class SQL extends Database {
             s.close();
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return results;
@@ -3318,7 +3317,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeUndraw", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -3339,10 +3338,10 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return results;
     }
@@ -3361,31 +3360,30 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         Log.info("fightStored", this.getClass().getName(), undraws.get(0).getTournament() + ": " + undraws.get(0).getWinnerTeam());
         return !error;
     }
 
     @Override
-    public String getWinnerInUndraws(Tournament tournament, int group, List<Team> teams) {
-        String teamWinner = null;
+    public List<Team> getWinnersInUndraws(Tournament tournament, int level, int group) {
+        List<Team> teamWinners = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group;
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw="+level;
                 try (ResultSet rs = s.executeQuery(query)) {
-                    if (rs.next()) {
-                        teamWinner = rs.getObject("Team").toString();
+                    while (rs.next()) {
+                        teamWinners.add(TeamPool.getManager(tournament).getTeam(rs.getObject("Team").toString()));
                     }
                 }
             }
-
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
-        return teamWinner;
+        return teamWinners;
     }
 
     @Override
@@ -3436,7 +3434,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -3449,7 +3447,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -3462,7 +3460,7 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 

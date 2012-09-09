@@ -139,7 +139,7 @@ public class ConvertDatabase {
                 timerPanel.dispose();
                 MessageManager.informationMessage("ConversionCompleted", "Database");
             } catch (Exception e) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(e);
+                KendoTournamentGenerator.showErrorInformation(e);
                 timerPanel.dispose();
                 return false;
             }

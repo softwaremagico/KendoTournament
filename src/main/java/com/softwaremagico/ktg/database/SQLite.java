@@ -134,7 +134,7 @@ public class SQLite extends SQL {
         try {
             copyFile(new File("database/" + defaultDatabaseName + "." + defaultSQLiteExtension), new File("database/" + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -208,7 +208,7 @@ public class SQLite extends SQL {
 
             stmt.setBytes(index, buffer.toByteArray());
         } catch (IOException ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 
@@ -260,7 +260,7 @@ public class SQLite extends SQL {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -297,7 +297,7 @@ public class SQLite extends SQL {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
         return !error;
     }
@@ -326,7 +326,7 @@ public class SQLite extends SQL {
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("deleteFight", this.getClass().getName());
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 
         if (!error && answer) {

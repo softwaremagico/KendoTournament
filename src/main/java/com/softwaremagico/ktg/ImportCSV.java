@@ -155,6 +155,7 @@ public class ImportCSV {
 
                     teamName = fields[index].replace("EQUIPO_", "").replace("\n", "").trim();
                     t = new Team(teamName, tournament);
+                    
                 }
             }
             index++;

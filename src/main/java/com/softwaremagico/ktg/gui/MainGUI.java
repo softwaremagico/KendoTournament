@@ -797,7 +797,7 @@ public class MainGUI extends KendoFrame {
             MessageManager.translatedMessage("databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             MessageManager.errorMessage("disconnectDatabaseFail", "MySQL");
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
     

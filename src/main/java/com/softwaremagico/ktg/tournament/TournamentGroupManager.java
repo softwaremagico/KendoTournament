@@ -678,7 +678,7 @@ public class TournamentGroupManager implements Serializable {
                 designedFight.update();
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(aiob);
+            KendoTournamentGenerator.showErrorInformation(aiob);
         }
     }
 }

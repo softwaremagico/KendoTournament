@@ -2,14 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softwaremagico.ktg.gui;
-
-import com.softwaremagico.ktg.FightPool;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.files.Folder;
-import java.io.IOException;
-
+package com.softwaremagico.ktg;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -33,30 +26,35 @@ import java.io.IOException;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+
+import java.util.HashMap;
+
 /**
  *
- * @author jhortelano
+ * @author jorge
  */
-public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv {
+public class TeamManager {
 
-    public SelectTournamentImportFightsFromCsv(String title, String buttonTag) {
-        super(title, buttonTag);
+    private static HashMap<String, Team> existingTeams = new HashMap<>();
+    private Tournament tournament;
+
+    TeamManager(Tournament tournament) {
+        this.tournament = tournament;
     }
 
-    @Override
-    public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + FightPool.getManager(returnSelectedTournament()).getLastLevel() + ".csv";
-    }
-
-    @Override
-    protected boolean doAction(String file) {
-        try {
-            if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
-                return true;
-            }
-        } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+    public Team getTeam(String teamName) {
+        if (teamName == null) {
+            return null;
         }
-        return false;
+        Team team = existingTeams.get(teamName);
+        if (team == null) {
+            team = KendoTournamentGenerator.getInstance().database.getTeamByName(teamName, tournament, false);
+            existingTeams.put(teamName, team);
+        }
+        return team;
+    }
+    
+    public void addTeam(Team team){
+        existingTeams.put(team.getName(), team);
     }
 }

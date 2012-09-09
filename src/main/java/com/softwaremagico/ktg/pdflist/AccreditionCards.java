@@ -75,14 +75,14 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
                     size = fileImage.length();
                     KendoTournamentGenerator.getInstance().database.storeAccreditationImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
                 } catch (FileNotFoundException fnf) {
-                    KendoTournamentGenerator.getInstance().showErrorInformation(fnf);
+                    KendoTournamentGenerator.showErrorInformation(fnf);
                 }
                 TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString()));
                 pdf.setPrintAll(isCheckBoxSelected());
                 pdf.createFile(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 

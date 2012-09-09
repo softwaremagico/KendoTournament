@@ -60,7 +60,7 @@ public class Main {
         try {
             Controller controller = new Controller(gui);
         } catch (Exception ex) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(ex);
         }
     }
 }

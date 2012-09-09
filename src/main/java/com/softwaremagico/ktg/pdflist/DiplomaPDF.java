@@ -129,11 +129,11 @@ public class DiplomaPDF {
                 error = false;
             } catch (NullPointerException npe) {
                 MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(npe);
                 error = true;
             } catch (Exception ex) {
                 MessageManager.errorMessage("diplomaBad", "PDF");
-                KendoTournamentGenerator.getInstance().showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(ex);
                 error = true;
             }
             timerPanel.dispose();
@@ -414,7 +414,7 @@ public class DiplomaPDF {
             try {
                 centerValue = searchForTeamPosition(KendoTournamentGenerator.getInstance().database.getTeamOfCompetitor(competitor.getId(), tournament, false));
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(npe);
                 centerValue = 0;
             }
             int startValue = centerValue - TOTAL_RANGES / 2;

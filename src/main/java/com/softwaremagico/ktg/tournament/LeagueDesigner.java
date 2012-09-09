@@ -169,7 +169,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 updateListeners();
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 
@@ -212,7 +212,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
             updateTeams();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         updateBlackBoard();
     }
@@ -297,7 +297,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }
 
@@ -1004,7 +1004,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.getInstance().showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
     }//GEN-LAST:event_DeleteAllButtonActionPerformed
 
