@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -34,7 +33,6 @@ import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
