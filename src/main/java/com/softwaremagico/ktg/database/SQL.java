@@ -1683,7 +1683,7 @@ public abstract class SQL extends Database {
                     if (tournament.bannerInput.markSupported()) {
                         tournament.bannerInput.reset();
                     }
-                } catch (IOException ex) {
+                } catch (IOException | NullPointerException npe) {
                 }
                 try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + tournament.getName() + "'")) {
                     storeBinaryStream(stmt, 1, tournament.bannerInput, (int) tournament.bannerSize);
@@ -1707,12 +1707,15 @@ public abstract class SQL extends Database {
         } catch (MysqlDataTruncation mdt) {
             error = true;
             MessageManager.errorMessage("storeImage", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(mdt);
         } catch (SQLException ex) {
             error = true;
             MessageManager.errorMessage("storeTournament", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             error = true;
             MessageManager.basicErrorMessage("noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         if (!error) {
