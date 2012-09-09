@@ -1,5 +1,7 @@
 package com.softwaremagico.ktg;
 
+import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,6 @@ import java.util.List;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 /**
  *
  * @author LOCAL\jhortelano
@@ -36,23 +37,27 @@ import java.util.List;
 public class Undraw {
 
     private static final String UNDRAW_TAG = "UNDRAW";
-    private String tournament;
-    private Integer group;
-    private String winnerTeam;
+    private Tournament tournament;
+    private TournamentGroup group;
+    private Team winnerTeam;
     private Integer player;
 
-    public Undraw(String tournament, Integer group, String winnerTeam, Integer player) {
+    public Undraw(Tournament tournament, TournamentGroup group, Team winnerTeam, Integer player) {
         this.winnerTeam = winnerTeam;
         this.tournament = tournament;
         this.player = player;
         this.group = group;
     }
 
-    public int getGroup() {
+    public TournamentGroup getGroup() {
         return group;
     }
 
-    public void setGroup(Integer group) {
+    public Integer getIndexOfGroup() {
+        return TournamentGroupPool.getManager(getTournament()).getIndexOfGroup(getGroup());
+    }
+
+    public void setGroup(TournamentGroup group) {
         this.group = group;
     }
 
@@ -64,29 +69,29 @@ public class Undraw {
         this.player = player;
     }
 
-    public String getTournament() {
+    public Tournament getTournament() {
         return tournament;
     }
 
-    public void setTournament(String tournament) {
+    public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 
-    public String getWinnerTeam() {
+    public Team getWinnerTeam() {
         return winnerTeam;
     }
 
-    public void setWinnerTeam(String winnerTeam) {
+    public void setWinnerTeam(Team winnerTeam) {
         this.winnerTeam = winnerTeam;
     }
 
     public static String getCsvTag() {
         return UNDRAW_TAG;
     }
-    
+
     public static List<String> exportToCsv(Team team) {
         List<String> csv = new ArrayList<>();
-        csv.add(UNDRAW_TAG + ";" + team.getName());
+        csv.add(UNDRAW_TAG + ";" + team.getName() + ";" + 0);
         return csv;
     }
 }

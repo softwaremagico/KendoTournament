@@ -29,8 +29,11 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import java.util.List;
 
 public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
 
@@ -46,7 +49,15 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
     @Override
     protected boolean doAction(String file) {
         if (!MyFile.fileExist(file) || MessageManager.questionMessage("existFile", "Warning!")) {
-            if (Folder.saveListInFile(FightPool.getManager(returnSelectedTournament()).exportToCsv(), file)) {
+
+            List<String> csv;
+            if (returnSelectedTournament().mode == TournamentType.SIMPLE) {
+                csv = FightPool.getManager(returnSelectedTournament()).exportToCsv();
+            } else {
+                csv = TournamentGroupPool.getManager(returnSelectedTournament()).exportToCsv();
+            }
+
+            if (Folder.saveListInFile(csv, file)) {
                 MessageManager.informationMessage("csvExported", "CSV");
                 return true;
             }

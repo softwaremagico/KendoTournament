@@ -456,9 +456,11 @@ public abstract class Database {
     /**
      * Store a undraw into the database.
      */
-    public abstract boolean storeUndraw(Tournament tournament, String team, int order, int group);
+    public abstract boolean storeUndraw(Tournament tournament, Team team, int order, int group);
 
-    public abstract List<Undraw> getAllUndraws();
+    public abstract boolean storeUndraw(Undraw undraw);
+
+    public abstract List<Undraw> getUndraws(Tournament tournament);
 
     public abstract boolean storeAllUndraws(List<Undraw> undraws);
 
@@ -471,6 +473,6 @@ public abstract class Database {
     public abstract void deleteDrawsOfTournament(Tournament tournament);
 
     public abstract void deleteDrawsOfGroupOfTournament(Tournament tournament, int group);
-    
+
     public abstract void deleteDrawsOfLevelOfTournament(Tournament tournament, int level);
 }

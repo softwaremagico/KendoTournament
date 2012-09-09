@@ -6,8 +6,9 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.io.IOException;
 
 /*
@@ -51,8 +52,14 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
     @Override
     protected boolean doAction(String file) {
         try {
-            if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
-                return true;
+            if (returnSelectedTournament().mode == TournamentType.SIMPLE) {
+                if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
+                    return true;
+                }
+            }else{
+                if(TournamentGroupPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))){
+                    return true;
+                }
             }
         } catch (IOException ex) {
             KendoTournamentGenerator.showErrorInformation(ex);

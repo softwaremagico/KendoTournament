@@ -23,7 +23,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-public enum TournamentTypes {
+public enum TournamentType {
 
     CHAMPIONSHIP("championship"),
     LEAGUE_TREE("tree"),
@@ -31,7 +31,7 @@ public enum TournamentTypes {
     MANUAL("manual");
     private String sqlName;
 
-    TournamentTypes(String sqlName) {
+    TournamentType(String sqlName) {
         this.sqlName = sqlName;
     }
 
@@ -39,8 +39,8 @@ public enum TournamentTypes {
         return sqlName;
     }
 
-    public static TournamentTypes getType(String value) {
-        for (TournamentTypes types : TournamentTypes.values()) {
+    public static TournamentType getType(String value) {
+        for (TournamentType types : TournamentType.values()) {
             if (types.sqlName.equals(value)) {
                 return types;
             }

@@ -45,6 +45,15 @@ public class FightManager {
         return fights.get(i);
     }
 
+    public Fight get(Team team1, Team team2, int level) {
+        for (Fight fight : fights) {
+            if (fight.level == level && fight.team1.equals(team1) && fight.team2.equals(team2)) {
+                return fight;
+            }
+        }
+        return null;
+    }
+
     public boolean existFight(Fight f) {
         return fights.contains(f);
     }
@@ -409,7 +418,7 @@ public class FightManager {
     public void currentFightsOver(int arena) {
         if (areAllOver()) {
             //If championship or similar...
-            if (!tournament.mode.equals(TournamentTypes.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
+            if (!tournament.mode.equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
                 //If all arena fights are over.
                 Log.finer("All fights are over!");
                 //Obtain next fights.
@@ -772,13 +781,13 @@ public class FightManager {
     }
 
     public List<String> exportToCsv() {
-        List<String> Csv = new ArrayList<>();
+        List<String> csv = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).isOver()) {
-                Csv.addAll(fights.get(i).exportToCsv(i));
+                csv.addAll(fights.get(i).exportToCsv(i));
             }
         }
-        return Csv;
+        return csv;
     }
 
     public boolean importFromCsv(List<String> csv) {
@@ -814,6 +823,8 @@ public class FightManager {
                     duelsCount++;
                 }
             } else if (csvLine.startsWith(Undraw.getCsvTag())) {
+                //Do nothing. 
+                Log.warning("Undraw line found in a simple tournament!");
             }
         }
 

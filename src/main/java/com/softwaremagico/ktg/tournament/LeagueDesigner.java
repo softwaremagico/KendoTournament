@@ -265,7 +265,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             //TournamentGroupPool.getManager(tournament) = new TournamentGroupManager(tournament);
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
 
-            //if (!tournament.mode.equals(TournamentTypes.SIMPLE)) {
+            //if (!tournament.mode.equals(TournamentType.SIMPLE)) {
             //If it is not stored in a file, generate it. 
             //TournamentGroupPool.getManager(tournament).refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
             //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
@@ -284,7 +284,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     void updateBlackBoard() {
         try {
             Integer select = TournamentGroupPool.getManager(tournament).getIndexLastSelected();
-            if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.SIMPLE)) {
+            if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
                 bbp.updateBlackBoard((Tournament) TournamentComboBox.getSelectedItem(), false);
                 TournamentGroupPool.getManager(tournament).enhance(false);
             } else {
@@ -304,9 +304,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void consistentTree() {
         try {
             //It is impossible in a tree league that are more than one winner. If it is, change to a tournament.
-            if (TournamentGroupPool.getManager(tournament).default_max_winners > 1 && TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.LEAGUE_TREE)) {
+            if (TournamentGroupPool.getManager(tournament).default_max_winners > 1 && TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.LEAGUE_TREE)) {
                 ChampionshipRadioButton.setSelected(true);
-                TournamentGroupPool.getManager(tournament).setMode(TournamentTypes.CHAMPIONSHIP);
+                TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
                 tournament.mode = TournamentGroupPool.getManager(tournament).getMode();
                 updateBlackBoard();
             }
@@ -352,22 +352,22 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateMode() {
         try {
-            TournamentTypes oldMode = TournamentGroupPool.getManager(tournament).getMode();
+            TournamentType oldMode = TournamentGroupPool.getManager(tournament).getMode();
             if (ManualRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentTypes.MANUAL);
-                tournament.mode = TournamentTypes.MANUAL;
+                TournamentGroupPool.getManager(tournament).setMode(TournamentType.MANUAL);
+                tournament.mode = TournamentType.MANUAL;
                 CleanLinksButton.setVisible(true);
             } else if (ChampionshipRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentTypes.CHAMPIONSHIP);
-                tournament.mode = TournamentTypes.CHAMPIONSHIP;
+                TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
+                tournament.mode = TournamentType.CHAMPIONSHIP;
                 CleanLinksButton.setVisible(false);
             } else if (TreeRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentTypes.LEAGUE_TREE);
-                tournament.mode = TournamentTypes.LEAGUE_TREE;
+                TournamentGroupPool.getManager(tournament).setMode(TournamentType.LEAGUE_TREE);
+                tournament.mode = TournamentType.LEAGUE_TREE;
                 CleanLinksButton.setVisible(false);
             } else if (SimpleRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentTypes.SIMPLE);
-                tournament.mode = TournamentTypes.SIMPLE;
+                TournamentGroupPool.getManager(tournament).setMode(TournamentType.SIMPLE);
+                tournament.mode = TournamentType.SIMPLE;
                 CleanLinksButton.setVisible(false);
             }
 
@@ -379,7 +379,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
             enableSpinner();
 
-            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.SIMPLE)) {
+            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
                 AddButton.setVisible(false);
                 DeleteButton.setVisible(false);
                 DeleteAllButton.setVisible(false);
@@ -497,7 +497,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             group.setSelected(TournamentGroupPool.getManager(tournament));
         } else if (group.getLevel() == 1 && group.teams.isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
-            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.MANUAL)) {
+            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) {
                 TournamentGroupPool.getManager(tournament).addLink(TournamentGroupPool.getManager(tournament).getLastGroupSelected(), group);
                 updateBlackBoard();
             }
@@ -947,7 +947,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeamListMouseClicked
-        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.SIMPLE)) {
+        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }
@@ -967,7 +967,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
-            if (!(TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.MANUAL)) || TournamentGroupPool.getManager(tournament).allGroupsHaveManualLink()) {
+            if (!(TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) || TournamentGroupPool.getManager(tournament).allGroupsHaveManualLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
                     Log.finer("Deleting old fights");
                     FightPool.getManager(tournament).deleteAllFights(tournament, false);

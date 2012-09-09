@@ -41,7 +41,7 @@ public class Team implements Serializable {
     public int group = 0; //for the league
 
     public Team(String name, Tournament tournament) {
-        storeName(name);
+        setName(name);
         this.tournament = tournament;
         participantsPerLevel.add(new ArrayList<Competitor>());
     }
@@ -168,7 +168,7 @@ public class Team implements Serializable {
         }
     }
 
-    public final void storeName(String name) {
+    public final void setName(String name) {
         //name = value.substring(0, 1).toUpperCase() + value.substring(1);
         /*
          * name = ""; String[] data = value.trim().split(" "); for (int i = 0; i
@@ -177,7 +177,7 @@ public class Team implements Serializable {
          * data[i].substring(1).toLowerCase() + " "; } else { name += data[i] +
          * " "; } }
          */
-        this.name = name.trim();
+        this.name = name.trim().replace(";", ",");
     }
 
     public String getName() {

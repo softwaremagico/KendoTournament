@@ -111,7 +111,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void hideTreeButton() {
         try {
-            if (TournamentGroupPool.getManager(selectedTournament).size() > 1 && !selectedTournament.mode.equals(TournamentTypes.SIMPLE)) {
+            if (TournamentGroupPool.getManager(selectedTournament).size() > 1 && !selectedTournament.mode.equals(TournamentType.SIMPLE)) {
                 TreeButton.setVisible(true);
             } else {
                 TreeButton.setVisible(false);
@@ -559,7 +559,7 @@ public final class FightPanel extends javax.swing.JFrame {
             Log.debug("Current number of fights over: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
 
             //If championship or similar...
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentTypes.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
                 TournamentGroup currentGroup = TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).getGroupOfFight(currentFight);
                 //Show scores, messages, etc. 
                 messagesFinishedGroup(currentGroup);

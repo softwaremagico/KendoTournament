@@ -131,7 +131,7 @@ public class ScoreListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (tournament.mode.equals(TournamentTypes.SIMPLE)) {
+        if (tournament.mode.equals(TournamentType.SIMPLE)) {
             mainTable = simpleTable(mainTable);
         } else {
             mainTable = championshipTable(mainTable);

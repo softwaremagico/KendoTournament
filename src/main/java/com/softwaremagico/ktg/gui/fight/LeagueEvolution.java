@@ -24,7 +24,7 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentTypes;
+import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.tournament.BlackBoardPanel;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.awt.Dimension;
@@ -63,7 +63,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
         this.tournament=tournament;
-        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentTypes.SIMPLE)) {
+        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
             TournamentGroupPool.getManager(tournament).color(true);
             TournamentGroupPool.getManager(tournament).update();
             bbp.updateBlackBoard(tournament, refill);

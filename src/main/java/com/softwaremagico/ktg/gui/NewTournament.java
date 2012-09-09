@@ -136,7 +136,7 @@ public class NewTournament extends KendoFrame {
 
     public boolean storeTournament() {
         if (NameTextField.getText().length() > 0) {
-            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentTypes.SIMPLE);
+            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
             tournament.addBanner(banner.photoInput, banner.size);
             //Store tournament into database
             if (KendoTournamentGenerator.getInstance().database.storeTournament(tournament, true)) {
@@ -372,7 +372,7 @@ public class NewTournament extends KendoFrame {
 
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
-            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentTypes.SIMPLE);
+            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
 
             try {
                 String file;

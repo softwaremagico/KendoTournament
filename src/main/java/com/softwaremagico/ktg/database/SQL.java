@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.statistics.CompetitorRanking;
 import com.softwaremagico.ktg.statistics.TeamRanking;
+import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1732,7 +1733,7 @@ public abstract class SQL extends Database {
             try (Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
                 while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
+                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                     InputStream sImage = getBinaryStream(rs, "Banner");
                     Long size = rs.getLong("Size");
@@ -1786,7 +1787,7 @@ public abstract class SQL extends Database {
             try (Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM tournament WHERE Name='" + tournamentName + "' ")) {
                 rs.next();
-                t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
+                t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
                 t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                 InputStream sImage = getBinaryStream(rs, "Banner");
                 Long size = rs.getLong("Size");
@@ -1817,7 +1818,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentTypes.getType(rs.getObject("Type").toString()));
+                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
                     InputStream sImage = (InputStream) getBinaryStream(rs, "Banner");
                     Long size = rs.getLong("Size");
@@ -1977,7 +1978,7 @@ public abstract class SQL extends Database {
                     }
                 }
 
-                if(insertTeam(team, verbose)){
+                if (insertTeam(team, verbose)) {
                     TeamPool.getManager(team.tournament).addTeam(team);
                 }
             }
@@ -3302,17 +3303,17 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    public boolean storeUndraw(Tournament tournament, String team, int order, int group) {
+    public boolean storeUndraw(Tournament tournament, Team team, int order, int group) {
         boolean error = false;
         try {
             //Delete the undraw if exist previously.
             Statement s = connection.createStatement();
-            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team + "'  AND UndrawGroup=" + group);
+            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team.getName() + "'  AND UndrawGroup=" + group);
             s.close();
 
             //Add the new undraw.
             s = connection.createStatement();
-            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup) VALUES ('" + tournament.getName() + "', '" + team + "', " + order + ", " + group + ")");
+            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup) VALUES ('" + tournament.getName() + "', '" + team.getName() + "', " + order + ", " + group + ")");
             s.close();
         } catch (SQLException ex) {
             error = true;
@@ -3323,8 +3324,13 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Undraw> getAllUndraws() {
-        String query = "SELECT * FROM undraw ";
+    public boolean storeUndraw(Undraw undraw) {
+        return storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup());
+    }
+
+    @Override
+    public List<Undraw> getUndraws(Tournament tournament) {
+        String query = "SELECT * FROM undraw WHERE championship='" + tournament.getName() + "'";
 
         List<Undraw> results = new ArrayList<>();
 
@@ -3332,7 +3338,10 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Undraw u = new Undraw(rs.getObject("Championship").toString(), (Integer) rs.getObject("UndrawGroup"), rs.getObject("Team").toString(), (Integer) rs.getObject("Player"));
+                    Undraw u = new Undraw(TournamentPool.getTournament(rs.getObject("Championship").toString()),
+                            TournamentGroupPool.getManager(tournament).get(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
+                            TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
+                            (Integer) rs.getObject("Player"));
                     results.add(u);
                 }
             }
@@ -3371,7 +3380,7 @@ public abstract class SQL extends Database {
         List<Team> teamWinners = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw="+level;
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level;
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
                         teamWinners.add(TeamPool.getManager(tournament).getTeam(rs.getObject("Team").toString()));

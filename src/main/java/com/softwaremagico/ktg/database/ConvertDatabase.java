@@ -130,11 +130,11 @@ public class ConvertDatabase {
                 fights.clear();
 
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 7, 7);
-                List<Undraw> undraws = fromDatabase.getAllUndraws();
+                /*List<Undraw> undraws = fromDatabase.getUndraws();
                 if (!toDatabase.storeAllUndraws(undraws)) {
                     return false;
                 }
-                undraws.clear();
+                undraws.clear();*/
 
                 timerPanel.dispose();
                 MessageManager.informationMessage("ConversionCompleted", "Database");

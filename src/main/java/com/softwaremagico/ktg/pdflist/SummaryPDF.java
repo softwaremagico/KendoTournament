@@ -33,7 +33,7 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentTypes;
+import com.softwaremagico.ktg.TournamentType;
 import java.util.List;
 
 /**
@@ -153,7 +153,7 @@ public class SummaryPDF extends ParentList {
                 /*
                  * Header of the phase
                  */
-                if (lastLevel != fights.get(i).level && !championship.mode.equals(TournamentTypes.SIMPLE)) {
+                if (lastLevel != fights.get(i).level && !championship.mode.equals(TournamentType.SIMPLE)) {
                     mainTable.addCell(getEmptyRow());
                     mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (fights.get(i).level + 1) + ":", 0, Element.ALIGN_LEFT));
                     lastLevel = fights.get(i).level;

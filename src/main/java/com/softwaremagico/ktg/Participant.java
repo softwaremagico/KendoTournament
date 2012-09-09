@@ -65,7 +65,7 @@ public class Participant implements Serializable {
                 }
             }
         }
-        name = name.trim();
+        name = name.trim().replace(";", ",");
     }
 
     public String getShortName(int length) {

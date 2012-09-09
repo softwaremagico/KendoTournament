@@ -93,11 +93,11 @@ public class TournamentGroupManager implements Serializable {
         return tournament;
     }
 
-    public TournamentTypes getMode() {
+    public TournamentType getMode() {
         return tournament.mode;
     }
 
-    public void setMode(TournamentTypes mode) {
+    public void setMode(TournamentType mode) {
         this.tournament.mode = mode;
     }
 
@@ -189,14 +189,14 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public void showTeams(){
-        if(levels.size()>0){
+    public void showTeams() {
+        if (levels.size() > 0) {
             levels.get(0).showTeams();
-        }else{
+        } else {
             System.out.println("Levels empty!");
         }
     }
-    
+
     /**
      * ********************************************
      *
@@ -255,7 +255,7 @@ public class TournamentGroupManager implements Serializable {
         return size;
     }
 
-    public Integer returnIndexOfGroup(TournamentGroup group) {
+    public Integer getIndexOfGroup(TournamentGroup group) {
         LeagueLevel level = levels.get(group.getLevel());
         return level.getIndexOfGroup(group);
     }
@@ -354,7 +354,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public boolean allGroupsHaveManualLink() {
-        if (!getMode().equals(TournamentTypes.MANUAL)) {
+        if (!getMode().equals(TournamentType.MANUAL)) {
             return false;
         } else {
             return ((LeagueLevelManual) levels.get(0)).allGroupsHaveManualLink();
@@ -362,13 +362,13 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void cleanLinksSelectedGroup() {
-        if (getMode().equals(TournamentTypes.MANUAL)) {
+        if (getMode().equals(TournamentType.MANUAL)) {
             ((LeagueLevelManual) levels.get(0)).removeLinksSelectedGroup();
         }
     }
 
     public void addLink(TournamentGroup source, TournamentGroup address) {
-        if (getMode().equals(TournamentTypes.MANUAL)) {
+        if (getMode().equals(TournamentType.MANUAL)) {
             ((LeagueLevelManual) levels.get(0)).addLink(source, address);
         }
     }
@@ -532,7 +532,7 @@ public class TournamentGroupManager implements Serializable {
 
         for (int i = 0; i < groups.size(); i++) {
             if (answer) {
-                if (!getMode().equals(TournamentTypes.MANUAL) || level > 0) {
+                if (!getMode().equals(TournamentType.MANUAL) || level > 0) {
                     arena = i / (int) Math.ceil((double) getSizeOfLevel(level) / (double) tournament.fightingAreas);
                 } else {
                     // grouped by the destination group of the next level.
@@ -679,6 +679,88 @@ public class TournamentGroupManager implements Serializable {
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
             KendoTournamentGenerator.showErrorInformation(aiob);
+        }
+    }
+
+    /**
+     * **********************************************
+     *
+     * LISTENERS
+     *
+     ***********************************************
+     */
+    /**
+     *
+     */
+    public List<String> exportToCsv() {
+        List<String> csv = new ArrayList<>();
+        for (LeagueLevel level : levels) {
+            for (TournamentGroup group : level.getGroups()) {
+                csv.addAll(group.exportToCsv());
+            }
+        }
+        return csv;
+    }
+
+    public boolean importFromCsv(List<String> csv) {
+        int duelsCount = 0;
+        Fight fight = null;
+        int fightsInFile = 0;
+        int fightsImported = 0;
+        List<Undraw> undraws = new ArrayList<>();
+        for (String csvLine : csv) {
+            String[] fields = csvLine.split(";");
+            if (csvLine.startsWith(Fight.getTag())) {
+                fight = null;
+                fightsInFile++;
+                duelsCount = 0;
+                //Obtain fight.
+                int fightNumber = Integer.parseInt(fields[1]);
+
+                if (fightNumber < FightPool.getManager(tournament).getFights().size() && fightNumber >= 0) {
+                    //Fight not finished and correct.
+                        /*if (!FightPool.getManager(tournament).getFights().get(fightNumber).isOver()) {
+                         fight = FightPool.getManager(tournament).getFights().get(fightNumber);
+                         fightsImported++;
+                         fight.setOver();
+                         fight.setOverStored(false);
+                         }*/
+                        Fight readedFight = levels.get(Integer.parseInt(fields[3]))
+                                .getGroups().get(Integer.parseInt(fields[2]))
+                                .getFights().get(Integer.parseInt(fields[1]));
+                        if (readedFight.team1.getName().equals(fields[4]) && readedFight.team2.getName().equals(fields[5])) {
+                        if (!readedFight.isOver()) {
+                            fight = readedFight;
+                            fightsImported++;
+                            fight.setOver();
+                            fight.setOverStored(false);
+                        }
+                    } else {
+                        MessageManager.errorMessage("csvNotImported", "Error");
+                        return false;
+                    }
+                }
+            } else if (csvLine.startsWith(Duel.getCsvTag())) {
+                if (fight != null) {
+                    fight.duels.get(duelsCount).importFromCsv(csvLine);
+                    duelsCount++;
+                }
+            } else if (csvLine.startsWith(Undraw.getCsvTag())) {
+                undraws.add(new Undraw(tournament, getGroupOfFight(fight), TeamPool.getManager(tournament).getTeam(fields[1]), Integer.parseInt(fields[2])));
+            }
+        }
+
+        if (fightsImported > 0) {
+            MessageManager.informationMessage("csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
+            if (FightPool.getManager(tournament).storeNotUpdatedFightsAndDuels()) {
+                for (Undraw undraw : undraws) {
+                    KendoTournamentGenerator.getInstance().database.storeUndraw(undraw);
+                }
+            }
+            return true;
+        } else {
+            MessageManager.errorMessage("csvNotImported", "Error");
+            return false;
         }
     }
 }

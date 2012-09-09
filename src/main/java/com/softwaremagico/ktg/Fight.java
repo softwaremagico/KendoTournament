@@ -337,6 +337,19 @@ public class Fight implements Serializable {
         return csv;
     }
 
+    /**
+     * @param order Order starts in 1.
+     * @return
+     */
+    public List<String> exportToCsv(int order, int group, int level) {
+        List<String> csv = new ArrayList<>();
+        csv.add(FIGHT_TAG + ";" + order + ";" + group + ";" + level + ";" + team1.getName() + ";" + team2.getName());
+        for (Duel d : duels) {
+            csv.add(d.exportToCsv());
+        }
+        return csv;
+    }
+
     public static String getTag() {
         return FIGHT_TAG;
     }
