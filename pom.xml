@@ -41,6 +41,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <linux.releasedir>install_linux</linux.releasedir>
         <linux.origin>linux-basic-files</linux.origin>
+	<linux.destination-folder>/usr/share/kendo-tournament-generator</linux.destination-folder>
         <windows.releasedir>install_windows</windows.releasedir>
         <windows.origin>windows-basic-files</windows.origin>
         <winexe>KendoTournamentGenerator.exe</winexe>
@@ -107,31 +108,31 @@
                                         <copy todir="${linux.releasedir}/usr" overwrite="true" >
                                             <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/" overwrite="true" >
                                             <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/lib" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/lib" overwrite="true" >
                                             <fileset dir="./target/lib" includes="**/*.jar" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/translations" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/translations" overwrite="true" >
                                             <fileset dir="./translations" includes="**/*.xml" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/images" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
                                             <fileset dir="./images" excludes="**/*.svg" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/database" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/database" overwrite="true" >
                                             <fileset dir="./database" includes="**/*_empty.*" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/manual" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
                                             <fileset dir="./manual" includes="**/*.pdf" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator/manual" overwrite="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
                                             <fileset dir="./manual" includes="**/*.txt" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator" overwrite="true" flatten="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
                                             <fileset dir="./" includes="**/gnu.txt" />
                                         </copy>
-                                        <copy todir="${linux.releasedir}/usr/share/kendo-tournament-generator" overwrite="true" flatten="true" >
+                                        <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
                                             <fileset dir="./" includes="**/Readme.txt" />
                                         </copy>
                                 
