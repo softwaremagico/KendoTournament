@@ -81,7 +81,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.4</version>
+                        <version>1.7</version>
                         <executions>
                             <execution>
                                 <phase>install</phase>
@@ -135,27 +135,14 @@
                                         <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
                                             <fileset dir="./" includes="**/Readme.txt" />
                                         </copy>
-                                
+					<chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator" perm="755"/>
+                                        <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator-doc" perm="755"/>
                                     </tasks>
                                 </configuration>
                                 <goals>
                                     <goal>run</goal>
                                 </goals>
                             </execution>
-                            <execution>
-                                <id>change permission</id>
-                                <phase>install</phase>
-                                <configuration>
-                                    <target>
-                                        <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator" perm="755"/>
-                                        <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator-doc" perm="755"/>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </executions>
                 </plugin>
             </plugins>
@@ -172,7 +159,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>1.4</version>
+                    <version>1.7</version>
                     <executions>
                         <execution>
                             <phase>install</phase>
