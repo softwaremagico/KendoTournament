@@ -41,7 +41,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <linux.releasedir>install_linux</linux.releasedir>
         <linux.origin>linux-basic-files</linux.origin>
-	<linux.destination-folder>/usr/share/kendo-tournament-generator</linux.destination-folder>
+        <linux.destination-folder>/usr/share/kendo-tournament-generator</linux.destination-folder>
         <windows.releasedir>install_windows</windows.releasedir>
         <windows.origin>windows-basic-files</windows.origin>
         <winexe>KendoTournamentGenerator.exe</winexe>
@@ -50,178 +50,7 @@
         <plugin.exec.version>1.2.1</plugin.exec.version>
     </properties>
     
-    <profiles>
-        <profile>
-            <id>linux</id>
-            <activation>
-                <os>
-                    <family>linux</family>
-                </os>
-            </activation>
-            <build>
-                <!-- <resources>
-        
-                    <resource>
-                        <directory>${linux.origin}</directory>
-                        <filtering>true</filtering>
-                        <includes>
-                            <include>**/control</include>
-                            <include>**/*.desktop</include>
-                        </includes>
-                    </resource>
-                    <resource>
-                        <directory>${linux.origin}</directory>
-                        <filtering>false</filtering>
-                        <excludes>
-                            <exclude>**/control</exclude>
-                            <exclude>**/*.desktop</exclude>
-                        </excludes>
-                    </resource>
-                </resources> -->
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <configuration>
-                                    <tasks>
-                                        <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
-                                        <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
-                                            <fileset dir="${linux.origin}/DEBIAN" includes="**/*" />
-                                            <filterset>
-                                                <filter value="${project.version}" token="version" />
-                                            </filterset>
-                                        </copy>
-                                        <!-- exclude images because are corrupted -->
-                                        <copy todir="${linux.releasedir}/usr" overwrite="true" >
-                                            <fileset dir="${linux.origin}/usr" includes="**/*" excludes="**/*.ico" />
-                                            <filterset>
-                                                <filter value="${project.version}" token="version" />
-                                                <filter value="${project.name}" token="projectname" />
-                                                <filter value="${project.build.sourceEncoding}" token="encoding" />
-                                                <filter value="${project.description}" token="description" />
-                                            </filterset> 
-                                        </copy>
-                                        <!-- copy images -->
-                                        <copy todir="${linux.releasedir}/usr" overwrite="true" >
-                                            <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/" overwrite="true" >
-                                            <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/lib" overwrite="true" >
-                                            <fileset dir="./target/lib" includes="**/*.jar" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/translations" overwrite="true" >
-                                            <fileset dir="./translations" includes="**/*.xml" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
-                                            <fileset dir="./images" excludes="**/*.svg" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/database" overwrite="true" >
-                                            <fileset dir="./database" includes="**/*_empty.*" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
-                                            <fileset dir="./manual" includes="**/*.pdf" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
-                                            <fileset dir="./manual" includes="**/*.txt" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
-                                            <fileset dir="./" includes="**/gnu.txt" />
-                                        </copy>
-                                        <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
-                                            <fileset dir="./" includes="**/Readme.txt" />
-                                        </copy>
-                                
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>windows</id>
-            <activation>
-                <os>
-                    <family>windows</family>
-                </os>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.7</version>
-                        <executions>
-                            <execution>
-                                <phase>install</phase>
-                                <configuration>
-                                    <tasks>
-                                        <delete dir="${windows.releasedir}" failonerror="false" includeemptydirs="true" />
-                                        <copy todir="${windows.releasedir}" overwrite="true" >
-                                            <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/lib" overwrite="true" >
-                                            <fileset dir="./target/lib" includes="**/*.jar" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/translations" overwrite="true" >
-                                            <fileset dir="./translations" includes="**/*.xml" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/images" overwrite="true" >
-                                            <fileset dir="./images" excludes="**/*.svg" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/database" overwrite="true" >
-                                            <fileset dir="./database" includes="**/*_empty.*" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/manual" overwrite="true" >
-                                            <fileset dir="./manual" includes="**/*.pdf" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}/manual" overwrite="true" >
-                                            <fileset dir="./manual" includes="**/*.txt" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="./" includes="**/gnu.txt" />
-                                        </copy>
-                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="./" includes="**/Readme.txt" />
-                                        </copy>   
-                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${windows.origin}/" includes="**/icon.ico" />
-                                        </copy>  
-                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${windows.origin}/" includes="**/KendoTournamentGenerator.exe" />
-                                        </copy>  
-                                        <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                            <fileset dir="${windows.origin}/" includes="**/InstallScript.iss" />
-                                            <filterset>
-                                                <filter value="${project.version}" token="version" />
-                                                <filter value="${project.name}" token="projectname" />
-                                                <filter value="${project.groupId}" token="group" />
-                                                <filter value="${url}" token="url" />
-                                                <filter value="${winexe}" token="winexe" />
-                                            </filterset>
-                                        </copy>  
-                                    </tasks>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-    
-    
+      
     <build>
         <finalName>KendoTournamentGenerator</finalName>
         <resources>
@@ -333,6 +162,118 @@
                 <configuration>
                     <mainClass>com.softwaremagico.ktg.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
+                                <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
+                                    <fileset dir="${linux.origin}/DEBIAN" includes="**/*" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                    </filterset>
+                                </copy>
+                                        <!-- exclude images because are corrupted -->
+                                <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                    <fileset dir="${linux.origin}/usr" includes="**/*" excludes="**/*.ico" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                        <filter value="${project.name}" token="projectname" />
+                                        <filter value="${project.build.sourceEncoding}" token="encoding" />
+                                        <filter value="${project.description}" token="description" />
+                                    </filterset> 
+                                </copy>
+                                        <!-- copy images -->
+                                <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                    <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/" overwrite="true" >
+                                    <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/lib" overwrite="true" >
+                                    <fileset dir="./target/lib" includes="**/*.jar" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/translations" overwrite="true" >
+                                    <fileset dir="./translations" includes="**/*.xml" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
+                                    <fileset dir="./images" excludes="**/*.svg" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/database" overwrite="true" >
+                                    <fileset dir="./database" includes="**/*_empty.*" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
+                                    <fileset dir="./manual" includes="**/*.pdf" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
+                                    <fileset dir="./manual" includes="**/*.txt" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
+                                    <fileset dir="./" includes="**/gnu.txt" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
+                                    <fileset dir="./" includes="**/Readme.txt" />
+                                </copy>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator" perm="755"/>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator-doc" perm="755"/>
+                                        
+                                        
+                                <delete dir="${windows.releasedir}" failonerror="false" includeemptydirs="true" />
+                                <copy todir="${windows.releasedir}" overwrite="true" >
+                                    <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/lib" overwrite="true" >
+                                    <fileset dir="./target/lib" includes="**/*.jar" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/translations" overwrite="true" >
+                                    <fileset dir="./translations" includes="**/*.xml" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/images" overwrite="true" >
+                                    <fileset dir="./images" excludes="**/*.svg" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/database" overwrite="true" >
+                                    <fileset dir="./database" includes="**/*_empty.*" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                    <fileset dir="./manual" includes="**/*.pdf" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                    <fileset dir="./manual" includes="**/*.txt" />
+                                </copy>
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="./" includes="**/gnu.txt" />
+                                </copy>
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="./" includes="**/Readme.txt" />
+                                </copy>   
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/icon.ico" />
+                                </copy>  
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/KendoTournamentGenerator.exe" />
+                                </copy>  
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/InstallScript.iss" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                        <filter value="${project.name}" token="projectname" />
+                                        <filter value="${project.groupId}" token="group" />
+                                        <filter value="${url}" token="url" />
+                                        <filter value="${winexe}" token="winexe" />
+                                    </filterset>
+                                </copy>  
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
