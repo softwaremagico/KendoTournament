@@ -29,7 +29,6 @@ import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ public class ConvertDatabase {
 
     private Database fromDatabase;
     private Database toDatabase;
+    private final static Integer MAX_DATA_BY_STEP = 50;
 
     public ConvertDatabase(Database fromDatabase, Database toDatabase,
             String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
@@ -88,53 +88,82 @@ public class ConvertDatabase {
         private boolean dumpData() {
             try {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), 1, 7);
-                List<Tournament> tournaments = fromDatabase.getAllTournaments();
-                if (!toDatabase.storeAllTournaments(tournaments)) {
-                    return false;
+                List<Tournament> tournaments;
+                int from = 0;
+                while ((tournaments = fromDatabase.getTournaments(from, MAX_DATA_BY_STEP)) != null && tournaments.size() > 0) {
+                    if (!toDatabase.storeAllTournaments(tournaments)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    tournaments.clear();
                 }
-                tournaments.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), 2, 7);
-                List<Club> clubs = fromDatabase.getAllClubs();
-                if (!toDatabase.storeAllClubs(clubs)) {
-                    return false;
+                List<Club> clubs;
+                while ((clubs = fromDatabase.getClubs(from, MAX_DATA_BY_STEP)) != null && clubs.size() > 0) {
+                    if (!toDatabase.storeAllClubs(clubs)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    clubs.clear();
                 }
-                clubs.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), 3, 7);
-                List<CompetitorWithPhoto> competitors = fromDatabase.getAllCompetitorsWithPhoto();
-                if (!toDatabase.storeAllCompetitors(competitors)) {
-                    return false;
+                List<CompetitorWithPhoto> competitors;
+                while ((competitors = fromDatabase.getCompetitorsWithPhoto(from, MAX_DATA_BY_STEP)) != null && competitors.size() > 0) {
+                    if (!toDatabase.storeAllCompetitors(competitors)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    competitors.clear();
                 }
-                competitors.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), 4, 7);
-                List<Role> roles = fromDatabase.getAllRoles();
-                if (!toDatabase.storeAllRoles(roles)) {
-                    return false;
+                List<Role> roles;
+                while ((roles = fromDatabase.getRoles(from, MAX_DATA_BY_STEP)) != null && roles.size() > 0) {
+                    if (!toDatabase.storeAllRoles(roles)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    roles.clear();
                 }
-                roles.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), 5, 7);
-                List<Team> teams = fromDatabase.getAllTeams();
-                if (!toDatabase.storeAllTeams(teams)) {
-                    return false;
+                List<Team> teams;
+                while ((teams = fromDatabase.getTeams(from, MAX_DATA_BY_STEP)) != null && teams.size() > 0) {
+                    if (!toDatabase.storeAllTeams(teams)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    teams.clear();
                 }
-                teams.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 6, 7);
-                ArrayList<Fight> fights = fromDatabase.getAllFights();
-                if (!toDatabase.storeAllFightsAndDeleteOldOnes(fights)) {
-                    return false;
+                List<Fight> fights;
+                toDatabase.deleteAllFights();
+                while ((fights = fromDatabase.getFights(from, MAX_DATA_BY_STEP)) != null && fights.size() > 0) {
+                    if (!toDatabase.storeFights(fights, false, false)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    fights.clear();
                 }
-                fights.clear();
 
+                from = 0;
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 7, 7);
-                /*List<Undraw> undraws = fromDatabase.getUndraws();
-                if (!toDatabase.storeAllUndraws(undraws)) {
-                    return false;
+                List<Undraw> undraws;
+                while ((undraws = fromDatabase.getUndraws(from, MAX_DATA_BY_STEP)) != null && undraws.size() > 0) {
+                    if (!toDatabase.storeAllUndraws(undraws)) {
+                        return false;
+                    }
+                    from += MAX_DATA_BY_STEP;
+                    undraws.clear();
                 }
-                undraws.clear();*/
 
                 timerPanel.dispose();
                 MessageManager.informationMessage("ConversionCompleted", "Database");

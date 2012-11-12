@@ -30,8 +30,8 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -49,15 +49,16 @@ public class TournamentGroupPool {
         if (tournamentGroupManager == null) {
             tournamentGroupManager = createGroupManager(tournament);
             existingManagers.put(tournament, tournamentGroupManager);
-            tournamentGroupManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
+            List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
+            if (fights != null) {
+                tournamentGroupManager.refillDesigner(fights);
+            }
         }
         return tournamentGroupManager;
     }
 
     private static TournamentGroupManager createGroupManager(Tournament tournament) {
-        TournamentGroupManager tournamentGroupManager = new TournamentGroupManager(tournament);
-        //tournamentGroupManager.refillDesigner(KendoTournamentGenerator.getInstance().fightManager.getFights());
-        return tournamentGroupManager;
+        return new TournamentGroupManager(tournament);
     }
 
     public static void cleanGroupManager(Tournament tournament) {
@@ -71,7 +72,7 @@ public class TournamentGroupPool {
         existingManagers.put(tournamentGroupManager.tournament, tournamentGroupManager);
     }
 
-    public static void updateGroupManagers(ArrayList<Fight> fights) {
+    public static void updateGroupManagers(List<Fight> fights) {
         if (fights.size() > 0) {
             TournamentGroupManager tournamentGroupManager = getManager(fights.get(0).tournament);
             tournamentGroupManager.refillDesigner(fights);

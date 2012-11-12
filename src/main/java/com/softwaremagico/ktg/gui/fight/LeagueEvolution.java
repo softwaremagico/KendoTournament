@@ -63,7 +63,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
         this.tournament=tournament;
-        if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
+        if (!tournament.mode.equals(TournamentType.SIMPLE)) {
             TournamentGroupPool.getManager(tournament).color(true);
             TournamentGroupPool.getManager(tournament).update();
             bbp.updateBlackBoard(tournament, refill);
@@ -96,8 +96,8 @@ public class LeagueEvolution extends javax.swing.JFrame {
 
     final void updateListeners() {
         for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
-            if (TournamentGroupPool.getManager(tournament).get(i).listenerAdded) {
-                TournamentGroupPool.getManager(tournament).get(i).removeMouseClickListener();
+            if (TournamentGroupPool.getManager(tournament).getGroup(i).listenerAdded) {
+                TournamentGroupPool.getManager(tournament).getGroup(i).removeMouseClickListener();
             }
         }
     }

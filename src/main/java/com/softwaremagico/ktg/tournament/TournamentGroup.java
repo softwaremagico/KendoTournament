@@ -694,7 +694,7 @@ public class TournamentGroup extends Group implements Serializable {
         updateScoreForTeams(fights);
         List<Team> sortedTeams = getTeamsOrderedByScore();
         try {
-            //if (resolvDraws && teamsScoreOrdered.get(order).equals(teamsScoreOrdered.get(order + 1)) && order >= numberMaxOfWinners - 1) {
+            //if (resolvDraws && teamsScoreOrdered.getGroup(order).equals(teamsScoreOrdered.getGroup(order + 1)) && order >= numberMaxOfWinners - 1) {
             if (resolvDraws && teamsScoreOrdered.get(order).equals(teamsScoreOrdered.get(order + 1))) {
                 return resolvDrawTeams(order, sortedTeams);
             }

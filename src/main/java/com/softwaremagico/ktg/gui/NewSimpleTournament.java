@@ -41,7 +41,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     DefaultListModel<String> fightsModel = new DefaultListModel<>();
     //List<Tournament> listTournaments = new ArrayList<>();
     List<Team> listTeams = new ArrayList<>();
-    ArrayList<Fight> fights = new ArrayList<>();
+    List<Fight> fights = new ArrayList<>();
     //Tournament competition = null;
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;

@@ -87,8 +87,8 @@ public class Translator {
             KendoTournamentGenerator.showErrorInformation(ex);
         } catch (FileNotFoundException fnf) {
             String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
-            KendoTournamentGenerator.showErrorInformation(fnf);
             System.out.println(text);
+            //KendoTournamentGenerator.showErrorInformation(fnf);
         } catch (IOException ex) {
             Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -34,7 +34,7 @@ import java.util.Random;
  */
 public class FightManager {
 
-    private ArrayList<Fight> fights = new ArrayList<>();
+    private List<Fight> fights = new ArrayList<>();
     private Tournament tournament;
 
     FightManager(Tournament tournament) {
@@ -72,7 +72,7 @@ public class FightManager {
         }
     }
 
-    public void add(ArrayList<Fight> newFights) {
+    public void add(List<Fight> newFights) {
         for (int i = 0; i < newFights.size(); i++) {
             addNewFight(newFights.get(i));
             //newFights.get(i).team1.completeToLevel(newFights.get(i).level);
@@ -80,7 +80,7 @@ public class FightManager {
         }
     }
 
-    public boolean setAll(ArrayList<Fight> newFights, boolean storeDatabase) {
+    public boolean setAll(List<Fight> newFights, boolean storeDatabase) {
         fights = newFights;
         if (storeDatabase && newFights.size() > 0) {
             return KendoTournamentGenerator.getInstance().database.storeFights(fights, true, true);
@@ -115,7 +115,7 @@ public class FightManager {
         return index;
     }
 
-    public ArrayList<Fight> getFights() {
+    public List<Fight> getFights() {
         return fights;
     }
 
@@ -692,7 +692,7 @@ public class FightManager {
         return results;
     }
 
-    public static int getMaxLevelOfFights(ArrayList<Fight> fightsList) {
+    public static int getMaxLevelOfFights(List<Fight> fightsList) {
         int level = 0;
         for (Fight f : fightsList) {
             if (f.level > level) {

@@ -53,6 +53,15 @@ public class MessageManager {
         customMessage(trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
         Log.finest(code, title);
     }
+    
+    public static void errorMessage(String code, String title, String finalText) {
+        String text = trans.returnTag(code);
+        if (text.endsWith(".")) {
+            text = text.substring(0, text.length() - 1);
+        }
+        customMessage(text+": "+finalText, title, JOptionPane.ERROR_MESSAGE);
+        Log.finest(code, title);
+    }    
 
     public static void winnerMessage(String code, String title, String finalText, int option) {
         String text = trans.returnTag(code);

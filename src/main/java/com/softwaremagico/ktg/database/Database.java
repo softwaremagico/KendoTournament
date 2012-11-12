@@ -34,7 +34,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -141,6 +140,8 @@ public abstract class Database {
     public abstract List<Participant> getParticipants(String query, boolean verbose);
 
     public abstract List<CompetitorWithPhoto> getAllCompetitorsWithPhoto();
+    
+    public abstract List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors);
 
@@ -239,6 +240,8 @@ public abstract class Database {
     public abstract void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roles, Tournament tournament);
 
     public abstract List<Role> getAllRoles();
+    
+    public abstract List<Role> getRoles(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllRoles(List<Role> roles);
 
@@ -259,6 +262,8 @@ public abstract class Database {
     public abstract List<String> returnClubsName();
 
     public abstract List<Club> getAllClubs();
+    
+    public abstract List<Club> getClubs(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllClubs(List<Club> clubs);
 
@@ -291,6 +296,8 @@ public abstract class Database {
     public abstract boolean updateTournament(Tournament tournament, boolean verbose);
 
     public abstract List<Tournament> getAllTournaments();
+    
+    public abstract List<Tournament> getTournaments(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllTournaments(List<Tournament> tournaments);
 
@@ -337,6 +344,8 @@ public abstract class Database {
     public abstract List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose);
 
     public abstract List<Team> getAllTeams();
+    
+    public abstract List<Team> getTeams(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllTeams(List<Team> teams);
 
@@ -372,9 +381,11 @@ public abstract class Database {
     /**
      * Store a fight into the database.
      */
-    public abstract boolean storeFights(ArrayList<Fight> fights, boolean purgeTournament, boolean verbose);
+    public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
 
-    public abstract boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights);
+    public abstract boolean deleteAllFights();
+    
+    public abstract boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights);
 
     public abstract boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne);
 
@@ -382,7 +393,7 @@ public abstract class Database {
 
     public abstract boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose);
 
-    public abstract ArrayList<Fight> searchFights(String query, Tournament tournament);
+    public abstract List<Fight> searchFights(String query, Tournament tournament);
 
     /**
      * Search all fights from one determined tournament.
@@ -390,17 +401,9 @@ public abstract class Database {
      * @param tournament
      * @return
      */
-    public abstract ArrayList<Fight> searchFightsByTournament(Tournament tournament);
+    public abstract List<Fight> searchFightsByTournament(Tournament tournament);
 
-    public abstract ArrayList<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level);
-
-    /**
-     * Search all fights from one determined tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract ArrayList<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea);
+    public abstract List<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level);
 
     /**
      * Search all fights from one determined tournament.
@@ -408,7 +411,15 @@ public abstract class Database {
      * @param tournament
      * @return
      */
-    public abstract ArrayList<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team);
+    public abstract List<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea);
+
+    /**
+     * Search all fights from one determined tournament.
+     *
+     * @param tournament
+     * @return
+     */
+    public abstract List<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team);
 
     public abstract int obtainFightID(Fight fight);
 
@@ -418,7 +429,9 @@ public abstract class Database {
 
     public abstract boolean updateFightAsNotOver(Fight fight);
 
-    public abstract ArrayList<Fight> getAllFights();
+    public abstract List<Fight> getAllFights();
+    
+    public abstract List<Fight> getFights(int fromRow, int numberOfRows);
 
     /**
      * *******************************************************************
@@ -459,6 +472,8 @@ public abstract class Database {
     public abstract boolean storeUndraw(Tournament tournament, Team team, int order, int group);
 
     public abstract boolean storeUndraw(Undraw undraw);
+    
+    public abstract List<Undraw> getUndraws(int fromRow, int numberOfRows);
 
     public abstract List<Undraw> getUndraws(Tournament tournament);
 

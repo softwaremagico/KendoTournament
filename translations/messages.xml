@@ -985,7 +985,15 @@
 		<de>There is not any tournament created.</de>
 		<ca>No hi ha cap torneig en la base de dades.</ca>
 		<it>Non esiste nessun torneo nel database.</it>
-	</noTournament>
+	</noTournament>	
+	<errorTournament>
+		<en>Unexpected error when reading tournament information.</en>
+		<es>Error inesperado al leer el torneo de la base de datos.</es>
+		<nl>Unexpected error when reading tournament information.</nl>
+		<de>Unexpected error when reading tournament information.</de>
+		<ca>Error inesperat al llegir el torneig de la base de dades.</ca>
+		<it>Errore inaspettato a leggere la base di dati.</it>
+	</errorTournament>
 	<csvNotImported>
 		<en>Error when importing the CSV file.</en>
 		<es>¡Error mientras se intentaba importar el fichero CSV!</es>

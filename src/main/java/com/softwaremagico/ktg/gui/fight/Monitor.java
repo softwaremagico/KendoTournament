@@ -142,12 +142,12 @@ public final class Monitor extends javax.swing.JFrame {
                 //Show the winner of the group
                 for (int i = 0; i < TournamentGroupPool.getManager(selectedTournament).size(); i++) {
                     //Only groups of this arena. 
-                    if (TournamentGroupPool.getManager(selectedTournament).get(i).arena == fightArea || fightArea == -1) {
+                    if (TournamentGroupPool.getManager(selectedTournament).getGroup(i).arena == fightArea || fightArea == -1) {
                         //Only groups of this level.
-                        if (TournamentGroupPool.getManager(selectedTournament).get(i).getLevel() == FightPool.getManager(selectedTournament).getLastLevel()) {
-                            if (TournamentGroupPool.getManager(selectedTournament).get(i).areFightsOver()) {
-                                if (!finishedGroups.contains(TournamentGroupPool.getManager(selectedTournament).get(i))) {
-                                    finishedGroups.add(TournamentGroupPool.getManager(selectedTournament).get(i));
+                        if (TournamentGroupPool.getManager(selectedTournament).getGroup(i).getLevel() == FightPool.getManager(selectedTournament).getLastLevel()) {
+                            if (TournamentGroupPool.getManager(selectedTournament).getGroup(i).areFightsOver()) {
+                                if (!finishedGroups.contains(TournamentGroupPool.getManager(selectedTournament).getGroup(i))) {
+                                    finishedGroups.add(TournamentGroupPool.getManager(selectedTournament).getGroup(i));
                                 }
                             }
                         }

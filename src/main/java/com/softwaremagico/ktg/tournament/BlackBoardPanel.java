@@ -33,7 +33,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BlackBoardPanel extends javax.swing.JPanel {
@@ -57,7 +56,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             //TournamentGroupPool.getManager(selectedTournament).updateInnerLevel(0);
         } else {
             FightPool.getManager(tournament).getFightsFromDatabase(tournament);
-            ArrayList<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+            List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         }
         paintDesignedGroups();
         paintSpaces();

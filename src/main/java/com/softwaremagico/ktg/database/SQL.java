@@ -304,7 +304,7 @@ public abstract class SQL extends Database {
 
     private void exportFights(String file) {
         Folder.appendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
-        ArrayList<Fight> fights = getAllFights();
+        List<Fight> fights = getAllFights();
         for (int i = 0; i < fights.size(); i++) {
             Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.getName() + "','"
                     + fights.get(i).team2.getName() + "','" + fights.get(i).tournament.getName() + "',"
@@ -319,7 +319,7 @@ public abstract class SQL extends Database {
 
     private void exportDuels(String file) {
         Folder.appendTextToFile("LOCK TABLES `duel` WRITE;\n", file);
-        ArrayList<Fight> fights = getAllFights();
+        List<Fight> fights = getAllFights();
         int id = 0;
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < fights.get(i).duels.size(); j++) {
@@ -418,6 +418,7 @@ public abstract class SQL extends Database {
                             competitorWithPhoto.photoInput.reset();
                         }
                     } catch (IOException | NullPointerException ex) {
+                        KendoTournamentGenerator.showErrorInformation(ex);
                     }
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
                         stmt.setString(1, competitorWithPhoto.getId());
@@ -707,6 +708,12 @@ public abstract class SQL extends Database {
         }
 
         return null;
+    }
+
+    @Override
+    public List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows) {
+        String query = "SELECT * FROM competitor ORDER BY Surname LIMIT " + fromRow + "," + numberOfRows;
+        return getCompetitorsWithPhoto(query, false);
     }
 
     @Override
@@ -1244,12 +1251,17 @@ public abstract class SQL extends Database {
 
     @Override
     public List<Role> getAllRoles() {
+        return getRoles(0, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public List<Role> getRoles(int fromRow, int numberOfRows) {
         Log.fine("Getting all roles.");
         List<Role> roles = new ArrayList<>();
         try {
             int id = 0;
             Statement s = connection.createStatement();
-            String query = "SELECT * FROM role ORDER BY Tournament,Role";
+            String query = "SELECT * FROM role ORDER BY Tournament,Role LIMIT " + fromRow + "," + numberOfRows;
             ResultSet rs = s.executeQuery(query);
             while (rs.next()) {
                 Role role = new Role(rs.getObject("Tournament").toString(), rs.getObject("Competitor").toString(), rs.getObject("Role").toString(), rs.getInt("ImpressCard"));
@@ -1385,11 +1397,16 @@ public abstract class SQL extends Database {
 
     @Override
     public List<Club> getAllClubs() {
+        return getClubs(0, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public List<Club> getClubs(int fromRow, int numberOfRows) {
         Log.fine("Obtaining all clubs.");
         List<Club> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("select * FROM club ORDER BY Name")) {
+                    ResultSet rs = s.executeQuery("select * FROM club ORDER BY Name LIMIT " + fromRow + "," + numberOfRows)) {
                 while (rs.next()) {
                     String city = "";
                     if (rs.getObject("City") != null) {
@@ -1730,11 +1747,16 @@ public abstract class SQL extends Database {
 
     @Override
     public List<Tournament> getAllTournaments() {
+        return getTournaments(0, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public List<Tournament> getTournaments(int fromRow, int numberOfRows) {
         List<Tournament> results = new ArrayList<>();
         Log.fine("Getting all tournaments.");
         try {
             try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
+                    ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name LIMIT " + fromRow + "," + numberOfRows)) {
                 while (rs.next()) {
                     Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
@@ -1789,24 +1811,29 @@ public abstract class SQL extends Database {
             Tournament t;
             try (Statement st = connection.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM tournament WHERE Name='" + tournamentName + "' ")) {
-                rs.next();
-                t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
-                t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                InputStream sImage = getBinaryStream(rs, "Banner");
-                Long size = rs.getLong("Size");
-                t.addBanner(sImage, size);
-                InputStream sImage2 = getBinaryStream(rs, "Accreditation");
-                Long size2 = rs.getLong("AccreditationSize");
-                t.addAccreditation(sImage2, size2);
-                InputStream sImage3 = getBinaryStream(rs, "Diploma");
-                Long size3 = rs.getLong("DiplomaSize");
-                t.addDiploma(sImage3, size3);
+                if (rs.next()) {
+                    t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
+                    t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
+                    InputStream sImage = getBinaryStream(rs, "Banner");
+                    Long size = rs.getLong("Size");
+                    t.addBanner(sImage, size);
+                    InputStream sImage2 = getBinaryStream(rs, "Accreditation");
+                    Long size2 = rs.getLong("AccreditationSize");
+                    t.addAccreditation(sImage2, size2);
+                    InputStream sImage3 = getBinaryStream(rs, "Diploma");
+                    Long size3 = rs.getLong("DiplomaSize");
+                    t.addDiploma(sImage3, size3);
+                    return t;
+                } else {
+                    MessageManager.errorMessage("errorTournament", this.getClass().getName(), tournamentName);
+                }
             }
-            return t;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
 
         return null;
@@ -1836,8 +1863,10 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(npe);
         }
         return results;
     }
@@ -2215,6 +2244,12 @@ public abstract class SQL extends Database {
     }
 
     @Override
+    public List<Team> getTeams(int fromRow, int numberOfRows) {
+        String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name LIMIT " + fromRow + "," + numberOfRows;
+        return searchTeam(query, false);
+    }
+
+    @Override
     public List<Team> getAllTeams() {
         String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name ";
         return searchTeam(query, false);
@@ -2558,7 +2593,7 @@ public abstract class SQL extends Database {
      * Store a fight into the database.
      */
     @Override
-    public boolean storeFights(ArrayList<Fight> fights, boolean purgeTournament, boolean verbose) {
+    public boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose) {
         boolean error = false;
         boolean answer = false;
         if (fights.size() > 0) {
@@ -2613,7 +2648,23 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllFightsAndDeleteOldOnes(ArrayList<Fight> fights) {
+    public boolean deleteAllFights() {
+        boolean error = false;
+        try {
+            try (Statement s = connection.createStatement()) {
+                s.executeUpdate("DELETE FROM fight");
+                s.executeUpdate("DELETE FROM duel");
+            }
+        } catch (SQLException ex) {
+            error = true;
+            MessageManager.errorMessage("storeFights", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(ex);
+        }
+        return error;
+    }
+
+    @Override
+    public boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights) {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
@@ -2660,8 +2711,8 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public ArrayList<Fight> searchFights(String query, Tournament tournament) {
-        ArrayList<Fight> results = new ArrayList<>();
+    public List<Fight> searchFights(String query, Tournament tournament) {
+        List<Fight> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
@@ -2707,13 +2758,13 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public ArrayList<Fight> searchFightsByTournament(Tournament tournament) {
+    public List<Fight> searchFightsByTournament(Tournament tournament) {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
         return searchFights(query, tournament);
     }
 
     @Override
-    public ArrayList<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level) {
+    public List<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level) {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level;
         return searchFights(query, tournament);
     }
@@ -2725,7 +2776,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public ArrayList<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea) {
+    public List<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea) {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND FightArea=" + fightArea;
         return searchFights(query, tournament);
     }
@@ -2737,7 +2788,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public ArrayList<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team) {
+    public List<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team) {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
         return searchFights(query, tournament);
     }
@@ -2807,12 +2858,17 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public ArrayList<Fight> getAllFights() {
+    public List<Fight> getAllFights() {
+        return getFights(0, Integer.MAX_VALUE);
+    }
+
+    @Override
+    public List<Fight> getFights(int fromRow, int numberOfRows) {
         ArrayList<Fight> results = new ArrayList<>();
 
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM fight")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM fight LIMIT " + fromRow + "," + numberOfRows)) {
 
                 while (rs.next()) {
                     Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
@@ -3152,7 +3208,7 @@ public abstract class SQL extends Database {
         Statement s;
         List<Duel> results = new ArrayList<>();
 
-        ArrayList<Fight> fights = searchFightsByTournament(tournament);
+        List<Fight> fights = searchFightsByTournament(tournament);
         for (int i = 0; i < fights.size(); i++) {
             results.addAll(getDuelsOfFight(fights.get(i)));
         }
@@ -3332,6 +3388,34 @@ public abstract class SQL extends Database {
     }
 
     @Override
+    public List<Undraw> getUndraws(int fromRow, int numberOfRows) {
+        String query = "SELECT * FROM undraw LIMIT " + fromRow + "," + numberOfRows;
+
+        List<Undraw> results = new ArrayList<>();
+
+        try {
+            try (Statement s = connection.createStatement();
+                    ResultSet rs = s.executeQuery(query)) {
+                while (rs.next()) {
+                    Tournament tournament = TournamentPool.getTournament(rs.getObject("Championship").toString());
+                    Undraw u = new Undraw(tournament,
+                            TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
+                            TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
+                            (Integer) rs.getObject("Player"));
+                    results.add(u);
+                }
+            }
+        } catch (SQLException ex) {
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(ex);
+        } catch (NullPointerException npe) {
+            MessageManager.errorMessage("noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(npe);
+        }
+        return results;
+    }
+
+    @Override
     public List<Undraw> getUndraws(Tournament tournament) {
         String query = "SELECT * FROM undraw WHERE championship='" + tournament.getName() + "'";
 
@@ -3342,7 +3426,7 @@ public abstract class SQL extends Database {
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
                     Undraw u = new Undraw(TournamentPool.getTournament(rs.getObject("Championship").toString()),
-                            TournamentGroupPool.getManager(tournament).get(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
+                            TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
                             TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
                             (Integer) rs.getObject("Player"));
                     results.add(u);
@@ -3365,8 +3449,8 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM undraw");
                 for (int i = 0; i < undraws.size(); i++) {
-                    s.executeUpdate("INSERT INTO undraw (Championship, UndrawGroup, Team, Player) VALUES ('"
-                            + undraws.get(i).getTournament() + "'," + undraws.get(i).getGroup() + ",'" + undraws.get(i).getWinnerTeam() + "'," + undraws.get(i).getPlayer() + ")");
+                    s.executeUpdate("INSERT INTO undraw (Championship, UndrawGroup, Team, Player, LevelUndraw) VALUES ('"
+                            + undraws.get(i).getTournament() + "'," + undraws.get(i).getIndexOfGroup() + ",'" + undraws.get(i).getWinnerTeam().getName() + "'," + undraws.get(i).getPlayer() + "," + undraws.get(i).getGroup().getLevel() +  ")");
                 }
             }
         } catch (SQLException ex) {

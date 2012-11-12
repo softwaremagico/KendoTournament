@@ -173,7 +173,7 @@ public abstract class LeagueLevel {
         return true;
     }
 
-    protected void updateScoreOfTeams(ArrayList<Fight> fights) {
+    protected void updateScoreOfTeams(List<Fight> fights) {
         for (TournamentGroup group : tournamentGroups) {
             group.updateScoreForTeams(fights);
         }

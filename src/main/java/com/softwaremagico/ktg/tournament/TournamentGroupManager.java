@@ -52,6 +52,10 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
+    public void setFights(List<Fight> fights) {
+        refillDesigner(fights);
+    }
+
     public List<LeagueLevel> getLevels() {
         return levels;
     }
@@ -135,8 +139,10 @@ public class TournamentGroupManager implements Serializable {
         default_max_winners = value;
         List<TournamentGroup> groups = returnGroupsOfLevel(0);
 
-        for (TournamentGroup group : groups) {
-            group.updateMaxNumberOfWinners(value);
+        if (groups != null) {
+            for (TournamentGroup group : groups) {
+                group.updateMaxNumberOfWinners(value);
+            }
         }
     }
 
@@ -152,7 +158,7 @@ public class TournamentGroupManager implements Serializable {
      *
      * @param group group to complete relative to the level.
      */
-    protected void fillGroupWithWinnersPreviousLevel(TournamentGroup group, ArrayList<Fight> fights, boolean resolvDraw) {
+    protected void fillGroupWithWinnersPreviousLevel(TournamentGroup group, List<Fight> fights, boolean resolvDraw) {
         updateScoreForTeams(fights);
         if (group.getLevel() > 0) {
             List<TournamentGroup> groups = returnGroupsOfLevel(group.getLevel() - 1);
@@ -169,7 +175,7 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    private Team winnerOfLastFight(ArrayList<Fight> fights) {
+    private Team winnerOfLastFight(List<Fight> fights) {
         // Last group.
         try {
             TournamentGroup dg = levels.get(levels.size() - 1).getLastGroupOfLevel();
@@ -228,7 +234,7 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    public TournamentGroup get(int index) {
+    public TournamentGroup getGroup(int index) {
         List<TournamentGroup> tournamentGroups = new ArrayList<>();
 
         for (LeagueLevel level : levels) {
@@ -433,7 +439,7 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    private void leagueFinished(ArrayList<Fight> fights) {
+    private void leagueFinished(List<Fight> fights) {
         Log.finer("League finished");
         // Finished! The winner is...
         Team winner = winnerOfLastFight(fights);
@@ -450,7 +456,7 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    private ArrayList<Fight> generateNextLevelFights(int nextLevel) {
+    private List<Fight> generateNextLevelFights(int nextLevel) {
         Log.finer("All fights are over.");
 
         if (MessageManager.questionMessage("nextLevel", "Warning!")) {
@@ -475,10 +481,10 @@ public class TournamentGroupManager implements Serializable {
         return newFights;
     }
 
-    public ArrayList<Fight> nextLevel(ArrayList<Fight> fights, int fightArea, Tournament tournament) {
+    public List<Fight> nextLevel(List<Fight> fights, int fightArea, Tournament tournament) {
         Integer nextLevel = getIndexLastLevelNotUsed();
         int arena;
-        ArrayList<Fight> newFights = new ArrayList<>();
+        List<Fight> newFights = new ArrayList<>();
         // Not finished the tournament.
         if (nextLevel != null && nextLevel >= 0 && nextLevel < getLevels().size()) {
             Log.finer("Tournament not finished!");
@@ -547,13 +553,13 @@ public class TournamentGroupManager implements Serializable {
         return fights;
     }
 
-    public void updateScoreForTeams(ArrayList<Fight> fights) {
+    public void updateScoreForTeams(List<Fight> fights) {
         for (LeagueLevel level : levels) {
             level.updateScoreOfTeams(fights);
         }
     }
 
-    public TournamentGroup getGroupOfFight(ArrayList<Fight> fights, int fightIndex) {
+    public TournamentGroup getGroupOfFight(List<Fight> fights, int fightIndex) {
         if (fightIndex >= 0 && fightIndex < fights.size()) {
             return getGroupOfFight(fights.get(fightIndex));
         }
@@ -567,7 +573,7 @@ public class TournamentGroupManager implements Serializable {
         return null;
     }
 
-    public ArrayList<Fight> getFightsOfLevel(ArrayList<Fight> fights, int level) {
+    public ArrayList<Fight> getFightsOfLevel(List<Fight> fights, int level) {
         ArrayList<Fight> fightsOfLevel = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).level == level) {
@@ -598,7 +604,7 @@ public class TournamentGroupManager implements Serializable {
         return tournament.fightingAreas;
     }
 
-    public int getArenasOfLevel(ArrayList<Fight> fights, int level) {
+    public int getArenasOfLevel(List<Fight> fights, int level) {
         return levels.get(level).getArenasUsed();
     }
 
@@ -612,7 +618,7 @@ public class TournamentGroupManager implements Serializable {
     /**
      * Restore a designer with the data stored in a database.
      */
-    public void refillDesigner(ArrayList<Fight> fights) {
+    public void refillDesigner(List<Fight> fights) {
         if (fights.size() > 0) {
             default_max_winners = fights.get(0).getMaxWinners();
         }
@@ -637,8 +643,8 @@ public class TournamentGroupManager implements Serializable {
         }
     }
 
-    private void refillLevel(ArrayList<Fight> fights, int level) {
-        ArrayList<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
+    private void refillLevel(List<Fight> fights, int level) {
+        List<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
         List<Team> teamsOfGroup = new ArrayList<>();
         deleteGroups(level);
 
@@ -719,16 +725,16 @@ public class TournamentGroupManager implements Serializable {
 
                 if (fightNumber < FightPool.getManager(tournament).getFights().size() && fightNumber >= 0) {
                     //Fight not finished and correct.
-                        /*if (!FightPool.getManager(tournament).getFights().get(fightNumber).isOver()) {
-                         fight = FightPool.getManager(tournament).getFights().get(fightNumber);
-                         fightsImported++;
-                         fight.setOver();
-                         fight.setOverStored(false);
-                         }*/
-                        Fight readedFight = levels.get(Integer.parseInt(fields[3]))
-                                .getGroups().get(Integer.parseInt(fields[2]))
-                                .getFights().get(Integer.parseInt(fields[1]));
-                        if (readedFight.team1.getName().equals(fields[4]) && readedFight.team2.getName().equals(fields[5])) {
+                        /*if (!FightPool.getManager(tournament).getFights().getGroup(fightNumber).isOver()) {
+                     fight = FightPool.getManager(tournament).getFights().getGroup(fightNumber);
+                     fightsImported++;
+                     fight.setOver();
+                     fight.setOverStored(false);
+                     }*/
+                    Fight readedFight = levels.get(Integer.parseInt(fields[3]))
+                            .getGroups().get(Integer.parseInt(fields[2]))
+                            .getFights().get(Integer.parseInt(fields[1]));
+                    if (readedFight.team1.getName().equals(fields[4]) && readedFight.team2.getName().equals(fields[5])) {
                         if (!readedFight.isOver()) {
                             fight = readedFight;
                             fightsImported++;
