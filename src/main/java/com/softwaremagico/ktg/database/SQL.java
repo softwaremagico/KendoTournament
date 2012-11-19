@@ -413,13 +413,13 @@ public abstract class SQL extends Database {
                 if (rs.next()) {
                     return updateCompetitor(competitorWithPhoto, verbose);
                 } else {
-                    try {
+                    /*try {
                         if (competitorWithPhoto.photoInput.markSupported()) {
                             competitorWithPhoto.photoInput.reset();
                         }
                     } catch (IOException | NullPointerException ex) {
                         KendoTournamentGenerator.showErrorInformation(ex);
-                    }
+                    }*/
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
                         stmt.setString(1, competitorWithPhoto.getId());
                         stmt.setString(2, competitorWithPhoto.getName());
@@ -733,11 +733,11 @@ public abstract class SQL extends Database {
             }
 
             for (int i = 0; i < competitors.size(); i++) {
-                if (!storeCompetitor(competitors.get(i), false)) {
+                if (storeCompetitor(competitors.get(i), false)) {
                     Log.finer("New competitors stored.");
-                    error = true;
                 } else {
                     Log.severe("Failed to store the list of competitors");
+                    error = true;
                 }
             }
         } catch (SQLException ex) {
