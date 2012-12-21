@@ -414,12 +414,12 @@ public abstract class SQL extends Database {
                     return updateCompetitor(competitorWithPhoto, verbose);
                 } else {
                     /*try {
-                        if (competitorWithPhoto.photoInput.markSupported()) {
-                            competitorWithPhoto.photoInput.reset();
-                        }
-                    } catch (IOException | NullPointerException ex) {
-                        KendoTournamentGenerator.showErrorInformation(ex);
-                    }*/
+                     if (competitorWithPhoto.photoInput.markSupported()) {
+                     competitorWithPhoto.photoInput.reset();
+                     }
+                     } catch (IOException | NullPointerException ex) {
+                     KendoTournamentGenerator.showErrorInformation(ex);
+                     }*/
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
                         stmt.setString(1, competitorWithPhoto.getId());
                         stmt.setString(2, competitorWithPhoto.getName());
@@ -723,13 +723,15 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors) {
+    public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes) {
         Log.fine("Storing a list of competitors");
         boolean error = false;
         try {
-            try (Statement s = connection.createStatement()) {
-                Log.finer("Deleting previous competitors");
-                s.executeUpdate("DELETE FROM competitor");
+            if (deleteOldOnes) {
+                try (Statement s = connection.createStatement()) {
+                    Log.finer("Deleting previous competitors");
+                    s.executeUpdate("DELETE FROM competitor");
+                }
             }
 
             for (int i = 0; i < competitors.size(); i++) {
@@ -1276,13 +1278,15 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllRoles(List<Role> roles) {
+    public boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes) {
         Log.fine("Storing all roles into database.");
         boolean error = false;
         try {
-            try (Statement s = connection.createStatement()) {
-                Log.finer("Deleting all roles");
-                s.executeUpdate("DELETE FROM role");
+            if (deleteOldOnes) {
+                try (Statement s = connection.createStatement()) {
+                    Log.finer("Deleting all roles");
+                    s.executeUpdate("DELETE FROM role");
+                }
             }
 
             for (int i = 0; i < roles.size(); i++) {
@@ -1448,12 +1452,14 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllClubs(List<Club> clubs) {
+    public boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes) {
         Log.fine("Storing a list of clubs.");
         boolean error = false;
         try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM club");
+            if (deleteOldOnes) {
+                try (Statement s = connection.createStatement()) {
+                    s.executeUpdate("DELETE FROM club");
+                }
             }
 
             for (int i = 0; i < clubs.size(); i++) {
@@ -1784,12 +1790,14 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllTournaments(List<Tournament> tournaments) {
+    public boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes) {
         boolean error = false;
         Log.fine("Storing a list of tournaments.");
         try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM tournament");
+            if (deleteOldOnes) {
+                try (Statement s = connection.createStatement()) {
+                    s.executeUpdate("DELETE FROM tournament");
+                }
             }
 
             for (int i = 0; i < tournaments.size(); i++) {
@@ -2256,12 +2264,14 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllTeams(List<Team> teams) {
+    public boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes) {
         Log.fine("Store a group of teams.");
         boolean error = false;
         try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team");
+            if (deleteOldOnes) {
+                try (Statement s = connection.createStatement()) {
+                    s.executeUpdate("DELETE FROM team");
+                }
             }
 
             for (int i = 0; i < teams.size(); i++) {
@@ -2624,7 +2634,7 @@ public abstract class SQL extends Database {
                             //Add the fightManager that depends on the level and the teams.
                             s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                             f.setOverStored(true);
-                            for(int i = 0; i < f.duels.size(); i++){
+                            for (int i = 0; i < f.duels.size(); i++) {
                                 storeDuel(f.duels.get(i), f, i);
                             }
                         }
@@ -3044,7 +3054,7 @@ public abstract class SQL extends Database {
 
         return !error;
     }
-   
+
     @Override
     public boolean storeDuelsOfFight(Fight f) {
         boolean error = false;
@@ -3296,8 +3306,8 @@ public abstract class SQL extends Database {
     public List<Duel> getAllDuels() {
         return getDuels(0, Integer.MAX_VALUE);
     }
-    
-     @Override
+
+    @Override
     public List<Duel> getDuels(int fromRow, int numberOfRows) {
         Statement s;
         List<Duel> results = new ArrayList<>();
@@ -3451,14 +3461,16 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllUndraws(List<Undraw> undraws) {
+    public boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes) {
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw");
+                if (deleteOldOnes) {
+                    s.executeUpdate("DELETE FROM undraw");
+                }
                 for (int i = 0; i < undraws.size(); i++) {
                     s.executeUpdate("INSERT INTO undraw (Championship, UndrawGroup, Team, Player, LevelUndraw) VALUES ('"
-                            + undraws.get(i).getTournament() + "'," + undraws.get(i).getIndexOfGroup() + ",'" + undraws.get(i).getWinnerTeam().getName() + "'," + undraws.get(i).getPlayer() + "," + undraws.get(i).getGroup().getLevel() +  ")");
+                            + undraws.get(i).getTournament() + "'," + undraws.get(i).getIndexOfGroup() + ",'" + undraws.get(i).getWinnerTeam().getName() + "'," + undraws.get(i).getPlayer() + "," + undraws.get(i).getGroup().getLevel() + ")");
                 }
             }
         } catch (SQLException ex) {

@@ -143,7 +143,7 @@ public abstract class Database {
     
     public abstract List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows);
 
-    public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors);
+    public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes);
 
     public abstract List<Competitor> getAllCompetitors();
 
@@ -243,7 +243,7 @@ public abstract class Database {
     
     public abstract List<Role> getRoles(int fromRow, int numberOfRows);
 
-    public abstract boolean storeAllRoles(List<Role> roles);
+    public abstract boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes);
 
     /**
      * *******************************************************************
@@ -265,7 +265,7 @@ public abstract class Database {
     
     public abstract List<Club> getClubs(int fromRow, int numberOfRows);
 
-    public abstract boolean storeAllClubs(List<Club> clubs);
+    public abstract boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes);
 
     public abstract List<Club> searchClub(String query, boolean verbose);
 
@@ -299,7 +299,7 @@ public abstract class Database {
     
     public abstract List<Tournament> getTournaments(int fromRow, int numberOfRows);
 
-    public abstract boolean storeAllTournaments(List<Tournament> tournaments);
+    public abstract boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes);
 
     public abstract Tournament getTournamentByName(String name, boolean verbose);
 
@@ -347,7 +347,7 @@ public abstract class Database {
     
     public abstract List<Team> getTeams(int fromRow, int numberOfRows);
 
-    public abstract boolean storeAllTeams(List<Team> teams);
+    public abstract boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes);
 
     public abstract void updateTeamGroupOfLeague(Tournament tournament, Team team);
 
@@ -479,7 +479,7 @@ public abstract class Database {
 
     public abstract List<Undraw> getUndraws(Tournament tournament);
 
-    public abstract boolean storeAllUndraws(List<Undraw> undraws);
+    public abstract boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes);
 
     public abstract List<Team> getWinnersInUndraws(Tournament tournament, int level, int group);
 

@@ -91,7 +91,7 @@ public class ConvertDatabase {
                 List<Tournament> tournaments;
                 int from = 0;
                 while ((tournaments = fromDatabase.getTournaments(from, MAX_DATA_BY_STEP)) != null && tournaments.size() > 0) {
-                    if (!toDatabase.storeAllTournaments(tournaments)) {
+                    if (!toDatabase.storeAllTournaments(tournaments, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
@@ -102,7 +102,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), 2, 7);
                 List<Club> clubs;
                 while ((clubs = fromDatabase.getClubs(from, MAX_DATA_BY_STEP)) != null && clubs.size() > 0) {
-                    if (!toDatabase.storeAllClubs(clubs)) {
+                    if (!toDatabase.storeAllClubs(clubs, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
@@ -113,7 +113,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), 3, 7);
                 List<CompetitorWithPhoto> competitors;
                 while ((competitors = fromDatabase.getCompetitorsWithPhoto(from, MAX_DATA_BY_STEP)) != null && competitors.size() > 0) {
-                    if (!toDatabase.storeAllCompetitors(competitors)) {
+                    if (!toDatabase.storeAllCompetitors(competitors, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
@@ -124,7 +124,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), 4, 7);
                 List<Role> roles;
                 while ((roles = fromDatabase.getRoles(from, MAX_DATA_BY_STEP)) != null && roles.size() > 0) {
-                    if (!toDatabase.storeAllRoles(roles)) {
+                    if (!toDatabase.storeAllRoles(roles, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
@@ -135,7 +135,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), 5, 7);
                 List<Team> teams;
                 while ((teams = fromDatabase.getTeams(from, MAX_DATA_BY_STEP)) != null && teams.size() > 0) {
-                    if (!toDatabase.storeAllTeams(teams)) {
+                    if (!toDatabase.storeAllTeams(teams, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
@@ -158,7 +158,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 7, 7);
                 List<Undraw> undraws;
                 while ((undraws = fromDatabase.getUndraws(from, MAX_DATA_BY_STEP)) != null && undraws.size() > 0) {
-                    if (!toDatabase.storeAllUndraws(undraws)) {
+                    if (!toDatabase.storeAllUndraws(undraws, from==0)) {
                         return false;
                     }
                     from += MAX_DATA_BY_STEP;
