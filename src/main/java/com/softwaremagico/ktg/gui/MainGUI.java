@@ -489,6 +489,8 @@ public class MainGUI extends KendoFrame {
         setTitle("Kendo Tournament Administration Tool");
         setResizable(false);
 
+        MainPhotoPanel.setBorder(null);
+        MainPhotoPanel.setForeground(new java.awt.Color(5, 0, 0));
         MainPhotoPanel.setOpaque(false);
         MainPhotoPanel.setLayout(new java.awt.BorderLayout());
 
