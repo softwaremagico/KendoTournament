@@ -135,8 +135,12 @@ public class KendoTournamentGenerator {
     }
 
     public String getVersion() {
-        return MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath(), false);
-        //return MyFile.readTextFile("/version.txt",false);
+        String text;
+        text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath(), false);
+        if (text != null && text.length() > 0) {
+            return text;
+        }
+        return MyFile.readTextFromJar("/version.txt");
     }
 
     /**

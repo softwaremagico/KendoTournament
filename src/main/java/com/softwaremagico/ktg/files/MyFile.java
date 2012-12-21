@@ -64,11 +64,12 @@ public class MyFile {
     }
 
     /**
-     * Return the text of a file in one string. 
+     * Return the text of a file in one string.
+     *
      * @param filename
      * @param verbose
      * @return
-     * @throws IOException 
+     * @throws IOException
      */
     public static String inString(String filename, boolean verbose) throws IOException {
         //String OS = System.getProperty("os.name");
@@ -116,7 +117,7 @@ public class MyFile {
      */
     public static String readTextFile(String filename, boolean verbose) {
         File file = new File(filename);
-        String text="";
+        String text = "";
         try {
             try (FileInputStream inputData = new FileInputStream(file)) {
                 byte bt[] = new byte[(int) file.length()];
@@ -149,9 +150,24 @@ public class MyFile {
         return text;
     }
 
+    public static String readTextFromJar(String s) {
+        String totalText = "";
+        String thisLine;
+        try {
+            InputStream is = MyFile.class.getResourceAsStream(s);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            while ((thisLine = br.readLine()) != null) {
+                totalText += thisLine;
+            }
+        } catch (Exception e) {
+        }
+        return totalText;
+    }
+
     /**
-     * Removes a file. 
-     * @param filename 
+     * Removes a file.
+     *
+     * @param filename
      */
     public static void deleteFile(String filename) {
         File f = new File(filename);
@@ -188,9 +204,10 @@ public class MyFile {
     }
 
     /**
-     * Check if the file already exists. 
+     * Check if the file already exists.
+     *
      * @param path
-     * @return 
+     * @return
      */
     public static boolean fileExist(String path) {
         File f = new File(path);
