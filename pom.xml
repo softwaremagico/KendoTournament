@@ -124,7 +124,7 @@
                         <goals>
                             <goal>update-file-header</goal>
                         </goals>
-                        <phase>process-sources</phase>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -168,7 +168,7 @@
                 <version>1.7</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <configuration>
                             <tasks>
                                 <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
@@ -267,6 +267,7 @@
                                         <filter value="${winexe}" token="winexe" />
                                     </filterset>
                                 </copy>  
+				
                             </tasks>
                         </configuration>
                         <goals>

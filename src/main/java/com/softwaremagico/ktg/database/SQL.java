@@ -2624,6 +2624,9 @@ public abstract class SQL extends Database {
                             //Add the fightManager that depends on the level and the teams.
                             s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
                             f.setOverStored(true);
+                            for(int i = 0; i < f.duels.size(); i++){
+                                storeDuel(f.duels.get(i), f, i);
+                            }
                         }
                     }
                 }
@@ -3041,7 +3044,7 @@ public abstract class SQL extends Database {
 
         return !error;
     }
-
+   
     @Override
     public boolean storeDuelsOfFight(Fight f) {
         boolean error = false;
@@ -3291,12 +3294,17 @@ public abstract class SQL extends Database {
 
     @Override
     public List<Duel> getAllDuels() {
+        return getDuels(0, Integer.MAX_VALUE);
+    }
+    
+     @Override
+    public List<Duel> getDuels(int fromRow, int numberOfRows) {
         Statement s;
         List<Duel> results = new ArrayList<>();
         Duel d;
         try {
             s = connection.createStatement();
-            try (ResultSet rs = s.executeQuery("SELECT * FROM duel")) {
+            try (ResultSet rs = s.executeQuery("SELECT * FROM duel LIMIT " + fromRow + "," + numberOfRows)) {
                 while (rs.next()) {
                     d = new Duel();
                     char c;

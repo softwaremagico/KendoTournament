@@ -458,6 +458,8 @@ public abstract class Database {
     public abstract List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight);
 
     public abstract List<Duel> getAllDuels();
+    
+    public abstract List<Duel> getDuels(int fromRow, int numberOfRows);
 
     /**
      * *******************************************************************
