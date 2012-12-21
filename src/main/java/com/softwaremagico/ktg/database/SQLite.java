@@ -81,7 +81,11 @@ public class SQLite extends SQL {
 
             if (!isDatabaseInstalledCorrectly(false)) {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
-                return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+                if (retry) {
+                    return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+                } else {
+                    return false;
+                }
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -132,7 +136,7 @@ public class SQLite extends SQL {
     @Override
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
-            copyFile(new File("database/" + defaultDatabaseName + "." + defaultSQLiteExtension), new File("database/" + tmp_database + "." + defaultSQLiteExtension));
+            copyFile(new File(Path.returnDatabasePath() + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.returnDatabasePath() + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
             KendoTournamentGenerator.showErrorInformation(ex);
         }
@@ -140,22 +144,25 @@ public class SQLite extends SQL {
 
     private static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.exists()) {
+            System.out.println(destFile.getAbsolutePath());
             destFile.createNewFile();
         }
 
-        FileChannel source = null;
-        FileChannel destination = null;
+        InputStream source = null;
+        OutputStream destination = null;
         try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
+            source = new FileInputStream(sourceFile);
+            destination = new FileOutputStream(destFile);
 
-            // previous code: destination.transferFrom(source, 0, source.size());
-            // to avoid infinite loops, should be:
-            long count = 0;
-            long size = source.size();
-            while (count < size) {
-                count += destination.transferFrom(source, 0, size - count);
+            byte[] buffer = new byte[1024];
+
+            int length;
+            //copy the file content in bytes 
+            while ((length = source.read(buffer)) > 0) {
+                destination.write(buffer, 0, length);
             }
+        } catch (Exception e) {
+            KendoTournamentGenerator.showErrorInformation(e);
         } finally {
             if (source != null) {
                 source.close();

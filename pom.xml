@@ -168,7 +168,7 @@
                 <version>1.7</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <configuration>
                             <tasks>
                                 <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
