@@ -62,11 +62,11 @@ public enum Score {
     public static Image getImage(String fileName) {
         Image image = existingScore.get(fileName);
         if (image == null) {
-            File file = new File(Path.returnScoreFolder() + fileName);
+            File file = new File(Path.getScoreFolder() + fileName);
             try {
                 image = ImageIO.read(file);
             } catch (IOException ex) {
-                Log.severe("No image '" + Path.returnScoreFolder() + fileName + "' found.");
+                Log.severe("No image '" + Path.getScoreFolder() + fileName + "' found.");
             }
             existingScore.put(fileName, image);
         }

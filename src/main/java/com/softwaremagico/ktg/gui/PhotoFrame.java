@@ -104,12 +104,12 @@ public class PhotoFrame extends JPanel {
         Graphics2D g = dest.createGraphics();
         AffineTransform at = AffineTransform.getScaleInstance((double) width / src.getWidth(), (double) height / src.getHeight());
         g.drawRenderedImage(src, at);
-        ImageIO.write(dest, "PNG", new File(Path.returnImagePath() + "tmp.png"));
-        tmp_image = new FileInputStream(Path.returnImagePath() + "tmp.png");
-        File file = new File(Path.returnImagePath() + "tmp.png");
+        ImageIO.write(dest, "PNG", new File(Path.getImagePath() + "tmp.png"));
+        tmp_image = new FileInputStream(Path.getImagePath() + "tmp.png");
+        File file = new File(Path.getImagePath() + "tmp.png");
         size = file.length();
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        photo = toolkit.getImage(Path.returnImagePath() + "tmp.png");
+        photo = toolkit.getImage(Path.getImagePath() + "tmp.png");
         photoInput = tmp_image;
     }
 
@@ -166,11 +166,11 @@ public class PhotoFrame extends JPanel {
     public void CleanPhoto() {
         try {
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            photo = toolkit.getImage(Path.returnWhiteSquare());
-            photoInput = new FileInputStream(Path.returnWhiteSquare());
+            photo = toolkit.getImage(Path.getWhiteSquare());
+            photoInput = new FileInputStream(Path.getWhiteSquare());
             BufferedImage input = ImageIO.read(photoInput);
             photo = photo.getScaledInstance(600, 600, Image.SCALE_FAST);
-            File file = new File(Path.returnWhiteSquare());
+            File file = new File(Path.getWhiteSquare());
             size = file.length();
             //photoInput.close();
             this.repaint();

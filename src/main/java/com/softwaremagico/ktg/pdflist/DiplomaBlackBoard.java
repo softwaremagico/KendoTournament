@@ -76,7 +76,7 @@ public class DiplomaBlackBoard extends JPanel {
     private File getBackground(String image) {
         File file = new File(image);
         if (!file.exists()) {
-            file = new File(Path.returnDiplomaPath());
+            file = new File(Path.getDiplomaPath());
             if (!file.exists()) {
             }
         }
@@ -92,7 +92,7 @@ public class DiplomaBlackBoard extends JPanel {
     public void paint(Graphics g) {
         try {
             setBackground(new Color(255, 255, 255));
-            setBackground(getBackground(Path.returnDiplomaPath()), getSize());
+            setBackground(getBackground(Path.getDiplomaPath()), getSize());
             if (imagen != null) {
                 g.drawImage(imagen, 0, 0, null);
             }

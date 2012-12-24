@@ -138,7 +138,7 @@ public class MainGUI extends KendoFrame {
     }
     
     private void setPhoto() {
-        banner = new PhotoFrame(MainPhotoPanel, Path.returnMainPhoto());
+        banner = new PhotoFrame(MainPhotoPanel, Path.getMainPhoto());
         MainPhotoPanel.add(banner, 0);
         banner.repaint();
     }
@@ -150,7 +150,7 @@ public class MainGUI extends KendoFrame {
     private void completeLanguageMenu() {
         for (int i = 0; i < KendoTournamentGenerator.getInstance().languages.size(); i++) {
             javax.swing.JRadioButtonMenuItem MenuItem;
-            MenuItem = new javax.swing.JRadioButtonMenuItem(KendoTournamentGenerator.getInstance().languages.getName(i), new ImageIcon(Path.returnImagePath() + KendoTournamentGenerator.getInstance().languages.getPathToFlag(i)));
+            MenuItem = new javax.swing.JRadioButtonMenuItem(KendoTournamentGenerator.getInstance().languages.getName(i), new ImageIcon(Path.getImagePath() + KendoTournamentGenerator.getInstance().languages.getPathToFlag(i)));
             if (KendoTournamentGenerator.getInstance().language.equals(KendoTournamentGenerator.getInstance().languages.getAbbreviature(i))) {
                 MenuItem.setSelected(true);
             }

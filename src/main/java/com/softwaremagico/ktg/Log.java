@@ -42,7 +42,7 @@ public class Log {
 
     static {
         try {
-            FileHandler fh = new FileHandler(Path.returnLogFile(), maxBytes, numLogFiles, true);
+            FileHandler fh = new FileHandler(Path.getLogFile(), maxBytes, numLogFiles, true);
             logger.addHandler(fh);
             logger.setLevel(logLevel);
             //fh.setFormatter(new SimpleFormatter());

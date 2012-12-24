@@ -73,7 +73,7 @@ public final class AboutBox extends javax.swing.JFrame {
         try {
             logo = new PanelBackground();
             logo.setPreferredSize(new Dimension(LogoPanel.getWidth(), LogoPanel.getHeight()));
-            logo.setBackground(new File(Path.returnLogoPath()));
+            logo.setBackground(new File(Path.getLogoPath()));
             logo.revalidate();
             logo.repaint();
             LogoPanel.add(logo);

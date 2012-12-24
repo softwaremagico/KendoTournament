@@ -33,10 +33,14 @@ import java.io.File;
  */
 public class Path {
 
+    private static final String DIRECTORY_STORE_USER_DATA = "kendoTournament";
+    private static final String CONFIG_FOLDER = "configuration";
+    private static final String DATABASE_FOLDER = "databases";
+
     private Path() {
     }
 
-    public static String returnRootPath() {
+    public static String getRootPath() {
         String soName = System.getProperty("os.name");
         if (soName.contains("Linux") || soName.contains("linux")) {
             File f = new File("/usr/share/kendo-tournament-generator");
@@ -51,67 +55,83 @@ public class Path {
         return "";
     }
 
-    public static String returnImagePath() {
-        return returnRootPath() + "images" + File.separator;
+    public static String getImagePath() {
+        return getRootPath() + "images" + File.separator;
     }
 
-    public static String returnTranslatorPath() {
-        return returnRootPath() + "translations" + File.separator;
+    public static String getTranslatorPath() {
+        return getRootPath() + "translations" + File.separator;
     }
 
-    public static String returnDiplomaPath() {
-        return returnImagePath() + "diploma" + File.separator + "diploma.png";
+    public static String getDiplomaPath() {
+        return getImagePath() + "diploma" + File.separator + "diploma.png";
     }
 
-    public static String returnDatabasePath() {
-        return returnRootPath() + "database" + File.separator;
+    public static String returnDatabaseSchemaPath() {
+        return getRootPath() + "database";
     }
 
-    public static String returnBackgroundPath() {
-        return returnImagePath() + "background" + File.separator + "background.png";
+    public static String getBackgroundPath() {
+        return getImagePath() + "background" + File.separator + "background.png";
     }
 
-    public static String returnBannerPath() {
-        return returnImagePath() + "banner" + File.separator + "banner.png";
+    public static String getBannerPath() {
+        return getImagePath() + "banner" + File.separator + "banner.png";
     }
 
-    public static String returnLogoPath() {
-        return returnImagePath() + "logo" + File.separator + "kendoUV.gif";
+    public static String getLogoPath() {
+        return getImagePath() + "logo" + File.separator + "kendoUV.gif";
     }
 
-    public static String returnDefaultPhoto() {
-        return returnDefault() + "defaultPhoto.png";
+    public static String getDefaultPhoto() {
+        return getDefaultsImagesFolder() + "defaultPhoto.png";
     }
 
-    public static String returnDefaultBanner() {
-        return returnDefault() + "defaultBanner.png";
+    public static String getDefaultBanner() {
+        return getDefaultsImagesFolder() + "defaultBanner.png";
     }
 
-    public static String returnMainPhoto() {
-        return returnDefault() + "mainPhoto.png";
+    public static String getMainPhoto() {
+        return getDefaultsImagesFolder() + "mainPhoto.png";
     }
 
-    public static String returnDefault() {
-        return returnImagePath() + "defaults" + File.separator;
+    public static String getDefaultsImagesFolder() {
+        return getImagePath() + "defaults" + File.separator;
     }
 
-    public static String returnWhiteSquare() {
-        return returnDefault() + "clean.png";
+    public static String getWhiteSquare() {
+        return getDefaultsImagesFolder() + "clean.png";
     }
 
-    public static String returnManualPath() {
-        return returnRootPath() + "manual" + File.separator;
+    public static String getManualPath() {
+        return getRootPath() + "manual" + File.separator;
     }
 
-    public static String returnScoreFolder() {
-        return returnImagePath() + "score" + File.separator;
+    public static String getScoreFolder() {
+        return getImagePath() + "score" + File.separator;
     }
 
-    public static String returnLogFile() {
+    public static String getLogFile() {
         return "kendoTournament.log";
     }
 
     public static String returnIconFolder() {
-        return returnImagePath() + "icons" + File.separator;
+        return getImagePath() + "icons" + File.separator;
+    }
+
+    public static String getPathFolderInHome() {
+        String homeFolder = System.getProperty("user.home");
+        Folder.makeFolderIfNotExist(homeFolder + File.separator + "." + DIRECTORY_STORE_USER_DATA);
+        return homeFolder + File.separator + "." + DIRECTORY_STORE_USER_DATA;
+    }
+
+    public static String getPathConfigInHome() {
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONFIG_FOLDER);
+        return getPathFolderInHome() + File.separator + CONFIG_FOLDER;
+    }
+    
+    public static String getPathDatabaseFolderInHome() {
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + DATABASE_FOLDER);
+        return getPathFolderInHome() + File.separator + DATABASE_FOLDER;
     }
 }

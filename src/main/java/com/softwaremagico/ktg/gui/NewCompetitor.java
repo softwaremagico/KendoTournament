@@ -111,8 +111,8 @@ public class NewCompetitor extends KendoFrame {
      * Show the photo of the selected user or a default one.
      */
     public final void createPhoto() {
-        //photo = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
-        PhotoFrame pFrame = new PhotoFrame(PhotoPanel, Path.returnDefaultPhoto());
+        //photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
+        PhotoFrame pFrame = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
         Dimension d;
         try {
             if (PhotoPanel.getWidth() / pFrame.getWidth() > pFrame.getHeight() / pFrame.getHeight()) {

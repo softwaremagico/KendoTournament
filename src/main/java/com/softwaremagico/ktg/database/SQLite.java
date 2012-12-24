@@ -28,7 +28,6 @@ package com.softwaremagico.ktg.database;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Path;
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.sql.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -77,7 +76,7 @@ public class SQLite extends SQL {
 
         try {
             // create a database connection
-            connection = DriverManager.getConnection("jdbc:sqlite:" + Path.returnDatabasePath() + tmp_database + "." + defaultSQLiteExtension);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension);
 
             if (!isDatabaseInstalledCorrectly(false)) {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
@@ -136,7 +135,7 @@ public class SQLite extends SQL {
     @Override
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
-            copyFile(new File(Path.returnDatabasePath() + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.returnDatabasePath() + tmp_database + "." + defaultSQLiteExtension));
+            copyFile(new File(Path.returnDatabaseSchemaPath() + File.separator + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
             KendoTournamentGenerator.showErrorInformation(ex);
         }
@@ -144,8 +143,10 @@ public class SQLite extends SQL {
 
     private static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.exists()) {
-            System.out.println(destFile.getAbsolutePath());
             destFile.createNewFile();
+            destFile.setExecutable(true);
+            destFile.setWritable(true);
+            destFile.setReadable(true);
         }
 
         InputStream source = null;

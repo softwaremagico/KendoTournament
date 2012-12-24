@@ -60,7 +60,7 @@ public abstract class PdfDocument {
 
     static {
         try {
-            defaultPhoto = Image.getInstance(Path.returnDefaultPhoto());
+            defaultPhoto = Image.getInstance(Path.getDefaultPhoto());
         } catch (BadElementException | IOException ex) {
             Log.severe("Default photo not found when creating accreditation.");
         }
@@ -71,7 +71,7 @@ public abstract class PdfDocument {
 
     private void startBackgroundImage() {
         try {
-            bgImage = Image.getInstance(Path.returnBackgroundPath());
+            bgImage = Image.getInstance(Path.getBackgroundPath());
         } catch (BadElementException | IOException ex) {
             MessageManager.errorMessage("imageNotFound", "Error");
             KendoTournamentGenerator.showErrorInformation(ex);
@@ -320,7 +320,7 @@ public abstract class PdfDocument {
                 PdfContentByte[] canvas) {
 
             try {
-                Image cellBgImage = Image.getInstance(Path.returnBackgroundPath());
+                Image cellBgImage = Image.getInstance(Path.getBackgroundPath());
                 PdfContentByte cb = canvas[PdfPTable.BACKGROUNDCANVAS];
                 if (cellBgImage != null) {
                     cellBgImage.scaleAbsolute(rect.getWidth(), rect.getHeight());

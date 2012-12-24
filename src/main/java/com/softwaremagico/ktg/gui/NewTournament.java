@@ -76,7 +76,7 @@ public class NewTournament extends KendoFrame {
      * Show the photo of the selected user or a default one.
      */
     public final void CreateBanner() {
-        banner = new PhotoFrame(BannerPanel, Path.returnDefaultBanner());
+        banner = new PhotoFrame(BannerPanel, Path.getDefaultBanner());
         //banner.setPreferredSize(new Dimension(BannerPanel.getWidth(), BannerPanel.getHeight()));
         /*
          * try { banner.Resize(BannerPanel.getWidth(), BannerPanel.getHeight());

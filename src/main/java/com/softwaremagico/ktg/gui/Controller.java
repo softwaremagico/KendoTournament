@@ -191,7 +191,7 @@ public class Controller {
                 } catch (NullPointerException npe) {
                 }
                 aboutGui = new AboutBox();
-                aboutGui.UpdateText(MyFile.inString(Path.returnRootPath() + "Readme.txt", true));
+                aboutGui.UpdateText(MyFile.inString(Path.getRootPath() + "Readme.txt", true));
                 aboutGui.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,7 +208,7 @@ public class Controller {
             } catch (NullPointerException npe) {
             }
             helpWindow = new HelpWindow();
-            String filename = Path.returnManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().language.toUpperCase() + ".txt";
+            String filename = Path.getManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().language.toUpperCase() + ".txt";
             String text = "";
             try {
                 text = MyFile.inString(filename, true);
@@ -218,7 +218,7 @@ public class Controller {
                 helpWindow.UpdateText(text);
             } else {
                 try {
-                    helpWindow.UpdateText(MyFile.inString(Path.returnManualPath() + "Guia_EN.txt", true));
+                    helpWindow.UpdateText(MyFile.inString(Path.getManualPath() + "Guia_EN.txt", true));
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -456,7 +456,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            KendoTournamentGenerator.getInstance().database.updateDatabase(Path.returnDatabasePath() + File.separator + "updates" + File.separator, true);
+            KendoTournamentGenerator.getInstance().database.updateDatabase(Path.returnDatabaseSchemaPath() + File.separator + "updates" + File.separator, true);
         }
     }
 

@@ -205,7 +205,7 @@ public class DiplomaPDF {
             mainTable.setTotalWidth(document.getPageSize().getWidth());
 
             document.newPage();
-            addBackGroundImage(document, Path.returnDiplomaPath());
+            addBackGroundImage(document, Path.getDiplomaPath());
 
             p = new Paragraph(competitor.getSurname() + ", " + competitor.getName(), FontFactory.getFont(font, fontSize + 20));
             cell = new PdfPCell(p);

@@ -49,7 +49,7 @@ public class TeamAccreditationCardPDF extends PdfDocument {
 
     @Override
     protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
-        //addBackGroundImage(document, Path.returnBackgroundPath());
+        //addBackGroundImage(document, Path.getBackgroundPath());
         PdfPTable table = pageTable(document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         table.setWidthPercentage(100);
         document.add(table);
@@ -64,7 +64,7 @@ public class TeamAccreditationCardPDF extends PdfDocument {
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.setTotalWidth(width);
-        com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
+        com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.getBannerPath());
 
         for (i = 0; i < team.getNumberOfMembers(0); i++) {
             CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(team.getMember(i, 0).getId(), false);

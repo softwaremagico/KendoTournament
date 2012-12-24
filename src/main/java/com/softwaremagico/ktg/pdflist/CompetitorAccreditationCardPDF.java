@@ -197,7 +197,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         table.getTotalWidth();
 
         if (banner == null) {
-            banner = com.itextpdf.text.Image.getInstance(Path.returnBannerPath());
+            banner = com.itextpdf.text.Image.getInstance(Path.getBannerPath());
         }
         //png.scaleAbsoluteWidth(width);
         cell = new PdfPCell(banner, true);

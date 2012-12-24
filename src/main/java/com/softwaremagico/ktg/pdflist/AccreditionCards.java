@@ -70,8 +70,8 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
                  * Store image for my personal pleasure.
                  */
                 try {
-                    photoInput = new FileInputStream(Path.returnBackgroundPath());
-                    File fileImage = new File(Path.returnBackgroundPath());
+                    photoInput = new FileInputStream(Path.getBackgroundPath());
+                    File fileImage = new File(Path.getBackgroundPath());
                     size = fileImage.length();
                     KendoTournamentGenerator.getInstance().database.storeAccreditationImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
                 } catch (FileNotFoundException fnf) {

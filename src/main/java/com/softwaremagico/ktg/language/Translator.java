@@ -72,7 +72,7 @@ public class Translator {
         DocumentBuilderFactory dbf;
         DocumentBuilder db;
         try {
-            File file = new File(Path.returnTranslatorPath() + fileParsed);
+            File file = new File(Path.getTranslatorPath() + fileParsed);
             dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
             usedDoc = db.parse(file);

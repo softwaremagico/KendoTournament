@@ -98,7 +98,8 @@ public class Folder {
     /**
      * Store text in a file. The text must be written in a String list.
      *
-     * @param dataList The text to be written @file the path to the file.
+     * @param dataList The text to be written
+     * @file the path to the file.
      */
     public static boolean saveListInFile(List dataList, String file) {
         File outputFile;
@@ -135,7 +136,8 @@ public class Folder {
     /**
      * Store text in a file. The text must be written in a String list.
      *
-     * @param dataList The text to be written @file the path to the file.
+     * @param dataList The text to be written
+     * @file the path to the file.
      */
     public static void saveTextInFile(String text, String file) {
         File outputFile;
@@ -194,7 +196,6 @@ public class Folder {
 
         if (extension != null) {
             files = dir.listFiles(new FilenameFilter() {
-
                 @Override
                 public boolean accept(File dir, String filename) {
                     return filename.endsWith(extension);
@@ -209,5 +210,10 @@ public class Folder {
         }
 
         return fileNames;
+    }
+
+    public static void makeFolderIfNotExist(String file) {
+        File f = new File(file);
+        f.mkdir();
     }
 }

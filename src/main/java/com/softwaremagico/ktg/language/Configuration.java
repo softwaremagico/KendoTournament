@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.language;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -38,9 +39,8 @@ import java.util.logging.Logger;
  */
 public class Configuration {
 
-    private static final String CONFIG_FOLDER = "configuration";
+    
     private static final String LANGUAGE_FILE = "language.txt";
-    private static final String directory_STORE_USER_DATA = "kendoTournament";
 
     /************************************************
      *
@@ -51,8 +51,8 @@ public class Configuration {
      * Stores into a file the language selected.
      */
     public static void storeLanguageConfiguration(String language) {
-        getPathConfigInHome();
-        Folder.saveTextInFile(language, getPathConfigInHome() + LANGUAGE_FILE);
+        Path.getPathConfigInHome();
+        Folder.saveTextInFile(language, Path.getPathConfigInHome() + LANGUAGE_FILE);
     }
 
     /**
@@ -60,13 +60,13 @@ public class Configuration {
      */
     public static void readLanguageConfiguration() {
         try {
-            String text = Folder.readFileAsText(getPathConfigInHome() + LANGUAGE_FILE, false);
+            String text = Folder.readFileAsText(Path.getPathConfigInHome() + LANGUAGE_FILE, false);
             if (text.length() > 1) {
                 KendoTournamentGenerator.getInstance().language = text;
             }
             if (text.startsWith("Error opening the file")) {
                     KendoTournamentGenerator.getInstance().language = "en";
-                    File f = new File(getPathConfigInHome() + LANGUAGE_FILE);
+                    File f = new File(Path.getPathConfigInHome() + LANGUAGE_FILE);
                     f.createNewFile();                    
                     storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
             }
@@ -76,23 +76,4 @@ public class Configuration {
         
     }
 
-    private static void makeFolderIfNotExist(String file) {
-        File f = new File(file);
-        f.mkdir();
-    }
-
-    public static String getPathConfigInHome() {
-        String config = System.getProperty("user.home");
-        String soName = System.getProperty("os.name");
-        if (soName.toLowerCase().contains("linux")) {
-            makeFolderIfNotExist(config + File.separator + "." + directory_STORE_USER_DATA + File.separator);
-            makeFolderIfNotExist(config + File.separator + "." + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator);
-            return config + File.separator + "." + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator;
-        } else if (soName.toLowerCase().contains("windows") || soName.toLowerCase().contains("vista")) {
-            makeFolderIfNotExist(config + File.separator + directory_STORE_USER_DATA + File.separator);
-            makeFolderIfNotExist(config + File.separator + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator);
-            return config + File.separator + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator;
-        }
-        return config + File.separator + directory_STORE_USER_DATA + File.separator + CONFIG_FOLDER + File.separator;
-    }
 }

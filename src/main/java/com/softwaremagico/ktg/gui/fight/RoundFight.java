@@ -288,7 +288,7 @@ public class RoundFight extends JPanel {
         private File getBackground(String image) {
             File file = new File(image);
             if (!file.exists()) {
-                file = new File(Path.returnImagePath() + image);
+                file = new File(Path.getImagePath() + image);
                 if (!file.exists()) {
                 }
             }

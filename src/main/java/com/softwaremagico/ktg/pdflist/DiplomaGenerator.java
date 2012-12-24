@@ -75,8 +75,8 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                 /*
                  * Store image for my pleasure.
                  */
-                photoInput = new FileInputStream(Path.returnDiplomaPath());
-                File fileImage = new File(Path.returnDiplomaPath());
+                photoInput = new FileInputStream(Path.getDiplomaPath());
+                File fileImage = new File(Path.getDiplomaPath());
                 size = fileImage.length();
                 KendoTournamentGenerator.getInstance().database.storeDiplomaImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
 

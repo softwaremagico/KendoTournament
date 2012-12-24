@@ -185,7 +185,7 @@ public final class FightPanel extends javax.swing.JFrame {
      * Show the photo of the selected user or a default one.
      */
     private void createBanner() {
-        banner = new PhotoFrame(BannerPanel, Path.returnDefaultBanner());
+        banner = new PhotoFrame(BannerPanel, Path.getDefaultBanner());
         //banner.setPreferredSize(new Dimension(BannerPanel.getWidth(), BannerPanel.getHeight()));
         BannerPanel.add(banner, 0);
         BannerPanel.revalidate();

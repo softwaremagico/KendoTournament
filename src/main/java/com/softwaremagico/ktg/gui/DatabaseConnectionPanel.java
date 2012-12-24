@@ -88,7 +88,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     private void fillDatabaseList() {
         DatabaseComboBox.removeAllItems();
         if (!DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()).getHasNetworkConnection()) {
-            List<String> files = Folder.obtainFilesInFolder(Path.returnDatabasePath(), SQLite.defaultSQLiteExtension);
+            List<String> files = Folder.obtainFilesInFolder(Path.getPathDatabaseFolderInHome(), SQLite.defaultSQLiteExtension);
             files.remove(SQLite.defaultDatabaseName + "." + SQLite.defaultSQLiteExtension);
             DatabaseComboBox.addItem("");
             for (String file : files) {

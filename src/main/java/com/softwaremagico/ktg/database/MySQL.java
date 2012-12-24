@@ -177,7 +177,7 @@ public class MySQL extends SQL {
                 sm.executeUpdate();
             }
 
-            executeScript(Path.returnDatabasePath() + "kendotournament_empty.sql");
+            executeScript(Path.returnDatabaseSchemaPath() + File.separator + "kendotournament_empty.sql");
 
         } catch (SQLException ex) {
             KendoTournamentGenerator.showErrorInformation(ex);
@@ -233,7 +233,7 @@ public class MySQL extends SQL {
         String query = "";
         boolean returnValue = true;
         try {
-            //File myFolder = new File(new Path().returnDatabasePath());
+            //File myFolder = new File(new Path().returnDatabaseSchemaPath());
             File myFolder = new File(path);
             File allMyFolderObjects[] = myFolder.listFiles();
 
