@@ -56,7 +56,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         setLanguage();
         fillTournaments();
         RefreshTournament();
-        //listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(TournamentComboBox.getSelectedItem().toString(), false);
+        listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament((Tournament)TournamentComboBox.getSelectedItem(), false);
         fillTeam1ComboBox();
     }
 

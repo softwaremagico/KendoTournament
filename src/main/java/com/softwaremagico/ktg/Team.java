@@ -244,4 +244,9 @@ public class Team implements Serializable {
         hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

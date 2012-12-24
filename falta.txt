@@ -1,7 +1,6 @@
 Solucionar que se olvida de combates el fight panel.  AHORA ES PEOR QUE ANTES!!!
 Que las listas se puedan exportar en TXT
 Que solamente se inserten los combates en la base de datos cuando acaban todos los combates del shiaijo (si está en remoto).
-La conversión entre bases de datos se queda sin memoria.
 
 
 
