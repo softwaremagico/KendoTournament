@@ -36,6 +36,7 @@ public class Path {
     private static final String DIRECTORY_STORE_USER_DATA = "kendoTournament";
     private static final String CONFIG_FOLDER = "configuration";
     private static final String DATABASE_FOLDER = "databases";
+    private static final String LOG_FOLDER = "logs";
 
     private Path() {
     }
@@ -112,7 +113,7 @@ public class Path {
     }
 
     public static String getLogFile() {
-        return "kendoTournament.log";
+        return getPathLogFolderInHome() + File.separator + "kendoTournament.log";
     }
 
     public static String returnIconFolder() {
@@ -129,9 +130,14 @@ public class Path {
         Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONFIG_FOLDER);
         return getPathFolderInHome() + File.separator + CONFIG_FOLDER;
     }
-    
+
     public static String getPathDatabaseFolderInHome() {
         Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + DATABASE_FOLDER);
         return getPathFolderInHome() + File.separator + DATABASE_FOLDER;
+    }
+
+    public static String getPathLogFolderInHome() {
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + LOG_FOLDER);
+        return getPathFolderInHome() + File.separator + LOG_FOLDER;
     }
 }
