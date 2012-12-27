@@ -100,7 +100,7 @@ public class ShortNewFight extends javax.swing.JFrame {
     private void fillFightingAreas() {
         FightAreaComboBox.removeAllItems();
         try {
-            for (int i = 0; i < tournament.fightingAreas; i++) {
+            for (int i = 0; i < tournament.getFightingAreas(); i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
             FightAreaComboBox.setSelectedIndex(selectedArena);

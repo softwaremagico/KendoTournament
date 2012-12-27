@@ -63,7 +63,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
         this.tournament=tournament;
-        if (!tournament.mode.equals(TournamentType.SIMPLE)) {
+        if (!tournament.getMode().equals(TournamentType.SIMPLE)) {
             TournamentGroupPool.getManager(tournament).color(true);
             TournamentGroupPool.getManager(tournament).update();
             bbp.updateBlackBoard(tournament, refill);

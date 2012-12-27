@@ -112,7 +112,7 @@ public class NewTeam extends KendoFrame {
 
     protected void fillCompetitors() {
         competitorsPanel = new ArrayList<>();
-        for (int i = 0; i < tournament.teamSize; i++) {
+        for (int i = 0; i < tournament.getTeamSize(); i++) {
             CompetitorPanel cp = new CompetitorPanel(KendoTournamentGenerator.getInstance().language, i + 1);
 
             for (int j = 0; j < competitors.size(); j++) {
@@ -227,7 +227,7 @@ public class NewTeam extends KendoFrame {
     }
 
     protected void inidividualTeams() {
-        if (tournament.teamSize == 1) {
+        if (tournament.getTeamSize() == 1) {
             individualTeams = true;
             IndividualTeamsCheckBox.setEnabled(true);
         } else {
@@ -516,7 +516,7 @@ public class NewTeam extends KendoFrame {
                 try {
                     if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament((Tournament)TournamentComboBox.getSelectedItem(), true)) {
                         KendoTournamentGenerator.getInstance().database.setIndividualTeams((Tournament)TournamentComboBox.getSelectedItem());
-                        tournament.teamSize = 1;
+                        tournament.setTeamSize(1);
                         KendoTournamentGenerator.getInstance().database.updateTournament(tournament, false);
                         MessageManager.informationMessage("teamsStored", "Team");
                         this.dispose();

@@ -131,7 +131,7 @@ public class Fight implements Serializable {
 
     public final boolean addDuels() {
         try {
-            for (int i = 0; i < tournament.teamSize; i++) {
+            for (int i = 0; i < tournament.getTeamSize(); i++) {
                 duels.add(new Duel());
             }
         } catch (NullPointerException npe) {

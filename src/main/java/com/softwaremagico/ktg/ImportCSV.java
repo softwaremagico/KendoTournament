@@ -148,7 +148,7 @@ public class ImportCSV {
             } else {
                 //New team
                 if (fields[index].contains("EQUIPO_") && !fields[index].replace("EQUIPO_", "").replace("\n", "").trim().equals(teamName)) {
-                    t.completeTeam(tournament.teamSize, 0);
+                    t.completeTeam(tournament.getTeamSize(), 0);
                     if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
                         error = true;
                     }
@@ -162,7 +162,7 @@ public class ImportCSV {
         }
         //Store last team.
         if (t.levelChangesSize() > 0) {
-            t.completeTeam(tournament.teamSize, 0);
+            t.completeTeam(tournament.getTeamSize(), 0);
             if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
                 error = true;
             }

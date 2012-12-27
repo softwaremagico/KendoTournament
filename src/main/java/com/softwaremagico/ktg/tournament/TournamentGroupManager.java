@@ -98,11 +98,11 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public TournamentType getMode() {
-        return tournament.mode;
+        return tournament.getMode();
     }
 
     public void setMode(TournamentType mode) {
-        this.tournament.mode = mode;
+        this.tournament.setMode(mode);
     }
 
     /**
@@ -489,7 +489,7 @@ public class TournamentGroupManager implements Serializable {
         if (nextLevel != null && nextLevel >= 0 && nextLevel < getLevels().size()) {
             Log.finer("Tournament not finished!");
             // Update fightManager to load the fightManager of other arenas and computers.
-            if (tournament.fightingAreas > 1) {
+            if (tournament.getFightingAreas() > 1) {
                 Log.finest("Retrieving data from other arenas.");
                 Log.debug("Current number of fights over before updating data: " + FightPool.getManager(tournament).numberOfFightsOver());
                 FightPool.getManager(tournament).getFightsFromDatabase(tournament);
@@ -532,17 +532,17 @@ public class TournamentGroupManager implements Serializable {
         boolean answer = false;
         int arena;
         // User must distribute the groups of level 0 in the different fightManager areas.
-        if (tournament.fightingAreas > 1 && allGroupsInSameArena(groups) && level == 0) {
+        if (tournament.getFightingAreas() > 1 && allGroupsInSameArena(groups) && level == 0) {
             answer = MessageManager.questionMessage("noFightsDistributedInArenas", "Warning!");
         }
 
         for (int i = 0; i < groups.size(); i++) {
             if (answer) {
                 if (!getMode().equals(TournamentType.MANUAL) || level > 0) {
-                    arena = i / (int) Math.ceil((double) getSizeOfLevel(level) / (double) tournament.fightingAreas);
+                    arena = i / (int) Math.ceil((double) getSizeOfLevel(level) / (double) tournament.getFightingAreas());
                 } else {
                     // grouped by the destination group of the next level.
-                    arena = (returnPositionOfGroupInItsLevel(groups.get(i))) % tournament.fightingAreas;
+                    arena = (returnPositionOfGroupInItsLevel(groups.get(i))) % tournament.getFightingAreas();
                 }
                 groups.get(i).arena = arena;
                 fights.addAll(groups.get(i).generateGroupFights(level, arena));
@@ -595,13 +595,13 @@ public class TournamentGroupManager implements Serializable {
      * proportionally.
      */
     public void updateArenas(int level) {
-        if ((tournament.fightingAreas > 1) && (levels.size() > level)) {
+        if ((tournament.getFightingAreas() > 1) && (levels.size() > level)) {
             levels.get(level).updateArenaOfGroups();
         }
     }
 
     public int returnNumberOfArenas() {
-        return tournament.fightingAreas;
+        return tournament.getFightingAreas();
     }
 
     public int getArenasOfLevel(List<Fight> fights, int level) {

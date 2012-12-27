@@ -117,12 +117,12 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
         ArenaComboBox.removeAllItems();
         try {
             int selectedTourn = returnSelectedTournamentOfList();
-            if (selectedTourn >= 0 && listTournaments.get(selectedTourn).fightingAreas > 1) {
+            if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
                 ArenaComboBox.addItem(trans.returnTag("All"));
             }
 
             if (selectedTourn >= 0) {
-                for (int i = 0; i < listTournaments.get(selectedTourn).fightingAreas; i++) {
+                for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
                     ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
                 }
             }

@@ -1228,7 +1228,7 @@ public class Controller {
 
             try {
                 Tournament championship = TournamentPool.getTournament(selectTournamentForTreeMonitor.returnSelectedTournamentName());
-                if (championship.mode.equals(TournamentType.CHAMPIONSHIP) || championship.mode.equals(TournamentType.LEAGUE_TREE)) {
+                if (championship.getMode().equals(TournamentType.CHAMPIONSHIP) || championship.getMode().equals(TournamentType.LEAGUE_TREE)) {
                     monitorTree = new MonitorTree(championship);
                     monitorTree.setVisible(true);
                     monitorTree.setExtendedState(monitorTree.getExtendedState() | JFrame.MAXIMIZED_BOTH);

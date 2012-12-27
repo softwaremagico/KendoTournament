@@ -90,7 +90,7 @@ public class ScoreListPDF extends ParentList {
                     if (groups.get(i).areFightsOver()) {
                         mainTable.addCell(getEmptyRow());
                         String head = trans.returnTag("GroupString") + " " + (i + 1);
-                        if (tournament.fightingAreas > 1) {
+                        if (tournament.getFightingAreas() > 1) {
                             head += " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(FightPool.getManager(tournament).getFights())) + ")";
                         }
 
@@ -131,7 +131,7 @@ public class ScoreListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (tournament.mode.equals(TournamentType.SIMPLE)) {
+        if (tournament.getMode().equals(TournamentType.SIMPLE)) {
             mainTable = simpleTable(mainTable);
         } else {
             mainTable = championshipTable(mainTable);

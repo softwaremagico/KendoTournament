@@ -38,16 +38,96 @@ import javax.swing.ImageIcon;
 public class Tournament implements Serializable {
 
     private String name;
-    public transient InputStream bannerInput;
-    public transient InputStream diplomaInput;
-    public transient InputStream accreditationInput;
-    public long bannerSize;
-    public long diplomaSize;
-    public long accreditationSize;
-    public int fightingAreas;
-    public int howManyTeamsOfGroupPassToTheTree;
-    public int teamSize;
-    public TournamentType mode;    //simple, championship, manual, tree
+    private transient InputStream bannerInput;
+    private transient InputStream diplomaInput;
+    private transient InputStream accreditationInput;
+    private long bannerSize;
+    private long diplomaSize;
+    private long accreditationSize;
+    private int fightingAreas;
+    private int howManyTeamsOfGroupPassToTheTree;
+    private int teamSize;
+    private TournamentType mode;    //simple, championship, manual, tree
+
+    public InputStream getBannerInput() {
+        return bannerInput;
+    }
+
+    public void setBannerInput(InputStream bannerInput) {
+        this.bannerInput = bannerInput;
+    }
+
+    public InputStream getDiplomaInput() {
+        return diplomaInput;
+    }
+
+    public void setDiplomaInput(InputStream diplomaInput) {
+        this.diplomaInput = diplomaInput;
+    }
+
+    public InputStream getAccreditationInput() {
+        return accreditationInput;
+    }
+
+    public void setAccreditationInput(InputStream accreditationInput) {
+        this.accreditationInput = accreditationInput;
+    }
+
+    public long getBannerSize() {
+        return bannerSize;
+    }
+
+    public void setBannerSize(long bannerSize) {
+        this.bannerSize = bannerSize;
+    }
+
+    public long getDiplomaSize() {
+        return diplomaSize;
+    }
+
+    public void setDiplomaSize(long diplomaSize) {
+        this.diplomaSize = diplomaSize;
+    }
+
+    public long getAccreditationSize() {
+        return accreditationSize;
+    }
+
+    public void setAccreditationSize(long accreditationSize) {
+        this.accreditationSize = accreditationSize;
+    }
+
+    public int getFightingAreas() {
+        return fightingAreas;
+    }
+
+    public void setFightingAreas(int fightingAreas) {
+        this.fightingAreas = fightingAreas;
+    }
+
+    public int getHowManyTeamsOfGroupPassToTheTree() {
+        return howManyTeamsOfGroupPassToTheTree;
+    }
+
+    public void setHowManyTeamsOfGroupPassToTheTree(int howManyTeamsOfGroupPassToTheTree) {
+        this.howManyTeamsOfGroupPassToTheTree = howManyTeamsOfGroupPassToTheTree;
+    }
+
+    public int getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(int teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    public TournamentType getMode() {
+        return mode;
+    }
+
+    public void setMode(TournamentType mode) {
+        this.mode = mode;
+    }
     private float scoreForWin = 1;
     private float scoreForDraw = 0;
     private String choosedScore = "European";

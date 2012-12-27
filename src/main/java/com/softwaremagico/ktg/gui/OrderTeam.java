@@ -90,7 +90,7 @@ public class OrderTeam extends NewTeam {
     public void updateOrderWindow(Team t) {
         team = t;
         try {
-            if (t.realMembers() < tournament.teamSize) {
+            if (t.realMembers() < tournament.getTeamSize()) {
                 competitors.add(0, new Competitor("", "", "", ""));
             }
             NameTextField.setText(t.getName());

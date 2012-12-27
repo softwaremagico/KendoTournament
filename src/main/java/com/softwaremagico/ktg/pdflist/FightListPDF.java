@@ -69,7 +69,7 @@ public class FightListPDF extends ParentList {
         Paragraph p;
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
-        for (int i = 0; i < tournament.fightingAreas; i++) {
+        for (int i = 0; i < tournament.getFightingAreas(); i++) {
             List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentAndFightArea(tournament, i);
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
@@ -133,7 +133,7 @@ public class FightListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (tournament.mode.equals(TournamentType.SIMPLE)) {
+        if (tournament.getMode().equals(TournamentType.SIMPLE)) {
             simpleTable(mainTable);
         } else {
             championshipTable(mainTable);

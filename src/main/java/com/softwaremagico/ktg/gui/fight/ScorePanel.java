@@ -67,7 +67,7 @@ public class ScorePanel extends javax.swing.JPanel {
                 if (f != null) {
                     rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) - 2, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                 } else {
-                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
                 }
                 showedFights++;
                 rf.updateScorePanels();
@@ -80,7 +80,7 @@ public class ScorePanel extends javax.swing.JPanel {
                 if (f != null) {
                     rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) - 1, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                 } else {
-                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
                 }
                 showedFights++;
                 rf.updateScorePanels();
@@ -104,7 +104,7 @@ public class ScorePanel extends javax.swing.JPanel {
                     if (f != null) {
                         rf = new RoundFight(tournament, f, false, FightPool.getManager(tournament).currentArenaFight((Integer) fightArena) + 1, FightPool.getManager(tournament).arenaSize((Integer) fightArena));
                     } else {
-                        rf = new RoundFight(tournament.teamSize, false, 0, 0);
+                        rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
                     }
                     showedFights++;
                     rf.updateScorePanels();
@@ -116,7 +116,7 @@ public class ScorePanel extends javax.swing.JPanel {
             //Add null fightManager to complete the panel.
             while (showedFights < numberOfFightsToShow()) {
                 try {
-                    rf = new RoundFight(tournament.teamSize, false, 0, 0);
+                    rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
                     add(rf);
                     add(new Box.Filler(minSize, prefSize, maxSize));
                 } catch (NullPointerException npe) {
@@ -134,7 +134,7 @@ public class ScorePanel extends javax.swing.JPanel {
 
     private int screenSizeOfTeam() {
         try {
-            return 60 * tournament.teamSize + 45;
+            return 60 * tournament.getTeamSize() + 45;
         } catch (NullPointerException npe) {
             return 225;
         }

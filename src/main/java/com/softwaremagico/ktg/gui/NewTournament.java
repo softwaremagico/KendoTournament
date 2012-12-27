@@ -100,21 +100,21 @@ public class NewTournament extends KendoFrame {
 
     public void updateWindow(Tournament tournament) {
         try {
-            maxCompetitorTeam = tournament.teamSize;
+            maxCompetitorTeam = tournament.getTeamSize();
             NameTextField.setText(tournament.getName());
             NameTextField.setEditable(false);
-            NumCompetitorsSpinner.setValue(tournament.teamSize);
+            NumCompetitorsSpinner.setValue(tournament.getTeamSize());
             BannerTextField.setText("");
             banner.CleanPhoto();
             try {
-                banner.ChangePhoto(tournament.banner(), tournament.bannerInput, tournament.bannerSize);
+                banner.ChangePhoto(tournament.banner(), tournament.getBannerInput(), tournament.getBannerSize());
                 //banner.ChangeInputStream(t.BannerInput, t.bannerSize);
                 banner.repaint();
                 BannerPanel.repaint();
                 BannerPanel.revalidate();
             } catch (IllegalArgumentException iae) {
             }
-            AreasSpinner.setValue(tournament.fightingAreas);
+            AreasSpinner.setValue(tournament.getFightingAreas());
         } catch (IOException ex) {
             Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException npe) {
@@ -145,7 +145,7 @@ public class NewTournament extends KendoFrame {
                 cleanWindow();
             }
             //If tournamnet team size has changed (tournament update), delete old teams of tournament.
-            if(maxCompetitorTeam != null && maxCompetitorTeam != tournament.teamSize){
+            if(maxCompetitorTeam != null && maxCompetitorTeam != tournament.getTeamSize()){
                 KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament, false);
             }
             return true;

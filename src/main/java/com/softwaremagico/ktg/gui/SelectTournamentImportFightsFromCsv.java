@@ -52,12 +52,12 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
     @Override
     protected boolean doAction(String file) {
         try {
-            if (returnSelectedTournament().mode == TournamentType.SIMPLE) {
+            if (returnSelectedTournament().getMode().equals(TournamentType.SIMPLE)) {
                 if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
                     return true;
                 }
-            }else{
-                if(TournamentGroupPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))){
+            } else {
+                if (TournamentGroupPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
                     return true;
                 }
             }

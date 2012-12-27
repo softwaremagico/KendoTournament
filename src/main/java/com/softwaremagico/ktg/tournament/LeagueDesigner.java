@@ -157,7 +157,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelLevelZero() {
         try {
-            if (!tournament.mode.equals(TournamentType.SIMPLE) &&
+            if (!tournament.getMode().equals(TournamentType.SIMPLE) &&
                 TournamentGroupPool.getManager(tournament).sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
@@ -273,7 +273,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
             //}
 
-            TournamentGroupPool.getManager(tournament).setMode(tournament.mode);
+            TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
 
             fillTeams();
             updateListeners();
@@ -309,7 +309,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (TournamentGroupPool.getManager(tournament).default_max_winners > 1 && TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.LEAGUE_TREE)) {
                 ChampionshipRadioButton.setSelected(true);
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
-                tournament.mode = TournamentGroupPool.getManager(tournament).getMode();
+                tournament.setMode(TournamentGroupPool.getManager(tournament).getMode());
                 updateBlackBoard();
             }
         } catch (NullPointerException npe) {
@@ -357,19 +357,19 @@ public class LeagueDesigner extends javax.swing.JFrame {
             TournamentType oldMode = TournamentGroupPool.getManager(tournament).getMode();
             if (ManualRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.MANUAL);
-                tournament.mode = TournamentType.MANUAL;
+                tournament.setMode(TournamentType.MANUAL);
                 CleanLinksButton.setVisible(true);
             } else if (ChampionshipRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
-                tournament.mode = TournamentType.CHAMPIONSHIP;
+                tournament.setMode(TournamentType.CHAMPIONSHIP);
                 CleanLinksButton.setVisible(false);
             } else if (TreeRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.LEAGUE_TREE);
-                tournament.mode = TournamentType.LEAGUE_TREE;
+                tournament.setMode(TournamentType.LEAGUE_TREE);
                 CleanLinksButton.setVisible(false);
             } else if (SimpleRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.SIMPLE);
-                tournament.mode = TournamentType.SIMPLE;
+                tournament.setMode(TournamentType.SIMPLE);
                 CleanLinksButton.setVisible(false);
             }
 
@@ -949,7 +949,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeamListMouseClicked
-        if (!tournament.mode.equals(TournamentType.SIMPLE)) {
+        if (!tournament.getMode().equals(TournamentType.SIMPLE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }
@@ -1088,7 +1088,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
             FightPool.getManager(tournament).setAll(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament), false);
             TournamentGroupPool.getManager(tournament).refillDesigner(FightPool.getManager(tournament).getFights());
-            TournamentGroupPool.getManager(tournament).setMode(tournament.mode);
+            TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
             fillTeams();
             updateListeners();
             updateBlackBoard();

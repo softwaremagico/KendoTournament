@@ -51,7 +51,7 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
         if (!MyFile.fileExist(file) || MessageManager.questionMessage("existFile", "Warning!")) {
 
             List<String> csv;
-            if (returnSelectedTournament().mode == TournamentType.SIMPLE) {
+            if (returnSelectedTournament().getMode().equals(TournamentType.SIMPLE)) {
                 csv = FightPool.getManager(returnSelectedTournament()).exportToCsv();
             } else {
                 csv = TournamentGroupPool.getManager(returnSelectedTournament()).exportToCsv();

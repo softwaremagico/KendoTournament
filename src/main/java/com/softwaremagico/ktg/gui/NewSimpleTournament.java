@@ -141,7 +141,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             FightAreaComboBox.removeAllItems();
             Tournament tournament = (Tournament) TournamentComboBox.getSelectedItem();
-            for (int i = 0; i < tournament.fightingAreas; i++) {
+            for (int i = 0; i < tournament.getFightingAreas(); i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
@@ -193,10 +193,10 @@ public class NewSimpleTournament extends javax.swing.JFrame {
      */
     public void fillFights() {
         fightsModel.removeAllElements();
-        if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE)) {
+        if (((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE)) {
             for (int i = 0; i < fights.size(); i++) {
                 String text = fights.get(i).team1.getName() + " - " + fights.get(i).team2.getName();
-                if (((Tournament) TournamentComboBox.getSelectedItem()).fightingAreas > 1) {
+                if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
                     text += "  (" + trans.returnTag("FightArea")
                             + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";
 
@@ -449,15 +449,15 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         try {
             boolean answer = false;
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE)) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE)) {
                 answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
-                    ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentType.SIMPLE;
+                    ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
                     fights.clear();
                 }
             }
-            if (((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE) || (answer)) {
+            if (((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE) || (answer)) {
                 if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
                     //Fight fight = new Fight(KendoTournamentGenerator.getInstance().database.getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
                     Fight fight = new Fight((Team) (Team1ComboBox.getSelectedItem()),
@@ -496,11 +496,11 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RandomButtonActionPerformed
         try {
             boolean answer = false;
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE) || fightsModel.size() > 0) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE) || fightsModel.size() > 0) {
                 answer = MessageManager.questionMessage("deleteFights", "Warning!");
                 if (answer) {
                     fightsModel.removeAllElements();
-                    ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentType.SIMPLE;
+                    ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
                     fights.clear();
                 }
             }
@@ -541,7 +541,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         if (fights.size() > 0) {
             KendoTournamentGenerator.getInstance().database.storeFights(fights, true, true);
             KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament(((Tournament) TournamentComboBox.getSelectedItem()), listTeams);
-            ((Tournament) TournamentComboBox.getSelectedItem()).mode = TournamentType.SIMPLE;
+            ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
             KendoTournamentGenerator.getInstance().database.updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();
         } else {

@@ -153,7 +153,7 @@ public abstract class LeagueLevel {
                 /**
                  * In level zero, all groups are divided by arenas.
                  */
-                double groupsPerArena = Math.ceil((double) tournamentGroups.size() / (double) tournament.fightingAreas);
+                double groupsPerArena = Math.ceil((double) tournamentGroups.size() / (double) tournament.getFightingAreas());
                 for (int j = 0; j < tournamentGroups.size(); j++) {
                     tournamentGroups.get(j).arena = (j) / (int) groupsPerArena;
                 }

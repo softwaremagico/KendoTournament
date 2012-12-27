@@ -89,7 +89,7 @@ public final class Monitor extends javax.swing.JFrame {
         ColourCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseColours);
         InverseCheckBox.setSelected(KendoTournamentGenerator.getInstance().inverseTeams);
 
-        if (selectedTournament.fightingAreas == 1) {
+        if (selectedTournament.getFightingAreas() == 1) {
             fightArea = 0;
             showAllArenas = false;
         }
@@ -182,8 +182,7 @@ public final class Monitor extends javax.swing.JFrame {
     private void setTournament() {
         try {
             banner.CleanPhoto();
-            //banner.ChangeInputStream(selectedTournament.BannerInput, selectedTournament.bannerSize);
-            banner.ChangePhoto(selectedTournament.banner(), selectedTournament.bannerInput, selectedTournament.bannerSize);
+            banner.ChangePhoto(selectedTournament.banner(), selectedTournament.getBannerInput(), selectedTournament.getBannerSize());
             BannerPanel.repaint();
             BannerPanel.revalidate();
             FightPool.getManager(selectedTournament).getFightsFromDatabase(selectedTournament);

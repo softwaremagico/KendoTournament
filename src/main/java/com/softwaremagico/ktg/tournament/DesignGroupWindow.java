@@ -59,7 +59,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void fillFightingAreas() {
         FightAreaComboBox.removeAllItems();
         try {
-            for (int i = 0; i < dg.tournament.fightingAreas; i++) {
+            for (int i = 0; i < dg.tournament.getFightingAreas(); i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {

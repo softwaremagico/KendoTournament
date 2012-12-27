@@ -64,7 +64,7 @@ public class TournamentGroupPool {
     public static void cleanGroupManager(Tournament tournament) {
         TournamentGroupManager tournamentGroupManager = new TournamentGroupManager(tournament);
         tournamentGroupManager.createLevelZero();
-        tournamentGroupManager.setMode(tournament.mode);
+        tournamentGroupManager.setMode(tournament.getMode());
         existingManagers.put(tournament, tournamentGroupManager);
     }
 

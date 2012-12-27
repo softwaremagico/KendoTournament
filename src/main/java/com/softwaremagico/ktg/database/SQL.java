@@ -232,9 +232,9 @@ public abstract class SQL extends Database {
         Folder.appendTextToFile("LOCK TABLES `tournament` WRITE;\n", file);
         List<Tournament> tournaments = getAllTournaments();
         for (int i = 0; i < tournaments.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).getName() + "','" + convertInputStream2String(tournaments.get(i).bannerInput) + "',"
-                    + tournaments.get(i).bannerSize + "," + tournaments.get(i).fightingAreas + "," + tournaments.get(i).howManyTeamsOfGroupPassToTheTree + ","
-                    + tournaments.get(i).teamSize + ",'" + tournaments.get(i).mode + "'," + (int) tournaments.get(i).getScoreForWin() + ","
+            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).getName() + "','" + convertInputStream2String(tournaments.get(i).getBannerInput()) + "',"
+                    + tournaments.get(i).getBannerSize() + "," + tournaments.get(i).getFightingAreas() + "," + tournaments.get(i).getHowManyTeamsOfGroupPassToTheTree() + ","
+                    + tournaments.get(i).getTeamSize() + ",'" + tournaments.get(i).getMode() + "'," + (int) tournaments.get(i).getScoreForWin() + ","
                     + tournaments.get(i).getScoreForDraw() + ",'" + tournaments.get(i).getChoosedScore() + "',NULL,NULL"
                     + ");\n", file);
         }
@@ -1607,27 +1607,27 @@ public abstract class SQL extends Database {
                     return updateTournament(tournament, verbose);
                 } else {
                     try {
-                        if (tournament.bannerInput.markSupported()) {
-                            tournament.bannerInput.reset();
+                        if (tournament.getBannerInput().markSupported()) {
+                            tournament.getBannerInput().reset();
                         }
                     } catch (IOException | NullPointerException ex) {
                         KendoTournamentGenerator.showErrorInformation(ex);
                     }
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
                         stmt.setString(1, tournament.getName());
-                        storeBinaryStream(stmt, 2, tournament.bannerInput, (int) tournament.bannerSize);
-                        stmt.setLong(3, tournament.bannerSize);
-                        stmt.setInt(4, tournament.fightingAreas);
-                        stmt.setInt(5, tournament.howManyTeamsOfGroupPassToTheTree);
-                        stmt.setInt(6, tournament.teamSize);
-                        stmt.setString(7, tournament.mode.getSqlName());
+                        storeBinaryStream(stmt, 2, tournament.getBannerInput(), (int) tournament.getBannerSize());
+                        stmt.setLong(3, tournament.getBannerSize());
+                        stmt.setInt(4, tournament.getFightingAreas());
+                        stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
+                        stmt.setInt(6, tournament.getTeamSize());
+                        stmt.setString(7, tournament.getMode().getSqlName());
                         stmt.setFloat(8, tournament.getScoreForWin());
                         stmt.setFloat(9, tournament.getScoreForDraw());
                         stmt.setString(10, tournament.getChoosedScore());
-                        storeBinaryStream(stmt, 11, tournament.diplomaInput, (int) tournament.diplomaSize);
-                        stmt.setLong(12, tournament.diplomaSize);
-                        storeBinaryStream(stmt, 13, tournament.accreditationInput, (int) tournament.accreditationSize);
-                        stmt.setLong(14, tournament.accreditationSize);
+                        storeBinaryStream(stmt, 11, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
+                        stmt.setLong(12, tournament.getDiplomaSize());
+                        storeBinaryStream(stmt, 13, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
+                        stmt.setLong(14, tournament.getAccreditationSize());
                         stmt.executeUpdate();
                     }
                 }
@@ -1703,25 +1703,25 @@ public abstract class SQL extends Database {
             }
             if (!verbose || answer) {
                 try {
-                    if (tournament.bannerInput.markSupported()) {
-                        tournament.bannerInput.reset();
+                    if (tournament.getBannerInput().markSupported()) {
+                        tournament.getBannerInput().reset();
                     }
                 } catch (IOException | NullPointerException npe) {
                 }
                 try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + tournament.getName() + "'")) {
-                    storeBinaryStream(stmt, 1, tournament.bannerInput, (int) tournament.bannerSize);
-                    stmt.setLong(2, tournament.bannerSize);
-                    stmt.setInt(3, tournament.fightingAreas);
-                    stmt.setInt(4, tournament.howManyTeamsOfGroupPassToTheTree);
-                    stmt.setInt(5, tournament.teamSize);
-                    stmt.setString(6, tournament.mode.getSqlName());
+                    storeBinaryStream(stmt, 1, tournament.getBannerInput(), (int) tournament.getBannerSize());
+                    stmt.setLong(2, tournament.getBannerSize());
+                    stmt.setInt(3, tournament.getFightingAreas());
+                    stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
+                    stmt.setInt(5, tournament.getTeamSize());
+                    stmt.setString(6, tournament.getMode().getSqlName());
                     stmt.setFloat(7, tournament.getScoreForWin());
                     stmt.setFloat(8, tournament.getScoreForDraw());
                     stmt.setString(9, tournament.getChoosedScore());
-                    storeBinaryStream(stmt, 10, tournament.diplomaInput, (int) tournament.diplomaSize);
-                    stmt.setLong(11, tournament.diplomaSize);
-                    storeBinaryStream(stmt, 12, tournament.accreditationInput, (int) tournament.accreditationSize);
-                    stmt.setLong(13, tournament.accreditationSize);
+                    storeBinaryStream(stmt, 10, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
+                    stmt.setLong(11, tournament.getDiplomaSize());
+                    storeBinaryStream(stmt, 12, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
+                    stmt.setLong(13, tournament.getAccreditationSize());
                     stmt.executeUpdate();
                 }
             } else {

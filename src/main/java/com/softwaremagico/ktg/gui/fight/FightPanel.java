@@ -109,7 +109,7 @@ public final class FightPanel extends javax.swing.JFrame {
     
     private void hideTreeButton() {
         try {
-            if (!selectedTournament.mode.equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(selectedTournament).size() > 1) {
+            if (!selectedTournament.getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(selectedTournament).size() > 1) {
                 TreeButton.setVisible(true);
             } else {
                 TreeButton.setVisible(false);
@@ -150,7 +150,7 @@ public final class FightPanel extends javax.swing.JFrame {
         refreshTournament = false;
         FightAreaComboBox.removeAllItems();
         try {
-            for (int i = 0; i < selectedTournament.fightingAreas; i++) {
+            for (int i = 0; i < selectedTournament.getFightingAreas(); i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
@@ -161,7 +161,7 @@ public final class FightPanel extends javax.swing.JFrame {
     private void updateTournament() {
         try {
             banner.CleanPhoto();
-            banner.ChangePhoto(selectedTournament.banner(), selectedTournament.bannerInput, selectedTournament.bannerSize);
+            banner.ChangePhoto(selectedTournament.banner(), selectedTournament.getBannerInput(), selectedTournament.getBannerSize());
             BannerPanel.repaint();
             BannerPanel.revalidate();
             fillFightingAreas();
@@ -545,7 +545,7 @@ public final class FightPanel extends javax.swing.JFrame {
             Log.debug("Current number of fights over: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
 
             //If championship or similar...
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).mode.equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
                 TournamentGroup currentGroup = TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).getGroupOfFight(currentFight);
                 //Show scores, messages, etc. 
                 messagesFinishedGroup(currentGroup);

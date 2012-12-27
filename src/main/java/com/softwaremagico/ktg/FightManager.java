@@ -418,7 +418,7 @@ public class FightManager {
     public void currentFightsOver(int arena) {
         if (areAllOver()) {
             //If championship or similar...
-            if (!tournament.mode.equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
+            if (!tournament.getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
                 //If all arena fights are over.
                 Log.finer("All fights are over!");
                 //Obtain next fights.
@@ -508,9 +508,9 @@ public class FightManager {
         return notContains;
     }
 
-    private ArrayList<Fight> obtainFightsWithTwoOrMoreFightArea(List<Team> listTeams, Tournament competition) {
+    private ArrayList<Fight> obtainFightsWithTwoOrMoreFightArea(List<Team> listTeams, Tournament tournament) {
         ArrayList<Fight> results = new ArrayList<>();
-        int areas = Math.min(competition.fightingAreas, listTeams.size() / 2);
+        int areas = Math.min(tournament.getFightingAreas(), listTeams.size() / 2);
         List<Couple> allFights = new ArrayList<>();
         Random rnd = new Random();
         for (int i = 0; i < listTeams.size(); i++) {
@@ -531,7 +531,7 @@ public class FightManager {
                     selected = rnd.nextInt(remainFights.size());
                     c = remainFights.get(selected);
                     remainFights = deleteAllCouplesWhereIsTeamOfCouple(c, remainFights);
-                    addFightToList(new Fight(listTeams.get(c.a), listTeams.get(c.b), competition, j), results);
+                    addFightToList(new Fight(listTeams.get(c.a), listTeams.get(c.b), tournament, j), results);
                     allFights.remove(c);
                     numberOfFights--;
                 } catch (IllegalArgumentException iae) {
@@ -542,11 +542,11 @@ public class FightManager {
         return results;
     }
 
-    public ArrayList<Fight> obtainRandomFights(List<Team> listTeams, Tournament competition) {
-        if (competition.fightingAreas < 2) {
-            return obtainFightsWithOneFightArea(listTeams, competition);
+    public ArrayList<Fight> obtainRandomFights(List<Team> listTeams, Tournament tournament) {
+        if (tournament.getFightingAreas() < 2) {
+            return obtainFightsWithOneFightArea(listTeams, tournament);
         } else {
-            return obtainFightsWithTwoOrMoreFightArea(listTeams, competition);
+            return obtainFightsWithTwoOrMoreFightArea(listTeams, tournament);
         }
     }
 
