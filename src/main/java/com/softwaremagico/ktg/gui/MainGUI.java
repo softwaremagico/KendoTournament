@@ -844,6 +844,9 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     }//GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
     
     private void StoreFightsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StoreFightsCheckBoxStateChanged
+        if(StoreFightsCheckBox.isSelected() && KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()){
+            MessageManager.warningMessage("disableMonitor", "Atention");
+        }
         KendoTournamentGenerator.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
     }//GEN-LAST:event_StoreFightsCheckBoxStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables

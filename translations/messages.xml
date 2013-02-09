@@ -1002,5 +1002,13 @@
 		<ca>Error mentres s'intentava importar el fitxer CSV!</ca>
 		<it>Errore durante il tentativo di importare il file CSV!</it>
 	</csvNotImported>
+	<disableMonitor>
+		<en>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</en>
+		<es>Esta opción es incompatible con el monitor de puntuaciones. Se ruega no utilizarlo si se selecciona esta opción.</es>
+		<nl>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</nl>
+		<de>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</de>
+		<ca>Esta opció és incompatible amb el monitor de puntuacions. Es prega no utilitzar-ho si es selecciona esta opció.</ca>
+		<it>Questa opzione è incompatibile con il monitor di punteggi. Si prega di non utilizzarlo si seleziona questa opzione.</it>	
+	</disableMonitor>
 </translator>
 

@@ -280,7 +280,9 @@ public abstract class LeagueLevel {
 
         // If there are no groups left, delete this level..
         if (size() == 0) {
-            groupManager.getLevels().remove(level);
+            if (level < groupManager.getLevels().size()) {
+                groupManager.getLevels().remove(level);
+            }
         }
     }
 
@@ -400,7 +402,7 @@ public abstract class LeagueLevel {
         System.out.println("-------------------------------------");
         for (TournamentGroup group : tournamentGroups) {
             for (Team team : group.teams) {
-                System.out.print(team.getName()+" ");
+                System.out.print(team.getName() + " ");
             }
             System.out.println();
         }

@@ -53,15 +53,15 @@ public class MessageManager {
         customMessage(trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
         Log.finest(code, title);
     }
-    
+
     public static void errorMessage(String code, String title, String finalText) {
         String text = trans.returnTag(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
-        customMessage(text+": "+finalText, title, JOptionPane.ERROR_MESSAGE);
+        customMessage(text + ": " + finalText, title, JOptionPane.ERROR_MESSAGE);
         Log.finest(code, title);
-    }    
+    }
 
     public static void winnerMessage(String code, String title, String finalText, int option) {
         String text = trans.returnTag(code);
@@ -145,6 +145,14 @@ public class MessageManager {
 
     public static void informationMessage(String code, String title, String finalText) {
         MessageManager.translatedMessage(code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void warningMessage(String code, String title) {
+        MessageManager.translatedMessage(code, title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    public static void warningMessage(String code, String title, String finalText) {
+        MessageManager.translatedMessage(code, title, finalText, JOptionPane.WARNING_MESSAGE);
     }
 
     public static boolean questionMessage(String code, String title) {

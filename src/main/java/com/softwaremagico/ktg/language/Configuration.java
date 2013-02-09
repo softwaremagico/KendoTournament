@@ -39,9 +39,6 @@ import java.util.logging.Logger;
  */
 public class Configuration {
 
-    
-    private static final String LANGUAGE_FILE = "language.txt";
-
     /************************************************
      *
      *                    DATABASE
@@ -52,7 +49,7 @@ public class Configuration {
      */
     public static void storeLanguageConfiguration(String language) {
         Path.getPathConfigInHome();
-        Folder.saveTextInFile(language, Path.getPathConfigInHome() + LANGUAGE_FILE);
+        Folder.saveTextInFile(language, Path.getPathLanguageConfigFile());
     }
 
     /**
@@ -60,13 +57,13 @@ public class Configuration {
      */
     public static void readLanguageConfiguration() {
         try {
-            String text = Folder.readFileAsText(Path.getPathConfigInHome() + LANGUAGE_FILE, false);
+            String text = Folder.readFileAsText(Path.getPathLanguageConfigFile(), false);
             if (text.length() > 1) {
                 KendoTournamentGenerator.getInstance().language = text;
             }
             if (text.startsWith("Error opening the file")) {
                     KendoTournamentGenerator.getInstance().language = "en";
-                    File f = new File(Path.getPathConfigInHome() + LANGUAGE_FILE);
+                    File f = new File(Path.getPathLanguageConfigFile());
                     f.createNewFile();                    
                     storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
             }

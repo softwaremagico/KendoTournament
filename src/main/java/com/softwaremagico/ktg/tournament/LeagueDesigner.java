@@ -165,7 +165,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
                 TournamentGroupPool.getManager(tournament).add(designedFight, true);
                 designedFight.setSelected(TournamentGroupPool.getManager(tournament));
-                TournamentGroupPool.getManager(tournament).updateArenas(0);
+                TournamentGroupPool.getManager(tournament).updateArenas(0);                
                 updateBlackBoard();
                 updateDesignerGroups();
                 updateListeners();

@@ -200,7 +200,7 @@ public class KendoTournamentGenerator {
         try {
             List<String> connectionData;
 
-            connectionData = Folder.readFileLines(Path.getPathConfigInHome() + "connection.txt", false);
+            connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome(), false);
 
             for (int i = 0; i < connectionData.size(); i++) {
                 if (connectionData.get(i).contains("User:")) {
@@ -238,7 +238,7 @@ public class KendoTournamentGenerator {
         connectionData.add("Machine:" + server);
         connectionData.add("Database:" + databaseName);
         connectionData.add("Engine:" + databaseEngine);
-        Folder.saveListInFile(connectionData, Path.getPathConfigInHome() + "connection.txt");
+        Folder.saveListInFile(connectionData, Path.getPathConnectionConfigInHome());
     }
 
     public boolean isLocallyConnected() {
@@ -340,7 +340,7 @@ public class KendoTournamentGenerator {
         try {
             List<String> tournamentConfigFile;
 
-            tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome() + File.separator + "config.txt", false);
+            tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome(), false);
 
             for (int i = 0; i < tournamentConfigFile.size(); i++) {
                 if (tournamentConfigFile.get(i).contains(tag)) {
@@ -410,7 +410,7 @@ public class KendoTournamentGenerator {
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);
-        Folder.saveListInFile(configData, Path.getPathConfigInHome() + File.separator + "config.txt");
+        Folder.saveListInFile(configData, Path.getPathConfigInHome());
     }
 
     public boolean existCompetitor(List<Competitor> competitors, Competitor competitor) {

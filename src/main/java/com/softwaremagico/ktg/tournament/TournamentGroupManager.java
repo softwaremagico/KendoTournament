@@ -190,8 +190,10 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void deleteTeamsOfLevel(Integer level) {
-        if (level >= 0 && level < levels.size()) {
-            levels.get(level).deleteTeams();
+        if (level >= 0) {
+            for(int i=level; i<levels.size();i++){
+                levels.get(i).deleteTeams();
+            }
         }
     }
 
@@ -199,7 +201,7 @@ public class TournamentGroupManager implements Serializable {
         if (levels.size() > 0) {
             levels.get(0).showTeams();
         } else {
-            System.out.println("Levels empty!");
+            Log.debug("Levels empty!");
         }
     }
 

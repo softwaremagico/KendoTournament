@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +58,8 @@ public class Translator {
     private boolean errorShowed = false;
     private boolean retried = false;
     private boolean showedMessage = false;
+    
+        private  static HashMap<String, Translator> existingTags = new HashMap<>();
 
     public Translator(String tmp_file) {
         fileTranslated = tmp_file;
@@ -96,10 +99,10 @@ public class Translator {
     }
     
     public String returnTag(String tag){
-        return returnTag(tag, KendoTournamentGenerator.getInstance().language);
+        return readTag(tag, KendoTournamentGenerator.getInstance().language);
     }
-
-    private String returnTag(String tag, String language) {
+    
+    private String readTag(String tag, String language) {
         try {
             NodeList nodeLst = doc.getElementsByTagName(tag);
             for (int s = 0; s < nodeLst.getLength(); s++) {
@@ -120,7 +123,7 @@ public class Translator {
                                 showedMessage = true;
                             }
                             retried = true;
-                            return returnTag(tag, DEFAULT_LANGUAGE);
+                            return readTag(tag, DEFAULT_LANGUAGE);
                         }
                         if (!language.equals(DEFAULT_LANGUAGE)) {
                             if (!errorShowed) {
@@ -128,7 +131,7 @@ public class Translator {
                                 Configuration.storeLanguageConfiguration(language);
                                 errorShowed = true;
                             }
-                            return returnTag(tag, DEFAULT_LANGUAGE);
+                            return readTag(tag, DEFAULT_LANGUAGE);
                         } else {
                             if (!errorShowed) {
                                 MessageManager.basicErrorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator");

@@ -33,10 +33,13 @@ import java.io.File;
  */
 public class Path {
 
-    private static final String DIRECTORY_STORE_USER_DATA = "kendoTournament";
+    private static final String DIRECTORY_STORE_USER_DATA = ".kendoTournament";
     private static final String CONFIG_FOLDER = "configuration";
     private static final String DATABASE_FOLDER = "databases";
     private static final String LOG_FOLDER = "logs";
+    private static final String LANGUAGE_FILE = "language.txt";
+    private static final String CONFIG_FILE = "config.txt";
+    private static final String CONNECTION_FILE = "connection.txt";
 
     private Path() {
     }
@@ -120,15 +123,25 @@ public class Path {
         return getImagePath() + "icons" + File.separator;
     }
 
-    public static String getPathFolderInHome() {
+    private static String getPathFolderInHome() {
         String homeFolder = System.getProperty("user.home");
-        Folder.makeFolderIfNotExist(homeFolder + File.separator + "." + DIRECTORY_STORE_USER_DATA);
-        return homeFolder + File.separator + "." + DIRECTORY_STORE_USER_DATA;
+        Folder.makeFolderIfNotExist(homeFolder + File.separator + DIRECTORY_STORE_USER_DATA);
+        return homeFolder + File.separator + DIRECTORY_STORE_USER_DATA;
     }
 
     public static String getPathConfigInHome() {
         Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONFIG_FOLDER);
-        return getPathFolderInHome() + File.separator + CONFIG_FOLDER;
+        return getPathFolderInHome() + File.separator + CONFIG_FOLDER + File.separator + CONFIG_FILE;
+    }
+
+    public static String getPathLanguageConfigFile() {
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + LANGUAGE_FILE);
+        return getPathFolderInHome() + File.separator + CONFIG_FOLDER + File.separator + LANGUAGE_FILE;
+    }
+
+    public static String getPathConnectionConfigInHome() {
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONNECTION_FILE);
+        return getPathFolderInHome() + File.separator + CONFIG_FOLDER + File.separator + CONNECTION_FILE;
     }
 
     public static String getPathDatabaseFolderInHome() {
