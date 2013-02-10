@@ -135,12 +135,12 @@ public class Path {
     }
 
     public static String getPathLanguageConfigFile() {
-        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + LANGUAGE_FILE);
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONFIG_FOLDER);
         return getPathFolderInHome() + File.separator + CONFIG_FOLDER + File.separator + LANGUAGE_FILE;
     }
 
     public static String getPathConnectionConfigInHome() {
-        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONNECTION_FILE);
+        Folder.makeFolderIfNotExist(getPathFolderInHome() + File.separator + CONFIG_FOLDER);
         return getPathFolderInHome() + File.separator + CONFIG_FOLDER + File.separator + CONNECTION_FILE;
     }
 

@@ -73,7 +73,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
             setLanguage();
             bbp = new BlackBoardPanel();
             BlackBoardScrollPane.setViewportView(bbp);
-            PassSpinner.setValue(numberMaxOfWinners);
             fillTournaments();
             updateInterface();
             updateLevel();
@@ -84,6 +83,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateMode();
             refreshMode = true;
         } catch (NullPointerException npe) {
+            npe.printStackTrace();
         }
     }
 
@@ -264,6 +264,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void updateInterface() {
         try {
             tournament = (Tournament) (TournamentComboBox.getSelectedItem());
+            numberMaxOfWinners = TournamentGroupPool.getManager(tournament).getDefaultNumberOfTeamsPassNextRound();
             //TournamentGroupPool.getManager(tournament) = new TournamentGroupManager(tournament);
             teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
 

@@ -134,6 +134,10 @@ public class TournamentGroupManager implements Serializable {
         }
         return null;
     }
+    
+    public Integer getDefaultNumberOfTeamsPassNextRound(){
+        return default_max_winners;
+    }
 
     public void setNumberOfTeamsPassNextRound(int value) {
         default_max_winners = value;

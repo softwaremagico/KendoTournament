@@ -769,12 +769,11 @@ public class FightManager {
         ArrayList<Fight> notUpdatedFights = notUpdatedFights();
         for (Fight f : notUpdatedFights) {
             if (!f.isOverStored() && f.isOver()) {
-                Log.finest("Fight " + f.show() + " is not over.");
+                Log.finest("Fight " + f.show() + " is not stored.");
                 KendoTournamentGenerator.getInstance().database.updateFightAsOver(f);
-            }
-
-            if (!storeDuelOfFights(f)) {
-                return false;
+                if (!storeDuelOfFights(f)) {
+                    return false;
+                }
             }
         }
         return true;

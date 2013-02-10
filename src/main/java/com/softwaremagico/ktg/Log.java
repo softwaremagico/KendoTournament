@@ -58,7 +58,6 @@ public class Log {
     public static Formatter getCustomFormatter() {
         return new Formatter() {
             //StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-
             @Override
             public String format(LogRecord record) {
                 String text = record.getLevel() + " [" + new Date() + "] " + " - " + record.getMessage() + "\n";
@@ -71,7 +70,9 @@ public class Log {
     }
 
     public static void info(String message) {
-        logger.info(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.info(message);
+        }
     }
 
     public static void info(String tag, String title) {
@@ -83,7 +84,9 @@ public class Log {
     }
 
     public static void config(String message) {
-        logger.config(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.config(message);
+        }
     }
 
     public static void config(String tag, String title) {
@@ -95,7 +98,9 @@ public class Log {
     }
 
     public static void warning(String message) {
-        logger.warning(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.warning(message);
+        }
     }
 
     public static void warning(String tag, String title) {
@@ -107,7 +112,9 @@ public class Log {
     }
 
     public static void debug(String message) {
-        logger.finest(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finest(message);
+        }
     }
 
     public static void debug(String tag, String title) {
@@ -119,7 +126,9 @@ public class Log {
     }
 
     public static void severe(String message) {
-        logger.severe(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.severe(message);
+        }
     }
 
     public static void severe(String tag, String title) {
@@ -131,7 +140,9 @@ public class Log {
     }
 
     public static void fine(String message) {
-        logger.fine(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.fine(message);
+        }
     }
 
     public static void fine(String tag, String title) {
@@ -143,7 +154,9 @@ public class Log {
     }
 
     public static void finer(String message) {
-        logger.finer(message);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finer(message);
+        }
     }
 
     public static void finer(String tag, String title) {
@@ -155,7 +168,9 @@ public class Log {
     }
 
     public static void finest(String messsage) {
-        logger.finest(messsage);
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finest(messsage);
+        }
     }
 
     public static void finest(String tag, String title) {
