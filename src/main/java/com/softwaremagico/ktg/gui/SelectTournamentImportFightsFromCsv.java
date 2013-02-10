@@ -62,7 +62,7 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
                 }
             }
         } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ex);
         }
         return false;
     }

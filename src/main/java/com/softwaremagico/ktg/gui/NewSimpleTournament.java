@@ -90,7 +90,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -105,7 +105,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 Team1ComboBox.addItem(listTeams.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         refreshTeam1 = true;
     }
@@ -518,7 +518,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }//GEN-LAST:event_RandomButtonActionPerformed
 
@@ -545,7 +545,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().database.updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();
         } else {
-            MessageManager.errorMessage("noFight", "New Fight");
+            MessageManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
 

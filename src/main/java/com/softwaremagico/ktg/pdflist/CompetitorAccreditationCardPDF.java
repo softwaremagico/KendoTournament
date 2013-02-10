@@ -78,7 +78,11 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         com.itextpdf.text.Image competitorImage;
 
         if (competitor.photoSize > 0) {
-            competitorImage = Image.getInstance(competitor.photo(), null);
+            try {
+                competitorImage = Image.getInstance(competitor.photo(), null);
+            } catch (NullPointerException npe) {
+                competitorImage = defaultPhoto;
+            }
         } else {
             competitorImage = defaultPhoto;
         }

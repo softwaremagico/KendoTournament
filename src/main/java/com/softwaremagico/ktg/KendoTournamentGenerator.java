@@ -152,9 +152,9 @@ public class KendoTournamentGenerator {
     /**
      * If debug is activated, show information about the error.
      */
-    public static void showErrorInformation(Exception ex) {
+    public static void showErrorInformation(String className, Exception ex) {
         if (isDebugOptionSelected()) {
-            MessageManager.errorMessage(ex);
+            MessageManager.errorMessage(className, ex);
         }
     }
 

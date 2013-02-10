@@ -73,7 +73,7 @@ public class NewCompetitor extends KendoFrame {
             ClubComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedClub());
         } else {
             NewClub newClub;
-            MessageManager.errorMessage("noClubsInserted", "MySQL");
+            MessageManager.errorMessage(this.getClass().getName(), "noClubsInserted", "MySQL");
             newClub = new NewClub();
             newClub.setVisible(true);
             newClub.updateClubsInCompetitor(this);
@@ -195,7 +195,7 @@ public class NewCompetitor extends KendoFrame {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
-                    Log.severe(NewCompetitor.class.getName() + " : " + ex.getMessage());
+                    KendoLog.severe(NewCompetitor.class.getName(), ex.getMessage());
                 }
                 if (KendoTournamentGenerator.getInstance().database.storeCompetitor(comp, true)) {
                     cleanWindow();
@@ -203,7 +203,7 @@ public class NewCompetitor extends KendoFrame {
                     return comp;
                 }
             } else {
-                MessageManager.errorMessage("noCompetitiorFieldsFilled", "SQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
             }
         }
         return null;

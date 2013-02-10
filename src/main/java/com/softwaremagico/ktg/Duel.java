@@ -209,7 +209,7 @@ public class Duel implements Serializable {
     public boolean needsToBeStored() {
         if (howManyPoints(true) > 0 || howManyPoints(false) > 0
                 || getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
-            Log.finest("Duel needs to be stored.");
+            KendoLog.finest(this.getClass().getName(),"Duel needs to be stored.");
             return true;
         }
         return false;

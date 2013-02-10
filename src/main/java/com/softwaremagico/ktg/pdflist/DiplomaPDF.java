@@ -124,16 +124,16 @@ public class DiplomaPDF {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
-                MessageManager.translatedMessage("diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
                 KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, tournament);
                 error = false;
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
-                KendoTournamentGenerator.showErrorInformation(npe);
+                MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 error = true;
             } catch (Exception ex) {
-                MessageManager.errorMessage("diplomaBad", "PDF");
-                KendoTournamentGenerator.showErrorInformation(ex);
+                MessageManager.errorMessage(this.getClass().getName(), "diplomaBad", "PDF");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 error = true;
             }
             timerPanel.dispose();
@@ -414,7 +414,7 @@ public class DiplomaPDF {
             try {
                 centerValue = searchForTeamPosition(KendoTournamentGenerator.getInstance().database.getTeamOfCompetitor(competitor.getId(), tournament, false));
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 centerValue = 0;
             }
             int startValue = centerValue - TOTAL_RANGES / 2;

@@ -57,7 +57,7 @@ public class ImportCSV {
         String path = exploreWindowsForCsv(JFileChooser.FILES_AND_DIRECTORIES, "");
         if (path.length() > 0) {
             try {
-                text = MyFile.inString(path,true);
+                text = MyFile.inString(path, true);
                 text = text.replace("\\s", "");
                 text = text.replace("\\n", "");
                 fields = text.split(";");
@@ -155,7 +155,7 @@ public class ImportCSV {
 
                     teamName = fields[index].replace("EQUIPO_", "").replace("\n", "").trim();
                     t = new Team(teamName, tournament);
-                    
+
                 }
             }
             index++;
@@ -232,7 +232,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainDelegate()) {
                     error = true;
-                    MessageManager.errorMessage("clubNotStored", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "clubNotStored", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("equipo")
                     || fields[index].trim().toLowerCase().equals("equipo")
@@ -240,7 +240,7 @@ public class ImportCSV {
                     || fields[index].trim().equals(trans.returnTag("Team").replace(":", ""))) {
                 if (!obtainTeam()) {
                     error = true;
-                    MessageManager.errorMessage("storeTeam", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("arbitro")
                     || fields[index].trim().toLowerCase().equals("arbitro")
@@ -249,7 +249,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainReferee()) {
                     error = true;
-                    MessageManager.errorMessage("storeRefereeBad", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "storeRefereeBad", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("seminar")
                     || fields[index].trim().toLowerCase().equals("seminar")
@@ -257,7 +257,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainSeminar()) {
                     error = true;
-                    MessageManager.errorMessage("storeSeminarBad", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "storeSeminarBad", "MySQL");
                 }
             } else {
                 //Unknown field, choose the next one. 
@@ -265,7 +265,7 @@ public class ImportCSV {
             }
         }
         if (!error) {
-            MessageManager.translatedMessage("csvImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage(this.getClass().getName(), "csvImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

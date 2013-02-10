@@ -431,7 +431,7 @@ public class TournamentGroup extends Group implements Serializable {
                         break;
                     }
                 } catch (NullPointerException npe) {
-                    KendoTournamentGenerator.showErrorInformation(npe);
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 }
             }
         }
@@ -699,7 +699,7 @@ public class TournamentGroup extends Group implements Serializable {
                 return resolvDrawTeams(order, sortedTeams);
             }
         } catch (IndexOutOfBoundsException iob) {
-            KendoTournamentGenerator.showErrorInformation(iob);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
         }
         try {
             return sortedTeams.get(order);
@@ -708,7 +708,7 @@ public class TournamentGroup extends Group implements Serializable {
             try {
                 return teams.get(0);
             } catch (IndexOutOfBoundsException iob2) {
-                KendoTournamentGenerator.showErrorInformation(iob2);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob2);
                 return null;
             }
         }
@@ -753,7 +753,7 @@ public class TournamentGroup extends Group implements Serializable {
         try {
             drawScore = teamsScoreOrdered.get(index);
         } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(e);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
             return null;
         }
         for (int i = 0; i < teamsScoreOrdered.size(); i++) {

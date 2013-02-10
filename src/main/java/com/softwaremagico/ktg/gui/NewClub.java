@@ -165,10 +165,10 @@ public class NewClub extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                MessageManager.errorMessage("noClubFieldsFilled", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "MySQL");
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 

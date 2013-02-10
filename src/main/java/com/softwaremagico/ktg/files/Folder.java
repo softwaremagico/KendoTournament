@@ -127,7 +127,7 @@ public class Folder {
         } catch (FileNotFoundException ex) {
             String text = "Impossible to generate the file:\n\t" + file
                     + "\nCheck the Folder.\n";
-            MessageManager.basicErrorMessage(text, "Directories");
+            MessageManager.basicErrorMessage(Folder.class.getName(), text, "Directories");
             return false;
         }
         return true;
@@ -161,7 +161,7 @@ public class Folder {
             String msg = "Impossible to generate file:\n\t" + file
                     + ". \nIs the working directory created properly?\n"
                     + "Check into \"Configuration -> Configurate the Computer\"";
-            MessageManager.basicErrorMessage(msg, "directories");
+            MessageManager.basicErrorMessage(Folder.class.getName(), msg, "directories");
         }
     }
 

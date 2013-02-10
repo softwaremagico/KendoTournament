@@ -97,7 +97,7 @@ public class MyFile {
             }
         } catch (FileNotFoundException ex) {
             if (verbose) {
-                MessageManager.customMessage("Impossible to read the file: " + filename, "Error", JOptionPane.ERROR_MESSAGE);
+                MessageManager.customMessage(MyFile.class.getName(), "Impossible to read the file: " + filename, "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException ex) {
         } finally {
@@ -128,7 +128,7 @@ public class MyFile {
             }
         } catch (IOException ex) {
             if (verbose) {
-                MessageManager.basicErrorMessage("Error opening the file:" + filename, "File Error");
+                MessageManager.basicErrorMessage(MyFile.class.getName(), "Error opening the file:" + filename, "File Error");
             }
         }
         return text;

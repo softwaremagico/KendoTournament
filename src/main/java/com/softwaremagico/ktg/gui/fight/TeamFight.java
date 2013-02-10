@@ -156,7 +156,7 @@ public class TeamFight extends JPanel {
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             } else {
-                MessageManager.errorMessage("waitNewLevel", "Team");
+                MessageManager.errorMessage(this.getClass().getName(), "waitNewLevel", "Team");
             }
         }
     }
@@ -192,7 +192,6 @@ public class TeamFight extends JPanel {
             //Avoid to run the one-click functions when performing a doubleclick.
             Integer timerinterval = (Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
             timer = new Timer(timerinterval.intValue(), new ActionListener() {
-
                 @Override
                 public void actionPerformed(ActionEvent evt) {
                     if (wasDoubleClick) {

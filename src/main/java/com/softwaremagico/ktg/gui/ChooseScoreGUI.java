@@ -100,7 +100,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
             }
             TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),npe);
         }
         refreshing = false;
         //fillFightsPanel();

@@ -49,28 +49,26 @@ public class MessageManager {
      * @param title
      * @param language
      */
-    public static void errorMessage(String code, String title) {
-        customMessage(trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
-        Log.finest(code, title);
+    public static void errorMessage(String className, String code, String title) {
+        customMessage(className, trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void errorMessage(String code, String title, String finalText) {
+    public static void errorMessage(String className, String code, String title, String finalText) {
         String text = trans.returnTag(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
-        customMessage(text + ": " + finalText, title, JOptionPane.ERROR_MESSAGE);
-        Log.finest(code, title);
+        customMessage(className, text + ": " + finalText, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void winnerMessage(String code, String title, String finalText, int option) {
+    public static void winnerMessage(String className, String code, String title, String finalText, int option) {
         String text = trans.returnTag(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
         //customMessage(text.trim() + ": " + finalText.trim(), title, option);
 
-        Log.finest(title + ": " + text);
+        KendoLog.finest(className, text);
 
         JFrame frame = null;
         JOptionPane.showMessageDialog(frame,
@@ -78,12 +76,12 @@ public class MessageManager {
                 JOptionPane.INFORMATION_MESSAGE, winnerIcon);
     }
 
-    public static void translatedMessage(String code, String title, String finalText, int option) {
+    public static void translatedMessage(String className, String code, String title, String finalText, int option) {
         String text = trans.returnTag(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
-        customMessage(text.trim() + ": " + finalText.trim(), title, option);
+        customMessage(className, text.trim() + ": " + finalText.trim(), title, option);
     }
 
     /**
@@ -95,27 +93,26 @@ public class MessageManager {
      * @param language
      * @param option
      */
-    public static void translatedMessage(String code, String title, int option) {
-        customMessage(trans.returnTag(code), title, option);
+    public static void translatedMessage(String className, String code, String title, int option) {
+        customMessage(className, trans.returnTag(code), title, option);
     }
 
-    public static void basicErrorMessage(String text, String title) {
-        Log.severe(text);
+    public static void basicErrorMessage(String className, String text, String title) {
+        KendoLog.severe(className, text);
         showGraphicMessage(text, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void errorMessage(Throwable throwable) {
+    public static void errorMessage(String className, Throwable throwable) {
         String error = getStackTrace(throwable);
-        basicErrorMessage(error, "Error");
-        throwable.printStackTrace();
+        basicErrorMessage(className, error, "Error");
     }
 
-    public static void customMessage(String text, String title, int option) {
+    public static void customMessage(String className, String text, String title, int option) {
         showGraphicMessage(text, title, option);
-        Log.finest(title + ": " + text);
+        KendoLog.finest(className, text);
     }
 
-    public static void showGraphicMessage(String text, String title, int option) {
+    private static void showGraphicMessage(String text, String title, int option) {
         int i = 0, caracteres = 0;
         try {
             String texto[] = text.split(" ");
@@ -139,20 +136,20 @@ public class MessageManager {
         }
     }
 
-    public static void informationMessage(String code, String title) {
-        MessageManager.translatedMessage(code, title, JOptionPane.INFORMATION_MESSAGE);
+    public static void informationMessage(String className, String code, String title) {
+        MessageManager.translatedMessage(className, code, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void informationMessage(String code, String title, String finalText) {
-        MessageManager.translatedMessage(code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
+    public static void informationMessage(String className, String code, String title, String finalText) {
+        MessageManager.translatedMessage(className, code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public static void warningMessage(String code, String title) {
-        MessageManager.translatedMessage(code, title, JOptionPane.WARNING_MESSAGE);
+    public static void warningMessage(String className, String code, String title) {
+        MessageManager.translatedMessage(className, code, title, JOptionPane.WARNING_MESSAGE);
     }
 
-    public static void warningMessage(String code, String title, String finalText) {
-        MessageManager.translatedMessage(code, title, finalText, JOptionPane.WARNING_MESSAGE);
+    public static void warningMessage(String className, String code, String title, String finalText) {
+        MessageManager.translatedMessage(className, code, title, finalText, JOptionPane.WARNING_MESSAGE);
     }
 
     public static boolean questionMessage(String code, String title) {

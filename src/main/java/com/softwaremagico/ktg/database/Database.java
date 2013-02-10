@@ -70,7 +70,7 @@ public abstract class Database {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-            KendoTournamentGenerator.showErrorInformation(ex1);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex1);
         }
     }
 
@@ -140,7 +140,7 @@ public abstract class Database {
     public abstract List<Participant> getParticipants(String query, boolean verbose);
 
     public abstract List<CompetitorWithPhoto> getAllCompetitorsWithPhoto();
-    
+
     public abstract List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes);
@@ -240,7 +240,7 @@ public abstract class Database {
     public abstract void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roles, Tournament tournament);
 
     public abstract List<Role> getAllRoles();
-    
+
     public abstract List<Role> getRoles(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes);
@@ -262,7 +262,7 @@ public abstract class Database {
     public abstract List<String> returnClubsName();
 
     public abstract List<Club> getAllClubs();
-    
+
     public abstract List<Club> getClubs(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes);
@@ -296,7 +296,7 @@ public abstract class Database {
     public abstract boolean updateTournament(Tournament tournament, boolean verbose);
 
     public abstract List<Tournament> getAllTournaments();
-    
+
     public abstract List<Tournament> getTournaments(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes);
@@ -344,7 +344,7 @@ public abstract class Database {
     public abstract List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose);
 
     public abstract List<Team> getAllTeams();
-    
+
     public abstract List<Team> getTeams(int fromRow, int numberOfRows);
 
     public abstract boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes);
@@ -384,7 +384,7 @@ public abstract class Database {
     public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
 
     public abstract boolean deleteAllFights();
-    
+
     public abstract boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights);
 
     public abstract boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne);
@@ -430,7 +430,7 @@ public abstract class Database {
     public abstract boolean updateFightAsNotOver(Fight fight);
 
     public abstract List<Fight> getAllFights();
-    
+
     public abstract List<Fight> getFights(int fromRow, int numberOfRows);
 
     /**
@@ -458,7 +458,7 @@ public abstract class Database {
     public abstract List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight);
 
     public abstract List<Duel> getAllDuels();
-    
+
     public abstract List<Duel> getDuels(int fromRow, int numberOfRows);
 
     /**
@@ -474,7 +474,7 @@ public abstract class Database {
     public abstract boolean storeUndraw(Tournament tournament, Team team, int order, int group);
 
     public abstract boolean storeUndraw(Undraw undraw);
-    
+
     public abstract List<Undraw> getUndraws(int fromRow, int numberOfRows);
 
     public abstract List<Undraw> getUndraws(Tournament tournament);

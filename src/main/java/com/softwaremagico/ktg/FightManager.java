@@ -274,7 +274,7 @@ public class FightManager {
 
     public boolean deleteFightsOfLevel(Tournament tournament, int level, boolean verbose) {
         if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(tournament, level, verbose)) {
-            Log.finer("Delete fights in memory.");
+            KendoLog.finer(FightManager.class.getName(), "Delete fights in memory.");
             for (int i = 0; i < fights.size(); i++) {
                 if (fights.get(i).level >= level) {
                     fights.remove(i);
@@ -314,11 +314,11 @@ public class FightManager {
     public boolean areArenaOver(int arena) {
         for (int i = 0; i < fights.size(); i++) {
             if (!fights.get(i).isOver() && fights.get(i).asignedFightArea == arena) {
-                Log.debug("Fight '" + fights.get(i).team1.getName() + " vs " + fights.get(i).team2.getName() + "' is not over.");
+                KendoLog.debug(FightManager.class.getName(), "Fight '" + fights.get(i).team1.getName() + " vs " + fights.get(i).team2.getName() + "' is not over.");
                 return false;
             }
         }
-        Log.finest("All arena fights are over.");
+        KendoLog.finest(FightManager.class.getName(), "All arena fights are over.");
         return true;
     }
 
@@ -420,14 +420,14 @@ public class FightManager {
             //If championship or similar...
             if (!tournament.getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(tournament).size() > 1) {
                 //If all arena fights are over.
-                Log.finer("All fights are over!");
+                KendoLog.finer(FightManager.class.getName(), "All fights are over!");
                 //Obtain next fights.
-                Log.finest("Calculating next fights in " + (tournament).getName());
+                KendoLog.finest(FightManager.class.getName(), "Calculating next fights in " + (tournament).getName());
                 add(TournamentGroupPool.getManager((tournament)).nextLevel(
                         getFights(), arena, (tournament)));
             } else { //Simple championship
                 System.out.println("---");
-                Log.info("Tournament over!");
+                KendoLog.info(FightManager.class.getName(), "Tournament over!");
             }
         }
     }
@@ -736,12 +736,12 @@ public class FightManager {
 
     public void setFightAsOver(Fight fight) {
         fight.setOver();
-        Log.finest("Fight '" + fight.team1.getName() + " vs " + fight.team2.getName() + "' is set to over.");
+        KendoLog.finest(this.getClass().getName(), "Fight '" + fight.team1.getName() + " vs " + fight.team2.getName() + "' is set to over.");
         //KendoTournamentGenerator.getInstance().database.updateFightAsOver(fight);
     }
 
     private boolean storeDuel(Duel d, Fight fight, int player) {
-        Log.fine("Storing duel '" + d.showScore());
+        KendoLog.fine(FightManager.class.getName(), "Storing duel '" + d.showScore());
         if (d.needsToBeStored()) {
             if (KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, player)) {
                 d.setStored(true);
@@ -755,7 +755,7 @@ public class FightManager {
     }
 
     private boolean storeDuelOfFights(Fight fight) {
-        Log.fine("Storing duels of fight " + fight.show() + ".");
+        KendoLog.fine(FightManager.class.getName(), "Storing duels of fight " + fight.show() + ".");
         for (int i = 0; i < fight.duels.size(); i++) {
             if (!storeDuel(fight.duels.get(i), fight, i)) {
                 return false;
@@ -765,11 +765,11 @@ public class FightManager {
     }
 
     public boolean storeNotUpdatedFightsAndDuels() {
-        Log.fine("Storing all not updated fights and duels.");
+        KendoLog.fine(FightManager.class.getName(), "Storing all not updated fights and duels.");
         ArrayList<Fight> notUpdatedFights = notUpdatedFights();
         for (Fight f : notUpdatedFights) {
             if (!f.isOverStored() && f.isOver()) {
-                Log.finest("Fight " + f.show() + " is not stored.");
+                KendoLog.finest(FightManager.class.getName(), "Fight " + f.show() + " is not stored.");
                 KendoTournamentGenerator.getInstance().database.updateFightAsOver(f);
                 if (!storeDuelOfFights(f)) {
                     return false;
@@ -812,7 +812,7 @@ public class FightManager {
                             fight.setOverStored(false);
                         }
                     } else {
-                        MessageManager.errorMessage("csvNotImported", "Error");
+                        MessageManager.errorMessage(this.getClass().getName(), "csvNotImported", "Error");
                         return false;
                     }
                 }
@@ -823,16 +823,16 @@ public class FightManager {
                 }
             } else if (csvLine.startsWith(Undraw.getCsvTag())) {
                 //Do nothing. 
-                Log.warning("Undraw line found in a simple tournament!");
+                KendoLog.warning(FightManager.class.getName(), "Undraw line found in a simple tournament!");
             }
         }
 
         if (fightsImported > 0) {
-            MessageManager.informationMessage("csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
+            MessageManager.informationMessage(this.getClass().getName(), "csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
             storeNotUpdatedFightsAndDuels();
             return true;
         } else {
-            MessageManager.errorMessage("csvNotImported", "Error");
+            MessageManager.errorMessage(this.getClass().getName(), "csvNotImported", "Error");
             return false;
         }
     }

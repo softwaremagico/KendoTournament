@@ -26,15 +26,12 @@ package com.softwaremagico.ktg;
  */
 
 import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
 import java.util.Date;
 import java.util.logging.*;
 
-public class Log {
+public class KendoLog {
 
-    private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static final Logger logger = Logger.getLogger("KendoLog");
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
     private static final int maxBytes = 50000000;
@@ -48,7 +45,7 @@ public class Log {
             //fh.setFormatter(new SimpleFormatter());
             fh.setFormatter(getCustomFormatter());
         } catch (IOException | SecurityException ex) {
-            MessageManager.basicErrorMessage("Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage(), "Logger");
+            MessageManager.basicErrorMessage(KendoLog.class.getName(), "Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage(), "Logger");
         }
     }
 
@@ -66,118 +63,86 @@ public class Log {
         };
     }
 
-    private Log() {
+    private KendoLog() {
     }
 
-    public static void info(String message) {
+    private static void info(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.info(message);
         }
     }
 
-    public static void info(String tag, String title) {
-        info(title + ": " + trans.returnTag(tag));
+    public static void info(String className, String message) {
+        info(className + ": " + message);
     }
 
-    public static void info(String tag, String title, String message) {
-        info(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void config(String message) {
+    private static void config(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.config(message);
         }
     }
 
-    public static void config(String tag, String title) {
-        config(title + ": " + trans.returnTag(tag));
+    public static void config(String className, String message) {
+        config(className + ": " + message);
     }
 
-    public static void config(String tag, String title, String message) {
-        config(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void warning(String message) {
+    private static void warning(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.warning(message);
         }
     }
 
-    public static void warning(String tag, String title) {
-        warning(title + ": " + trans.returnTag(tag));
+    public static void warning(String className, String message) {
+        warning(className + ": " + message);
     }
 
-    public static void warning(String tag, String title, String message) {
-        warning(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void debug(String message) {
+    private static void debug(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.finest(message);
         }
     }
 
-    public static void debug(String tag, String title) {
-        debug(title + ": " + trans.returnTag(tag));
+    public static void debug(String className, String message) {
+        debug(className + ": " + message);
     }
 
-    public static void debug(String tag, String title, String message) {
-        debug(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void severe(String message) {
+    private static void severe(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.severe(message);
         }
     }
 
-    public static void severe(String tag, String title) {
-        severe(title + ": " + trans.returnTag(tag));
+    public static void severe(String className, String message) {
+        severe(className + ": " + message);
     }
 
-    public static void severe(String tag, String title, String message) {
-        severe(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void fine(String message) {
+    private static void fine(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.fine(message);
         }
     }
 
-    public static void fine(String tag, String title) {
-        fine(title + ": " + trans.returnTag(tag));
+    public static void fine(String className, String message) {
+        fine(className + ": " + message);
     }
 
-    public static void fine(String tag, String title, String message) {
-        fine(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void finer(String message) {
+    private static void finer(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.finer(message);
         }
     }
 
-    public static void finer(String tag, String title) {
-        finer(title + ": " + trans.returnTag(tag));
+    public static void finer(String className, String message) {
+        finer(className + ": " + message);
     }
 
-    public static void finer(String tag, String title, String message) {
-        finer(title + ": " + trans.returnTag(tag) + " -> " + message);
-    }
-
-    public static void finest(String messsage) {
+    private static void finest(String messsage) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             logger.finest(messsage);
         }
     }
 
-    public static void finest(String tag, String title) {
-        finest(title + ": " + trans.returnTag(tag));
-    }
-
-    public static void finest(String tag, String title, String message) {
-        finest(title + ": " + trans.returnTag(tag) + " -> " + message);
+    public static void finest(String className, String message) {
+        finest(className + ": " + message);
     }
 }

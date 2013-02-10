@@ -58,7 +58,7 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
             }
 
             if (Folder.saveListInFile(csv, file)) {
-                MessageManager.informationMessage("csvExported", "CSV");
+                MessageManager.informationMessage(this.getClass().getName(), "csvExported", "CSV");
                 return true;
             }
         }

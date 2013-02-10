@@ -127,7 +127,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
                 }
             }
         } catch (NullPointerException | IndexOutOfBoundsException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 

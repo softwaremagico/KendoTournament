@@ -55,7 +55,6 @@ public class OrderTeam extends NewTeam {
         //fillCompetitors();
         inidividualTeams();
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AcceptButtonActionPerformed2(evt);
@@ -75,7 +74,6 @@ public class OrderTeam extends NewTeam {
         //fillCompetitors();
         inidividualTeams();
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AcceptButtonActionPerformed2(evt);
@@ -106,12 +104,12 @@ public class OrderTeam extends NewTeam {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
                 } catch (NullPointerException | IndexOutOfBoundsException npe) {
-                    KendoTournamentGenerator.showErrorInformation(npe);
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -124,14 +122,14 @@ public class OrderTeam extends NewTeam {
             }
 
             if (repeatedCompetitor()) {
-                MessageManager.errorMessage("repeatedCompetitor", "League");
+                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
             } else {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
                 if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
                     FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).updateFightsWithNewOrderOfTeam(team);
-                    MessageManager.informationMessage("orderChanged", "League");
+                    MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
                     this.dispose();
                 }
             }

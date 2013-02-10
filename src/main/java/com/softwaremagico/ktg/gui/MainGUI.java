@@ -45,7 +45,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @author jorge
  */
 public class MainGUI extends KendoFrame {
-    
+
     Translator trans = null;
     private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
     private PhotoFrame banner;
@@ -136,7 +136,7 @@ public class MainGUI extends KendoFrame {
         ExportParticipantMenu.setText(trans.returnTag("Export"));
         StoreFightsCheckBox.setText(trans.returnTag("StrictStore"));
     }
-    
+
     private void setPhoto() {
         banner = new PhotoFrame(MainPhotoPanel, Path.getMainPhoto());
         MainPhotoPanel.add(banner, 0);
@@ -159,7 +159,7 @@ public class MainGUI extends KendoFrame {
             languageList.add(MenuItem);
         }
     }
-    
+
     public String ReturnSelectedLanguage() {
         for (int i = 0; i < languageList.size(); i++) {
             if (languageList.get(i).isSelected()) {
@@ -168,7 +168,7 @@ public class MainGUI extends KendoFrame {
         }
         return KendoTournamentGenerator.getInstance().language;
     }
-    
+
     public final void isConnectedToDatabase() {
         boolean connected = KendoTournamentGenerator.getInstance().databaseConnected;
         DiplomaMenuItem.setEnabled(connected);
@@ -208,12 +208,12 @@ public class MainGUI extends KendoFrame {
         ChangeTeamMenuItem.setEnabled(connected);
         ConvertDatabaseMenuItem.setEnabled(true);
     }
-    
+
     @Override
     public String defaultFileName() {
         return "";
     }
-    
+
     private void updateConfig() {
         refresh = false;
         LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
@@ -239,155 +239,155 @@ public class MainGUI extends KendoFrame {
             languageList.get(i).addActionListener(al);
         }
     }
-    
+
     public void addAboutMenuItemListener(ActionListener al) {
         AboutMenuItem.addActionListener(al);
     }
-    
+
     public void addCompetitorMenuItemListener(ActionListener al) {
         CompetitorMenuItem.addActionListener(al);
     }
-    
+
     public void addRoleMenuItemListener(ActionListener al) {
         RoleMenuItem.addActionListener(al);
     }
-    
+
     public void addTournamentMenuItemListener(ActionListener al) {
         TournamentMenuItem.addActionListener(al);
     }
-    
+
     public void addTournamentPanelMenuItemListener(ActionListener al) {
         TournamentPanelMenuItem.addActionListener(al);
     }
-    
+
     public void addClubMenuItemListener(ActionListener al) {
         ClubMenuItem.addActionListener(al);
     }
-    
+
     public void addTeamMenuItemListener(ActionListener al) {
         TeamMenuItem.addActionListener(al);
     }
-    
+
     public void addConnectDatabaseMenuItemListener(ActionListener al) {
         DatabaseConnectMenuItem.addActionListener(al);
     }
-    
+
     public void addUpdateDatabaseMenuItemListener(ActionListener al) {
         DatabaseUpdateMenuItem.addActionListener(al);
     }
-    
+
     public void addTeamListMenuItemListener(ActionListener al) {
         TeamListMenuItem.addActionListener(al);
     }
-    
+
     public void addRefereeListMenuItemListener(ActionListener al) {
         RefereeListMenuItem.addActionListener(al);
     }
-    
+
     public void addFightListMenuItemListener(ActionListener al) {
         FightListMenuItem.addActionListener(al);
     }
-    
+
     public void addPointListMenuItemListener(ActionListener al) {
         PointListMenuItem.addActionListener(al);
     }
-    
+
     public void addDiplomaListMenuItemListener(ActionListener al) {
         DiplomaMenuItem.addActionListener(al);
     }
-    
+
     public void addSummaryMenuItemListener(ActionListener al) {
         SummaryMenuItem.addActionListener(al);
     }
-    
+
     public void addClubListMenuItemListener(ActionListener al) {
         ClubListMenuItem.addActionListener(al);
     }
-    
+
     public void addHitsStatisticsMenuItemListener(ActionListener al) {
         TournamentHitsStatisticsMenuItem.addActionListener(al);
     }
-    
+
     public void addPerformedHitsStatisticsMenuItemListener(ActionListener al) {
         PerformedHitsMenuItem.addActionListener(al);
     }
-    
+
     public void addReceivedHitsStatisticsMenuItemListener(ActionListener al) {
         ReceivedHitsMenuItem.addActionListener(al);
     }
-    
+
     public void addWonFightsStatisticsMenuItemListener(ActionListener al) {
         WonLostMenuItem.addActionListener(al);
     }
-    
+
     public void addTopTenStatisticsMenuItemListener(ActionListener al) {
         TournamentTopTenMenuItem.addActionListener(al);
     }
-    
+
     public void addManualMenuItemListener(ActionListener al) {
         ManualFightsMenuItem.addActionListener(al);
     }
-    
+
     public void addFightMenuItemListener(ActionListener al) {
         FightMenuItem.addActionListener(al);
     }
-    
+
     public void addRingMenuItemListener(ActionListener al) {
         RingMenuItem.addActionListener(al);
     }
-    
+
     public void addDesignerMenuItemListener(ActionListener al) {
         DesignerMenuItem.addActionListener(al);
     }
-    
+
     public void addTeamTopTenListener(ActionListener al) {
         TeamTopTenMenuItem.addActionListener(al);
     }
-    
+
     public void addScoreMonitorListener(ActionListener al) {
         ScoreMonitorMenuItem.addActionListener(al);
     }
-    
+
     public void addTreeMonitorListener(ActionListener al) {
         TreeMonitorMenuItem.addActionListener(al);
     }
-    
+
     public void addAccreditionCardMenuItemListener(ActionListener al) {
         AccreditationMenuItem.addActionListener(al);
     }
-    
+
     public void addHelpMenuItemListener(ActionListener al) {
         HelpMenuItem.addActionListener(al);
     }
-    
+
     public void addScoreMenuItemListener(ActionListener al) {
         ScoreMenuItem.addActionListener(al);
     }
-    
+
     public void addImportFightCsvMenuItemListener(ActionListener al) {
         ImportFightCsvMenuItem.addActionListener(al);
     }
-    
+
     public void addExportFightCsvMenuItemListener(ActionListener al) {
         ExportFightCsvMenuItem.addActionListener(al);
     }
-    
+
     public void addImportParticipantCsvMenuItemListener(ActionListener al) {
         ImportParticpantCsvMenuItem.addActionListener(al);
     }
-    
+
     public void addExportParticipantCsvMenuItemListener(ActionListener al) {
         ExportParticipantCsvMenuItem.addActionListener(al);
     }
-    
+
     public void addChangeTeamMenuItemListener(ActionListener al) {
         ChangeTeamMenuItem.addActionListener(al);
     }
-    
+
     public void addConvertDatabaseMenuItemListener(ActionListener al) {
         ConvertDatabaseMenuItem.addActionListener(al);
     }
-    
+
     public void addFightsCardMenuItemListener(ActionListener al) {
         FightsCardMenuItem.addActionListener(al);
     }
@@ -796,17 +796,17 @@ public class MainGUI extends KendoFrame {
             KendoTournamentGenerator.getInstance().database.disconnect();
             KendoTournamentGenerator.getInstance().databaseConnected = false;
             isConnectedToDatabase();
-            MessageManager.translatedMessage("databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
-            MessageManager.errorMessage("disconnectDatabaseFail", "MySQL");
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.errorMessage(this.getClass().getName(), "disconnectDatabaseFail", "MySQL");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
-    
+
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed
         this.dispose();
     }//GEN-LAST:event_ExitMenuItemActionPerformed
-    
+
     private void ImportMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ImportMenuItemActionPerformed
         String file;
         if (!(file = exploreWindowsForKtg(trans.returnTag("ImportSQL"),
@@ -815,14 +815,14 @@ public class MainGUI extends KendoFrame {
             new StoreDatabase().load(file);
         }
     }//GEN-LAST:event_ImportMenuItemActionPerformed
-    
+
     private void ExportMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportMenuItemActionPerformed
         String file;
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
-        
+
         String date = year + "-" + month + "-" + day;
         if (!(file = exploreWindowsForKtg(trans.returnTag("ExportSQL"),
                 JFileChooser.FILES_AND_DIRECTORIES, "KendoTournament_" + date + ".ktg")).equals("")) {
@@ -830,22 +830,22 @@ public class MainGUI extends KendoFrame {
             new StoreDatabase().save(file);
         }
 }//GEN-LAST:event_ExportMenuItemActionPerformed
-    
+
 private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LogMenuCheckBoxItemStateChanged
     if (refresh) {
         KendoTournamentGenerator.getInstance().changeLogOption(LogMenuCheckBox.getState());
     }
 }//GEN-LAST:event_LogMenuCheckBoxItemStateChanged
-    
+
     private void DebugMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DebugMenuCheckBoxItemStateChanged
         if (refresh) {
             KendoTournamentGenerator.getInstance().changeDebugOption(DebugMenuCheckBox.getState());
         }
     }//GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
-    
+
     private void StoreFightsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StoreFightsCheckBoxStateChanged
-        if(StoreFightsCheckBox.isSelected() && KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()){
-            MessageManager.warningMessage("disableMonitor", "Atention");
+        if (StoreFightsCheckBox.isSelected() && KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()) {
+            MessageManager.warningMessage(this.getClass().getName(), "disableMonitor", "Atention");
         }
         KendoTournamentGenerator.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
     }//GEN-LAST:event_StoreFightsCheckBoxStateChanged

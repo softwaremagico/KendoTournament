@@ -87,7 +87,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void fillTournaments() {
-        Log.finest("Updating tournament list of NewRole");
+        KendoLog.finest(this.getClass().getName(), "Updating tournament list of NewRole");
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
@@ -102,7 +102,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void fillCompetitors() {
-        Log.finest("Updating competitors list of NewRole");
+        KendoLog.finest(this.getClass().getName(), "Updating competitors list of NewRole");
         refreshCompetitor = false;
         try {
             CompetitorComboBox.removeAllItems();
@@ -111,13 +111,13 @@ public class NewRole extends KendoFrame {
                 CompetitorComboBox.addItem(listParticipants.get(i).getSurname() + ", " + listParticipants.get(i).getName());
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         refreshCompetitor = true;
     }
 
     private void fillRoles() {
-        Log.finest("Updating role list of NewRole");
+        KendoLog.finest(this.getClass().getName(), "Updating role list of NewRole");
         try {
             RoleComboBox.removeAllItems();
             RoleComboBox.addItem("");
@@ -125,7 +125,7 @@ public class NewRole extends KendoFrame {
                 RoleComboBox.addItem(KendoTournamentGenerator.getInstance().getAvailableRoles().get(i).name);
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -139,9 +139,9 @@ public class NewRole extends KendoFrame {
     }
 
     private void refreshRole() {
-        Log.finest("Obtaining role of selected Competitor");
+        KendoLog.finest(this.getClass().getName(), "Obtaining role of selected Competitor");
         try {
-            String role = KendoTournamentGenerator.getInstance().database.getTagRole((Tournament)TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            String role = KendoTournamentGenerator.getInstance().database.getTagRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             try {
                 if (role == null) {
                     RoleComboBox.setSelectedIndex(0);
@@ -153,7 +153,7 @@ public class NewRole extends KendoFrame {
             } catch (IllegalArgumentException iae) {
             }
         } catch (ArrayIndexOutOfBoundsException aiofb) {
-            MessageManager.errorMessage("noTournamentOrCompetitorExist", "MySQL");
+            MessageManager.errorMessage(this.getClass().getName(), "noTournamentOrCompetitorExist", "MySQL");
             try {
                 RoleComboBox.setSelectedItem("");
             } catch (IllegalArgumentException iae) {
@@ -164,9 +164,9 @@ public class NewRole extends KendoFrame {
     }
 
     private void deleteRole() {
-        Log.finest("Deleting role");
+        KendoLog.finest(this.getClass().getName(), "Deleting role");
         try {
-            KendoTournamentGenerator.getInstance().database.deleteRole((Tournament)TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            KendoTournamentGenerator.getInstance().database.deleteRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             if (RoleComboBox.getItemCount() > 0) {
                 RoleComboBox.setSelectedIndex(0);
             }
@@ -175,7 +175,7 @@ public class NewRole extends KendoFrame {
     }
 
     private void defaultSelect(Competitor competitor) {
-        Log.finest("Selecting default " + competitor.getSurnameName());
+        KendoLog.finest(this.getClass().getName(), "Selecting default " + competitor.getSurnameName());
         refreshTournament = false;
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -343,7 +343,7 @@ public class NewRole extends KendoFrame {
                 pdf.createFile(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
 }//GEN-LAST:event_PDFButtonActionPerformed
 

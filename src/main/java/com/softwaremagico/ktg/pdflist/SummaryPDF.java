@@ -163,7 +163,7 @@ public class SummaryPDF extends ParentList {
                     cell = new PdfPCell(fightTable(fights.get(i), first));
                 } catch (DocumentException ex) {
                     cell = new PdfPCell();
-                    KendoTournamentGenerator.showErrorInformation(ex);
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 }
                 cell.setBorderWidth(border);
                 cell.setColspan(getTableWidths().length);

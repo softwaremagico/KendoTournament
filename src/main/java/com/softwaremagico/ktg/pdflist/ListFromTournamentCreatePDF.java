@@ -29,8 +29,8 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
@@ -59,7 +59,7 @@ public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCrea
                 }
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ex);
         }
     }
     

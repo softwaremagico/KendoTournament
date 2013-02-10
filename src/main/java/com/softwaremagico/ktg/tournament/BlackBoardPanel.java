@@ -143,7 +143,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                             }
                         }
                     } catch (NullPointerException npe) {
-                        KendoTournamentGenerator.showErrorInformation(npe);
+                        KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                     }
                 }
             }
@@ -181,7 +181,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(e);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
         }
     }
 

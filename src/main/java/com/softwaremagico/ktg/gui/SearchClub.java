@@ -79,7 +79,7 @@ public final class SearchClub extends Search<Club> {
         } else if (CityTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchClubByCity(CityTextField.getText(), true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search");
+            MessageManager.errorMessage(this.getClass().getName(),"fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {

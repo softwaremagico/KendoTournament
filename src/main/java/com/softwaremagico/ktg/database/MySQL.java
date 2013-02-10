@@ -25,9 +25,8 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
-
+import com.softwaremagico.ktg.KendoLog;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Log;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
@@ -78,7 +77,7 @@ public class MySQL extends SQL {
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
         } catch (Exception e) {
-            MessageManager.basicErrorMessage("Mysql driver for Java is not installed. Check your configuration.", "Mysql");
+            MessageManager.basicErrorMessage(this.getClass().getName(), "Mysql driver for Java is not installed. Check your configuration.", "Mysql");
             error = true;
         }
 
@@ -111,9 +110,9 @@ public class MySQL extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("databaseConnected", "MySQL", "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("databaseConnected", "MySQL");
+            KendoLog.info(MySQL.class.getName(), "MySQL");
         }
         return !error;
     }
@@ -146,7 +145,7 @@ public class MySQL extends SQL {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-            KendoTournamentGenerator.showErrorInformation(ex1);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex1);
         }
     }
 
@@ -180,7 +179,7 @@ public class MySQL extends SQL {
             executeScript(Path.returnDatabaseSchemaPath() + File.separator + "kendotournament_empty.sql");
 
         } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 
@@ -221,9 +220,9 @@ public class MySQL extends SQL {
         if (answer) {
             updated = updateDatabaseAction(path);
             if (updated) {
-                MessageManager.translatedMessage("updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                MessageManager.errorMessage("notUpdateDatabase", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "notUpdateDatabase", "MySQL");
             }
         }
         return updated;
@@ -300,28 +299,28 @@ public class MySQL extends SQL {
         System.out.println("Error: " + numberError);
         switch (numberError) {
             case 1045:
-                MessageManager.errorMessage("deniedUser", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "deniedUser", "MySQL");
                 return true;
             case 1049:
-                MessageManager.errorMessage("noDatabase", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "MySQL");
                 return true;
             case 1062:
-                MessageManager.errorMessage("repeatedCompetitor", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "MySQL");
                 return true;
             case 1054:
-                MessageManager.errorMessage("unknownColumn", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "unknownColumn", "MySQL");
                 return true;
             case 1146:
-                MessageManager.errorMessage("corruptedDatabase", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "MySQL");
                 return true;
             case 1130:
-                MessageManager.errorMessage("noAccessUser", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noAccessUser", "MySQL");
                 return true;
             case 1044:
-                MessageManager.errorMessage("noUserPrivileges", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noUserPrivileges", "MySQL");
                 return true;
             case 0:
-                MessageManager.errorMessage("noDatabase", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "MySQL");
                 return true;
         }
 

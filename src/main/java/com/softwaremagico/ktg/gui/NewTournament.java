@@ -145,12 +145,12 @@ public class NewTournament extends KendoFrame {
                 cleanWindow();
             }
             //If tournamnet team size has changed (tournament update), delete old teams of tournament.
-            if(maxCompetitorTeam != null && maxCompetitorTeam != tournament.getTeamSize()){
+            if (maxCompetitorTeam != null && maxCompetitorTeam != tournament.getTeamSize()) {
                 KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament, false);
             }
             return true;
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
+            MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
         }
         return false;
     }
@@ -383,10 +383,10 @@ public class NewTournament extends KendoFrame {
                     pdf.createFile(file);
                 }
             } catch (Exception ex) {
-                KendoTournamentGenerator.showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
         } else {
-            MessageManager.errorMessage("noTournamentFieldsFilled", "MySQL");
+            MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 

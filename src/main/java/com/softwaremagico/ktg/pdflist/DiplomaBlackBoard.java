@@ -65,7 +65,7 @@ public class DiplomaBlackBoard extends JPanel {
             //imagen = imagen.getScaledInstance( (int) ((((double) getPreferredSize().height / srcHeight) * srcWidth)),getPreferredSize().height, Image.SCALE_FAST);
             imagen = imagen.getScaledInstance(d.width, d.height, Image.SCALE_FAST);
         } catch (javax.imageio.IIOException ie) {
-            KendoTournamentGenerator.showErrorInformation(ie);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ie);
         }
     }
 

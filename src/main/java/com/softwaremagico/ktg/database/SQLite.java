@@ -70,7 +70,7 @@ public class SQLite extends SQL {
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (Exception e) {
-            MessageManager.basicErrorMessage("Sqlite driver for Java is not installed. Check your configuration.", "SQLite");
+            MessageManager.basicErrorMessage(this.getClass().getName(), "Sqlite driver for Java is not installed. Check your configuration.", "SQLite");
             error = true;
         }
 
@@ -92,9 +92,9 @@ public class SQLite extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage("databaseConnected", "SQLite", "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "SQLite", "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("databaseConnected", this.getClass().getName());
+            KendoLog.info(this.getClass().getName(), "Connected to Database!");
         }
         return !error;
     }
@@ -137,7 +137,7 @@ public class SQLite extends SQL {
         try {
             copyFile(new File(Path.returnDatabaseSchemaPath() + File.separator + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 
@@ -163,7 +163,7 @@ public class SQLite extends SQL {
                 destination.write(buffer, 0, length);
             }
         } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(e);
+            KendoTournamentGenerator.showErrorInformation(SQLite.class.getName(), e);
         } finally {
             if (source != null) {
                 source.close();
@@ -216,7 +216,7 @@ public class SQLite extends SQL {
 
             stmt.setBytes(index, buffer.toByteArray());
         } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 
@@ -244,7 +244,7 @@ public class SQLite extends SQL {
      */
     @Override
     public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
-        Log.fine("Deleting fight of level " + level);
+        KendoLog.fine(this.getClass().getName(), "Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
         try {
@@ -258,7 +258,7 @@ public class SQLite extends SQL {
                         deleteFight(f, false);
                     }
                 }
-                Log.finer("Delete draw fights of tournament.");
+                KendoLog.finer(this.getClass().getName(), "Delete draw fights of tournament.");
                 deleteDrawsOfLevelOfTournament(tournament, level);
                 return true;
             } else {
@@ -267,8 +267,8 @@ public class SQLite extends SQL {
 
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         return !error;
     }
@@ -304,8 +304,8 @@ public class SQLite extends SQL {
             }
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("storeFights", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         return !error;
     }
@@ -333,15 +333,15 @@ public class SQLite extends SQL {
             }
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage("deleteFight", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.errorMessage(this.getClass().getName(), "deleteFight", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
 
         if (!error && answer) {
             if (verbose) {
-                MessageManager.translatedMessage("fightDeleted", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "fightDeleted", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
             }
-            Log.info("fightDeleted", this.getClass().getName(), fight.tournament.getName());
+            KendoLog.info(this.getClass().getName(), fight.tournament.getName());
         }
 
         return (answer && !error);
@@ -364,28 +364,28 @@ public class SQLite extends SQL {
         System.out.println("Error: " + numberError);
         switch (numberError) {
             case 1045:
-                MessageManager.errorMessage("deniedUser", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "deniedUser", "SQLite");
                 return true;
             case 1049:
-                MessageManager.errorMessage("noDatabase", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQLite");
                 return true;
             case 1062:
-                MessageManager.errorMessage("repeatedCompetitor", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "SQLite");
                 return true;
             case 1054:
-                MessageManager.errorMessage("unknownColumn", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "unknownColumn", "SQLite");
                 return true;
             case 1146:
-                MessageManager.errorMessage("corruptedDatabase", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "SQLite");
                 return true;
             case 1130:
-                MessageManager.errorMessage("noAccessUser", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "noAccessUser", "SQLite");
                 return true;
             case 1044:
-                MessageManager.errorMessage("noUserPrivileges", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "noUserPrivileges", "SQLite");
                 return true;
             case 0:
-                MessageManager.errorMessage("noDatabase", "SQLite");
+                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQLite");
                 return true;
         }
 

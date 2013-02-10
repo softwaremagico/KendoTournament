@@ -75,7 +75,7 @@ public class StoreDatabase implements Serializable {
     private void write(Object objectToSave) throws IOException {
         try {
             try (ObjectOutputStream os = new ObjectOutputStream(
-                         new BufferedOutputStream(new FileOutputStream(fileName)))) {
+                            new BufferedOutputStream(new FileOutputStream(fileName)))) {
                 os.writeObject(objectToSave);
             }
         } catch (FileNotFoundException fnoe) {
@@ -108,8 +108,8 @@ public class StoreDatabase implements Serializable {
 
         @Override
         public void run() {
-            if(!saveFileInDatabase()){
-                MessageManager.errorMessage("corruptedDatabase", "MySQL");
+            if (!saveFileInDatabase()) {
+                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "MySQL");
             }
             timerPanel.dispose();
         }
@@ -135,7 +135,7 @@ public class StoreDatabase implements Serializable {
                 }
             } catch (IOException | ClassNotFoundException ex) {
                 error = true;
-                MessageManager.errorMessage("corruptedDatabase", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "MySQL");
             }
             return !error;
         }
@@ -207,7 +207,7 @@ public class StoreDatabase implements Serializable {
                 }
                 current++;
             }
-            
+
             for (int i = 0; i < teams.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTeam") + " " + (i + 1) + "/" + roles.size(), current, total);
                 if (!KendoTournamentGenerator.getInstance().database.insertTeam(teams.get(i), false)) {
@@ -226,7 +226,7 @@ public class StoreDatabase implements Serializable {
                     if (!KendoTournamentGenerator.getInstance().database.storeDuelsOfFight(fights.get(i))) {
                         return false;
                     }
-                }else{
+                } else {
                     return false;
                 }
                 current++;
@@ -251,7 +251,7 @@ public class StoreDatabase implements Serializable {
             }
 
             if (!error) {
-                MessageManager.translatedMessage("databaseImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "databaseImported", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
             return !error;
         }
@@ -372,10 +372,10 @@ public class StoreDatabase implements Serializable {
             try {
                 timerPanel.updateText(transl.returnTag("WriteFile"), current, total);
                 write(storeDatabase);
-                MessageManager.translatedMessage("exportDatabase", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "exportDatabase", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 error = true;
-                MessageManager.errorMessage("exportDatabaseFail", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "exportDatabaseFail", "MySQL");
             }
             return !error;
         }

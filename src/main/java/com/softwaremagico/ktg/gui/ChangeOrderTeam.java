@@ -86,12 +86,12 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private void update() {
         try {
-            level = KendoTournamentGenerator.getInstance().database.getLevelTournament((Tournament)TournamentComboBox.getSelectedItem());
+            level = KendoTournamentGenerator.getInstance().database.getLevelTournament((Tournament) TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            teams = KendoTournamentGenerator.getInstance().database.searchTeamsByLevel((Tournament)TournamentComboBox.getSelectedItem(), level, false);
+            teams = KendoTournamentGenerator.getInstance().database.searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
             fillTeams();
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage("noTournament", "Panel");
+            MessageManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
             dispose();
         }
     }
@@ -111,7 +111,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         Team team = returnSelectedTeam();
 
         OrderTeam newTeam;
-        newTeam = new OrderTeam((Tournament)TournamentComboBox.getSelectedItem(), level);
+        newTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
         newTeam.updateWindow(team);
         newTeam.setVisible(true);
         newTeam.toFront();

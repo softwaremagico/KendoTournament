@@ -27,13 +27,14 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import com.softwaremagico.ktg.KendoLog;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Log;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.pdflist.PdfDocument;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public abstract class PdfDocument {
         try {
             defaultPhoto = Image.getInstance(Path.getDefaultPhoto());
         } catch (BadElementException | IOException ex) {
-            Log.severe("Default photo not found when creating accreditation.");
+            KendoLog.severe(PdfDocument.class.getName(), "Default image not found when creating pdf document.");
         }
     }
 
@@ -73,8 +74,8 @@ public abstract class PdfDocument {
         try {
             bgImage = Image.getInstance(Path.getBackgroundPath());
         } catch (BadElementException | IOException ex) {
-            MessageManager.errorMessage("imageNotFound", "Error");
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.errorMessage(this.getClass().getName(), "imageNotFound", "Error");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 
@@ -108,13 +109,13 @@ public abstract class PdfDocument {
                 TableFooter event = new TableFooter();
                 writer.setPageEvent(event);
                 generatePDF(document, writer);
-                MessageManager.translatedMessage(fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 return false;
             } catch (Exception ex) {
-                MessageManager.errorMessage(fileCreatedBadTag(), "PDF");
-                KendoTournamentGenerator.showErrorInformation(ex);
+                MessageManager.errorMessage(this.getClass().getName(), fileCreatedBadTag(), "PDF");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 return false;
             }
         }
@@ -329,7 +330,7 @@ public abstract class PdfDocument {
                 }
 
             } catch (IOException | DocumentException e) {
-                KendoTournamentGenerator.showErrorInformation(e);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
             }
         }
     }
@@ -349,7 +350,7 @@ public abstract class PdfDocument {
                     pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, -rect.getHeight(), rect.getLeft(), rect.getTop());
                 }
             } catch (Exception e) {
-                KendoTournamentGenerator.showErrorInformation(e);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
             }
         }
     }

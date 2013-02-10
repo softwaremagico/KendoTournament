@@ -83,7 +83,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateMode();
             refreshMode = true;
         } catch (NullPointerException npe) {
-            npe.printStackTrace();
         }
     }
 
@@ -138,7 +137,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 TeamList.setSelectedIndex(0);
             }
         } catch (NullPointerException npe) {
-           KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -157,21 +156,21 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelLevelZero() {
         try {
-            if (!tournament.getMode().equals(TournamentType.SIMPLE) &&
-                TournamentGroupPool.getManager(tournament).sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
+            if (!tournament.getMode().equals(TournamentType.SIMPLE)
+                    && TournamentGroupPool.getManager(tournament).sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
                 TournamentGroup designedFight = new TournamentGroup(numberMaxOfWinners, tournament, 0, defaultArena);
                 designedFight.addMouseClickListener(new MouseAdapters(designedFight));
                 TournamentGroupPool.getManager(tournament).add(designedFight, true);
                 designedFight.setSelected(TournamentGroupPool.getManager(tournament));
-                TournamentGroupPool.getManager(tournament).updateArenas(0);                
+                TournamentGroupPool.getManager(tournament).updateArenas(0);
                 updateBlackBoard();
                 updateDesignerGroups();
                 updateListeners();
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -214,7 +213,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
             updateTeams();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         updateBlackBoard();
     }
@@ -300,7 +299,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -404,7 +403,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
             //TournamentGroupPool.getManager(tournament).updateInnerLevels();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
 
         updateBlackBoard();
@@ -479,7 +478,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 //Avoid to run the one-click functions when performing a doubleclick.
                 Integer timerinterval = (Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
                 timer = new Timer(timerinterval.intValue(), new ActionListener() {
-
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (wasDoubleClick) {
@@ -972,19 +970,19 @@ public class LeagueDesigner extends javax.swing.JFrame {
         try {
             if (!(TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) || TournamentGroupPool.getManager(tournament).allGroupsHaveManualLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
-                    Log.finer("Deleting old fights");
+                    KendoLog.finer(this.getClass().getName(), "Deleting old fights");
                     FightPool.getManager(tournament).deleteAllFights(tournament, false);
                     if (FightPool.getManager(tournament).setAll(TournamentGroupPool.getManager(tournament).generateLevelFights(0), true)) {
                         TournamentGroupPool.getManager(tournament).emptyInnerLevels();
                         TournamentGroupPool.updateGroupManagers(FightPool.getManager(tournament).getFights());
                         //Delete inner levels when delete old fightManager.
-                        Log.finest("Deleting inner levels of old tournament");
+                        KendoLog.finest(this.getClass().getName(), "Deleting inner levels of old tournament");
                         this.dispose();
                     }
                     //Update Groups with new fights.
                 }
             } else {
-                MessageManager.errorMessage("noLinkFinished", "Error");
+                MessageManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
             }
         } catch (NullPointerException npe) {
         }
@@ -1007,7 +1005,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }//GEN-LAST:event_DeleteAllButtonActionPerformed
 
@@ -1073,12 +1071,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             if (FightPool.getManager(tournament).deleteAllFights(tournament, true)) {
                 TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(0);
-                MessageManager.translatedMessage("fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(),"fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             if (FightPool.getManager(tournament).deleteFightsOfLevel(tournament, LevelComboBox.getSelectedIndex(), true)) {
                 TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
-                MessageManager.translatedMessage("fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(),"fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         updateBlackBoard();

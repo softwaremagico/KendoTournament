@@ -142,7 +142,7 @@ public class NewTeam extends KendoFrame {
     private void cleanWindow() {
         NameTextField.setText("");
         //fillTournaments();
-        competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament)TournamentComboBox.getSelectedItem());
+        competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
         competitors.add(0, new Competitor("", "", "", ""));
         fillCompetitors();
 
@@ -167,12 +167,12 @@ public class NewTeam extends KendoFrame {
                 } catch (NullPointerException npe) {
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 } catch (IndexOutOfBoundsException iob) {
-                    KendoTournamentGenerator.showErrorInformation(iob);
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(npe);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -191,7 +191,7 @@ public class NewTeam extends KendoFrame {
 
     private void refreshCompetitors() {
         try {
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament)TournamentComboBox.getSelectedItem());
+            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
             competitors.add(0, new Competitor("", "", "", ""));
         } catch (NullPointerException npe) {
             competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
@@ -479,11 +479,11 @@ public class NewTeam extends KendoFrame {
                 }
 
             } catch (Exception ex) {
-                KendoTournamentGenerator.showErrorInformation(ex);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
 
         } else {
-            MessageManager.errorMessage("noTeamFieldsFilled", "MySQL");
+            MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 
@@ -514,11 +514,11 @@ public class NewTeam extends KendoFrame {
         if (newTeam) {
             if (individualTeams) {
                 try {
-                    if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament((Tournament)TournamentComboBox.getSelectedItem(), true)) {
-                        KendoTournamentGenerator.getInstance().database.setIndividualTeams((Tournament)TournamentComboBox.getSelectedItem());
+                    if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), true)) {
+                        KendoTournamentGenerator.getInstance().database.setIndividualTeams((Tournament) TournamentComboBox.getSelectedItem());
                         tournament.setTeamSize(1);
                         KendoTournamentGenerator.getInstance().database.updateTournament(tournament, false);
-                        MessageManager.informationMessage("teamsStored", "Team");
+                        MessageManager.informationMessage(this.getClass().getName(), "teamsStored", "Team");
                         this.dispose();
                     }
                     //No competitors exist. 
@@ -535,10 +535,10 @@ public class NewTeam extends KendoFrame {
                         }
 
                         if (repeatedCompetitor()) {
-                            MessageManager.errorMessage("repeatedCompetitor", "League");
+                            MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
                         }
                         if (!checkTeam()) {
-                            MessageManager.errorMessage("notEnoughCompetitors", "League");
+                            MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                         } else {
                             t.addMembers(participants, 0);
                             if (KendoTournamentGenerator.getInstance().database.storeTeam(t, true)) {
@@ -546,10 +546,9 @@ public class NewTeam extends KendoFrame {
                             }
                         }
                     } else {
-                        MessageManager.errorMessage("noTeamFieldsFilled", "MySQL");
+                        MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
                     }
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
-                
                 }
             }
             NameTextField.setEnabled(true);

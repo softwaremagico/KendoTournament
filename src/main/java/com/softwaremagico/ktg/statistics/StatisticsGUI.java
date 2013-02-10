@@ -194,7 +194,7 @@ public abstract class StatisticsGUI extends KendoFrame {
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ex);
         }
         if (!file.endsWith(".png")) {
             file = file.concat(".png");

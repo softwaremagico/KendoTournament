@@ -58,8 +58,7 @@ public class Translator {
     private boolean errorShowed = false;
     private boolean retried = false;
     private boolean showedMessage = false;
-    
-        private  static HashMap<String, Translator> existingTags = new HashMap<>();
+    private static HashMap<String, Translator> existingTags = new HashMap<>();
 
     public Translator(String tmp_file) {
         fileTranslated = tmp_file;
@@ -82,12 +81,12 @@ public class Translator {
             usedDoc.getDocumentElement().normalize();
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
-            MessageManager.basicErrorMessage(text, "Language");
-            KendoTournamentGenerator.showErrorInformation(ex);
+            MessageManager.basicErrorMessage(this.getClass().getName(), text, "Language");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (SAXException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (ParserConfigurationException ex) {
-            KendoTournamentGenerator.showErrorInformation(ex);
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (FileNotFoundException fnf) {
             String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
             System.out.println(text);
@@ -97,11 +96,11 @@ public class Translator {
         }
         return usedDoc;
     }
-    
-    public String returnTag(String tag){
+
+    public String returnTag(String tag) {
         return readTag(tag, KendoTournamentGenerator.getInstance().language);
     }
-    
+
     private String readTag(String tag, String language) {
         try {
             NodeList nodeLst = doc.getElementsByTagName(tag);
@@ -119,7 +118,7 @@ public class Translator {
                         //npe.printStackTrace();
                         if (!retried) {
                             if (!showedMessage) {
-                                MessageManager.customMessage("There is a problem with tag: " + tag + " in  language: \"" + language + "\". We tray to use english language instead.", "Translator", JOptionPane.PLAIN_MESSAGE);
+                                MessageManager.customMessage(this.getClass().getName(), "There is a problem with tag: " + tag + " in  language: \"" + language + "\". We tray to use english language instead.", "Translator", JOptionPane.PLAIN_MESSAGE);
                                 showedMessage = true;
                             }
                             retried = true;
@@ -127,14 +126,14 @@ public class Translator {
                         }
                         if (!language.equals(DEFAULT_LANGUAGE)) {
                             if (!errorShowed) {
-                                MessageManager.customMessage("Selecting english language by default. You can change it later in Options->Language ", "Translator", JOptionPane.PLAIN_MESSAGE);
+                                MessageManager.customMessage(this.getClass().getName(), "Selecting english language by default. You can change it later in Options->Language ", "Translator", JOptionPane.PLAIN_MESSAGE);
                                 Configuration.storeLanguageConfiguration(language);
                                 errorShowed = true;
                             }
                             return readTag(tag, DEFAULT_LANGUAGE);
                         } else {
                             if (!errorShowed) {
-                                MessageManager.basicErrorMessage("Language selection failed: " + language + " on " + tag + ".", "Translator");
+                                MessageManager.basicErrorMessage(this.getClass().getName(), "Language selection failed: " + language + " on " + tag + ".", "Translator");
                                 errorShowed = true;
                             }
                             return null;
@@ -143,7 +142,7 @@ public class Translator {
 
                 }
             }
-            MessageManager.basicErrorMessage("No tag for: " + tag + ".", "Translator");
+            MessageManager.basicErrorMessage(this.getClass().getName(), "No tag for: " + tag + ".", "Translator");
             return null;
         } catch (NullPointerException npe) {
             return null;
@@ -163,7 +162,7 @@ public class Translator {
                         fstNode.getAttributes().getNamedItem("flag").getNodeValue());
                 languagesList.add(lang);
             } catch (NullPointerException npe) {
-                MessageManager.basicErrorMessage("errorLanguage", "Language");
+                MessageManager.basicErrorMessage(this.getClass().getName(), "errorLanguage", "Language");
             }
         }
         return languagesList;

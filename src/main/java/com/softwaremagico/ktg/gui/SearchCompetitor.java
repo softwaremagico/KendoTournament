@@ -94,7 +94,7 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
         } else if (ClubTextField.getText().length() > 0) {
             results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
         } else {
-            MessageManager.errorMessage("fillFields", "Search");
+            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {

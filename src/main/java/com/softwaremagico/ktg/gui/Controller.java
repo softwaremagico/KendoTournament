@@ -833,7 +833,7 @@ public class Controller {
             Competitor c;
             newCompetitor.testNIF();
             if ((c = newCompetitor.acceptCompetitor()) != null) {
-                Log.info("New competitor added!");
+                KendoLog.info(Controller.class.getName(), "New competitor added!");
                 try {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
@@ -1438,11 +1438,11 @@ public class Controller {
             }
             try {
                 FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).add(f);
-                MessageManager.translatedMessage("addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
                 //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(npe);
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
 
         }

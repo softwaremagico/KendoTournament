@@ -66,7 +66,7 @@ public enum Score {
             try {
                 image = ImageIO.read(file);
             } catch (IOException ex) {
-                Log.severe("No image '" + Path.getScoreFolder() + fileName + "' found.");
+                KendoLog.severe(Score.class.getName(), "No image '" + Path.getScoreFolder() + fileName + "' found.");
             }
             existingScore.put(fileName, image);
         }
