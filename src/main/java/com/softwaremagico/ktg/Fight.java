@@ -321,7 +321,16 @@ public class Fight implements Serializable {
     }
 
     public String show() {
-        return "'" + team1.getName() + " vs " + team2.getName() + "'";
+        return "'" + team1.getName() + "' vs '" + team2.getName() + "'";
+    }
+
+    @Override
+    public String toString() {
+        String text = "'" + team1.getName() + "' vs '" + team2.getName() + "'\n";
+        for (Duel d : duels) {
+            text += d + "\n";
+        }
+        return text;
     }
 
     /**

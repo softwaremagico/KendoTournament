@@ -54,14 +54,7 @@ public class Duel implements Serializable {
     }
 
     public void showHits() {
-        System.out.println("Player A:");
-        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-            System.out.println(hitsFromCompetitorA.get(i));
-        }
-        System.out.println("Player B:");
-        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-            System.out.println(hitsFromCompetitorB.get(i));
-        }
+        System.out.println(toString());
     }
 
     /**
@@ -343,12 +336,12 @@ public class Duel implements Serializable {
             score += s.getAbbreviature() + " ";
         }
 
-        score += "(" + faultsCompetitorA + ")";
+        score += "(f:" + faultsCompetitorA + "), ";
         score += "TeamB: ";
         for (Score s : hitsFromCompetitorB) {
             score += s.getAbbreviature() + " ";
         }
-        score += "(" + faultsCompetitorB + ")";
+        score += "(f:" + faultsCompetitorB + ")";
         return score;
     }
 
@@ -383,5 +376,20 @@ public class Duel implements Serializable {
 
     public static String getCsvTag() {
         return DUEL_TAG;
+    }
+
+    @Override
+    public String toString() {
+        String text = "Player A  (";
+        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
+            text += (hitsFromCompetitorA.get(i).getAbbreviature());
+        }
+        text += (") Player B (");
+        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
+            text += (hitsFromCompetitorB.get(i).getAbbreviature());
+        }
+        text += ")";
+
+        return text;
     }
 }
