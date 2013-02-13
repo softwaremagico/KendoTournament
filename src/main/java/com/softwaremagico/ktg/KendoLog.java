@@ -145,4 +145,16 @@ public class KendoLog {
     public static void finest(String className, String message) {
         finest(className + ": " + message);
     }
+
+    public static void entering(String className, String method) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.entering(className, method);
+        }
+    }
+
+    public static void exiting(String className, String method) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.exiting(className, method);
+        }
+    }
 }

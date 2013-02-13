@@ -534,6 +534,7 @@ public final class FightPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TournamentComboBoxActionPerformed
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
+        KendoLog.entering(this.getClass().getName(), "NextButtonActionPerformed");
         try {
             KendoLog.debug(this.getClass().getName(), "Next button is pressed.");
             Fight currentFight = getCurrentFight();
@@ -574,6 +575,7 @@ public final class FightPanel extends javax.swing.JFrame {
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
         }
+        KendoLog.exiting(this.getClass().getName(), "NextButtonActionPerformed");
     }//GEN-LAST:event_NextButtonActionPerformed
 
     private void PreviousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreviousButtonActionPerformed

@@ -365,8 +365,6 @@ public abstract class Database {
 
     public abstract boolean insertMemebersOfTeamInLevel(Team team, int level, boolean verbose);
 
-    public abstract boolean extendTeamInLevel(Team team, int level, boolean verbose);
-
     public abstract boolean deleteTeamInLevel(Team team, int level, boolean verbose);
 
     public abstract boolean deleteAllMemberChangesInTeams(Tournament tournament, boolean verbose);

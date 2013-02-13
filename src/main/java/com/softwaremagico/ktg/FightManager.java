@@ -838,11 +838,14 @@ public class FightManager {
     }
 
     public boolean storeLazyFights(int arena) {
+        KendoLog.entering(this.getClass().getName(), "storeLazyFights");
         //If all arena fights are over or strict store is selected.
         if (areArenaOver(arena) || !KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate()) {
             //Store score into database.
+            KendoLog.exiting(this.getClass().getName(), "storeLazyFights");
             return storeNotUpdatedFightsAndDuels();
         }
+        KendoLog.exiting(this.getClass().getName(), "storeLazyFights");
         return false;
     }
 

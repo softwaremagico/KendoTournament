@@ -403,6 +403,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeCompetitor(CompetitorWithPhoto competitorWithPhoto, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeCompetitor");
         KendoLog.fine(SQL.class.getName(), "Storing competitor " + competitorWithPhoto.getSurnameName() + " into database");
         boolean error = false;
         boolean update = false;
@@ -462,6 +463,7 @@ public abstract class SQL extends Database {
                 }
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "storeCompetitor");
         return !error;
     }
 
@@ -473,6 +475,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean insertCompetitor(CompetitorWithPhoto competitorWithPhoto) {
+        KendoLog.entering(this.getClass().getName(), "insertCompetitor");
         KendoLog.fine(this.getClass().getName(), "Inserting competitor " + competitorWithPhoto.getSurnameName() + " into database");
         boolean error = false;
         try {
@@ -505,11 +508,13 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             error = true;
         }
+        KendoLog.exiting(this.getClass().getName(), "insertCompetitor");
         return !error;
     }
 
     @Override
     public boolean updateCompetitor(CompetitorWithPhoto competitor, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "updateCompetitor");
         KendoLog.fine(this.getClass().getName(), "Updating competitor " + competitor.getSurnameName() + "  from database");
         boolean answer = true;
         boolean error = false;
@@ -543,13 +548,16 @@ public abstract class SQL extends Database {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
         } else {
+            KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
             return false;
         }
+        KendoLog.exiting(this.getClass().getName(), "updateCompetitor");
         return !error;
     }
 
     @Override
     public boolean updateIdCompetitor(Competitor competitor, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "updateIdCompetitor");
         KendoLog.fine(this.getClass().getName(), "Updating ID of competitor " + competitor.getSurnameName());
         boolean answer = true;
         boolean error = false;
@@ -568,13 +576,16 @@ public abstract class SQL extends Database {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
         } else {
+            KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
             return false;
         }
+        KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
         return !error;
     }
 
     @Override
     public boolean updateClubCompetitor(Competitor competitor, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "updateClubCompetitor");
         KendoLog.fine(this.getClass().getName(), "Updating the club of competitor " + competitor.getSurnameName());
         boolean answer = true;
         boolean error = false;
@@ -595,13 +606,16 @@ public abstract class SQL extends Database {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
         } else {
+            KendoLog.exiting(this.getClass().getName(), "updateClubCompetitor");
             return false;
         }
+        KendoLog.exiting(this.getClass().getName(), "updateClubCompetitor");
         return !error;
     }
 
     @Override
     public List<CompetitorWithPhoto> getCompetitorsWithPhoto(String query, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getCompetitorsWithPhoto");
         KendoLog.fine(this.getClass().getName(), "Obtaining a group of competitors with photo.");
         KendoLog.finer(this.getClass().getName(), query);
         List<CompetitorWithPhoto> results = new ArrayList<>();
@@ -632,7 +646,7 @@ public abstract class SQL extends Database {
             if (results.isEmpty() && verbose) {
                 MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
-
+            KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -640,12 +654,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
         return null;
     }
 
     @Override
     public List<Competitor> getCompetitors(String query, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getCompetitors");
         KendoLog.fine(this.getClass().getName(), "Getting competitors.");
         KendoLog.finer(this.getClass().getName(), query);
         List<Competitor> results = new ArrayList<>();
@@ -669,20 +684,20 @@ public abstract class SQL extends Database {
             if (results.isEmpty() && verbose) {
                 MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
-
+            KendoLog.exiting(this.getClass().getName(), "getCompetitors");
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getCompetitors");
         return null;
     }
 
     @Override
     public List<Participant> getParticipants(String query, boolean verbose) {
-        KendoLog.fine(this.getClass().getName(), "Getting participants");
+        KendoLog.entering(this.getClass().getName(), "getParticipants");
         KendoLog.finer(this.getClass().getName(), query);
         List<Participant> results = new ArrayList<>();
         String name, surname;
@@ -700,31 +715,36 @@ public abstract class SQL extends Database {
                     }
                 }
             }
+            KendoLog.exiting(this.getClass().getName(), "getParticipants");
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getParticipants");
         return null;
     }
 
     @Override
     public List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getCompetitorsWithPhoto");
         String query = "SELECT * FROM competitor ORDER BY Surname LIMIT " + fromRow + "," + numberOfRows;
+        KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
         return getCompetitorsWithPhoto(query, false);
     }
 
     @Override
     public List<CompetitorWithPhoto> getAllCompetitorsWithPhoto() {
+        KendoLog.entering(this.getClass().getName(), "getAllCompetitorsWithPhoto");
         String query = "SELECT * FROM competitor ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "getAllCompetitorsWithPhoto");
         return getCompetitorsWithPhoto(query, false);
     }
 
     @Override
     public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes) {
-        KendoLog.fine(this.getClass().getName(), "Storing a list of competitors");
+        KendoLog.entering(this.getClass().getName(), "storeAllCompetitors");
         boolean error = false;
         try {
             if (deleteOldOnes) {
@@ -746,18 +766,23 @@ public abstract class SQL extends Database {
             error = true;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAllCompetitors");
         return !error;
     }
 
     @Override
     public List<Competitor> getAllCompetitors() {
+        KendoLog.entering(this.getClass().getName(), "getAllCompetitors");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "getAllCompetitors");
         return getCompetitors(query, false);
     }
 
     @Override
     public List<Participant> getAllParticipants() {
+        KendoLog.entering(this.getClass().getName(), "getAllParticipants");
         String query = "SELECT ID,Name,Surname FROM competitor ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "getAllParticipants");
         return getParticipants(query, false);
     }
 
@@ -770,7 +795,9 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Competitor> selectAllCompetitorsWithoutTeamInTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorsWithoutTeamInTournament");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE NOT EXISTS (SELECT Member FROM team WHERE Tournament='" + tournament.getName() + "' AND competitor.id=team.Member) AND EXISTS (SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' AND role.Competitor=competitor.id AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorsWithoutTeamInTournament");
         return getCompetitors(query, false);
     }
 
@@ -783,11 +810,13 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<CompetitorWithPhoto> selectAllParticipantsInTournamentWithoutAccreditation(Tournament tournament, boolean printAll) {
+        KendoLog.entering(this.getClass().getName(), "selectAllParticipantsInTournamentWithoutAccreditation");
         String query = "SELECT * FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor";
         if (!printAll) {
             query += " AND role.ImpressCard=0 ";
         }
         query += ") ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "selectAllParticipantsInTournamentWithoutAccreditation");
         return getCompetitorsWithPhoto(query, false);
     }
 
@@ -799,7 +828,9 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Competitor> selectAllCompetitorsInTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorsInTournament");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorsInTournament");
         return getCompetitors(query, false);
     }
 
@@ -815,6 +846,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roleTags, Tournament tournament, boolean printAll) {
+        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorWithDiplomaInTournament");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor ";
 
         if (!printAll) {
@@ -834,6 +866,7 @@ public abstract class SQL extends Database {
         }
 
         query += ") ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorWithDiplomaInTournament");
         return getCompetitors(query, false);
     }
 
@@ -845,7 +878,9 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Competitor> selectAllVolunteersInTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "selectAllVolunteersInTournament");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor c1 WHERE EXISTS (SELECT Competitor FROM role r1 WHERE Tournament='" + tournament.getName() + "' AND c1.ID=r1.Competitor AND (r1.Role='VCLO' OR r1.Role='VolunteerK')) ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "selectAllVolunteersInTournament");
         return getCompetitors(query, false);
     }
 
@@ -857,6 +892,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public CompetitorWithPhoto selectCompetitor(String id, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "selectCompetitor");
         KendoLog.fine(SQL.class.getName(), "Obtaining a competitor with ID " + id);
         CompetitorWithPhoto c = null;
         try {
@@ -874,59 +910,75 @@ public abstract class SQL extends Database {
                     }
                 }
             }
+            KendoLog.exiting(this.getClass().getName(), "selectCompetitor");
             return c;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "selectCompetitor");
         return null;
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarName(String name, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarName");
         String query = "SELECT * FROM competitor WHERE Name LIKE '%" + name + "%' ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarName");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarSurname(String surname, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarSurname");
         String query = "SELECT * FROM competitor WHERE Surname LIKE '%" + surname + "%' ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarSurname");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarID(String id, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarID");
         String query = "SELECT * FROM competitor WHERE ID LIKE '%" + id + "%' ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarID");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public List<Competitor> searchCompetitorsByClub(String clubName, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByClub");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club='" + clubName + "' ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByClub");
         return getCompetitors(query, verbose);
     }
 
     @Override
     public List<Competitor> searchCompetitorsWithoutClub(boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsWithoutClub");
         String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club IS NULL ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsWithoutClub");
         return getCompetitors(query, verbose);
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsBySimilarClub(String clubName, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarClub");
         String query = "SELECT * FROM competitor WHERE Club LIKE '%" + clubName + "%' ORDER BY Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarClub");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String clubName, Tournament tournament, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByClubAndTournament");
         String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + clubName + "' AND r1.Tournament='" + tournament.getName() + "'  ORDER BY c1.Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByClubAndTournament");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public boolean deleteCompetitor(Competitor competitor, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteCompetitor");
         KendoLog.fine(SQL.class.getName(), "Deleting the competitor " + competitor.getSurnameName());
         boolean error = false;
         boolean answer = false;
@@ -968,11 +1020,13 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(SQL.class.getName(), "Competitor deleted: " + competitor.getName() + " " + competitor.getSurname());
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteCompetitor");
         return !error && (answer || !verbose);
     }
 
     @Override
     public List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getCompetitorsOrderByScore");
         KendoLog.fine(SQL.class.getName(), "Getting competitors ordered by score from " + tournament.getName());
         List<CompetitorRanking> competitorsOrdered = new ArrayList<>();
         String query = "SELECT " + "t3.Name as Name, " + "t3.Surname as Surname, " + "t3.ID as ID, " + "t1.NumVictorias, " + "TotalPtos " + "FROM( " + "SELECT " + "count(Distinct t1.IdDuelo) as NumVictorias, " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + "as  IDGanador " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor1, " + "t1.NAME as Competidor1, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador1 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t1 " + "INNER JOIN " + "(SELECT " + "t1.ID as IdCompetidor2, " + "t1.NAME as Competidor2, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador2 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t2 " + "ON t1.IdDuelo = t2.IdDuelo " + "WHERE " + "TotalJugador1 <> TotalJugador2   " + "GROUP BY " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + ") t1 " + "RIGHT OUTER JOIN " + "(SELECT " + "t1.IdCompetidor, " + "sum(TotalPtos) as TotalPtos " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + "UNION ALL " + "SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer) t1 " + "GROUP BY " + "t1.IdCompetidor " + ") " + "t2 " + "ON t2.IdCompetidor = t1.IDGanador " + "INNER JOIN " + "competitor t3 " + "ON t2.IdCompetidor = t3.ID " + "ORDER BY " + "NumVictorias DESC,TotalPtos DESC, t3.surname asc;";
@@ -992,31 +1046,37 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getCompetitorsOrderByScore");
         return competitorsOrdered;
     }
 
     @Override
     public List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String roleName, Tournament tournament, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByRoleAndTournament");
         String query = "SELECT * FROM competitor, role WHERE competitor.ID=role.Competitor AND role.Role='" + roleName + "' AND role.Tournament='" + tournament.getName() + "'  ORDER BY competitor.Surname";
+        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByRoleAndTournament");
         return getCompetitorsWithPhoto(query, verbose);
     }
 
     @Override
     public List<CompetitorWithPhoto> searchRefereeByTournament(Tournament tournament, boolean getImage, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchRefereeByTournament");
         return searchCompetitorsByRoleAndTournament("Referee", tournament, getImage, verbose);
     }
 
     @Override
     public Integer searchVolunteerOrder(Competitor competitor, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "searchVolunteerOrder");
         KendoLog.fine(SQL.class.getName(), "Obtain the numeration order of the volunteer " + competitor.getSurnameName());
         List<Competitor> allVolunteers = selectAllVolunteersInTournament(tournament);
 
         for (int i = 0; i < allVolunteers.size(); i++) {
             if (allVolunteers.get(i).getId().equals(competitor.getId())) {
+                KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
                 return i + 1; //Order starts in 1. 
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
         return null;
     }
 
@@ -1027,6 +1087,7 @@ public abstract class SQL extends Database {
      * @return
      */
     protected int obtainCompetitorOrder() {
+        KendoLog.entering(this.getClass().getName(), "searchVolunteerOrder");
         KendoLog.fine(SQL.class.getName(), "Obtain the numeration of competitors into the database");
         int order = 0;
         try {
@@ -1038,6 +1099,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         }
+        KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
         return order + 1;
     }
 
@@ -1059,6 +1121,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeRole(RoleTag roleTag, Tournament tournament, Participant participant, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeRole");
         KendoLog.fine(SQL.class.getName(), "Storing the role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " as " + roleTag.name);
         boolean inserted = true;
         try {
@@ -1083,11 +1146,13 @@ public abstract class SQL extends Database {
             MessageManager.translatedMessage(this.getClass().getName(), "roleChanged", this.getClass().getName(), participant.getName() + " " + participant.getSurname() + " -> " + roleTag.name, JOptionPane.INFORMATION_MESSAGE);
             KendoLog.info(SQL.class.getName(), "Role of " + participant.getSurnameName() + " changed to " + roleTag.name);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeRole");
         return inserted;
     }
 
     @Override
     public boolean storeRole(Role role, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeRole2");
         KendoLog.fine(SQL.class.getName(), "Storing role " + role.roleName);
         boolean inserted = true;
         try {
@@ -1109,11 +1174,13 @@ public abstract class SQL extends Database {
             KendoLog.finer(SQL.class.getName(), "Role " + role.roleName + " stored.");
         }
 
+        KendoLog.exiting(this.getClass().getName(), "storeRole2");
         return inserted;
     }
 
     @Override
     public boolean deleteRole(Tournament tournament, Participant participant) {
+        KendoLog.entering(this.getClass().getName(), "deleteRole");
         KendoLog.fine(SQL.class.getName(), "Deleting role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
         boolean answer = false;
         try {
@@ -1133,11 +1200,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteRole");
         return answer;
     }
 
     @Override
     public String getTagRole(Tournament tournament, Participant participant) {
+        KendoLog.entering(this.getClass().getName(), "getTagRole");
         KendoLog.fine(SQL.class.getName(), "Getting roleTag of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
         String role = null;
         try {
@@ -1158,11 +1227,13 @@ public abstract class SQL extends Database {
         }
 
         KendoLog.finer(SQL.class.getName(), "RolTag obtained for participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " is " + role);
+        KendoLog.exiting(this.getClass().getName(), "getTagRole");
         return role;
     }
 
     @Override
     public void setAllParticipantsInTournamentAsAccreditationPrinted(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "setAllParticipantsInTournamentAsAccreditationPrinted");
         KendoLog.fine(SQL.class.getName(), "Disabling printing all accreditations cards of " + tournament.getName());
         try {
             try (Statement st = connection.createStatement();
@@ -1173,14 +1244,17 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "setAllParticipantsInTournamentAsAccreditationPrinted");
     }
 
     @Override
     public void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "setParticipantInTournamentAsAccreditationPrinted");
         KendoLog.fine(SQL.class.getName(), "Disabling printing the accreditation card of " + competitor.getSurnameName() + " in tournament " + tournament.getName());
         List<Competitor> competitors = new ArrayList<>();
         competitors.add(competitor);
         setParticipantsInTournamentAsAccreditationPrinted(competitors, tournament);
+        KendoLog.exiting(this.getClass().getName(), "setParticipantInTournamentAsAccreditationPrinted");
     }
 
     /**
@@ -1192,6 +1266,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public void setParticipantsInTournamentAsAccreditationPrinted(List<Competitor> competitors, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "setParticipantsInTournamentAsAccreditationPrinted");
         KendoLog.fine(SQL.class.getName(), "Disabling printing the accreditation card of a list of competitors in tournament " + tournament.getName());
         try {
             //Basic query
@@ -1215,6 +1290,7 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "setParticipantsInTournamentAsAccreditationPrinted");
     }
 
     /**
@@ -1226,6 +1302,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roleTags, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "setAllParticipantsInTournamentAsDiplomaPrinted");
         KendoLog.fine(SQL.class.getName(), "Disabling printing all diplomas of " + tournament.getName() + " for " + roleTags);
         try {
             //Basic query
@@ -1249,15 +1326,20 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "setAllParticipantsInTournamentAsDiplomaPrinted");
     }
 
     @Override
     public List<Role> getAllRoles() {
-        return getRoles(0, Integer.MAX_VALUE);
+        KendoLog.entering(this.getClass().getName(), "getAllRoles");
+        List<Role> roles = getRoles(0, Integer.MAX_VALUE);
+        KendoLog.exiting(this.getClass().getName(), "getAllRoles");
+        return roles;
     }
 
     @Override
     public List<Role> getRoles(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getRoles");
         KendoLog.fine(SQL.class.getName(), "Getting all roles.");
         List<Role> roles = new ArrayList<>();
         try {
@@ -1274,11 +1356,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
+        KendoLog.exiting(this.getClass().getName(), "getRoles");
         return roles;
     }
 
     @Override
     public boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes) {
+        KendoLog.entering(this.getClass().getName(), "storeAllRoles");
         KendoLog.fine(SQL.class.getName(), "Storing all roles into database.");
         boolean error = false;
         try {
@@ -1299,6 +1383,7 @@ public abstract class SQL extends Database {
             error = true;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAllRoles");
         return !error;
     }
 
@@ -1316,6 +1401,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeClub(Club club, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeClub");
         KendoLog.fine(SQL.class.getName(), "Storing club " + club.returnName() + " into database.");
         boolean inserted = true;
         boolean update = false;
@@ -1375,11 +1461,13 @@ public abstract class SQL extends Database {
             }
 
         }
+        KendoLog.exiting(this.getClass().getName(), "storeClub");
         return inserted;
     }
 
     @Override
     public List<String> returnClubsName() {
+        KendoLog.entering(this.getClass().getName(), "returnClubsName");
         KendoLog.fine(SQL.class.getName(), "Obtaining the name of all clubs.");
         List<String> clubs = new ArrayList<>();
         try {
@@ -1389,6 +1477,7 @@ public abstract class SQL extends Database {
                     clubs.add(rs.getString(1));
                 }
             }
+            KendoLog.exiting(this.getClass().getName(), "returnClubsName");
             return clubs;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -1396,16 +1485,21 @@ public abstract class SQL extends Database {
             MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
         }
 
+        KendoLog.exiting(this.getClass().getName(), "returnClubsName");
         return null;
     }
 
     @Override
     public List<Club> getAllClubs() {
-        return getClubs(0, Integer.MAX_VALUE);
+        KendoLog.entering(this.getClass().getName(), "getAllClubs");
+        List<Club> clubs = getClubs(0, Integer.MAX_VALUE);
+        KendoLog.exiting(this.getClass().getName(), "getAllClubs");
+        return clubs;
     }
 
     @Override
     public List<Club> getClubs(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getClubs");
         KendoLog.fine(SQL.class.getName(), "Obtaining all clubs.");
         List<Club> results = new ArrayList<>();
         try {
@@ -1448,11 +1542,13 @@ public abstract class SQL extends Database {
             MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "getClubs");
         return results;
     }
 
     @Override
     public boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes) {
+        KendoLog.entering(this.getClass().getName(), "storeAllClubs");
         KendoLog.fine(SQL.class.getName(), "Storing a list of clubs.");
         boolean error = false;
         try {
@@ -1471,12 +1567,13 @@ public abstract class SQL extends Database {
             error = true;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAllClubs");
         return !error;
     }
 
     @Override
     public List<Club> searchClub(String query, boolean verbose) {
-        KendoLog.fine(SQL.class.getName(), "Searching club.");
+        KendoLog.entering(this.getClass().getName(), "searchClub");
         KendoLog.finer(SQL.class.getName(), query);
         List<Club> results = new ArrayList<>();
 
@@ -1514,30 +1611,40 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "searchClub");
         return results;
     }
 
     @Override
     public List<Club> searchClubByName(String name, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchClubByName");
         String query = "SELECT * FROM club WHERE Name LIKE '%" + name + "%' ORDER BY Name";
-        return searchClub(query, verbose);
+        List<Club> clubs = searchClub(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchClubByName");
+        return clubs;
     }
 
     @Override
     public List<Club> searchClubByCity(String city, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchClubByCity");
         String query = "SELECT * FROM club WHERE City LIKE '%" + city + "%' ORDER BY Name";
-        return searchClub(query, verbose);
+        List<Club> clubs = searchClub(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchClubByCity");
+        return clubs;
     }
 
     @Override
     public List<Club> searchClubByCountry(String country, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchClubByCountry");
         String query = "SELECT * FROM club WHERE Country LIKE '%" + country + "%' ORDER BY Name";
-        return searchClub(query, verbose);
+        List<Club> clubs = searchClub(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchClubByCountry");
+        return clubs;
     }
 
     @Override
     public boolean deleteClub(Club club, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteClub");
         boolean error = false;
         boolean answer = false;
         KendoLog.fine(SQL.class.getName(), "Deleting club " + club.returnName());
@@ -1579,6 +1686,7 @@ public abstract class SQL extends Database {
             KendoLog.info(SQL.class.getName(), "Club deleted: " + club.returnName());
         }
 
+        KendoLog.exiting(this.getClass().getName(), "deleteClub");
         return !error && (answer || !verbose);
     }
 
@@ -1596,6 +1704,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeTournament");
         boolean error = false;
         boolean update = false;
         KendoLog.fine(SQL.class.getName(), "Storing tournament " + tournament.getName());
@@ -1660,11 +1769,13 @@ public abstract class SQL extends Database {
             }
         }
 
+        KendoLog.exiting(this.getClass().getName(), "storeTournament");
         return !error;
     }
 
     @Override
     public boolean deleteTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "deleteTournament");
         boolean answer = false;
         KendoLog.fine(SQL.class.getName(), "Deleting tournament " + tournament.getName());
         try {
@@ -1689,11 +1800,13 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
 
+        KendoLog.exiting(this.getClass().getName(), "deleteTournament");
         return answer;
     }
 
     @Override
     public boolean updateTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "updateTournament");
         boolean error = false;
         boolean answer = false;
         KendoLog.fine(SQL.class.getName(), "Updating tournament.");
@@ -1725,6 +1838,7 @@ public abstract class SQL extends Database {
                     stmt.executeUpdate();
                 }
             } else {
+                KendoLog.exiting(this.getClass().getName(), "updateTournament");
                 return false;
             }
         } catch (MysqlDataTruncation mdt) {
@@ -1747,17 +1861,21 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(this.getClass().getName(), "Tournament updated: " + tournament.getName());
         }
-
+        KendoLog.exiting(this.getClass().getName(), "updateTournament");
         return !error;
     }
 
     @Override
     public List<Tournament> getAllTournaments() {
-        return getTournaments(0, Integer.MAX_VALUE);
+        KendoLog.entering(this.getClass().getName(), "getAllTournaments");
+        List<Tournament> tournaments = getTournaments(0, Integer.MAX_VALUE);
+        KendoLog.exiting(this.getClass().getName(), "getAllTournaments");
+        return tournaments;
     }
 
     @Override
     public List<Tournament> getTournaments(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getTournaments");
         List<Tournament> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
         try {
@@ -1778,6 +1896,7 @@ public abstract class SQL extends Database {
                     results.add(t);
                 }
             }
+            KendoLog.exiting(this.getClass().getName(), "getTournaments");
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -1785,12 +1904,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getTournaments");
         return null;
     }
 
     @Override
     public boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes) {
+        KendoLog.entering(this.getClass().getName(), "storeAllTournaments");
         boolean error = false;
         KendoLog.fine(SQL.class.getName(), "Storing a list of tournaments.");
         try {
@@ -1809,11 +1929,13 @@ public abstract class SQL extends Database {
             error = true;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAllTournaments");
         return !error;
     }
 
     @Override
     public Tournament getTournamentByName(String tournamentName, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getTournamentByName");
         KendoLog.fine(SQL.class.getName(), "Get tournament " + tournamentName);
         try {
             Tournament t;
@@ -1831,6 +1953,7 @@ public abstract class SQL extends Database {
                     InputStream sImage3 = getBinaryStream(rs, "Diploma");
                     Long size3 = rs.getLong("DiplomaSize");
                     t.addDiploma(sImage3, size3);
+                    KendoLog.exiting(this.getClass().getName(), "getTournamentByName");
                     return t;
                 } else {
                     MessageManager.errorMessage(this.getClass().getName(), "errorTournament", "SQL", tournamentName);
@@ -1843,12 +1966,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getTournamentByName");
         return null;
     }
 
     @Override
     public List<Tournament> searchTournament(String query, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTournament");
         KendoLog.fine(SQL.class.getName(), "Searching tournament.");
         KendoLog.finer(SQL.class.getName(), query);
         List<Tournament> results = new ArrayList<>();
@@ -1876,27 +2000,34 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "searchTournament");
         return results;
     }
 
     @Override
     public List<Tournament> searchTournamentsByName(String tournamentName, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTournamentsByName");
         String query = "SELECT * FROM tournament WHERE Name LIKE '%" + tournamentName + "%' ORDER BY Name";
-        return searchTournament(query, verbose);
+        List<Tournament> tournaments = searchTournament(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchTournamentsByName");
+        return tournaments;
     }
 
     @Override
     public void deleteGroupsOfTournament(Tournament tournament, List<Team> teams) {
+        KendoLog.entering(this.getClass().getName(), "deleteGroupsOfTournament");
         KendoLog.fine(SQL.class.getName(), "Deleting groups of tournament " + tournament.getName());
         for (int i = 0; i < teams.size(); i++) {
             Team t = teams.get(i);
             t.group = 0;
             updateTeamGroupOfLeague(tournament, t);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteGroupsOfTournament");
     }
 
     @Override
     public void storeDiplomaImage(Tournament tournament, InputStream Image, long imageSize) {
+        KendoLog.entering(this.getClass().getName(), "storeDiplomaImage");
         KendoLog.fine(SQL.class.getName(), "Store diploma image of " + tournament.getName());
         try {
             try {
@@ -1926,10 +2057,12 @@ public abstract class SQL extends Database {
             //error = true;
             MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
         }
+        KendoLog.exiting(this.getClass().getName(), "storeDiplomaImage");
     }
 
     @Override
     public void storeAccreditationImage(Tournament tournament, InputStream Image, long imageSize) {
+        KendoLog.entering(this.getClass().getName(), "storeAccreditationImage");
         KendoLog.fine(SQL.class.getName(), "Store accreditation of " + tournament.getName());
         try {
             try {
@@ -1959,10 +2092,12 @@ public abstract class SQL extends Database {
             //error = true;
             MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAccreditationImage");
     }
 
     @Override
     public int getLevelTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getLevelTournament");
         KendoLog.fine(SQL.class.getName(), "Getting max level of " + tournament.getName());
         String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournament.getName() + "';";
 
@@ -1976,6 +2111,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "getLevelTournament");
         return level;
     }
 
@@ -1994,6 +2130,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeTeam(Team team, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeTeam");
         KendoLog.fine(SQL.class.getName(), "Storing team " + team.getName());
         boolean error = false;
         boolean answer = false;
@@ -2010,6 +2147,7 @@ public abstract class SQL extends Database {
                         KendoLog.finer(SQL.class.getName(), "Deleting an existing team " + team.getName());
                         s.executeUpdate("DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "' AND LeagueGroup=" + team.group);
                     } else {
+                        KendoLog.exiting(this.getClass().getName(), "storeTeam");
                         return false;
                     }
                 }
@@ -2058,6 +2196,7 @@ public abstract class SQL extends Database {
                 KendoLog.info(this.getClass().getName(), "Team Stored: " + team.getName());
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "storeTeam");
         return !error;
     }
 
@@ -2070,6 +2209,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean insertTeam(Team team, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "insertTeam");
         KendoLog.fine(SQL.class.getName(), "Inserting team " + team.getName());
         boolean error = false;
         //Insert team.
@@ -2101,6 +2241,7 @@ public abstract class SQL extends Database {
                 }
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "insertTeam");
         return !error;
     }
 
@@ -2113,6 +2254,7 @@ public abstract class SQL extends Database {
      * @return
      */
     private List<Competitor> searchTeamMembersInLevel(Team team, boolean verbose, int level) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamMembersInLevel");
         List<Competitor> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Obtaining the members of team " + team.getName() + " in level " + level);
         try {
@@ -2137,6 +2279,7 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "searchTeamMembersInLevel");
         return results;
     }
 
@@ -2148,6 +2291,7 @@ public abstract class SQL extends Database {
      * @return
      */
     private List<List<Competitor>> searchTeamMembers(Team team, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamMembers");
         KendoLog.fine(SQL.class.getName(), "Obtain the members of " + team.getName());
         List<List<Competitor>> membersPerLevel = new ArrayList<>();
         try {
@@ -2166,6 +2310,7 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "searchTeamMembers");
         return membersPerLevel;
     }
 
@@ -2178,7 +2323,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Team> searchTeam(String query, boolean verbose) {
-        KendoLog.fine(SQL.class.getName(), "Searching team.");
+        KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
 
         List<Team> results = new ArrayList<>();
@@ -2205,62 +2350,85 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "searchTeam");
         return results;
     }
 
     @Override
     public List<Team> searchTeamsByNameAndTournament(String name, Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamsByNameAndTournament");
         String query = "SELECT * FROM team WHERE Name LIKE '%" + name + "%' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
-        return searchTeam(query, verbose);
+        List<Team> teams = searchTeam(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchTeamsByNameAndTournament");
+        return teams;
     }
 
     @Override
     public Team getTeamByName(String name, Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getTeamByName");
         String query = "SELECT * FROM team WHERE Name='" + name + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
         List<Team> teams = searchTeam(query, verbose);
         if (!teams.isEmpty()) {
+            KendoLog.exiting(this.getClass().getName(), "getTeamByName");
             return searchTeam(query, verbose).get(0);
         } else {
             if (verbose) {
                 MessageManager.customMessage(this.getClass().getName(), "Error obtaining team " + name, "Error", 0);
                 KendoLog.warning(SQL.class.getName(), "Error obtaining team " + name);
             }
+            KendoLog.exiting(this.getClass().getName(), "getTeamByName");
             return null;
         }
     }
 
     @Override
     public List<Team> searchTeamsByTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamsByTournament");
         String query = "SELECT * FROM team WHERE Tournament LIKE '" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
-        return searchTeam(query, verbose);
+        List<Team> teams = searchTeam(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchTeamsByTournament");
+        return teams;
     }
 
     @Override
     public List<Team> searchTeamsByTournamentExactName(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamsByTournamentExactName");
         String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
-        return searchTeam(query, verbose);
+        List<Team> teams = searchTeam(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchTeamsByTournamentExactName");
+        return teams;
     }
 
     @Override
     public List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "searchTeamsByLevel");
         String query = "SELECT t1.name,t1.Tournament,t1.LeagueGroup FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament.getName() + "' AND f1.Tournament='" + tournament.getName() + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
-        return searchTeam(query, verbose);
+        List<Team> teams = searchTeam(query, verbose);
+        KendoLog.exiting(this.getClass().getName(), "searchTeamsByLevel");
+        return teams;
     }
 
     @Override
     public List<Team> getTeams(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getTeams");
         String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name LIMIT " + fromRow + "," + numberOfRows;
-        return searchTeam(query, false);
+        List<Team> teams = searchTeam(query, false);
+        KendoLog.exiting(this.getClass().getName(), "getTeams");
+        return teams;
     }
 
     @Override
     public List<Team> getAllTeams() {
+        KendoLog.entering(this.getClass().getName(), "getAllTeams");
         String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name ";
-        return searchTeam(query, false);
+        List<Team> teams = searchTeam(query, false);
+        KendoLog.exiting(this.getClass().getName(), "getAllTeams");
+        return teams;
     }
 
     @Override
     public boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes) {
+        KendoLog.entering(this.getClass().getName(), "storeAllTeams");
         KendoLog.fine(SQL.class.getName(), "Store a group of teams.");
         boolean error = false;
         try {
@@ -2279,11 +2447,13 @@ public abstract class SQL extends Database {
             error = true;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeAllTeams");
         return !error;
     }
 
     @Override
     public void updateTeamGroupOfLeague(Tournament tournament, Team team) {
+        KendoLog.entering(this.getClass().getName(), "updateTeamGroupOfLeague");
         KendoLog.fine(SQL.class.getName(), "Upgrading team " + team.getName() + " of " + tournament.getName());
         try {
             try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.getName() + "' AND Tournament='" + tournament.getName() + "'")) {
@@ -2297,11 +2467,12 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "updateTeamGroupOfLeague");
     }
 
     @Override
     public boolean deleteTeam(Team team, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteTeam");
         KendoLog.fine(SQL.class.getName(), "Deleting team " + team.getName());
         boolean error = false;
         boolean answer = false;
@@ -2342,11 +2513,13 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(this.getClass().getName(), "Team deleted: " + team.getName());
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteTeam");
         return !error && (answer || !verbose);
     }
 
     @Override
     public boolean deleteTeamByName(String teamName, String toournamentName, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteTeamByName");
         KendoLog.debug(SQL.class.getName(), "Deleting team " + teamName);
         boolean error = false;
         boolean answer = false;
@@ -2392,11 +2565,13 @@ public abstract class SQL extends Database {
             }
 
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteTeamByName");
         return !error && (answer || !verbose);
     }
 
     @Override
     public void setIndividualTeams(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "setIndividualTeams");
         KendoLog.fine(SQL.class.getName(), "Creating individual teams for tournament " + tournament.getName());
         List<Competitor> competitors = selectAllCompetitorsInTournament(tournament);
         MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
@@ -2405,11 +2580,12 @@ public abstract class SQL extends Database {
             t.addOneMember(competitors.get(i), 0);
             storeTeam(t, false);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "setIndividualTeams");
     }
 
     @Override
     public boolean deleteTeamsOfTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteTeamsOfTournament");
         boolean error = false;
         boolean answer = false;
         try {
@@ -2442,11 +2618,13 @@ public abstract class SQL extends Database {
             }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteTeamsOfTournament");
         return !error && (answer || !verbose);
     }
 
     @Override
     public List<TeamRanking> getTeamsOrderByScore(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getTeamsOrderByScore");
         List<TeamRanking> teamsOrdered = new ArrayList<>();
         //String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
         String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
@@ -2463,21 +2641,26 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
         }
+        KendoLog.exiting(this.getClass().getName(), "getTeamsOrderByScore");
         return teamsOrdered;
     }
 
     @Override
     public Team getTeamOfCompetitor(String competitorID, Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "getTeamOfCompetitor");
         String query = "SELECT * FROM team WHERE Member='" + competitorID + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name";
         try {
+            KendoLog.exiting(this.getClass().getName(), "getTeamOfCompetitor");
             return searchTeam(query, verbose).get(0);
         } catch (IndexOutOfBoundsException iob) {
+            KendoLog.exiting(this.getClass().getName(), "getTeamOfCompetitor");
             return null;
         }
     }
 
     @Override
     public boolean insertMemebersOfTeamInLevel(Team t, int level, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "insertMemebersOfTeamInLevel");
         boolean error = false;
         deleteTeamInLevel(t, level, verbose); //To allow a change in the current level and avoid the MySQLIntegrityConstraintViolationException
         try {
@@ -2527,23 +2710,19 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(this.getClass().getName(), "Team stored: " + t.getName());
         }
+        KendoLog.exiting(this.getClass().getName(), "insertMemebersOfTeamInLevel");
         return !error;
     }
 
     @Override
-    public boolean extendTeamInLevel(Team t, int level, boolean verbose) {
-        return false;
-    }
-
-    @Override
     public boolean deleteTeamInLevel(Team t, int level, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteTeamInLevel");
         boolean error = false;
-
         try {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM team WHERE Name='" + t.getName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.tournament.getName() + "'");
             }
-
+            KendoLog.exiting(this.getClass().getName(), "deleteTeamInLevel");
             return true;
         } catch (SQLException ex) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
@@ -2559,17 +2738,20 @@ public abstract class SQL extends Database {
             }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteTeamInLevel");
         return !error;
 
     }
 
     @Override
     public boolean deleteAllMemberChangesInTeams(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteAllMemberChangesInTeams");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM team WHERE LevelTournament > 0  AND Tournament='" + tournament.getName() + "'");
             }
+            KendoLog.exiting(this.getClass().getName(), "deleteAllMemberChangesInTeams");
             return true;
         } catch (SQLException ex) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
@@ -2585,6 +2767,7 @@ public abstract class SQL extends Database {
             }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteAllMemberChangesInTeams");
         return !error;
     }
 
@@ -2600,6 +2783,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "storeFights");
         boolean error = false;
         boolean answer = false;
         if (fights.size() > 0) {
@@ -2650,14 +2834,16 @@ public abstract class SQL extends Database {
                 KendoLog.info(this.getClass().getName(), "Fight stored: " + fights.get(0).tournament.getName());
             }
         } else {
+            KendoLog.exiting(this.getClass().getName(), "storeFights");
             return false;
         }
-
+        KendoLog.exiting(this.getClass().getName(), "storeFights");
         return !error && answer;
     }
 
     @Override
     public boolean deleteAllFights() {
+        KendoLog.entering(this.getClass().getName(), "deleteAllFights");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
@@ -2669,11 +2855,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteAllFights");
         return error;
     }
 
     @Override
     public boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights) {
+        KendoLog.entering(this.getClass().getName(), "storeAllFightsAndDeleteOldOnes");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
@@ -2691,11 +2879,13 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         KendoLog.info(this.getClass().getName(), "Fight stored " + fights.get(0).tournament.getName());
+        KendoLog.exiting(this.getClass().getName(), "storeAllFightsAndDeleteOldOnes");
         return !error;
     }
 
     @Override
     public boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne) {
+        KendoLog.entering(this.getClass().getName(), "storeFight");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
@@ -2716,11 +2906,13 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(this.getClass().getName(), "Fight stored: " + fight.tournament.getName());
         }
+        KendoLog.exiting(this.getClass().getName(), "storeFight");
         return !error;
     }
 
     @Override
     public List<Fight> searchFights(String query, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "searchFights");
         List<Fight> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
@@ -2756,7 +2948,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "searchFights");
         return results;
     }
 
@@ -2768,14 +2960,20 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Fight> searchFightsByTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "searchFightsByTournament");
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
-        return searchFights(query, tournament);
+        List<Fight> fights = searchFights(query, tournament);
+        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournament");
+        return fights;
     }
 
     @Override
     public List<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level) {
+        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentLevelEqualOrGreater");
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level;
-        return searchFights(query, tournament);
+        List<Fight> fights = searchFights(query, tournament);
+        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentLevelEqualOrGreater");
+        return fights;
     }
 
     /**
@@ -2786,8 +2984,11 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea) {
+        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentAndFightArea");
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND FightArea=" + fightArea;
-        return searchFights(query, tournament);
+        List<Fight> fights = searchFights(query, tournament);
+        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentAndFightArea");
+        return fights;
     }
 
     /**
@@ -2798,12 +2999,16 @@ public abstract class SQL extends Database {
      */
     @Override
     public List<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team) {
+        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentAndTeam");
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
-        return searchFights(query, tournament);
+        List<Fight> fights = searchFights(query, tournament);
+        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentAndTeam");
+        return fights;
     }
 
     @Override
     public int obtainFightID(Fight f) {
+        KendoLog.entering(this.getClass().getName(), "obtainFightID");
         int ID = -1;
         try {
             String query = "SELECT ID FROM fight WHERE Tournament='" + f.tournament.getName() + "' AND Team1='" + f.team1.getName() + "' AND Team2='" + f.team2.getName() + "' AND LeagueLevel=" + f.level;
@@ -2818,11 +3023,13 @@ public abstract class SQL extends Database {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         KendoLog.debug(SQL.class.getName(), "Id of fight " + f.show() + " is " + ID);
+        KendoLog.exiting(this.getClass().getName(), "obtainFightID");
         return ID;
     }
 
     @Override
     public boolean updateFightAsOver(Fight fight) {
+        KendoLog.entering(this.getClass().getName(), "updateFightAsOver");
         KendoLog.fine(SQL.class.getName(), "Updating fight '" + fight.team1 + " vs " + fight.team2 + "' as over.");
         boolean error = false;
         try {
@@ -2845,11 +3052,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "updateFightAsOver");
         return !error;
     }
 
     @Override
     public boolean updateFightAsNotOver(Fight fight) {
+        KendoLog.entering(this.getClass().getName(), "updateFightAsNotOver");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement();
@@ -2863,16 +3072,21 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "updateFightAsNotOver");
         return !error;
     }
 
     @Override
     public List<Fight> getAllFights() {
-        return getFights(0, Integer.MAX_VALUE);
+        KendoLog.entering(this.getClass().getName(), "getAllFights");
+        List<Fight> fights = getFights(0, Integer.MAX_VALUE);
+        KendoLog.exiting(this.getClass().getName(), "getAllFights");
+        return fights;
     }
 
     @Override
     public List<Fight> getFights(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getFights");
         ArrayList<Fight> results = new ArrayList<>();
 
         try {
@@ -2901,7 +3115,7 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getFights");
         return results;
     }
 
@@ -2916,6 +3130,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
         KendoLog.fine(SQL.class.getName(), "Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
@@ -2929,8 +3144,10 @@ public abstract class SQL extends Database {
                 }
                 KendoLog.finer(SQL.class.getName(), "Delete draw fights of tournament.");
                 deleteDrawsOfLevelOfTournament(tournament, level);
+                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
                 return true;
             } else {
+                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
                 return false;
             }
 
@@ -2939,6 +3156,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
         return !error;
     }
 
@@ -2951,6 +3169,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean deleteFightsOfTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFightsOfTournament");
         boolean error;
         boolean answer = false;
         try {
@@ -2962,8 +3181,10 @@ public abstract class SQL extends Database {
                     s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournament.getName() + "'");
                 }
                 deleteDrawsOfTournament(tournament);
+                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
                 return true;
             } else {
+                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
                 return false;
             }
         } catch (SQLException ex) {
@@ -2971,6 +3192,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
         return !error;
     }
 
@@ -2983,6 +3205,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean deleteFight(Fight fight, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFight");
         boolean error = false;
         boolean answer = false;
         try {
@@ -3007,7 +3230,7 @@ public abstract class SQL extends Database {
             }
             KendoLog.info(SQL.class.getName(), "Fights deledte from: " + fight.tournament.getName());
         }
-
+        KendoLog.exiting(this.getClass().getName(), "deleteFight");
         return (answer && !error);
     }
 
@@ -3023,6 +3246,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeDuel(Duel d, Fight f, int player) {
+        KendoLog.entering(this.getClass().getName(), "storeDuel");
         KendoLog.fine(SQL.class.getName(), "Storing duel " + d.showScore() + " into database.");
         boolean error = false;
         try {
@@ -3047,12 +3271,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeDuel", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "storeDuel");
         return !error;
     }
 
     @Override
     public boolean storeDuelsOfFight(Fight f) {
+        KendoLog.entering(this.getClass().getName(), "storeDuelsOfFight");
         boolean error = false;
         try {
             //Obtain the ID of the fight..
@@ -3075,12 +3300,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeDuel", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "storeDuelsOfFight");
         return !error;
     }
 
     @Override
     public boolean deleteDuelsOfFight(Fight f) {
+        KendoLog.entering(this.getClass().getName(), "deleteDuelsOfFight");
         boolean error = false;
         try {
             //Obtain the ID of the fight..
@@ -3091,11 +3317,13 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteDuelsOfFight");
         return !error;
     }
 
     @Override
     public List<Duel> getDuelsOfFight(Fight f) {
+        KendoLog.entering(this.getClass().getName(), "getDuelsOfFight");
         int fightID = obtainFightID(f);
         Statement s;
 
@@ -3148,12 +3376,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getDuelsOfFight");
         return results;
     }
 
     @Override
     public Duel getDuel(Fight f, int player) {
+        KendoLog.entering(this.getClass().getName(), "getDuel");
         Statement s;
         int fightID = obtainFightID(f);
 
@@ -3208,12 +3437,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getDuel");
         return d;
     }
 
     @Override
     public List<Duel> getDuelsOfTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getDuelsOfTournament");
         Statement s;
         List<Duel> results = new ArrayList<>();
 
@@ -3221,12 +3451,13 @@ public abstract class SQL extends Database {
         for (int i = 0; i < fights.size(); i++) {
             results.addAll(getDuelsOfFight(fights.get(i)));
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getDuelsOfTournament");
         return results;
     }
 
     @Override
     public List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight) {
+        KendoLog.entering(this.getClass().getName(), "getDuelsOfcompetitor");
         Statement s;
         List<Duel> results = new ArrayList<>();
         Duel d;
@@ -3294,17 +3525,21 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getDuelsOfcompetitor");
         return results;
     }
 
     @Override
     public List<Duel> getAllDuels() {
-        return getDuels(0, Integer.MAX_VALUE);
+        KendoLog.entering(this.getClass().getName(), "getAllDuels");
+        List<Duel> duels = getDuels(0, Integer.MAX_VALUE);
+        KendoLog.exiting(this.getClass().getName(), "getAllDuels");
+        return duels;
     }
 
     @Override
     public List<Duel> getDuels(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getDuels");
         Statement s;
         List<Duel> results = new ArrayList<>();
         Duel d;
@@ -3361,7 +3596,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
+        KendoLog.exiting(this.getClass().getName(), "getDuels");
         return results;
     }
 
@@ -3377,6 +3612,7 @@ public abstract class SQL extends Database {
      */
     @Override
     public boolean storeUndraw(Tournament tournament, Team team, int order, int group) {
+        KendoLog.entering(this.getClass().getName(), "storeUndraw");
         boolean error = false;
         try {
             //Delete the undraw if exist previously.
@@ -3393,16 +3629,21 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "storeUndraw", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "storeUndraw");
         return !error;
     }
 
     @Override
     public boolean storeUndraw(Undraw undraw) {
-        return storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup());
+        KendoLog.entering(this.getClass().getName(), "storeUndraw2");
+        boolean value = storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup());
+        KendoLog.exiting(this.getClass().getName(), "storeUndraw2");
+        return value;
     }
 
     @Override
     public List<Undraw> getUndraws(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getUndraws");
         String query = "SELECT * FROM undraw LIMIT " + fromRow + "," + numberOfRows;
 
         List<Undraw> results = new ArrayList<>();
@@ -3426,11 +3667,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
 
     @Override
     public List<Undraw> getUndraws(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getUndraws");
         String query = "SELECT * FROM undraw WHERE championship='" + tournament.getName() + "'";
 
         List<Undraw> results = new ArrayList<>();
@@ -3453,11 +3696,13 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
 
     @Override
     public boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes) {
+        KendoLog.entering(this.getClass().getName(), "storeAllUndraws");
         boolean error = false;
         try {
             try (Statement s = connection.createStatement()) {
@@ -3475,11 +3720,13 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         KendoLog.info(this.getClass().getName(), "Fights stored: " + undraws.get(0).getTournament() + ": " + undraws.get(0).getWinnerTeam());
+        KendoLog.exiting(this.getClass().getName(), "storeAllUndraws");
         return !error;
     }
 
     @Override
     public List<Team> getWinnersInUndraws(Tournament tournament, int level, int group) {
+        KendoLog.entering(this.getClass().getName(), "getWinnersInUndraws");
         List<Team> teamWinners = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement()) {
@@ -3495,11 +3742,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        KendoLog.exiting(this.getClass().getName(), "getWinnersInUndraws");
         return teamWinners;
     }
 
     @Override
     public int getValueWinnerInUndraws(Tournament tournament, String team) {
+        KendoLog.entering(this.getClass().getName(), "getValueWinnerInUndraws");
         int value = 0;
         try {
             try (Statement s = connection.createStatement()) {
@@ -3515,11 +3764,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
+        KendoLog.exiting(this.getClass().getName(), "getValueWinnerInUndraws");
         return value;
     }
 
     @Override
     public int getValueWinnerInUndrawInGroup(Tournament tournament, int group, String team) {
+        KendoLog.entering(this.getClass().getName(), "getValueWinnerInUndrawInGroup");
         int value = 0;
         try {
             try (Statement s = connection.createStatement()) {
@@ -3535,11 +3786,13 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
+        KendoLog.exiting(this.getClass().getName(), "getValueWinnerInUndrawInGroup");
         return value;
     }
 
     @Override
     public void deleteDrawsOfTournament(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfTournament");
         try {
             try (Statement s = connection.createStatement()) {
                 s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "'");
@@ -3548,10 +3801,12 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfTournament");
     }
 
     @Override
     public void deleteDrawsOfGroupOfTournament(Tournament tournament, int group) {
+        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfGroupOfTournament");
         KendoLog.fine(SQL.class.getName(), "Deleting undraws of group " + group);
         try {
             try (Statement s = connection.createStatement()) {
@@ -3561,10 +3816,12 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfGroupOfTournament");
     }
 
     @Override
     public void deleteDrawsOfLevelOfTournament(Tournament tournament, int level) {
+        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfLevelOfTournament");
         KendoLog.fine(SQL.class.getName(), "Deleting undraws of level " + level);
         try {
             try (Statement s = connection.createStatement()) {
@@ -3574,9 +3831,11 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfLevelOfTournament");
     }
 
     public List<String> getUndrawMySQLCommands() {
+        KendoLog.entering(this.getClass().getName(), "getUndrawMySQLCommands");
         List<String> commands = new ArrayList<>();
         try {
             Statement s = connection.createStatement();
@@ -3594,6 +3853,7 @@ public abstract class SQL extends Database {
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
+        KendoLog.exiting(this.getClass().getName(), "getUndrawMySQLCommands");
         return commands;
     }
 

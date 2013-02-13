@@ -273,9 +273,11 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public List<TournamentGroup> returnGroupsOfLevel(Integer level) {
+        KendoLog.entering(this.getClass().getName(), "returnGroupsOfLevel");
         if (level >= 0 && level < levels.size()) {
             return levels.get(level).getGroups();
         }
+        KendoLog.exiting(this.getClass().getName(), "returnGroupsOfLevel");
         return null;
     }
 
@@ -356,12 +358,15 @@ public class TournamentGroupManager implements Serializable {
      * @return
      */
     public Integer getIndexLastLevelNotUsed() {
+        KendoLog.entering(this.getClass().getName(), "getIndexLastLevelNotUsed");
         for (int i = 0; i < levels.size(); i++) {
             if (levels.get(i).getUsedTeams().isEmpty()) {
+                KendoLog.exiting(this.getClass().getName(), "getIndexLastLevelNotUsed");
                 return i;
             }
         }
         //All levels used, return last level.
+        KendoLog.exiting(this.getClass().getName(), "getIndexLastLevelNotUsed");
         return null;
     }
 
@@ -463,6 +468,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     private List<Fight> generateNextLevelFights(int nextLevel) {
+        KendoLog.entering(this.getClass().getName(), "generateNextLevelFights");
         KendoLog.finer(this.getClass().getName(), "All fights are over.");
 
         if (MessageManager.questionMessage("nextLevel", "Warning!")) {
@@ -484,10 +490,12 @@ public class TournamentGroupManager implements Serializable {
         ArrayList<Fight> newFights = generateLevelFights(nextLevel);
         KendoLog.debug(this.getClass().getName(), "Current number of fights over after generating next level fights: "
                 + FightPool.getManager(tournament).numberOfFightsOver());
+        KendoLog.exiting(this.getClass().getName(), "generateNextLevelFights");
         return newFights;
     }
 
     public List<Fight> nextLevel(List<Fight> fights, int fightArea, Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "nextLevel");
         Integer nextLevel = getIndexLastLevelNotUsed();
         int arena;
         List<Fight> newFights = new ArrayList<>();
@@ -516,6 +524,7 @@ public class TournamentGroupManager implements Serializable {
             leagueFinished(fights);
         }
         //update();
+        KendoLog.exiting(this.getClass().getName(), "nextLevel");
         return newFights;
     }
 
@@ -532,6 +541,7 @@ public class TournamentGroupManager implements Serializable {
      * @return
      */
     public ArrayList<Fight> generateLevelFights(int level) {
+        KendoLog.entering(this.getClass().getName(), "generateLevelFights");
         ArrayList<Fight> fights = new ArrayList<>();
         List<TournamentGroup> groups = returnGroupsOfLevel(level);
 
@@ -556,6 +566,7 @@ public class TournamentGroupManager implements Serializable {
                 fights.addAll(groups.get(i).generateGroupFights(level));
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "generateLevelFights");
         return fights;
     }
 

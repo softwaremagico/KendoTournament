@@ -244,6 +244,7 @@ public class SQLite extends SQL {
      */
     @Override
     public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
         KendoLog.fine(this.getClass().getName(), "Deleting fight of level " + level);
         boolean error;
         boolean answer = false;
@@ -270,6 +271,7 @@ public class SQLite extends SQL {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
         return !error;
     }
 
@@ -282,6 +284,7 @@ public class SQLite extends SQL {
      */
     @Override
     public boolean deleteFightsOfTournament(Tournament tournament, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFightsOfTournament");
         boolean error;
         boolean answer = false;
         try {
@@ -307,6 +310,7 @@ public class SQLite extends SQL {
             MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
+        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
         return !error;
     }
 
@@ -319,6 +323,7 @@ public class SQLite extends SQL {
      */
     @Override
     public boolean deleteFight(Fight fight, boolean verbose) {
+        KendoLog.entering(this.getClass().getName(), "deleteFight");
         boolean error = false;
         boolean answer = false;
         try {
@@ -343,7 +348,7 @@ public class SQLite extends SQL {
             }
             KendoLog.info(this.getClass().getName(), fight.tournament.getName());
         }
-
+        KendoLog.exiting(this.getClass().getName(), "deleteFight");
         return (answer && !error);
     }
 

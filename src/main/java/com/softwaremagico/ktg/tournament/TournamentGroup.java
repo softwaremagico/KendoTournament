@@ -359,10 +359,14 @@ public class TournamentGroup extends Group implements Serializable {
      * @return
      */
     public List<Fight> generateGroupFights(int level) {
-        return generateGroupFights(level, arena);
+        KendoLog.entering(this.getClass().getName(), "generateGroupFights");
+        List<Fight> fights = generateGroupFights(level, arena);
+        KendoLog.exiting(this.getClass().getName(), "generateGroupFights");
+        return fights;
     }
 
     public List<Fight> generateGroupFights(int level, int fightArea) {
+        KendoLog.entering(this.getClass().getName(), "generateGroupFights");
         List<Fight> fights = new ArrayList<>();
         int count = 0;
         Fight f;
@@ -392,6 +396,7 @@ public class TournamentGroup extends Group implements Serializable {
                 count++;
             }
         }
+        KendoLog.exiting(this.getClass().getName(), "generateGroupFights");
         return fights;
     }
 
