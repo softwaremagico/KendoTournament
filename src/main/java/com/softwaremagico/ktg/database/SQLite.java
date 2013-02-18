@@ -92,7 +92,7 @@ public class SQLite extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "SQLite", "SQLite (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "SQLite", "SQLite", JOptionPane.INFORMATION_MESSAGE);
             }
             KendoLog.info(this.getClass().getName(), "Connected to Database!");
         }

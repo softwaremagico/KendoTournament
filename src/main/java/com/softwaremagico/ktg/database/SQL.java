@@ -1956,7 +1956,9 @@ public abstract class SQL extends Database {
                     KendoLog.exiting(this.getClass().getName(), "getTournamentByName");
                     return t;
                 } else {
-                    MessageManager.errorMessage(this.getClass().getName(), "errorTournament", "SQL", tournamentName);
+                    if (verbose) {
+                        MessageManager.errorMessage(this.getClass().getName(), "errorTournament", "SQL", tournamentName);
+                    }
                 }
             }
         } catch (SQLException ex) {

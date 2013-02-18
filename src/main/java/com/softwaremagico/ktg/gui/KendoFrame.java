@@ -61,7 +61,7 @@ public abstract class KendoFrame extends javax.swing.JFrame {
                 KendoTournamentGenerator.getInstance().changeDefaultExplorationFolder(fc.getSelectedFile().toString());
                 if (fc.getSelectedFile().isDirectory()) {
                     return fc.getSelectedFile().toString()
-                            + File.pathSeparator + defaultFileName();
+                            + File.separator + defaultFileName();
                 }
                 return fc.getSelectedFile().toString();
             }

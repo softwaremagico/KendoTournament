@@ -22,10 +22,10 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\SoftwareMagico\KendoTournament
 DefaultGroupName=SoftwareMagico\KendoTournament
 AllowNoIcons=yes
-LicenseFile=.\gnu.txt
-InfoAfterFile=.\Readme.txt
+LicenseFile=C:\install_windows\gnu.txt
+InfoAfterFile=C:\install_windows\Readme.txt
 OutputBaseFilename=KendoTournamentGenerator
-SetupIconFile=.\icon.ico
+SetupIconFile=C:\install_windows\icon.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -43,23 +43,25 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: ".\KendoTournamentGenerator.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\KendoTournamentGenerator.jar"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\gnu.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\manual\*"; DestDir: "{app}\manual"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\database\*"; DestDir: "{app}\database"; Flags: ignoreversion 
-Source: ".\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\background\*"; DestDir: "{app}\images\background"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\banner\*"; DestDir: "{app}\images\banner"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\defaults\*"; DestDir: "{app}\images\defaults"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\diploma\*"; DestDir: "{app}\images\diploma"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\icons\*"; DestDir: "{app}\images\icons"; Flags: ignoreversion
-Source: ".\images\icons\flags\*"; DestDir: "{app}\images\icons\flags"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\logo\*"; DestDir: "{app}\images\logo"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\images\score\*"; DestDir: "{app}\images\score"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: ".\manual\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\KendoTournamentGenerator.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\install_windows\gnu.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\install_windows\INSTALACION.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\install_windows\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\install_windows\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\manual\*"; DestDir: "{app}\manual"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\database\*"; DestDir: "{app}\database"; Flags: ignoreversion 
+Source: "C:\install_windows\database\updates\*"; DestDir: "{app}\database\updates"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\dist\*"; DestDir: "{app}\dist"; Flags: ignoreversion
+Source: "C:\install_windows\dist\lib\*"; DestDir: "{app}\dist\lib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\background\*"; DestDir: "{app}\images\background"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\banner\*"; DestDir: "{app}\images\banner"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\defaults\*"; DestDir: "{app}\images\defaults"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\diploma\*"; DestDir: "{app}\images\diploma"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\icons\*"; DestDir: "{app}\images\icons"; Flags: ignoreversion
+Source: "C:\install_windows\images\icons\flags\*"; DestDir: "{app}\images\icons\flags"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\logo\*"; DestDir: "{app}\images\logo"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\images\score\*"; DestDir: "{app}\images\score"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\install_windows\manual\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

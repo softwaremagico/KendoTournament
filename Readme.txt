@@ -110,6 +110,10 @@ Version:
 
 0.972	Italian language added.
 		Performance improvements. 
+		
+0.9.8.0	Performance improvements.
+
+0.9.8.1	Log improved.
 
 
 

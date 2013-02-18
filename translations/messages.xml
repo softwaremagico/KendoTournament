@@ -1010,5 +1010,13 @@
 		<ca>Esta opció és incompatible amb el monitor de puntuacions. Es prega no utilitzar-ho si es selecciona esta opció.</ca>
 		<it>Questa opzione è incompatibile con il monitor di punteggi. Si prega di non utilizzarlo si seleziona questa opzione.</it>	
 	</disableMonitor>
+	<tournamentNotOver>
+		<en>Tournament is not over yet!</en>
+		<es>El campeonato no ha terminado todavía!</es>
+		<nl>Tournament is not over yet!</nl>
+		<de>Tournament is not over yet!</de>
+		<ca>El campionat no ha acabat encara!</ca>
+		<it>Il campionato non è ancora finito!</it>		
+	</tournamentNotOver>
 </translator>
 

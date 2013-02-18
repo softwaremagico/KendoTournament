@@ -647,10 +647,6 @@ public class TournamentGroupManager implements Serializable {
             // Fill levels with fights defined.
             int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
             for (int i = 0; i <= maxFightLevel; i++) {
-                /*
-                 * if (i >= levels.size()) { //LevelZero has been added
-                 * previously levels.add(createNextLevel(i)); }
-                 */
                 refillLevel(fights, i);
             }
 

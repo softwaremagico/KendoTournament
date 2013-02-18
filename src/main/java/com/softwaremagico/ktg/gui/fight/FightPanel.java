@@ -234,7 +234,7 @@ public final class FightPanel extends javax.swing.JFrame {
             text += winnersOfGroup.get(i).getName();
         }
         if (message) {
-            MessageManager.translatedMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!!", text, JOptionPane.INFORMATION_MESSAGE);
+            MessageManager.informationMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!!", text);
         }
     }
 
@@ -273,7 +273,7 @@ public final class FightPanel extends javax.swing.JFrame {
         }
     }
 
-    private void messagesFinishedSimpleChampionship() {
+    private void messagesFinishedSimpleChampionship(boolean verbose) {
         if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areAllOver()) {
             KendoLog.info(this.getClass().getName(), "Tournament over!");
             //Avoid showing more than one window if the button is pressed several times. 
@@ -282,6 +282,10 @@ public final class FightPanel extends javax.swing.JFrame {
             }
             mp = new MonitorPosition(selectedTournament);
             mp.setVisible(true);
+        } else {
+            if (verbose) {
+                MessageManager.informationMessage(this.getClass().getName(), "tournamentNotOver", "Tournament");
+            }
         }
     }
 
@@ -561,7 +565,7 @@ public final class FightPanel extends javax.swing.JFrame {
                             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(), FightAreaComboBox.getSelectedIndex(), ((Tournament) TournamentComboBox.getSelectedItem())));
                 }
             } else { //Simple championship
-                messagesFinishedSimpleChampionship();
+                messagesFinishedSimpleChampionship(false);
             }
 
             KendoLog.debug(this.getClass().getName(), "Current number of fights over before GUI: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
@@ -636,20 +640,24 @@ public final class FightPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_RefreshButtonActionPerformed
 
     private void RankingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankingButtonActionPerformed
-        Fight currentFight = FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex());
-
-        TournamentGroup groupFinished;
-        if (!FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex()).equals(currentFight)) {
-            groupFinished = TournamentGroupPool.getManager(selectedTournament).getGroupOfFight(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(),
-                    FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
+        if (((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE)) {
+            messagesFinishedSimpleChampionship(true);
         } else {
-            //Last fight of the panel is a special case.
-            groupFinished = TournamentGroupPool.getManager(selectedTournament).getGroupOfFight(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(),
-                    FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).currentFight(FightAreaComboBox.getSelectedIndex()));
-        }
+            Fight currentFight = FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex());
 
-        MonitorFightPosition mfp = new MonitorFightPosition(groupFinished, false);
-        mfp.setVisible(true);
+            TournamentGroup groupFinished;
+            if (!FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex()).equals(currentFight)) {
+                groupFinished = TournamentGroupPool.getManager(selectedTournament).getGroupOfFight(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(),
+                        FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
+            } else {
+                //Last fight of the panel is a special case.
+                groupFinished = TournamentGroupPool.getManager(selectedTournament).getGroupOfFight(FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(),
+                        FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).currentFight(FightAreaComboBox.getSelectedIndex()));
+            }
+
+            MonitorFightPosition mfp = new MonitorFightPosition(groupFinished, false);
+            mfp.setVisible(true);
+        }
     }//GEN-LAST:event_RankingButtonActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
