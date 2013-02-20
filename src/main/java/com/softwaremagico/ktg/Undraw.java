@@ -41,12 +41,14 @@ public class Undraw {
     private TournamentGroup group;
     private Team winnerTeam;
     private Integer player;
+    private Integer level;
 
-    public Undraw(Tournament tournament, TournamentGroup group, Team winnerTeam, Integer player) {
+    public Undraw(Tournament tournament, TournamentGroup group, Team winnerTeam, Integer player, Integer level) {
         this.winnerTeam = winnerTeam;
         this.tournament = tournament;
         this.player = player;
         this.group = group;
+        this.level = level;
     }
 
     public TournamentGroup getGroup() {
@@ -89,9 +91,13 @@ public class Undraw {
         return UNDRAW_TAG;
     }
 
-    public static List<String> exportToCsv(Team team) {
+    public List<String> exportToCsv() {
         List<String> csv = new ArrayList<>();
-        csv.add(UNDRAW_TAG + ";" + team.getName() + ";" + 0);
+        csv.add(UNDRAW_TAG + ";" + winnerTeam.getName() + ";" + 0 + ";" + level);
         return csv;
+    }
+
+    public Integer getLevel() {
+        return level;
     }
 }

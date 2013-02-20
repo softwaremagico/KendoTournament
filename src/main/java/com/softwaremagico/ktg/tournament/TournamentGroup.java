@@ -609,10 +609,9 @@ public class TournamentGroup extends Group implements Serializable {
      * @return
      */
     private double obtainPointsForGoldenPoint(Team team) {
-        String t;
         double score = (double) 0;
         //Undraw hits.
-        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), team.getName());
+        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level, team.getName());
         score += (double) SCORE_GOLDEN_POINT * multiplier;
         return score;
     }
@@ -660,7 +659,7 @@ public class TournamentGroup extends Group implements Serializable {
         return index;
     }
 
-    private double obainScoreOfTeam(int team) {
+    private double obtainScoreOfTeam(int team) {
         try {
             return teamsScore.get(team);
         } catch (IndexOutOfBoundsException iob) {
@@ -786,7 +785,7 @@ public class TournamentGroup extends Group implements Serializable {
         }
 
         //If the user has already define a winner. Use it.
-        if ((teamsDrawStored = getDrawsStored()) != null) {
+        if ((teamsDrawStored = getTeamsOfDrawsStored()) != null) {
             for (int i = 0; i < drawTeams.size(); i++) {
                 if (teamsDrawStored.contains(drawTeams.get(i))) {
                     return i;
@@ -811,13 +810,17 @@ public class TournamentGroup extends Group implements Serializable {
                 options,
                 options[0]);
         if (n >= 0) {
-            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n), 0, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this));
+            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n), 0, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level);
         }
         return n;
     }
 
-    private List<Team> getDrawsStored() {
+    private List<Team> getTeamsOfDrawsStored() {
         return KendoTournamentGenerator.getInstance().database.getWinnersInUndraws(tournament, level, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this));
+    }
+
+    private List<Undraw> getDrawsStored() {
+        return KendoTournamentGenerator.getInstance().database.getUndraws();
     }
 
     /**
@@ -838,9 +841,9 @@ public class TournamentGroup extends Group implements Serializable {
                 csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level));
             }
         }
-        List<Team> draws = getDrawsStored();
-        for (int i = 0; i < draws.size(); i++) {
-            csv.addAll(Undraw.exportToCsv(draws.get(i)));
+        List<Undraw> undraws = getDrawsStored();
+        for (int i = 0; i < undraws.size(); i++) {
+            csv.addAll(undraws.get(i).exportToCsv());
         }
         return csv;
     }

@@ -3613,18 +3613,18 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    public boolean storeUndraw(Tournament tournament, Team team, int order, int group) {
+    public boolean storeUndraw(Tournament tournament, Team team, int order, int group, int level) {
         KendoLog.entering(this.getClass().getName(), "storeUndraw");
         boolean error = false;
         try {
             //Delete the undraw if exist previously.
             Statement s = connection.createStatement();
-            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team.getName() + "'  AND UndrawGroup=" + group);
+            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team.getName() + "'  AND UndrawGroup=" + group + " AND LevelUndraw=" + level);
             s.close();
 
             //Add the new undraw.
             s = connection.createStatement();
-            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup) VALUES ('" + tournament.getName() + "', '" + team.getName() + "', " + order + ", " + group + ")");
+            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup, LevelUndraw) VALUES ('" + tournament.getName() + "', '" + team.getName() + "', " + order + ", " + group + ", " + level + ")");
             s.close();
         } catch (SQLException ex) {
             error = true;
@@ -3638,27 +3638,23 @@ public abstract class SQL extends Database {
     @Override
     public boolean storeUndraw(Undraw undraw) {
         KendoLog.entering(this.getClass().getName(), "storeUndraw2");
-        boolean value = storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup());
+        boolean value = storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup(), undraw.getLevel());
         KendoLog.exiting(this.getClass().getName(), "storeUndraw2");
         return value;
     }
 
-    @Override
-    public List<Undraw> getUndraws(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getUndraws");
-        String query = "SELECT * FROM undraw LIMIT " + fromRow + "," + numberOfRows;
-
+    private List<Undraw> getUndraws(String sqlQuery) {
         List<Undraw> results = new ArrayList<>();
 
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
+                    ResultSet rs = s.executeQuery(sqlQuery)) {
                 while (rs.next()) {
                     Tournament tournament = TournamentPool.getTournament(rs.getObject("Championship").toString());
                     Undraw u = new Undraw(tournament,
                             TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
                             TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
-                            (Integer) rs.getObject("Player"));
+                            (Integer) rs.getObject("Player"), (Integer) rs.getObject("LevelUndraw"));
                     results.add(u);
                 }
             }
@@ -3669,6 +3665,14 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
+        return results;
+    }
+
+    @Override
+    public List<Undraw> getUndraws(int fromRow, int numberOfRows) {
+        KendoLog.entering(this.getClass().getName(), "getUndraws");
+        String query = "SELECT * FROM undraw LIMIT " + fromRow + "," + numberOfRows;
+        List<Undraw> results = getUndraws(query);
         KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
@@ -3677,27 +3681,16 @@ public abstract class SQL extends Database {
     public List<Undraw> getUndraws(Tournament tournament) {
         KendoLog.entering(this.getClass().getName(), "getUndraws");
         String query = "SELECT * FROM undraw WHERE championship='" + tournament.getName() + "'";
+        List<Undraw> results = getUndraws(query);
+        KendoLog.exiting(this.getClass().getName(), "getUndraws");
+        return results;
+    }
 
-        List<Undraw> results = new ArrayList<>();
-
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    Undraw u = new Undraw(TournamentPool.getTournament(rs.getObject("Championship").toString()),
-                            TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
-                            TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
-                            (Integer) rs.getObject("Player"));
-                    results.add(u);
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
+    @Override
+    public List<Undraw> getUndraws() {
+        KendoLog.entering(this.getClass().getName(), "getUndraws");
+        String query = "SELECT * FROM undraw";
+        List<Undraw> results = getUndraws(query);
         KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
@@ -3771,12 +3764,13 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public int getValueWinnerInUndrawInGroup(Tournament tournament, int group, String team) {
+    public int getValueWinnerInUndrawInGroup(Tournament tournament, int group, int level, String team) {
         KendoLog.entering(this.getClass().getName(), "getValueWinnerInUndrawInGroup");
         int value = 0;
         try {
             try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND Team='" + team + "'";
+                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level + " AND Team='" + team + "'";
+                System.out.println(query);
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
                         value++;

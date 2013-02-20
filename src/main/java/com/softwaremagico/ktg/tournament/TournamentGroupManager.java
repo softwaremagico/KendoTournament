@@ -765,7 +765,7 @@ public class TournamentGroupManager implements Serializable {
                     duelsCount++;
                 }
             } else if (csvLine.startsWith(Undraw.getCsvTag())) {
-                undraws.add(new Undraw(tournament, getGroupOfFight(fight), TeamPool.getManager(tournament).getTeam(fields[1]), Integer.parseInt(fields[2])));
+                undraws.add(new Undraw(tournament, getGroupOfFight(fight), TeamPool.getManager(tournament).getTeam(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
             }
         }
 
