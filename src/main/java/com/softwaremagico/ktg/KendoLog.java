@@ -148,13 +148,13 @@ public class KendoLog {
 
     public static void entering(String className, String method) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
-            logger.entering(className, method);
+            debug(className, "ENTRY (" + method + ")");
         }
     }
 
     public static void exiting(String className, String method) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
-            logger.exiting(className, method);
+            debug(className, "RETURN (" + method + ")");
         }
     }
 }
