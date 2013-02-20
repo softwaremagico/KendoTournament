@@ -34,10 +34,6 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-/**
- *
- * @author Jorge
- */
 public class TeamFight extends JPanel {
 
     private List<CompetitorFight> competitorFights = new ArrayList<>();

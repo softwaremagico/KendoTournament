@@ -43,6 +43,7 @@ public class OrderTeam extends NewTeam {
     TeamFight windowParent = null;
 
     public OrderTeam(Tournament tournament, int levelOrder, TeamFight tf) {
+        this.tournament = tournament;
         level = levelOrder;
         windowParent = tf;
         newTeam = false;
@@ -63,6 +64,7 @@ public class OrderTeam extends NewTeam {
     }
 
     public OrderTeam(Tournament tournament, int levelOrder) {
+        this.tournament = tournament;
         level = levelOrder;
         newTeam = false;
         start();
@@ -126,7 +128,7 @@ public class OrderTeam extends NewTeam {
             } else {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
-                if (KendoTournamentGenerator.getInstance().database.insertMemebersOfTeamInLevel(team, level, false)) {
+                if (KendoTournamentGenerator.getInstance().database.insertMembersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
                     FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).updateFightsWithNewOrderOfTeam(team);
                     MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
@@ -134,6 +136,7 @@ public class OrderTeam extends NewTeam {
                 }
             }
         } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 

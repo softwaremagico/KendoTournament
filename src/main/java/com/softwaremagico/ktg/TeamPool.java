@@ -27,7 +27,9 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -49,5 +51,15 @@ public class TeamPool {
     private static TeamManager createTeamManager(Tournament tournament) {
         TeamManager teamManager = new TeamManager(tournament);
         return teamManager;
+    }
+
+    public static List<Team> getTeamsByLevel(Tournament tournament, Integer level, boolean verbose) {
+        List<Team> databaseTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByLevel(tournament, level, false);
+        //Team in database is not the same object that team in java heap.
+        List<Team> includedTeams = new ArrayList<>();
+        for (Team team : databaseTeams) {
+            includedTeams.add(getManager(tournament).getTeam(team.getName()));
+        }
+        return includedTeams;
     }
 }

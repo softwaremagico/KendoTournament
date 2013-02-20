@@ -164,10 +164,8 @@ public class NewTeam extends KendoFrame {
                     } else {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
-                } catch (NullPointerException npe) {
-                    competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
-                } catch (IndexOutOfBoundsException iob) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
+                } catch (NullPointerException | IndexOutOfBoundsException npe) {
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }

@@ -2661,7 +2661,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean insertMemebersOfTeamInLevel(Team t, int level, boolean verbose) {
+    public boolean insertMembersOfTeamInLevel(Team t, int level, boolean verbose) {
         KendoLog.entering(this.getClass().getName(), "insertMemebersOfTeamInLevel");
         boolean error = false;
         deleteTeamInLevel(t, level, verbose); //To allow a change in the current level and avoid the MySQLIntegrityConstraintViolationException

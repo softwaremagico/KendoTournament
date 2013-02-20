@@ -363,7 +363,7 @@ public abstract class Database {
 
     public abstract Team getTeamOfCompetitor(String competitorID, Tournament tournament, boolean verbose);
 
-    public abstract boolean insertMemebersOfTeamInLevel(Team team, int level, boolean verbose);
+    public abstract boolean insertMembersOfTeamInLevel(Team team, int level, boolean verbose);
 
     public abstract boolean deleteTeamInLevel(Team team, int level, boolean verbose);
 

@@ -55,12 +55,8 @@ public class Team implements Serializable {
         for (int i = participantsPerLevel.size(); i <= level; i++) {
             participantsPerLevel.add(new ArrayList<Competitor>());
         }
-        //if (level < participantsPerLevel.size()) {
-        //    participantsPerLevel.set(level, tmp_participants);
-        //} else {
         //Change the selected level.
         participantsPerLevel.set(level, tmp_participants);
-        //}
     }
 
     public void addOneMember(int priority, Competitor participant, int level) {
