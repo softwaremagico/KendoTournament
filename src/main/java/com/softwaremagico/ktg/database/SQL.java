@@ -2409,6 +2409,34 @@ public abstract class SQL extends Database {
         KendoLog.exiting(this.getClass().getName(), "searchTeamsByLevel");
         return teams;
     }
+    
+    public List<String> getTeamsNameByLevel(Tournament tournament, int level, boolean verbose){
+        KendoLog.entering(this.getClass().getName(), "getTeamsNameByLevel");
+         List<String> results = new ArrayList<>();
+
+        try {
+            String query = "SELECT t1.name FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament.getName() + "' AND f1.Tournament='" + tournament.getName() + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
+            try (Statement s = connection.createStatement();
+                    ResultSet rs = s.executeQuery(query)) {
+                while (rs.next()) {
+                    results.add(rs.getObject("Name").toString());
+                }
+            }
+            if (results.isEmpty()) {
+                if (verbose) {
+                    MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
+                }
+            }
+        } catch (SQLException ex) {
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+        } catch (NullPointerException npe) {
+            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+        }
+        KendoLog.exiting(this.getClass().getName(), "getTeamsNameByLevel");
+        return results;
+    }
 
     @Override
     public List<Team> getTeams(int fromRow, int numberOfRows) {
@@ -3770,7 +3798,6 @@ public abstract class SQL extends Database {
         try {
             try (Statement s = connection.createStatement()) {
                 String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level + " AND Team='" + team + "'";
-                System.out.println(query);
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
                         value++;

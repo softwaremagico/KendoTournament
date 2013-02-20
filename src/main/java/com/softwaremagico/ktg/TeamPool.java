@@ -54,11 +54,11 @@ public class TeamPool {
     }
 
     public static List<Team> getTeamsByLevel(Tournament tournament, Integer level, boolean verbose) {
-        List<Team> databaseTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByLevel(tournament, level, false);
+        List<String> databaseTeams = KendoTournamentGenerator.getInstance().database.getTeamsNameByLevel(tournament, level, false);
         //Team in database is not the same object that team in java heap.
         List<Team> includedTeams = new ArrayList<>();
-        for (Team team : databaseTeams) {
-            includedTeams.add(getManager(tournament).getTeam(team.getName()));
+        for (String teamName : databaseTeams) {
+            includedTeams.add(getManager(tournament).getTeam(teamName));
         }
         return includedTeams;
     }

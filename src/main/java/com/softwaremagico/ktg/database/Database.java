@@ -343,6 +343,8 @@ public abstract class Database {
 
     public abstract List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose);
 
+    public abstract List<String> getTeamsNameByLevel(Tournament tournament, int level, boolean verbose);
+
     public abstract List<Team> getAllTeams();
 
     public abstract List<Team> getTeams(int fromRow, int numberOfRows);
@@ -476,7 +478,7 @@ public abstract class Database {
     public abstract List<Undraw> getUndraws(int fromRow, int numberOfRows);
 
     public abstract List<Undraw> getUndraws(Tournament tournament);
-    
+
     public abstract List<Undraw> getUndraws();
 
     public abstract boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes);
