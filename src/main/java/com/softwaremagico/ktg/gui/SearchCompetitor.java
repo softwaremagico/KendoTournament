@@ -36,10 +36,6 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author jorge
- */
 public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
 
     private JLabel ClubLabel = new JLabel("Club:");

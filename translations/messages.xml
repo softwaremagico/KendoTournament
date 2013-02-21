@@ -1018,5 +1018,13 @@
 		<ca>El campionat no ha acabat encara!</ca>
 		<it>Il campionato non è ancora finito!</it>		
 	</tournamentNotOver>
+	<databaseConnectionFailure>
+		<en>Communications link failure with the database server!</en>
+		<es>Fallo en el enlace de comunicación con el servidor de bases de datos.</es>
+		<nl>Communications link failure with the database server!</nl>
+		<de>Communications link failure with the database server!</de>
+		<ca>Error en l'enllaç de comunicació amb el servidor de bases de dades.</ca>
+		<it>Errore di communicazione con il server della base di dati.</it>
+	</databaseConnectionFailure>
 </translator>
 
