@@ -113,23 +113,23 @@ public class NewCompetitor extends KendoFrame {
      */
     public final void createPhoto() {
         //photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
-        PhotoFrame pFrame = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
+        photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
         Dimension d;
         try {
-            if (PhotoPanel.getWidth() / pFrame.getWidth() > pFrame.getHeight() / pFrame.getHeight()) {
-                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / pFrame.getWidth()) * pFrame.getHeight());
+            if (PhotoPanel.getWidth() / photo.getWidth() > photo.getHeight() / photo.getHeight()) {
+                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / photo.getWidth()) * photo.getHeight());
             } else {
-                d = new Dimension((PhotoPanel.getHeight() / pFrame.getHeight()) * pFrame.getWidth(), PhotoPanel.getHeight());
+                d = new Dimension((PhotoPanel.getHeight() / photo.getHeight()) * photo.getWidth(), PhotoPanel.getHeight());
             }
         } catch (ArithmeticException ae) {
             d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
         }
-        pFrame.setPreferredSize(d);
+        photo.setPreferredSize(d);
         PhotoPanel.removeAll();
         PhotoPanel.setBackground(new Color(255, 255, 255));
-        PhotoPanel.add(pFrame, 0);
+        PhotoPanel.add(photo, 0);
         PhotoPanel.revalidate();
-        pFrame.repaint();
+        photo.repaint();
         PhotoPanel.repaint();
     }
 
@@ -145,12 +145,15 @@ public class NewCompetitor extends KendoFrame {
             IDTextField.setText(c.getId());
             ClubComboBox.setSelectedItem(c.club);
             PhotoTextField.setText("");
-            photo.CleanPhoto();
+            try {
+                photo.CleanPhoto();
+            } catch (NullPointerException npe) {
+            }
             try {
                 //photo.ChangeInputStream(c.photoInput, c.photoSize);
                 PhotoPanel.removeAll();
                 PhotoPanel.setBackground(new Color(255, 255, 255));
-                if (c.photo() != null) {
+                if (c.photo() != null) {  
                     photo.ChangePhoto(c.photo(), c.photoInput, c.photoSize);
                     PhotoPanel.add(photo, 0);
                     photo.repaint();
@@ -446,7 +449,6 @@ public class NewCompetitor extends KendoFrame {
             PhotoPanel.removeAll();
             photo.ChangePhoto(file);
             PhotoPanel.add(photo, 0);
-
         }
     }//GEN-LAST:event_ExploreButtonActionPerformed
 

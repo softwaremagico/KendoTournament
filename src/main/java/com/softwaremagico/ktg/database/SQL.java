@@ -527,7 +527,7 @@ public abstract class SQL extends Database {
                     if (competitor.photoInput.markSupported()) {
                         competitor.photoInput.reset();
                     }
-                } catch (IOException ex) {
+                } catch (IOException |  NullPointerException ex) {
                 }
                 try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=?, Photo=?, PhotoSize=? WHERE ID='" + competitor.getId() + "'")) {
                     stmt.setString(1, competitor.getName());

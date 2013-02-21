@@ -51,6 +51,7 @@ public class CompetitorWithPhoto extends Competitor implements Serializable {
     }
 
     public Image photo() throws IOException {
+        photoInput.reset();
         if (photoInput != null) {
             return ImageIO.read(photoInput);
         } else {
