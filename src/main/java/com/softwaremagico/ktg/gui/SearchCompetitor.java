@@ -30,6 +30,8 @@ import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -53,6 +55,7 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
         super();
         fillSearchFieldPanel();
         setLanguage();
+        IDTextField.addKeyListener(new IDKeyEvent());
     }
 
     /**
@@ -86,13 +89,13 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (IDTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarID(IDTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarID(IDTextField.getText().trim(), true, true);
         } else if (SurnameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarSurname(SurnameTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarSurname(SurnameTextField.getText().trim(), true, true);
         } else if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarName(NameTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarName(NameTextField.getText().trim(), true, true);
         } else if (ClubTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarClub(ClubTextField.getText().trim(), true, true);
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -105,5 +108,26 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
     @Override
     protected boolean deleteFromDatabase(CompetitorWithPhoto object) {
         return DatabaseConnection.getInstance().getDatabase().deleteCompetitor(object, true);
+    }
+
+    public class IDKeyEvent implements KeyListener {
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            if (IDTextField.getText().length() > 12) {
+                IDTextField.setText(IDTextField.getText().subSequence(0, 12).toString());
+            }
+            IDTextField.setText(IDTextField.getText().replace("-", ""));
+            IDTextField.setText(IDTextField.getText().replace(" ", ""));
+            IDTextField.setText(IDTextField.getText().toUpperCase());
+        }
     }
 }

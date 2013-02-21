@@ -39,6 +39,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -414,13 +415,6 @@ public abstract class SQL extends Database {
                 if (rs.next()) {
                     return updateCompetitor(competitorWithPhoto, verbose);
                 } else {
-                    /*try {
-                     if (competitorWithPhoto.photoInput.markSupported()) {
-                     competitorWithPhoto.photoInput.reset();
-                     }
-                     } catch (IOException | NullPointerException ex) {
-                     KendoTournamentGenerator.showErrorInformation(ex);
-                     }*/
                     try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
                         stmt.setString(1, competitorWithPhoto.getId());
                         stmt.setString(2, competitorWithPhoto.getName());
@@ -685,6 +679,7 @@ public abstract class SQL extends Database {
                 MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
             KendoLog.exiting(this.getClass().getName(), "getCompetitors");
+            Collections.sort(results);
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -703,7 +698,7 @@ public abstract class SQL extends Database {
         String name, surname;
         try {
             try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT ID,Name,Surname FROM competitor ORDER BY Surname")) {
+                    ResultSet rs = st.executeQuery(query)) {
                 while (rs.next()) {
                     name = rs.getObject("Name").toString();
                     surname = rs.getObject("Surname").toString();
@@ -716,6 +711,7 @@ public abstract class SQL extends Database {
                 }
             }
             KendoLog.exiting(this.getClass().getName(), "getParticipants");
+            Collections.sort(results);
             return results;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());

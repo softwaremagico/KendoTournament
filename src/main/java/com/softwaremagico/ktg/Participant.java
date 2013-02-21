@@ -26,12 +26,14 @@ package com.softwaremagico.ktg;
  */
 
 import java.io.Serializable;
+import java.text.Collator;
+import java.util.Locale;
 
 /**
  *
  * @author jorge
  */
-public class Participant implements Serializable {
+public class Participant implements Serializable, Comparable<Participant> {
 
     protected String id;
     protected String name;
@@ -164,7 +166,7 @@ public class Participant implements Serializable {
     }
 
     public static String nifFromDni(Integer dni) {
-        if (dni == null)  {
+        if (dni == null) {
             return null;
         }
         String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
@@ -188,5 +190,22 @@ public class Participant implements Serializable {
         int hash = 3;
         hash = 31 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
+    }
+
+    /**
+     * Compare participants avoidong accent problems. 
+     * @param otherParticipant
+     * @return 
+     */
+    @Override
+    public int compareTo(Participant otherParticipant) {
+        String string1 = this.surname + " " + this.name;
+        String string2 = otherParticipant.surname + " " + otherParticipant.name;
+
+        Collator collator = Collator.getInstance(new Locale("es"));
+        collator.setStrength(Collator.SECONDARY);
+        collator.setDecomposition(Collator.FULL_DECOMPOSITION);
+
+        return collator.compare(string1, string2);
     }
 }

@@ -102,7 +102,7 @@ public final class SearchTeam extends Search<Team> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchTeamsByNameAndTournament(NameTextField.getText(), (Tournament) TournamentComboBox.getSelectedItem(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchTeamsByNameAndTournament(NameTextField.getText().trim(), (Tournament) TournamentComboBox.getSelectedItem(), true);
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }

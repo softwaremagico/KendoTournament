@@ -76,7 +76,7 @@ public final class SearchTournament extends Search<Tournament> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchTournamentsByName(NameTextField.getText(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchTournamentsByName(NameTextField.getText().trim(), true);
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }

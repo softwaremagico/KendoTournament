@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.CompetitorAccreditationCardPDF;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
 
@@ -108,6 +109,7 @@ public class NewRole extends KendoFrame {
         try {
             CompetitorComboBox.removeAllItems();
             listParticipants = DatabaseConnection.getInstance().getDatabase().getAllParticipants();
+            Collections.sort(listParticipants);
             for (int i = 0; i < listParticipants.size(); i++) {
                 CompetitorComboBox.addItem(listParticipants.get(i).getSurname() + ", " + listParticipants.get(i).getName());
             }

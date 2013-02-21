@@ -194,9 +194,9 @@ public class NewCompetitor extends KendoFrame {
             if (IDTextField.getText().length() > 0 && NameTextField.getText().length() > 0 && SurnameTextField.getText().length() > 0) {
                 CompetitorWithPhoto comp = new CompetitorWithPhoto(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim(), ClubComboBox.getSelectedItem().toString());
                 try {
-                    if (photo != null) {
+                    try{
                         comp.addImage(photo.photoInput, photo.photoInput.available());
-                    }
+                    }catch(NullPointerException npe){}
                 } catch (IOException ex) {
                     Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
                     KendoLog.severe(NewCompetitor.class.getName(), ex.getMessage());
