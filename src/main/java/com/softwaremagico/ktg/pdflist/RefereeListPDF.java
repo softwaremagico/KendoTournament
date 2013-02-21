@@ -30,8 +30,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.List;
 
 /**
@@ -52,7 +52,7 @@ public class RefereeListPDF extends ParentList {
         Paragraph p;
 
         mainTable.addCell(getHeader2(tournament.getName(), 0));
-        List<CompetitorWithPhoto> listReferee = KendoTournamentGenerator.getInstance().database.searchRefereeByTournament(tournament, false, false);
+        List<CompetitorWithPhoto> listReferee = DatabaseConnection.getInstance().getDatabase().searchRefereeByTournament(tournament, false, false);
         for (int i = 0; i < listReferee.size(); i++) {
             mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).club + ")", 0));
         }

@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.*;
@@ -134,7 +135,7 @@ public class TournamentGroup extends Group implements Serializable {
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
             for (int i = 0; i < teams.size(); i++) {
-                Team t = KendoTournamentGenerator.getInstance().database.getTeamByName(teams.get(i).getName(), tournament, false);
+                Team t = DatabaseConnection.getInstance().getDatabase().getTeamByName(teams.get(i).getName(), tournament, false);
                 if (t != null) {
                     updatedTeams.add(t);
                 } else {
@@ -611,7 +612,7 @@ public class TournamentGroup extends Group implements Serializable {
     private double obtainPointsForGoldenPoint(Team team) {
         double score = (double) 0;
         //Undraw hits.
-        double multiplier = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level, team.getName());
+        double multiplier = (double) DatabaseConnection.getInstance().getDatabase().getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level, team.getName());
         score += (double) SCORE_GOLDEN_POINT * multiplier;
         return score;
     }
@@ -810,17 +811,17 @@ public class TournamentGroup extends Group implements Serializable {
                 options,
                 options[0]);
         if (n >= 0) {
-            KendoTournamentGenerator.getInstance().database.storeUndraw(tournament, drawTeams.get(n), 0, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level);
+            DatabaseConnection.getInstance().getDatabase().storeUndraw(tournament, drawTeams.get(n), 0, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level);
         }
         return n;
     }
 
     private List<Team> getTeamsOfDrawsStored() {
-        return KendoTournamentGenerator.getInstance().database.getWinnersInUndraws(tournament, level, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this));
+        return DatabaseConnection.getInstance().getDatabase().getWinnersInUndraws(tournament, level, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this));
     }
 
     private List<Undraw> getDrawsStored() {
-        return KendoTournamentGenerator.getInstance().database.getUndraws();
+        return DatabaseConnection.getInstance().getDatabase().getUndraws();
     }
 
     /**

@@ -29,9 +29,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.List;
 
 /**
@@ -77,7 +77,7 @@ public class TeamListPDF extends ParentList {
 
         mainTable.addCell(getEmptyRow());
 
-        List<Team> listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament(championship, false);
+        List<Team> listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournament(championship, false);
         for (int i = 0; i < listTeams.size(); i++) {
 
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));

@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
@@ -265,11 +266,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
             tournament = (Tournament) (TournamentComboBox.getSelectedItem());
             numberMaxOfWinners = TournamentGroupPool.getManager(tournament).getDefaultNumberOfTeamsPassNextRound();
             //TournamentGroupPool.getManager(tournament) = new TournamentGroupManager(tournament);
-            teams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
+            teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournamentExactName(tournament, false);
 
             //if (!tournament.mode.equals(TournamentType.SIMPLE)) {
             //If it is not stored in a file, generate it. 
-            //TournamentGroupPool.getManager(tournament).refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
+            //TournamentGroupPool.getManager(tournament).refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
             //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
             //}
 
@@ -399,7 +400,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
             if (refreshMode) {
                 //Update tournament.
-                KendoTournamentGenerator.getInstance().database.updateTournament(tournament, false);
+                DatabaseConnection.getInstance().getDatabase().updateTournament(tournament, false);
             }
             //TournamentGroupPool.getManager(tournament).updateInnerLevels();
         } catch (NullPointerException npe) {
@@ -1085,7 +1086,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
         if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
-            FightPool.getManager(tournament).setAll(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament), false);
+            FightPool.getManager(tournament).setAll(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament), false);
             TournamentGroupPool.getManager(tournament).refillDesigner(FightPool.getManager(tournament).getFights());
             TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
             fillTeams();

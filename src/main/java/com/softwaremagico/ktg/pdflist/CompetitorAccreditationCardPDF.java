@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -49,13 +50,13 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
     public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition) throws Exception {
         this.competitor = competitor;
         this.competition = competition;
-        role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
+        role = DatabaseConnection.getInstance().getDatabase().getTagRole(competition, competitor);
     }
 
     public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition, com.itextpdf.text.Image banner) throws Exception {
         this.competitor = competitor;
         this.competition = competition;
-        role = KendoTournamentGenerator.getInstance().database.getTagRole(competition, competitor);
+        role = DatabaseConnection.getInstance().getDatabase().getTagRole(competition, competitor);
         setBanner(banner);
     }
 

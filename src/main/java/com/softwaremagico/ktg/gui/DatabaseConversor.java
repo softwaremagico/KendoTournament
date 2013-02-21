@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.ConvertDatabase;
 import com.softwaremagico.ktg.database.Database;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -54,12 +54,12 @@ public class DatabaseConversor extends javax.swing.JFrame {
         SourcePanel.add(fromDatabaseConnectionPanel);
         fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
         //fromDatabaseConnectionPanel.resetPassword();
-        fromDatabaseConnectionPanel.setSelectedEngine(KendoTournamentGenerator.getInstance().getDatabaseEngine().name());
+        fromDatabaseConnectionPanel.setSelectedEngine(DatabaseConnection.getInstance().getDatabaseEngine().name());
         
         DestinationPanel.add(toDatabaseConnectionPanel);
         toDatabaseConnectionPanel.setBounds(new Rectangle(DestinationPanel.getSize().width, DestinationPanel.getSize().height));
         toDatabaseConnectionPanel.resetPassword();
-        toDatabaseConnectionPanel.setSelectedEngine(DatabaseEngine.getOtherDatabase(KendoTournamentGenerator.getInstance().getDatabaseEngine().name()).name());
+        toDatabaseConnectionPanel.setSelectedEngine(DatabaseEngine.getOtherDatabase(DatabaseConnection.getInstance().getDatabaseEngine().name()).name());
         
     }
 

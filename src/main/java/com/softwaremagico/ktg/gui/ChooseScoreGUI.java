@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentPool;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -318,7 +319,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         for (int i = 0; i < TournamentComboBox.getItemCount(); i++) { //Update all changes
-            KendoTournamentGenerator.getInstance().database.updateTournament(((Tournament)(TournamentComboBox.getItemAt(i))), false);
+            DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament)(TournamentComboBox.getItemAt(i))), false);
         }
         this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed

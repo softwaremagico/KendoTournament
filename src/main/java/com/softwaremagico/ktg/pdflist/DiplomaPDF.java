@@ -28,6 +28,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -125,7 +126,7 @@ public class DiplomaPDF {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
                 MessageManager.translatedMessage(this.getClass().getName(), "diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
-                KendoTournamentGenerator.getInstance().database.setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, tournament);
+                DatabaseConnection.getInstance().getDatabase().setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, tournament);
                 error = false;
             } catch (NullPointerException npe) {
                 MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
@@ -178,14 +179,14 @@ public class DiplomaPDF {
         public void pageTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
             List<Competitor> competitors;
 
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, tournament, allDiplomas);
+            competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, tournament, allDiplomas);
 
             if (statistics) {
-                duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(tournament);
-                //teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(tournament.name, false);
+                duels = DatabaseConnection.getInstance().getDatabase().getDuelsOfTournament(tournament);
+                //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tournament.name, false);
                 Ranking ranking = new Ranking();
-                teamTopTen = ranking.getRanking(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament));
-                competitorTopTen = KendoTournamentGenerator.getInstance().database.getCompetitorsOrderByScore(true, tournament);
+                teamTopTen = ranking.getRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
+                competitorTopTen = DatabaseConnection.getInstance().getDatabase().getCompetitorsOrderByScore(true, tournament);
             }
 
             for (int i = 0; i < competitors.size(); i++) {
@@ -239,8 +240,8 @@ public class DiplomaPDF {
                 List<Duel> duelsTeamRight;
                 List<Duel> duelsTeamLeft;
 
-                duelsTeamRight = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), true);
-                duelsTeamLeft = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), false);
+                duelsTeamRight = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), true);
+                duelsTeamLeft = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), false);
 
                 //Performed hits.
                 image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem")), null, false);
@@ -412,7 +413,7 @@ public class DiplomaPDF {
 
             int centerValue;
             try {
-                centerValue = searchForTeamPosition(KendoTournamentGenerator.getInstance().database.getTeamOfCompetitor(competitor.getId(), tournament, false));
+                centerValue = searchForTeamPosition(DatabaseConnection.getInstance().getDatabase().getTeamOfCompetitor(competitor.getId(), tournament, false));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 centerValue = 0;

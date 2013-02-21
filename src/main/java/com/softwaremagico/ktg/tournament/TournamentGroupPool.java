@@ -28,8 +28,8 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class TournamentGroupPool {
         if (tournamentGroupManager == null) {
             tournamentGroupManager = createGroupManager(tournament);
             existingManagers.put(tournament, tournamentGroupManager);
-            List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
+            List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
             if (fights != null) {
                 tournamentGroupManager.refillDesigner(fights);
             }

@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Rectangle;
@@ -37,14 +38,14 @@ import java.awt.event.KeyListener;
  *
  * @author jorge
  */
-public class DatabaseConnection extends javax.swing.JFrame {
+public class DatabaseConnectionWindow extends javax.swing.JFrame {
 
     private DatabaseConnectionPanel connectionPanel = new DatabaseConnectionPanel();
 
     /**
      * Creates new form DatabaseConnection
      */
-    public DatabaseConnection() {
+    public DatabaseConnectionWindow() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -67,8 +68,8 @@ public class DatabaseConnection extends javax.swing.JFrame {
     }
 
     public void performConnection() {
-        KendoTournamentGenerator.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
-        if (KendoTournamentGenerator.getInstance().startDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
+        DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
+        if (DatabaseConnection.getInstance().startDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
                 connectionPanel.getDatabase(), connectionPanel.getServer())) {
             this.dispose();
         } else {

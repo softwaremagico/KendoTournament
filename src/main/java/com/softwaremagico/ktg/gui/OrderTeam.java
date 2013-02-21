@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -128,7 +129,7 @@ public class OrderTeam extends NewTeam {
             } else {
                 //Insert the change into the database.
                 team.addMembers(participants, level);
-                if (KendoTournamentGenerator.getInstance().database.insertMembersOfTeamInLevel(team, level, false)) {
+                if (DatabaseConnection.getInstance().getDatabase().insertMembersOfTeamInLevel(team, level, false)) {
                     //Insert the change into the fightManager already loaded.
                     FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).updateFightsWithNewOrderOfTeam(team);
                     MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");

@@ -30,8 +30,8 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -121,7 +121,7 @@ public class TournamentAccreditationPDF {
                 mainTable.setTotalWidth(document.getPageSize().getWidth());
                 com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.getBannerPath());
 
-                List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.selectAllParticipantsInTournamentWithoutAccreditation(championship, all);
+                List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().selectAllParticipantsInTournamentWithoutAccreditation(championship, all);
 
                 for (int i = 0; i < competitors.size(); i++) {
                     timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());

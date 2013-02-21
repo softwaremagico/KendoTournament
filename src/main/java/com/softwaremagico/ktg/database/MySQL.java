@@ -90,14 +90,14 @@ public class MySQL extends SQL {
         } catch (SQLException ex) {
             //If server not started (but assume that is installed) start it.
             if (ex.getErrorCode() == 0) {
-                if (retry && KendoTournamentGenerator.getInstance().isLocallyConnected()) {
+                if (retry && DatabaseConnection.getInstance().isLocallyConnected()) {
                     startDatabase();
                     return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
                 } else {
                     error = true;
                 }
             } else if (ex.getErrorCode() == 1049) { //Server started, but no database found.
-                if (retry && KendoTournamentGenerator.getInstance().isLocallyConnected()) {
+                if (retry && DatabaseConnection.getInstance().isLocallyConnected()) {
                     installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
                     return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
                 } else {
@@ -121,7 +121,7 @@ public class MySQL extends SQL {
     public void disconnect() throws SQLException {
         try {
             connection.close();
-            KendoTournamentGenerator.getInstance().resetPassword();
+            DatabaseConnection.getInstance().resetPassword();
         } catch (NullPointerException npe) {
         }
     }

@@ -27,6 +27,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class TournamentPool {
         }
         Tournament tournament = existingTournaments.get(tournamentName);
         if (tournament == null) {
-            tournament = KendoTournamentGenerator.getInstance().database.getTournamentByName(tournamentName, false);
+            tournament = DatabaseConnection.getInstance().getDatabase().getTournamentByName(tournamentName, false);
             existingTournaments.put(tournamentName, tournament);
         }
         return tournament;
@@ -60,7 +61,7 @@ public class TournamentPool {
 
     private static void loadAllTournaments() {
         existingTournaments = new HashMap<>();
-        List<Tournament> tournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
+        List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getAllTournaments();
         for (Tournament tournament : tournaments) {
             addTournament(tournament);
         }

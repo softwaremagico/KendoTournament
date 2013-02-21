@@ -62,6 +62,11 @@ public abstract class Database {
 
     public abstract void disconnect() throws SQLException;
 
+    public void disconnectDatabase() throws SQLException {
+        DatabaseConnection.getInstance().setDatabaseConnected(false);
+        disconnect();
+    }
+
     abstract void startDatabase();
 
     private void executeCommand(String[] commands) {

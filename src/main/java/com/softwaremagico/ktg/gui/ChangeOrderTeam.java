@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -86,9 +87,9 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private void update() {
         try {
-            level = KendoTournamentGenerator.getInstance().database.getLevelTournament((Tournament) TournamentComboBox.getSelectedItem());
+            level = DatabaseConnection.getInstance().getDatabase().getLevelTournament((Tournament) TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            //teams = KendoTournamentGenerator.getInstance().database.searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
+            //teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
             teams = TeamPool.getTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
             fillTeams();
         } catch (NullPointerException npe) {

@@ -25,6 +25,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.util.ArrayList;
 import java.util.List;
@@ -263,7 +264,7 @@ public class Ranking {
         String t;
         double score = (double) 0;
         //Undraw hits.
-        double undraws = (double) KendoTournamentGenerator.getInstance().database.getValueWinnerInUndraws(team.tournament, team.getName());
+        double undraws = (double) DatabaseConnection.getInstance().getDatabase().getValueWinnerInUndraws(team.tournament, team.getName());
         score += SCORE_GOLDEN_POINT * undraws;
         return score;
     }

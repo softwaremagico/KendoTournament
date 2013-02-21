@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Participant;
 import com.softwaremagico.ktg.Team;
 import java.util.List;
@@ -37,14 +36,14 @@ import java.util.List;
  */
 public class CorrectNIF {
 
-    CorrectNIF(KendoTournamentGenerator tournament) {
-        correctTeams(tournament); //Teams previous to competitors!
-        correctCompetitors(tournament);
+    CorrectNIF() {
+        correctTeams(); //Teams previous to competitors!
+        correctCompetitors();
     }
 
-    private void correctCompetitors(KendoTournamentGenerator tournament) {
+    private void correctCompetitors() {
         //Nif of competitors.
-        List<Competitor> competitors = tournament.database.getAllCompetitors();
+        List<Competitor> competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         for (int i = 0; i < competitors.size(); i++) {
             String idNumber = competitors.get(i).getId();
             competitors.get(i).setId(idNumber);
@@ -56,13 +55,13 @@ public class CorrectNIF {
                 }
             } catch (NumberFormatException nfe) {
             }
-            tournament.database.updateIdCompetitor(competitors.get(i), false);
+            DatabaseConnection.getInstance().getDatabase().updateIdCompetitor(competitors.get(i), false);
         }
     }
 
-    private void correctTeams(KendoTournamentGenerator tournament) {
+    private void correctTeams() {
         //NIF in teams.
-        List<Team> teams = tournament.database.getAllTeams();
+        List<Team> teams = DatabaseConnection.getInstance().getDatabase().getAllTeams();
         for (int i = 0; i < teams.size(); i++) {
             for (int j = 0; j < teams.get(i).levelChangesSize(); j++) {
                 for (int k = 0; k < teams.get(i).getNumberOfMembers(j); k++) {
@@ -81,7 +80,7 @@ public class CorrectNIF {
                     }
                 }
             }
-            tournament.database.storeTeam(teams.get(i), false);
+            DatabaseConnection.getInstance().getDatabase().storeTeam(teams.get(i), false);
         }
     }
 

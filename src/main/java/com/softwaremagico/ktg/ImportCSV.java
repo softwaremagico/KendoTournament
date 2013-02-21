@@ -25,6 +25,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -91,23 +92,23 @@ public class ImportCSV {
         //Update club
         Club c = new Club(club, " ", city);
         c.storeAddress(address);
-        if (!KendoTournamentGenerator.getInstance().database.storeClub(c, false)) {
+        if (!DatabaseConnection.getInstance().getDatabase().storeClub(c, false)) {
             error = true;
         }
 
 
         //Update competitor.
-        CompetitorWithPhoto d = KendoTournamentGenerator.getInstance().database.selectCompetitor(id, false);
+        CompetitorWithPhoto d = DatabaseConnection.getInstance().getDatabase().selectCompetitor(id, false);
         if (d == null) {
             d = new CompetitorWithPhoto(id, name, surname, club);
-            if (!KendoTournamentGenerator.getInstance().database.storeCompetitor(d, false)) {
+            if (!DatabaseConnection.getInstance().getDatabase().storeCompetitor(d, false)) {
                 error = true;
             }
         }
 
         //Update representative.
         c.RefreshRepresentative(id, email, phone);
-        if (!KendoTournamentGenerator.getInstance().database.storeClub(c, false)) {
+        if (!DatabaseConnection.getInstance().getDatabase().storeClub(c, false)) {
             error = true;
         }
 
@@ -129,17 +130,17 @@ public class ImportCSV {
                 index++;
                 String memberID = fields[index];
 
-                CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(memberID, false);
+                CompetitorWithPhoto c = DatabaseConnection.getInstance().getDatabase().selectCompetitor(memberID, false);
                 if (c == null) {
                     c = new CompetitorWithPhoto(memberID, memberName, memberSurname, lastClub);
-                    if (!KendoTournamentGenerator.getInstance().database.storeCompetitor(c, false)) {
+                    if (!DatabaseConnection.getInstance().getDatabase().storeCompetitor(c, false)) {
                         error = true;
                     }
 
                 }
                 // RoleTag of members.
                 RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Competitor");
-                if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, c, false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().storeRole(role, tournament, c, false)) {
                     error = true;
                 }
 
@@ -149,7 +150,7 @@ public class ImportCSV {
                 //New team
                 if (fields[index].contains("EQUIPO_") && !fields[index].replace("EQUIPO_", "").replace("\n", "").trim().equals(teamName)) {
                     t.completeTeam(tournament.getTeamSize(), 0);
-                    if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
+                    if (!DatabaseConnection.getInstance().getDatabase().storeTeam(t, false)) {
                         error = true;
                     }
 
@@ -163,7 +164,7 @@ public class ImportCSV {
         //Store last team.
         if (t.levelChangesSize() > 0) {
             t.completeTeam(tournament.getTeamSize(), 0);
-            if (!KendoTournamentGenerator.getInstance().database.storeTeam(t, false)) {
+            if (!DatabaseConnection.getInstance().getDatabase().storeTeam(t, false)) {
                 error = true;
             }
         }
@@ -181,17 +182,17 @@ public class ImportCSV {
         index++;
 
         //Update competitor.
-        CompetitorWithPhoto r = KendoTournamentGenerator.getInstance().database.selectCompetitor(id, false);
+        CompetitorWithPhoto r = DatabaseConnection.getInstance().getDatabase().selectCompetitor(id, false);
         if (r == null) {
             r = new CompetitorWithPhoto(id, name, surname, lastClub);
-            if (!KendoTournamentGenerator.getInstance().database.storeCompetitor(r, false)) {
+            if (!DatabaseConnection.getInstance().getDatabase().storeCompetitor(r, false)) {
                 error = true;
             }
         }
 
         // RoleTag of referee.
         RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Referee");
-        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, r, false)) {
+        if (!DatabaseConnection.getInstance().getDatabase().storeRole(role, tournament, r, false)) {
             error = true;
         }
         return !error;
@@ -207,17 +208,17 @@ public class ImportCSV {
         index++;
 
         //Update competitor.
-        CompetitorWithPhoto s = KendoTournamentGenerator.getInstance().database.selectCompetitor(id, false);
+        CompetitorWithPhoto s = DatabaseConnection.getInstance().getDatabase().selectCompetitor(id, false);
         if (s == null) {
             s = new CompetitorWithPhoto(id, name, surname, lastClub);
-            if (!KendoTournamentGenerator.getInstance().database.storeCompetitor(s, false)) {
+            if (!DatabaseConnection.getInstance().getDatabase().storeCompetitor(s, false)) {
                 error = true;
             }
         }
 
         // RoleTag of referee.
         RoleTag role = KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Seminar");
-        if (!KendoTournamentGenerator.getInstance().database.storeRole(role, tournament, s, false)) {
+        if (!DatabaseConnection.getInstance().getDatabase().storeRole(role, tournament, s, false)) {
             error = true;
         }
         return !error;

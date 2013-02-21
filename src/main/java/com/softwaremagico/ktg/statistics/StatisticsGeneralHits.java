@@ -24,9 +24,9 @@ package com.softwaremagico.ktg.statistics;
  */
 
 import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ public class StatisticsGeneralHits extends StatisticsGUI {
     public StatisticsGeneralHits(Tournament tournament) {
         this.tournament = tournament;
         if (tournament == null) { //null == all.
-            duels = KendoTournamentGenerator.getInstance().database.getAllDuels();
+            duels = DatabaseConnection.getInstance().getDatabase().getAllDuels();
         } else {
-            duels = KendoTournamentGenerator.getInstance().database.getDuelsOfTournament(tournament);
+            duels = DatabaseConnection.getInstance().getDatabase().getDuelsOfTournament(tournament);
         }
         start();
     }

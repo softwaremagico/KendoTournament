@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.CompetitorAccreditationCardPDF;
@@ -106,7 +107,7 @@ public class NewRole extends KendoFrame {
         refreshCompetitor = false;
         try {
             CompetitorComboBox.removeAllItems();
-            listParticipants = KendoTournamentGenerator.getInstance().database.getAllParticipants();
+            listParticipants = DatabaseConnection.getInstance().getDatabase().getAllParticipants();
             for (int i = 0; i < listParticipants.size(); i++) {
                 CompetitorComboBox.addItem(listParticipants.get(i).getSurname() + ", " + listParticipants.get(i).getName());
             }
@@ -141,7 +142,7 @@ public class NewRole extends KendoFrame {
     private void refreshRole() {
         KendoLog.finest(this.getClass().getName(), "Obtaining role of selected Competitor");
         try {
-            String role = KendoTournamentGenerator.getInstance().database.getTagRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            String role = DatabaseConnection.getInstance().getDatabase().getTagRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             try {
                 if (role == null) {
                     RoleComboBox.setSelectedIndex(0);
@@ -166,7 +167,7 @@ public class NewRole extends KendoFrame {
     private void deleteRole() {
         KendoLog.finest(this.getClass().getName(), "Deleting role");
         try {
-            KendoTournamentGenerator.getInstance().database.deleteRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
+            DatabaseConnection.getInstance().getDatabase().deleteRole((Tournament) TournamentComboBox.getSelectedItem(), listParticipants.get(CompetitorComboBox.getSelectedIndex()));
             if (RoleComboBox.getItemCount() > 0) {
                 RoleComboBox.setSelectedIndex(0);
             }
@@ -313,7 +314,7 @@ public class NewRole extends KendoFrame {
         try {
             int role = RoleComboBox.getSelectedIndex();
             if (role > 0) {
-                if (KendoTournamentGenerator.getInstance().database.storeRole(KendoTournamentGenerator.getInstance().getAvailableRoles().get(role - 1), listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()), true)) {
+                if (DatabaseConnection.getInstance().getDatabase().storeRole(KendoTournamentGenerator.getInstance().getAvailableRoles().get(role - 1), listTournaments.get(TournamentComboBox.getSelectedIndex()), listParticipants.get(CompetitorComboBox.getSelectedIndex()), true)) {
                     if (close) {
                         this.dispose();
                     } else {
@@ -338,7 +339,7 @@ public class NewRole extends KendoFrame {
             String file;
             if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                CompetitorWithPhoto c = KendoTournamentGenerator.getInstance().database.selectCompetitor(listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId(), false);
+                CompetitorWithPhoto c = DatabaseConnection.getInstance().getDatabase().selectCompetitor(listParticipants.get(CompetitorComboBox.getSelectedIndex()).getId(), false);
                 CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF(c, listTournaments.get(TournamentComboBox.getSelectedIndex()));
                 pdf.createFile(file);
             }

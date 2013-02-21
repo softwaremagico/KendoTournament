@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
@@ -70,7 +71,7 @@ public class FightListPDF extends ParentList {
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         for (int i = 0; i < tournament.getFightingAreas(); i++) {
-            List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentAndFightArea(tournament, i);
+            List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournamentAndFightArea(tournament, i);
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getInstance().returnShiaijo(i), 0));

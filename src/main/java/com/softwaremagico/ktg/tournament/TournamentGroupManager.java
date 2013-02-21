@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -773,7 +774,7 @@ public class TournamentGroupManager implements Serializable {
             MessageManager.informationMessage(this.getClass().getName(), "csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
             if (FightPool.getManager(tournament).storeNotUpdatedFightsAndDuels()) {
                 for (Undraw undraw : undraws) {
-                    KendoTournamentGenerator.getInstance().database.storeUndraw(undraw);
+                    DatabaseConnection.getInstance().getDatabase().storeUndraw(undraw);
                 }
             }
             return true;

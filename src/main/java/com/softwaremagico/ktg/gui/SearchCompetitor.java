@@ -26,8 +26,8 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.CompetitorWithPhoto;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -86,13 +86,13 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (IDTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarID(IDTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarID(IDTextField.getText(), true, true);
         } else if (SurnameTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarSurname(SurnameTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarSurname(SurnameTextField.getText(), true, true);
         } else if (NameTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarName(NameTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarName(NameTextField.getText(), true, true);
         } else if (ClubTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
+            results = DatabaseConnection.getInstance().getDatabase().searchCompetitorsBySimilarClub(ClubTextField.getText(), true, true);
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -104,6 +104,6 @@ public final class SearchCompetitor extends Search<CompetitorWithPhoto> {
 
     @Override
     protected boolean deleteFromDatabase(CompetitorWithPhoto object) {
-        return KendoTournamentGenerator.getInstance().database.deleteCompetitor(object, true);
+        return DatabaseConnection.getInstance().getDatabase().deleteCompetitor(object, true);
     }
 }

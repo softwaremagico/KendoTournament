@@ -27,8 +27,8 @@ package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -57,7 +57,7 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     public StatisticsTopTen(Tournament tournament) {
         this.tournament = tournament;
-        if (tournament==null) {
+        if (tournament == null) {
             competitorTopTen = getCompetitorsOrderByScore();
         } else {
             competitorTopTen = getCompetitorsOrderByScoreInChampionship(tournament);
@@ -67,10 +67,10 @@ public class StatisticsTopTen extends StatisticsGUI {
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
         this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
-        if (tournament!=null) {
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(tournament);
+        if (tournament != null) {
+            competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
         } else {
-            competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
+            competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         }
         fillSelectComboBox();
         changesAllowed = true;
@@ -85,16 +85,16 @@ public class StatisticsTopTen extends StatisticsGUI {
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
         this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
-        competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
+        competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         fillSelectComboBox();
         changesAllowed = true;
         NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
     }
 
     private List<CompetitorRanking> getCompetitorsOrderByScore() {
-        List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
+        List<Competitor> competitorsList = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         List<CompetitorRanking> ranking = new ArrayList<>();
-        List<Fight> fights = KendoTournamentGenerator.getInstance().database.getAllFights();
+        List<Fight> fights = DatabaseConnection.getInstance().getDatabase().getAllFights();
         for (int i = 0; i < competitorsList.size(); i++) {
             if (competitorsList.get(i) != null) {
                 int victories = obtainWinnedDuels(competitorsList.get(i), fights);
@@ -107,9 +107,9 @@ public class StatisticsTopTen extends StatisticsGUI {
     }
 
     private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(Tournament tournament) {
-        List<Competitor> competitorsList = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsInTournament(tournament);
+        List<Competitor> competitorsList = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
         List<CompetitorRanking> ranking = new ArrayList<>();
-        List<Fight> fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
+        List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
         for (int i = 0; i < competitorsList.size(); i++) {
             if (competitorsList.get(i) != null) {
                 int victories = obtainWinnedDuels(competitorsList.get(i), fights);
@@ -196,7 +196,8 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     /**
      * Generate the set of data
-     * @return 
+     *
+     * @return
      */
     private CategoryDataset createDataset() {
 

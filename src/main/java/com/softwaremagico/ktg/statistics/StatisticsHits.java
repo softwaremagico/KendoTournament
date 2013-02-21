@@ -27,7 +27,7 @@ package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
@@ -49,22 +49,26 @@ public abstract class StatisticsHits extends StatisticsGUI {
 
     /**
      * Obtain all duels of a specific competitor.
-     * @param competitor 
+     *
+     * @param competitor
      */
     protected void obtainDuels(Competitor competitor) {
         this.competitor = competitor;
         if (this.competitor == null) {
-            duels = KendoTournamentGenerator.getInstance().database.getAllDuels();
+            duels = DatabaseConnection.getInstance().getDatabase().getAllDuels();
         } else {
-            duelsOfCompetitorWhenIsInTeamRight = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), true);
-            duelsOfCOmpetitorWhenIsInTeamLeft = KendoTournamentGenerator.getInstance().database.getDuelsOfcompetitor(competitor.getId(), false);
+            duelsOfCompetitorWhenIsInTeamRight = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), true);
+            duelsOfCOmpetitorWhenIsInTeamLeft = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), false);
         }
     }
 
     /**
-     * Obtain the score of the competitor. Add all the score of the fights when competitor is in the left and when competitor is in the right. 
-     * @param performedHits false if using received Hits, true if counts hits done. 
-     * @return 
+     * Obtain the score of the competitor. Add all the score of the fights when
+     * competitor is in the left and when competitor is in the right.
+     *
+     * @param performedHits false if using received Hits, true if counts hits
+     * done.
+     * @return
      */
     protected DefaultPieDataset createDataset(boolean performedHits) {
         DefaultPieDataset dataset = new DefaultPieDataset();

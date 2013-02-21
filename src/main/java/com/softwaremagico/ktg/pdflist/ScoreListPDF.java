@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
@@ -51,7 +52,7 @@ public class ScoreListPDF extends ParentList {
     }
 
     private PdfPTable simpleTable(PdfPTable mainTable) {
-        teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(tournament, false);
+        teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tournament, false);
 
         mainTable.addCell(getCell(trans.returnTag("Team"), 0, Element.ALIGN_CENTER));
         mainTable.addCell(getCell(trans.returnTag("fightsWon"), 0, Element.ALIGN_CENTER));
@@ -101,7 +102,7 @@ public class ScoreListPDF extends ParentList {
                         mainTable.addCell(getCell(trans.returnTag("histsWon"), 1, Element.ALIGN_CENTER));
 
 
-                        List<Team> winnersUndraw = KendoTournamentGenerator.getInstance().database.getWinnersInUndraws(tournament, groups.get(i).getLevel(), i);
+                        List<Team> winnersUndraw = DatabaseConnection.getInstance().getDatabase().getWinnersInUndraws(tournament, groups.get(i).getLevel(), i);
 
                         for (int j = 0; j < groups.get(i).teams.size(); j++) {
                             /*

@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
@@ -142,7 +143,7 @@ public class NewTeam extends KendoFrame {
     private void cleanWindow() {
         NameTextField.setText("");
         //fillTournaments();
-        competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
+        competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
         competitors.add(0, new Competitor("", "", "", ""));
         fillCompetitors();
 
@@ -189,10 +190,10 @@ public class NewTeam extends KendoFrame {
 
     private void refreshCompetitors() {
         try {
-            competitors = KendoTournamentGenerator.getInstance().database.selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
+            competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
             competitors.add(0, new Competitor("", "", "", ""));
         } catch (NullPointerException npe) {
-            competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitors();
+            competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         }
     }
 
@@ -500,7 +501,7 @@ public class NewTeam extends KendoFrame {
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         try {
-            KendoTournamentGenerator.getInstance().database.deleteTeamByName(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
+            DatabaseConnection.getInstance().getDatabase().deleteTeamByName(NameTextField.getText(), TournamentComboBox.getSelectedItem().toString(), true);
             refreshTournament();
             NameTextField.setText("");
             NameTextField.setEnabled(true);
@@ -512,10 +513,10 @@ public class NewTeam extends KendoFrame {
         if (newTeam) {
             if (individualTeams) {
                 try {
-                    if (KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), true)) {
-                        KendoTournamentGenerator.getInstance().database.setIndividualTeams((Tournament) TournamentComboBox.getSelectedItem());
+                    if (DatabaseConnection.getInstance().getDatabase().deleteTeamsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), true)) {
+                        DatabaseConnection.getInstance().getDatabase().setIndividualTeams((Tournament) TournamentComboBox.getSelectedItem());
                         tournament.setTeamSize(1);
-                        KendoTournamentGenerator.getInstance().database.updateTournament(tournament, false);
+                        DatabaseConnection.getInstance().getDatabase().updateTournament(tournament, false);
                         MessageManager.informationMessage(this.getClass().getName(), "teamsStored", "Team");
                         this.dispose();
                     }
@@ -539,7 +540,7 @@ public class NewTeam extends KendoFrame {
                             MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                         } else {
                             t.addMembers(participants, 0);
-                            if (KendoTournamentGenerator.getInstance().database.storeTeam(t, true)) {
+                            if (DatabaseConnection.getInstance().getDatabase().storeTeam(t, true)) {
                                 cleanWindow();
                             }
                         }

@@ -177,7 +177,7 @@ public class StoreDatabase implements Serializable {
         private boolean storeInDatabase() {
             for (int i = 0; i < clubs.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelClub") + " " + (i + 1) + "/" + clubs.size(), current, total);
-                if (!KendoTournamentGenerator.getInstance().database.storeClub(clubs.get(i), false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().storeClub(clubs.get(i), false)) {
                     return false;
                 }
                 current++;
@@ -185,7 +185,7 @@ public class StoreDatabase implements Serializable {
 
             for (int i = 0; i < tournaments.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTournament") + " " + (i + 1) + "/" + tournaments.size(), current, total);
-                if (!KendoTournamentGenerator.getInstance().database.storeTournament(tournaments.get(i), false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().storeTournament(tournaments.get(i), false)) {
                     return false;
                 }
                 current++;
@@ -193,7 +193,7 @@ public class StoreDatabase implements Serializable {
 
             for (int i = 0; i < competitors.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelCompetitor") + " " + (i + 1) + "/" + competitors.size(), current, total);
-                if (!KendoTournamentGenerator.getInstance().database.insertCompetitor(competitors.get(i))) {
+                if (!DatabaseConnection.getInstance().getDatabase().insertCompetitor(competitors.get(i))) {
                     return false;
                 }
                 current++;
@@ -202,7 +202,7 @@ public class StoreDatabase implements Serializable {
 
             for (int i = 0; i < roles.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelRole") + " " + (i + 1) + "/" + roles.size(), current, total);
-                if (!KendoTournamentGenerator.getInstance().database.storeRole(roles.get(i), false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().storeRole(roles.get(i), false)) {
                     return false;
                 }
                 current++;
@@ -210,7 +210,7 @@ public class StoreDatabase implements Serializable {
 
             for (int i = 0; i < teams.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelTeam") + " " + (i + 1) + "/" + roles.size(), current, total);
-                if (!KendoTournamentGenerator.getInstance().database.insertTeam(teams.get(i), false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().insertTeam(teams.get(i), false)) {
                     System.out.println("false");
                     return false;
                 }
@@ -218,12 +218,12 @@ public class StoreDatabase implements Serializable {
             }
 
 
-            // KendoTournamentGenerator.getInstance().database.storeFights(fightManager, false, false);
+            // DatabaseConnection.getInstance().getDatabase().storeFights(fightManager, false, false);
 
             for (int i = 0; i < fights.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelFight") + " " + (i + 1) + "/" + fights.size(), current, total);
-                if (KendoTournamentGenerator.getInstance().database.storeFight(fights.get(i), false, false)) {
-                    if (!KendoTournamentGenerator.getInstance().database.storeDuelsOfFight(fights.get(i))) {
+                if (DatabaseConnection.getInstance().getDatabase().storeFight(fights.get(i), false, false)) {
+                    if (!DatabaseConnection.getInstance().getDatabase().storeDuelsOfFight(fights.get(i))) {
                         return false;
                     }
                 } else {
@@ -242,7 +242,7 @@ public class StoreDatabase implements Serializable {
                 total = photos.size() + banners.size() + clubs.size() + competitors.size() + tournaments.size() + roles.size() + teams.size() + fights.size() + diplomas.size() + accreditations.size();
                 current++;
                 timerPanel.updateText(transl.returnTag("DeleteDatabaseProgressBarLabel"), current, total);
-                KendoTournamentGenerator.getInstance().database.clearDatabase();
+                DatabaseConnection.getInstance().getDatabase().clearDatabase();
                 if (convertPhotos()) {
                     if (storeInDatabase()) {
                         error = false;
@@ -344,14 +344,14 @@ public class StoreDatabase implements Serializable {
         private boolean saveDatabaseInFile() {
             boolean error = false;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), current, total);
-            clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
+            clubs = DatabaseConnection.getInstance().getDatabase().getAllClubs();
             current += 10;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), current, total);
-            competitors = KendoTournamentGenerator.getInstance().database.getAllCompetitorsWithPhoto();
+            competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitorsWithPhoto();
             current += 10;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), current, total);
             current += 10;
-            tournaments = KendoTournamentGenerator.getInstance().database.getAllTournaments();
+            tournaments = DatabaseConnection.getInstance().getDatabase().getAllTournaments();
             //Progress bar is only useful when changing the photos. 
             try {
                 total = competitors.size() + tournaments.size() + 60;
@@ -361,13 +361,13 @@ public class StoreDatabase implements Serializable {
             getCompetitorsPhotos();
             getTournamentBanners();
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), current, total);
-            teams = KendoTournamentGenerator.getInstance().database.getAllTeams();
+            teams = DatabaseConnection.getInstance().getDatabase().getAllTeams();
             current += 10;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), current, total);
-            fights = KendoTournamentGenerator.getInstance().database.getAllFights();
+            fights = DatabaseConnection.getInstance().getDatabase().getAllFights();
             current += 10;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), current, total);
-            roles = KendoTournamentGenerator.getInstance().database.getAllRoles();
+            roles = DatabaseConnection.getInstance().getDatabase().getAllRoles();
             current += 10;
             try {
                 timerPanel.updateText(transl.returnTag("WriteFile"), current, total);

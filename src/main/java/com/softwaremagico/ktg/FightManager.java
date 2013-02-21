@@ -23,6 +23,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class FightManager {
 
     public void add(Fight f) {
         fights.add(f);
-        if (KendoTournamentGenerator.getInstance().isLocallyConnected()) {
+        if (DatabaseConnection.getInstance().isLocallyConnected()) {
             storeFight(f);
         }
     }
@@ -83,13 +84,13 @@ public class FightManager {
     public boolean setAll(List<Fight> newFights, boolean storeDatabase) {
         fights = newFights;
         if (storeDatabase && newFights.size() > 0) {
-            return KendoTournamentGenerator.getInstance().database.storeFights(fights, true, true);
+            return DatabaseConnection.getInstance().getDatabase().storeFights(fights, true, true);
         }
         return false;
     }
 
     public void getFightsFromDatabase(Tournament tournament) {
-        fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(tournament);
+        fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
     }
 
     public int size() {
@@ -233,7 +234,7 @@ public class FightManager {
     public void setFightAsNotOver(int fight) {
         if (fight >= 0 && fight < fights.size()) {
             fights.get(fight).setAsNotOver();
-            KendoTournamentGenerator.getInstance().database.updateFightAsNotOver(fights.get(fight));
+            DatabaseConnection.getInstance().getDatabase().updateFightAsNotOver(fights.get(fight));
         }
     }
 
@@ -249,9 +250,9 @@ public class FightManager {
 
     public void deleteSelectedFight(int arena, boolean verbose) {
         try {
-            if (KendoTournamentGenerator.getInstance().database.deleteFight(fights.get(currentFight(arena)), verbose)) {
-                KendoTournamentGenerator.getInstance().database.deleteTeamInLevel(fights.get(currentFight(arena)).team1, fights.get(currentFight(arena)).level, false);
-                KendoTournamentGenerator.getInstance().database.deleteTeamInLevel(fights.get(currentFight(arena)).team2, fights.get(currentFight(arena)).level, false);
+            if (DatabaseConnection.getInstance().getDatabase().deleteFight(fights.get(currentFight(arena)), verbose)) {
+                DatabaseConnection.getInstance().getDatabase().deleteTeamInLevel(fights.get(currentFight(arena)).team1, fights.get(currentFight(arena)).level, false);
+                DatabaseConnection.getInstance().getDatabase().deleteTeamInLevel(fights.get(currentFight(arena)).team2, fights.get(currentFight(arena)).level, false);
                 fights.remove(currentFight(arena));
             }
         } catch (IndexOutOfBoundsException iob) {
@@ -259,8 +260,8 @@ public class FightManager {
     }
 
     public boolean deleteAllFights(Tournament tournament, boolean verbose) {
-        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfTournament(tournament, verbose)) {
-            KendoTournamentGenerator.getInstance().database.deleteAllMemberChangesInTeams(tournament, verbose);
+        if (DatabaseConnection.getInstance().getDatabase().deleteFightsOfTournament(tournament, verbose)) {
+            DatabaseConnection.getInstance().getDatabase().deleteAllMemberChangesInTeams(tournament, verbose);
             fights = new ArrayList<>();
             return true;
         }
@@ -273,7 +274,7 @@ public class FightManager {
     }
 
     public boolean deleteFightsOfLevel(Tournament tournament, int level, boolean verbose) {
-        if (KendoTournamentGenerator.getInstance().database.deleteFightsOfLevelOfTournament(tournament, level, verbose)) {
+        if (DatabaseConnection.getInstance().getDatabase().deleteFightsOfLevelOfTournament(tournament, level, verbose)) {
             KendoLog.finer(FightManager.class.getName(), "Delete fights in memory.");
             for (int i = 0; i < fights.size(); i++) {
                 if (fights.get(i).level >= level) {
@@ -715,7 +716,7 @@ public class FightManager {
      * @param f
      */
     private boolean storeFight(Fight f) {
-        return KendoTournamentGenerator.getInstance().database.storeFight(f, false, false);
+        return DatabaseConnection.getInstance().getDatabase().storeFight(f, false, false);
     }
 
     private ArrayList<Fight> notUpdatedFights() {
@@ -737,13 +738,13 @@ public class FightManager {
     public void setFightAsOver(Fight fight) {
         fight.setOver();
         KendoLog.finest(this.getClass().getName(), "Fight '" + fight.team1.getName() + " vs " + fight.team2.getName() + "' is set to over.");
-        //KendoTournamentGenerator.getInstance().database.updateFightAsOver(fight);
+        //DatabaseConnection.getInstance().getDatabase().updateFightAsOver(fight);
     }
 
     private boolean storeDuel(Duel d, Fight fight, int player) {
         KendoLog.fine(FightManager.class.getName(), "Storing duel '" + d.showScore());
         if (d.needsToBeStored()) {
-            if (KendoTournamentGenerator.getInstance().database.storeDuel(d, fight, player)) {
+            if (DatabaseConnection.getInstance().getDatabase().storeDuel(d, fight, player)) {
                 d.setStored(true);
                 return true;
             }
@@ -770,7 +771,7 @@ public class FightManager {
         for (Fight f : notUpdatedFights) {
             if (!f.isOverStored() && f.isOver()) {
                 KendoLog.finest(FightManager.class.getName(), "Fight " + f.show() + " is not stored.");
-                KendoTournamentGenerator.getInstance().database.updateFightAsOver(f);
+                DatabaseConnection.getInstance().getDatabase().updateFightAsOver(f);
                 if (!storeDuelOfFights(f)) {
                     return false;
                 }
@@ -840,7 +841,7 @@ public class FightManager {
     public boolean storeLazyFights(int arena) {
         KendoLog.entering(this.getClass().getName(), "storeLazyFights");
         //If all arena fights are over or strict store is selected.
-        if (areArenaOver(arena) || !KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate()) {
+        if (areArenaOver(arena) || !DatabaseConnection.getInstance().isDatabaseLazyUpdate()) {
             //Store score into database.
             KendoLog.exiting(this.getClass().getName(), "storeLazyFights");
             return storeNotUpdatedFightsAndDuels();

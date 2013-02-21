@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.TournamentPool;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileInputStream;
@@ -73,7 +74,7 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
                     photoInput = new FileInputStream(Path.getBackgroundPath());
                     File fileImage = new File(Path.getBackgroundPath());
                     size = fileImage.length();
-                    KendoTournamentGenerator.getInstance().database.storeAccreditationImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
+                    DatabaseConnection.getInstance().getDatabase().storeAccreditationImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
                 } catch (FileNotFoundException fnf) {
                     KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), fnf);
                 }

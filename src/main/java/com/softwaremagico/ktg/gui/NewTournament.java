@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -139,14 +140,14 @@ public class NewTournament extends KendoFrame {
             Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
             tournament.addBanner(banner.photoInput, banner.size);
             //Store tournament into database
-            if (KendoTournamentGenerator.getInstance().database.storeTournament(tournament, true)) {
+            if (DatabaseConnection.getInstance().getDatabase().storeTournament(tournament, true)) {
                 KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
                 TournamentPool.addTournament(tournament);
                 cleanWindow();
             }
             //If tournamnet team size has changed (tournament update), delete old teams of tournament.
             if (maxCompetitorTeam != null && maxCompetitorTeam != tournament.getTeamSize()) {
-                KendoTournamentGenerator.getInstance().database.deleteTeamsOfTournament(tournament, false);
+                DatabaseConnection.getInstance().getDatabase().deleteTeamsOfTournament(tournament, false);
             }
             return true;
         } else {

@@ -26,8 +26,8 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -73,13 +73,13 @@ public final class SearchClub extends Search<Club> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchClubByName(NameTextField.getText(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchClubByName(NameTextField.getText(), true);
         } else if (CountryTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchClubByCountry(CountryTextField.getText(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchClubByCountry(CountryTextField.getText(), true);
         } else if (CityTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchClubByCity(CityTextField.getText(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchClubByCity(CityTextField.getText(), true);
         } else {
-            MessageManager.errorMessage(this.getClass().getName(),"fillFields", "Search");
+            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
         fillResults(results);
         if (results.size() > 0) {
@@ -94,6 +94,6 @@ public final class SearchClub extends Search<Club> {
 
     @Override
     protected boolean deleteFromDatabase(Club object) {
-        return KendoTournamentGenerator.getInstance().database.deleteClub(object, true);
+        return DatabaseConnection.getInstance().getDatabase().deleteClub(object, true);
     }
 }

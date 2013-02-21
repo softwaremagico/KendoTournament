@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentType;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.List;
 
 /**
@@ -142,9 +143,9 @@ public class SummaryPDF extends ParentList {
 
         List<Fight> fights;
         if (useOnlyShiaijo < 0) {
-            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournament(championship);
+            fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(championship);
         } else {
-            fights = KendoTournamentGenerator.getInstance().database.searchFightsByTournamentAndFightArea(championship, useOnlyShiaijo);
+            fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournamentAndFightArea(championship, useOnlyShiaijo);
         }
 
 

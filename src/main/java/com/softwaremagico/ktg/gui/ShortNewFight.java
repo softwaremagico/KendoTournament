@@ -29,6 +29,7 @@ import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -59,7 +60,7 @@ public class ShortNewFight extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournamentExactName(tournament, false);
+        listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournamentExactName(tournament, false);
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();
@@ -284,7 +285,6 @@ public class ShortNewFight extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JButton CancelButton;

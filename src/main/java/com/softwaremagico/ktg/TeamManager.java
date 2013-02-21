@@ -27,6 +27,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.util.HashMap;
 
 /**
@@ -48,7 +49,7 @@ public class TeamManager {
         }
         Team team = existingTeams.get(teamName);
         if (team == null) {
-            team = KendoTournamentGenerator.getInstance().database.getTeamByName(teamName, tournament, false);
+            team = DatabaseConnection.getInstance().getDatabase().getTeamByName(teamName, tournament, false);
             existingTeams.put(teamName, team);
         }
         return team;

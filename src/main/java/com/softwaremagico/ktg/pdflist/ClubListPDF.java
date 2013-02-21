@@ -33,6 +33,7 @@ import com.softwaremagico.ktg.Club;
 import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.Color;
 import java.util.List;
@@ -67,10 +68,10 @@ public class ClubListPDF extends ParentList {
         int cellNumber = 0;
         boolean firstClub = true;
 
-        List<Club> clubs = KendoTournamentGenerator.getInstance().database.getAllClubs();
+        List<Club> clubs = DatabaseConnection.getInstance().getDatabase().getAllClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-            List<CompetitorWithPhoto> competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship, false, false);
+            List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship, false, false);
 
             if (competitors.size() > 0) {
                 if (!firstClub) {
@@ -96,7 +97,7 @@ public class ClubListPDF extends ParentList {
                     color = new Color(230, 230, 230);
                 }
                 mainTable.addCell(getCell(competitors.get(j).getSurnameName() + " (" + competitors.get(j).getId() + ")", 1, Element.ALIGN_LEFT, color));
-                mainTable.addCell(getCell(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(KendoTournamentGenerator.getInstance().database.getTagRole(championship, competitors.get(j))), 1, 1, color));
+                mainTable.addCell(getCell(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(DatabaseConnection.getInstance().getDatabase().getTagRole(championship, competitors.get(j))), 1, 1, color));
 
                 cellNumber++;
             }

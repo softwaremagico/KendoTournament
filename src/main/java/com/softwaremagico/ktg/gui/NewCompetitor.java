@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -65,7 +66,7 @@ public class NewCompetitor extends KendoFrame {
         refreshClub = false;
         List<String> clubs;
         ClubComboBox.removeAllItems();
-        clubs = KendoTournamentGenerator.getInstance().database.returnClubsName();
+        clubs = DatabaseConnection.getInstance().getDatabase().returnClubsName();
         if (clubs != null && clubs.size() > 0) {
             for (int i = 0; i < clubs.size(); i++) {
                 ClubComboBox.addItem(clubs.get(i));
@@ -197,7 +198,7 @@ public class NewCompetitor extends KendoFrame {
                     Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
                     KendoLog.severe(NewCompetitor.class.getName(), ex.getMessage());
                 }
-                if (KendoTournamentGenerator.getInstance().database.storeCompetitor(comp, true)) {
+                if (DatabaseConnection.getInstance().getDatabase().storeCompetitor(comp, true)) {
                     cleanWindow();
                     this.repaint();
                     return comp;

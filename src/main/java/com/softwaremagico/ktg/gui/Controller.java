@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.fight.*;
@@ -56,7 +57,7 @@ public class Controller {
     private NewTournament newTournament;
     private NewClub newClub;
     private NewTeam newTeam;
-    private DatabaseConnection databaseConnection;
+    private DatabaseConnectionWindow databaseConnection;
     private SearchCompetitor searchCompetitor = null;
     private SearchClub searchClub = null;
     private SearchTeam searchTeam = null;
@@ -103,7 +104,7 @@ public class Controller {
         main = tmp_gui;
         AddMainMenuListeners();
         main.setVisible(true);
-        connectDatabase(!KendoTournamentGenerator.getInstance().databaseConnected);
+        connectDatabase(!DatabaseConnection.getInstance().isDatabaseConnected());
     }
 
     private void connectDatabase(boolean connect) {
@@ -112,7 +113,7 @@ public class Controller {
                 databaseConnection.dispose();
             } catch (NullPointerException npe) {
             }
-            databaseConnection = new DatabaseConnection();
+            databaseConnection = new DatabaseConnectionWindow();
             databaseConnection.setVisible(true);
             AddNewConnectionListeners();
         }
@@ -456,7 +457,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            KendoTournamentGenerator.getInstance().database.updateDatabase(Path.returnDatabaseSchemaPath() + File.separator + "updates" + File.separator, true);
+            DatabaseConnection.getInstance().getDatabase().updateDatabase(Path.returnDatabaseSchemaPath() + File.separator + "updates" + File.separator, true);
         }
     }
 
@@ -622,7 +623,7 @@ public class Controller {
                 chooseScore.dispose();
             } catch (NullPointerException npe) {
             }
-            //Tournament championship = KendoTournamentGenerator.getInstance().database.getTournamentByName(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), false);
+            //Tournament championship = DatabaseConnection.getInstance().getDatabase().getTournamentByName(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), false);
             chooseScore = new ChooseScoreGUI();
             chooseScore.setVisible(true);
         }
@@ -762,7 +763,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             databaseConnection.performConnection();
-            main.isConnectedToDatabase();
+            main.changeMenuIsConnectedToDatabase();
         }
     }
 
@@ -781,7 +782,7 @@ public class Controller {
             int ke = evt.getKeyCode();
             if (ke == 10 && key) {
                 databaseConnection.performConnection();
-                main.isConnectedToDatabase();
+                main.changeMenuIsConnectedToDatabase();
                 key = false;
             }
         }
@@ -1440,7 +1441,7 @@ public class Controller {
                 FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).add(f);
                 MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
-                //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament(shortFight.getTournament()));
+                //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }

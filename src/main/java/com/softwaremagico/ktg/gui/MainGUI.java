@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.StoreDatabase;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -62,7 +63,7 @@ public class MainGUI extends KendoFrame {
         setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
         completeLanguageMenu();
         setPhoto();
-        isConnectedToDatabase();
+        changeMenuIsConnectedToDatabase();
         updateConfig();
     }
 
@@ -169,8 +170,8 @@ public class MainGUI extends KendoFrame {
         return KendoTournamentGenerator.getInstance().language;
     }
 
-    public final void isConnectedToDatabase() {
-        boolean connected = KendoTournamentGenerator.getInstance().databaseConnected;
+    public final void changeMenuIsConnectedToDatabase() {
+        boolean connected = DatabaseConnection.getInstance().isDatabaseConnected();
         DiplomaMenuItem.setEnabled(connected);
         TournamentPanelMenuItem.setEnabled(connected);
         TournamentTopTenMenuItem.setEnabled(connected);
@@ -219,7 +220,7 @@ public class MainGUI extends KendoFrame {
         LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
         DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
         refresh = true;
-        StoreFightsCheckBox.setState(KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate());
+        StoreFightsCheckBox.setState(DatabaseConnection.getInstance().isDatabaseLazyUpdate());
     }
 
     /**
@@ -793,9 +794,8 @@ public class MainGUI extends KendoFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
         try {
-            KendoTournamentGenerator.getInstance().database.disconnect();
-            KendoTournamentGenerator.getInstance().databaseConnected = false;
-            isConnectedToDatabase();
+            DatabaseConnection.getInstance().getDatabase().disconnectDatabase();
+            changeMenuIsConnectedToDatabase();
             MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException ex) {
             MessageManager.errorMessage(this.getClass().getName(), "disconnectDatabaseFail", "MySQL");
@@ -844,10 +844,11 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     }//GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
 
     private void StoreFightsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StoreFightsCheckBoxStateChanged
-        if (StoreFightsCheckBox.isSelected() && KendoTournamentGenerator.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()) {
+        if (StoreFightsCheckBox.isSelected() && DatabaseConnection.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()) {
             MessageManager.warningMessage(this.getClass().getName(), "disableMonitor", "Atention");
         }
-        KendoTournamentGenerator.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
+        DatabaseConnection.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
+        KendoTournamentGenerator.getInstance().storeConfig();
     }//GEN-LAST:event_StoreFightsCheckBoxStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;

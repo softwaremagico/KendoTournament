@@ -23,20 +23,14 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.Database;
-import com.softwaremagico.ktg.database.DatabaseEngine;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -47,28 +41,19 @@ public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
-    public Database database = null;
-    private String password = "";
-    public String user = "kendouser";
-    public String databaseName = "kendotournament";
-    public String server = "localhost";
     public String language = "en";
-    private DatabaseEngine databaseEngine = null;
     public Languages languages = new Languages();
     private String explorationFolder = null;
     //public TournamentGroupManager tournamentManager = null;
     private char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
-    public boolean databaseConnected = false;
     private int nameDiplomaPosition = 100;
     private boolean logActivated = true;
     public boolean inverseColours = false;
     public boolean inverseTeams = false;
-    private boolean databaseLazyUpdate = false;
 
     private KendoTournamentGenerator() {
-        obtainStoredDatabaseConnection();
         loadConfig();
     }
 
@@ -165,138 +150,6 @@ public class KendoTournamentGenerator {
     /**
      * **********************************************
      *
-     * DATABASE
-     *
-     ***********************************************
-     */
-    /**
-     * Start the connection to the defined database.
-     */
-    public boolean databaseConnection() {
-        return (databaseConnected = startDatabaseConnection(password, user, databaseName, server));
-    }
-
-    public boolean startDatabaseConnection(String tmp_password, String tmp_user, String tmp_database, String tmp_server) {
-        password = tmp_password;
-        user = tmp_user;
-        databaseName = tmp_database;
-        server = tmp_server;
-        generateDatabaseConnectionFile();
-        database = databaseEngine.getDatabaseClass();
-        try {
-            database.disconnect();
-        } catch (SQLException ex) {
-        }
-        databaseConnected = database.connect(tmp_password, tmp_user, tmp_database, tmp_server, true, true);
-        return databaseConnected;
-    }
-
-    public void resetPassword() {
-        password = "";
-    }
-
-    private void obtainStoredDatabaseConnection() {
-        try {
-            List<String> connectionData;
-
-            connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome(), false);
-
-            for (int i = 0; i < connectionData.size(); i++) {
-                if (connectionData.get(i).contains("User:")) {
-                    try {
-                        user = connectionData.get(i).split("User:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Machine:")) {
-                    try {
-                        server = connectionData.get(i).split("Machine:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Database:")) {
-                    try {
-                        databaseName = connectionData.get(i).split("Database:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Engine:")) {
-                    try {
-                        databaseEngine = DatabaseEngine.getDatabase(connectionData.get(i).split("Engine:")[1]);
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-            }
-        } catch (IOException ex) {
-        }
-    }
-
-    private void generateDatabaseConnectionFile() {
-        List<String> connectionData = new ArrayList<>();
-        connectionData.add("User:" + user);
-        connectionData.add("Machine:" + server);
-        connectionData.add("Database:" + databaseName);
-        connectionData.add("Engine:" + databaseEngine);
-        Folder.saveListInFile(connectionData, Path.getPathConnectionConfigInHome());
-    }
-
-    public boolean isLocallyConnected() {
-        InetAddress ownIP = null;
-        try {
-            ownIP = InetAddress.getLocalHost();
-        } catch (UnknownHostException ex1) {
-        }
-
-        if (database.onlyLocalConnection()) {
-            return true;
-        }
-
-        //The easy way. 
-        if (server.equals("localhost") || server.equals("127.0.0.1") || server.equals(ownIP.getHostAddress())) {
-            return true;
-        }
-        //Read all network interfaces.
-        try {
-            Enumeration net = NetworkInterface.getNetworkInterfaces();
-            while (net.hasMoreElements()) {
-                NetworkInterface ni = (NetworkInterface) net.nextElement();
-                Enumeration addr = ni.getInetAddresses();
-                //Get the IP of each interface.
-                while (addr.hasMoreElements()) {
-                    java.net.InetAddress inet = (java.net.InetAddress) addr.nextElement();
-                    if (server.equals(inet.getHostAddress())) {
-                        return true;
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-        return false;
-    }
-
-    public DatabaseEngine getDatabaseEngine() {
-        if (databaseEngine == null) {
-            return DatabaseEngine.getDatabase("MySQL");
-        }
-        return databaseEngine;
-    }
-
-    public void setDatabaseEngine(String engine) {
-        databaseEngine = DatabaseEngine.getDatabase(engine);
-    }
-
-    public boolean isDatabaseLazyUpdate() {
-        return databaseLazyUpdate;
-    }
-
-    public void setDatabaseLazyUpdate(boolean value) {
-        databaseLazyUpdate = value;
-        storeConfig();
-    }
-
-    /**
-     * **********************************************
-     *
      * FILES
      *
      ***********************************************
@@ -310,7 +163,7 @@ public class KendoTournamentGenerator {
         obtainStoredNamePositionOnDiploma();
         obtainLogOption();
         obtainDebugOption();
-        obtainFightsMustBeStoredOption();
+        obtainLazyUpdateOption();
         //obtainStoredScore();
     }
 
@@ -389,23 +242,23 @@ public class KendoTournamentGenerator {
         }
     }
 
-    private boolean obtainFightsMustBeStoredOption() {
+    private void obtainLazyUpdateOption() {
         try {
-            databaseLazyUpdate = Boolean.parseBoolean(obtainStoredDataInConfig("StrictStore:"));
-            return databaseLazyUpdate;
+            DatabaseConnection.getInstance().setDatabaseLazyUpdate(Boolean.parseBoolean(obtainStoredDataInConfig("StrictStore:")));
         } catch (Exception e) {
-            return true;
+            DatabaseConnection.getInstance().setDatabaseLazyUpdate(true);
+            storeConfig();
         }
     }
 
-    private void storeConfig() {
+    public void storeConfig() {
         List<String> configData = new ArrayList<>();
         configData.add("Tournament:" + lastSelectedTournament);
         configData.add("Club:" + lastSelectedClub);
         configData.add("NameDiploma:" + nameDiplomaPosition);
         configData.add("Log:" + logActivated);
         configData.add("Debug:" + debugMode);
-        configData.add("StrictStore:" + databaseLazyUpdate);
+        configData.add("StrictStore:" + DatabaseConnection.getInstance().isDatabaseLazyUpdate());
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);
@@ -433,7 +286,7 @@ public class KendoTournamentGenerator {
     public String getCompetitorOrder(Competitor competitor, String role, Tournament tournament) {
         DecimalFormat myFormatter = new DecimalFormat("00000");
         if (role.equals("VCLO") || role.equals("VolunteerK")) {
-            Integer order = database.searchVolunteerOrder(competitor, tournament);
+            Integer order = DatabaseConnection.getInstance().getDatabase().searchVolunteerOrder(competitor, tournament);
             if (order != null) {
                 return myFormatter.format(order);
             }

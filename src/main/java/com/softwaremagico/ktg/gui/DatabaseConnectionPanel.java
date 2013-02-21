@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.database.SQLite;
 import com.softwaremagico.ktg.files.Folder;
@@ -40,7 +40,7 @@ import java.util.List;
  * @author LOCAL\jhortelano
  */
 public class DatabaseConnectionPanel extends javax.swing.JPanel {
-    
+
     private boolean engineUpdate = true;
     private String selectedEngine = "MySQL";
 
@@ -53,7 +53,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         setDefaultText();
         setLanguage();
     }
-    
+
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
         UserLabel.setText(trans.returnTag("UserLabel"));
@@ -62,29 +62,29 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         DatabaseLabel.setText(trans.returnTag("DatabaseLabel"));
         EngineLabel.setText(trans.returnTag("DatabaseEngineLabel"));
     }
-    
+
     private void setDefaultText() {
-        ServerTextField.setText(KendoTournamentGenerator.getInstance().server);
-        UserTextField.setText(KendoTournamentGenerator.getInstance().user);
-        //DatabaseTextField.setText(KendoTournamentGenerator.getInstance().databaseName);
+        ServerTextField.setText(DatabaseConnection.getInstance().getServer());
+        UserTextField.setText(DatabaseConnection.getInstance().getUser());
+        //DatabaseTextField.setText(DatabaseConnection.getInstance().getDatabase()Name);
         //PasswordField.setText(KendoTournamentGenerator.getInstance().password);
     }
-    
+
     private void fillEngines() {
         engineUpdate = false;
         int i = 0, index = 0;
         for (DatabaseEngine db : DatabaseEngine.values()) {
             EngineComboBox.addItem(db.toString());
-            if (db.toString().equals(KendoTournamentGenerator.getInstance().getDatabaseEngine().toString())) {
+            if (db.toString().equals(DatabaseConnection.getInstance().getDatabaseEngine().toString())) {
                 index = i;
             }
             i++;
         }
         engineUpdate = true;
         EngineComboBox.setSelectedIndex(index); //Update the window with the event and the selected database. 
-        hasNetworkConnection(KendoTournamentGenerator.getInstance().getDatabaseEngine());
+        hasNetworkConnection(DatabaseConnection.getInstance().getDatabaseEngine());
     }
-    
+
     private void fillDatabaseList() {
         DatabaseComboBox.removeAllItems();
         if (!DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()).getHasNetworkConnection()) {
@@ -92,20 +92,20 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             files.remove(SQLite.defaultDatabaseName + "." + SQLite.defaultSQLiteExtension);
             DatabaseComboBox.addItem("");
             for (String file : files) {
-                DatabaseComboBox.addItem(file.substring(0, file.indexOf('.')));                
+                DatabaseComboBox.addItem(file.substring(0, file.indexOf('.')));
             }
-            DatabaseComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().databaseName);
+            DatabaseComboBox.setSelectedItem(DatabaseConnection.getInstance().getDatabaseName());
         } else {
             DatabaseComboBox.addItem("");
-            DatabaseComboBox.addItem(KendoTournamentGenerator.getInstance().databaseName);
+            DatabaseComboBox.addItem(DatabaseConnection.getInstance().getDatabaseName());
             DatabaseComboBox.setSelectedIndex(1);
         }
     }
-    
+
     public char[] password() {
         return PasswordField.getPassword();
     }
-    
+
     public String getPassword() {
         String p = "";
         for (int i = 0; i < PasswordField.getPassword().length; i++) {
@@ -113,43 +113,43 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         }
         return p;
     }
-    
+
     public String getUser() {
         return UserTextField.getText();
     }
-    
+
     public String getServer() {
         return ServerTextField.getText();
     }
-    
+
     public String getDatabase() {
         //return DatabaseTextField.getText();
         return DatabaseComboBox.getSelectedItem().toString();
     }
-    
+
     public void resetPassword() {
         PasswordField.setText("");
     }
-    
+
     private void hasNetworkConnection(DatabaseEngine engine) {
         ServerTextField.setEnabled(engine.getHasNetworkConnection());
         UserTextField.setEnabled(engine.getHasNetworkConnection());
         PasswordField.setEnabled(engine.getHasNetworkConnection());
     }
-    
+
     public String getSelectedEngine() {
         return selectedEngine;
     }
-    
+
     public void setSelectedEngine(String selectedEngine) {
         EngineComboBox.setSelectedItem(selectedEngine);
         this.selectedEngine = selectedEngine;
     }
-    
+
     public void setFocusOnPassword() {
         PasswordField.requestFocusInWindow();
     }
-    
+
     public boolean getPasswordEnabled() {
         return PasswordField.isEnabled();
     }
@@ -283,13 +283,13 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             resetPassword();
         }
     }//GEN-LAST:event_EngineComboBoxActionPerformed
-    
+
     private void ServerTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ServerTextFieldKeyReleased
-        KendoTournamentGenerator.getInstance().server = ServerTextField.getText();
+        DatabaseConnection.getInstance().setServer(ServerTextField.getText());
     }//GEN-LAST:event_ServerTextFieldKeyReleased
-    
+
     private void UserTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UserTextFieldKeyReleased
-        KendoTournamentGenerator.getInstance().user = UserTextField.getText();
+        DatabaseConnection.getInstance().setUser(UserTextField.getText());
     }//GEN-LAST:event_UserTextFieldKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox DatabaseComboBox;

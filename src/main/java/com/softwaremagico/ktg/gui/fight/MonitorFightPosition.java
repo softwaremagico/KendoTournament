@@ -127,7 +127,7 @@ public class MonitorFightPosition extends JFrame {
         fontSize = this.getWidth() / 45;
         addTitle(fontSize);
 
-        //teamTopTen = KendoTournamentGenerator.getInstance().database.getTeamsOrderByScore(tournament.name, false);
+        //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tournament.name, false);
         createRanking();
 
         if (teamTopTen.size() > 0) {

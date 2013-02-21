@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public final class SearchTournament extends Search<Tournament> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = KendoTournamentGenerator.getInstance().database.searchTournamentsByName(NameTextField.getText(), true);
+            results = DatabaseConnection.getInstance().getDatabase().searchTournamentsByName(NameTextField.getText(), true);
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -85,6 +85,6 @@ public final class SearchTournament extends Search<Tournament> {
 
     @Override
     protected boolean deleteFromDatabase(Tournament tournament) {
-        return KendoTournamentGenerator.getInstance().database.deleteTournament(tournament);
+        return DatabaseConnection.getInstance().getDatabase().deleteTournament(tournament);
     }
 }

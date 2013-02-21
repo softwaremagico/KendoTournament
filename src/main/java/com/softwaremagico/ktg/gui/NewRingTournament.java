@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -58,7 +59,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         setLanguage();
         fillTournaments();
         RefreshTournament();
-        listTeams = KendoTournamentGenerator.getInstance().database.searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
+        listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
         fillTeam1ComboBox();
     }
 
@@ -459,13 +460,13 @@ public class NewRingTournament extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (teams.size() > 0) {
             if (!AvoidRepetitionCheckBox.isSelected()) {
-                KendoTournamentGenerator.getInstance().database.storeFights(obtainRingFightsWithRepetition(), true, true);
+                DatabaseConnection.getInstance().getDatabase().storeFights(obtainRingFightsWithRepetition(), true, true);
             } else {
-                KendoTournamentGenerator.getInstance().database.storeFights(obtainRingFightsWithoutRepetition(), true, true);
+                DatabaseConnection.getInstance().getDatabase().storeFights(obtainRingFightsWithoutRepetition(), true, true);
             }
-            KendoTournamentGenerator.getInstance().database.deleteGroupsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), listTeams);
+            DatabaseConnection.getInstance().getDatabase().deleteGroupsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), listTeams);
             ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
-            KendoTournamentGenerator.getInstance().database.updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
+            DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTeam", "New Fight");

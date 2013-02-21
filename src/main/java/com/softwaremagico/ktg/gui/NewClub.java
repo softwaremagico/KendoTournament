@@ -29,6 +29,7 @@ import com.softwaremagico.ktg.Club;
 import com.softwaremagico.ktg.Competitor;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -103,7 +104,7 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     public void FillCompetitorsFromClub(Club club) {
-        competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsByClub(club.returnName(), false);
+        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClub(club.returnName(), false);
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
@@ -116,7 +117,7 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     private void FillCompetitors() {
-        competitors = KendoTournamentGenerator.getInstance().database.searchCompetitorsWithoutClub(false);
+        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsWithoutClub(false);
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
@@ -150,7 +151,7 @@ public class NewClub extends javax.swing.JFrame {
                     c.RefreshRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
-                if (KendoTournamentGenerator.getInstance().database.storeClub(c, true)) {
+                if (DatabaseConnection.getInstance().getDatabase().storeClub(c, true)) {
                     CleanWindow();
                 }
                 if (newCompetitor != null) {
@@ -159,7 +160,7 @@ public class NewClub extends javax.swing.JFrame {
                     if (updateClubOfCompetitor) { //Update club of selected competitor.
                         if (RepresentativeComboBox.getSelectedIndex() > 0) {
                             competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).club = c.returnName();
-                            KendoTournamentGenerator.getInstance().database.updateClubCompetitor(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), false);
+                            DatabaseConnection.getInstance().getDatabase().updateClubCompetitor(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), false);
                         }
                     }
                     this.dispose();

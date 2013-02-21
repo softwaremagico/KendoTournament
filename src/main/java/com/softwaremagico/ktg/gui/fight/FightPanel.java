@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -610,7 +611,7 @@ public final class FightPanel extends javax.swing.JFrame {
         try {
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).deleteSelectedFight((Integer) FightAreaComboBox.getSelectedIndex(), true);
             if (TournamentComboBox.getItemCount() > 0) {
-                TournamentGroupPool.getManager(selectedTournament).refillDesigner(KendoTournamentGenerator.getInstance().database.searchFightsByTournament((Tournament) TournamentComboBox.getSelectedItem()));
+                TournamentGroupPool.getManager(selectedTournament).refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament((Tournament) TournamentComboBox.getSelectedItem()));
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
         }
