@@ -738,7 +738,7 @@ public class FightManager {
     public void setFightAsOver(Fight fight) {
         fight.setOver();
         KendoLog.finest(this.getClass().getName(), "Fight '" + fight.team1.getName() + " vs " + fight.team2.getName() + "' is set to over.");
-        //DatabaseConnection.getInstance().getDatabase().updateFightAsOver(fight);
+        //Database will be updated later if lazy update. 
     }
 
     private boolean storeDuel(Duel d, Fight fight, int player) {
@@ -841,7 +841,7 @@ public class FightManager {
     public boolean storeLazyFights(int arena) {
         KendoLog.entering(this.getClass().getName(), "storeLazyFights");
         //If all arena fights are over or strict store is selected.
-        if (areArenaOver(arena) || !DatabaseConnection.getInstance().isDatabaseLazyUpdate()) {
+        if (!DatabaseConnection.getInstance().isDatabaseLazyUpdate() || areArenaOver(arena)) {
             //Store score into database.
             KendoLog.exiting(this.getClass().getName(), "storeLazyFights");
             return storeNotUpdatedFightsAndDuels();

@@ -541,7 +541,6 @@ public final class FightPanel extends javax.swing.JFrame {
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         KendoLog.entering(this.getClass().getName(), "NextButtonActionPerformed");
         try {
-            KendoLog.debug(this.getClass().getName(), "Next button is pressed.");
             Fight currentFight = getCurrentFight();
             KendoLog.debug(this.getClass().getName(), currentFight.toString());
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).setFightAsOver(currentFight);
@@ -559,7 +558,6 @@ public final class FightPanel extends javax.swing.JFrame {
 
                 //If all arena fights are over.
                 if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areArenaOver(FightAreaComboBox.getSelectedIndex())) {
-                    KendoLog.finer(this.getClass().getName(), "All fights in this arena are over!");
                     //Obtain next fights.
                     KendoLog.finest(this.getClass().getName(), "Calculating next fights for arena " + FightAreaComboBox.getSelectedIndex() + " in " + ((Tournament) TournamentComboBox.getSelectedItem()).getName());
                     FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).add(TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).nextLevel(

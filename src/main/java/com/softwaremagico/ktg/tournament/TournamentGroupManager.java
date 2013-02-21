@@ -517,8 +517,7 @@ public class TournamentGroupManager implements Serializable {
             } else {
                 // Only one arena is finished: show message for waiting all fightManager are over.
                 if ((arena = FightPool.getManager(tournament).allArenasAreOver()) != -1) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "",
-                            JOptionPane.INFORMATION_MESSAGE);
+                    MessageManager.informationMessage(this.getClass().getName(), "waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "");
                 }
             }
         } else {

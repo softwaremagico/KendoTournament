@@ -2410,6 +2410,7 @@ public abstract class SQL extends Database {
         return teams;
     }
     
+    @Override
     public List<String> getTeamsNameByLevel(Tournament tournament, int level, boolean verbose){
         KendoLog.entering(this.getClass().getName(), "getTeamsNameByLevel");
          List<String> results = new ArrayList<>();
