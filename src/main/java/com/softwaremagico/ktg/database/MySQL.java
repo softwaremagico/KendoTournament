@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
-import com.mysql.jdbc.CommunicationsException;
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.KendoLog;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
@@ -89,9 +89,9 @@ public class MySQL extends SQL {
                 return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
             }
         }catch(CommunicationsException ce){
-            MessageManager.errorMessage("databaseConnectionFailure", "", "");
+            MessageManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
+            error = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             //If server not started (but assume that is installed) start it.
             if (ex.getErrorCode() == 0) {
                 if (retry && DatabaseConnection.getInstance().isLocallyConnected()) {
@@ -108,6 +108,7 @@ public class MySQL extends SQL {
                     error = true;
                 }
             } else {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 showSQLError(ex.getErrorCode());
                 error = true;
             }
