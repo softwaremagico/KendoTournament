@@ -14,9 +14,6 @@
         <Menu class="javax.swing.JMenu" name="ProgramMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Program"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="DatabaseMenu">
@@ -240,9 +237,6 @@
         <Menu class="javax.swing.JMenu" name="InsertMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Insert"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="ClubMenuItem">
@@ -277,9 +271,6 @@
         <Menu class="javax.swing.JMenu" name="TournamentMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tournament"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="ScoreMenuItem">
@@ -372,9 +363,6 @@
         <Menu class="javax.swing.JMenu" name="ListMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Lists"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="AccreditationMenuItem">
@@ -454,9 +442,6 @@
         <Menu class="javax.swing.JMenu" name="StatisticsMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Statistics"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="TournamentStatisticsMenu">
@@ -542,9 +527,6 @@
         <Menu class="javax.swing.JMenu" name="OptionsMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Options"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <Menu class="javax.swing.JMenu" name="LanguageMenu">
@@ -596,9 +578,6 @@
         <Menu class="javax.swing.JMenu" name="HelpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Ubuntu" size="15" style="1"/>
-            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="HelpMenuItem">
@@ -663,7 +642,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="230" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="236" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

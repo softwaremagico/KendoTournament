@@ -40,6 +40,20 @@ public class Duel implements Serializable {
     public int faultsCompetitorA = 0;
     public int faultsCompetitorB = 0;
     private boolean stored = false; //Has been stored into the database or not. 
+    private boolean erasedPoints = false;
+
+    /**
+     * if a result has been modified (erased) must be reflected into the
+     * database.
+     *
+     * @return
+     */
+    public void setErasedPoints(boolean value) {
+        if (stored) { //Only need to be update the empty values if has been stored into the database.
+            System.out.println("e:"+value);
+            erasedPoints = value;
+        }
+    }
 
     public boolean isStored() {
         return stored;
@@ -133,6 +147,7 @@ public class Duel implements Serializable {
             System.out.println("Point ignored: fight finished.");
         }
         //showHits();
+        stored = false;
         return roundUpdated;
     }
 
@@ -147,6 +162,7 @@ public class Duel implements Serializable {
                     hitsFromCompetitorB.set(i, Score.EMPTY);
                 }
             }
+            stored = false;
         } catch (IndexOutOfBoundsException iob) {
         }
     }
@@ -166,6 +182,7 @@ public class Duel implements Serializable {
                 faultsCompetitorB = 0;
             }
         }
+        stored = false;
     }
 
     public int getFaultInRound(boolean player1) {
@@ -182,6 +199,7 @@ public class Duel implements Serializable {
         } else {
             faultsCompetitorB = 0;
         }
+        stored = false;
     }
 
     public int howManyPoints(boolean player1) {
@@ -207,9 +225,9 @@ public class Duel implements Serializable {
     }
 
     public boolean needsToBeStored() {
-        if (howManyPoints(true) > 0 || howManyPoints(false) > 0
+        if (erasedPoints || howManyPoints(true) > 0 || howManyPoints(false) > 0
                 || getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
-            KendoLog.finest(this.getClass().getName(),"Duel needs to be stored.");
+            KendoLog.finest(this.getClass().getName(), "Duel needs to be stored.");
             return true;
         }
         return false;

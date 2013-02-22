@@ -234,7 +234,9 @@ public class FightManager {
     public void setFightAsNotOver(int fight) {
         if (fight >= 0 && fight < fights.size()) {
             fights.get(fight).setAsNotOver();
-            DatabaseConnection.getInstance().getDatabase().updateFightAsNotOver(fights.get(fight));
+            if (!DatabaseConnection.getInstance().isDatabaseLazyUpdate()) {
+                DatabaseConnection.getInstance().getDatabase().updateFightAsNotOver(fights.get(fight));
+            }
         }
     }
 
@@ -722,7 +724,7 @@ public class FightManager {
     private ArrayList<Fight> notUpdatedFights() {
         ArrayList<Fight> notStored = new ArrayList<>();
         for (Fight f : fights) {
-            if (!f.isOverStored() || !f.areUpdatedDuelsOfFight()) {
+            if (!f.isOverStored() || f.areDuelsNeedToBeUpdated()) {
                 notStored.add(f);
             }
         }
@@ -743,7 +745,7 @@ public class FightManager {
 
     private boolean storeDuel(Duel d, Fight fight, int player) {
         KendoLog.fine(FightManager.class.getName(), "Storing duel '" + d.showScore());
-        if (d.needsToBeStored()) {
+        if (d.needsToBeStored()) { //Have points!
             if (DatabaseConnection.getInstance().getDatabase().storeDuel(d, fight, player)) {
                 d.setStored(true);
                 return true;

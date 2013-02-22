@@ -29,10 +29,6 @@ package com.softwaremagico.ktg;
 
 import java.util.HashMap;
 
-/**
- *
- * @author jhortelano
- */
 public class FightPool {
 
     private static HashMap<Tournament, FightManager> existingManagers = new HashMap<>();

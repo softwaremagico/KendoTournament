@@ -277,9 +277,11 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
+                fight.setOverStored(false);
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, true);
                 } else {
+                    d.setErasedPoints(true);
                     d.clearResultInRound(round, true);
                 }
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
@@ -290,6 +292,7 @@ public class CompetitorFight extends JPanel {
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, false);
                 } else {
+                    d.setErasedPoints(true);
                     d.clearResultInRound(round, false);
                 }
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
@@ -307,6 +310,7 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
+                fight.setOverStored(false);
                 d.setFaultInRound(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
@@ -328,12 +332,15 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.team1.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
+                d.setErasedPoints(true);
                 d.resetFaults(true);
+                fight.setOverStored(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
             if ((index = fight.team2.getIndexOfMember(fight.level, competitor)) != -1) {
                 d = fight.duels.get(index);
+                d.setErasedPoints(true);
                 d.resetFaults(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();

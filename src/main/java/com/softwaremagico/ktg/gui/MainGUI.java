@@ -498,7 +498,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         ProgramMenu.setText("Program");
-        ProgramMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         DatabaseMenu.setText("Database");
 
@@ -605,7 +604,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(ProgramMenu);
 
         InsertMenu.setText("Insert");
-        InsertMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         ClubMenuItem.setText("Add Club");
         InsertMenu.add(ClubMenuItem);
@@ -620,7 +618,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(InsertMenu);
 
         TournamentMenu.setText("Tournament");
-        TournamentMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         ScoreMenuItem.setText("Score");
         TournamentMenu.add(ScoreMenuItem);
@@ -657,7 +654,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(TournamentMenu);
 
         ListMenu.setText("Lists");
-        ListMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         AccreditationMenuItem.setText("Accreditation Cards");
         ListMenu.add(AccreditationMenuItem);
@@ -689,7 +685,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(ListMenu);
 
         StatisticsMenu.setText("Statistics");
-        StatisticsMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         TournamentStatisticsMenu.setText("By tournament");
 
@@ -724,7 +719,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(StatisticsMenu);
 
         OptionsMenu.setText("Options");
-        OptionsMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         LanguageMenu.setText("Language");
         OptionsMenu.add(LanguageMenu);
@@ -759,7 +753,6 @@ public class MainGUI extends KendoFrame {
         MainMenuBar.add(OptionsMenu);
 
         HelpMenu.setText("Help");
-        HelpMenu.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         HelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         HelpMenuItem.setText("Help");
@@ -786,7 +779,7 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

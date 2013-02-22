@@ -3393,6 +3393,7 @@ public abstract class SQL extends Database {
                     }
 
                     d.hitsFromCompetitorB.set(1, Score.getScore(c));
+                    d.setStored(true);
                     results.add(d);
                 }
             }
@@ -3465,6 +3466,7 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
         }
         KendoLog.exiting(this.getClass().getName(), "getDuel");
+        d.setStored(true);
         return d;
     }
 
@@ -3540,7 +3542,7 @@ public abstract class SQL extends Database {
                 //Faults
                 d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
                 d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
+                d.setStored(true);
                 results.add(d);
             }
             rs.close();
@@ -3611,7 +3613,7 @@ public abstract class SQL extends Database {
                     //Faults
                     d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
                     d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
+                    d.setStored(true);
                     results.add(d);
                 }
             }

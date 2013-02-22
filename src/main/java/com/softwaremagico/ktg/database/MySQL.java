@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import com.softwaremagico.ktg.KendoLog;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
@@ -88,7 +89,7 @@ public class MySQL extends SQL {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
                 return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
             }
-        }catch(CommunicationsException ce){
+        } catch (CommunicationsException ce) {
             MessageManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
             error = true;
         } catch (SQLException ex) {
@@ -108,7 +109,7 @@ public class MySQL extends SQL {
                     error = true;
                 }
             } else {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                //KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 showSQLError(ex.getErrorCode());
                 error = true;
             }
@@ -176,7 +177,13 @@ public class MySQL extends SQL {
     @Override
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + tmp_server + ":" + port, tmp_user, tmp_password);
+            //connection = DriverManager.getConnection("jdbc:mysql://" + tmp_server + ":" + port, tmp_user, tmp_password);
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser(tmp_user);
+            dataSource.setPassword(tmp_password);
+            dataSource.setServerName(tmp_server);
+            
+            connection = dataSource.getConnection();
             try (PreparedStatement sm = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS " + tmp_database)) {
                 sm.executeUpdate();
             }

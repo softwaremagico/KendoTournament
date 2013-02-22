@@ -23,7 +23,6 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,7 +243,7 @@ public class Fight implements Serializable {
                     || (team1.getMember(i, level).getName().equals("")
                     && team1.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(false);
-               DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+              // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
             }
         }
 
@@ -256,7 +255,7 @@ public class Fight implements Serializable {
                     || (team2.getMember(i, level).getName().equals("")
                     && team2.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(true);
-                DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+               // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
             }
         }
 
@@ -309,16 +308,16 @@ public class Fight implements Serializable {
         return hash;
     }
 
-    public boolean areUpdatedDuelsOfFight() {
+    public boolean areDuelsNeedToBeUpdated() {
         if (duels.isEmpty()) {
             return false;
         }
         for (Duel d : duels) {
             if (!d.isStored()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public String show() {
