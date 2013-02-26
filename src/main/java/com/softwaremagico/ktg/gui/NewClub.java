@@ -81,10 +81,10 @@ public class NewClub extends javax.swing.JFrame {
     public void UpdateWindow(Club tmp_c) {
         try {
             c = tmp_c;
-            NameTextField.setText(c.returnName());
-            CountryTextField.setText(c.returnCountry());
-            CityTextField.setText(c.returnCity());
-            AddressTextField.setText(c.returnAddress());
+            NameTextField.setText(c.getName());
+            CountryTextField.setText(c.getCountry());
+            CityTextField.setText(c.getCity());
+            AddressTextField.setText(c.getAddress());
             FillCompetitorsFromClub(c);
             selectRepresentative(c);
             PhoneTextField.setText(c.phone);
@@ -104,7 +104,7 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     public void FillCompetitorsFromClub(Club club) {
-        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClub(club.returnName(), false);
+        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClub(club.getName(), false);
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
@@ -136,7 +136,7 @@ public class NewClub extends javax.swing.JFrame {
 
     private void UpdateRepresentative() {
         try {
-            c.RefreshRepresentative(RepresentativeComboBox.getSelectedItem().toString(), MailTextField.getText(), PhoneTextField.getText());
+            c.setRepresentative(RepresentativeComboBox.getSelectedItem().toString(), MailTextField.getText(), PhoneTextField.getText());
         } catch (NullPointerException npe) {
         }
     }
@@ -146,12 +146,12 @@ public class NewClub extends javax.swing.JFrame {
             setAlwaysOnTop(false);
             if (NameTextField.getText().length() > 0 && CountryTextField.getText().length() > 0 && CityTextField.getText().length() > 0) {
                 c = new Club(NameTextField.getText().trim(), CountryTextField.getText().trim(), CityTextField.getText().trim());
-                c.storeAddress(AddressTextField.getText());
+                c.setAddress(AddressTextField.getText());
                 try {
-                    c.RefreshRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
+                    c.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
-                if (DatabaseConnection.getInstance().getDatabase().storeClub(c, true)) {
+                if (DatabaseConnection.getInstance().getDatabase().addClub(c, true)) {
                     CleanWindow();
                 }
                 if (newCompetitor != null) {
@@ -159,7 +159,7 @@ public class NewClub extends javax.swing.JFrame {
                     newCompetitor.addClub(c);  //Uodate competitor window.
                     if (updateClubOfCompetitor) { //Update club of selected competitor.
                         if (RepresentativeComboBox.getSelectedIndex() > 0) {
-                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).club = c.returnName();
+                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).club = c.getName();
                             DatabaseConnection.getInstance().getDatabase().updateClubCompetitor(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), false);
                         }
                     }

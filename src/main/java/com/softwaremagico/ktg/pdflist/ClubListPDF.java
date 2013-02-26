@@ -68,10 +68,10 @@ public class ClubListPDF extends ParentList {
         int cellNumber = 0;
         boolean firstClub = true;
 
-        List<Club> clubs = DatabaseConnection.getInstance().getDatabase().getAllClubs();
+        List<Club> clubs = DatabaseConnection.getInstance().getDatabase().getClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-            List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClubAndTournament(clubs.get(i).returnName(), championship, false, false);
+            List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClubAndTournament(clubs.get(i).getName(), championship, false, false);
 
             if (competitors.size() > 0) {
                 if (!firstClub) {
@@ -82,9 +82,9 @@ public class ClubListPDF extends ParentList {
                 /**
                  * Club
                  */
-                String text = clubs.get(i).returnName();
-                if (clubs.get(i).returnCountry().length() > 1) {
-                    text += " (" + clubs.get(i).returnCountry() + ")";
+                String text = clubs.get(i).getName();
+                if (clubs.get(i).getCountry().length() > 1) {
+                    text += " (" + clubs.get(i).getCountry() + ")";
                 }
                 mainTable.addCell(getHeader2(text, 0));
             }

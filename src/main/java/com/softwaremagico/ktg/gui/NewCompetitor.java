@@ -86,7 +86,7 @@ public class NewCompetitor extends KendoFrame {
 
     public final void addClub(Club c) {
         refreshClub = false;
-        ClubComboBox.addItem(c.returnName());
+        ClubComboBox.addItem(c.getName());
         refreshClub = true;
     }
 

@@ -177,7 +177,7 @@ public class StoreDatabase implements Serializable {
         private boolean storeInDatabase() {
             for (int i = 0; i < clubs.size(); i++) {
                 timerPanel.updateText(transl.returnTag("ImportDatabaseProgressBarLabelClub") + " " + (i + 1) + "/" + clubs.size(), current, total);
-                if (!DatabaseConnection.getInstance().getDatabase().storeClub(clubs.get(i), false)) {
+                if (!DatabaseConnection.getInstance().getDatabase().addClub(clubs.get(i), false)) {
                     return false;
                 }
                 current++;
@@ -344,7 +344,7 @@ public class StoreDatabase implements Serializable {
         private boolean saveDatabaseInFile() {
             boolean error = false;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), current, total);
-            clubs = DatabaseConnection.getInstance().getDatabase().getAllClubs();
+            clubs = DatabaseConnection.getInstance().getDatabase().getClubs();
             current += 10;
             timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), current, total);
             competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitorsWithPhoto();

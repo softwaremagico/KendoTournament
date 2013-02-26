@@ -31,7 +31,6 @@ import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.statistics.CompetitorRanking;
-import com.softwaremagico.ktg.statistics.TeamRanking;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -110,12 +109,12 @@ public abstract class SQL extends Database {
 
     private void exportClubs(String file) {
         Folder.appendTextToFile("LOCK TABLES `club` WRITE;\n", file);
-        List<Club> clubs = getAllClubs();
+        List<Club> clubs = getClubs();
         for (int i = 0; i < clubs.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).returnName() + "','" + clubs.get(i).returnCountry() + "','"
+            Folder.appendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).getName() + "','" + clubs.get(i).getCountry() + "','"
                     + clubs.get(i).representativeID + "','" + clubs.get(i).email + "','"
-                    + clubs.get(i).phone + "','" + clubs.get(i).returnCity() + "',"
-                    + "NULL" + ",'" + clubs.get(i).returnAddress() + "');\n", file);
+                    + clubs.get(i).phone + "','" + clubs.get(i).getCity() + "',"
+                    + "NULL" + ",'" + clubs.get(i).getAddress() + "');\n", file);
         }
         Folder.appendTextToFile("UNLOCK TABLES;\n", file);
         Folder.appendTextToFile("--------------------\n", file);
@@ -1397,46 +1396,18 @@ public abstract class SQL extends Database {
      * @param club
      */
     @Override
-    public boolean storeClub(Club club, boolean verbose) {
+    protected boolean addClubs(List<Club> clubs) {
         KendoLog.entering(this.getClass().getName(), "storeClub");
-        KendoLog.fine(SQL.class.getName(), "Storing club " + club.returnName() + " into database.");
         boolean inserted = true;
-        boolean update = false;
-        boolean answer = false;
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM club WHERE Name='" + club.returnName() + "'")) {
-                if (rs.next()) {
-                    if (verbose) {
-                        answer = MessageManager.questionMessage("questionUpdateClub", "Warning!");
-                    }
-                    if (answer || !verbose) {
-                        KendoLog.finer(SQL.class.getName(), "Club exist, updating club.");
-                        try (PreparedStatement stmt = connection.prepareStatement("UPDATE club SET Country=?, City=?, Phone=?, Mail=?, Representative=?, Address=?, Web=? WHERE Name='" + club.returnName() + "'")) {
-                            stmt.setString(1, club.returnCountry());
-                            stmt.setString(2, club.returnCity());
-                            stmt.setString(3, club.phone);
-                            stmt.setString(4, club.email);
-                            stmt.setString(5, club.representativeID);
-                            stmt.setString(6, club.returnAddress());
-                            stmt.setString(7, club.returnWeb());
-                            stmt.executeUpdate();
-                        }
-                        update = true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    try (Statement st = connection.createStatement()) {
-                        st.executeUpdate("INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('" + club.returnName() + "','" + club.returnCountry() + "','" + club.returnCity() + "','" + club.returnAddress() + "','" + club.returnWeb() + "','" + club.email + "'," + club.phone + ",'" + club.representativeID + "')");
-                    }
-                }
-            }
+        String query = "";
+        for (Club club : clubs) {
+            query += "INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('" + club.getName() + "','" + club.getCountry() + "','" + club.getCity() + "','" + club.getAddress() + "','" + club.getWeb() + "','" + club.getMail() + "'," + club.getPhone() + ",'" + club.getRepresentative() + "');\n";
+        }
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
         } catch (MySQLIntegrityConstraintViolationException micve) {
             inserted = false;
-            if (verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "nameClub", "SQL");
-            }
+            MessageManager.errorMessage(this.getClass().getName(), "nameClub", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), micve);
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -1444,64 +1415,20 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (NullPointerException npe) {
             inserted = false;
-            if (verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            }
+            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-
-        if (inserted && verbose) {
-            if (!update) {
-                MessageManager.translatedMessage(this.getClass().getName(), "clubStored", this.getClass().getName(), club.returnName(), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                MessageManager.translatedMessage(this.getClass().getName(), "clubUpdated", this.getClass().getName(), club.returnName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-
         }
         KendoLog.exiting(this.getClass().getName(), "storeClub");
         return inserted;
     }
 
     @Override
-    public List<String> returnClubsName() {
-        KendoLog.entering(this.getClass().getName(), "returnClubsName");
-        KendoLog.fine(SQL.class.getName(), "Obtaining the name of all clubs.");
-        List<String> clubs = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("select * FROM club ORDER BY Name")) {
-                while (rs.next()) {
-                    clubs.add(rs.getString(1));
-                }
-            }
-            KendoLog.exiting(this.getClass().getName(), "returnClubsName");
-            return clubs;
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
-        }
-
-        KendoLog.exiting(this.getClass().getName(), "returnClubsName");
-        return null;
-    }
-
-    @Override
-    public List<Club> getAllClubs() {
-        KendoLog.entering(this.getClass().getName(), "getAllClubs");
-        List<Club> clubs = getClubs(0, Integer.MAX_VALUE);
-        KendoLog.exiting(this.getClass().getName(), "getAllClubs");
-        return clubs;
-    }
-
-    @Override
-    public List<Club> getClubs(int fromRow, int numberOfRows) {
+    protected List<Club> getClubs() {
         KendoLog.entering(this.getClass().getName(), "getClubs");
-        KendoLog.fine(SQL.class.getName(), "Obtaining all clubs.");
         List<Club> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("select * FROM club ORDER BY Name LIMIT " + fromRow + "," + numberOfRows)) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM club ORDER BY Name")) {
                 while (rs.next()) {
                     String city = "";
                     if (rs.getObject("City") != null) {
@@ -1515,7 +1442,7 @@ public abstract class SQL extends Database {
 
                     Club c = new Club(rs.getObject("Name").toString(), country, city);
                     try {
-                        c.storeAddress(rs.getObject("Address").toString());
+                        c.setAddress(rs.getObject("Address").toString());
                     } catch (NullPointerException npe) {
                     }
                     try {
@@ -1524,14 +1451,13 @@ public abstract class SQL extends Database {
                     }
                     if (c != null) {
                         try {
-                            c.RefreshRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
+                            c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
                         } catch (NullPointerException npe) {
                         }
                         results.add(c);
                     }
                 }
             }
-
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
@@ -1544,147 +1470,50 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllClubs");
-        KendoLog.fine(SQL.class.getName(), "Storing a list of clubs.");
-        boolean error = false;
-        try {
-            if (deleteOldOnes) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM club");
-                }
-            }
-
-            for (int i = 0; i < clubs.size(); i++) {
-                if (!storeClub(clubs.get(i), false)) {
-                    error = true;
-                }
-            }
-        } catch (SQLException ex) {
-            error = true;
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+    protected boolean removeClubs(List<Club> clubs) {
+        KendoLog.entering(this.getClass().getName(), "deleteClubs");
+        String query = "";
+        for (Club club : clubs) {
+            query += "DELETE FROM club WHERE Name='" + club.getName() + "';\n";
         }
-        KendoLog.exiting(this.getClass().getName(), "storeAllClubs");
-        return !error;
-    }
-
-    @Override
-    public List<Club> searchClub(String query, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchClub");
-        KendoLog.finer(SQL.class.getName(), query);
-        List<Club> results = new ArrayList<>();
-
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-
-                while (rs.next()) {
-                    Club c = new Club(rs.getObject("Name").toString(), rs.getObject("Country").toString(), rs.getObject("City").toString());
-                    try {
-                        c.storeAddress(rs.getObject("Address").toString());
-                    } catch (NullPointerException npe) {
-                    }
-                    try {
-                        c.storeWeb(rs.getObject("Web").toString());
-                    } catch (NullPointerException npe) {
-                    }
-                    try {
-                        c.RefreshRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
-                    } catch (NullPointerException npe) {
-                    }
-                    results.add(c);
-                }
-            }
-            if (results.isEmpty()) {
-                if (verbose) {
-                    MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-                }
-            }
-
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteClub", "SQL");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            }
+            return false;
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "searchClub");
-        return results;
-    }
-
-    @Override
-    public List<Club> searchClubByName(String name, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchClubByName");
-        String query = "SELECT * FROM club WHERE Name LIKE '%" + name + "%' ORDER BY Name";
-        List<Club> clubs = searchClub(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchClubByName");
-        return clubs;
-    }
-
-    @Override
-    public List<Club> searchClubByCity(String city, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchClubByCity");
-        String query = "SELECT * FROM club WHERE City LIKE '%" + city + "%' ORDER BY Name";
-        List<Club> clubs = searchClub(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchClubByCity");
-        return clubs;
-    }
-
-    @Override
-    public List<Club> searchClubByCountry(String country, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchClubByCountry");
-        String query = "SELECT * FROM club WHERE Country LIKE '%" + country + "%' ORDER BY Name";
-        List<Club> clubs = searchClub(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchClubByCountry");
-        return clubs;
-    }
-
-    @Override
-    public boolean deleteClub(Club club, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteClub");
-        boolean error = false;
-        boolean answer = false;
-        KendoLog.fine(SQL.class.getName(), "Deleting club " + club.returnName());
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionDeleteClub", "Warning!");
-            }
-
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM club WHERE Name='" + club.returnName() + "'");
-                }
-            }
-
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "deleteClub", "SQL");
-                    }
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                }
-
-            }
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-
-            }
-        }
-        if (!error && answer) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "clubDeleted", this.getClass().getName(), club.returnName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(SQL.class.getName(), "Club deleted: " + club.returnName());
-        }
-
         KendoLog.exiting(this.getClass().getName(), "deleteClub");
-        return !error && (answer || !verbose);
+        return true;
+    }
+
+    @Override
+    protected boolean updateClubs(HashMap<Club, Club> clubsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateClubs");
+        List<Club> oldClubs = new ArrayList<>(clubsExchange.values());
+        List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
+        String query = "";
+        for (Club club : newClubs) {
+            query += "UPDATE Club SET Country='" + club.getCountry() + "', City='" + club.getCity() + "', Address='" + club.getAddress() + "', Web='" + club.getWeb() + "', Mail='" + club.getMail() + "', Phone='" + club.getPhone() + "', Representative='" + club.getRepresentative() + "' WHERE Name='" + clubsExchange.get(club).getName() + "'\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            }
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "updateClubs");
+        return true;
     }
 
     /**
@@ -2121,6 +1950,11 @@ public abstract class SQL extends Database {
      *
      ********************************************************************
      */
+    /**
+     *
+     * @param tournament
+     * @return
+     */
     @Override
     protected List<Team> getTeams(Tournament tournament) {
         String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
@@ -2225,7 +2059,7 @@ public abstract class SQL extends Database {
         KendoLog.exiting(this.getClass().getName(), "updateTeams");
         return true;
     }
-    
+
     /**
      * Obtain the members of a team in a specific level.
      *

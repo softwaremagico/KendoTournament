@@ -32,7 +32,7 @@ public class TeamPool extends Pool<Team> {
         List<Team> teams = DatabaseConnection.getConnection().getDatabase().getTeams(tournament);
         HashMap<String, Team> hashMap = new HashMap<>();
         for (Team t : teams) {
-            hashMap.put(t.getName(), t);
+            hashMap.put(getId(t), t);
         }
         return hashMap;
     }
@@ -54,9 +54,9 @@ public class TeamPool extends Pool<Team> {
 
     @Override
     protected List<Team> sort(Tournament tournament) {
-        List<Team> unsortedTeams = new ArrayList(get(tournament).values());
-        Collections.sort(unsortedTeams);
-        return unsortedTeams;
+        List<Team> unsorted = new ArrayList(get(tournament).values());
+        Collections.sort(unsorted);
+        return unsorted;
     }
 
     /**

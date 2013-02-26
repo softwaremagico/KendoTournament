@@ -27,34 +27,30 @@ package com.softwaremagico.ktg;
 
 import java.io.Serializable;
 
-/**
- *
- * @author jorge
- */
-public class Club implements Serializable {
+public class Club implements Serializable, Comparable<Club> {
 
     private String name = "";
     private String country = "";
     private String city = "";
     private String address = "";
-    public String representativeID = "";
-    public String email = "";
-    public String phone = null;
+    private String representativeID = "";
+    private String email = "";
+    private String phone = null;
     private String web = "";
 
-    public Club(String tmp_name, String tmp_country, String tmp_city) {
-        storeName(tmp_name);
-        storeCountry(tmp_country);
-        storeCity(tmp_city);
+    public Club(String name, String country, String city) {
+        setName(name);
+        setCountry(country);
+        setCity(city);
     }
 
-    public void RefreshRepresentative(String tmp_representative, String tmp_email, String tmp_phone) {
-        representativeID = tmp_representative;
-        email = tmp_email;
-        phone = tmp_phone;
+    public void setRepresentative(String representative, String email, String phone) {
+        representativeID = representative;
+        this.email = email;
+        this.phone = phone;
     }
 
-    private void storeName(String value) {
+    private void setName(String value) {
         name = "";
         String[] data = value.split(" ");
         for (int i = 0; i < data.length; i++) {
@@ -67,11 +63,11 @@ public class Club implements Serializable {
         name = name.trim();
     }
 
-    public String returnName() {
+    public String getName() {
         return name;
     }
 
-    private void storeCountry(String value) {
+    private void setCountry(String value) {
         country = "";
         String[] data = value.split(" ");
         for (int i = 0; i < data.length; i++) {
@@ -84,7 +80,7 @@ public class Club implements Serializable {
         country = country.trim();
     }
 
-    private void storeCity(String value) {
+    private void setCity(String value) {
         city = "";
         String[] data = value.split(" ");
         for (int i = 0; i < data.length; i++) {
@@ -97,7 +93,7 @@ public class Club implements Serializable {
         city = city.trim();
     }
 
-    public void storeAddress(String value) {
+    public void setAddress(String value) {
         address = "";
         String[] data = value.split(" ");
         for (int i = 0; i < data.length; i++) {
@@ -110,24 +106,48 @@ public class Club implements Serializable {
         address = address.trim();
     }
 
+    public void setMail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRepresentative(String representative) {
+        this.representativeID = representative;
+    }
+
     public void storeWeb(String value) {
         web = value.trim();
     }
 
-    public String returnCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public String returnCity() {
+    public String getCity() {
         return city;
     }
 
-    public String returnAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public String returnWeb() {
+    public String getWeb() {
         return web;
+    }
+
+    public String getMail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getRepresentative() {
+        return representativeID;
     }
 
     @Override
@@ -148,5 +168,15 @@ public class Club implements Serializable {
         hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
         hash = 67 * hash + (this.city != null ? this.city.hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    @Override
+    public int compareTo(Club c) {
+        return (getName() + city).compareTo(c.getName() + c.getCity());
     }
 }

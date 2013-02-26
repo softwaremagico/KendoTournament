@@ -91,8 +91,8 @@ public class ImportCSV {
 
         //Update club
         Club c = new Club(club, " ", city);
-        c.storeAddress(address);
-        if (!DatabaseConnection.getInstance().getDatabase().storeClub(c, false)) {
+        c.setAddress(address);
+        if (!DatabaseConnection.getInstance().getDatabase().addClub(c, false)) {
             error = true;
         }
 
@@ -107,8 +107,8 @@ public class ImportCSV {
         }
 
         //Update representative.
-        c.RefreshRepresentative(id, email, phone);
-        if (!DatabaseConnection.getInstance().getDatabase().storeClub(c, false)) {
+        c.setRepresentative(id, email, phone);
+        if (!DatabaseConnection.getInstance().getDatabase().addClub(c, false)) {
             error = true;
         }
 

@@ -89,7 +89,7 @@ public final class SearchClub extends Search<Club> {
 
     @Override
     protected String getResultInformation(Club object) {
-        return object.returnName() + " (" + object.returnCountry() + ")";
+        return object.getName() + " (" + object.getCountry() + ")";
     }
 
     @Override

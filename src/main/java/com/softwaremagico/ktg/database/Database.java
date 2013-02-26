@@ -263,25 +263,13 @@ public abstract class Database {
      *
      * @param club
      */
-    public abstract boolean storeClub(Club club, boolean verbose);
+    protected abstract boolean addClubs(List<Club> clubs);
 
-    public abstract List<String> returnClubsName();
-
-    public abstract List<Club> getAllClubs();
-
-    public abstract List<Club> getClubs(int fromRow, int numberOfRows);
-
-    public abstract boolean storeAllClubs(List<Club> clubs, boolean deleteOldOnes);
-
-    public abstract List<Club> searchClub(String query, boolean verbose);
-
-    public abstract List<Club> searchClubByName(String name, boolean verbose);
-
-    public abstract List<Club> searchClubByCity(String city, boolean verbose);
-
-    public abstract List<Club> searchClubByCountry(String country, boolean verbose);
-
-    public abstract boolean deleteClub(Club club, boolean verbose);
+    protected abstract List<Club> getClubs();
+    
+    protected abstract boolean removeClubs(List<Club> clubs);
+    
+    protected abstract boolean updateClubs(HashMap<Club, Club> clubsExchange);
 
     /**
      * *******************************************************************
