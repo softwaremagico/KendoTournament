@@ -27,10 +27,6 @@ package com.softwaremagico.ktg;
 
 import java.io.Serializable;
 
-/**
- *
- * @author jorge
- */
 public class Competitor extends Participant implements Serializable {
 
     public String club;

@@ -193,7 +193,7 @@ public class Participant implements Serializable, Comparable<Participant> {
     }
 
     /**
-     * Compare participants avoidong accent problems. 
+     * Compare participants avoiding accent problems. 
      * @param otherParticipant
      * @return 
      */
@@ -207,5 +207,10 @@ public class Participant implements Serializable, Comparable<Participant> {
         collator.setDecomposition(Collator.FULL_DECOMPOSITION);
 
         return collator.compare(string1, string2);
+    }
+    
+    @Override
+    public String toString(){
+        return getSurnameName();
     }
 }

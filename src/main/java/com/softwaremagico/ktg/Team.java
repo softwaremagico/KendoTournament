@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author Jorge
  */
-public class Team implements Serializable {
+public class Team implements Serializable, Comparable<Team> {
 
     public Tournament tournament;
     private List<List<Competitor>> participantsPerLevel = new ArrayList<>();
@@ -219,6 +219,11 @@ public class Team implements Serializable {
             System.out.println(" +++++++ +++++++++++++ +++++++ ");
         }
     }
+    
+    public boolean isMember(Competitor competitor){
+        List<Competitor> competitors = getCompetitorsInLevel(0);
+        return competitors.contains(competitor);
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -244,5 +249,10 @@ public class Team implements Serializable {
     @Override
     public String toString() {
         return this.getName();
+    }
+    
+     @Override
+    public int compareTo(Team t) {
+        return getName().compareTo(t.getName());
     }
 }

@@ -40,6 +40,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -521,7 +522,7 @@ public abstract class SQL extends Database {
                     if (competitor.photoInput.markSupported()) {
                         competitor.photoInput.reset();
                     }
-                } catch (IOException |  NullPointerException ex) {
+                } catch (IOException | NullPointerException ex) {
                 }
                 try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=?, Photo=?, PhotoSize=? WHERE ID='" + competitor.getId() + "'")) {
                     stmt.setString(1, competitor.getName());
@@ -2120,82 +2121,36 @@ public abstract class SQL extends Database {
      *
      ********************************************************************
      */
-    /**
-     * Check if the team already exists into the database and update or insert
-     * it.
-     *
-     * @param club
-     */
     @Override
-    public boolean storeTeam(Team team, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeTeam");
-        KendoLog.fine(SQL.class.getName(), "Storing team " + team.getName());
-        boolean error = false;
-        boolean answer = false;
-        boolean update = false;
-        //Delete all old entries for these team if exists.
+    protected List<Team> getTeams(Tournament tournament) {
+        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
+        KendoLog.entering(this.getClass().getName(), "searchTeam");
+        KendoLog.finer(SQL.class.getName(), query);
+
+        List<Team> results = new ArrayList<>();
+
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs1 = s.executeQuery("SELECT * FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'")) {
-                if (rs1.next()) {
-                    if (verbose) {
-                        answer = MessageManager.questionMessage("questionUpdateTeam", "Warning!");
-                    }
-                    if (answer || !verbose) {
-                        KendoLog.finer(SQL.class.getName(), "Deleting an existing team " + team.getName());
-                        s.executeUpdate("DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "' AND LeagueGroup=" + team.group);
-                    } else {
-                        KendoLog.exiting(this.getClass().getName(), "storeTeam");
-                        return false;
-                    }
-                }
-
-                if (insertTeam(team, verbose)) {
-                    TeamPool.getManager(team.tournament).addTeam(team);
+                    ResultSet rs = s.executeQuery(query)) {
+                while (rs.next()) {
+                    Team t = new Team(rs.getObject("Name").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()));
+                    t.addGroup(rs.getInt("LeagueGroup"));
+                    t.setMembers(searchTeamMembers(t, false));
+                    results.add(t);
                 }
             }
-        } catch (MySQLIntegrityConstraintViolationException micve) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "SQL");
-                }
+            if (results.isEmpty()) {
+                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), micve);
         } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "SQL");
-                    }
-                }
-            }
+            showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
+            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-        if (!error) {
-            if (update) {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "teamUpdated", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(this.getClass().getName(), "Team updated: " + team.getName());
-            } else {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "teamStored", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(this.getClass().getName(), "Team Stored: " + team.getName());
-            }
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeTeam");
-        return !error;
+        KendoLog.exiting(this.getClass().getName(), "searchTeam");
+        return results;
     }
 
     /**
@@ -2206,43 +2161,71 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public boolean insertTeam(Team team, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "insertTeam");
-        KendoLog.fine(SQL.class.getName(), "Inserting team " + team.getName());
-        boolean error = false;
+    protected boolean addTeams(List<Team> teams) {
+        KendoLog.entering(this.getClass().getName(), "addTeams");
+        String query = "";
         //Insert team.
-        for (int levelIndex = 0; levelIndex < team.levelChangesSize(); levelIndex++) {
-            if (team.changesInThisLevel(levelIndex)) {
-                for (int indexCompetitor = 0; indexCompetitor < team.getNumberOfMembers(levelIndex); indexCompetitor++) {
-                    try {
-                        try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
-                            stmt.setString(1, team.getName());
-                            stmt.setString(2, team.getMember(indexCompetitor, levelIndex).getId());
-                            stmt.setString(3, team.tournament.getName());
-                            stmt.setInt(4, indexCompetitor);
-                            stmt.setInt(5, team.group);
-                            stmt.setInt(6, levelIndex);
-                            stmt.executeUpdate();
+        for (Team team : teams) {
+            for (int levelIndex = 0; levelIndex < team.levelChangesSize(); levelIndex++) {
+                if (team.changesInThisLevel(levelIndex)) {
+                    for (int indexCompetitor = 0; indexCompetitor < team.getNumberOfMembers(levelIndex); indexCompetitor++) {
+                        try {
+                            query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES ('" + team.getName() + "','" + team.getMember(indexCompetitor, levelIndex).getId() + "','" + team.tournament.getName() + "'," + indexCompetitor + "," + team.group + "," + levelIndex + ");\n";
+                        } catch (NullPointerException npe) { //The team has one competitor less...
                         }
-                    } catch (NullPointerException npe) { //The team has one competitor less...
-                    } catch (SQLException ex) {
-                        if (!error) {
-                            error = true;
-                            if (!showSQLError(ex.getErrorCode())) {
-                                if (verbose) {
-                                    MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "SQL");
-                                }
-                            }
-                        }
-                        KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                     }
                 }
             }
         }
-        KendoLog.exiting(this.getClass().getName(), "insertTeam");
-        return !error;
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "addTeams");
+        return true;
     }
 
+    @Override
+    protected boolean removeTeams(List<Team> teams) {
+        KendoLog.entering(this.getClass().getName(), "removeTeams");
+        String query = "";
+        for (Team team : teams) {
+            query += "DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "';\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteTeam", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeTeams");
+        return true;
+    }
+
+    @Override
+    protected boolean updateTeams(HashMap<Team, Team> teamsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateTeams");
+        List<Team> oldTeams = new ArrayList<>(teamsExchange.values());
+        List<Team> newTeams = new ArrayList<>(teamsExchange.keySet());
+        removeTeams(oldTeams);
+        addTeams(newTeams);
+        KendoLog.exiting(this.getClass().getName(), "updateTeams");
+        return true;
+    }
+    
     /**
      * Obtain the members of a team in a specific level.
      *
@@ -2353,132 +2336,6 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public List<Team> searchTeamsByNameAndTournament(String name, Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamsByNameAndTournament");
-        String query = "SELECT * FROM team WHERE Name LIKE '%" + name + "%' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
-        List<Team> teams = searchTeam(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchTeamsByNameAndTournament");
-        return teams;
-    }
-
-    @Override
-    public Team getTeamByName(String name, Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getTeamByName");
-        String query = "SELECT * FROM team WHERE Name='" + name + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
-        List<Team> teams = searchTeam(query, verbose);
-        if (!teams.isEmpty()) {
-            KendoLog.exiting(this.getClass().getName(), "getTeamByName");
-            return searchTeam(query, verbose).get(0);
-        } else {
-            if (verbose) {
-                MessageManager.customMessage(this.getClass().getName(), "Error obtaining team " + name, "Error", 0);
-                KendoLog.warning(SQL.class.getName(), "Error obtaining team " + name);
-            }
-            KendoLog.exiting(this.getClass().getName(), "getTeamByName");
-            return null;
-        }
-    }
-
-    @Override
-    public List<Team> searchTeamsByTournament(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamsByTournament");
-        String query = "SELECT * FROM team WHERE Tournament LIKE '" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
-        List<Team> teams = searchTeam(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchTeamsByTournament");
-        return teams;
-    }
-
-    @Override
-    public List<Team> searchTeamsByTournamentExactName(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamsByTournamentExactName");
-        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name";
-        List<Team> teams = searchTeam(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchTeamsByTournamentExactName");
-        return teams;
-    }
-
-    @Override
-    public List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamsByLevel");
-        String query = "SELECT t1.name,t1.Tournament,t1.LeagueGroup FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament.getName() + "' AND f1.Tournament='" + tournament.getName() + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
-        List<Team> teams = searchTeam(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchTeamsByLevel");
-        return teams;
-    }
-    
-    @Override
-    public List<String> getTeamsNameByLevel(Tournament tournament, int level, boolean verbose){
-        KendoLog.entering(this.getClass().getName(), "getTeamsNameByLevel");
-         List<String> results = new ArrayList<>();
-
-        try {
-            String query = "SELECT t1.name FROM team t1 LEFT JOIN fight f1 ON (t1.Name=f1.team1 OR t1.Name=f1.team2)  WHERE t1.Tournament='" + tournament.getName() + "' AND f1.Tournament='" + tournament.getName() + "' AND f1.LeagueLevel>=" + level + " GROUP BY Name ORDER BY Name ";
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    results.add(rs.getObject("Name").toString());
-                }
-            }
-            if (results.isEmpty()) {
-                if (verbose) {
-                    MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "getTeamsNameByLevel");
-        return results;
-    }
-
-    @Override
-    public List<Team> getTeams(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getTeams");
-        String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name LIMIT " + fromRow + "," + numberOfRows;
-        List<Team> teams = searchTeam(query, false);
-        KendoLog.exiting(this.getClass().getName(), "getTeams");
-        return teams;
-    }
-
-    @Override
-    public List<Team> getAllTeams() {
-        KendoLog.entering(this.getClass().getName(), "getAllTeams");
-        String query = "SELECT * FROM team GROUP BY Name,Tournament ORDER BY Name ";
-        List<Team> teams = searchTeam(query, false);
-        KendoLog.exiting(this.getClass().getName(), "getAllTeams");
-        return teams;
-    }
-
-    @Override
-    public boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllTeams");
-        KendoLog.fine(SQL.class.getName(), "Store a group of teams.");
-        boolean error = false;
-        try {
-            if (deleteOldOnes) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team");
-                }
-            }
-
-            for (int i = 0; i < teams.size(); i++) {
-                if (!storeTeam(teams.get(i), false)) {
-                    error = true;
-                }
-            }
-        } catch (SQLException ex) {
-            error = true;
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeAllTeams");
-        return !error;
-    }
-
-    @Override
     public void updateTeamGroupOfLeague(Tournament tournament, Team team) {
         KendoLog.entering(this.getClass().getName(), "updateTeamGroupOfLeague");
         KendoLog.fine(SQL.class.getName(), "Upgrading team " + team.getName() + " of " + tournament.getName());
@@ -2495,194 +2352,6 @@ public abstract class SQL extends Database {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         KendoLog.exiting(this.getClass().getName(), "updateTeamGroupOfLeague");
-    }
-
-    @Override
-    public boolean deleteTeam(Team team, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteTeam");
-        KendoLog.fine(SQL.class.getName(), "Deleting team " + team.getName());
-        boolean error = false;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionDeleteTeam", "Warning!");
-            }
-
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'");
-                }
-            }
-
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "deleteTeam", "SQL");
-                    }
-                }
-
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        if (!error && answer) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "teamDeleted", this.getClass().getName(), team.getName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(this.getClass().getName(), "Team deleted: " + team.getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteTeam");
-        return !error && (answer || !verbose);
-    }
-
-    @Override
-    public boolean deleteTeamByName(String teamName, String toournamentName, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteTeamByName");
-        KendoLog.debug(SQL.class.getName(), "Deleting team " + teamName);
-        boolean error = false;
-        boolean answer = false;
-        int sol = 0;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionDeleteTeam", "Warning!");
-            }
-
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    sol = s.executeUpdate("DELETE FROM team WHERE Name='" + teamName + "' AND Tournament='" + toournamentName + "'");
-                }
-            }
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "deleteTeam", "SQL");
-                    }
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                }
-
-            }
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        if (!error && answer) {
-            if (sol > 0) {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "teamDeleted", this.getClass().getName(), teamName, JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(SQL.class.getName(), "Team deleted: " + teamName);
-            } else {
-                MessageManager.errorMessage(this.getClass().getName(), "teamNotDeleted", "SQL");
-            }
-
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteTeamByName");
-        return !error && (answer || !verbose);
-    }
-
-    @Override
-    public void setIndividualTeams(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "setIndividualTeams");
-        KendoLog.fine(SQL.class.getName(), "Creating individual teams for tournament " + tournament.getName());
-        List<Competitor> competitors = selectAllCompetitorsInTournament(tournament);
-        MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
-        for (int i = 0; i < competitors.size(); i++) {
-            Team t = new Team(competitors.get(i).getSurname() + ", " + competitors.get(i).getName(), tournament);
-            t.addOneMember(competitors.get(i), 0);
-            storeTeam(t, false);
-        }
-        KendoLog.exiting(this.getClass().getName(), "setIndividualTeams");
-    }
-
-    @Override
-    public boolean deleteTeamsOfTournament(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteTeamsOfTournament");
-        boolean error = false;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionDeleteTeams", "Warning!");
-            }
-
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + tournament.getName() + "'");
-                }
-            }
-
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "deleteTeam", "SQL");
-                    }
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteTeamsOfTournament");
-        return !error && (answer || !verbose);
-    }
-
-    @Override
-    public List<TeamRanking> getTeamsOrderByScore(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getTeamsOrderByScore");
-        List<TeamRanking> teamsOrdered = new ArrayList<>();
-        //String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + championship + "' OR 'All' = '" + championship + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
-        String query = "SELECT " + "t1.NomEquipo as Equipo, " + "ifnull(t3.NumVictorias,0) as Victorias, " + "ifnull(t2.TotalDuelos,0) as Duelos, " + "ifnull(t1.TotalPtos,0) as Puntos " + "FROM " + "(SELECT " + "		t1.NomEquipo as NomEquipo,  " + "		sum(TotalPtos) as TotalPtos  " + "FROM  " + "		(SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos  " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team1  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "				t2.Position = t4.OrderPlayer " + "				 " + "		UNION ALL  " + "		 " + "		SELECT  " + "				t2.Name as NomEquipo,  " + "				CASE  " + "					WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "					ELSE 0 END + CASE  " + "										WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "										ELSE 0 END " + "				as TotalPtos " + "		FROM  " + "				team t2  " + "				INNER JOIN  " + "				fight t3  " + "				ON t2.Name = t3.Team2  " + "				AND t2.Tournament = t3.Tournament  " + "				AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "				INNER JOIN  " + "				duel t4  " + "				ON t3.ID = t4.Fight  " + "		WHERE  " + "			t2.Position = t4.OrderPlayer " + " " + "		) t1  " + "GROUP BY  " + "		t1.NomEquipo " + ") t1  " + "LEFT OUTER JOIN " + "(	SELECT  " + "		CASE  " + "			WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "			ELSE t2.Team  " + "		END as NomEquipo, " + "		count(Distinct t1.IdDuelo) as TotalDuelos " + "FROM  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo1  " + "	FROM  " + "			team t2  " + "			INNER JOIN  " + "			fight t3  " + "			ON t2.Name = t3.Team1  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "			INNER JOIN duel t4  " + "			ON t3.ID = t4.Fight  " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t1  " + "	INNER JOIN  " + "	(SELECT  " + "			t2.Name as Team, " + "			t4.ID as IdDuelo,  " + "			Sum(CASE  " + "				WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "				ELSE 0 END + CASE  " + "								WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END ) " + "			as TotalDuelo2  " + "	FROM  " + "			team t2  " + "			INNER JOIN fight t3  " + "			ON t2.Name = t3.Team2  " + "			AND t2.Tournament = t3.Tournament  " + "			AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "			INNER JOIN duel t4 " + "			ON t3.ID = t4.Fight " + "	WHERE  " + "			t2.Position = t4.OrderPlayer  " + "	GROUP BY " + "			t2.Name, " + "			t4.ID  " + "	)t2 " + "	ON t1.IdDuelo = t2.IdDuelo  " + "	WHERE  " + "			TotalDuelo1 <> TotalDuelo2    " + "	GROUP BY " + "			CASE  " + "				WHEN TotalDuelo1 > TotalDuelo2 THEN t1.Team   " + "				ELSE t2.Team  " + "			END " + "	) t2  " + "	ON t1.NomEquipo = t2.NomEquipo " + "	LEFT OUTER JOIN " + "	(SELECT " + "			CASE " + "					WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "					WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "			END as NomEquipo, " + "			count(idcombate) as NumVictorias " + "		FROM " + "		(SELECT  " + "				idcombate, " + "				EquipoIzq, " + "				EquipoDer, " + "				Sum(NumDuelosGanados1) as VictoriaIzq, " + "				Sum(NumDuelosGanados2) as VictoriaDer, " + "				Sum(TotalDueloA) as TotalPuntosA, " + "				Sum(TotalDueloB) as TotalPuntosB" + "		FROM  " + "				(SELECT " + "						t1.Team as EquipoIzq, " + "						t2.Team as EquipoDer, " + "						t1.IdCombate, " + "						TotalDuelo1 as TotalDueloA, " + "						TotalDuelo2 as TotalDueloB," + "						CASE WHEN TotalDuelo1 > TotalDuelo2 THEN 1 " + "						ELSE 0 END as NumDuelosGanados1, " + "						CASE WHEN TotalDuelo2 > TotalDuelo1 THEN 1 " + "						ELSE 0 END  as NumDuelosGanados2 " + "								 " + "				FROM	 " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo1  " + "					FROM  " + "							team t2  " + "							INNER JOIN  " + "							fight t3  " + "							ON t2.Name = t3.Team1  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "')  " + "							INNER JOIN duel t4  " + "							ON t3.ID = t4.Fight  " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t1  " + "					INNER JOIN  " + "					(SELECT  " + "							t2.Name as Team, " + "							t3.Id as IdCombate, " + "							t4.ID as IdDuelo,  " + "							Sum(CASE  " + "								WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1  " + "								ELSE 0 END + CASE  " + "												WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1  " + "												ELSE 0 END ) " + "							as TotalDuelo2  " + "					FROM  " + "							team t2  " + "							INNER JOIN fight t3  " + "							ON t2.Name = t3.Team2  " + "							AND t2.Tournament = t3.Tournament  " + "							AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "							INNER JOIN duel t4 " + "							ON t3.ID = t4.Fight " + "					WHERE  " + "							t2.Position = t4.OrderPlayer  " + "					GROUP BY " + "							t2.Name, " + "							t3.ID, " + "							t4.ID  " + "					)t2 " + "					ON t1.IdDuelo = t2.IdDuelo  " + "					AND t1.IdCombate = t2.IDCombate " + "				WHERE  " + "						TotalDuelo1 <> TotalDuelo2 " + "				)t1 " + "			GROUP BY " + "					idcombate, " + "					EquipoIzq, " + "					EquipoDer " + "		) t1 " + "	GROUP BY " + "	CASE " + "			WHEN VictoriaIzq >  VictoriaDer THEN EquipoIzq " + "			WHEN VictoriaIzq < VictoriaDer THEN EquipoDer " + "ELSE (CASE WHEN TotalPuntosA > TotalPuntosB THEN EquipoIzq WHEN TotalPuntosA < TotalPuntosB THEN EquipoDer END)" + "	END   " + "	)t3  " + "	ON t1.NomEquipo = t3.NomEquipo " + "ORDER BY " + "	ifnull(t3.NumVictorias,0) DESC, " + "	ifnull(t2.TotalDuelos,0) DESC, " + "	ifnull(t1.TotalPtos,0)  DESC, " + "	t1.NomEquipo ";
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    teamsOrdered.add(new TeamRanking(rs.getObject("Equipo").toString(), tournament, rs.getInt("Victorias"), 0, rs.getInt("Duelos"), 0, rs.getInt("Puntos")));
-                }
-            }
-            if (teamsOrdered.isEmpty() && verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        }
-        KendoLog.exiting(this.getClass().getName(), "getTeamsOrderByScore");
-        return teamsOrdered;
-    }
-
-    @Override
-    public Team getTeamOfCompetitor(String competitorID, Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getTeamOfCompetitor");
-        String query = "SELECT * FROM team WHERE Member='" + competitorID + "' AND Tournament='" + tournament.getName() + "' GROUP BY Name";
-        try {
-            KendoLog.exiting(this.getClass().getName(), "getTeamOfCompetitor");
-            return searchTeam(query, verbose).get(0);
-        } catch (IndexOutOfBoundsException iob) {
-            KendoLog.exiting(this.getClass().getName(), "getTeamOfCompetitor");
-            return null;
-        }
     }
 
     @Override
@@ -2947,8 +2616,8 @@ public abstract class SQL extends Database {
                 while (rs.next()) {
                     //Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), tournament, false),
                     //        getTeamByName(rs.getObject("Team2").toString(), tournament, false),
-                    Fight f = new Fight(TeamPool.getManager(tournament).getTeam(rs.getObject("Team1").toString()),
-                            TeamPool.getManager(tournament).getTeam(rs.getObject("Team2").toString()),
+                    Fight f = new Fight(TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
+                            TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
                             tournament,
                             rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
                     f.setMaxWinners(rs.getInt("MaxWinners"));
@@ -3680,7 +3349,7 @@ public abstract class SQL extends Database {
                     Tournament tournament = TournamentPool.getTournament(rs.getObject("Championship").toString());
                     Undraw u = new Undraw(tournament,
                             TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
-                            TeamPool.getManager(TournamentPool.getTournament(rs.getObject("Championship").toString())).getTeam(rs.getObject("Team").toString()),
+                            TeamPool.getInstance().get(TournamentPool.getTournament(rs.getObject("Championship").toString()), rs.getObject("Team").toString()),
                             (Integer) rs.getObject("Player"), (Integer) rs.getObject("LevelUndraw"));
                     results.add(u);
                 }
@@ -3755,7 +3424,7 @@ public abstract class SQL extends Database {
                 String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level;
                 try (ResultSet rs = s.executeQuery(query)) {
                     while (rs.next()) {
-                        teamWinners.add(TeamPool.getManager(tournament).getTeam(rs.getObject("Team").toString()));
+                        teamWinners.add(TeamPool.getInstance().get(tournament, rs.getObject("Team").toString()));
                     }
                 }
             }

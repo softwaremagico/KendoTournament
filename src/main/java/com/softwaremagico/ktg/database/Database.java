@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -327,6 +328,14 @@ public abstract class Database {
      *
      ********************************************************************
      */
+    protected abstract List<Team> getTeams(Tournament tournament);
+
+    protected abstract boolean addTeams(List<Team> teams);
+
+    protected abstract boolean removeTeams(List<Team> teams);
+    
+    protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange);
+
     /**
      * Store a Tournament into the database.
      *
