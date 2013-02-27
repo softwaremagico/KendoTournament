@@ -112,8 +112,8 @@ public abstract class SQL extends Database {
         List<Club> clubs = getClubs();
         for (int i = 0; i < clubs.size(); i++) {
             Folder.appendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).getName() + "','" + clubs.get(i).getCountry() + "','"
-                    + clubs.get(i).representativeID + "','" + clubs.get(i).email + "','"
-                    + clubs.get(i).phone + "','" + clubs.get(i).getCity() + "',"
+                    + clubs.get(i).getRepresentative() + "','" + clubs.get(i).getMail() + "','"
+                    + clubs.get(i).getPhone() + "','" + clubs.get(i).getCity() + "',"
                     + "NULL" + ",'" + clubs.get(i).getAddress() + "');\n", file);
         }
         Folder.appendTextToFile("UNLOCK TABLES;\n", file);
@@ -1398,7 +1398,6 @@ public abstract class SQL extends Database {
     @Override
     protected boolean addClubs(List<Club> clubs) {
         KendoLog.entering(this.getClass().getName(), "storeClub");
-        boolean inserted = true;
         String query = "";
         for (Club club : clubs) {
             query += "INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('" + club.getName() + "','" + club.getCountry() + "','" + club.getCity() + "','" + club.getAddress() + "','" + club.getWeb() + "','" + club.getMail() + "'," + club.getPhone() + ",'" + club.getRepresentative() + "');\n";
@@ -1406,20 +1405,20 @@ public abstract class SQL extends Database {
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (MySQLIntegrityConstraintViolationException micve) {
-            inserted = false;
             MessageManager.errorMessage(this.getClass().getName(), "nameClub", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), micve);
+            return false;
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            inserted = false;
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
         } catch (NullPointerException npe) {
-            inserted = false;
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
         }
         KendoLog.exiting(this.getClass().getName(), "storeClub");
-        return inserted;
+        return true;
     }
 
     @Override
@@ -1524,189 +1523,57 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
-     * Store a Tournament into the database.
+     * Store a Club into the database.
      *
      * @param club
      */
     @Override
-    public boolean storeTournament(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeTournament");
-        boolean error = false;
-        boolean update = false;
-        KendoLog.fine(SQL.class.getName(), "Storing tournament " + tournament.getName());
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM tournament WHERE Name='" + tournament.getName() + "'")) {
-
-                if (rs.next()) {
-                    return updateTournament(tournament, verbose);
-                } else {
-                    try {
-                        if (tournament.getBannerInput().markSupported()) {
-                            tournament.getBannerInput().reset();
-                        }
-                    } catch (IOException | NullPointerException ex) {
-                        KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                    }
-                    try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
-                        stmt.setString(1, tournament.getName());
-                        storeBinaryStream(stmt, 2, tournament.getBannerInput(), (int) tournament.getBannerSize());
-                        stmt.setLong(3, tournament.getBannerSize());
-                        stmt.setInt(4, tournament.getFightingAreas());
-                        stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
-                        stmt.setInt(6, tournament.getTeamSize());
-                        stmt.setString(7, tournament.getMode().getSqlName());
-                        stmt.setFloat(8, tournament.getScoreForWin());
-                        stmt.setFloat(9, tournament.getScoreForDraw());
-                        stmt.setString(10, tournament.getChoosedScore());
-                        storeBinaryStream(stmt, 11, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
-                        stmt.setLong(12, tournament.getDiplomaSize());
-                        storeBinaryStream(stmt, 13, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
-                        stmt.setLong(14, tournament.getAccreditationSize());
-                        stmt.executeUpdate();
-                    }
-                }
-            }
-        } catch (MysqlDataTruncation mdt) {
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), mdt);
-            error = true;
-        } catch (SQLException ex) {
-            MessageManager.errorMessage(this.getClass().getName(), "storeTournament", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            error = true;
-        } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            error = true;
-        }
-
-        if (!error) {
-            if (!update) {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "tournamentStored", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(SQL.class.getName(), "Tournament stored: " + tournament.getName());
-            } else {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "tournamentUpdated", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(SQL.class.getName(), "Tournament updated: " + tournament.getName());
-            }
-        }
-
-        KendoLog.exiting(this.getClass().getName(), "storeTournament");
-        return !error;
-    }
-
-    @Override
-    public boolean deleteTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "deleteTournament");
-        boolean answer = false;
-        KendoLog.fine(SQL.class.getName(), "Deleting tournament " + tournament.getName());
-        try {
-            answer = MessageManager.questionMessage("tournamentDeleteQuestion", "Warning!");
-            if (answer) {
-                try (Statement s = connection.createStatement()) {
-                    deleteFightsOfTournament(tournament, false);
-                    KendoLog.fine(SQL.class.getName(), "Deleting teams of tournament.");
-                    s.executeUpdate("DELETE FROM team WHERE Tournament='" + tournament.getName() + "'");
-                    KendoLog.fine(SQL.class.getName(), "Deleting roles of tournament.");
-                    s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "'");
-                    KendoLog.fine(SQL.class.getName(), "Deleting tournament.");
-                    s.executeUpdate("DELETE FROM tournament WHERE Name='" + tournament.getName() + "'");
-                    MessageManager.translatedMessage(this.getClass().getName(), "tournamentDeleted", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-
-        KendoLog.exiting(this.getClass().getName(), "deleteTournament");
-        return answer;
-    }
-
-    @Override
-    public boolean updateTournament(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "updateTournament");
-        boolean error = false;
-        boolean answer = false;
-        KendoLog.fine(SQL.class.getName(), "Updating tournament.");
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionUpdateTournament", "Warning!");
-            }
-            if (!verbose || answer) {
-                try {
-                    if (tournament.getBannerInput().markSupported()) {
-                        tournament.getBannerInput().reset();
-                    }
-                } catch (IOException | NullPointerException npe) {
-                }
-                try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + tournament.getName() + "'")) {
-                    storeBinaryStream(stmt, 1, tournament.getBannerInput(), (int) tournament.getBannerSize());
-                    stmt.setLong(2, tournament.getBannerSize());
-                    stmt.setInt(3, tournament.getFightingAreas());
-                    stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
-                    stmt.setInt(5, tournament.getTeamSize());
-                    stmt.setString(6, tournament.getMode().getSqlName());
-                    stmt.setFloat(7, tournament.getScoreForWin());
-                    stmt.setFloat(8, tournament.getScoreForDraw());
-                    stmt.setString(9, tournament.getChoosedScore());
-                    storeBinaryStream(stmt, 10, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
-                    stmt.setLong(11, tournament.getDiplomaSize());
-                    storeBinaryStream(stmt, 12, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
-                    stmt.setLong(13, tournament.getAccreditationSize());
-                    stmt.executeUpdate();
-                }
-            } else {
-                KendoLog.exiting(this.getClass().getName(), "updateTournament");
+    protected boolean addTournaments(List<Tournament> tournaments) {
+        KendoLog.entering(this.getClass().getName(), "addTournaments");
+        for (Tournament tournament : tournaments) {
+            try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                stmt.setString(1, tournament.getName());
+                storeBinaryStream(stmt, 2, tournament.getBannerInput(), (int) tournament.getBannerSize());
+                stmt.setLong(3, tournament.getBannerSize());
+                stmt.setInt(4, tournament.getFightingAreas());
+                stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
+                stmt.setInt(6, tournament.getTeamSize());
+                stmt.setString(7, tournament.getMode().getSqlName());
+                stmt.setFloat(8, tournament.getScoreForWin());
+                stmt.setFloat(9, tournament.getScoreForDraw());
+                stmt.setString(10, tournament.getChoosedScore());
+                storeBinaryStream(stmt, 11, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
+                stmt.setLong(12, tournament.getDiplomaSize());
+                storeBinaryStream(stmt, 13, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
+                stmt.setLong(14, tournament.getAccreditationSize());
+                stmt.executeUpdate();
+            } catch (MysqlDataTruncation mdt) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), mdt);
+                return false;
+            } catch (SQLException ex) {
+                showSQLError(ex.getErrorCode());
+                MessageManager.errorMessage(this.getClass().getName(), "storeTournament", "SQL");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                return false;
+            } catch (NullPointerException npe) {
+                MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 return false;
             }
-        } catch (MysqlDataTruncation mdt) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), mdt);
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeTournament", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            error = true;
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-
-        if (!error) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "tournamentUpdated", this.getClass().getName(), tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(this.getClass().getName(), "Tournament updated: " + tournament.getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateTournament");
-        return !error;
+        KendoLog.exiting(this.getClass().getName(), "addTournaments");
+        return true;
     }
 
     @Override
-    public List<Tournament> getAllTournaments() {
-        KendoLog.entering(this.getClass().getName(), "getAllTournaments");
-        List<Tournament> tournaments = getTournaments(0, Integer.MAX_VALUE);
-        KendoLog.exiting(this.getClass().getName(), "getAllTournaments");
-        return tournaments;
-    }
-
-    @Override
-    public List<Tournament> getTournaments(int fromRow, int numberOfRows) {
+    protected List<Tournament> getTournaments() {
         KendoLog.entering(this.getClass().getName(), "getTournaments");
         List<Tournament> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
         try {
             try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name LIMIT " + fromRow + "," + numberOfRows)) {
+                    ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
                 while (rs.next()) {
                     Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
                     t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
@@ -1735,212 +1602,61 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    public boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllTournaments");
-        boolean error = false;
-        KendoLog.fine(SQL.class.getName(), "Storing a list of tournaments.");
-        try {
-            if (deleteOldOnes) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM tournament");
-                }
-            }
-
-            for (int i = 0; i < tournaments.size(); i++) {
-                if (!storeTournament(tournaments.get(i), false)) {
-                    error = true;
-                }
-            }
-        } catch (SQLException ex) {
-            error = true;
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+    protected boolean removeTournaments(List<Tournament> tournaments) {
+        KendoLog.entering(this.getClass().getName(), "removeTournaments");
+        String query = "";
+        for (Tournament tournament : tournaments) {
+            query += "DELETE FROM tournament WHERE Name='" + tournament.getName() + "';\n";
         }
-        KendoLog.exiting(this.getClass().getName(), "storeAllTournaments");
-        return !error;
-    }
-
-    @Override
-    public Tournament getTournamentByName(String tournamentName, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getTournamentByName");
-        KendoLog.fine(SQL.class.getName(), "Get tournament " + tournamentName);
-        try {
-            Tournament t;
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM tournament WHERE Name='" + tournamentName + "' ")) {
-                if (rs.next()) {
-                    t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
-                    t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                    InputStream sImage = getBinaryStream(rs, "Banner");
-                    Long size = rs.getLong("Size");
-                    t.addBanner(sImage, size);
-                    InputStream sImage2 = getBinaryStream(rs, "Accreditation");
-                    Long size2 = rs.getLong("AccreditationSize");
-                    t.addAccreditation(sImage2, size2);
-                    InputStream sImage3 = getBinaryStream(rs, "Diploma");
-                    Long size3 = rs.getLong("DiplomaSize");
-                    t.addDiploma(sImage3, size3);
-                    KendoLog.exiting(this.getClass().getName(), "getTournamentByName");
-                    return t;
-                } else {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "errorTournament", "SQL", tournamentName);
-                    }
-                }
-            }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "getTournamentByName");
-        return null;
+
+        KendoLog.exiting(this.getClass().getName(), "removeTournaments");
+        return true;
     }
 
     @Override
-    public List<Tournament> searchTournament(String query, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTournament");
-        KendoLog.fine(SQL.class.getName(), "Searching tournament.");
-        KendoLog.finer(SQL.class.getName(), query);
-        List<Tournament> results = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
-                    t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                    InputStream sImage = (InputStream) getBinaryStream(rs, "Banner");
-                    Long size = rs.getLong("Size");
-                    t.addBanner(sImage, size);
-                    results.add(t);
+    protected boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateTournaments");
+        List<Tournament> oldTournaments = new ArrayList<>(tournamentsExchange.values());
+        List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
+        for (Tournament tournament : newTournaments) {
+            Tournament oldTournament = tournamentsExchange.get(tournament);
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + oldTournament.getName() + "'")) {
+                storeBinaryStream(stmt, 1, tournament.getBannerInput(), (int) tournament.getBannerSize());
+                stmt.setLong(2, tournament.getBannerSize());
+                stmt.setInt(3, tournament.getFightingAreas());
+                stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
+                stmt.setInt(5, tournament.getTeamSize());
+                stmt.setString(6, tournament.getMode().getSqlName());
+                stmt.setFloat(7, tournament.getScoreForWin());
+                stmt.setFloat(8, tournament.getScoreForDraw());
+                stmt.setString(9, tournament.getChoosedScore());
+                storeBinaryStream(stmt, 10, tournament.getDiplomaInput(), (int) tournament.getDiplomaSize());
+                stmt.setLong(11, tournament.getDiplomaSize());
+                storeBinaryStream(stmt, 12, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
+                stmt.setLong(13, tournament.getAccreditationSize());
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                if (!showSQLError(ex.getErrorCode())) {
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
                 }
+                return false;
+            } catch (NullPointerException npe) {
+                MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+                return false;
             }
-            if (results.isEmpty()) {
-                if (verbose) {
-                    MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-        KendoLog.exiting(this.getClass().getName(), "searchTournament");
-        return results;
-    }
-
-    @Override
-    public List<Tournament> searchTournamentsByName(String tournamentName, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTournamentsByName");
-        String query = "SELECT * FROM tournament WHERE Name LIKE '%" + tournamentName + "%' ORDER BY Name";
-        List<Tournament> tournaments = searchTournament(query, verbose);
-        KendoLog.exiting(this.getClass().getName(), "searchTournamentsByName");
-        return tournaments;
-    }
-
-    @Override
-    public void deleteGroupsOfTournament(Tournament tournament, List<Team> teams) {
-        KendoLog.entering(this.getClass().getName(), "deleteGroupsOfTournament");
-        KendoLog.fine(SQL.class.getName(), "Deleting groups of tournament " + tournament.getName());
-        for (int i = 0; i < teams.size(); i++) {
-            Team t = teams.get(i);
-            t.group = 0;
-            updateTeamGroupOfLeague(tournament, t);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteGroupsOfTournament");
-    }
-
-    @Override
-    public void storeDiplomaImage(Tournament tournament, InputStream Image, long imageSize) {
-        KendoLog.entering(this.getClass().getName(), "storeDiplomaImage");
-        KendoLog.fine(SQL.class.getName(), "Store diploma image of " + tournament.getName());
-        try {
-            try {
-                if (Image.markSupported()) {
-                    Image.reset();
-                }
-            } catch (IOException ex) {
-            }
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Diploma=?, DiplomaSize=? WHERE Name='" + tournament.getName() + "'")) {
-                storeBinaryStream(stmt, 1, Image, (int) imageSize);
-                stmt.setLong(2, imageSize);
-                try {
-                    stmt.executeUpdate();
-                } catch (OutOfMemoryError ofm) {
-                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-                }
-            }
-        } catch (MysqlDataTruncation mdt) {
-            //error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-        } catch (SQLException ex) {
-            //error = true;
-            if (imageSize > 1048576) {
-                MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-            }
-        } catch (NullPointerException npe) {
-            //error = true;
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeDiplomaImage");
-    }
-
-    @Override
-    public void storeAccreditationImage(Tournament tournament, InputStream Image, long imageSize) {
-        KendoLog.entering(this.getClass().getName(), "storeAccreditationImage");
-        KendoLog.fine(SQL.class.getName(), "Store accreditation of " + tournament.getName());
-        try {
-            try {
-                if (Image.markSupported()) {
-                    Image.reset();
-                }
-            } catch (IOException ex) {
-            }
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Accreditation=?, AccredotationSize=? WHERE Name='" + tournament.getName() + "'")) {
-                storeBinaryStream(stmt, 1, Image, (int) imageSize);
-                stmt.setLong(2, imageSize);
-                try {
-                    stmt.executeUpdate();
-                } catch (OutOfMemoryError ofm) {
-                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-                }
-            }
-        } catch (MysqlDataTruncation mdt) {
-            //error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-        } catch (SQLException ex) {
-            //error = true;
-            if (imageSize > 1048576) {
-                MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-            }
-        } catch (NullPointerException npe) {
-            //error = true;
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeAccreditationImage");
-    }
-
-    @Override
-    public int getLevelTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "getLevelTournament");
-        KendoLog.fine(SQL.class.getName(), "Getting max level of " + tournament.getName());
-        String query = "SELECT MAX(LeagueLevel) FROM fight WHERE Tournament='" + tournament.getName() + "';";
-
-        int level = -1;
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                rs.next();
-                level = rs.getInt(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "getLevelTournament");
-        return level;
+        KendoLog.exiting(this.getClass().getName(), "updateTournaments");
+        return true;
     }
 
     /**
@@ -2167,25 +1883,6 @@ public abstract class SQL extends Database {
         }
         KendoLog.exiting(this.getClass().getName(), "searchTeam");
         return results;
-    }
-
-    @Override
-    public void updateTeamGroupOfLeague(Tournament tournament, Team team) {
-        KendoLog.entering(this.getClass().getName(), "updateTeamGroupOfLeague");
-        KendoLog.fine(SQL.class.getName(), "Upgrading team " + team.getName() + " of " + tournament.getName());
-        try {
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE team SET LeagueGroup=? WHERE Name='" + team.getName() + "' AND Tournament='" + tournament.getName() + "'")) {
-                stmt.setInt(1, team.group);
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateTeamGroupOfLeague");
     }
 
     @Override

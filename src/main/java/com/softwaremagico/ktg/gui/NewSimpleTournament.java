@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -541,7 +542,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (fights.size() > 0) {
             DatabaseConnection.getInstance().getDatabase().storeFights(fights, true, true);
-            DatabaseConnection.getInstance().getDatabase().deleteGroupsOfTournament(((Tournament) TournamentComboBox.getSelectedItem()), listTeams);
+                        TeamPool.getInstance().deleteTeamGroups((Tournament) TournamentComboBox.getSelectedItem());
             ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
             DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();

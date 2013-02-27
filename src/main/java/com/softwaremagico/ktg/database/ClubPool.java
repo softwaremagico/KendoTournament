@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ClubPool extends Pool<Club> {
+public class ClubPool extends TournamentDependentPool<Club> {
 
     @Override
     protected String getId(Club element) {

@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.pdflist;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.RoleTags;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,7 +80,9 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                 photoInput = new FileInputStream(Path.getDiplomaPath());
                 File fileImage = new File(Path.getDiplomaPath());
                 size = fileImage.length();
-                DatabaseConnection.getInstance().getDatabase().storeDiplomaImage(listTournaments.get(TournamentComboBox.getSelectedIndex()), photoInput, size);
+                listTournaments.get(TournamentComboBox.getSelectedIndex()).setDiplomaInput(photoInput);
+                listTournaments.get(TournamentComboBox.getSelectedIndex()).setDiplomaSize(size);
+                TournamentPool.getInstance().update(listTournaments.get(TournamentComboBox.getSelectedIndex()), listTournaments.get(TournamentComboBox.getSelectedIndex()));
 
                 if (pdf.generateDiplomaPDF(file, nameposition)) {
                     this.dispose();

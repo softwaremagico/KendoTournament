@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class TeamPool extends Pool<Team> {
+public class TeamPool extends TournamentDependentPool<Team> {
 
     private static TeamPool instance;
 
@@ -87,5 +87,13 @@ public class TeamPool extends Pool<Team> {
             add(tournament, team);
         }
 
+    }
+
+    public void deleteTeamGroups(Tournament tournament) {
+        List<Team> teams = new ArrayList<>(get(tournament).values());
+        for (Team team : teams) {
+            team.group = 0;
+            update(tournament, team, team);
+        }
     }
 }

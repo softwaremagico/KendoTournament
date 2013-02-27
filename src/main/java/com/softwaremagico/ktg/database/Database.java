@@ -279,36 +279,16 @@ public abstract class Database {
      ********************************************************************
      */
     /**
-     * Store a Tournament into the database.
-     *
-     * @param club
+     * Store a Tournament list into the database.
      */
-    public abstract boolean storeTournament(Tournament tournament, boolean verbose);
-
-    public abstract boolean deleteTournament(Tournament tournament);
-
-    public abstract boolean updateTournament(Tournament tournament, boolean verbose);
-
-    public abstract List<Tournament> getAllTournaments();
-
-    public abstract List<Tournament> getTournaments(int fromRow, int numberOfRows);
-
-    public abstract boolean storeAllTournaments(List<Tournament> tournaments, boolean deleteOldOnes);
-
-    public abstract Tournament getTournamentByName(String name, boolean verbose);
-
-    public abstract List<Tournament> searchTournament(String query, boolean verbose);
-
-    public abstract List<Tournament> searchTournamentsByName(String name, boolean verbose);
-
-    public abstract void deleteGroupsOfTournament(Tournament tournament, List<Team> teams);
-
-    public abstract void storeDiplomaImage(Tournament tournament, InputStream Image, long imageSize);
-
-    public abstract void storeAccreditationImage(Tournament tournament, InputStream Image, long imageSize);
-
-    public abstract int getLevelTournament(Tournament tournament);
-
+    protected abstract boolean addTournaments(List<Tournament> tournaments);
+    
+    protected abstract List<Tournament> getTournaments();
+    
+    protected abstract boolean removeTournaments(List<Tournament> tournaments);
+    
+    protected abstract boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange);
+    
     /**
      * *******************************************************************
      *
@@ -326,8 +306,6 @@ public abstract class Database {
 
     /**
      * Store a Tournament into the database.
-     *
-     * @param club
      */
     public abstract boolean storeTeam(Team team, boolean verbose);
 

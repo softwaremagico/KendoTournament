@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -464,7 +465,7 @@ public class NewRingTournament extends javax.swing.JFrame {
             } else {
                 DatabaseConnection.getInstance().getDatabase().storeFights(obtainRingFightsWithoutRepetition(), true, true);
             }
-            DatabaseConnection.getInstance().getDatabase().deleteGroupsOfTournament((Tournament) TournamentComboBox.getSelectedItem(), listTeams);
+            TeamPool.getInstance().deleteTeamGroups((Tournament) TournamentComboBox.getSelectedItem());
             ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
             DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
             this.dispose();

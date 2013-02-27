@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
  *
  * @author Jorge
  */
-public class Tournament implements Serializable {
+public class Tournament implements Serializable, Comparable<Tournament> {
 
     private String name;
     private transient InputStream bannerInput;
@@ -139,8 +139,8 @@ public class Tournament implements Serializable {
         this.teamSize = teamSize;
         this.mode = mode;
     }
-    
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 
@@ -323,9 +323,14 @@ public class Tournament implements Serializable {
         hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return this.getName();
+    }
+
+    @Override
+    public int compareTo(Tournament t) {
+        return getName().compareTo(t.getName());
     }
 }

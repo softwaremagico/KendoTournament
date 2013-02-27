@@ -40,12 +40,20 @@ public class Fight implements Serializable {
     public int asignedFightArea;
     public List<Duel> duels = new ArrayList<>();
     private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
-    public int level;
+    private Integer level;
     private int maxWinners = 1;
     private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
 
     public boolean isOverStored() {
         return overUpdated;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public void setOverStored(boolean overUpdated) {
@@ -243,7 +251,7 @@ public class Fight implements Serializable {
                     || (team1.getMember(i, level).getName().equals("")
                     && team1.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(false);
-              // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+                // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
             }
         }
 
@@ -255,7 +263,7 @@ public class Fight implements Serializable {
                     || (team2.getMember(i, level).getName().equals("")
                     && team2.getMember(i, level).id.equals("")))) {
                 duels.get(i).completeIppons(true);
-               // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+                // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
             }
         }
 

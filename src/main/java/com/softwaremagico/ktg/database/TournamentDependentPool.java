@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class Pool<ElementPool> {
+public abstract class TournamentDependentPool<ElementPool> {
 
     private HashMap<Tournament, HashMap<String, ElementPool>> elements;
     private HashMap<Tournament, List<ElementPool>> sortedElements = null;
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToStore = new HashMap<>();
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToDelete = new HashMap<>();
     private HashMap<Tournament, HashMap<ElementPool, ElementPool>> elementsToUpdate = new HashMap<>(); //New element replace old one.
+
+    /**
+     * Ensure that the class knows all existent tournaments.
+     */
+    protected TournamentDependentPool() {
+        for (Tournament tournament : TournamentPool.getInstance().getAll()) {
+            elements.put(tournament, null);
+        }
+    }
 
     protected abstract String getId(ElementPool element);
 
@@ -76,14 +85,14 @@ public abstract class Pool<ElementPool> {
     public List<ElementPool> getAll() {
         List<ElementPool> results = new ArrayList<>();
         for (Tournament tournament : elements.keySet()) {
-            results.addAll(elements.get(tournament).values());
+            results.addAll(get(tournament).values());
         }
         return results;
     }
 
     public void add(Tournament tournament, ElementPool element) {
         sortedElements = null; //Sorted elements need to be recreated.
-        elements.get(tournament).put(getId(element), element);
+        get(tournament).put(getId(element), element);
         addElementToStore(tournament, element);
     }
 
@@ -108,7 +117,7 @@ public abstract class Pool<ElementPool> {
     }
 
     public void remove(Tournament tournament) {
-        for (ElementPool element : elements.get(tournament).values()) {
+        for (ElementPool element : get(tournament).values()) {
             remove(tournament, element);
         }
     }
