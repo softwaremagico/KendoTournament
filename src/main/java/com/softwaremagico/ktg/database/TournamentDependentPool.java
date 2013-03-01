@@ -26,9 +26,9 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected abstract HashMap<String, ElementPool> getFromDatabase(Tournament tournament);
 
-    protected abstract void storeInDatabase(List<ElementPool> elementsToStore);
+    protected abstract void storeInDatabase(Tournament tournament, List<ElementPool> elementsToStore);
 
-    protected abstract void removeFromDatabase(List<ElementPool> elementsToDelete);
+    protected abstract void removeFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete);
 
     protected abstract void updateDatabase(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate);
 

@@ -33,20 +33,42 @@ import java.io.Serializable;
  */
 public class Role implements Serializable {
 
-    public String tournament;
-    private String competitorID;
-    public String roleName;
-    public int impressCard;
+    private Tournament tournament;
+    private String competitor;
+    private RoleTag tag;
+    private boolean accreditationPrinted;
+    private boolean diplomaPrinted;
 
-    public Role(String championship, String competitor, String selectedRole, int impressedCard) {
-        tournament = championship;
-        competitorID = competitor;
-        roleName = selectedRole;
-        impressCard = impressedCard;
+    public Role(Tournament tournament, String competitor, RoleTag tag, boolean accreditationPrinted, boolean diplomaPrinted) {
+        this.tournament = tournament;
+        this.competitor = competitor;
+        this.tag = tag;
+        this.accreditationPrinted = accreditationPrinted;
+        this.diplomaPrinted = diplomaPrinted;
     }
 
-    public String competitorID() {
-        return competitorID;
+    public String getCompetitor() {
+        return competitor;
+    }
+
+    public String getDatabaseTag() {
+        return tag.getTag();
+    }
+
+    public boolean isAccreditationPrinted() {
+        return accreditationPrinted;
+    }
+
+    public void setAccreditationPrinted(boolean value) {
+        accreditationPrinted = value;
+    }
+
+    public boolean isDiplomaPrinted() {
+        return diplomaPrinted;
+    }
+
+    public void setDiplomaPrinted(boolean value) {
+        diplomaPrinted = value;
     }
 
     @Override
@@ -59,16 +81,16 @@ public class Role implements Serializable {
         }
         Role otherRole = (Role) object;
         return this.tournament.equals(otherRole.tournament)
-                && this.roleName.equals(otherRole.roleName)
-                && this.competitorID.equals(otherRole.competitorID);
+                && this.tag.equals(otherRole.tag)
+                && this.competitor.equals(otherRole.competitor);
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 67 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
-        hash = 67 * hash + (this.competitorID != null ? this.competitorID.hashCode() : 0);
-        hash = 67 * hash + (this.roleName != null ? this.roleName.hashCode() : 0);
+        hash = 67 * hash + (this.competitor != null ? this.competitor.hashCode() : 0);
+        hash = 67 * hash + (this.tag != null ? this.tag.hashCode() : 0);
         return hash;
     }
 }

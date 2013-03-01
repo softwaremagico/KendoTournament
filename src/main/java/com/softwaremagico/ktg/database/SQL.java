@@ -1116,271 +1116,107 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    public boolean storeRole(RoleTag roleTag, Tournament tournament, Participant participant, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeRole");
-        KendoLog.fine(SQL.class.getName(), "Storing the role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " as " + roleTag.name);
-        boolean inserted = true;
-        try {
-            try (Statement s = connection.createStatement()) {
-                KendoLog.finer(SQL.class.getName(), "Deleting role of participant " + participant.getShortSurname() + " in tournament " + tournament.getName());
-                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'");
+    protected boolean addRoles(Tournament tournament, List<Role> roles) {
+        KendoLog.entering(this.getClass().getName(), "addRoles");
+        String query = "";
+        //Insert team.
+        for (Role role : roles) {
+            try {
+                Participant participant = CompetitorPool.get(role.getCompetitor());
+                query += "INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + role.getDatabaseTag() + "','" + tournament.getName() + "','" + participant.getId() + "');\n";
+            } catch (NullPointerException npe) { //The team has one competitor less...
             }
-            try (Statement st = connection.createStatement()) {
-                st.executeUpdate("INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + roleTag.tag + "','" + tournament.getName() + "','" + participant.getId() + "')");
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            inserted = false;
-        } catch (NullPointerException npe) {
-            inserted = false;
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
 
-        if (inserted && verbose) {
-            MessageManager.translatedMessage(this.getClass().getName(), "roleChanged", this.getClass().getName(), participant.getName() + " " + participant.getSurname() + " -> " + roleTag.name, JOptionPane.INFORMATION_MESSAGE);
-            KendoLog.info(SQL.class.getName(), "Role of " + participant.getSurnameName() + " changed to " + roleTag.name);
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "storeRole");
-        return inserted;
+        KendoLog.exiting(this.getClass().getName(), "addRoles");
+        return true;
     }
 
     @Override
-    public boolean storeRole(Role role, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeRole2");
-        KendoLog.fine(SQL.class.getName(), "Storing role " + role.roleName);
-        boolean inserted = true;
-        try {
-            try (Statement st = connection.createStatement()) {
-                st.executeUpdate("INSERT INTO role (Role, Tournament, Competitor,ImpressCard) VALUES ('" + role.roleName + "','" + role.tournament + "','" + role.competitorID() + "'," + role.impressCard + ")");
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            inserted = false;
-        } catch (NullPointerException npe) {
-            inserted = false;
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
+    protected List<Role> getRoles(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getRoles");
+        String query = "SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' ORDER BY Role; ";
+        KendoLog.finer(SQL.class.getName(), query);
 
-        if (inserted && verbose) {
-            MessageManager.translatedMessage(this.getClass().getName(), "roleChanged", this.getClass().getName(), role.competitorID() + " -> " + role.roleName, JOptionPane.INFORMATION_MESSAGE);
-            KendoLog.finer(SQL.class.getName(), "Role " + role.roleName + " stored.");
-        }
+        List<Role> results = new ArrayList<>();
 
-        KendoLog.exiting(this.getClass().getName(), "storeRole2");
-        return inserted;
-    }
-
-    @Override
-    public boolean deleteRole(Tournament tournament, Participant participant) {
-        KendoLog.entering(this.getClass().getName(), "deleteRole");
-        KendoLog.fine(SQL.class.getName(), "Deleting role of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
-        boolean answer = false;
-        try {
-            Statement s = connection.createStatement();
-
-            answer = MessageManager.questionMessage("roleDeleteQuestion", "Warning!");
-            if (answer) {
-                s.executeUpdate("DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'");
-                MessageManager.translatedMessage(this.getClass().getName(), "roleDeleted", this.getClass().getName(), participant.getName() + " " + participant.getSurname(), JOptionPane.INFORMATION_MESSAGE);
-                s.close();
-            }
-
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteRole");
-        return answer;
-    }
-
-    @Override
-    public String getTagRole(Tournament tournament, Participant participant) {
-        KendoLog.entering(this.getClass().getName(), "getTagRole");
-        KendoLog.fine(SQL.class.getName(), "Getting roleTag of participant " + participant.getSurnameName() + " in tournament " + tournament.getName());
-        String role = null;
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + participant.getId() + "'")) {
-                rs.next();
-                role = rs.getObject("Role").toString();
+                    ResultSet rs = s.executeQuery(query)) {
+                while (rs.next()) {
+                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), rs.getObject("Competitor").toString(), KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCard"));
+                    results.add(role);
+                }
             }
-
-
+            if (results.isEmpty()) {
+                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
+            }
         } catch (SQLException ex) {
-            if (ex.getErrorCode() != 0) {
-                showSQLError(ex.getErrorCode());
-            }
-
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-
-        KendoLog.finer(SQL.class.getName(), "RolTag obtained for participant " + participant.getSurnameName() + " in tournament " + tournament.getName() + " is " + role);
-        KendoLog.exiting(this.getClass().getName(), "getTagRole");
-        return role;
-    }
-
-    @Override
-    public void setAllParticipantsInTournamentAsAccreditationPrinted(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "setAllParticipantsInTournamentAsAccreditationPrinted");
-        KendoLog.fine(SQL.class.getName(), "Disabling printing all accreditations cards of " + tournament.getName());
-        try {
-            try (Statement st = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournament.getName() + "'")) {
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "setAllParticipantsInTournamentAsAccreditationPrinted");
-    }
-
-    @Override
-    public void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "setParticipantInTournamentAsAccreditationPrinted");
-        KendoLog.fine(SQL.class.getName(), "Disabling printing the accreditation card of " + competitor.getSurnameName() + " in tournament " + tournament.getName());
-        List<Competitor> competitors = new ArrayList<>();
-        competitors.add(competitor);
-        setParticipantsInTournamentAsAccreditationPrinted(competitors, tournament);
-        KendoLog.exiting(this.getClass().getName(), "setParticipantInTournamentAsAccreditationPrinted");
-    }
-
-    /**
-     * Set all selected participants as accredition card already printed. If no
-     * competitors are selected, set all participants of the championship.
-     *
-     * @param competitors
-     * @param tournament.getName()
-     */
-    @Override
-    public void setParticipantsInTournamentAsAccreditationPrinted(List<Competitor> competitors, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "setParticipantsInTournamentAsAccreditationPrinted");
-        KendoLog.fine(SQL.class.getName(), "Disabling printing the accreditation card of a list of competitors in tournament " + tournament.getName());
-        try {
-            //Basic query
-            String query = "UPDATE role SET ImpressCard=1 WHERE Tournament='" + tournament.getName() + "'";
-
-            //Select the competitors
-            if (competitors != null && competitors.size() > 0) {
-                query += " AND (";
-                for (int i = 0; i < competitors.size(); i++) {
-                    query += " Competitor='" + competitors.get(i).getId() + "' ";
-                    if (i < competitors.size() - 1) {
-                        query += " OR ";
-                    }
-                }
-                query += ")";
-            }
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "setParticipantsInTournamentAsAccreditationPrinted");
-    }
-
-    /**
-     * Set all selected roles as diploma already printed. If no roles are
-     * selected, set all participants of the championship.
-     *
-     * @param roleTags
-     * @param tournament.getName()
-     */
-    @Override
-    public void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roleTags, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "setAllParticipantsInTournamentAsDiplomaPrinted");
-        KendoLog.fine(SQL.class.getName(), "Disabling printing all diplomas of " + tournament.getName() + " for " + roleTags);
-        try {
-            //Basic query
-            String query = "UPDATE role SET Diploma=1 WHERE Tournament='" + tournament.getName() + "'";
-
-            //Select the roles
-            if (roleTags != null && roleTags.size() > 0) {
-                query += " AND (";
-                for (int i = 0; i < roleTags.size(); i++) {
-                    query += " Role='" + roleTags.get(i).tag + "' ";
-                    if (i < roleTags.size() - 1) {
-                        query += " OR ";
-                    }
-                }
-                query += ")";
-            }
-            try (PreparedStatement stmt = connection.prepareStatement(query)) {
-                stmt.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "setAllParticipantsInTournamentAsDiplomaPrinted");
-    }
-
-    @Override
-    public List<Role> getAllRoles() {
-        KendoLog.entering(this.getClass().getName(), "getAllRoles");
-        List<Role> roles = getRoles(0, Integer.MAX_VALUE);
-        KendoLog.exiting(this.getClass().getName(), "getAllRoles");
-        return roles;
-    }
-
-    @Override
-    public List<Role> getRoles(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getRoles");
-        KendoLog.fine(SQL.class.getName(), "Getting all roles.");
-        List<Role> roles = new ArrayList<>();
-        try {
-            int id = 0;
-            Statement s = connection.createStatement();
-            String query = "SELECT * FROM role ORDER BY Tournament,Role LIMIT " + fromRow + "," + numberOfRows;
-            ResultSet rs = s.executeQuery(query);
-            while (rs.next()) {
-                Role role = new Role(rs.getObject("Tournament").toString(), rs.getObject("Competitor").toString(), rs.getObject("Role").toString(), rs.getInt("ImpressCard"));
-                roles.add(role);
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
         KendoLog.exiting(this.getClass().getName(), "getRoles");
-        return roles;
+        return results;
     }
 
     @Override
-    public boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllRoles");
-        KendoLog.fine(SQL.class.getName(), "Storing all roles into database.");
-        boolean error = false;
-        try {
-            if (deleteOldOnes) {
-                try (Statement s = connection.createStatement()) {
-                    KendoLog.finer(SQL.class.getName(), "Deleting all roles");
-                    s.executeUpdate("DELETE FROM role");
-                }
-            }
-
-            for (int i = 0; i < roles.size(); i++) {
-                if (!storeRole(roles.get(i), false)) {
-                    KendoLog.severe(SQL.class.getName(), "Role " + roles.get(i).roleName);
-                    error = true;
-                }
-            }
-        } catch (SQLException ex) {
-            error = true;
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+    protected boolean removeRoles(Tournament tournament, List<Role> roles) {
+        KendoLog.entering(this.getClass().getName(), "removeRoles");
+        String query = "";
+        for (Role role : roles) {
+            query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor() + "';\n";
         }
-        KendoLog.exiting(this.getClass().getName(), "storeAllRoles");
-        return !error;
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteRoleBad", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeRoles");
+        return true;
+    }
+
+    @Override
+    protected boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateRoles");
+        List<Role> oldRoles = new ArrayList<>(rolesExchange.values());
+        List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
+        String query = "";
+        for (Role role : newRoles) {
+            query += "UPDATE Role SET Role='" + role.getDatabaseTag() + "', ImpressCard=" + role.isAccreditationPrinted() + ", Diploma=" + role.isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor() + "';\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            }
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "updateRoles");
+        return true;
     }
 
     /**

@@ -43,12 +43,12 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected void storeInDatabase(List<Team> elementsToStore) {
+    protected void storeInDatabase(Tournament tournament, List<Team> elementsToStore) {
         DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
     }
 
     @Override
-    protected void removeFromDatabase(List<Team> elementsToDelete) {
+    protected void removeFromDatabase(Tournament tournament, List<Team> elementsToDelete) {
         DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
     }
 

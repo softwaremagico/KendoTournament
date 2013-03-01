@@ -26,18 +26,23 @@ package com.softwaremagico.ktg;
  */
 
 import java.awt.Color;
+import java.util.Objects;
 
 public class RoleTag {
 
-    public String tag;     //Identical for all languages.
+    private String tag;     //Identical for all languages.
     public String name;    //The traduction for each language.
     public String abbrev;
     public Color color;
 
-    public RoleTag(String tmp_tag, String tmp_name, String tmp_abbrev) {
-        tag = tmp_tag;
+    public RoleTag(String tag, String tmp_name, String tmp_abbrev) {
+        this.tag = tag;
         name = tmp_name;
         abbrev = tmp_abbrev;
+    }
+
+    public String getTag() {
+        return tag;
     }
 
     public void addColor(int red, int green, int blue) {
@@ -46,5 +51,27 @@ public class RoleTag {
 
     public com.itextpdf.text.BaseColor getItextColor() {
         return new com.itextpdf.text.BaseColor(color.getRed(), color.getGreen(), color.getBlue());
+    }
+    
+     @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.tag);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RoleTag other = (RoleTag) obj;
+        if (!Objects.equals(this.tag, other.tag)) {
+            return false;
+        }
+        return true;
     }
 }

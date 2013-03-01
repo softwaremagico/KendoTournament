@@ -225,31 +225,15 @@ public abstract class Database {
      ********************************************************************
      */
     /**
-     * Store a Club into the database.
-     *
-     * @param club
+     * Store a Role into the database.
      */
-    public abstract boolean storeRole(RoleTag role, Tournament tournament, Participant p, boolean verbose);
+    protected abstract boolean addRoles(Tournament tournament, List<Role> roles);
 
-    public abstract boolean storeRole(Role role, boolean verbose);
+    protected abstract List<Role> getRoles(Tournament tournament);
 
-    public abstract boolean deleteRole(Tournament tournament, Participant p);
+    protected abstract boolean removeRoles(Tournament tournament, List<Role> roles);
 
-    public abstract String getTagRole(Tournament tournament, Participant p);
-
-    public abstract void setAllParticipantsInTournamentAsAccreditationPrinted(Tournament tournament);
-
-    public abstract void setParticipantInTournamentAsAccreditationPrinted(Competitor competitor, Tournament tournament);
-
-    public abstract void setParticipantsInTournamentAsAccreditationPrinted(List<Competitor> competitors, Tournament tournament);
-
-    public abstract void setAllParticipantsInTournamentAsDiplomaPrinted(RoleTags roles, Tournament tournament);
-
-    public abstract List<Role> getAllRoles();
-
-    public abstract List<Role> getRoles(int fromRow, int numberOfRows);
-
-    public abstract boolean storeAllRoles(List<Role> roles, boolean deleteOldOnes);
+    protected abstract boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange);
 
     /**
      * *******************************************************************
@@ -266,9 +250,9 @@ public abstract class Database {
     protected abstract boolean addClubs(List<Club> clubs);
 
     protected abstract List<Club> getClubs();
-    
+
     protected abstract boolean removeClubs(List<Club> clubs);
-    
+
     protected abstract boolean updateClubs(HashMap<Club, Club> clubsExchange);
 
     /**
@@ -282,13 +266,13 @@ public abstract class Database {
      * Store a Tournament list into the database.
      */
     protected abstract boolean addTournaments(List<Tournament> tournaments);
-    
+
     protected abstract List<Tournament> getTournaments();
-    
+
     protected abstract boolean removeTournaments(List<Tournament> tournaments);
-    
+
     protected abstract boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange);
-    
+
     /**
      * *******************************************************************
      *
@@ -301,7 +285,7 @@ public abstract class Database {
     protected abstract boolean addTeams(List<Team> teams);
 
     protected abstract boolean removeTeams(List<Team> teams);
-    
+
     protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange);
 
     /**

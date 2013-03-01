@@ -1,13 +1,12 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class ClubPool extends TournamentDependentPool<Club> {
+public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected String getId(Club element) {
@@ -15,7 +14,7 @@ public class ClubPool extends TournamentDependentPool<Club> {
     }
 
     @Override
-    protected HashMap<String, Club> getFromDatabase(Tournament tournament) {
+    protected HashMap<String, Club> getFromDatabase() {
         List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
         HashMap<String, Club> hashMap = new HashMap<>();
         for (Club c : clubs) {
@@ -35,13 +34,13 @@ public class ClubPool extends TournamentDependentPool<Club> {
     }
 
     @Override
-    protected void updateDatabase(Tournament tournament, HashMap<Club, Club> elementsToUpdate) {
+    protected void updateDatabase(HashMap<Club, Club> elementsToUpdate) {
         DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
     }
 
     @Override
-    protected List<Club> sort(Tournament tournament) {
-        List<Club> unsorted = new ArrayList(get(tournament).values());
+    protected List<Club> sort() {
+        List<Club> unsorted = new ArrayList(get().values());
         Collections.sort(unsorted);
         return unsorted;
     }
@@ -49,9 +48,9 @@ public class ClubPool extends TournamentDependentPool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> searchClubByCity(Tournament tournament, String city) {
+    public List<Club> searchClubByCity(String city) {
         List<Club> result = new ArrayList<>();
-        for (Club element : get(tournament).values()) {
+        for (Club element : get().values()) {
             if (element.getCity().contains(city)) {
                 result.add(element);
             }
@@ -62,9 +61,9 @@ public class ClubPool extends TournamentDependentPool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> searchClubByCountry(Tournament tournament, String country) {
+    public List<Club> searchClubByCountry(String country) {
         List<Club> result = new ArrayList<>();
-        for (Club element : get(tournament).values()) {
+        for (Club element : get().values()) {
             if (element.getCountry().contains(country)) {
                 result.add(element);
             }
