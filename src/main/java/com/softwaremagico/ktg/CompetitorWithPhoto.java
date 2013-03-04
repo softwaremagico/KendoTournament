@@ -36,13 +36,14 @@ import javax.swing.ImageIcon;
  *
  * @author jorge
  */
-public class CompetitorWithPhoto extends Competitor implements Serializable {
+public class CompetitorWithPhoto extends RegisteredPerson implements Serializable {
 
     transient public InputStream photoInput;
     public long photoSize;
 
-    public CompetitorWithPhoto(String tmp_id, String tmp_name, String tmp_surname, String tmp_club) {
-        super(tmp_id, tmp_name, tmp_surname, tmp_club);
+    public CompetitorWithPhoto(String id, String name, String surname, Club club) {
+        super(id, name, surname);
+        setClub(club);
     }
 
     public void addImage(InputStream tmp_photo, long size) {

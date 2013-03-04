@@ -170,9 +170,9 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void updateDatabase(Tournament tournament) {
-        removeFromDatabase(new ArrayList(elementsToDelete.get(tournament).values()));
+        removeFromDatabase(tournament, new ArrayList(elementsToDelete.get(tournament).values()));
         elementsToDelete = new HashMap<>();
-        storeInDatabase(new ArrayList(elementsToStore.get(tournament).values()));
+        storeInDatabase(tournament, new ArrayList(elementsToStore.get(tournament).values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
         updateDatabase(tournament, elementsToUpdate.get(tournament));

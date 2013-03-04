@@ -8,6 +8,18 @@ import java.util.List;
 
 public class ClubPool extends SimplePool<Club> {
 
+    private static ClubPool instance;
+
+    private ClubPool() {
+    }
+
+    public static ClubPool getInstance() {
+        if (instance == null) {
+            instance = new ClubPool();
+        }
+        return instance;
+    }
+
     @Override
     protected String getId(Club element) {
         return element.getName();
@@ -55,6 +67,7 @@ public class ClubPool extends SimplePool<Club> {
                 result.add(element);
             }
         }
+        Collections.sort(result);
         return result;
     }
 
@@ -68,6 +81,7 @@ public class ClubPool extends SimplePool<Club> {
                 result.add(element);
             }
         }
+        Collections.sort(result);
         return result;
     }
 }

@@ -26,12 +26,17 @@ package com.softwaremagico.ktg;
  */
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RoleTag {
+    
+    public static final List<String> volunteerRoles = new ArrayList<>(){"VCLO", "Volunteer", "VolunteerK"};
+    public static final List<String> competitorsRoles = new ArrayList<>(){"Competitor", "VolunteerK"};
 
     private String tag;     //Identical for all languages.
-    public String name;    //The traduction for each language.
+    public String name;    //The translation for each language.
     public String abbrev;
     public Color color;
 

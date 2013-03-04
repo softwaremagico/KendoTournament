@@ -44,7 +44,7 @@ public class NewRole extends KendoFrame {
 
     private Translator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
-    private List<Participant> listParticipants = new ArrayList<>();
+    private List<RegisteredPerson> listParticipants = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshCompetitor = true;
     private boolean close;

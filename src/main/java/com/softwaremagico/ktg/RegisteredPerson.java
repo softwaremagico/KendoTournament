@@ -25,24 +25,23 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.PhotoPool;
 import java.io.Serializable;
 import java.text.Collator;
 import java.util.Locale;
 
-/**
- *
- * @author jorge
- */
-public class Participant implements Serializable, Comparable<Participant> {
+public class RegisteredPerson implements Serializable, Comparable<RegisteredPerson> {
 
     protected String id;
     protected String name;
     protected String surname;
+    private Club club;
+    private Integer order;
 
-    public Participant(String tmp_id, String name, String surname) {
+    public RegisteredPerson(String id, String name, String surname) {
         setName(name);
         setSurname(surname);
-        setId(tmp_id);
+        setId(id);
     }
 
     public final void setId(String value) {
@@ -173,15 +172,35 @@ public class Participant implements Serializable, Comparable<Participant> {
         return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(dni % 23);
     }
 
+    public void addOrder(int value) {
+        order = value;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public Photo getPhoto() {
+        return PhotoPool.getInstance().get(getId());
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof Participant)) {
+        if (!(object instanceof RegisteredPerson)) {
             return false;
         }
-        Participant otherParticipant = (Participant) object;
+        RegisteredPerson otherParticipant = (RegisteredPerson) object;
         return this.id.equals(otherParticipant.id);
     }
 
@@ -193,12 +212,13 @@ public class Participant implements Serializable, Comparable<Participant> {
     }
 
     /**
-     * Compare participants avoiding accent problems. 
+     * Compare participants avoiding accent problems.
+     *
      * @param otherParticipant
-     * @return 
+     * @return
      */
     @Override
-    public int compareTo(Participant otherParticipant) {
+    public int compareTo(RegisteredPerson otherParticipant) {
         String string1 = this.surname + " " + this.name;
         String string2 = otherParticipant.surname + " " + otherParticipant.name;
 
@@ -208,9 +228,9 @@ public class Participant implements Serializable, Comparable<Participant> {
 
         return collator.compare(string1, string2);
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return getSurnameName();
     }
 }

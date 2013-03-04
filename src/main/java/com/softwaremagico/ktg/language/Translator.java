@@ -182,7 +182,7 @@ public class Translator {
                 String tag = element.getAttributes().getNamedItem("tag").getNodeValue();
                 String abbrev = element.getAttributes().getNamedItem("abbrev").getNodeValue();
                 try {
-                    red = Integer.parseInt(element.getAttributes().getNamedItem("redd").getNodeValue());
+                    red = Integer.parseInt(element.getAttributes().getNamedItem("red").getNodeValue());
                 } catch (NullPointerException npe) {
                     red = i * 127;
                     if (red > 224) {

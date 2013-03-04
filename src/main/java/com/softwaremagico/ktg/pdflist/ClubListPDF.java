@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.Color;
 import java.util.List;
@@ -71,7 +72,7 @@ public class ClubListPDF extends ParentList {
         List<Club> clubs = DatabaseConnection.getInstance().getDatabase().getClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-            List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClubAndTournament(clubs.get(i).getName(), championship, false, false);
+            List<CompetitorWithPhoto> competitors = RolePool.getInstance().getRegisteredPeople(championship, clubs.get(i));
 
             if (competitors.size() > 0) {
                 if (!firstClub) {

@@ -1,6 +1,6 @@
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 
-    public Team get(Tournament tournament, Competitor competitor) {
+    public Team get(Tournament tournament, RegisteredPerson competitor) {
         for (Team team : get(tournament).values()) {
             if (team.isMember(competitor)) {
                 return team;
@@ -79,9 +79,9 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     public void setIndividualTeams(Tournament tournament) {
-        List<Competitor> competitors = selectAllCompetitorsInTournament(tournament);
+        List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         //MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
-        for (Competitor competitor : competitors) {
+        for (RegisteredPerson competitor : competitors) {
             Team team = new Team(competitor.getSurnameName(), tournament);
             team.addOneMember(competitor, 0);
             add(tournament, team);
@@ -95,5 +95,16 @@ public class TeamPool extends TournamentDependentPool<Team> {
             team.group = 0;
             update(tournament, team, team);
         }
+    }
+
+    public List<RegisteredPerson> getCompetitorsWithoutTeam(Tournament tournament) {
+        List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
+        List<Team> teams = new ArrayList<>(get(tournament).values());
+        for (Team team : teams) {
+            for (RegisteredPerson teamIntegrator : team.getCompetitorsInLevel(0)) {
+                competitors.remove(teamIntegrator);
+            }
+        }
+        return competitors;
     }
 }

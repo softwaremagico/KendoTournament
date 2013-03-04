@@ -29,7 +29,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected HashMap<String, Tournament> getFromDatabase() {
-        List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getAllTournaments();
+        List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getTournaments();
         HashMap<String, Tournament> hashMap = new HashMap<>();
         for (Tournament t : tournaments) {
             hashMap.put(getId(t), t);

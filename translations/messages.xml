@@ -1026,5 +1026,13 @@
 		<ca>Error en l'enllaç de comunicació amb el servidor de bases de dades.</ca>
 		<it>Errore di communicazione con il server della base di dati.</it>
 	</databaseConnectionFailure>
+	<deleteRoleBad>
+		<en>Error when trying to delete a role from the database.</en>
+		<es>Error mientras se intentaba borrar un rol de la base de datos.</es>
+		<nl>Error when trying to delete a role from the database.</nl>
+		<de>Error when trying to delete a role from the database.</de>
+		<ca>Error mentre s'intentava esborrar un rol de la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando un ruolo del database</it>
+	</deleteRoleBad>
 </translator>
 

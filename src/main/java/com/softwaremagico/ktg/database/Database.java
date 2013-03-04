@@ -124,6 +124,18 @@ public abstract class Database {
      *
      ********************************************************************
      */
+    protected abstract boolean addRegisteredPeople(List<RegisteredPerson> roles);
+
+    protected abstract List<RegisteredPerson> getRegisteredPeople();
+
+    protected abstract boolean removeRegisteredPeople(List<RegisteredPerson> roles);
+
+    protected abstract boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> rolesExchange);
+
+    protected abstract Photo getPhoto(String competitorId);
+
+    protected abstract boolean setPhotos(List<Photo> photos);
+
     /**
      * Stores into the database a competitor.
      *
@@ -143,7 +155,7 @@ public abstract class Database {
 
     public abstract List<Competitor> getCompetitors(String query, boolean verbose);
 
-    public abstract List<Participant> getParticipants(String query, boolean verbose);
+    public abstract List<RegisteredPerson> getParticipants(String query, boolean verbose);
 
     public abstract List<CompetitorWithPhoto> getAllCompetitorsWithPhoto();
 
@@ -153,7 +165,7 @@ public abstract class Database {
 
     public abstract List<Competitor> getAllCompetitors();
 
-    public abstract List<Participant> getAllParticipants();
+    public abstract List<RegisteredPerson> getAllParticipants();
 
     /**
      * Select all competitors that are not included in any team for a

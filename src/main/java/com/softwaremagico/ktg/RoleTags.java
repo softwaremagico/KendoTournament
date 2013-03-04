@@ -28,10 +28,6 @@ package com.softwaremagico.ktg;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jorge
- */
 public class RoleTags {
 
     private List<RoleTag> listRoles = new ArrayList<>();
@@ -57,7 +53,7 @@ public class RoleTags {
 
     public int get(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).tag.equals(tag)) {
+            if (listRoles.get(i).getTag().equals(tag)) {
                 return i;
             }
         }
@@ -66,12 +62,13 @@ public class RoleTags {
 
     /**
      * Return the first letter of the role or 'X' if is not defined.
+     *
      * @param tag
      * @return
      */
     public String getAbbrev(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).tag.equals(tag)) {
+            if (listRoles.get(i).getTag().equals(tag)) {
                 return listRoles.get(i).abbrev;
             }
         }
@@ -80,7 +77,7 @@ public class RoleTags {
 
     public RoleTag getRole(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).tag.equals(tag)) {
+            if (listRoles.get(i).getTag().equals(tag)) {
                 return listRoles.get(i);
             }
         }
@@ -89,11 +86,10 @@ public class RoleTags {
 
     public String getTraduction(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).tag.equals(tag)) {
+            if (listRoles.get(i).getTag().equals(tag)) {
                 return listRoles.get(i).name;
             }
         }
         return null;
     }
-
 }

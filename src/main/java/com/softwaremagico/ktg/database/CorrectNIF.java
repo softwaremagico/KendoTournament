@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.softwaremagico.ktg.Competitor;
-import com.softwaremagico.ktg.Participant;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Team;
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class CorrectNIF {
             try {
                 Integer dni = Integer.parseInt(idNumber);
                 if (competitors.get(i).getId().length() == 8 && dni != null) {
-                    competitors.get(i).setId(Participant.nifFromDni(dni));
+                    competitors.get(i).setId(RegisteredPerson.nifFromDni(dni));
                 }
             } catch (NumberFormatException nfe) {
             }
@@ -72,7 +72,7 @@ public class CorrectNIF {
                         try {
                             Integer dni = Integer.parseInt(idNumber);
                             if (teams.get(i).getMember(k, j).getId().length() == 8 && dni != null) {
-                                teams.get(i).getMember(k, j).setId(Participant.nifFromDni(dni));
+                                teams.get(i).getMember(k, j).setId(RegisteredPerson.nifFromDni(dni));
                             }
                         } catch (NumberFormatException nfe) {
                         }

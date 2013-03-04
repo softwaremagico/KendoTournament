@@ -28,7 +28,6 @@ package com.softwaremagico.ktg.database;
 import com.mysql.jdbc.MysqlDataTruncation;
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.statistics.CompetitorRanking;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
@@ -69,289 +68,6 @@ public abstract class SQL extends Database {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
-    }
-
-    /**
-     * *******************************************************************
-     *
-     * EXPORT DATABASE
-     *
-     ********************************************************************
-     */
-    /**
-     * Export the database into a local file.
-     *
-     * @param fileName
-     */
-    public void exportDatabase(String fileName) {
-        KendoLog.fine(SQL.class.getName(), "Exporting database");
-        if (!fileName.endsWith(".sql")) {
-            fileName += ".sql";
-        }
-        try {
-            File f = new File(fileName);
-            f.delete();
-
-            exportClubs(fileName);
-            exportCompetitors(fileName);
-            exportTournaments(fileName);
-            exportRole(fileName);
-            exportTeams(fileName);
-            exportFights(fileName);
-            exportDuels(fileName);
-            exportUndraws(fileName);
-            MessageManager.translatedMessage(this.getClass().getName(), "exportDatabase", "SQL", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            MessageManager.errorMessage(this.getClass().getName(), "exportDatabaseFail", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
-        }
-    }
-
-    private void exportClubs(String file) {
-        Folder.appendTextToFile("LOCK TABLES `club` WRITE;\n", file);
-        List<Club> clubs = getClubs();
-        for (int i = 0; i < clubs.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `club` VALUES('" + clubs.get(i).getName() + "','" + clubs.get(i).getCountry() + "','"
-                    + clubs.get(i).getRepresentative() + "','" + clubs.get(i).getMail() + "','"
-                    + clubs.get(i).getPhone() + "','" + clubs.get(i).getCity() + "',"
-                    + "NULL" + ",'" + clubs.get(i).getAddress() + "');\n", file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    private void exportCompetitors(String file) {
-        Folder.appendTextToFile("LOCK TABLES `competitor` WRITE;\n", file);
-        List<CompetitorWithPhoto> competitors = getAllCompetitorsWithPhoto();
-        for (int i = 0; i < competitors.size(); i++) {
-            //FileOutputStream fos;
-            //byte[] photo = {0x0};
-            if (competitors.get(i).photoInput != null) {
-                try {
-                    StoreInputStream(competitors.get(i).photoInput, (int) competitors.get(i).photoSize);
-                } catch (Exception ex) {
-                    KendoLog.severe(SQL.class.getName(), ex.getMessage());
-                }
-            }
-            //Select Photo from competitor where competitor.ListOrder=1 into dumpfile '/tmp/image.jpg';
-            Folder.appendTextToFile("INSERT INTO `competitor` VALUES('" + competitors.get(i).getId() + "','" + competitors.get(i).getName() + "','"
-                    + competitors.get(i).getSurname() + "','" + competitors.get(i).club + "','" + convertInputStream2String(competitors.get(i).photoInput) + "',"
-                    + competitors.get(i).photoSize + "," + i + ");\n", file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    /**
-     * Funciona!
-     *
-     * @param inputStream
-     * @param length
-     */
-    private void StoreInputStream(InputStream inputStream, int length) {
-        try {
-            byte[] data;
-            int offset;
-            try (InputStream in = new BufferedInputStream(inputStream)) {
-                data = new byte[length];
-                int bytesRead;
-                offset = 0;
-                while (offset < length) {
-                    try {
-                        bytesRead = in.read(data, offset, data.length - offset);
-                        if (bytesRead == -1) {
-                            break;
-                        }
-                        offset += bytesRead;
-                    } catch (IOException ex) {
-                        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-
-            if (offset != length) {
-                throw new IOException("Only read " + offset + " bytes; Expected " + length + " bytes");
-            }
-            /*
-             * try (FileOutputStream out = new
-             * FileOutputStream("/tmp/test.jpg")) { out.write(data);
-             * out.flush(); }
-             */
-        } catch (IOException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    private String convertInputStream2String(InputStream inputStream) {
-        //FUNCIONA-> SELECT Photo FROM kendotournament.competitor WHERE competitor.ListOrder=200 INTO OUTFILE '/tmp/Prueba6.txt' FIELDS TERMINATED BY '' ENCLOSED BY '' ESCAPED BY '' LINES TERMINATED BY '' STARTING BY '';
-        /*
-         * if (inputStream != null) { try { BufferedImage originalImage =
-         * ImageIO.read(inputStream);
-         *
-         * //convert BufferedImage to byte array ByteArrayOutputStream baos =
-         * new ByteArrayOutputStream(); ImageIO.write(originalImage, "jpg",
-         * baos); baos.flush(); byte[] imageInByte = baos.toByteArray();
-         * baos.close(); return new String(imageInByte, "UTF-8"); } catch
-         * (IOException ex) { } catch (IllegalArgumentException iae){ } }
-         */
-        return "";
-    }
-
-    public static String convertStreamToString(InputStream is) throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-        }
-        is.close();
-        return sb.toString();
-    }
-
-    public static byte[] getBytes(InputStream is) throws IOException {
-        int len;
-        int size = 1024;
-        byte[] buf;
-
-        if (is instanceof ByteArrayInputStream) {
-            size = is.available();
-            buf = new byte[size];
-            //len = is.read(buf, 0, size);
-        } else {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            buf = new byte[size];
-            while ((len = is.read(buf, 0, size)) != -1) {
-                bos.write(buf, 0, len);
-            }
-            buf = bos.toByteArray();
-        }
-        return buf;
-    }
-
-    private void exportTournaments(String file) {
-        Folder.appendTextToFile("LOCK TABLES `tournament` WRITE;\n", file);
-        List<Tournament> tournaments = getAllTournaments();
-        for (int i = 0; i < tournaments.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `tournament` VALUES('" + tournaments.get(i).getName() + "','" + convertInputStream2String(tournaments.get(i).getBannerInput()) + "',"
-                    + tournaments.get(i).getBannerSize() + "," + tournaments.get(i).getFightingAreas() + "," + tournaments.get(i).getHowManyTeamsOfGroupPassToTheTree() + ","
-                    + tournaments.get(i).getTeamSize() + ",'" + tournaments.get(i).getMode() + "'," + (int) tournaments.get(i).getScoreForWin() + ","
-                    + tournaments.get(i).getScoreForDraw() + ",'" + tournaments.get(i).getChoosedScore() + "',NULL,NULL"
-                    + ");\n", file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    private void exportRole(String file) {
-        Folder.appendTextToFile("LOCK TABLES `role` WRITE;\n", file);
-        List<String> commands = getRoleSqlCommands();
-        for (int i = 0; i < commands.size(); i++) {
-            Folder.appendTextToFile(commands.get(i), file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    /**
-     * Obtain the SQL commands for inserting the roles into the database. Used
-     * for exporting database into a file.
-     *
-     * @return
-     */
-    public List<String> getRoleSqlCommands() {
-        List<String> commands = new ArrayList<>();
-        try {
-            int id = 0;
-            Statement s = connection.createStatement();
-            String query = "SELECT * FROM role ORDER BY Tournament";
-            ResultSet rs = s.executeQuery(query);
-            while (rs.next()) {
-                String command = "INSERT INTO `role` VALUES('" + rs.getObject("Tournament").toString() + "','"
-                        + rs.getObject("Competitor").toString() + "','" + rs.getObject("Role").toString() + "',"
-                        + id + "," + rs.getInt("ImpressCard")
-                        + ");\n";
-                commands.add(command);
-                id++;
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        return commands;
-    }
-
-    private void exportTeams(String file) {
-        Folder.appendTextToFile("LOCK TABLES `team` WRITE;\n", file);
-        List<Team> teams = getAllTeams();
-        for (int i = 0; i < teams.size(); i++) {
-            for (int levelIndex = 0; levelIndex < teams.get(i).levelChangesSize(); levelIndex++) {
-                for (int member = 0; member < teams.get(i).getNumberOfMembers(levelIndex); member++) {
-                    String memberID = "";
-                    if (teams.get(i).getMember(member, levelIndex) != null) {
-                        memberID = teams.get(i).getMember(member, levelIndex).getId();
-                    }
-                    Folder.appendTextToFile("INSERT INTO `team` VALUES('" + teams.get(i).getName() + "','"
-                            + memberID + "'," + member + "," + levelIndex + ",'"
-                            + teams.get(i).tournament.getName() + "'," + teams.get(i).group
-                            + ");\n", file);
-                }
-            }
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    private void exportFights(String file) {
-        Folder.appendTextToFile("LOCK TABLES `fight` WRITE;\n", file);
-        List<Fight> fights = getAllFights();
-        for (int i = 0; i < fights.size(); i++) {
-            Folder.appendTextToFile("INSERT INTO `fight` VALUES('" + fights.get(i).team1.getName() + "','"
-                    + fights.get(i).team2.getName() + "','" + fights.get(i).tournament.getName() + "',"
-                    + fights.get(i).asignedFightArea + "," + i + ","
-                    + fights.get(i).returnWinner() + "," + fights.get(i).level + ","
-                    + fights.get(i).getMaxWinners()
-                    + ");\n", file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    private void exportDuels(String file) {
-        Folder.appendTextToFile("LOCK TABLES `duel` WRITE;\n", file);
-        List<Fight> fights = getAllFights();
-        int id = 0;
-        for (int i = 0; i < fights.size(); i++) {
-            for (int j = 0; j < fights.get(i).duels.size(); j++) {
-                Folder.appendTextToFile("INSERT INTO `duel` VALUES(" + id + "," + i + ","
-                        + j + ",'" + fights.get(i).duels.get(j).hitsFromCompetitorA.get(0).getAbbreviature() + "','"
-                        + fights.get(i).duels.get(j).hitsFromCompetitorA.get(1).getAbbreviature() + "','"
-                        + fights.get(i).duels.get(j).hitsFromCompetitorB.get(0).getAbbreviature() + "','"
-                        + fights.get(i).duels.get(j).hitsFromCompetitorB.get(1).getAbbreviature() + "',"
-                        + fights.get(i).duels.get(j).faultsCompetitorA + ","
-                        + fights.get(i).duels.get(j).faultsCompetitorB + ","
-                        + ");\n", file);
-                id++;
-            }
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    private void exportUndraws(String file) {
-        Folder.appendTextToFile("LOCK TABLES `undraw` WRITE;\n", file);
-        List<String> commands = getUndrawMySQLCommands();
-        for (int i = 0; i < commands.size(); i++) {
-            Folder.appendTextToFile(commands.get(i), file);
-        }
-        Folder.appendTextToFile("UNLOCK TABLES;\n", file);
-        Folder.appendTextToFile("--------------------\n", file);
-    }
-
-    public void importDatabase(String fileName) {
-        clearDatabase();
-        executeScript(fileName);
     }
 
     protected void executeScript(String fileName) {
@@ -398,705 +114,162 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
-     * Stores into the database a competitor. Frist check if exist.
+     * Store a role into the database.
      *
-     * @param competitorWithPhoto Competitor.
+     * @param roleTag
+     * @param tournament
+     * @param c
+     * @param verbose
+     * @return
      */
     @Override
-    public boolean storeCompetitor(CompetitorWithPhoto competitorWithPhoto, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeCompetitor");
-        KendoLog.fine(SQL.class.getName(), "Storing competitor " + competitorWithPhoto.getSurnameName() + " into database");
-        boolean error = false;
-        boolean update = false;
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM competitor WHERE ID='" + competitorWithPhoto.getId() + "'")) {
-
-                if (rs.next()) {
-                    return updateCompetitor(competitorWithPhoto, verbose);
-                } else {
-                    try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
-                        stmt.setString(1, competitorWithPhoto.getId());
-                        stmt.setString(2, competitorWithPhoto.getName());
-                        stmt.setString(3, competitorWithPhoto.getSurname());
-                        stmt.setString(4, competitorWithPhoto.club);
-                        storeBinaryStream(stmt, 5, competitorWithPhoto.photoInput, (int) competitorWithPhoto.photoSize);
-                        stmt.setLong(6, competitorWithPhoto.photoSize);
-                        stmt.setLong(7, obtainCompetitorOrder());
-                        try {
-                            stmt.executeUpdate();
-                        } catch (OutOfMemoryError ofm) {
-                            MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-                        }
-                    }
-                }
-            }
-        } catch (MysqlDataTruncation mdt) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-        } catch (SQLException ex) {
-            error = true;
-            if (competitorWithPhoto.photoSize > 1048576) {
-                MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-            } else {
-                MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            error = true;
-        }
-
-        if (!error) {
-            if (verbose) {
-                if (update) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "competitorUpdated", this.getClass().getName(), competitorWithPhoto.getName() + " " + competitorWithPhoto.getSurname(), JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    MessageManager.translatedMessage(this.getClass().getName(), "competitorStored", this.getClass().getName(), competitorWithPhoto.getName() + " " + competitorWithPhoto.getSurname(), JOptionPane.INFORMATION_MESSAGE);
-                }
-            }
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeCompetitor");
-        return !error;
-    }
-
-    /**
-     * Stores into the database a competitor, without any check or question.
-     * Quick version for import com.softwaremagico.ktg.database option.
-     *
-     * @param competitorWithPhoto Competitor.
-     */
-    @Override
-    public boolean insertCompetitor(CompetitorWithPhoto competitorWithPhoto) {
-        KendoLog.entering(this.getClass().getName(), "insertCompetitor");
-        KendoLog.fine(this.getClass().getName(), "Inserting competitor " + competitorWithPhoto.getSurnameName() + " into database");
-        boolean error = false;
-        try {
-            try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize, ListOrder) VALUES (?,?,?,?,?,?,?)")) {
-                stmt.setString(1, competitorWithPhoto.getId());
-                stmt.setString(2, competitorWithPhoto.getName());
-                stmt.setString(3, competitorWithPhoto.getSurname());
-                stmt.setString(4, competitorWithPhoto.club);
-                storeBinaryStream(stmt, 5, competitorWithPhoto.photoInput, (int) competitorWithPhoto.photoSize);
-                stmt.setLong(6, competitorWithPhoto.photoSize);
-                stmt.setInt(7, obtainCompetitorOrder());
+    protected boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) {
+        KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
+        for (RegisteredPerson person : registeredPeople) {
+            try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?)")) {
+                stmt.setString(1, person.getId());
+                stmt.setString(2, person.getName());
+                stmt.setString(3, person.getSurname());
+                stmt.setString(4, person.getClub().getName());
+                storeBinaryStream(stmt, 5, person.getPhoto().getPhotoInput(), person.getPhoto().getPhotoSize());
+                stmt.setLong(6, person.getPhoto().getPhotoSize());
                 try {
                     stmt.executeUpdate();
                 } catch (OutOfMemoryError ofm) {
                     MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
                 }
-            }
-        } catch (MysqlDataTruncation mdt) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeImage", "SQL");
-        } catch (SQLException ex) {
-            error = true;
-            if (competitorWithPhoto.photoSize > 1048576) {
-                MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-            } else {
-                MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
-            }
-        } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            error = true;
-        }
-        KendoLog.exiting(this.getClass().getName(), "insertCompetitor");
-        return !error;
-    }
-
-    @Override
-    public boolean updateCompetitor(CompetitorWithPhoto competitor, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "updateCompetitor");
-        KendoLog.fine(this.getClass().getName(), "Updating competitor " + competitor.getSurnameName() + "  from database");
-        boolean answer = true;
-        boolean error = false;
-        if (verbose) {
-            answer = MessageManager.questionMessage("questionUpdateCompetitor", "Warning!");
-        }
-        if (answer || !verbose) {
-            try {
-                try {
-                    if (competitor.photoInput.markSupported()) {
-                        competitor.photoInput.reset();
-                    }
-                } catch (IOException | NullPointerException ex) {
-                }
-                try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=?, Photo=?, PhotoSize=? WHERE ID='" + competitor.getId() + "'")) {
-                    stmt.setString(1, competitor.getName());
-                    stmt.setString(2, competitor.getSurname());
-                    stmt.setString(3, competitor.club);
-                    storeBinaryStream(stmt, 4, competitor.photoInput, (int) competitor.photoSize);
-                    //stmt.setBlob(4, c.photo);
-                    stmt.setLong(5, competitor.photoSize);
-                    stmt.executeUpdate();
-                }
             } catch (SQLException ex) {
-                error = true;
-                if (competitor.photoSize > 1048576) {
-                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
-                } else {
+                if (!showSQLError(ex.getErrorCode())) {
                     MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
                 }
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                return false;
             }
-        } else {
-            KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
-            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "updateCompetitor");
-        return !error;
+        KendoLog.exiting(this.getClass().getName(), "addRegisteredPeople");
+        return true;
     }
 
     @Override
-    public boolean updateIdCompetitor(Competitor competitor, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "updateIdCompetitor");
-        KendoLog.fine(this.getClass().getName(), "Updating ID of competitor " + competitor.getSurnameName());
-        boolean answer = true;
-        boolean error = false;
-        if (verbose) {
-            answer = MessageManager.questionMessage("questionUpdateCompetitor", "Warning!");
-        }
-        if (answer || !verbose) {
-            try {
-                try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET ID=? WHERE Name='" + competitor.getName() + "' AND Surname='" + competitor.getSurname() + "' AND Club='" + competitor.club + "'")) {
-                    stmt.setString(1, competitor.getId());
-                    stmt.executeUpdate();
-                }
-            } catch (SQLException ex) {
-                error = true;
-                MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
-        } else {
-            KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
-            return false;
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateIdCompetitor");
-        return !error;
-    }
-
-    @Override
-    public boolean updateClubCompetitor(Competitor competitor, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "updateClubCompetitor");
-        KendoLog.fine(this.getClass().getName(), "Updating the club of competitor " + competitor.getSurnameName());
-        boolean answer = true;
-        boolean error = false;
-        if (verbose) {
-            answer = MessageManager.questionMessage("questionUpdateCompetitor", "Warning!");
-        }
-        if (answer || !verbose) {
-            try {
-                try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=?, Photo=?, PhotoSize=? WHERE ID='" + competitor.getId() + "'")) {
-                    stmt.setString(1, competitor.getName());
-                    stmt.setString(2, competitor.getSurname());
-                    stmt.setString(3, competitor.club);
-                    stmt.executeUpdate();
-                }
-            } catch (SQLException ex) {
-                error = true;
-                MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
-        } else {
-            KendoLog.exiting(this.getClass().getName(), "updateClubCompetitor");
-            return false;
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateClubCompetitor");
-        return !error;
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> getCompetitorsWithPhoto(String query, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getCompetitorsWithPhoto");
-        KendoLog.fine(this.getClass().getName(), "Obtaining a group of competitors with photo.");
-        KendoLog.finer(this.getClass().getName(), query);
-        List<CompetitorWithPhoto> results = new ArrayList<>();
-        String name, surname;
-        try {
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery(query)) {
-                while (rs.next()) {
-                    name = rs.getObject("Name").toString();
-                    surname = rs.getObject("Surname").toString();
-                    try {
-                        CompetitorWithPhoto c = new CompetitorWithPhoto(rs.getObject("ID").toString(), name, surname, rs.getObject("Club").toString());
-                        c.addOrder(rs.getInt("ListOrder"));
-                        try {
-                            InputStream sImage = getBinaryStream(rs, "Photo");
-                            Long size = rs.getLong("PhotoSize");
-                            c.addImage(sImage, size);
-                        } catch (NullPointerException npe) {
-                            c.addImage(null, 0);
-                        }
-                        results.add(c);
-                    } catch (NullPointerException npe) {
-                        MessageManager.basicErrorMessage(this.getClass().getName(), "Error in: " + name + " " + surname, this.getClass().getName());
-                    }
-                }
-            }
-
-            if (results.isEmpty() && verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-            }
-            KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
-            return results;
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
-        return null;
-    }
-
-    @Override
-    public List<Competitor> getCompetitors(String query, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getCompetitors");
-        KendoLog.fine(this.getClass().getName(), "Getting competitors.");
-        KendoLog.finer(this.getClass().getName(), query);
-        List<Competitor> results = new ArrayList<>();
-        String name, surname;
-        try {
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery(query)) {
-                while (rs.next()) {
-                    name = rs.getObject("Name").toString();
-                    surname = rs.getObject("Surname").toString();
-                    try {
-                        Competitor c = new Competitor(rs.getObject("ID").toString(), name, surname, rs.getObject("Club").toString());
-                        c.addOrder(rs.getInt("ListOrder"));
-                        results.add(c);
-                    } catch (NullPointerException npe) {
-                        MessageManager.basicErrorMessage(this.getClass().getName(), "Error in: " + name + " " + surname, this.getClass().getName());
-                    }
-                }
-            }
-
-            if (results.isEmpty() && verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-            }
-            KendoLog.exiting(this.getClass().getName(), "getCompetitors");
-            Collections.sort(results);
-            return results;
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getCompetitors");
-        return null;
-    }
-
-    @Override
-    public List<Participant> getParticipants(String query, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "getParticipants");
-        KendoLog.finer(this.getClass().getName(), query);
-        List<Participant> results = new ArrayList<>();
-        String name, surname;
-        try {
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery(query)) {
-                while (rs.next()) {
-                    name = rs.getObject("Name").toString();
-                    surname = rs.getObject("Surname").toString();
-                    try {
-                        Participant p = new Participant(rs.getObject("ID").toString(), name, surname);
-                        results.add(p);
-                    } catch (NullPointerException npe) {
-                        MessageManager.basicErrorMessage(this.getClass().getName(), "Error in: " + name + " " + surname, this.getClass().getName());
-                    }
-                }
-            }
-            KendoLog.exiting(this.getClass().getName(), "getParticipants");
-            Collections.sort(results);
-            return results;
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getParticipants");
-        return null;
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getCompetitorsWithPhoto");
-        String query = "SELECT * FROM competitor ORDER BY Surname LIMIT " + fromRow + "," + numberOfRows;
-        KendoLog.exiting(this.getClass().getName(), "getCompetitorsWithPhoto");
-        return getCompetitorsWithPhoto(query, false);
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> getAllCompetitorsWithPhoto() {
-        KendoLog.entering(this.getClass().getName(), "getAllCompetitorsWithPhoto");
-        String query = "SELECT * FROM competitor ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "getAllCompetitorsWithPhoto");
-        return getCompetitorsWithPhoto(query, false);
-    }
-
-    @Override
-    public boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllCompetitors");
-        boolean error = false;
-        try {
-            if (deleteOldOnes) {
-                try (Statement s = connection.createStatement()) {
-                    KendoLog.finer(this.getClass().getName(), "Deleting previous competitors");
-                    s.executeUpdate("DELETE FROM competitor");
-                }
-            }
-
-            for (int i = 0; i < competitors.size(); i++) {
-                if (storeCompetitor(competitors.get(i), false)) {
-                    KendoLog.finer(this.getClass().getName(), "New competitors stored.");
-                } else {
-                    KendoLog.severe(this.getClass().getName(), "Failed to store the list of competitors");
-                    error = true;
-                }
-            }
-        } catch (SQLException ex) {
-            error = true;
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeAllCompetitors");
-        return !error;
-    }
-
-    @Override
-    public List<Competitor> getAllCompetitors() {
-        KendoLog.entering(this.getClass().getName(), "getAllCompetitors");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "getAllCompetitors");
-        return getCompetitors(query, false);
-    }
-
-    @Override
-    public List<Participant> getAllParticipants() {
-        KendoLog.entering(this.getClass().getName(), "getAllParticipants");
-        String query = "SELECT ID,Name,Surname FROM competitor ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "getAllParticipants");
-        return getParticipants(query, false);
-    }
-
-    /**
-     * Select all competitors that are not included in any team for a
-     * tournament.
-     *
-     * @param tournament.getName()
-     * @return
-     */
-    @Override
-    public List<Competitor> selectAllCompetitorsWithoutTeamInTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorsWithoutTeamInTournament");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE NOT EXISTS (SELECT Member FROM team WHERE Tournament='" + tournament.getName() + "' AND competitor.id=team.Member) AND EXISTS (SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' AND role.Competitor=competitor.id AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorsWithoutTeamInTournament");
-        return getCompetitors(query, false);
-    }
-
-    /**
-     * Select all competitors, organizer and refereer of the tournament that
-     * still have not the accreditation card.
-     *
-     * @param tournament.getName()
-     * @return
-     */
-    @Override
-    public List<CompetitorWithPhoto> selectAllParticipantsInTournamentWithoutAccreditation(Tournament tournament, boolean printAll) {
-        KendoLog.entering(this.getClass().getName(), "selectAllParticipantsInTournamentWithoutAccreditation");
-        String query = "SELECT * FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor";
-        if (!printAll) {
-            query += " AND role.ImpressCard=0 ";
-        }
-        query += ") ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "selectAllParticipantsInTournamentWithoutAccreditation");
-        return getCompetitorsWithPhoto(query, false);
-    }
-
-    /**
-     * Select all competitors, organizer and refereer of the tournament.
-     *
-     * @param tournament.getName()
-     * @return
-     */
-    @Override
-    public List<Competitor> selectAllCompetitorsInTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorsInTournament");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor AND (role.Role='Competitor' OR role.Role='VolunteerK')) ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorsInTournament");
-        return getCompetitors(query, false);
-    }
-
-    /**
-     * Select participants of all selected roles. If no role is selected, select
-     * all participants.
-     *
-     * @param roleTags roles that have diploma.
-     * @param tournament.getName()
-     * @param printAll if false select competitors without printed diploma.
-     * before.
-     * @return
-     */
-    @Override
-    public List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roleTags, Tournament tournament, boolean printAll) {
-        KendoLog.entering(this.getClass().getName(), "selectAllCompetitorWithDiplomaInTournament");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE EXISTS (SELECT Competitor FROM role WHERE Tournament='" + tournament.getName() + "' AND competitor.ID=role.Competitor ";
-
-        if (!printAll) {
-            query += " AND role.Diploma=0 ";
-        }
-
-        //Select the roles
-        if (roleTags != null && roleTags.size() > 0) {
-            query += " AND (";
-            for (int i = 0; i < roleTags.size(); i++) {
-                query += " role.Role='" + roleTags.get(i).tag + "' ";
-                if (i < roleTags.size() - 1) {
-                    query += " OR ";
-                }
-            }
-            query += ")";
-        }
-
-        query += ") ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "selectAllCompetitorWithDiplomaInTournament");
-        return getCompetitors(query, false);
-    }
-
-    /**
-     * Select all VCLO.
-     *
-     * @param tournament.getName()
-     * @return
-     */
-    @Override
-    public List<Competitor> selectAllVolunteersInTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "selectAllVolunteersInTournament");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor c1 WHERE EXISTS (SELECT Competitor FROM role r1 WHERE Tournament='" + tournament.getName() + "' AND c1.ID=r1.Competitor AND (r1.Role='VCLO' OR r1.Role='VolunteerK')) ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "selectAllVolunteersInTournament");
-        return getCompetitors(query, false);
-    }
-
-    /**
-     * Obtain from database a competitor.
-     *
-     * @param id The Identificaction Number of the Competitor.
-     * @return Competitor.
-     */
-    @Override
-    public CompetitorWithPhoto selectCompetitor(String id, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "selectCompetitor");
-        KendoLog.fine(SQL.class.getName(), "Obtaining a competitor with ID " + id);
-        CompetitorWithPhoto c = null;
-        try {
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM competitor WHERE ID='" + id + "'")) {
-                if (rs.next()) {
-                    c = new CompetitorWithPhoto(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString(), rs.getObject("Club").toString());
-                    c.addOrder(rs.getInt("ListOrder"));
-                    try {
-                        InputStream sImage = getBinaryStream(rs, "Photo");
-                        Long size = rs.getLong("PhotoSize");
-                        c.addImage(sImage, size);
-                    } catch (NullPointerException npe) {
-                        c.addImage(null, 0);
-                    }
-                }
-            }
-            KendoLog.exiting(this.getClass().getName(), "selectCompetitor");
-            return c;
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "selectCompetitor");
-        return null;
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> searchCompetitorsBySimilarName(String name, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarName");
-        String query = "SELECT * FROM competitor WHERE Name LIKE '%" + name + "%' ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarName");
-        return getCompetitorsWithPhoto(query, verbose);
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> searchCompetitorsBySimilarSurname(String surname, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarSurname");
-        String query = "SELECT * FROM competitor WHERE Surname LIKE '%" + surname + "%' ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarSurname");
-        return getCompetitorsWithPhoto(query, verbose);
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> searchCompetitorsBySimilarID(String id, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarID");
-        String query = "SELECT * FROM competitor WHERE ID LIKE '%" + id + "%' ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarID");
-        return getCompetitorsWithPhoto(query, verbose);
-    }
-
-    @Override
-    public List<Competitor> searchCompetitorsByClub(String clubName, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByClub");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club='" + clubName + "' ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByClub");
-        return getCompetitors(query, verbose);
-    }
-
-    @Override
-    public List<Competitor> searchCompetitorsWithoutClub(boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsWithoutClub");
-        String query = "SELECT ID, Name, Surname, Club, ListOrder FROM competitor WHERE Club IS NULL ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsWithoutClub");
-        return getCompetitors(query, verbose);
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> searchCompetitorsBySimilarClub(String clubName, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsBySimilarClub");
-        String query = "SELECT * FROM competitor WHERE Club LIKE '%" + clubName + "%' ORDER BY Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsBySimilarClub");
-        return getCompetitorsWithPhoto(query, verbose);
-    }
-
-    @Override
-    public List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String clubName, Tournament tournament, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByClubAndTournament");
-        String query = "SELECT c1.* FROM competitor c1 INNER JOIN role r1 ON c1.ID=r1.Competitor WHERE c1.Club='" + clubName + "' AND r1.Tournament='" + tournament.getName() + "'  ORDER BY c1.Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByClubAndTournament");
-        return getCompetitorsWithPhoto(query, verbose);
-    }
-
-    @Override
-    public boolean deleteCompetitor(Competitor competitor, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteCompetitor");
-        KendoLog.fine(SQL.class.getName(), "Deleting the competitor " + competitor.getSurnameName());
-        boolean error = false;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("questionDeleteCompetitor", "Warning!");
-            }
-
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM competitor WHERE ID='" + competitor.getId() + "'");
-                }
-            }
-
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "deleteCompetitor", "SQL");
-                    }
-                    KendoLog.severe("deleteCompetitor", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-                KendoLog.severe("noRunningDatabase", this.getClass().getName());
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        if (!error && answer) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "competitorDeleted", this.getClass().getName(), competitor.getName() + " " + competitor.getSurname(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(SQL.class.getName(), "Competitor deleted: " + competitor.getName() + " " + competitor.getSurname());
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteCompetitor");
-        return !error && (answer || !verbose);
-    }
-
-    @Override
-    public List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "getCompetitorsOrderByScore");
-        KendoLog.fine(SQL.class.getName(), "Getting competitors ordered by score from " + tournament.getName());
-        List<CompetitorRanking> competitorsOrdered = new ArrayList<>();
-        String query = "SELECT " + "t3.Name as Name, " + "t3.Surname as Surname, " + "t3.ID as ID, " + "t1.NumVictorias, " + "TotalPtos " + "FROM( " + "SELECT " + "count(Distinct t1.IdDuelo) as NumVictorias, " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + "as  IDGanador " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor1, " + "t1.NAME as Competidor1, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador1 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t1 " + "INNER JOIN " + "(SELECT " + "t1.ID as IdCompetidor2, " + "t1.NAME as Competidor2, " + "t4.ID as IdDuelo, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalJugador2 " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + ")t2 " + "ON t1.IdDuelo = t2.IdDuelo " + "WHERE " + "TotalJugador1 <> TotalJugador2   " + "GROUP BY " + "CASE " + "WHEN TotalJugador1 > TotalJugador2 THEN t1.IdCompetidor1  " + "ELSE t2.IdCompetidor2 END " + ") t1 " + "RIGHT OUTER JOIN " + "(SELECT " + "t1.IdCompetidor, " + "sum(TotalPtos) as TotalPtos " + "FROM " + "(SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer1A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer1B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team1 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer " + "UNION ALL " + "SELECT " + "t1.ID as IdCompetidor, " + "CASE " + "WHEN PointPlayer2A in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "+ " + "CASE " + "WHEN PointPlayer2B in ('K','M','T','D','I','H')  THEN 1 " + "ELSE 0 END " + "as TotalPtos " + "FROM " + "competitor t1 " + "INNER JOIN " + "team t2 " + "ON t1.ID = t2.Member " + "INNER JOIN " + "fight t3 " + "ON t2.Name = t3.Team2 " + " AND t2.Tournament = t3.Tournament " + " AND (t2.Tournament = '" + tournament.getName() + "' OR 'All' = '" + tournament.getName() + "') " + "INNER JOIN " + "duel t4 " + "ON t3.ID = t4.Fight " + "WHERE " + "t2.Position = t4.OrderPlayer) t1 " + "GROUP BY " + "t1.IdCompetidor " + ") " + "t2 " + "ON t2.IdCompetidor = t1.IDGanador " + "INNER JOIN " + "competitor t3 " + "ON t2.IdCompetidor = t3.ID " + "ORDER BY " + "NumVictorias DESC,TotalPtos DESC, t3.surname asc;";
-
+    protected List<RegisteredPerson> getRegisteredPeople() {
+        KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
+        List<RegisteredPerson> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-
+                    ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname")) {
                 while (rs.next()) {
-                    competitorsOrdered.add(new CompetitorRanking(rs.getObject("Name").toString(), rs.getObject("Surname").toString(), rs.getObject("ID").toString(), rs.getInt("NumVictorias"), rs.getInt("TotalPtos")));
+                    RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
+                    registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
                 }
             }
-            if (competitorsOrdered.isEmpty() && verbose) {
-                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
-            }
-
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-        KendoLog.exiting(this.getClass().getName(), "getCompetitorsOrderByScore");
-        return competitorsOrdered;
+        KendoLog.exiting(this.getClass().getName(), "getRegisteredPeople");
+        return results;
     }
 
     @Override
-    public List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String roleName, Tournament tournament, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchCompetitorsByRoleAndTournament");
-        String query = "SELECT * FROM competitor, role WHERE competitor.ID=role.Competitor AND role.Role='" + roleName + "' AND role.Tournament='" + tournament.getName() + "'  ORDER BY competitor.Surname";
-        KendoLog.exiting(this.getClass().getName(), "searchCompetitorsByRoleAndTournament");
-        return getCompetitorsWithPhoto(query, verbose);
+    protected boolean removeRegisteredPeople(List<RegisteredPerson> peoples) {
+        KendoLog.entering(this.getClass().getName(), "removeRegisteredPeople");
+        String query = "";
+        for (RegisteredPerson people : peoples) {
+            query += "DELETE FROM competitor WHERE ID='" + people.getId() + "';\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteCompetitor", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeRegisteredPeople");
+        return true;
     }
 
     @Override
-    public List<CompetitorWithPhoto> searchRefereeByTournament(Tournament tournament, boolean getImage, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchRefereeByTournament");
-        return searchCompetitorsByRoleAndTournament("Referee", tournament, getImage, verbose);
-    }
-
-    @Override
-    public Integer searchVolunteerOrder(Competitor competitor, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "searchVolunteerOrder");
-        KendoLog.fine(SQL.class.getName(), "Obtain the numeration order of the volunteer " + competitor.getSurnameName());
-        List<Competitor> allVolunteers = selectAllVolunteersInTournament(tournament);
-
-        for (int i = 0; i < allVolunteers.size(); i++) {
-            if (allVolunteers.get(i).getId().equals(competitor.getId())) {
-                KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
-                return i + 1; //Order starts in 1. 
+    protected boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateRoles");
+        List<RegisteredPerson> oldPeople = new ArrayList<>(peopleExchange.values());
+        List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
+        for (RegisteredPerson person : newPeople) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=? WHERE ID='" + person.getId() + "'")) {
+                stmt.setString(1, person.getName());
+                stmt.setString(2, person.getSurname());
+                stmt.setString(3, person.getClub().getName());
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                if (!showSQLError(ex.getErrorCode())) {
+                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                }
+                return false;
+            } catch (NullPointerException npe) {
+                MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+                return false;
             }
         }
-        KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
+        KendoLog.exiting(this.getClass().getName(), "updateRoles");
+        return true;
+    }
+
+    @Override
+    protected Photo getPhoto(String competitorId) {
+        KendoLog.entering(this.getClass().getName(), "getPhoto");
+        String query = "SELECT Photo,PhotoSize FROM competitor WHERE ID='" + competitorId + "'";
+        Photo photo = new Photo(competitorId);
+        try (Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(query)) {
+            if (rs.next()) {
+                try {
+                    InputStream sImage = getBinaryStream(rs, "Photo");
+                    Integer size = rs.getInt("PhotoSize");
+                    photo.addImage(sImage, size);
+                } catch (NullPointerException npe) {
+                    photo.addImage(null, 0);
+                }
+            }
+        } catch (SQLException ex) {
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+        } catch (NullPointerException npe) {
+            MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
+        }
+        KendoLog.exiting(this.getClass().getName(), "getPhoto");
         return null;
     }
 
-    /**
-     * SQLite does not support autoincrement, then I've implemented an
-     * alternative.
-     *
-     * @return
-     */
-    protected int obtainCompetitorOrder() {
-        KendoLog.entering(this.getClass().getName(), "searchVolunteerOrder");
-        KendoLog.fine(SQL.class.getName(), "Obtain the numeration of competitors into the database");
-        int order = 0;
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT count(*) from competitor");
-            if (rs.next()) {
-                order = rs.getInt(1);
+    @Override
+    protected boolean setPhotos(List<Photo> photos) {
+        KendoLog.entering(this.getClass().getName(), "setPhoto");
+        for (Photo photo : photos) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId() + "'")) {
+                storeBinaryStream(stmt, 1, photo.getPhotoInput(), (int) photo.getPhotoSize());
+                stmt.setLong(2, photo.getPhotoSize());
+                try {
+                    stmt.executeUpdate();
+                } catch (OutOfMemoryError ofm) {
+                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
+                }
+            } catch (SQLException ex) {
+                if (!showSQLError(ex.getErrorCode())) {
+                    MessageManager.errorMessage(this.getClass().getName(), "storeCompetitor", "SQL");
+                }
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                return false;
             }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
         }
-        KendoLog.exiting(this.getClass().getName(), "searchVolunteerOrder");
-        return order + 1;
+        KendoLog.exiting(this.getClass().getName(), "setPhoto");
+        return true;
     }
 
     /**
@@ -1122,7 +295,7 @@ public abstract class SQL extends Database {
         //Insert team.
         for (Role role : roles) {
             try {
-                Participant participant = CompetitorPool.get(role.getCompetitor());
+                RegisteredPerson participant = RegisteredPersonPool.get(role.getCompetitorId());
                 query += "INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + role.getDatabaseTag() + "','" + tournament.getName() + "','" + participant.getId() + "');\n";
             } catch (NullPointerException npe) { //The team has one competitor less...
             }
@@ -1132,7 +305,7 @@ public abstract class SQL extends Database {
             s.executeUpdate();
         } catch (SQLException ex) {
             if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "SQL");
+                MessageManager.errorMessage(this.getClass().getName(), "roleChanged", "SQL");
             }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             return false;
@@ -1176,7 +349,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeRoles");
         String query = "";
         for (Role role : roles) {
-            query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor() + "';\n";
+            query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitorId() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -1202,7 +375,7 @@ public abstract class SQL extends Database {
         List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
         String query = "";
         for (Role role : newRoles) {
-            query += "UPDATE Role SET Role='" + role.getDatabaseTag() + "', ImpressCard=" + role.isAccreditationPrinted() + ", Diploma=" + role.isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor() + "';\n";
+            query += "UPDATE Role SET Role='" + role.getDatabaseTag() + "', ImpressCard=" + role.isAccreditationPrinted() + ", Diploma=" + role.isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitorId() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);

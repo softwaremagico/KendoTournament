@@ -36,46 +36,46 @@ import java.util.List;
 public class Team implements Serializable, Comparable<Team> {
 
     public Tournament tournament;
-    private List<List<Competitor>> participantsPerLevel = new ArrayList<>();
+    private List<List<RegisteredPerson>> participantsPerLevel = new ArrayList<>();
     private String name;
     public int group = 0; //for the league
 
     public Team(String name, Tournament tournament) {
         setName(name);
         this.tournament = tournament;
-        participantsPerLevel.add(new ArrayList<Competitor>());
+        participantsPerLevel.add(new ArrayList<RegisteredPerson>());
     }
 
-    public void setMembers(List<List<Competitor>> members) {
+    public void setMembers(List<List<RegisteredPerson>> members) {
         participantsPerLevel = members;
     }
 
-    public void addMembers(List<Competitor> tmp_participants, int level) {
+    public void addMembers(List<RegisteredPerson> tmp_participants, int level) {
         //Add empty levels to avoid null exceptions.
         for (int i = participantsPerLevel.size(); i <= level; i++) {
-            participantsPerLevel.add(new ArrayList<Competitor>());
+            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
         }
         //Change the selected level.
         participantsPerLevel.set(level, tmp_participants);
     }
 
-    public void addOneMember(int priority, Competitor participant, int level) {
+    public void addOneMember(int priority, RegisteredPerson participant, int level) {
         if (level >= participantsPerLevel.size()) {
-            participantsPerLevel.add(new ArrayList<Competitor>());
+            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
             participantsPerLevel.get(level).add(participant);
         } else {
             participantsPerLevel.get(level).set(priority, participant);
         }
     }
 
-    public void addOneMember(Competitor participant, int level) {
+    public void addOneMember(RegisteredPerson participant, int level) {
         if (level >= participantsPerLevel.size()) {
-            participantsPerLevel.add(new ArrayList<Competitor>());
+            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
         }
         participantsPerLevel.get(level).add(participant);
     }
 
-    public Competitor getMember(int order, int level) {
+    public RegisteredPerson getMember(int order, int level) {
         try {
             return getCompetitorsInLevel(level).get(order);
         } catch (NullPointerException npe) {
@@ -91,7 +91,7 @@ public class Team implements Serializable, Comparable<Team> {
         return 0;
     }
 
-    public int getIndexOfMember(int level, Competitor c) {
+    public int getIndexOfMember(int level, RegisteredPerson c) {
         try {
             return getCompetitorsInLevel(level).indexOf(c);
         } catch (NullPointerException npe) {
@@ -101,7 +101,7 @@ public class Team implements Serializable, Comparable<Team> {
 
     public int getIndexOfMember(int level, String competitorID) {
         try {
-            List<Competitor> orderInLevel = getCompetitorsInLevel(level);
+            List<RegisteredPerson> orderInLevel = getCompetitorsInLevel(level);
             for (int i = 0; i < orderInLevel.size(); i++) {
                 if (orderInLevel.get(i).id.equals(competitorID)) {
                     return i;
@@ -118,7 +118,7 @@ public class Team implements Serializable, Comparable<Team> {
      * @param level
      * @return
      */
-    public List<Competitor> getCompetitorsInLevel(int level) {
+    public List<RegisteredPerson> getCompetitorsInLevel(int level) {
         for (int i = level; i >= 0; i--) {
             if (i < participantsPerLevel.size() && participantsPerLevel.get(i) != null && !participantsPerLevel.get(i).isEmpty()) {
                 return participantsPerLevel.get(i);
@@ -196,7 +196,7 @@ public class Team implements Serializable, Comparable<Team> {
     public void completeTeam(int numberOfParticipants, int level) {
         if (level < participantsPerLevel.size()) {
             for (int i = participantsPerLevel.get(level).size(); i < numberOfParticipants; i++) {
-                participantsPerLevel.get(level).add(new Competitor("", "", "", ""));
+                participantsPerLevel.get(level).add(new RegisteredPerson("", "", ""));
             }
         }
     }
@@ -220,8 +220,8 @@ public class Team implements Serializable, Comparable<Team> {
         }
     }
     
-    public boolean isMember(Competitor competitor){
-        List<Competitor> competitors = getCompetitorsInLevel(0);
+    public boolean isMember(RegisteredPerson competitor){
+        List<RegisteredPerson> competitors = getCompetitorsInLevel(0);
         return competitors.contains(competitor);
     }
 
