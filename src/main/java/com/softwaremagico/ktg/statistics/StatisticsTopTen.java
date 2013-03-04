@@ -152,14 +152,14 @@ public class StatisticsTopTen extends StatisticsGUI {
     public int obtainWinnedDuels(Competitor c, List<Fight> fights) {
         int won = 0;
         for (int i = 0; i < fights.size(); i++) {
-            int index = fights.get(i).team1.getIndexOfMember(fights.get(i).level, c.getId());
-            if (index >= 0) {
+            Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
+            if (index != null && index >= 0) {
                 if (fights.get(i).duels.get(index).winner() < 0) {
                     won++;
                 }
             }
-            index = fights.get(i).team2.getIndexOfMember(fights.get(i).level, c.getId());
-            if (index >= 0) {
+            index = fights.get(i).team2.getMemberOrder(fights.get(i).level, c.getId());
+            if (index != null && index >= 0) {
                 if (fights.get(i).duels.get(index).winner() > 0) {
                     won++;
                 }
@@ -171,12 +171,12 @@ public class StatisticsTopTen extends StatisticsGUI {
     public int obtainTotalHits(Competitor c, List<Fight> fights) {
         int hits = 0;
         for (int i = 0; i < fights.size(); i++) {
-            int index = fights.get(i).team1.getIndexOfMember(fights.get(i).level, c.getId());
-            if (index >= 0) {
+            Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
+            if (index != null && index >= 0) {
                 hits += fights.get(i).duels.get(index).howManyPoints(true);
             }
-            index = fights.get(i).team2.getIndexOfMember(fights.get(i).level, c.getId());
-            if (index >= 0) {
+            index = fights.get(i).team2.getMemberOrder(fights.get(i).level, c.getId());
+            if (index != null && index >= 0) {
                 hits += fights.get(i).duels.get(index).howManyPoints(false);
             }
         }

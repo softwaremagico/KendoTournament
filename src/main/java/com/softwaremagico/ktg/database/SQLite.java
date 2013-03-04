@@ -268,7 +268,7 @@ public class SQLite extends SQL {
 
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
+            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
@@ -307,7 +307,7 @@ public class SQLite extends SQL {
             }
         } catch (SQLException ex) {
             error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFights", this.getClass().getName());
+            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
         KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");

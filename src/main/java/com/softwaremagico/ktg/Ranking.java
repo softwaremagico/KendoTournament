@@ -44,7 +44,7 @@ public class Ranking {
     private final Float SCORE_HITS = new Float(1);
     private final Float SCORE_DRAW_FIGHTS = new Float(0.001);
     private final Float SCORE_DRAW_DUELS = new Float(0.000001);
-    private final Float SCORE_GOLDEN_POINT = new Float(0.000001);
+    private final Float SCORE_GOLDEN_POINT = new Float(0.000000001);
 
     public Ranking() {
     }

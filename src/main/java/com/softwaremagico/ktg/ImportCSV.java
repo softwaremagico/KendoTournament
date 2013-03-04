@@ -241,7 +241,7 @@ public class ImportCSV {
                     || fields[index].trim().equals(trans.returnTag("Team").replace(":", ""))) {
                 if (!obtainTeam()) {
                     error = true;
-                    MessageManager.errorMessage(this.getClass().getName(), "storeTeam", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "storeTeamError", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("arbitro")
                     || fields[index].trim().toLowerCase().equals("arbitro")
@@ -250,7 +250,7 @@ public class ImportCSV {
                 index++;
                 if (!obtainReferee()) {
                     error = true;
-                    MessageManager.errorMessage(this.getClass().getName(), "storeRefereeBad", "MySQL");
+                    MessageManager.errorMessage(this.getClass().getName(), "storeRefereeError", "MySQL");
                 }
             } else if (fields[index].trim().toLowerCase().contains("seminar")
                     || fields[index].trim().toLowerCase().equals("seminar")

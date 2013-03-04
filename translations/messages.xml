@@ -96,14 +96,14 @@
 		<ca>S'ha actualitzat la base de dades a la versió</ca>
 		<it>Il database è stato aggiornato alla versione</it>
 	</updatedDatabase>
-	<storeCompetitor>
+	<storeCompetitorError>
 		<en>Error when trying to store a competitor into the database.</en>
 		<es>Error mientras se intentaba almacenar un competidor en la base de datos.</es>
 		<nl>Fout bij het opslaan van de deelnemer in de database.</nl>
 		<de>Fehler beim speichern eines Teilnehmers in die Datenbank</de>
 		<ca>Error mentre s'intentaba enmagatzemar un competidor a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando un competitore nel database</it>
-	</storeCompetitor>
+	</storeCompetitorError>
 	<imageTooLarge>
 		<en>The image is too large for being stored into the database (the image's size must be less than 1MB).</en>
 		<es>La imagen es demasiado grande para guardarse en la base de datos (debe ser menor que 1MB).</es>
@@ -112,14 +112,14 @@
 		<ca>La imatge és massa gran per a guardar-se a la base de dades (deu de ser menor que 1MB).</ca>
 		<it>L'immagine è troppo grande per essere salvata nel database (deve essere inferiore de 1MB)</it>
 	</imageTooLarge>
-	<storeTournament>
+	<storeTournamentError>
 		<en>Error when trying to store a tournament into the database.</en>
 		<es>Error mientras se intentaba almacenar un campeonato en la base de datos.</es>
 		<nl>Fout bij het opslaan van het toernooi in de database.</nl>
 		<de>Fehler beim speichern eines Wettkampfes.</de>
 		<ca>Error mentre s'intentava enmagatzemar un campiontat a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando un campionato</it>
-	</storeTournament>
+	</storeTournamentError>
 	<tournamentDeleteQuestion>
 		<en>The selected tournament will be deleted. Would you like to continue?</en>
 		<es>Se va a eliminar el campeonato seleccionado. ¿Desea continuar?</es>
@@ -136,78 +136,78 @@
 		<ca>S'ha eliminat el campionat!</ca>
 		<it>Il campionato è stato cancellato!</it>
 	</tournamentDeleted>
-	<storeRefereeBad>
+	<storeRefereeError>
 		<en>Error when trying to store a referee into the database.</en>
 		<es>Error mientras se intentaba almacenar un árbitro en la base de datos.</es>
 		<nl>Fout bij het opslaan van het scheidsrechters in de database.</nl>
 		<de>Fehler beim speichern eines Kampfrichters.</de>
 		<ca>Error mentre s'intentava enmagatzemar un àbitre a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando un arbitro nel database</it>
-	</storeRefereeBad>
-	<storeTeam>
+	</storeRefereeError>
+	<storeTeamError>
 		<en>Error when trying to store a team into the database.</en>
 		<es>Error mientras se intentaba almacenar un equipo en la base de datos.</es>
 		<nl>Fout bij het opslaan van het team in de database.</nl>
 		<de>Fehler beim speichern eines Teams.</de>
 		<ca>Error mentre s'intentava enmagatzemar un equip a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando una squadra nel database</it>
-	</storeTeam>
-	<deleteTeam>
+	</storeTeamError>
+	<deleteTeamError>
 		<en>Error when trying to delete a team from the database.</en>
 		<es>Error mientras se intentaba borrar un equipo de la base de datos.</es>
 		<nl>Fout bij het verwijderen van het team uit de database.</nl>
 		<de>Fehler beim löschen eines Teams.</de>
 		<ca>Error mentre s'intentava esborrar un equip de la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando una squadra del database</it>
-	</deleteTeam>
-	<deleteClub>
+	</deleteTeamError>
+	<deleteClubError>
 		<en>Error when trying to delete a club from the database.</en>
 		<es>Error mientras se intentaba borrar un club de la base de datos.</es>
 		<nl>Fout bij het verwijderen van de club uit de database.</nl>
 		<de>Fehler beim löschen eines Klubs.</de>
 		<ca>Error mentre s'intentava esborrar un club de la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando un club del database</it>
-	</deleteClub>
-	<deleteCompetitor>
+	</deleteClubError>
+	<deleteCompetitorError>
 		<en>Error when trying to delete a competitor from the database.</en>
 		<es>Error mientras se intentaba borrar un competidor de la base de datos.</es>
 		<nl>Fout bij het verwijderen van de deelnemer uit de database.</nl>
 		<de>Fehler beim löschen eines Teilnehmers.</de>
 		<ca>Error mentre s'intentava esborrar un competidor de la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando un competitore del database</it>
-	</deleteCompetitor>
-	<storeImage>
+	</deleteCompetitorError>
+	<storeImageError>
 		<en>The image is too large for being stored into the database (the image's size must be less than 1MB).</en>
 		<es>La imagen es demasiado grande para guardarse en la base de datos (debe ser menor que 1MB).</es>
 		<nl>De foto is te groot om in de database te worden opgenomen (het bestand mag max. 1 MB zijn).</nl>
 		<de>Das Bild ist zu groß zum speichern. (Max. 1MB)</de>
 		<ca>La imatge és massa gran per a guardar-se a la base de dades (deu de ser menor que 1 MB).</ca>
 		<it>L'immagine è troppo grande per essere salvata nel database (deve essere inferiore de 1MB)</it>
-	</storeImage>
-	<storeFights>
+	</storeImageError>
+	<storeFightsError>
 		<en>Error when trying to store the match list into the database.</en>
 		<es>Error mientras se intentaba almacenar los partidos en la base de datos.</es>
 		<nl>Fout bij het opslaan van de competitie in de database.</nl>
 		<de>Fehler beim speichern der Kampfliste in die Datenbank.</de>
 		<ca>Error mentre s'intentava enmagatzemar els partits a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando gli incontri nel database</it>
-	</storeFights>
-	<storeDuel>
+	</storeFightsError>
+	<storeDuelError>
 		<en>Error when trying to store a duel into the database.</en>
 		<es>Error mientras se intentaba almacenar un duelo en la base de datos.</es>
 		<nl>Fout bij het opslaan van de wedstrijd in de database.</nl>
 		<de>Fehler beim speichern eines Duells.</de>
 		<ca>Error mentre s'intentava enmagatzemar un duel a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava salvando un incontro nel database</it>
-	</storeDuel>
-	<installDatabase>
+	</storeDuelError>
+	<installDatabaseError>
 		<en>The program can not install the database. Is the server running?</en>
 		<es>No se puedo instalar la base de datos. ¿Está ejecutándose el servidor?</es>
 		<nl>Kan de database niet installeren. Is de server actief?</nl>
 		<de>Das Programm kann die Datenbank nicht installieren. Läuft ein MySQL Server?</de>
 		<ca>No es pot instal·lar la base de dades. Està executant-se el servidor?.</ca>
 		<it>Non si puó installare el database. El server è attivo?</it>
-	</installDatabase>
+	</installDatabaseError>
 	<noClubsInserted>
 		<en>There is no previous club inserted! You need to select a club to insert a competitor.</en>
 		<es>No existe ningún club insertado en la base de datos. Necesitas seleccionar un club para insertar un competidor.</es>

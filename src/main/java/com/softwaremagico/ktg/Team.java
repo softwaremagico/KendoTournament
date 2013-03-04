@@ -26,8 +26,7 @@ package com.softwaremagico.ktg;
  */
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  *
@@ -35,49 +34,33 @@ import java.util.List;
  */
 public class Team implements Serializable, Comparable<Team> {
 
-    public Tournament tournament;
-    private List<List<RegisteredPerson>> participantsPerLevel = new ArrayList<>();
+    private Tournament tournament;
+    private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; //HashMap<Level,HashMap<MemberOrder, Order>>;
     private String name;
-    public int group = 0; //for the league
+    private int group = 0; //for the league
 
     public Team(String name, Tournament tournament) {
         setName(name);
         this.tournament = tournament;
-        participantsPerLevel.add(new ArrayList<RegisteredPerson>());
+        initializeMemberOrder();
     }
 
-    public void setMembers(List<List<RegisteredPerson>> members) {
-        participantsPerLevel = members;
+    private void initializeMemberOrder() {
+        membersOrder = new HashMap<>();
+        membersOrder.put(0, new HashMap<Integer, RegisteredPerson>());
     }
 
-    public void addMembers(List<RegisteredPerson> tmp_participants, int level) {
-        //Add empty levels to avoid null exceptions.
-        for (int i = participantsPerLevel.size(); i <= level; i++) {
-            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
+    public void setMember(RegisteredPerson member, Integer order, Integer level) {
+        HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(level);
+        if (levelOrder == null) {
+            levelOrder = new HashMap<>();
         }
-        //Change the selected level.
-        participantsPerLevel.set(level, tmp_participants);
-    }
-
-    public void addOneMember(int priority, RegisteredPerson participant, int level) {
-        if (level >= participantsPerLevel.size()) {
-            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
-            participantsPerLevel.get(level).add(participant);
-        } else {
-            participantsPerLevel.get(level).set(priority, participant);
-        }
-    }
-
-    public void addOneMember(RegisteredPerson participant, int level) {
-        if (level >= participantsPerLevel.size()) {
-            participantsPerLevel.add(new ArrayList<RegisteredPerson>());
-        }
-        participantsPerLevel.get(level).add(participant);
+        levelOrder.put(order, member);
     }
 
     public RegisteredPerson getMember(int order, int level) {
         try {
-            return getCompetitorsInLevel(level).get(order);
+            return getMembersOrder(level).get(order);
         } catch (NullPointerException npe) {
         }
         return null;
@@ -85,59 +68,53 @@ public class Team implements Serializable, Comparable<Team> {
 
     public int getNumberOfMembers(int level) {
         try {
-            return getCompetitorsInLevel(level).size();
+            return getMembersOrder(level).size();
         } catch (NullPointerException npe) {
         }
         return 0;
     }
 
-    public int getIndexOfMember(int level, RegisteredPerson c) {
+    public Integer getMemberOrder(int level, String competitorID) {
         try {
-            return getCompetitorsInLevel(level).indexOf(c);
-        } catch (NullPointerException npe) {
-        }
-        return -1;
-    }
-
-    public int getIndexOfMember(int level, String competitorID) {
-        try {
-            List<RegisteredPerson> orderInLevel = getCompetitorsInLevel(level);
-            for (int i = 0; i < orderInLevel.size(); i++) {
-                if (orderInLevel.get(i).id.equals(competitorID)) {
-                    return i;
+            HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
+            for (Integer order : orderInLevel.keySet()) {
+                if (orderInLevel.get(order).id.equals(competitorID)) {
+                    return order;
                 }
             }
         } catch (NullPointerException npe) {
         }
-        return -1;
+        return null;
     }
 
-    /**
-     * Search for the order of competitors in a level.
-     *
-     * @param level
-     * @return
-     */
-    public List<RegisteredPerson> getCompetitorsInLevel(int level) {
-        for (int i = level; i >= 0; i--) {
-            if (i < participantsPerLevel.size() && participantsPerLevel.get(i) != null && !participantsPerLevel.get(i).isEmpty()) {
-                return participantsPerLevel.get(i);
+    public HashMap<Integer, RegisteredPerson> getMembersOrder(int level) {
+        if (level >= 0) {
+            try {
+                HashMap<Integer, RegisteredPerson> membersInLevel = membersOrder.get(level);
+                if (membersInLevel == null) {
+                    return getMembersOrder(level - 1);
+                } else {
+                    return membersInLevel;
+                }
+            } catch (Exception e) {
+                return getMembersOrder(level - 1);
             }
         }
         return null;
     }
 
-    public boolean changesInThisLevel(int level) {
-        if (level < participantsPerLevel.size() || participantsPerLevel.isEmpty()) {
-            if (participantsPerLevel.get(level) != null) {
+    public boolean areMemberOrderChanges(int level) {
+        try {
+            if (membersOrder.get(level) != null) {
                 return true;
             }
+        } catch (Exception e) {
         }
         return false;
     }
 
     public int levelChangesSize() {
-        return participantsPerLevel.size();
+        return membersOrder.size();
     }
 
     public void addGroup(int g) {
@@ -165,14 +142,6 @@ public class Team implements Serializable, Comparable<Team> {
     }
 
     public final void setName(String name) {
-        //name = value.substring(0, 1).toUpperCase() + value.substring(1);
-        /*
-         * name = ""; String[] data = value.trim().split(" "); for (int i = 0; i
-         * < data.length; i++) { if (data[i].length() > 1) { name +=
-         * data[i].substring(0, 1).toUpperCase() +
-         * data[i].substring(1).toLowerCase() + " "; } else { name += data[i] +
-         * " "; } }
-         */
         this.name = name.trim().replace(";", ",");
     }
 
@@ -182,10 +151,9 @@ public class Team implements Serializable, Comparable<Team> {
 
     public int realMembers() {
         int counter = 0;
-        if (participantsPerLevel.size() > 0) {
-            for (int i = 0; i < participantsPerLevel.get(0).size(); i++) {
-                if ((participantsPerLevel.get(0).get(i).getName().length() > 0)
-                        || (participantsPerLevel.get(0).get(i).getSurname().length() > 0)) {
+        if (membersOrder.size() > 0) {
+            for (int i = 0; i < membersOrder.get(0).size(); i++) {
+                if (membersOrder.get(0).get(i) != null) {
                     counter++;
                 }
             }
@@ -193,36 +161,15 @@ public class Team implements Serializable, Comparable<Team> {
         return counter;
     }
 
-    public void completeTeam(int numberOfParticipants, int level) {
-        if (level < participantsPerLevel.size()) {
-            for (int i = participantsPerLevel.get(level).size(); i < numberOfParticipants; i++) {
-                participantsPerLevel.get(level).add(new RegisteredPerson("", "", ""));
-            }
-        }
-    }
-
     public int numberOfMembers() {
-        if (participantsPerLevel.size() > 0) {
-            return participantsPerLevel.get(0).size();
+        if (membersOrder.size() > 0) {
+            return membersOrder.get(0).size();
         }
         return 0;
     }
 
-    public void showMembers() {
-        if (getName().equals("3")) {
-            System.out.println(" +++++++ " + getName() + " +++++++ ");
-            for (int i = 0; i < participantsPerLevel.size(); i++) {
-                for (int j = 0; j < participantsPerLevel.get(i).size(); j++) {
-                    System.out.println(participantsPerLevel.get(i).get(j).getSurnameName() + " LeveL: " + i);
-                }
-            }
-            System.out.println(" +++++++ +++++++++++++ +++++++ ");
-        }
-    }
-    
-    public boolean isMember(RegisteredPerson competitor){
-        List<RegisteredPerson> competitors = getCompetitorsInLevel(0);
-        return competitors.contains(competitor);
+    public boolean isMember(RegisteredPerson member) {
+        return getMembersOrder(0).values().contains(member);
     }
 
     @Override
@@ -250,8 +197,8 @@ public class Team implements Serializable, Comparable<Team> {
     public String toString() {
         return this.getName();
     }
-    
-     @Override
+
+    @Override
     public int compareTo(Team t) {
         return getName().compareTo(t.getName());
     }

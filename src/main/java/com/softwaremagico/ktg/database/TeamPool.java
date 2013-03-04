@@ -83,7 +83,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         //MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
         for (RegisteredPerson competitor : competitors) {
             Team team = new Team(competitor.getSurnameName(), tournament);
-            team.addOneMember(competitor, 0);
+            team.setMember(competitor, 0, 0);
             add(tournament, team);
         }
 
@@ -101,7 +101,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         List<Team> teams = new ArrayList<>(get(tournament).values());
         for (Team team : teams) {
-            for (RegisteredPerson teamIntegrator : team.getCompetitorsInLevel(0)) {
+            for (RegisteredPerson teamIntegrator : team.getMembersOrder(0).values()) {
                 competitors.remove(teamIntegrator);
             }
         }
