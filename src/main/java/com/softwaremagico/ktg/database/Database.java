@@ -26,8 +26,6 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.statistics.CompetitorRanking;
-import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,16 +67,6 @@ public abstract class Database {
     }
 
     abstract void startDatabase();
-
-    private void executeCommand(String[] commands) {
-        showCommand(commands);
-        try {
-            Process child = Runtime.getRuntime().exec(commands);
-            showCommandOutput(child);
-        } catch (IOException ex1) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex1);
-        }
-    }
 
     void showCommand(String[] commands) {
         for (int i = 0; i < commands.length; i++) {
@@ -124,6 +112,10 @@ public abstract class Database {
      *
      ********************************************************************
      */
+    /**
+     * *
+     *
+     */
     protected abstract boolean addRegisteredPeople(List<RegisteredPerson> roles);
 
     protected abstract List<RegisteredPerson> getRegisteredPeople();
@@ -135,99 +127,6 @@ public abstract class Database {
     protected abstract Photo getPhoto(String competitorId);
 
     protected abstract boolean setPhotos(List<Photo> photos);
-
-    /**
-     * Stores into the database a competitor.
-     *
-     * @param c Competitor.
-     */
-    public abstract boolean storeCompetitor(CompetitorWithPhoto competitor, boolean verbose);
-
-    public abstract boolean insertCompetitor(CompetitorWithPhoto competitor);
-
-    public abstract boolean updateCompetitor(CompetitorWithPhoto competitor, boolean verbose);
-
-    public abstract boolean updateClubCompetitor(Competitor competitor, boolean verbose);
-
-    public abstract boolean updateIdCompetitor(Competitor competitor, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> getCompetitorsWithPhoto(String query, boolean verbose);
-
-    public abstract List<Competitor> getCompetitors(String query, boolean verbose);
-
-    public abstract List<RegisteredPerson> getParticipants(String query, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> getAllCompetitorsWithPhoto();
-
-    public abstract List<CompetitorWithPhoto> getCompetitorsWithPhoto(int fromRow, int numberOfRows);
-
-    public abstract boolean storeAllCompetitors(List<CompetitorWithPhoto> competitors, boolean deleteOldOnes);
-
-    public abstract List<Competitor> getAllCompetitors();
-
-    public abstract List<RegisteredPerson> getAllParticipants();
-
-    /**
-     * Select all competitors that are not included in any team for a
-     * tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<Competitor> selectAllCompetitorsWithoutTeamInTournament(Tournament tournament);
-
-    /**
-     * Select all competitors, organizer and refereer of the tournament that
-     * still have not the accreditation card.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<CompetitorWithPhoto> selectAllParticipantsInTournamentWithoutAccreditation(Tournament tournament, boolean printAll);
-
-    /**
-     * Select all competitors, organizer and refereer of the tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<Competitor> selectAllCompetitorsInTournament(Tournament tournament);
-
-    public abstract List<Competitor> selectAllCompetitorWithDiplomaInTournament(RoleTags roles, Tournament tournament, boolean onlyNotPrinted);
-
-    public abstract List<Competitor> selectAllVolunteersInTournament(Tournament tournament);
-
-    /**
-     * Obtain from the database a competitor.
-     *
-     * @param id The Identificaction Number of the Competitor.
-     * @return Competitor.
-     */
-    public abstract CompetitorWithPhoto selectCompetitor(String id, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsBySimilarName(String name, boolean getImage, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsBySimilarSurname(String surname, boolean getImage, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsBySimilarID(String id, boolean getImage, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsBySimilarClub(String club, boolean getImage, boolean verbose);
-
-    public abstract List<Competitor> searchCompetitorsByClub(String club, boolean verbose);
-
-    public abstract List<Competitor> searchCompetitorsWithoutClub(boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsByClubAndTournament(String club, Tournament tournament, boolean getImage, boolean verbose);
-
-    public abstract boolean deleteCompetitor(Competitor competitor, boolean verbose);
-
-    public abstract List<CompetitorRanking> getCompetitorsOrderByScore(boolean verbose, Tournament tournament);
-
-    public abstract List<CompetitorWithPhoto> searchCompetitorsByRoleAndTournament(String role, Tournament tournament, boolean getImage, boolean verbose);
-
-    public abstract List<CompetitorWithPhoto> searchRefereeByTournament(Tournament tournament, boolean getImage, boolean verbose);
-
-    public abstract Integer searchVolunteerOrder(Competitor competitor, Tournament tournament);
 
     /**
      * *******************************************************************
@@ -292,6 +191,9 @@ public abstract class Database {
      *
      ********************************************************************
      */
+    /**
+     *
+     */
     protected abstract List<Team> getTeams(Tournament tournament);
 
     protected abstract boolean addTeams(List<Team> teams);
@@ -299,53 +201,6 @@ public abstract class Database {
     protected abstract boolean removeTeams(List<Team> teams);
 
     protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange);
-
-    /**
-     * Store a Tournament into the database.
-     */
-    public abstract boolean storeTeam(Team team, boolean verbose);
-
-    public abstract boolean insertTeam(Team team, boolean verbose);
-
-    public abstract List<Team> searchTeam(String query, boolean verbose);
-
-    public abstract List<Team> searchTeamsByNameAndTournament(String name, Tournament tournament, boolean verbose);
-
-    public abstract Team getTeamByName(String name, Tournament tournament, boolean verbose);
-
-    public abstract List<Team> searchTeamsByTournament(Tournament tournament, boolean verbose);
-
-    public abstract List<Team> searchTeamsByTournamentExactName(Tournament tournament, boolean verbose);
-
-    public abstract List<Team> searchTeamsByLevel(Tournament tournament, int level, boolean verbose);
-
-    public abstract List<String> getTeamsNameByLevel(Tournament tournament, int level, boolean verbose);
-
-    public abstract List<Team> getAllTeams();
-
-    public abstract List<Team> getTeams(int fromRow, int numberOfRows);
-
-    public abstract boolean storeAllTeams(List<Team> teams, boolean deleteOldOnes);
-
-    public abstract void updateTeamGroupOfLeague(Tournament tournament, Team team);
-
-    public abstract boolean deleteTeam(Team team, boolean verbose);
-
-    public abstract boolean deleteTeamByName(String team, String competition, boolean verbose);
-
-    public abstract void setIndividualTeams(Tournament tournament);
-
-    public abstract boolean deleteTeamsOfTournament(Tournament tournament, boolean verbose);
-
-    public abstract List<TeamRanking> getTeamsOrderByScore(Tournament tournament, boolean verbose);
-
-    public abstract Team getTeamOfCompetitor(String competitorID, Tournament tournament, boolean verbose);
-
-    public abstract boolean insertMembersOfTeamInLevel(Team team, int level, boolean verbose);
-
-    public abstract boolean deleteTeamInLevel(Team team, int level, boolean verbose);
-
-    public abstract boolean deleteAllMemberChangesInTeams(Tournament tournament, boolean verbose);
 
     /**
      * *******************************************************************
@@ -357,6 +212,14 @@ public abstract class Database {
     /**
      * Store a fight into the database.
      */
+    protected abstract List<Fight> getFights(Tournament tournament);
+
+    protected abstract boolean addFights(List<Fight> fights);
+
+    protected abstract boolean removeFights(List<Fight> fights);
+
+    protected abstract boolean updateFights(HashMap<Fight, Fight> fightsExchange);
+
     public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
 
     public abstract boolean deleteAllFights();

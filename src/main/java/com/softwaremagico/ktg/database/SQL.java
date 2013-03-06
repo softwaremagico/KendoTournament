@@ -293,9 +293,10 @@ public abstract class SQL extends Database {
         //Insert team.
         for (Role role : roles) {
             try {
-                RegisteredPerson participant = RegisteredPersonPool.get(role.getCompetitorId());
-                query += "INSERT INTO role (Role, Tournament, Competitor) VALUES ('" + role.getDatabaseTag() + "','" + tournament.getName() + "','" + participant.getId() + "');\n";
-            } catch (NullPointerException npe) { //The team has one competitor less...
+                RegisteredPerson participant = RegisteredPersonPool.getInstance().get(role.getCompetitorId());
+                query += "INSERT INTO role (Role, Tournament, Competitor, ImpressCard, Diploma) VALUES ('" + role.getDatabaseTag() + "','" + tournament.getName() + "','" + participant.getId() + "', " + role.isAccreditationPrinted() + "," + role.isDiplomaPrinted() + ");\n";
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
         }
 
@@ -324,7 +325,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), rs.getObject("Competitor").toString(), KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCard"));
+                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), rs.getObject("Competitor").toString(), KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(rs.getObject("Role").toString()), rs.getBoolean("ImpressCard"), rs.getBoolean("Diploma"));
                     results.add(role);
                 }
             }
@@ -675,8 +676,6 @@ public abstract class SQL extends Database {
      */
     /**
      *
-     * @param tournament
-     * @return
      */
     @Override
     protected List<Team> getTeams(Tournament tournament) {
@@ -722,13 +721,11 @@ public abstract class SQL extends Database {
         String query = "";
         //Insert team.
         for (Team team : teams) {
-            for (int levelIndex = 0; levelIndex < team.levelChangesSize(); levelIndex++) {
-                if (team.areMemberOrderChanges(levelIndex)) {
-                    for (int indexCompetitor = 0; indexCompetitor < team.getNumberOfMembers(levelIndex); indexCompetitor++) {
-                        try {
-                            query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES ('" + team.getName() + "','" + team.getMember(indexCompetitor, levelIndex).getId() + "','" + team.tournament.getName() + "'," + indexCompetitor + "," + team.group + "," + levelIndex + ");\n";
-                        } catch (NullPointerException npe) { //The team has one competitor less...
-                        }
+            for (Integer level : team.getMembersOrder().keySet()) {
+                for (int indexCompetitor = 0; indexCompetitor < team.getNumberOfMembers(level); indexCompetitor++) {
+                    try {
+                        query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES ('" + team.getName() + "','" + team.getMember(indexCompetitor, level).getId() + "','" + team.getTournament().getName() + "'," + indexCompetitor + "," + team.getGroup() + "," + level + ");\n";
+                    } catch (NullPointerException npe) { //The team has one competitor less...
                     }
                 }
             }
@@ -752,7 +749,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeTeams");
         String query = "";
         for (Team team : teams) {
-            query += "DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "';\n";
+            query += "DELETE FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.getTournament().getName() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -783,186 +780,6 @@ public abstract class SQL extends Database {
     }
 
     /**
-     * Obtain the members of a team in a specific level.
-     *
-     * @param team
-     * @param verbose
-     * @param level
-     * @return
-     */
-    private List<RegisteredPerson> searchTeamMembersInLevel(Team team, boolean verbose, int level) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamMembersInLevel");
-        List<Competitor> results = new ArrayList<>();
-        KendoLog.fine(SQL.class.getName(), "Obtaining the members of team " + team.getName() + " in level " + level);
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "' AND LevelTournament=" + level + " ORDER BY Position ASC")) {
-                while (rs.next()) {
-                    String memberID = rs.getObject("Member").toString();
-                    if (!memberID.equals("")) {
-                        Competitor c = selectCompetitor(memberID, verbose);
-                        //Add previous void competitors.
-                        for (int i = results.size(); i < rs.getInt("Position"); i++) {
-                            results.add(new Competitor("", "", "", ""));
-                        }
-                        results.add(c);
-                    } else {
-                        //not defined member.
-                        results.add(new Competitor("", "", "", ""));
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "searchTeamMembersInLevel");
-        return results;
-    }
-
-    /**
-     * Obtain the members of a team at the start of the championship.
-     *
-     * @param team
-     * @param verbose
-     * @return
-     */
-    private List<List<RegisteredPerson>> searchTeamMembers(Team team, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "searchTeamMembers");
-        KendoLog.fine(SQL.class.getName(), "Obtain the members of " + team.getName());
-        List<List<RegisteredPerson>> membersPerLevel = new ArrayList<>();
-        try {
-            Statement s = connection.createStatement();
-            String query = "SELECT MAX(LevelTournament) AS level FROM team WHERE Name='" + team.getName() + "' AND Tournament='" + team.tournament.getName() + "'";
-            KendoLog.finest(SQL.class.getName(), query);
-            ResultSet rs = s.executeQuery(query);
-            while (rs.next()) {
-                int level = rs.getInt("level");
-                for (int i = 0; i <= level; i++) {
-                    List<RegisteredPerson> members = searchTeamMembersInLevel(team, verbose, i);
-                    membersPerLevel.add(members);
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "searchTeamMembers");
-        return membersPerLevel;
-    }
-
-    @Override
-    public boolean insertMembersOfTeamInLevel(Team t, int level, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "insertMemebersOfTeamInLevel");
-        boolean error = false;
-        deleteTeamInLevel(t, level, verbose); //To allow a change in the current level and avoid the MySQLIntegrityConstraintViolationException
-        try {
-            for (int indexCompetitor = 0; indexCompetitor < t.getNumberOfMembers(level); indexCompetitor++) {
-                try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES (?,?,?,?,?,?)")) {
-                    stmt.setString(1, t.getName());
-                    stmt.setString(2, t.getMember(indexCompetitor, level).getId());
-                    stmt.setString(3, t.tournament.getName());
-                    stmt.setInt(4, indexCompetitor);
-                    stmt.setInt(5, t.group);
-                    stmt.setInt(6, level);
-                    stmt.executeUpdate();
-                }
-            }
-        } catch (MySQLIntegrityConstraintViolationException micve) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "SQL");
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), micve);
-        } catch (SQLException ex) {
-            if (!error) {
-                error = true;
-                if (!showSQLError(ex.getErrorCode())) {
-                    if (verbose) {
-                        MessageManager.errorMessage(this.getClass().getName(), "storeTeamError", "SQL");
-                    }
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        if (!error) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "teamStored", this.getClass().getName(), t.getName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(this.getClass().getName(), "Team stored: " + t.getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "insertMemebersOfTeamInLevel");
-        return !error;
-    }
-
-    @Override
-    public boolean deleteTeamInLevel(Team t, int level, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteTeamInLevel");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team WHERE Name='" + t.getName() + "' AND LevelTournament >=" + level + " AND Tournament='" + t.tournament.getName() + "'");
-            }
-            KendoLog.exiting(this.getClass().getName(), "deleteTeamInLevel");
-            return true;
-        } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            if (!error) {
-                error = true;
-            }
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteTeamInLevel");
-        return !error;
-
-    }
-
-    @Override
-    public boolean deleteAllMemberChangesInTeams(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteAllMemberChangesInTeams");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM team WHERE LevelTournament > 0  AND Tournament='" + tournament.getName() + "'");
-            }
-            KendoLog.exiting(this.getClass().getName(), "deleteAllMemberChangesInTeams");
-            return true;
-        } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            if (!error) {
-                error = true;
-            }
-        } catch (NullPointerException npe) {
-            if (!error) {
-                error = true;
-                if (verbose) {
-                    MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                }
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteAllMemberChangesInTeams");
-        return !error;
-    }
-
-    /**
      * *******************************************************************
      *
      * FIGHTS
@@ -970,135 +787,122 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
-     * Store a fight into the database.
+     *
      */
     @Override
-    public boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "storeFightsError");
-        boolean error = false;
-        boolean answer = false;
-        if (fights.size() > 0) {
-            try {
-                //Delete all previous fightManager.
-                if (verbose) {
-                    answer = MessageManager.questionMessage("deleteFights", "Warning!");
-                } else {
-                    answer = true;
-                }
+    protected List<Fight> getFights(Tournament tournament) {
+        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
+        KendoLog.entering(this.getClass().getName(), "getFights");
+        KendoLog.finer(SQL.class.getName(), query);
 
-                if (answer) {
-                    try (Statement s = connection.createStatement()) {
-                        if (purgeTournament) {
-                            deleteFightsOfTournament(fights.get(0).tournament, false);
-                            s.executeUpdate("DELETE FROM team WHERE Tournament='" + fights.get(0).tournament.getName() + "' AND LevelTournament > " + 0);
-                        }
-
-                        //Obtain the max level of figths.
-                        int level = 0;
-                        for (int i = 0; i < fights.size(); i++) {
-                            if (level < fights.get(i).level) {
-                                level = fights.get(i).level;
-                            }
-                        }
-
-                        for (Fight f : fights) {
-                            //Add the fightManager that depends on the level and the teams.
-                            s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
-                            f.setOverStored(true);
-                            for (int i = 0; i < f.duels.size(); i++) {
-                                storeDuel(f.duels.get(i), f, i);
+        List<Fight> results = new ArrayList<>();
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery(query)) {
+            while (rs.next()) {
+                Fight f = new Fight(TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
+                        tournament,
+                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
+                f.setMaxWinners(rs.getInt("MaxWinners"));
+                f.calculateOverWithDuels();
+                try {
+                    if (f.getTeam1().levelChangesSize() > 0 && f.getTeam2().levelChangesSize() > 0) {
+                        for (int i = 0; i < Math.max(f.getTeam1().getNumberOfMembers(0), f.getTeam2().getNumberOfMembers(0)); i++) {
+                            Duel d = getDuel(f, i);
+                            if (d != null) {
+                                f.setDuel(d, i);
                             }
                         }
                     }
+                } catch (NullPointerException npe) {
                 }
+                results.add(f);
+            }
+        } catch (SQLException ex) {
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+        } catch (NullPointerException npe) {
+            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+        }
+        KendoLog.exiting(this.getClass().getName(), "getFights");
+        return results;
+    }
 
-            } catch (SQLException ex) {
-                error = true;
+    @Override
+    protected boolean addFights(List<Fight> fights) {
+        KendoLog.entering(this.getClass().getName(), "addFights");
+        String query = "";
+        //Insert team.
+        for (Fight fight : fights) {
+            try {
+                query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getMaxWinners() + ");\n";
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            }
+        }
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
                 MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
-
-            if (!error && answer) {
-                if (verbose) {
-                    MessageManager.translatedMessage(this.getClass().getName(), "fightStored", this.getClass().getName(), fights.get(0).tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-                }
-                KendoLog.info(this.getClass().getName(), "Fight stored: " + fights.get(0).tournament.getName());
-            }
-        } else {
-            KendoLog.exiting(this.getClass().getName(), "storeFightsError");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "storeFightsError");
-        return !error && answer;
+        KendoLog.exiting(this.getClass().getName(), "addFights");
+        return true;
     }
 
     @Override
-    public boolean deleteAllFights() {
-        KendoLog.entering(this.getClass().getName(), "deleteAllFights");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM fight");
-                s.executeUpdate("DELETE FROM duel");
-            }
+    protected boolean removeFights(List<Fight> fights) {
+        KendoLog.entering(this.getClass().getName(), "removeFights");
+        String query = "";
+        for (Fight fight : fights) {
+            query += "DELETE FROM fight WHERE Tournament='" + fight.getTournament().getName() + "' AND LeagueLevel=" + fight.getLevel() + " AND Team1='" + fight.getTeam1().getName() + "' AND Team2='" + fight.getTeam2().getName() + "';\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteFightError", "SQL");
+            }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "deleteAllFights");
-        return error;
+        KendoLog.exiting(this.getClass().getName(), "removeFights");
+        return true;
     }
 
     @Override
-    public boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights) {
-        KendoLog.entering(this.getClass().getName(), "storeAllFightsAndDeleteOldOnes");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM fight");
-                s.executeUpdate("DELETE FROM duel");
-                for (Fight f : fights) {
-                    s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + f.team1.getName() + "','" + f.team2.getName() + "','" + f.tournament.getName() + "','" + f.asignedFightArea + "'," + f.returnWinner() + "," + f.level + "," + f.getMaxWinners() + ")");
-                    f.setOverStored(true);
-                    storeDuelsOfFight(f);
-                }
-            }
+    protected boolean updateFights(HashMap<Fight, Fight> fightsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateFights");
+        List<Fight> oldFights = new ArrayList<>(fightsExchange.values());
+        List<Fight> newFights = new ArrayList<>(fightsExchange.keySet());
+        String query = "";
+        for (Fight newFight : newFights) {
+            Fight oldFight = fightsExchange.get(newFight);
+            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', LeagueLevel='" + newFight.getLevel() + "', MaxWinners='" + newFight.getMaxWinners() + "' FightArea=" + newFight.getAsignedFightArea() + ", "
+                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND LeagueLevel='" + oldFight.getLevel() + "'\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.info(this.getClass().getName(), "Fight stored " + fights.get(0).tournament.getName());
-        KendoLog.exiting(this.getClass().getName(), "storeAllFightsAndDeleteOldOnes");
-        return !error;
-    }
-
-    @Override
-    public boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne) {
-        KendoLog.entering(this.getClass().getName(), "storeFight");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                if (deleteOldOne) {
-                    deleteFight(fight, false);
-                }
-                s.executeUpdate("INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.team1.getName() + "','" + fight.team2.getName() + "','" + fight.tournament.getName() + "','" + fight.asignedFightArea + "'," + fight.returnWinner() + "," + fight.level + "," + fight.getMaxWinners() + ")");
-                fight.setOverStored(true);
+            if (!showSQLError(ex.getErrorCode())) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             }
-        } catch (SQLException | NullPointerException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
         }
-        if (!error) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "fightStored", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(this.getClass().getName(), "Fight stored: " + fight.tournament.getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeFight");
-        return !error;
+        KendoLog.exiting(this.getClass().getName(), "updateFights");
+        return true;
     }
 
     @Override
@@ -1227,7 +1031,7 @@ public abstract class SQL extends Database {
             /*
              * Considering the fight over if is updated
              */
-            int over = fight.returnWinner();
+            int over = fight.getWinner();
             if (over == 2) {
                 over = 0;
             }

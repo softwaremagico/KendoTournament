@@ -89,10 +89,10 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
     }
 
-    public void deleteTeamGroups(Tournament tournament) {
+    public void deleteTeamsGroup(Tournament tournament) {
         List<Team> teams = new ArrayList<>(get(tournament).values());
         for (Team team : teams) {
-            team.group = 0;
+            team.setGroup(0);
             update(tournament, team, team);
         }
     }

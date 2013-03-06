@@ -281,7 +281,7 @@ public class RoundFight extends JPanel {
                 } else {
                     nextStarted = false;
                 }
-                updateDrawPanel(draws.get(i), fight.duels.get(i).winner(), fight.returnWinner(), nextStarted, i);
+                updateDrawPanel(draws.get(i), fight.duels.get(i).winner(), fight.getWinner(), nextStarted, i);
             }
         }
 

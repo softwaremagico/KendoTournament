@@ -27,46 +27,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Jorge
- */
 public class Fight implements Serializable {
 
     private static final String FIGHT_TAG = "FIGHT";
-    public Team team1;
-    public Team team2;
-    public Tournament tournament;
-    public int asignedFightArea;
-    public List<Duel> duels = new ArrayList<>();
-    private int winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
+    private Team team1;
+    private Team team2;
+    private Tournament tournament;
+    private Integer asignedFightArea;
+    private List<Duel> duels = new ArrayList<>();
+    private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     private Integer level;
-    private int maxWinners = 1;
+    private Integer maxWinners = 1;
     private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
-
-    public boolean isOverStored() {
-        return overUpdated;
-    }
-
-    public Integer getLevel() {
-        return level;
-    }
-
-    public void setLevel(Integer level) {
-        this.level = level;
-    }
-
-    public void setOverStored(boolean overUpdated) {
-        this.overUpdated = overUpdated;
-    }
-
-    public void calculateOverWithDuels() {
-        if (returnWinner() == 2) {
-            overUpdated = false;
-        } else {
-            overUpdated = true;
-        }
-    }
 
     public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_winner, int tmp_level) {
         team1 = tmp_team1;
@@ -98,6 +70,70 @@ public class Fight implements Serializable {
         level = 0;
     }
 
+    public boolean isOverStored() {
+        return overUpdated;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setOverStored(boolean overUpdated) {
+        this.overUpdated = overUpdated;
+    }
+
+    public void calculateOverWithDuels() {
+        if (getWinner() == 2) {
+            overUpdated = false;
+        } else {
+            overUpdated = true;
+        }
+    }
+
+    public Team getTeam1() {
+        return team1;
+    }
+
+    public void setTeam1(Team team1) {
+        this.team1 = team1;
+    }
+
+    public Team getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(Team team2) {
+        this.team2 = team2;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    public int getAsignedFightArea() {
+        return asignedFightArea;
+    }
+
+    public void setAsignedFightArea(int asignedFightArea) {
+        this.asignedFightArea = asignedFightArea;
+    }
+
+    public List<Duel> getDuels() {
+        return duels;
+    }
+
+    public void setDuels(List<Duel> duels) {
+        this.duels = duels;
+    }
+
     public boolean isOver() {
         /*
          * try { Team winnerTeam = winner(); if
@@ -109,7 +145,7 @@ public class Fight implements Serializable {
         return winner < 2;
     }
 
-    public int returnWinner() {
+    public int getWinner() {
         return winner;
     }
 

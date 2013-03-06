@@ -43,36 +43,6 @@
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;disconnect.png&quot;));"/>
                   </AuxValues>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="ExportMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Export..."/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExportMenuItemActionPerformed"/>
-                  </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;export.png&quot;));"/>
-                  </AuxValues>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="ImportMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Import..."/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ImportMenuItemActionPerformed"/>
-                  </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;import.png&quot;));"/>
-                  </AuxValues>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="DatabaseUpdateMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Update"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;execute.png&quot;));"/>
-                  </AuxValues>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="ConvertDatabaseMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Convert database"/>
@@ -642,7 +612,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="236" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="240" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

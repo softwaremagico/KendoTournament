@@ -448,14 +448,14 @@
 		<ca>Tots els partits han finalitzat, la lliga ha conclús i el guanyador és.</ca>
 		<it>Tutti gli incontri si sono disputati, il campionato è finito e il vincitore è</it>
 	</leagueFinished>
-	<deleteFight>
+	<deleteFightError>
 		<en>Error when deleting a match.</en>
 		<es>Error mientras se intentaba borrar un partido.</es>
 		<nl>Fout bij het verwijderen van de wedstrijd!</nl>
 		<de>Fehler beim löschen eines Kampfes.</de>
 		<ca>Error mentre s'intentava esborrar un partit.</ca>
 		<it>Si è generato un errore mentre si stava cancellando un incontro</it>
-	</deleteFight>
+	</deleteFightError>
 	<fightDeleted>
 		<en>The match has been deleted!</en>
 		<es>¡El partido ha sido borrado!</es>

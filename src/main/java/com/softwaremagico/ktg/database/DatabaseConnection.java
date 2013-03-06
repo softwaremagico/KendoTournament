@@ -130,7 +130,7 @@ public class DatabaseConnection {
         generateDatabaseConnectionFile();
         database = databaseEngine.getDatabaseClass();
         try {
-            database.disconnect();
+            database.disconnectDatabase();
         } catch (SQLException ex) {
         }
         databaseConnected = database.connect(tmp_password, tmp_user, tmp_database, tmp_server, true, true);

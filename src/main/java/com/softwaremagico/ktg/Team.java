@@ -66,6 +66,18 @@ public class Team implements Serializable, Comparable<Team> {
         return null;
     }
 
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public Integer getGroup() {
+        return group;
+    }
+
+    public void setGroup(Integer group) {
+        this.group = group;
+    }
+
     public int getNumberOfMembers(int level) {
         try {
             return getMembersOrder(level).size();
@@ -85,6 +97,10 @@ public class Team implements Serializable, Comparable<Team> {
         } catch (NullPointerException npe) {
         }
         return null;
+    }
+
+    public HashMap<Integer, HashMap<Integer, RegisteredPerson>> getMembersOrder() {
+        return membersOrder;
     }
 
     public HashMap<Integer, RegisteredPerson> getMembersOrder(int level) {
