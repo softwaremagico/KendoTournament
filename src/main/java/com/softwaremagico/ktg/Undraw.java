@@ -30,11 +30,7 @@ import java.util.List;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-/**
- *
- * @author LOCAL\jhortelano
- */
-public class Undraw {
+public class Undraw implements Comparable<Undraw> {
 
     private static final String UNDRAW_TAG = "UNDRAW";
     private Tournament tournament;
@@ -55,7 +51,7 @@ public class Undraw {
         return group;
     }
 
-    public Integer getIndexOfGroup() {
+    public Integer getGroupIndex() {
         return TournamentGroupPool.getManager(getTournament()).getIndexOfGroup(getGroup());
     }
 
@@ -79,11 +75,11 @@ public class Undraw {
         this.tournament = tournament;
     }
 
-    public Team getWinnerTeam() {
+    public Team getTeam() {
         return winnerTeam;
     }
 
-    public void setWinnerTeam(Team winnerTeam) {
+    public void setTeam(Team winnerTeam) {
         this.winnerTeam = winnerTeam;
     }
 
@@ -99,5 +95,14 @@ public class Undraw {
 
     public Integer getLevel() {
         return level;
+    }
+
+    @Override
+    public int compareTo(Undraw o) {
+        Integer levelCompare = getLevel().compareTo(o.getLevel());
+        if (levelCompare != 0) {
+            return levelCompare;
+        }
+        return getGroupIndex().compareTo(o.getGroupIndex());
     }
 }

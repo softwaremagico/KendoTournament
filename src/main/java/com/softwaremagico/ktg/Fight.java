@@ -23,6 +23,7 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.DuelPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Team team2;
     private Tournament tournament;
     private Integer asignedFightArea;
-    private List<Duel> duels = new ArrayList<>();
+    //private List<Duel> duels = null;
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     private Integer index;
     private Integer level;
@@ -46,7 +47,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         this.team2 = team2;
         this.tournament = tmp_tournament;
         this.asignedFightArea = asignedArea;
-        addDuels();
         this.index = order;
         this.level = level;
     }
@@ -112,21 +112,10 @@ public class Fight implements Serializable, Comparable<Fight> {
     }
 
     public List<Duel> getDuels() {
-        return duels;
-    }
-
-    public void setDuels(List<Duel> duels) {
-        this.duels = duels;
+        return DuelPool.getInstance().get(tournament, this);
     }
 
     public boolean isOver() {
-        /*
-         * try { Team winnerTeam = winner(); if
-         * (winnerTeam.getName().equals(team1.getName())) { winner = -1; return
-         * -1; } if (winnerTeam.getName().equals(team2.getName())) { winner = 1;
-         * return 1; } } catch (NullPointerException npe) { return winner; }
-         * winner = 2;
-         */
         return winner < 2;
     }
 
@@ -162,21 +151,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
     }
 
-    public final boolean addDuels() {
-        try {
-            for (int i = 0; i < tournament.getTeamSize(); i++) {
-                duels.add(new Duel(this, i));
-            }
-        } catch (NullPointerException npe) {
-            return false;
-        }
-        return true;
-    }
-
-    public void setDuel(Duel d, int player) {
-        duels.set(player, d);
-    }
-
     /**
      * Return the winner only counting the duels.
      *
@@ -186,8 +160,8 @@ public class Fight implements Serializable, Comparable<Fight> {
         int points1 = 0;
         int points2 = 0;
         int duelsScore = 0;
-        for (int i = 0; i < duels.size(); i++) {
-            duelsScore += duels.get(i).winner();
+        for (int i = 0; i < getDuels().size(); i++) {
+            duelsScore += getDuels().get(i).winner();
         }
         if (duelsScore < 0) {
             return team1;
@@ -196,9 +170,9 @@ public class Fight implements Serializable, Comparable<Fight> {
             return team2;
         }
 
-        for (int i = 0; i < duels.size(); i++) {
-            points1 += duels.get(i).howManyPoints(true);
-            points2 += duels.get(i).howManyPoints(false);
+        for (int i = 0; i < getDuels().size(); i++) {
+            points1 += getDuels().get(i).howManyPoints(true);
+            points2 += getDuels().get(i).howManyPoints(false);
         }
 
         if (points1 > points2) {
@@ -225,8 +199,8 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     public Team winner() {
         int points = 0;
-        for (int i = 0; i < duels.size(); i++) {
-            points += duels.get(i).winner();
+        for (int i = 0; i < getDuels().size(); i++) {
+            points += getDuels().get(i).winner();
         }
         if (points < 0) {
             return team1;
@@ -237,9 +211,9 @@ public class Fight implements Serializable, Comparable<Fight> {
         //If are draw rounds, win who has more points.
         int pointLeft = 0;
         int pointRight = 0;
-        for (int i = 0; i < duels.size(); i++) {
-            pointLeft += duels.get(i).howManyPoints(true);
-            pointRight += duels.get(i).howManyPoints(false);
+        for (int i = 0; i < getDuels().size(); i++) {
+            pointLeft += getDuels().get(i).howManyPoints(true);
+            pointRight += getDuels().get(i).howManyPoints(false);
         }
         if (pointLeft > pointRight) {
             return team1;
@@ -253,8 +227,8 @@ public class Fight implements Serializable, Comparable<Fight> {
     public void showDuels() {
         System.out.println("---------------");
         System.out.println(team1.getName() + " vs " + team2.getName());
-        for (int i = 0; i < duels.size(); i++) {
-            System.out.println(team1.getMember(i, level).getName() + ": " + duels.get(i).getHits(true).get(0).getAbbreviature() + " " + duels.get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + duels.get(i).getFaults(true) + " vs " + team2.getMember(i, level).getName() + ": " + duels.get(i).getHits(false).get(0).getAbbreviature() + " " + duels.get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + duels.get(i).getFaults(false));
+        for (int i = 0; i < getDuels().size(); i++) {
+            System.out.println(team1.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(true).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(true) + " vs " + team2.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(false).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(false));
         }
         System.out.println("---------------");
     }
@@ -275,8 +249,8 @@ public class Fight implements Serializable, Comparable<Fight> {
                     && ((team1.getMember(i, level) == null) //Versus no player.
                     || (team1.getMember(i, level).getName().equals("")
                     && team1.getMember(i, level).id.equals("")))) {
-                duels.get(i).completeIppons(false);
-                // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+                getDuels().get(i).completeIppons(false);
+                // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
         }
 
@@ -287,8 +261,8 @@ public class Fight implements Serializable, Comparable<Fight> {
                     && ((team2.getMember(i, level) == null) //Versus no player.
                     || (team2.getMember(i, level).getName().equals("")
                     && team2.getMember(i, level).id.equals("")))) {
-                duels.get(i).completeIppons(true);
-                // DatabaseConnection.getInstance().getDatabase().storeDuel(duels.get(i), this, i);
+                getDuels().get(i).completeIppons(true);
+                // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
         }
 
@@ -296,11 +270,11 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     public Integer getWinnedDuels(boolean team1) {
         int winDuels = 0;
-        for (int i = 0; i < duels.size(); i++) {
-            if (duels.get(i).winner() < 0 && team1) {
+        for (int i = 0; i < getDuels().size(); i++) {
+            if (getDuels().get(i).winner() < 0 && team1) {
                 winDuels++;
             }
-            if (duels.get(i).winner() > 0 && !team1) {
+            if (getDuels().get(i).winner() > 0 && !team1) {
                 winDuels++;
             }
         }
@@ -309,8 +283,8 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     public Integer getScore(boolean team1) {
         int score = 0;
-        for (int i = 0; i < duels.size(); i++) {
-            score += duels.get(i).howManyPoints(team1);
+        for (int i = 0; i < getDuels().size(); i++) {
+            score += getDuels().get(i).howManyPoints(team1);
         }
         return score;
     }
@@ -349,7 +323,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     @Override
     public String toString() {
         String text = "'" + team1.getName() + "' vs '" + team2.getName() + "'\n";
-        for (Duel d : duels) {
+        for (Duel d : getDuels()) {
             text += d + "\n";
         }
         return text;
@@ -362,7 +336,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     public List<String> exportToCsv(int order) {
         List<String> csv = new ArrayList<>();
         csv.add(FIGHT_TAG + ";" + order + ";" + team1.getName() + ";" + team2.getName());
-        for (Duel d : duels) {
+        for (Duel d : getDuels()) {
             csv.add(d.exportToCsv());
         }
         return csv;
@@ -375,7 +349,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     public List<String> exportToCsv(int order, int group, int level) {
         List<String> csv = new ArrayList<>();
         csv.add(FIGHT_TAG + ";" + order + ";" + group + ";" + level + ";" + team1.getName() + ";" + team2.getName());
-        for (Duel d : duels) {
+        for (Duel d : getDuels()) {
             csv.add(d.exportToCsv());
         }
         return csv;

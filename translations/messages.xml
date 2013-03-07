@@ -792,14 +792,14 @@
 		<ca>Els combats d'un grup han finalitzat. Els equips que passen a la següent ronda són:</ca>
 		<it>Gli incontri di questo gruppo sono finiti. Le squadre che passano alla seguente fase sono</it>
 	</winnerOfgroup>
-	<storeUndraw>
+	<storeUndrawError>
 		<en>Error when trying to store the score for the breakthrough.</en>
 		<es>Error mientras se intentaba almacenar el punto para desempatar.</es>
 		<nl>Fout bij het opslaan van de score.</nl>
 		<de>Error when trying to store the score for the breakthrough.</de>
 		<ca>Error mentre s'intentava enmagatzemar el punt per desempatar.</ca>
 		<it>Si è generato un errore mentre si stava salvanso il punto per lo spareggio.</it>
-	</storeUndraw>
+	</storeUndrawError>
 	<waitingArena>
 		<en>Wait until all fights are finished. Remain shiaijo </en>
 		<es>Espere mientras se acaban los combates del shiaijo </es>

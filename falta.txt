@@ -3,5 +3,6 @@ Que las listas se puedan exportar en TXT
 Que solamente se inserten los combates en la base de datos cuando acaban todos los combates del shiaijo (si est� en remoto).
 En el diseñador, si está en un campeonato y se borran todos los grupos, al volverlos a añadir unicamente pone una flecha y no dos en el nivel cero. 
 Dicen que cuenta las faltas en la puntuación. 
+CVS import undraws
 
 

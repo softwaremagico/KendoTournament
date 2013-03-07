@@ -248,27 +248,11 @@ public abstract class Database {
     /**
      * Store a undraw into the database.
      */
-    public abstract boolean storeUndraw(Tournament tournament, Team team, int order, int group, int level);
+    protected abstract List<Undraw> getUndraws(Tournament tournament);
 
-    public abstract boolean storeUndraw(Undraw undraw);
+    protected abstract boolean addUndraws(List<Undraw> duels);
 
-    public abstract List<Undraw> getUndraws(int fromRow, int numberOfRows);
+    protected abstract boolean removeUndraws(List<Undraw> duels);
 
-    public abstract List<Undraw> getUndraws(Tournament tournament);
-
-    public abstract List<Undraw> getUndraws();
-
-    public abstract boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes);
-
-    public abstract List<Team> getWinnersInUndraws(Tournament tournament, int level, int group);
-
-    public abstract int getValueWinnerInUndraws(Tournament tournament, String team);
-
-    public abstract int getValueWinnerInUndrawInGroup(Tournament tournament, int group, int level, String team);
-
-    public abstract void deleteDrawsOfTournament(Tournament tournament);
-
-    public abstract void deleteDrawsOfGroupOfTournament(Tournament tournament, int group);
-
-    public abstract void deleteDrawsOfLevelOfTournament(Tournament tournament, int level);
+    protected abstract boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange);
 }

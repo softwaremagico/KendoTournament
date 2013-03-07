@@ -505,7 +505,7 @@ public abstract class SQL extends Database {
         List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
         String query = "";
         for (Club club : newClubs) {
-            query += "UPDATE Club SET Country='" + club.getCountry() + "', City='" + club.getCity() + "', Address='" + club.getAddress() + "', Web='" + club.getWeb() + "', Mail='" + club.getMail() + "', Phone='" + club.getPhone() + "', Representative='" + club.getRepresentative() + "' WHERE Name='" + clubsExchange.get(club).getName() + "'\n";
+            query += "UPDATE Club SET Country='" + club.getCountry() + "', City='" + club.getCity() + "', Address='" + club.getAddress() + "', Web='" + club.getWeb() + "', Mail='" + club.getMail() + "', Phone='" + club.getPhone() + "', Representative='" + club.getRepresentative() + "' WHERE Name='" + clubsExchange.get(club).getName() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -637,7 +637,7 @@ public abstract class SQL extends Database {
         List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
         for (Tournament tournament : newTournaments) {
             Tournament oldTournament = tournamentsExchange.get(tournament);
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + oldTournament.getName() + "'")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + oldTournament.getName() + "';")) {
                 storeBinaryStream(stmt, 1, tournament.getBannerInput(), (int) tournament.getBannerSize());
                 stmt.setLong(2, tournament.getBannerSize());
                 stmt.setInt(3, tournament.getFightingAreas());
@@ -806,7 +806,6 @@ public abstract class SQL extends Database {
                 f.setMaxWinners(rs.getInt("MaxWinners"));
                 f.calculateOverWithDuels();
                 //Set duels of fight:
-                ...
                 results.add(f);
             }
         } catch (SQLException ex) {
@@ -878,7 +877,7 @@ public abstract class SQL extends Database {
         for (Fight newFight : newFights) {
             Fight oldFight = fightsExchange.get(newFight);
             query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', MaxWinners='" + newFight.getMaxWinners() + "' FightArea=" + newFight.getAsignedFightArea() + ", "
-                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Index=" + oldFight.getIndex() + "\n";
+                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Index=" + oldFight.getIndex() + ";\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -1031,7 +1030,7 @@ public abstract class SQL extends Database {
         for (Duel newDuel : newDuels) {
             Duel oldDuel = duelsExchange.get(newDuel);
             query += "UPDATE Duel SET Team1='" + newDuel.getFight().getTeam1() + "', Tournament='" + newDuel.getFight().getTournament() + "' Team2='" + newDuel.getFight().getTeam2() + "', Level=" + newDuel.getFight().getLevel() + ", Index=" + newDuel.getFight().getIndex() + ", Order=" + newDuel.getOrder() + ", PointPlayer1A='" + newDuel.getHits(true).get(0) + "', PointPlayer1B='" + newDuel.getHits(true).get(1) + "', PointPlayer2A=" + newDuel.getHits(false).get(0) + ", PointPlayer2B=" + newDuel.getHits(false).get(1) + ", FaultsPlayer1=" + newDuel.getFaults(true) + ", FaultsPlayer2=" + newDuel.getFaults(false)
-                    + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='" + oldDuel.getFight().getTournament().getName() + "' AND Level='" + oldDuel.getFight().getLevel() + "' AND Index=" + oldDuel.getFight().getIndex() + " AND Order=" + oldDuel.getOrder() + "\n";
+                    + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='" + oldDuel.getFight().getTournament().getName() + "' AND Level=" + oldDuel.getFight().getLevel() + " AND Index=" + oldDuel.getFight().getIndex() + " AND Order=" + oldDuel.getOrder() + ";\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -1047,7 +1046,7 @@ public abstract class SQL extends Database {
         KendoLog.exiting(this.getClass().getName(), "updateDuels");
         return true;
     }
-    
+
     /**
      * *******************************************************************
      *
@@ -1059,48 +1058,19 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    public boolean storeUndraw(Tournament tournament, Team team, int order, int group, int level) {
-        KendoLog.entering(this.getClass().getName(), "storeUndraw");
-        boolean error = false;
-        try {
-            //Delete the undraw if exist previously.
-            Statement s = connection.createStatement();
-            s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team.getName() + "'  AND UndrawGroup=" + group + " AND LevelUndraw=" + level);
-            s.close();
-
-            //Add the new undraw.
-            s = connection.createStatement();
-            s.executeUpdate("INSERT INTO undraw (Championship, Team, Player, UndrawGroup, LevelUndraw) VALUES ('" + tournament.getName() + "', '" + team.getName() + "', " + order + ", " + group + ", " + level + ")");
-            s.close();
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeUndraw", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeUndraw");
-        return !error;
-    }
-
-    @Override
-    public boolean storeUndraw(Undraw undraw) {
-        KendoLog.entering(this.getClass().getName(), "storeUndraw2");
-        boolean value = storeUndraw(undraw.getTournament(), undraw.getWinnerTeam(), undraw.getPlayer(), undraw.getIndexOfGroup(), undraw.getLevel());
-        KendoLog.exiting(this.getClass().getName(), "storeUndraw2");
-        return value;
-    }
-
-    private List<Undraw> getUndraws(String sqlQuery) {
+    protected List<Undraw> getUndraws(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getUndraws");
+        String query = "SELECT * FROM undraw WHERE Tournament='" + tournament.getName() + "'";
+        KendoLog.finer(SQL.class.getName(), query);
         List<Undraw> results = new ArrayList<>();
-
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(sqlQuery)) {
+                    ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Tournament tournament = TournamentPool.getTournament(rs.getObject("Championship").toString());
                     Undraw u = new Undraw(tournament,
-                            TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("UndrawGroup").toString())),
-                            TeamPool.getInstance().get(TournamentPool.getTournament(rs.getObject("Championship").toString()), rs.getObject("Team").toString()),
-                            (Integer) rs.getObject("Player"), (Integer) rs.getObject("LevelUndraw"));
+                            TournamentGroupPool.getManager(tournament).getGroup(Integer.parseInt(rs.getObject("Group").toString())),
+                            TeamPool.getInstance().get(tournament, rs.getObject("Team").toString()),
+                            (Integer) rs.getObject("Player"), (Integer) rs.getObject("Level"));
                     results.add(u);
                 }
             }
@@ -1111,192 +1081,96 @@ public abstract class SQL extends Database {
             MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-        return results;
-    }
-
-    @Override
-    public List<Undraw> getUndraws(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getUndraws");
-        String query = "SELECT * FROM undraw LIMIT " + fromRow + "," + numberOfRows;
-        List<Undraw> results = getUndraws(query);
         KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
 
     @Override
-    public List<Undraw> getUndraws(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "getUndraws");
-        String query = "SELECT * FROM undraw WHERE championship='" + tournament.getName() + "'";
-        List<Undraw> results = getUndraws(query);
-        KendoLog.exiting(this.getClass().getName(), "getUndraws");
-        return results;
-    }
-
-    @Override
-    public List<Undraw> getUndraws() {
-        KendoLog.entering(this.getClass().getName(), "getUndraws");
-        String query = "SELECT * FROM undraw";
-        List<Undraw> results = getUndraws(query);
-        KendoLog.exiting(this.getClass().getName(), "getUndraws");
-        return results;
-    }
-
-    @Override
-    public boolean storeAllUndraws(List<Undraw> undraws, boolean deleteOldOnes) {
-        KendoLog.entering(this.getClass().getName(), "storeAllUndraws");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement()) {
-                if (deleteOldOnes) {
-                    s.executeUpdate("DELETE FROM undraw");
-                }
-                for (int i = 0; i < undraws.size(); i++) {
-                    s.executeUpdate("INSERT INTO undraw (Championship, UndrawGroup, Team, Player, LevelUndraw) VALUES ('"
-                            + undraws.get(i).getTournament() + "'," + undraws.get(i).getIndexOfGroup() + ",'" + undraws.get(i).getWinnerTeam().getName() + "'," + undraws.get(i).getPlayer() + "," + undraws.get(i).getGroup().getLevel() + ")");
-                }
+    protected boolean addUndraws(List<Undraw> undraws) {
+        KendoLog.entering(this.getClass().getName(), "addUndraws");
+        String query = "";
+        for (Undraw undraw : undraws) {
+            try {
+                query += "INSERT INTO Undraw (Tournament, Team, Player, Group, Level) VALUES ('" + undraw.getTournament().getName() + "', '" + undraw.getTeam().getName() + "', " + undraw.getPlayer() + ", " + undraw.getGroupIndex() + ", " + undraw.getLevel() + ");\n";
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         }
-        KendoLog.info(this.getClass().getName(), "Fights stored: " + undraws.get(0).getTournament() + ": " + undraws.get(0).getWinnerTeam());
-        KendoLog.exiting(this.getClass().getName(), "storeAllUndraws");
-        return !error;
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeUndrawError", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "addUndraws");
+        return true;
     }
 
     @Override
-    public List<Team> getWinnersInUndraws(Tournament tournament, int level, int group) {
-        KendoLog.entering(this.getClass().getName(), "getWinnersInUndraws");
-        List<Team> teamWinners = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level;
-                try (ResultSet rs = s.executeQuery(query)) {
-                    while (rs.next()) {
-                        teamWinners.add(TeamPool.getInstance().get(tournament, rs.getObject("Team").toString()));
-                    }
-                }
-            }
+    protected boolean removeUndraws(List<Undraw> undraws) {
+        KendoLog.entering(this.getClass().getName(), "removeUndraws");
+        String query = "";
+        for (Undraw undraw : undraws) {
+            query += "DELETE FROM Undraw WHERE Tournament='" + undraw.getTournament().getName() + "' AND Level=" + undraw.getLevel() + " AND Team='" + undraw.getTeam().getName() + "' AND Group=" + undraw.getGroupIndex() + ";\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteDuelError", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
         } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "getWinnersInUndraws");
-        return teamWinners;
+        KendoLog.exiting(this.getClass().getName(), "removeUndraws");
+        return true;
     }
 
     @Override
-    public int getValueWinnerInUndraws(Tournament tournament, String team) {
-        KendoLog.entering(this.getClass().getName(), "getValueWinnerInUndraws");
-        int value = 0;
-        try {
-            try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND Team='" + team + "'";
-                try (ResultSet rs = s.executeQuery(query)) {
-                    while (rs.next()) {
-                        value++;
-                    }
-                }
-            }
+    protected boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateUndraws");
+        List<Undraw> oldUndraws = new ArrayList<>(undrawsExchange.values());
+        List<Undraw> newUndraws = new ArrayList<>(undrawsExchange.keySet());
+        String query = "";
+        for (Undraw newUndraw : newUndraws) {
+            Undraw oldUndraw = undrawsExchange.get(newUndraw);
+            query += "UPDATE Undraw SET Team='" + newUndraw.getTeam().getName() + "', Tournament='" + newUndraw.getTournament().getName() + "', Level=" + newUndraw.getLevel() + ", Group=" + newUndraw.getGroupIndex() + ", Player=" + newUndraw.getPlayer() + ", "
+                    + " WHERE Team='" + oldUndraw.getTeam().getName() + "' AND Tournament='" + oldUndraw.getTournament().getName() + "' AND Level=" + oldUndraw.getLevel() + " AND Group=" + oldUndraw.getGroupIndex() + ";\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
+            if (!showSQLError(ex.getErrorCode())) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            }
+            return false;
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
         }
-        KendoLog.exiting(this.getClass().getName(), "getValueWinnerInUndraws");
-        return value;
+        KendoLog.exiting(this.getClass().getName(), "updateUndraws");
+        return true;
     }
 
-    @Override
-    public int getValueWinnerInUndrawInGroup(Tournament tournament, int group, int level, String team) {
-        KendoLog.entering(this.getClass().getName(), "getValueWinnerInUndrawInGroup");
-        int value = 0;
-        try {
-            try (Statement s = connection.createStatement()) {
-                String query = "SELECT * FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group + " AND LevelUndraw=" + level + " AND Team='" + team + "'";
-                try (ResultSet rs = s.executeQuery(query)) {
-                    while (rs.next()) {
-                        value++;
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getValueWinnerInUndrawInGroup");
-        return value;
-    }
-
-    @Override
-    public void deleteDrawsOfTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfTournament");
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "'");
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfTournament");
-    }
-
-    @Override
-    public void deleteDrawsOfGroupOfTournament(Tournament tournament, int group) {
-        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfGroupOfTournament");
-        KendoLog.fine(SQL.class.getName(), "Deleting undraws of group " + group);
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND UndrawGroup=" + group);
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfGroupOfTournament");
-    }
-
-    @Override
-    public void deleteDrawsOfLevelOfTournament(Tournament tournament, int level) {
-        KendoLog.entering(this.getClass().getName(), "deleteDrawsOfLevelOfTournament");
-        KendoLog.fine(SQL.class.getName(), "Deleting undraws of level " + level);
-        try {
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM undraw WHERE Championship='" + tournament.getName() + "' AND LevelUndraw=" + level);
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteDrawsOfLevelOfTournament");
-    }
-
-    public List<String> getUndrawMySQLCommands() {
-        KendoLog.entering(this.getClass().getName(), "getUndrawMySQLCommands");
-        List<String> commands = new ArrayList<>();
-        try {
-            Statement s = connection.createStatement();
-            String query = "SELECT * FROM undraw ORDER BY Championship";
-            ResultSet rs = s.executeQuery(query);
-            while (rs.next()) {
-                String command = "INSERT INTO `undraw` VALUES('" + rs.getObject("Championship").toString() + "',"
-                        + rs.getInt("UndrawGroup") + "," + rs.getInt("LevelUndraw") + ",'" + rs.getObject("Team").toString() + "',"
-                        + rs.getInt("Player")
-                        + ");\n";
-                commands.add(command);
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getUndrawMySQLCommands");
-        return commands;
-    }
-
+    /**
+     * *******************************************************************
+     *
+     * EXCEPTIONS
+     *
+     ********************************************************************
+     */
+    /**
+     *
+     * @param numberError
+     * @return
+     */
     protected abstract boolean showSQLError(int numberError);
 }
