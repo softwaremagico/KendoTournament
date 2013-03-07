@@ -65,7 +65,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      * @param level
      */
-    public void getTeamsByLevel(Tournament tournament, Integer level) {
+    public void get(Tournament tournament, Integer level) {
         throw new UnsupportedOperationException("Not implemented yet.");
     }
 

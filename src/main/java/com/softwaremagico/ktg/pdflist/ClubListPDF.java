@@ -72,7 +72,7 @@ public class ClubListPDF extends ParentList {
         List<Club> clubs = DatabaseConnection.getInstance().getDatabase().getClubs();
 
         for (int i = 0; i < clubs.size(); i++) {
-            List<CompetitorWithPhoto> competitors = RolePool.getInstance().getRegisteredPeople(championship, clubs.get(i));
+            List<CompetitorWithPhoto> competitors = RolePool.getInstance().getPeople(championship, clubs.get(i));
 
             if (competitors.size() > 0) {
                 if (!firstClub) {

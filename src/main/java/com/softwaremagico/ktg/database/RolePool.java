@@ -107,7 +107,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
     }
 
-    public List<RegisteredPerson> getRegisteredPeopleInTournamenteWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) {
+    public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : get(tournament).values()) {
             if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
@@ -165,7 +165,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return competitors;
     }
 
-    public List<RegisteredPerson> getRegisteredPeople(Tournament tournament, Club club) {
+    public List<RegisteredPerson> getPeople(Tournament tournament, Club club) {
         List<RegisteredPerson> results = new ArrayList<>();
         List<RegisteredPerson> registeredPeople = getPeople(tournament);
         for (RegisteredPerson person : registeredPeople) {

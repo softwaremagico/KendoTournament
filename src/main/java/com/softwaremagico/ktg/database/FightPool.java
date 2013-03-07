@@ -2,6 +2,8 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.Tournament;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     @Override
     protected String getId(Fight element) {
         return element.getTeam1().getName() + "-" + element.getTeam2().getName() + ":"
-                + element.getLevel();
+                + element.getLevel() + "," + element.getIndex() + "(" + element.getTournament() + ")";
     }
 
     @Override
@@ -52,6 +54,33 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected List<Fight> sort(Tournament tournament) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Fight> unsorted = new ArrayList(get(tournament).values());
+        Collections.sort(unsorted);
+        return unsorted;
+    }
+
+    public List<Fight> get(Tournament tournament, Integer fightArea) {
+        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        List<Fight> fightsOfArea = new ArrayList<>();
+        for (Fight fight : allFights) {
+            if (fight.getAsignedFightArea() == fightArea) {
+                fightsOfArea.add(fight);
+            }
+        }
+        return fightsOfArea;
+    }
+
+    public void setAsOver(Tournament tournament, Fight fight, boolean over) {
+        fight.setOver(over);
+        update(tournament, fight, fight);
+    }
+
+    public void remove(Tournament tournament, Integer minLevel) {
+        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        for (Fight fight : allFights) {
+            if (fight.getLevel() >= minLevel) {
+                remove(tournament, fight);
+            }
+        }
     }
 }

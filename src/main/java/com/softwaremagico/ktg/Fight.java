@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fight implements Serializable {
+public class Fight implements Serializable, Comparable<Fight> {
 
     private static final String FIGHT_TAG = "FIGHT";
     private Team team1;
@@ -36,38 +36,23 @@ public class Fight implements Serializable {
     private Integer asignedFightArea;
     private List<Duel> duels = new ArrayList<>();
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
+    private Integer index;
     private Integer level;
     private Integer maxWinners = 1;
     private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
 
-    public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_winner, int tmp_level) {
-        team1 = tmp_team1;
-        team2 = tmp_team2;
-        tournament = tmp_tournament;
-        asignedFightArea = asignedArea;
+    public Fight(Team team1, Team team2, Tournament tmp_tournament, int asignedArea, int level, int order) {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.tournament = tmp_tournament;
+        this.asignedFightArea = asignedArea;
         addDuels();
-        winner = tmp_winner;
-        level = tmp_level;
+        this.index = order;
+        this.level = level;
     }
 
-    public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea, int tmp_level) {
-        team1 = tmp_team1;
-        team2 = tmp_team2;
-        tournament = tmp_tournament;
-        asignedFightArea = asignedArea;
-        addDuels();
-        winner = 2;
-        level = tmp_level;
-    }
-
-    public Fight(Team tmp_team1, Team tmp_team2, Tournament tmp_tournament, int asignedArea) {
-        team1 = tmp_team1;
-        team2 = tmp_team2;
-        tournament = tmp_tournament;
-        asignedFightArea = asignedArea;
-        addDuels();
-        winner = 2;
-        level = 0;
+    public Integer getIndex() {
+        return index;
     }
 
     public boolean isOverStored() {
@@ -118,7 +103,7 @@ public class Fight implements Serializable {
         this.tournament = tournament;
     }
 
-    public int getAsignedFightArea() {
+    public Integer getAsignedFightArea() {
         return asignedFightArea;
     }
 
@@ -145,32 +130,36 @@ public class Fight implements Serializable {
         return winner < 2;
     }
 
-    public int getWinner() {
+    public Integer getWinner() {
         return winner;
     }
 
-    public void setOver() {
-        completeIppons();
-        if (winner == 2) {
-            overUpdated = false;
-        }
-        try {
-            Team winnerTeam = winner();
-            if (winnerTeam.getName().equals(team1.getName())) {
-                winner = -1;
-            } else if (winnerTeam.getName().equals(team2.getName())) {
-                winner = 1;
-            } else {
-                winner = 0;
-            }
-        } catch (NullPointerException npe) {
-            winner = 0;
-        }
+    public void setWinner(Integer winner) {
+        this.winner = winner;
     }
 
-    public void setAsNotOver() {
-        winner = 2;
-        overUpdated = false;
+    public void setOver(boolean over) {
+        if (over) {
+            completeIppons();
+            if (winner == 2) {
+                overUpdated = false;
+            }
+            try {
+                Team winnerTeam = winner();
+                if (winnerTeam.getName().equals(team1.getName())) {
+                    winner = -1;
+                } else if (winnerTeam.getName().equals(team2.getName())) {
+                    winner = 1;
+                } else {
+                    winner = 0;
+                }
+            } catch (NullPointerException npe) {
+                winner = 0;
+            }
+        } else {
+            winner = 2;
+            overUpdated = false;
+        }
     }
 
     public final boolean addDuels() {
@@ -274,7 +263,7 @@ public class Fight implements Serializable {
         maxWinners = value;
     }
 
-    public int getMaxWinners() {
+    public Integer getMaxWinners() {
         return maxWinners;
     }
 
@@ -305,7 +294,7 @@ public class Fight implements Serializable {
 
     }
 
-    public int getWinnedDuels(boolean team1) {
+    public Integer getWinnedDuels(boolean team1) {
         int winDuels = 0;
         for (int i = 0; i < duels.size(); i++) {
             if (duels.get(i).winner() < 0 && team1) {
@@ -318,7 +307,7 @@ public class Fight implements Serializable {
         return winDuels;
     }
 
-    public int getScore(boolean team1) {
+    public Integer getScore(boolean team1) {
         int score = 0;
         for (int i = 0; i < duels.size(); i++) {
             score += duels.get(i).howManyPoints(team1);
@@ -338,7 +327,8 @@ public class Fight implements Serializable {
         return this.team1.equals(otherFight.team1)
                 && this.team2.equals(otherFight.team2)
                 && this.tournament.equals(otherFight.tournament)
-                && this.level == otherFight.level;
+                && this.level == otherFight.level
+                && this.index == otherFight.index;
 
     }
 
@@ -405,5 +395,14 @@ public class Fight implements Serializable {
 
     public static String getTag() {
         return FIGHT_TAG;
+    }
+
+    @Override
+    public int compareTo(Fight o) {
+        Integer levelCompare = level.compareTo(o.level);
+        if (levelCompare != 0) {
+            return levelCompare;
+        }
+        return index.compareTo(o.index);
     }
 }

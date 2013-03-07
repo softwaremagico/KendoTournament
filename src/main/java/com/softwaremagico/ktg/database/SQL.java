@@ -40,7 +40,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -802,7 +801,8 @@ public abstract class SQL extends Database {
                 Fight f = new Fight(TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
                         TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
                         tournament,
-                        rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
+                        rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("Index"));
+                f.setWinner(rs.getInt("Winner"));
                 f.setMaxWinners(rs.getInt("MaxWinners"));
                 f.calculateOverWithDuels();
                 try {
@@ -836,7 +836,7 @@ public abstract class SQL extends Database {
         //Insert team.
         for (Fight fight : fights) {
             try {
-                query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, LeagueLevel, MaxWinners) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getMaxWinners() + ");\n";
+                query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, Level, MaxWinners, Index) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getMaxWinners() + "," + fight.getIndex() + ");\n";
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
@@ -860,7 +860,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeFights");
         String query = "";
         for (Fight fight : fights) {
-            query += "DELETE FROM fight WHERE Tournament='" + fight.getTournament().getName() + "' AND LeagueLevel=" + fight.getLevel() + " AND Team1='" + fight.getTeam1().getName() + "' AND Team2='" + fight.getTeam2().getName() + "';\n";
+            query += "DELETE FROM fight WHERE Tournament='" + fight.getTournament().getName() + "' AND Level=" + fight.getLevel() + " AND Team1='" + fight.getTeam1().getName() + "' AND Team2='" + fight.getTeam2().getName() + "' AND Index=" + fight.getIndex() + ";\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -888,7 +888,7 @@ public abstract class SQL extends Database {
         for (Fight newFight : newFights) {
             Fight oldFight = fightsExchange.get(newFight);
             query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', LeagueLevel='" + newFight.getLevel() + "', MaxWinners='" + newFight.getMaxWinners() + "' FightArea=" + newFight.getAsignedFightArea() + ", "
-                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND LeagueLevel='" + oldFight.getLevel() + "'\n";
+                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Index=" + oldFight.getIndex() + "\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -903,330 +903,6 @@ public abstract class SQL extends Database {
         }
         KendoLog.exiting(this.getClass().getName(), "updateFights");
         return true;
-    }
-
-    @Override
-    public List<Fight> searchFights(String query, Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "searchFights");
-        List<Fight> results = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    //Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), tournament, false),
-                    //        getTeamByName(rs.getObject("Team2").toString(), tournament, false),
-                    Fight f = new Fight(TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
-                            TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
-                            tournament,
-                            rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
-                    f.setMaxWinners(rs.getInt("MaxWinners"));
-                    f.calculateOverWithDuels();
-                    try {
-                        if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
-                            for (int i = 0; i < Math.max(f.team1.getNumberOfMembers(0), f.team2.getNumberOfMembers(0)); i++) {
-                                Duel d = getDuel(f, i);
-                                if (d != null) {
-                                    f.setDuel(d, i);
-                                }
-
-                            }
-                        }
-                    } catch (NullPointerException npe) {
-                    }
-                    results.add(f);
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "searchFights");
-        return results;
-    }
-
-    /**
-     * Search all fightManager from one determined tournament.
-     *
-     * @param championship
-     * @return
-     */
-    @Override
-    public List<Fight> searchFightsByTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "searchFightsByTournament");
-        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
-        List<Fight> fights = searchFights(query, tournament);
-        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournament");
-        return fights;
-    }
-
-    @Override
-    public List<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level) {
-        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentLevelEqualOrGreater");
-        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level;
-        List<Fight> fights = searchFights(query, tournament);
-        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentLevelEqualOrGreater");
-        return fights;
-    }
-
-    /**
-     * Search all fightManager from one determined tournament.
-     *
-     * @param championship
-     * @return
-     */
-    @Override
-    public List<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea) {
-        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentAndFightArea");
-        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND FightArea=" + fightArea;
-        List<Fight> fights = searchFights(query, tournament);
-        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentAndFightArea");
-        return fights;
-    }
-
-    /**
-     * Search all fightManager from one determined tournament.
-     *
-     * @param championship
-     * @return
-     */
-    @Override
-    public List<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team) {
-        KendoLog.entering(this.getClass().getName(), "searchFightsByTournamentAndTeam");
-        String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "' AND (Team1='" + team + "' OR Team2='" + team + "')";
-        List<Fight> fights = searchFights(query, tournament);
-        KendoLog.exiting(this.getClass().getName(), "searchFightsByTournamentAndTeam");
-        return fights;
-    }
-
-    @Override
-    public int obtainFightID(Fight f) {
-        KendoLog.entering(this.getClass().getName(), "obtainFightID");
-        int ID = -1;
-        try {
-            String query = "SELECT ID FROM fight WHERE Tournament='" + f.tournament.getName() + "' AND Team1='" + f.team1.getName() + "' AND Team2='" + f.team2.getName() + "' AND LeagueLevel=" + f.level;
-            KendoLog.finest(SQL.class.getName(), query);
-            try (Statement s = connection.createStatement();
-                    ResultSet rts = s.executeQuery(query)) {
-                if (rts.next()) {
-                    ID = rts.getInt("ID");
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        KendoLog.debug(SQL.class.getName(), "Id of fight " + f.show() + " is " + ID);
-        KendoLog.exiting(this.getClass().getName(), "obtainFightID");
-        return ID;
-    }
-
-    @Override
-    public boolean updateFightAsOver(Fight fight) {
-        KendoLog.entering(this.getClass().getName(), "updateFightAsOver");
-        KendoLog.fine(SQL.class.getName(), "Updating fight '" + fight.team1 + " vs " + fight.team2 + "' as over.");
-        boolean error = false;
-        try {
-            /*
-             * Considering the fight over if is updated
-             */
-            int over = fight.getWinner();
-            if (over == 2) {
-                over = 0;
-            }
-            try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level)) {
-                stmt.setInt(1, over);
-                KendoLog.finest(SQL.class.getName(), "UPDATE fight SET Winner=" + over + " WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level);
-                stmt.executeUpdate();
-            }
-            fight.setOverStored(true);
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateFightAsOver");
-        return !error;
-    }
-
-    @Override
-    public boolean updateFightAsNotOver(Fight fight) {
-        KendoLog.entering(this.getClass().getName(), "updateFightAsNotOver");
-        boolean error = false;
-        try {
-            try (Statement s = connection.createStatement();
-                    PreparedStatement stmt = connection.prepareStatement("UPDATE fight SET Winner=? WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level)) {
-                stmt.setInt(1, 2);
-                stmt.executeUpdate();
-            }
-            fight.setOverStored(true);
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "updateFightAsNotOver");
-        return !error;
-    }
-
-    @Override
-    public List<Fight> getAllFights() {
-        KendoLog.entering(this.getClass().getName(), "getAllFights");
-        List<Fight> fights = getFights(0, Integer.MAX_VALUE);
-        KendoLog.exiting(this.getClass().getName(), "getAllFights");
-        return fights;
-    }
-
-    @Override
-    public List<Fight> getFights(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getFights");
-        ArrayList<Fight> results = new ArrayList<>();
-
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM fight LIMIT " + fromRow + "," + numberOfRows)) {
-
-                while (rs.next()) {
-                    Fight f = new Fight(getTeamByName(rs.getObject("Team1").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
-                            getTeamByName(rs.getObject("Team2").toString(), TournamentPool.getTournament(rs.getObject("Tournament").toString()), false),
-                            TournamentPool.getTournament(rs.getObject("Tournament").toString()),
-                            rs.getInt("FightArea"), rs.getInt("Winner"), rs.getInt("LeagueLevel"));
-                    f.setMaxWinners(rs.getInt("MaxWinners"));
-                    if (f.team1.levelChangesSize() > 0 && f.team2.levelChangesSize() > 0) {
-                        for (int i = 0; i < Math.max(f.team1.getNumberOfMembers(0), f.team2.getNumberOfMembers(0)); i++) {
-                            Duel d = getDuel(f, i);
-                            if (d != null) {
-                                f.setDuel(d, i);
-                            }
-                        }
-                    }
-                    results.add(f);
-                }
-            }
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getFights");
-        return results;
-    }
-
-    /**
-     * Delete fights must delete duels. MySQL use foreign key, but SQLite need
-     * to delete one by one
-     *
-     * @param tournament.getName()
-     * @param level
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
-        KendoLog.fine(SQL.class.getName(), "Deleting fight of level " + level);
-        boolean error;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!");
-            }
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournament.getName() + "' AND LeagueLevel >=" + level);
-                }
-                KendoLog.finer(SQL.class.getName(), "Delete draw fights of tournament.");
-                deleteDrawsOfLevelOfTournament(tournament, level);
-                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
-                return true;
-            } else {
-                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfLevelOfTournament");
-        return !error;
-    }
-
-    /**
-     * Delete fights must delete duels. MySQL use foreign key, but SQLite need
-     *
-     * @param championship
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFightsOfTournament(Tournament tournament, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteFightsOfTournament");
-        boolean error;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!");
-            }
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + tournament.getName() + "'");
-                }
-                deleteDrawsOfTournament(tournament);
-                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
-                return true;
-            } else {
-                KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
-                return false;
-            }
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteFightsOfTournament");
-        return !error;
-    }
-
-    /**
-     * Delete fights and duels of fights.
-     *
-     * @param fight
-     * @param verbose
-     * @return
-     */
-    @Override
-    public boolean deleteFight(Fight fight, boolean verbose) {
-        KendoLog.entering(this.getClass().getName(), "deleteFight");
-        boolean error = false;
-        boolean answer = false;
-        try {
-            if (verbose) {
-                answer = MessageManager.questionMessage("deleteOneFight", "Warning!");
-            }
-            if (answer || !verbose) {
-                try (Statement s = connection.createStatement()) {
-                    s.executeUpdate("DELETE FROM fight WHERE Tournament='" + fight.tournament.getName() + "' AND Team1='" + fight.team1.getName() + "' AND Team2='" + fight.team2.getName() + "' AND LeagueLevel=" + fight.level);
-                }
-            }
-
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "deleteFight", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-
-        if (!error && answer) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "fightDeleted", this.getClass().getName(), fight.tournament.getName(), JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(SQL.class.getName(), "Fights deledte from: " + fight.tournament.getName());
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteFight");
-        return (answer && !error);
     }
 
     /**
