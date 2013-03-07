@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,8 +24,8 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected String getId(Fight element) {
-        return element.getTeam1().getName() + "-" + element.getTeam2().getName() + ":"
-                + element.getLevel() + "," + element.getIndex() + "(" + element.getTournament() + ")";
+        return element.getTeam1().getName() + element.getTeam2().getName()
+                + element.getLevel() + element.getIndex() + element.getTournament();
     }
 
     @Override
@@ -68,6 +69,16 @@ public class FightPool extends TournamentDependentPool<Fight> {
             }
         }
         return fightsOfArea;
+    }
+
+    public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) {
+        for (Fight fight : get(tournament).values()) {
+            if (fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
+                    && fight.getLevel() == level && fight.getIndex() == index) {
+                return fight;
+            }
+        }
+        return null;
     }
 
     public void setAsOver(Tournament tournament, Fight fight, boolean over) {

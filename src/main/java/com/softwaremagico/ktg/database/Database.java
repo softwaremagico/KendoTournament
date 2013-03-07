@@ -220,58 +220,6 @@ public abstract class Database {
 
     protected abstract boolean updateFights(HashMap<Fight, Fight> fightsExchange);
 
-    public abstract boolean storeFights(List<Fight> fights, boolean purgeTournament, boolean verbose);
-
-    public abstract boolean deleteAllFights();
-
-    public abstract boolean storeAllFightsAndDeleteOldOnes(List<Fight> fights);
-
-    public abstract boolean storeFight(Fight fight, boolean verbose, boolean deleteOldOne);
-
-    public abstract boolean deleteFightsOfTournament(Tournament tournament, boolean verbose);
-
-    public abstract boolean deleteFightsOfLevelOfTournament(Tournament tournament, int level, boolean verbose);
-
-    public abstract List<Fight> searchFights(String query, Tournament tournament);
-
-    /**
-     * Search all fights from one determined tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<Fight> searchFightsByTournament(Tournament tournament);
-
-    public abstract List<Fight> searchFightsByTournamentLevelEqualOrGreater(Tournament tournament, int level);
-
-    /**
-     * Search all fights from one determined tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<Fight> searchFightsByTournamentAndFightArea(Tournament tournament, int fightArea);
-
-    /**
-     * Search all fights from one determined tournament.
-     *
-     * @param tournament
-     * @return
-     */
-    public abstract List<Fight> searchFightsByTournamentAndTeam(Tournament tournament, String team);
-
-    public abstract int obtainFightID(Fight fight);
-
-    public abstract boolean deleteFight(Fight fight, boolean verbose);
-
-    public abstract boolean updateFightAsOver(Fight fight);
-
-    public abstract boolean updateFightAsNotOver(Fight fight);
-
-    public abstract List<Fight> getAllFights();
-
-    public abstract List<Fight> getFights(int fromRow, int numberOfRows);
-
     /**
      * *******************************************************************
      *
@@ -282,23 +230,13 @@ public abstract class Database {
     /**
      * Store a duel into the database.
      */
-    public abstract boolean storeDuel(Duel d, Fight fight, int player);
+    protected abstract List<Duel> getDuels(Tournament tournament);
 
-    public abstract boolean storeDuelsOfFight(Fight fight);
+    protected abstract boolean addDuels(List<Duel> duels);
 
-    public abstract boolean deleteDuelsOfFight(Fight fight);
+    protected abstract boolean removeDuels(List<Duel> duels);
 
-    public abstract List<Duel> getDuelsOfFight(Fight fight);
-
-    public abstract Duel getDuel(Fight fight, int player);
-
-    public abstract List<Duel> getDuelsOfTournament(Tournament tournament);
-
-    public abstract List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight);
-
-    public abstract List<Duel> getAllDuels();
-
-    public abstract List<Duel> getDuels(int fromRow, int numberOfRows);
+    protected abstract boolean updateDuels(HashMap<Duel, Duel> duelsExchange);
 
     /**
      * *******************************************************************

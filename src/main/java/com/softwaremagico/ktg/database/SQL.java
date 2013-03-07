@@ -353,7 +353,7 @@ public abstract class SQL extends Database {
             s.executeUpdate(query);
         } catch (SQLException ex) {
             if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteRoleBad", "SQL");
+                MessageManager.errorMessage(this.getClass().getName(), "deleteRoleError", "SQL");
             }
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
             return false;
@@ -805,17 +805,8 @@ public abstract class SQL extends Database {
                 f.setWinner(rs.getInt("Winner"));
                 f.setMaxWinners(rs.getInt("MaxWinners"));
                 f.calculateOverWithDuels();
-                try {
-                    if (f.getTeam1().levelChangesSize() > 0 && f.getTeam2().levelChangesSize() > 0) {
-                        for (int i = 0; i < Math.max(f.getTeam1().getNumberOfMembers(0), f.getTeam2().getNumberOfMembers(0)); i++) {
-                            Duel d = getDuel(f, i);
-                            if (d != null) {
-                                f.setDuel(d, i);
-                            }
-                        }
-                    }
-                } catch (NullPointerException npe) {
-                }
+                //Set duels of fight:
+                ...
                 results.add(f);
             }
         } catch (SQLException ex) {
@@ -833,7 +824,6 @@ public abstract class SQL extends Database {
     protected boolean addFights(List<Fight> fights) {
         KendoLog.entering(this.getClass().getName(), "addFights");
         String query = "";
-        //Insert team.
         for (Fight fight : fights) {
             try {
                 query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, Level, MaxWinners, Index) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getMaxWinners() + "," + fight.getIndex() + ");\n";
@@ -887,7 +877,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (Fight newFight : newFights) {
             Fight oldFight = fightsExchange.get(newFight);
-            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', LeagueLevel='" + newFight.getLevel() + "', MaxWinners='" + newFight.getMaxWinners() + "' FightArea=" + newFight.getAsignedFightArea() + ", "
+            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', MaxWinners='" + newFight.getMaxWinners() + "' FightArea=" + newFight.getAsignedFightArea() + ", "
                     + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Index=" + oldFight.getIndex() + "\n";
         }
         try (Statement s = connection.createStatement()) {
@@ -916,352 +906,60 @@ public abstract class SQL extends Database {
      * Store a duel into the database.
      */
     @Override
-    public boolean storeDuel(Duel d, Fight f, int player) {
-        KendoLog.entering(this.getClass().getName(), "storeDuelError");
-        KendoLog.fine(SQL.class.getName(), "Storing duel " + d.showScore() + " into database.");
-        boolean error = false;
-        try {
-            //Obtain the ID of the fight..
+    protected List<Duel> getDuels(Tournament tournament) {
+        String query = "SELECT * FROM Duel WHERE Tournament='" + tournament.getName() + "'";
+        KendoLog.entering(this.getClass().getName(), "getDuels");
+        KendoLog.finer(SQL.class.getName(), query);
 
-            int fightID = obtainFightID(f);
-
-            //Delete the duel if exist previously.
-            Statement s = connection.createStatement();
-            KendoLog.finest(SQL.class.getName(), "DELETE FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player);
-            s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player);
-            s.close();
-
-            //Add the new duel.
-            s = connection.createStatement();
-            KendoLog.finest(SQL.class.getName(), "INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + player + ",'" + d.hitsFromCompetitorA.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorA.get(1).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + d.faultsCompetitorA + "," + d.faultsCompetitorB + ")");
-            s.executeUpdate("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + player + ",'" + d.hitsFromCompetitorA.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorA.get(1).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(0).getAbbreviature() + "','" + d.hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + d.faultsCompetitorA + "," + d.faultsCompetitorB + ")");
-            d.setStored(true);
-            s.close();
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeDuelError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeDuelError");
-        return !error;
-    }
-
-    @Override
-    public boolean storeDuelsOfFight(Fight f) {
-        KendoLog.entering(this.getClass().getName(), "storeDuelsOfFight");
-        boolean error = false;
-        try {
-            //Obtain the ID of the fight..
-            int fightID = obtainFightID(f);
-
-            //Delete the duel if exist previously.
-            Statement s = connection.createStatement();
-            s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID);
-            s.close();
-
-            //Add the new duels.
-            s = connection.createStatement();
-            for (int i = 0; i < f.duels.size(); i++) {
-                s.executeUpdate("INSERT INTO duel (Fight, OrderPlayer, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES (" + fightID + "," + i + ",'" + f.duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + "','" + f.duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + "'" + "," + f.duels.get(i).faultsCompetitorA + "," + f.duels.get(i).faultsCompetitorB + ")");
-                f.duels.get(i).setStored(true);
-            }
-            s.close();
-        } catch (SQLException ex) {
-            error = true;
-            MessageManager.errorMessage(this.getClass().getName(), "storeDuelError", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "storeDuelsOfFight");
-        return !error;
-    }
-
-    @Override
-    public boolean deleteDuelsOfFight(Fight f) {
-        KendoLog.entering(this.getClass().getName(), "deleteDuelsOfFight");
-        boolean error = false;
-        try {
-            //Obtain the ID of the fight..
-            int fightID = obtainFightID(f);
-            try (Statement s = connection.createStatement()) {
-                s.executeUpdate("DELETE FROM duel WHERE Fight=" + fightID);
-            }
-        } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
-        KendoLog.exiting(this.getClass().getName(), "deleteDuelsOfFight");
-        return !error;
-    }
-
-    @Override
-    public List<Duel> getDuelsOfFight(Fight f) {
-        KendoLog.entering(this.getClass().getName(), "getDuelsOfFight");
-        int fightID = obtainFightID(f);
-        Statement s;
-
-        Duel d;
         List<Duel> results = new ArrayList<>();
-        try {
-            s = connection.createStatement();
-            try (ResultSet rs = s.executeQuery("SELECT * FROM duel WHERE Fight=" + fightID)) {
-                while (rs.next()) {
-                    d = new Duel();
-                    char c;
-                    try {
-                        c = rs.getString("PointPlayer1A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer1B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(1, Score.getScore(c));
-                    d.setStored(true);
-                    results.add(d);
-                }
-            }
-            s.close();
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getDuelsOfFight");
-        return results;
-    }
-
-    @Override
-    public Duel getDuel(Fight f, int player) {
-        KendoLog.entering(this.getClass().getName(), "getDuel");
-        Statement s;
-        int fightID = obtainFightID(f);
-
-        Duel d = null;
-        try {
-            s = connection.createStatement();
-            try (ResultSet rs = s.executeQuery("SELECT * FROM duel WHERE Fight=" + fightID + " AND OrderPlayer=" + player)) {
-                if (rs.next()) {
-                    d = new Duel();
-                    char c;
-                    try {
-                        c = rs.getString("PointPlayer1A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer1B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(1, Score.getScore(c));
-
-                    d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
-                    d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-
-                }
-            }
-            s.close();
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-        }
-        KendoLog.exiting(this.getClass().getName(), "getDuel");
-        d.setStored(true);
-        return d;
-    }
-
-    @Override
-    public List<Duel> getDuelsOfTournament(Tournament tournament) {
-        KendoLog.entering(this.getClass().getName(), "getDuelsOfTournament");
-        Statement s;
-        List<Duel> results = new ArrayList<>();
-
-        List<Fight> fights = searchFightsByTournament(tournament);
-        for (int i = 0; i < fights.size(); i++) {
-            results.addAll(getDuelsOfFight(fights.get(i)));
-        }
-        KendoLog.exiting(this.getClass().getName(), "getDuelsOfTournament");
-        return results;
-    }
-
-    @Override
-    public List<Duel> getDuelsOfcompetitor(String competitorID, boolean teamRight) {
-        KendoLog.entering(this.getClass().getName(), "getDuelsOfcompetitor");
-        Statement s;
-        List<Duel> results = new ArrayList<>();
-        Duel d;
-        ResultSet rs;
-
-        String queryTeamRight = "select * from duel d1 where EXISTS " + "(SELECT * from fight f1 WHERE f1.ID=d1.Fight AND EXISTS " + "(SELECT * FROM team t1 WHERE (f1.Team2=t1.name) AND EXISTS  " + "(SELECT * FROM competitor c1 WHERE t1.Member='" + competitorID + "') AND " + "d1.OrderPlayer=t1.Position))";
-
-        String queryTeamLeft = "select * from duel d1 where EXISTS " + "(SELECT * from fight f1 WHERE f1.ID=d1.Fight AND EXISTS " + "(SELECT * FROM team t1 WHERE (f1.Team1=t1.name) AND EXISTS  " + "(SELECT * FROM competitor c1 WHERE t1.Member='" + competitorID + "') AND " + "d1.OrderPlayer=t1.Position))";
-
-        try {
-            s = connection.createStatement();
-            if (teamRight) {
-                rs = s.executeQuery(queryTeamRight);
-            } else {
-                rs = s.executeQuery(queryTeamLeft);
-            }
-
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery(query)) {
             while (rs.next()) {
-                d = new Duel();
+                Fight fight = FightPool.getInstance().get(tournament,
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
+                        rs.getInt("Level"), rs.getInt("Index"));
+                Duel duel = new Duel(fight, rs.getInt("Order"));
+
                 char c;
                 try {
                     c = rs.getString("PointPlayer1A").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
-                d.hitsFromCompetitorA.set(0, Score.getScore(c));
+                duel.setHit(true, 0, Score.getScore(c));
 
                 try {
                     c = rs.getString("PointPlayer1B").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
-                d.hitsFromCompetitorA.set(1, Score.getScore(c));
+                duel.setHit(true, 1, Score.getScore(c));
 
                 try {
                     c = rs.getString("PointPlayer2A").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
-
-                d.hitsFromCompetitorB.set(0, Score.getScore(c));
+                duel.setHit(false, 0, Score.getScore(c));
 
                 try {
                     c = rs.getString("PointPlayer2B").charAt(0);
                 } catch (StringIndexOutOfBoundsException siob) {
                     c = ' ';
                 }
+                duel.setHit(false, 1, Score.getScore(c));
 
-                d.hitsFromCompetitorB.set(1, Score.getScore(c));
-
-                //Faults
-                d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
-                d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-                d.setStored(true);
-                results.add(d);
-            }
-            rs.close();
-            s.close();
-        } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        KendoLog.exiting(this.getClass().getName(), "getDuelsOfcompetitor");
-        return results;
-    }
-
-    @Override
-    public List<Duel> getAllDuels() {
-        KendoLog.entering(this.getClass().getName(), "getAllDuels");
-        List<Duel> duels = getDuels(0, Integer.MAX_VALUE);
-        KendoLog.exiting(this.getClass().getName(), "getAllDuels");
-        return duels;
-    }
-
-    @Override
-    public List<Duel> getDuels(int fromRow, int numberOfRows) {
-        KendoLog.entering(this.getClass().getName(), "getDuels");
-        Statement s;
-        List<Duel> results = new ArrayList<>();
-        Duel d;
-        try {
-            s = connection.createStatement();
-            try (ResultSet rs = s.executeQuery("SELECT * FROM duel LIMIT " + fromRow + "," + numberOfRows)) {
-                while (rs.next()) {
-                    d = new Duel();
-                    char c;
-                    try {
-                        c = rs.getString("PointPlayer1A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer1B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorA.set(1, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2A").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(0, Score.getScore(c));
-
-                    try {
-                        c = rs.getString("PointPlayer2B").charAt(0);
-                    } catch (StringIndexOutOfBoundsException siob) {
-                        c = ' ';
-                    }
-
-                    d.hitsFromCompetitorB.set(1, Score.getScore(c));
-
-                    //Faults
-                    d.faultsCompetitorA = rs.getInt("FaultsPlayer1");
-                    d.faultsCompetitorB = rs.getInt("FaultsPlayer2");
-                    d.setStored(true);
-                    results.add(d);
+                if (rs.getInt("FaultsPlayer1") > 0) {
+                    duel.setFaults(true);
                 }
+
+                if (rs.getInt("FaultsPlayer2") > 0) {
+                    duel.setFaults(false);
+                }
+
+                results.add(duel);
             }
-            s.close();
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
@@ -1273,6 +971,83 @@ public abstract class SQL extends Database {
         return results;
     }
 
+    @Override
+    protected boolean addDuels(List<Duel> duels) {
+        KendoLog.entering(this.getClass().getName(), "addDuels");
+        String query = "";
+        for (Duel duel : duels) {
+            try {
+                query += "INSERT INTO duel (Team1, Team2, Tournament, Index, Level, Order, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES ('" + duel.getFight().getTeam1().getName() + "', '" + duel.getFight().getTeam2().getName() + "', '" + duel.getFight().getTournament().getName() + "', "
+                        + duel.getFight().getIndex() + ", " + duel.getFight().getLevel() + ", " + duel.getOrder() + ", "
+                        + duel.getHits(true).get(0) + ", " + duel.getHits(true).get(1) + ", " + duel.getHits(false).get(0) + ", " + duel.getHits(false).get(1) + ", " + duel.getFaults(true) + ", " + duel.getFaults(false) + ");\n";
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            }
+        }
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "addDuels");
+        return true;
+    }
+
+    @Override
+    protected boolean removeDuels(List<Duel> duels) {
+        KendoLog.entering(this.getClass().getName(), "removeDuels");
+        String query = "";
+        for (Duel duel : duels) {
+            query += "DELETE FROM Duel WHERE Tournament='" + duel.getFight().getTournament().getName() + "' AND Level=" + duel.getFight().getLevel() + " AND Team1='" + duel.getFight().getTeam1().getName() + "' AND Team2='" + duel.getFight().getTeam2().getName() + "' AND Index=" + duel.getFight().getIndex() + " AND Order=" + duel.getOrder() + ";\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteDuelError", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeDuels");
+        return true;
+    }
+
+    @Override
+    protected boolean updateDuels(HashMap<Duel, Duel> duelsExchange) {
+        KendoLog.entering(this.getClass().getName(), "updateDuels");
+        List<Duel> oldDuels = new ArrayList<>(duelsExchange.values());
+        List<Duel> newDuels = new ArrayList<>(duelsExchange.keySet());
+        String query = "";
+        for (Duel newDuel : newDuels) {
+            Duel oldDuel = duelsExchange.get(newDuel);
+            query += "UPDATE Duel SET Team1='" + newDuel.getFight().getTeam1() + "', Tournament='" + newDuel.getFight().getTournament() + "' Team2='" + newDuel.getFight().getTeam2() + "', Level=" + newDuel.getFight().getLevel() + ", Index=" + newDuel.getFight().getIndex() + ", Order=" + newDuel.getOrder() + ", PointPlayer1A='" + newDuel.getHits(true).get(0) + "', PointPlayer1B='" + newDuel.getHits(true).get(1) + "', PointPlayer2A=" + newDuel.getHits(false).get(0) + ", PointPlayer2B=" + newDuel.getHits(false).get(1) + ", FaultsPlayer1=" + newDuel.getFaults(true) + ", FaultsPlayer2=" + newDuel.getFaults(false)
+                    + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='" + oldDuel.getFight().getTournament().getName() + "' AND Level='" + oldDuel.getFight().getLevel() + "' AND Index=" + oldDuel.getFight().getIndex() + " AND Order=" + oldDuel.getOrder() + "\n";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            }
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "updateDuels");
+        return true;
+    }
+    
     /**
      * *******************************************************************
      *

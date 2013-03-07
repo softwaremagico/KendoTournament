@@ -31,44 +31,45 @@ import java.util.List;
  *
  * @author Jorge
  */
-public class Duel implements Serializable {
+public class Duel implements Serializable, Comparable<Duel> {
 
+    private Fight fight;
+    private Integer order;
     private static final String DUEL_TAG = "DUEL";
     private final int POINTS_TO_WIN = 2;
-    public List<Score> hitsFromCompetitorA = new ArrayList<>(); //M, K, T, D, H, I
-    public List<Score> hitsFromCompetitorB = new ArrayList<>(); //M, K, T, D, H, I
-    public int faultsCompetitorA = 0;
-    public int faultsCompetitorB = 0;
-    private boolean stored = false; //Has been stored into the database or not. 
-    private boolean erasedPoints = false;
+    private List<Score> hitsFromCompetitorA = new ArrayList<>(); //M, K, T, D, H, I
+    private List<Score> hitsFromCompetitorB = new ArrayList<>(); //M, K, T, D, H, I
+    private Boolean faultsCompetitorA = false;
+    private Boolean faultsCompetitorB = false;
 
-    /**
-     * if a result has been modified (erased) must be reflected into the
-     * database.
-     *
-     * @return
-     */
-    public void setErasedPoints(boolean value) {
-        if (stored) { //Only need to be update the empty values if has been stored into the database.
-            System.out.println("e:"+value);
-            erasedPoints = value;
-        }
-    }
-
-    public boolean isStored() {
-        return stored;
-    }
-
-    public void setStored(boolean stored) {
-        this.stored = stored;
-    }
-
-    public Duel() {
+    public Duel(Fight fight, Integer order) {
+        this.fight = fight;
+        this.order = order;
         addRounds();
     }
 
-    public void showHits() {
-        System.out.println(toString());
+    public Fight getFight() {
+        return fight;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setHit(boolean playerA, Integer hitNumber, Score score) {
+        if (playerA) {
+            hitsFromCompetitorA.set(hitNumber, score);
+        } else {
+            hitsFromCompetitorB.set(hitNumber, score);
+        }
+    }
+
+    public List<Score> getHits(boolean playerA) {
+        if (playerA) {
+            return hitsFromCompetitorA;
+        } else {
+            return hitsFromCompetitorB;
+        }
     }
 
     /**
@@ -115,7 +116,7 @@ public class Duel implements Serializable {
      * player2.
      * @return the round updated.
      */
-    public int setResultInRound(int round, Score result, boolean player1) {
+    public Integer setResultInRound(int round, Score result, boolean player1) {
         int roundUpdated = round;
         try {
             if (Score.isValidPoint(result)) {
@@ -144,10 +145,7 @@ public class Duel implements Serializable {
                 }
             }
         } catch (IndexOutOfBoundsException iob) {
-            System.out.println("Point ignored: fight finished.");
         }
-        //showHits();
-        stored = false;
         return roundUpdated;
     }
 
@@ -162,30 +160,30 @@ public class Duel implements Serializable {
                     hitsFromCompetitorB.set(i, Score.EMPTY);
                 }
             }
-            stored = false;
         } catch (IndexOutOfBoundsException iob) {
         }
     }
 
-    public void setFaultInRound(boolean player1) {
+    public void setFaults(boolean player1) {
         int faultRound = howManyPoints((!player1));
         if (player1) {
-            faultsCompetitorA++;
-            if (faultsCompetitorA > 1) {
+            if (faultsCompetitorA == true) {
                 setResultInRound(faultRound, Score.HANSOKU, !player1);
-                faultsCompetitorA = 0;
+                faultsCompetitorA = false;
+            } else {
+                faultsCompetitorA = true;
             }
         } else {
-            faultsCompetitorB++;
-            if (faultsCompetitorB > 1) {
+            if (faultsCompetitorB == true) {
                 setResultInRound(faultRound, Score.HANSOKU, !player1);
-                faultsCompetitorB = 0;
+                faultsCompetitorB = false;
+            } else {
+                faultsCompetitorB = true;
             }
         }
-        stored = false;
     }
 
-    public int getFaultInRound(boolean player1) {
+    public Boolean getFaults(boolean player1) {
         if (player1) {
             return faultsCompetitorA;
         } else {
@@ -195,14 +193,13 @@ public class Duel implements Serializable {
 
     public void resetFaults(boolean player1) {
         if (player1) {
-            faultsCompetitorA = 0;
+            faultsCompetitorA = false;
         } else {
-            faultsCompetitorB = 0;
+            faultsCompetitorB = false;
         }
-        stored = false;
     }
 
-    public int howManyPoints(boolean player1) {
+    public Integer howManyPoints(boolean player1) {
         int round = 0;
         if (player1) {
             for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
@@ -222,15 +219,6 @@ public class Duel implements Serializable {
             }
         }
         return round;
-    }
-
-    public boolean needsToBeStored() {
-        if (erasedPoints || howManyPoints(true) > 0 || howManyPoints(false) > 0
-                || getFaultInRound(true) > 0 || getFaultInRound(false) > 0) {
-            KendoLog.finest(this.getClass().getName(), "Duel needs to be stored.");
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -375,16 +363,17 @@ public class Duel implements Serializable {
         for (Score s : hitsFromCompetitorA) {
             Csv += s.getAbbreviature() + ";";
         }
-        Csv += ((faultsCompetitorA == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
+        Csv += ((!faultsCompetitorA) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
 
         for (Score s : hitsFromCompetitorB) {
             Csv += s.getAbbreviature() + ";";
         }
-        Csv += ((faultsCompetitorB == 0) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
+        Csv += ((!faultsCompetitorB) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
         return Csv;
     }
 
     public void importFromCsv(String csvLine) {
+        //TODO No lee las faltas!!!
         String[] fields = csvLine.split(";");
         for (int i = 0; i < POINTS_TO_WIN; i++) {
             setResultInRound(i, getScoreFromField(fields[i + 1]), true);
@@ -409,5 +398,18 @@ public class Duel implements Serializable {
         text += ")";
 
         return text;
+    }
+
+    @Override
+    public int compareTo(Duel o) {
+        Integer levelCompare = getFight().getLevel().compareTo(o.getFight().getLevel());
+        if (levelCompare != 0) {
+            return levelCompare;
+        }
+        Integer indexCompare = getFight().getIndex().compareTo(o.getFight().getIndex());
+        if (indexCompare != 0) {
+            return indexCompare;
+        }
+        return order.compareTo(o.order);
     }
 }

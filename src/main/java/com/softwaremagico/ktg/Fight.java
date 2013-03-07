@@ -165,7 +165,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     public final boolean addDuels() {
         try {
             for (int i = 0; i < tournament.getTeamSize(); i++) {
-                duels.add(new Duel());
+                duels.add(new Duel(this, i));
             }
         } catch (NullPointerException npe) {
             return false;
@@ -254,7 +254,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         System.out.println("---------------");
         System.out.println(team1.getName() + " vs " + team2.getName());
         for (int i = 0; i < duels.size(); i++) {
-            System.out.println(team1.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorA.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorA.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorA + " vs " + team2.getMember(i, level).getName() + ": " + duels.get(i).hitsFromCompetitorB.get(0).getAbbreviature() + " " + duels.get(i).hitsFromCompetitorB.get(1).getAbbreviature() + " Faults: " + duels.get(i).faultsCompetitorB);
+            System.out.println(team1.getMember(i, level).getName() + ": " + duels.get(i).getHits(true).get(0).getAbbreviature() + " " + duels.get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + duels.get(i).getFaults(true) + " vs " + team2.getMember(i, level).getName() + ": " + duels.get(i).getHits(false).get(0).getAbbreviature() + " " + duels.get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + duels.get(i).getFaults(false));
         }
         System.out.println("---------------");
     }
@@ -340,18 +340,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         hash = 59 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
         hash = 59 * hash + this.level;
         return hash;
-    }
-
-    public boolean areDuelsNeedToBeUpdated() {
-        if (duels.isEmpty()) {
-            return false;
-        }
-        for (Duel d : duels) {
-            if (!d.isStored()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public String show() {

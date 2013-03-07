@@ -311,13 +311,13 @@ public class CompetitorFight extends JPanel {
             if ((index = fight.team1.getMemberOrder(fight.level, competitor)) != null) {
                 d = fight.duels.get(index);
                 fight.setOverStored(false);
-                d.setFaultInRound(true);
+                d.setFaults(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
             if ((index = fight.team2.getMemberOrder(fight.level, competitor)) != null) {
                 d = fight.duels.get(index);
-                d.setFaultInRound(false);
+                d.setFaults(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
