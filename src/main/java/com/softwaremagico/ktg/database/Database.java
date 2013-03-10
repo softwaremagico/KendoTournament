@@ -59,11 +59,11 @@ public abstract class Database {
      */
     public abstract boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry);
 
-    public abstract void disconnect() throws SQLException;
+    protected abstract void disconnectDatabase();
 
-    public void disconnectDatabase() throws SQLException {
+    public void disconnect() {
         DatabaseConnection.getInstance().setDatabaseConnected(false);
-        disconnect();
+        disconnectDatabase();
     }
 
     abstract void startDatabase();
@@ -92,7 +92,7 @@ public abstract class Database {
 
     abstract void installDatabase(String password, String user, String server, String database);
 
-    abstract boolean isDatabaseInstalledCorrectly(boolean verbose);
+    abstract boolean isDatabaseInstalledCorrectly();
 
     public abstract boolean updateDatabase(String path, boolean verbose);
 
@@ -116,13 +116,13 @@ public abstract class Database {
      * *
      *
      */
-    protected abstract boolean addRegisteredPeople(List<RegisteredPerson> roles);
+    protected abstract boolean addRegisteredPeople(List<RegisteredPerson> people);
 
     protected abstract List<RegisteredPerson> getRegisteredPeople();
 
-    protected abstract boolean removeRegisteredPeople(List<RegisteredPerson> roles);
+    protected abstract boolean removeRegisteredPeople(List<RegisteredPerson> people);
 
-    protected abstract boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> rolesExchange);
+    protected abstract boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange);
 
     protected abstract Photo getPhoto(String competitorId);
 
@@ -138,7 +138,7 @@ public abstract class Database {
     /**
      * Store a Role into the database.
      */
-    protected abstract boolean addRoles(Tournament tournament, List<Role> roles);
+    protected abstract boolean addRoles(List<Role> roles);
 
     protected abstract List<Role> getRoles(Tournament tournament);
 
@@ -250,9 +250,9 @@ public abstract class Database {
      */
     protected abstract List<Undraw> getUndraws(Tournament tournament);
 
-    protected abstract boolean addUndraws(List<Undraw> duels);
+    protected abstract boolean addUndraws(List<Undraw> undraws);
 
-    protected abstract boolean removeUndraws(List<Undraw> duels);
+    protected abstract boolean removeUndraws(List<Undraw> undraws);
 
     protected abstract boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange);
 }

@@ -175,7 +175,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
-    public void updateDatabase(Tournament tournament) {
+    private void updateDatabase(Tournament tournament) {
         removeFromDatabase(tournament, new ArrayList(elementsToDelete.get(tournament).values()));
         elementsToDelete = new HashMap<>();
         storeInDatabase(tournament, new ArrayList(elementsToStore.get(tournament).values()));
@@ -183,6 +183,12 @@ public abstract class TournamentDependentPool<ElementPool> {
         //Update must be done after store. 
         updateDatabase(tournament, elementsToUpdate.get(tournament));
         elementsToUpdate = new HashMap<>();
+    }
+
+    public void updateDatabase() {
+        for (Tournament tournament : elements.keySet()) {
+            updateDatabase(tournament);
+        }
     }
 
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {

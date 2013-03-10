@@ -288,14 +288,14 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addRoles(Tournament tournament, List<Role> roles) {
+    protected boolean addRoles(List<Role> roles) {
         KendoLog.entering(this.getClass().getName(), "addRoles");
         String query = "";
         //Insert team.
         for (Role role : roles) {
             try {
-                RegisteredPerson participant = RegisteredPersonPool.getInstance().get(role.getCompetitorId());
-                query += "INSERT INTO role (Role, Tournament, Competitor, ImpressCard, Diploma) VALUES ('" + role.getDatabaseTag() + "','" + tournament.getName() + "','" + participant.getId() + "', " + role.isAccreditationPrinted() + "," + role.isDiplomaPrinted() + ");\n";
+                RegisteredPerson participant = RegisteredPersonPool.getInstance().get(role.getCompetitor().getId());
+                query += "INSERT INTO role (Role, Tournament, Competitor, ImpressCardOrder, ImpressCardPrinted, DiplomaPrinted) VALUES ('" + role.getDatabaseTag() + "','" + role.getTournament().getName() + "','" + participant.getId() + "', " + role.getAccreditationOrder() + ", " + role.isAccreditationPrinted() + "," + role.isDiplomaPrinted() + ");\n";
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
@@ -326,7 +326,7 @@ public abstract class SQL extends Database {
             try (Statement s = connection.createStatement();
                     ResultSet rs = s.executeQuery(query)) {
                 while (rs.next()) {
-                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), rs.getObject("Competitor").toString(), KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(rs.getObject("Role").toString()), rs.getBoolean("ImpressCard"), rs.getBoolean("Diploma"));
+                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), RegisteredPersonPool.getInstance().get(rs.getObject("Competitor").toString()), KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"), rs.getBoolean("DiplomaPrinted"));
                     results.add(role);
                 }
             }
@@ -349,7 +349,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeRoles");
         String query = "";
         for (Role role : roles) {
-            query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitorId() + "';\n";
+            query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -375,7 +375,7 @@ public abstract class SQL extends Database {
         List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
         String query = "";
         for (Role role : newRoles) {
-            query += "UPDATE Role SET Role='" + role.getDatabaseTag() + "', ImpressCard=" + role.isAccreditationPrinted() + ", Diploma=" + role.isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitorId() + "';\n";
+            query += "UPDATE Role SET Role='" + role.getDatabaseTag() + "', ImpressCardOrder=" + role.getAccreditationOrder() + ", ImpressCardPrinted=" + role.isAccreditationPrinted() + ", DiplomaPrinted=" + role.isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + role.getCompetitor().getId() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);

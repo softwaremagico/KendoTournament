@@ -36,7 +36,6 @@ public class RegisteredPerson implements Serializable, Comparable<RegisteredPers
     protected String name;
     protected String surname;
     private Club club;
-    private Integer order;
 
     public RegisteredPerson(String id, String name, String surname) {
         setName(name);
@@ -170,14 +169,6 @@ public class RegisteredPerson implements Serializable, Comparable<RegisteredPers
         }
         String NIF_STRING_ASOCIATION = "TRWAGMYFPDXBNJZSQVHLCKE";
         return String.valueOf(dni) + NIF_STRING_ASOCIATION.charAt(dni % 23);
-    }
-
-    public void addOrder(int value) {
-        order = value;
-    }
-
-    public int getOrder() {
-        return order;
     }
 
     public void setClub(Club club) {

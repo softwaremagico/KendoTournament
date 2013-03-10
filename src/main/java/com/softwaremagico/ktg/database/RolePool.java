@@ -26,7 +26,11 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected String getId(Role element) {
-        return element.getCompetitorId();
+        return element.getCompetitor().getId() + element.getTournament().getName();
+    }
+
+    protected String getId(Tournament tournament, RegisteredPerson person) {
+        return person.getId() + tournament.getName();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected void storeInDatabase(Tournament tournament, List<Role> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addRoles(tournament, elementsToStore);
+        DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
     }
 
     @Override
@@ -61,7 +65,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public Role getRole(Tournament tournament, RegisteredPerson participant) {
         for (Role role : get(tournament).values()) {
-            if (role.getCompetitorId().equals(participant.getId())) {
+            if (role.getCompetitor().equals(participant)) {
                 return role;
             }
         }
@@ -91,7 +95,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : get(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
-                results.add(RegisteredPersonPool.getInstance().get(role.getCompetitorId()));
+                results.add(role.getCompetitor());
             }
         }
         Collections.sort(results);
@@ -111,7 +115,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : get(tournament).values()) {
             if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
-                results.add(RegisteredPersonPool.getInstance().get(role.getCompetitorId()));
+                results.add(role.getCompetitor());
             }
         }
         Collections.sort(results);
@@ -121,9 +125,8 @@ public class RolePool extends TournamentDependentPool<Role> {
     public List<RegisteredPerson> getPeople(Tournament tournament) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : get(tournament).values()) {
-            RegisteredPerson person = RegisteredPersonPool.getInstance().get(role.getCompetitorId());
-            if (person != null) {
-                result.add(person);
+            if (role.getCompetitor() != null) {
+                result.add(role.getCompetitor());
             }
         }
         Collections.sort(result);
@@ -140,9 +143,8 @@ public class RolePool extends TournamentDependentPool<Role> {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : get(tournament).values()) {
             if (roleTags.contains(role.getDatabaseTag())) {
-                RegisteredPerson person = RegisteredPersonPool.getInstance().get(role.getCompetitorId());
-                if (person != null) {
-                    result.add(person);
+                if (role.getCompetitor() != null) {
+                    result.add(role.getCompetitor());
                 }
             }
         }

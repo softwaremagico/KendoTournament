@@ -32,27 +32,32 @@ import java.util.Objects;
 
 public class RoleTag {
 
-    public static final List<String> volunteerRoles = new ArrayList<>() {
-    
-    "VCLO", "Volunteer", "VolunteerK"};
-    
-    public static final List<String> competitorsRoles = new ArrayList<>() {
-    
-    "Competitor", "VolunteerK"};
-
-    private String tag;     //Identical for all languages.
+    public static final List<String> volunteerRoles;
+    public static final List<String> competitorsRoles;
+    private String tagName;     //Identical for all languages.
     public String name;    //The translation for each language.
     public String abbrev;
     public Color color;
 
+    static {
+        volunteerRoles = new ArrayList<>();
+        volunteerRoles.add("VCLO");
+        volunteerRoles.add("Volunteer");
+        volunteerRoles.add("VolunteerK");
+
+        competitorsRoles = new ArrayList<>();
+        competitorsRoles.add("Competitor");
+        competitorsRoles.add("VolunteerK");
+    }
+
     public RoleTag(String tag, String tmp_name, String tmp_abbrev) {
-        this.tag = tag;
+        this.tagName = tag;
         name = tmp_name;
         abbrev = tmp_abbrev;
     }
 
-    public String getTag() {
-        return tag;
+    public String getName() {
+        return tagName;
     }
 
     public void addColor(int red, int green, int blue) {
@@ -66,7 +71,7 @@ public class RoleTag {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.tag);
+        hash = 67 * hash + Objects.hashCode(this.tagName);
         return hash;
     }
 
@@ -79,7 +84,7 @@ public class RoleTag {
             return false;
         }
         final RoleTag other = (RoleTag) obj;
-        if (!Objects.equals(this.tag, other.tag)) {
+        if (!Objects.equals(this.tagName, other.tagName)) {
             return false;
         }
         return true;

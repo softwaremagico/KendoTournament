@@ -27,7 +27,6 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
@@ -122,18 +121,15 @@ public class DatabaseConnection {
         DatabaseConnection.connection = connection;
     }
 
-    public boolean startDatabaseConnection(String tmp_password, String tmp_user, String tmp_database, String tmp_server) {
-        password = tmp_password;
-        user = tmp_user;
-        databaseName = tmp_database;
-        server = tmp_server;
+    public boolean startDatabaseConnection(String password, String user, String databaseName, String server) {
+        this.password = password;
+        this.user = user;
+        this.databaseName = databaseName;
+        this.server = server;
         generateDatabaseConnectionFile();
-        database = databaseEngine.getDatabaseClass();
-        try {
-            database.disconnectDatabase();
-        } catch (SQLException ex) {
-        }
-        databaseConnected = database.connect(tmp_password, tmp_user, tmp_database, tmp_server, true, true);
+        this.database = databaseEngine.getDatabaseClass();
+        this.database.disconnect();
+        //databaseConnected = database.connect(password, user, databaseName, server, true, true);
         return databaseConnected;
     }
 
@@ -241,5 +237,19 @@ public class DatabaseConnection {
 
     public boolean databaseConnection() {
         return (databaseConnected = startDatabaseConnection(password, user, databaseName, server));
+    }
+
+    public void updateDatabase() {
+        getDatabase().connect(password, user, databaseName, server, false, true);
+        ClubPool.getInstance().updateDatabase();
+        RegisteredPersonPool.getInstance().updateDatabase();
+        PhotoPool.getInstance().updateDatabase();
+        TournamentPool.getInstance().updateDatabase();
+        RolePool.getInstance().updateDatabase();
+        TeamPool.getInstance().updateDatabase();
+        FightPool.getInstance().updateDatabase();
+        DuelPool.getInstance().updateDatabase();
+        UndrawPool.getInstance().updateDatabase();
+        getDatabase().disconnect();
     }
 }

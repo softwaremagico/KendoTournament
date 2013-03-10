@@ -29,10 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author jorge
- */
 public class FightManager {
 
     private List<Fight> fights = new ArrayList<>();

@@ -77,7 +77,7 @@ public class SQLite extends SQL {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:" + Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension);
 
-            if (!isDatabaseInstalledCorrectly(false)) {
+            if (!isDatabaseInstalledCorrectly()) {
                 installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
                 if (retry) {
                     return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
@@ -99,10 +99,10 @@ public class SQLite extends SQL {
     }
 
     @Override
-    public void disconnect() throws SQLException {
+    public void disconnectDatabase() {
         try {
             connection.close();
-        } catch (NullPointerException npe) {
+        } catch (SQLException | NullPointerException npe) {
         }
     }
 
@@ -174,7 +174,7 @@ public class SQLite extends SQL {
     }
 
     @Override
-    boolean isDatabaseInstalledCorrectly(boolean verbose) {
+    boolean isDatabaseInstalledCorrectly() {
         //SELECT name FROM sqlite_master WHERE type='table' AND name='table_name';
         try {
             int tables;

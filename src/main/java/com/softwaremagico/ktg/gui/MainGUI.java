@@ -751,14 +751,9 @@ public class MainGUI extends KendoFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
-        try {
-            DatabaseConnection.getInstance().getDatabase().disconnectDatabase();
-            changeMenuIsConnectedToDatabase();
-            MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
-        } catch (SQLException ex) {
-            MessageManager.errorMessage(this.getClass().getName(), "disconnectDatabaseFail", "MySQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-        }
+        DatabaseConnection.getInstance().getDatabase().disconnect();
+        changeMenuIsConnectedToDatabase();
+        MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed

@@ -53,7 +53,7 @@ public class RoleTags {
 
     public int get(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).getTag().equals(tag)) {
+            if (listRoles.get(i).getName().equals(tag)) {
                 return i;
             }
         }
@@ -68,7 +68,7 @@ public class RoleTags {
      */
     public String getAbbrev(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).getTag().equals(tag)) {
+            if (listRoles.get(i).getName().equals(tag)) {
                 return listRoles.get(i).abbrev;
             }
         }
@@ -77,7 +77,7 @@ public class RoleTags {
 
     public RoleTag getRole(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).getTag().equals(tag)) {
+            if (listRoles.get(i).getName().equals(tag)) {
                 return listRoles.get(i);
             }
         }
@@ -86,7 +86,7 @@ public class RoleTags {
 
     public String getTraduction(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
-            if (listRoles.get(i).getTag().equals(tag)) {
+            if (listRoles.get(i).getName().equals(tag)) {
                 return listRoles.get(i).name;
             }
         }

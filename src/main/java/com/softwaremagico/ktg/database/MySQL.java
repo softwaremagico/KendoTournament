@@ -43,10 +43,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jorge
- */
 public class MySQL extends SQL {
 
     public int port = 3306;
@@ -64,16 +60,16 @@ public class MySQL extends SQL {
     /**
      * Connect to the database
      *
-     * @param tmp_password database password.
-     * @param tmp_user user database.
-     * @param tmp_database satabase schema.
-     * @param tmp_server server IP
+     * @param password database password.
+     * @param user user database.
+     * @param database satabase schema.
+     * @param server server IP
      * @param verbose show error messages.
      * @param retry do another try if can solve the SQL problem.
      * @return true if the connection is ok.
      */
     @Override
-    public boolean connect(String tmp_password, String tmp_user, String tmp_database, String tmp_server, boolean verbose, boolean retry) {
+    public boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry) {
         boolean error = false;
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
@@ -83,16 +79,16 @@ public class MySQL extends SQL {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + tmp_server + ":" + port + "/" + tmp_database, tmp_user, tmp_password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database, user, password);
             //MysqlDataSource dataSource = new MysqlDataSource();
-           // dataSource.setUser(tmp_user);
+            // dataSource.setUser(tmp_user);
             //dataSource.setPassword(tmp_password);
             //dataSource.setServerName(tmp_server);
 
             //connection = dataSource.getConnection();
-            if (!isDatabaseInstalledCorrectly(false)) {
-                installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
-                return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+            if (!isDatabaseInstalledCorrectly()) {
+                installDatabase(password, user, server, database);
+                return connect(password, user, database, server, verbose, false);
             }
         } catch (CommunicationsException ce) {
             MessageManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
@@ -102,14 +98,14 @@ public class MySQL extends SQL {
             if (ex.getErrorCode() == 0) {
                 if (retry && DatabaseConnection.getInstance().isLocallyConnected()) {
                     startDatabase();
-                    return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+                    return connect(password, user, database, server, verbose, false);
                 } else {
                     error = true;
                 }
             } else if (ex.getErrorCode() == 1049) { //Server started, but no database found.
                 if (retry && DatabaseConnection.getInstance().isLocallyConnected()) {
-                    installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
-                    return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+                    installDatabase(password, user, server, database);
+                    return connect(password, user, database, server, verbose, false);
                 } else {
                     error = true;
                 }
@@ -121,7 +117,7 @@ public class MySQL extends SQL {
         }
         if (!error) {
             if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + tmp_server + ")", JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + server + ")", JOptionPane.INFORMATION_MESSAGE);
             }
             KendoLog.info(MySQL.class.getName(), "MySQL");
         }
@@ -129,11 +125,11 @@ public class MySQL extends SQL {
     }
 
     @Override
-    public void disconnect() throws SQLException {
+    public void disconnectDatabase() {
         try {
             connection.close();
             DatabaseConnection.getInstance().resetPassword();
-        } catch (NullPointerException npe) {
+        } catch (NullPointerException | SQLException npe) {
         }
     }
 
@@ -183,12 +179,12 @@ public class MySQL extends SQL {
     void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + tmp_server + ":" + port, tmp_user, tmp_password);
-           // MysqlDataSource dataSource = new MysqlDataSource();
-           // dataSource.setUser(tmp_user);
-           // dataSource.setPassword(tmp_password);
-           // dataSource.setServerName(tmp_server);
+            // MysqlDataSource dataSource = new MysqlDataSource();
+            // dataSource.setUser(tmp_user);
+            // dataSource.setPassword(tmp_password);
+            // dataSource.setServerName(tmp_server);
 
-           // connection = dataSource.getConnection();
+            // connection = dataSource.getConnection();
             try (PreparedStatement sm = connection.prepareStatement("CREATE DATABASE IF NOT EXISTS " + tmp_database)) {
                 sm.executeUpdate();
             }
@@ -201,20 +197,14 @@ public class MySQL extends SQL {
     }
 
     @Override
-    boolean isDatabaseInstalledCorrectly(boolean verbose) {
+    boolean isDatabaseInstalledCorrectly() {
         int count = 0;
         try {
             java.sql.DatabaseMetaData md = connection.getMetaData();
             try (ResultSet rs = md.getTables(null, null, "%", null)) {
-                if (verbose) {
-                    System.out.println("Searching for tables... ");
-                }
                 while (rs.next()) {
                     String catalogo = rs.getString(1);
                     String tabla = rs.getString(3);
-                    if (verbose) {
-                        System.out.println("TABLE = " + catalogo + "." + tabla);
-                    }
                     count++;
                 }
             }

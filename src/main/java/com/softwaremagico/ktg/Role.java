@@ -34,37 +34,51 @@ import java.io.Serializable;
 public class Role implements Serializable {
 
     private Tournament tournament;
-    private String competitorId;
+    private RegisteredPerson competitor;
     private RoleTag tag;
+    private Integer accreditationOrder;
     private boolean accreditationPrinted;
     private boolean diplomaPrinted;
 
-    public Role(Tournament tournament, String competitorId, RoleTag tag, boolean accreditationPrinted, boolean diplomaPrinted) {
+    public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag, Integer accreditationOrder, boolean accreditationPrinted, boolean diplomaPrinted) {
         this.tournament = tournament;
-        this.competitorId = competitorId;
+        this.competitor = competitor;
         this.tag = tag;
+        this.accreditationOrder = accreditationOrder;
         this.accreditationPrinted = accreditationPrinted;
         this.diplomaPrinted = diplomaPrinted;
     }
 
-    public String getCompetitorId() {
-        return competitorId;
+    public RegisteredPerson getCompetitor() {
+        return competitor;
+    }
+
+    public Tournament getTournament() {
+        return tournament;
     }
 
     public String getDatabaseTag() {
-        return tag.getTag();
+        return tag.getName();
     }
 
     public RoleTag getTag() {
         return tag;
     }
 
+    public void setAccreditationPrinted(boolean value) {
+        accreditationPrinted = value;
+    }
+
     public boolean isAccreditationPrinted() {
         return accreditationPrinted;
     }
 
-    public void setAccreditationPrinted(boolean value) {
-        accreditationPrinted = value;
+    public Integer getAccreditationOrder() {
+        return accreditationOrder;
+    }
+
+    public void setAccreditationOrder(Integer value) {
+        accreditationOrder = value;
     }
 
     public boolean isDiplomaPrinted() {
@@ -86,14 +100,14 @@ public class Role implements Serializable {
         Role otherRole = (Role) object;
         return this.tournament.equals(otherRole.tournament)
                 && this.tag.equals(otherRole.tag)
-                && this.competitorId.equals(otherRole.competitorId);
+                && this.competitor.equals(otherRole.competitor);
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 67 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
-        hash = 67 * hash + (this.competitorId != null ? this.competitorId.hashCode() : 0);
+        hash = 67 * hash + (this.competitor != null ? this.competitor.hashCode() : 0);
         hash = 67 * hash + (this.tag != null ? this.tag.hashCode() : 0);
         return hash;
     }

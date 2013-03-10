@@ -129,7 +129,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     protected abstract List<ElementPool> sort();
-    
+
     public List<ElementPool> getSorted() {
         if (sortedElements != null) {
             return sortedElements;
@@ -140,8 +140,8 @@ public abstract class SimplePool<ElementPool> {
             return new ArrayList<>();
         }
     }
-    
-     public void updateDatabase() {
+
+    public void updateDatabase() {
         removeFromDatabase(new ArrayList(elementsToDelete.values()));
         elementsToDelete = new HashMap<>();
         storeInDatabase(new ArrayList(elementsToStore.values()));
@@ -150,7 +150,7 @@ public abstract class SimplePool<ElementPool> {
         updateDatabase(elementsToUpdate);
         elementsToUpdate = new HashMap<>();
     }
-     
+
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {
         return getAll().subList(fromRow, fromRow + numberOfRows);
     }

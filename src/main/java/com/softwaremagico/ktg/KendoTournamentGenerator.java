@@ -24,6 +24,8 @@ package com.softwaremagico.ktg;
  */
 
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
@@ -90,7 +92,7 @@ public class KendoTournamentGenerator {
     }
 
     public Tournament getLastSelectedTournament() {
-        return TournamentPool.getTournament(lastSelectedTournament);
+        return TournamentPool.getInstance().get(lastSelectedTournament);
     }
 
     public String getLastSelectedClub() {
@@ -108,11 +110,11 @@ public class KendoTournamentGenerator {
     public List<Team> getTeamsOfFights(List<Fight> fightList) {
         List<Team> teams = new ArrayList<>();
         for (int i = 0; i < fightList.size(); i++) {
-            if (!teams.contains(fightList.get(i).team1)) {
-                teams.add(fightList.get(i).team1);
+            if (!teams.contains(fightList.get(i).getTeam1())) {
+                teams.add(fightList.get(i).getTeam1());
             }
-            if (!teams.contains(fightList.get(i).team2)) {
-                teams.add(fightList.get(i).team2);
+            if (!teams.contains(fightList.get(i).getTeam2())) {
+                teams.add(fightList.get(i).getTeam2());
             }
         }
         return teams;
@@ -265,7 +267,7 @@ public class KendoTournamentGenerator {
         Folder.saveListInFile(configData, Path.getPathConfigInHome());
     }
 
-    public boolean existCompetitor(List<Competitor> competitors, Competitor competitor) {
+    public boolean existCompetitor(List<RegisteredPerson> competitors, RegisteredPerson competitor) {
         for (int i = 0; i < competitors.size(); i++) {
             if (competitors.get(i).id.equals(competitor.id)) {
                 return true;
@@ -283,15 +285,15 @@ public class KendoTournamentGenerator {
      * @param championship
      * @return
      */
-    public String getCompetitorOrder(Competitor competitor, String role, Tournament tournament) {
+    public String getRegisteredPersonNumber(RegisteredPerson competitor, Role role, Tournament tournament) {
         DecimalFormat myFormatter = new DecimalFormat("00000");
-        if (role.equals("VCLO") || role.equals("VolunteerK")) {
-            Integer order = DatabaseConnection.getInstance().getDatabase().searchVolunteerOrder(competitor, tournament);
+        if (RoleTag.volunteerRoles.contains(role.getTag().getName())) {
+            Integer order = RolePool.getInstance().getVolunteerOrder(tournament, competitor);
             if (order != null) {
                 return myFormatter.format(order);
             }
         }
-        return myFormatter.format(competitor.getOrder());
+        return myFormatter.format(role.getAccreditationOrder());
     }
 
     public String returnShiaijo(int pos) {

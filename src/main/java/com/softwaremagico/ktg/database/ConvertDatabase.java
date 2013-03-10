@@ -87,82 +87,41 @@ public class ConvertDatabase {
 
         private boolean dumpData() {
             try {
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), 1, 7);
-                List<Tournament> tournaments;
-                int from = 0;
-                while ((tournaments = fromDatabase.getTournaments(from, MAX_DATA_BY_STEP)) != null && tournaments.size() > 0) {
-                    if (!toDatabase.storeAllTournaments(tournaments, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    tournaments.clear();
-                }
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), 0, 1);
+                List<Tournament> tournaments = fromDatabase.getTournaments();
+                toDatabase.addTournaments(tournaments);
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), 2, 7);
-                List<Club> clubs;
-                while ((clubs = fromDatabase.getClubs(from, MAX_DATA_BY_STEP)) != null && clubs.size() > 0) {
-                    if (!toDatabase.storeAllClubs(clubs, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    clubs.clear();
-                }
+                Integer total = 3 + tournaments.size() * 5;
+                Integer current = 0;
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), 3, 7);
-                List<CompetitorWithPhoto> competitors;
-                while ((competitors = fromDatabase.getCompetitorsWithPhoto(from, MAX_DATA_BY_STEP)) != null && competitors.size() > 0) {
-                    if (!toDatabase.storeAllCompetitors(competitors, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    competitors.clear();
-                }
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), current++, total);
+                List<Club> clubs = fromDatabase.getClubs();
+                toDatabase.addClubs(clubs);
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole"), 4, 7);
-                List<Role> roles;
-                while ((roles = fromDatabase.getRoles(from, MAX_DATA_BY_STEP)) != null && roles.size() > 0) {
-                    if (!toDatabase.storeAllRoles(roles, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    roles.clear();
-                }
+                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), current++, total);
+                List<RegisteredPerson> people = fromDatabase.getRegisteredPeople();
+                toDatabase.addRegisteredPeople(people);
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam"), 5, 7);
-                List<Team> teams;
-                while ((teams = fromDatabase.getTeams(from, MAX_DATA_BY_STEP)) != null && teams.size() > 0) {
-                    if (!toDatabase.storeAllTeams(teams, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    teams.clear();
-                }
+                for (Tournament tournament : tournaments) {
+                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")", current++, total);
+                    List<Role> roles = fromDatabase.getRoles(tournament);
+                    toDatabase.addRoles(roles);
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 6, 7);
-                List<Fight> fights;
-                toDatabase.deleteAllFights();
-                while ((fights = fromDatabase.getFights(from, MAX_DATA_BY_STEP)) != null && fights.size() > 0) {
-                    if (!toDatabase.storeFights(fights, false, false)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    fights.clear();
-                }
+                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"), current++, total);
+                    List<Team> teams = fromDatabase.getTeams(tournament);
+                    toDatabase.addTeams(teams);
 
-                from = 0;
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight"), 7, 7);
-                List<Undraw> undraws;
-                while ((undraws = fromDatabase.getUndraws(from, MAX_DATA_BY_STEP)) != null && undraws.size() > 0) {
-                    if (!toDatabase.storeAllUndraws(undraws, from == 0)) {
-                        return false;
-                    }
-                    from += MAX_DATA_BY_STEP;
-                    undraws.clear();
+                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    List<Fight> fights = fromDatabase.getFights(tournament);
+                    toDatabase.addFights(fights);
+
+                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    List<Duel> duels = fromDatabase.getDuels(tournament);
+                    toDatabase.addDuels(duels);
+
+                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    List<Undraw> undraws = fromDatabase.getUndraws(tournament);
+                    toDatabase.addUndraws(undraws);
                 }
 
                 timerPanel.dispose();
