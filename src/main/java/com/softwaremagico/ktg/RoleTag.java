@@ -31,9 +31,14 @@ import java.util.List;
 import java.util.Objects;
 
 public class RoleTag {
+
+    public static final List<String> volunteerRoles = new ArrayList<>() {
     
-    public static final List<String> volunteerRoles = new ArrayList<>(){"VCLO", "Volunteer", "VolunteerK"};
-    public static final List<String> competitorsRoles = new ArrayList<>(){"Competitor", "VolunteerK"};
+    "VCLO", "Volunteer", "VolunteerK"};
+    
+    public static final List<String> competitorsRoles = new ArrayList<>() {
+    
+    "Competitor", "VolunteerK"};
 
     private String tag;     //Identical for all languages.
     public String name;    //The translation for each language.
@@ -57,8 +62,8 @@ public class RoleTag {
     public com.itextpdf.text.BaseColor getItextColor() {
         return new com.itextpdf.text.BaseColor(color.getRed(), color.getGreen(), color.getBlue());
     }
-    
-     @Override
+
+    @Override
     public int hashCode() {
         int hash = 5;
         hash = 67 * hash + Objects.hashCode(this.tag);

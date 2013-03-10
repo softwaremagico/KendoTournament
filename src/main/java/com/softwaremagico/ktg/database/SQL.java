@@ -123,7 +123,7 @@ public abstract class SQL extends Database {
     protected boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
-            try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?)")) {
+            try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?);")) {
                 stmt.setString(1, person.getId());
                 stmt.setString(2, person.getName());
                 stmt.setString(3, person.getSurname());
@@ -153,7 +153,7 @@ public abstract class SQL extends Database {
         List<RegisteredPerson> results = new ArrayList<>();
         try {
             try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname")) {
+                    ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname;")) {
                 while (rs.next()) {
                     RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
                     registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
@@ -199,11 +199,13 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "updateRoles");
         List<RegisteredPerson> oldPeople = new ArrayList<>(peopleExchange.values());
         List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
-        for (RegisteredPerson person : newPeople) {
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Name=?, Surname=?, Club=? WHERE ID='" + person.getId() + "'")) {
-                stmt.setString(1, person.getName());
-                stmt.setString(2, person.getSurname());
-                stmt.setString(3, person.getClub().getName());
+        for (RegisteredPerson newPerson : newPeople) {
+            RegisteredPerson oldPerson = peopleExchange.get(newPerson);
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET ID=?, Name=?, Surname=?, Club=? WHERE ID='" + oldPerson.getId() + "'")) {
+                stmt.setString(1, newPerson.getId());
+                stmt.setString(2, newPerson.getName());
+                stmt.setString(3, newPerson.getSurname());
+                stmt.setString(4, newPerson.getClub().getName());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 if (!showSQLError(ex.getErrorCode())) {
@@ -504,8 +506,9 @@ public abstract class SQL extends Database {
         List<Club> oldClubs = new ArrayList<>(clubsExchange.values());
         List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
         String query = "";
-        for (Club club : newClubs) {
-            query += "UPDATE Club SET Country='" + club.getCountry() + "', City='" + club.getCity() + "', Address='" + club.getAddress() + "', Web='" + club.getWeb() + "', Mail='" + club.getMail() + "', Phone='" + club.getPhone() + "', Representative='" + club.getRepresentative() + "' WHERE Name='" + clubsExchange.get(club).getName() + "';\n";
+        for (Club newClub : newClubs) {
+            Club oldClub = clubsExchange.get(newClub);
+            query += "UPDATE Club SET Name='" + newClub.getName() + "', Country='" + newClub.getCountry() + "', City='" + newClub.getCity() + "', Address='" + newClub.getAddress() + "', Web='" + newClub.getWeb() + "', Mail='" + newClub.getMail() + "', Phone='" + newClub.getPhone() + "', Representative='" + newClub.getRepresentative() + "' WHERE Name='" + oldClub.getName() + "';\n";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -637,7 +640,7 @@ public abstract class SQL extends Database {
         List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
         for (Tournament tournament : newTournaments) {
             Tournament oldTournament = tournamentsExchange.get(tournament);
-            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=? WHERE Name='" + oldTournament.getName() + "';")) {
+            try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=? WHERE Name='" + oldTournament.getName() + "';")) {
                 storeBinaryStream(stmt, 1, tournament.getBannerInput(), (int) tournament.getBannerSize());
                 stmt.setLong(2, tournament.getBannerSize());
                 stmt.setInt(3, tournament.getFightingAreas());
@@ -651,6 +654,7 @@ public abstract class SQL extends Database {
                 stmt.setLong(11, tournament.getDiplomaSize());
                 storeBinaryStream(stmt, 12, tournament.getAccreditationInput(), (int) tournament.getAccreditationSize());
                 stmt.setLong(13, tournament.getAccreditationSize());
+                stmt.setString(14, tournament.getName());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 if (!showSQLError(ex.getErrorCode())) {
@@ -678,7 +682,7 @@ public abstract class SQL extends Database {
      */
     @Override
     protected List<Team> getTeams(Tournament tournament) {
-        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name ";
+        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
 

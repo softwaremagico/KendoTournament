@@ -1,7 +1,6 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,8 +68,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     public Integer getLevelTournament(Tournament tournament) {
         int level = -1;
-        List<Fight> fightsOfTournament = FightPool.getInstance().get(tournament);
-        for (Fight fight : fightsOfTournament) {
+        for (Fight fight : FightPool.getInstance().get(tournament).values()) {
             if (fight.getLevel() > level) {
                 level = fight.getLevel();
             }

@@ -152,40 +152,6 @@ public class Fight implements Serializable, Comparable<Fight> {
     }
 
     /**
-     * Return the winner only counting the duels.
-     *
-     * @return Team winner of match.
-     */
-    public Team winnerByDuels() {
-        int points1 = 0;
-        int points2 = 0;
-        int duelsScore = 0;
-        for (int i = 0; i < getDuels().size(); i++) {
-            duelsScore += getDuels().get(i).winner();
-        }
-        if (duelsScore < 0) {
-            return team1;
-        }
-        if (duelsScore > 0) {
-            return team2;
-        }
-
-        for (int i = 0; i < getDuels().size(); i++) {
-            points1 += getDuels().get(i).howManyPoints(true);
-            points2 += getDuels().get(i).howManyPoints(false);
-        }
-
-        if (points1 > points2) {
-            return team1;
-        }
-        if (points1 < points2) {
-            return team2;
-        }
-
-        return null;
-    }
-
-    /**
      * To win a fight, a team need to win more duels or do more points.
      *
      * @return
@@ -268,7 +234,17 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     }
 
-    public Integer getWinnedDuels(boolean team1) {
+    public Integer getWonDuels(Team team) {
+        if (team1.equals(team)) {
+            return getWonDuels(true);
+        }
+        if (team2.equals(team)) {
+            return getWonDuels(false);
+        }
+        return 0;
+    }
+
+    public Integer getWonDuels(boolean team1) {
         int winDuels = 0;
         for (int i = 0; i < getDuels().size(); i++) {
             if (getDuels().get(i).winner() < 0 && team1) {
@@ -279,6 +255,26 @@ public class Fight implements Serializable, Comparable<Fight> {
             }
         }
         return winDuels;
+    }
+
+    public Integer getDrawDuels() {
+        int drawDuels = 0;
+        for (int i = 0; i < getDuels().size(); i++) {
+            if (getDuels().get(i).winner() == 0) {
+                drawDuels++;
+            }
+        }
+        return drawDuels;
+    }
+
+    public Integer getScore(Team team) {
+        if (team1.equals(team)) {
+            return getScore(true);
+        }
+        if (team2.equals(team)) {
+            return getScore(false);
+        }
+        return 0;
     }
 
     public Integer getScore(boolean team1) {

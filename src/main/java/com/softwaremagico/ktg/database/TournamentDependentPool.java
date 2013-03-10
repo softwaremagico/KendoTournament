@@ -137,6 +137,12 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
+    public void remove(Tournament tournament, List<ElementPool> elements) {
+        for (ElementPool element : elements) {
+            remove(tournament, element);
+        }
+    }
+
     public void remove(Tournament tournament, String elementName) {
         remove(tournament, get(tournament, elementName));
     }

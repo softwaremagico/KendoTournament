@@ -1,5 +1,6 @@
 package com.softwaremagico.ktg.database;
 
+import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
@@ -58,6 +59,15 @@ public class FightPool extends TournamentDependentPool<Fight> {
         List<Fight> unsorted = new ArrayList(get(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
+    }
+
+    @Override
+    public void remove(Tournament tournament, Fight element) {
+        //Delete duels.
+        List<Duel> duels = DuelPool.getInstance().get(tournament, element);
+        DuelPool.getInstance().remove(tournament, duels);
+        //Delete fight.
+        super.remove(tournament, element);
     }
 
     public List<Fight> get(Tournament tournament, Integer fightArea) {
