@@ -78,13 +78,24 @@ public class FightPool extends TournamentDependentPool<Fight> {
                 fightsOfArea.add(fight);
             }
         }
+        Collections.sort(fightsOfArea);
         return fightsOfArea;
+    }
+
+    public Fight get(Tournament tournament, Integer fightArea, Integer index) {
+        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        for (Fight fight : allFights) {
+            if (fight.getAsignedFightArea() == fightArea && fight.getIndex() == index) {
+                return fight;
+            }
+        }
+        return null;
     }
 
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) {
         for (Fight fight : get(tournament).values()) {
-            if (fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
-                    && fight.getLevel() == level && fight.getIndex() == index) {
+            if (fight.getIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
+                    && fight.getLevel() == level) {
                 return fight;
             }
         }
@@ -103,5 +114,35 @@ public class FightPool extends TournamentDependentPool<Fight> {
                 remove(tournament, fight);
             }
         }
+    }
+
+    public Integer getFightIndex(Tournament tournament, Fight fight, Integer fightArea) {
+        List<Fight> fightsOfArena = get(tournament, fightArea);
+        for (Integer i = 0; i < fightsOfArena.size(); i++) {
+            if (fightsOfArena.get(i).equals(fight)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the first fight not over.
+     *
+     * @param tournament
+     * @param fightArea
+     * @return Null if all fights are over.
+     */
+    public Fight getCurrentFight(Tournament tournament, Integer fightArea) {
+        List<Fight> fightsOfArena = get(tournament, fightArea);
+        if (fightsOfArena == null || fightsOfArena.isEmpty()) {
+            return null;
+        }
+        for (Integer i = 0; i < fightsOfArena.size(); i++) {
+            if (!fightsOfArena.get(i).isOver()) {
+                return fightsOfArena.get(i);
+            }
+        }
+        return null;
     }
 }

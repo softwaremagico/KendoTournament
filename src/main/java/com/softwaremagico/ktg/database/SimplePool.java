@@ -71,9 +71,11 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public void add(ElementPool element) {
-        sortedElements = null; //Sorted elements need to be recreated.
-        get().put(getId(element), element);
-        addElementToStore(element);
+        if (!elements.containsValue(element)) {
+            sortedElements = null; //Sorted elements need to be recreated.
+            get().put(getId(element), element);
+            addElementToStore(element);
+        }
     }
 
     public void update(ElementPool oldElement, ElementPool newElement) {

@@ -802,9 +802,9 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement();
                 ResultSet rs = s.executeQuery(query)) {
             while (rs.next()) {
-                Fight f = new Fight(TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
-                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
-                        tournament,
+                Fight f = new Fight(tournament,
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),                        
                         rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("Index"));
                 f.setWinner(rs.getInt("Winner"));
                 f.setMaxWinners(rs.getInt("MaxWinners"));

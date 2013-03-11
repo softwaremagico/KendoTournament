@@ -91,9 +91,11 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void add(Tournament tournament, ElementPool element) {
-        sortedElements = null; //Sorted elements need to be recreated.
-        get(tournament).put(getId(element), element);
-        addElementToStore(tournament, element);
+        if (!elements.get(tournament).containsValue(element)) {
+            sortedElements = null; //Sorted elements need to be recreated.
+            get(tournament).put(getId(element), element);
+            addElementToStore(tournament, element);
+        }
     }
 
     public void update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {

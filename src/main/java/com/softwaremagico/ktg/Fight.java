@@ -42,10 +42,10 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Integer maxWinners = 1;
     private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
 
-    public Fight(Team team1, Team team2, Tournament tmp_tournament, int asignedArea, int level, int order) {
+    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int order) {
         this.team1 = team1;
         this.team2 = team2;
-        this.tournament = tmp_tournament;
+        this.tournament = tournament;
         this.asignedFightArea = asignedArea;
         this.index = order;
         this.level = level;
