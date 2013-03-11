@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
@@ -44,7 +44,7 @@ public class NewClub extends javax.swing.JFrame {
 
     private Translator trans = null;
     private Club c;
-    private List<Competitor> competitors;
+    private List<RegisteredPerson> competitors;
     private NewCompetitor newCompetitor = null;
     private boolean updateClubOfCompetitor = false;
 

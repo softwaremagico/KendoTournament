@@ -27,8 +27,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentPool;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -94,7 +93,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
 
     private void fillTournaments() {
         refreshing = true;
-        List<Tournament> listTournaments = TournamentPool.getAllTournaments();
+        List<Tournament> listTournaments = TournamentPool.getInstance().getAll();
         try {
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
@@ -131,7 +130,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
         DrawSpinner = new javax.swing.JSpinner();
         CloseButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
+        TournamentComboBox = new javax.swing.JComboBox();
         TournamentLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -319,7 +318,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         for (int i = 0; i < TournamentComboBox.getItemCount(); i++) { //Update all changes
-            DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament)(TournamentComboBox.getItemAt(i))), false);
+            
         }
         this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
@@ -327,18 +326,21 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
     private void ClassicRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClassicRadioButtonActionPerformed
         if (!refreshing) {
             ((Tournament)(TournamentComboBox.getSelectedItem())).changeScoreOptions("Classic", 1, 0);
+            TournamentPool.getInstance().update((Tournament)((Tournament)(TournamentComboBox.getSelectedItem())), (Tournament)(TournamentComboBox.getSelectedItem()));
         }
     }//GEN-LAST:event_ClassicRadioButtonActionPerformed
 
     private void EuropeanRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EuropeanRadioButtonActionPerformed
         if (!refreshing) {
             ((Tournament)(TournamentComboBox.getSelectedItem())).changeScoreOptions("European", 1, (float) 0.001);
+            TournamentPool.getInstance().update((Tournament)((Tournament)(TournamentComboBox.getSelectedItem())), (Tournament)(TournamentComboBox.getSelectedItem()));
         }
     }//GEN-LAST:event_EuropeanRadioButtonActionPerformed
 
     private void CustomRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomRadioButtonActionPerformed
         if (!refreshing) {
             ((Tournament)(TournamentComboBox.getSelectedItem())).changeScoreOptions("Custom", (Integer) WinSpinner.getValue(), (Integer) DrawSpinner.getValue());
+            TournamentPool.getInstance().update((Tournament)((Tournament)(TournamentComboBox.getSelectedItem())), (Tournament)(TournamentComboBox.getSelectedItem()));
         }
     }//GEN-LAST:event_CustomRadioButtonActionPerformed
 
@@ -348,6 +350,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
                 WinSpinner.setValue(1);
             }
             ((Tournament)(TournamentComboBox.getSelectedItem())).changeScoreOptions("Custom", (Integer) WinSpinner.getValue(), (Integer) DrawSpinner.getValue());
+            TournamentPool.getInstance().update((Tournament)((Tournament)(TournamentComboBox.getSelectedItem())), (Tournament)(TournamentComboBox.getSelectedItem()));
         }
     }//GEN-LAST:event_WinSpinnerStateChanged
 
@@ -360,6 +363,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
                 DrawSpinner.setValue((Integer) WinSpinner.getValue() - 1);
             }
             ((Tournament)(TournamentComboBox.getSelectedItem())).changeScoreOptions("Custom", (Integer) WinSpinner.getValue(), (Integer) DrawSpinner.getValue());
+            TournamentPool.getInstance().update((Tournament)((Tournament)(TournamentComboBox.getSelectedItem())), (Tournament)(TournamentComboBox.getSelectedItem()));
         }
     }//GEN-LAST:event_DrawSpinnerStateChanged
 
@@ -380,7 +384,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
     private javax.swing.JLabel EuropeanUndrawLabel;
     private javax.swing.ButtonGroup ScoreGroup;
     private javax.swing.JPanel ScorePanel;
-    private javax.swing.JComboBox<Tournament> TournamentComboBox;
+    private javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.JLabel WinLabel;
     private javax.swing.JSpinner WinSpinner;

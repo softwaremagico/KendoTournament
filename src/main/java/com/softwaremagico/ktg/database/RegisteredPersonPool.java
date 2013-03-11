@@ -48,7 +48,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected List<RegisteredPerson> sort() {
-        List<RegisteredPerson> unsorted = new ArrayList(get().values());
+        List<RegisteredPerson> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

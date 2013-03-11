@@ -26,7 +26,9 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -34,10 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
-/**
- *
- * @author jorge
- */
 public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private Translator trans = null;
@@ -51,7 +49,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
      * Creates new form ChangeOrderTeam
      */
     public ChangeOrderTeam() {
-        level = FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).getLastLevel();
+        level = FightPool.getInstance().getLastLevelUsed(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -75,7 +73,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = TournamentPool.getAllTournaments();
+            listTournaments = TournamentPool.getInstance().getAll();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
@@ -87,10 +85,10 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private void update() {
         try {
-            level = DatabaseConnection.getInstance().getDatabase().getLevelTournament((Tournament) TournamentComboBox.getSelectedItem());
+            level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             //teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
-            teams = TeamPool.getTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
+            teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
             fillTeams();
         } catch (NullPointerException npe) {
             MessageManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
@@ -129,7 +127,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void initComponents() {
 
         TournamentLabel = new javax.swing.JLabel();
-        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
+        TournamentComboBox = new javax.swing.JComboBox();
         TeamPanel = new javax.swing.JPanel();
         TeamScrollPane = new javax.swing.JScrollPane();
         TeamList = new javax.swing.JList();
@@ -255,7 +253,7 @@ private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     private javax.swing.JList TeamList;
     private javax.swing.JPanel TeamPanel;
     private javax.swing.JScrollPane TeamScrollPane;
-    protected javax.swing.JComboBox<Tournament> TournamentComboBox;
+    protected javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     // End of variables declaration//GEN-END:variables
 }

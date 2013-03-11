@@ -47,12 +47,12 @@ public class CompetitorFight extends JPanel {
     private PanelBackground round2;
     private PanelBackground faults;
     private JLabel nameLabel;
-    private Competitor competitor;
+    private RegisteredPerson competitor;
     private Fight fight;
     private Translator trans = null;
     private TeamFight teamFight;
 
-    CompetitorFight(TeamFight tf, Competitor c, Fight f, boolean left, boolean selected, boolean menu) {
+    CompetitorFight(TeamFight tf, RegisteredPerson c, Fight f, boolean left, boolean selected, boolean menu) {
         competitor = c;
         fight = f;
         teamFight = tf;

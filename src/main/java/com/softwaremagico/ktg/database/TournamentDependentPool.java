@@ -32,7 +32,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected abstract void updateDatabase(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate);
 
-    protected HashMap<String, ElementPool> get(Tournament tournament) {
+    protected HashMap<String, ElementPool> getMap(Tournament tournament) {
         HashMap<String, ElementPool> elementsOfTournament = elements.get(tournament);
         if (elementsOfTournament == null) {
             elementsOfTournament = getFromDatabase(tournament);
@@ -79,13 +79,13 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public ElementPool get(Tournament tournament, String elementName) {
-        return (ElementPool) get(tournament).get(elementName);
+        return (ElementPool) getMap(tournament).get(elementName);
     }
-
+    
     public List<ElementPool> getAll() {
         List<ElementPool> results = new ArrayList<>();
         for (Tournament tournament : elements.keySet()) {
-            results.addAll(get(tournament).values());
+            results.addAll(getMap(tournament).values());
         }
         return results;
     }
@@ -93,7 +93,7 @@ public abstract class TournamentDependentPool<ElementPool> {
     public void add(Tournament tournament, ElementPool element) {
         if (!elements.get(tournament).containsValue(element)) {
             sortedElements = null; //Sorted elements need to be recreated.
-            get(tournament).put(getId(element), element);
+            getMap(tournament).put(getId(element), element);
             addElementToStore(tournament, element);
         }
     }
@@ -105,8 +105,8 @@ public abstract class TournamentDependentPool<ElementPool> {
             remove(tournament, oldElement);
             add(tournament, newElement);
         } else {
-            get(tournament).remove(id);
-            get(tournament).put(id, newElement);
+            getMap(tournament).remove(id);
+            getMap(tournament).put(id, newElement);
 
             ElementPool elementStillNotInDatabase = elementsToStore.get(tournament).get(id);
             if (elementStillNotInDatabase != null) {
@@ -119,14 +119,14 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void remove(Tournament tournament) {
-        for (ElementPool element : get(tournament).values()) {
+        for (ElementPool element : getMap(tournament).values()) {
             remove(tournament, element);
         }
     }
 
     public void remove(Tournament tournament, ElementPool element) {
         String id = getId(element);
-        if (get(tournament).remove(id) != null) {
+        if (getMap(tournament).remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
             ElementPool elementStillNotInDatabase = elementsToStore.get(tournament).get(id);
             if (elementStillNotInDatabase != null) {
@@ -154,7 +154,7 @@ public abstract class TournamentDependentPool<ElementPool> {
      */
     public List<ElementPool> search(Tournament tournament, String string) {
         List<ElementPool> result = new ArrayList<>();
-        for (ElementPool element : get(tournament).values()) {
+        for (ElementPool element : getMap(tournament).values()) {
             if (getId(element).contains(string)) {
                 result.add((ElementPool) element);
             }
@@ -168,7 +168,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         List<ElementPool> sorted = sortedElements.get(tournament);
         if (sorted != null) {
             return sorted;
-        } else if (get(tournament) != null) {
+        } else if (getMap(tournament) != null) {
             sorted = sort(tournament);
             sortedElements.put(tournament, sorted);
             return sorted;

@@ -177,7 +177,7 @@ public class DiplomaPDF {
         }
 
         public void pageTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
-            List<Competitor> competitors;
+            List<RegisteredPerson> competitors;
 
             competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, tournament, allDiplomas);
 
@@ -198,7 +198,7 @@ public class DiplomaPDF {
             }
         }
 
-        private void diplomaTable(Document document, PdfWriter writer, Competitor competitor, String font, int fontSize) throws BadElementException, DocumentException, MalformedURLException, IOException {
+        private void diplomaTable(Document document, PdfWriter writer, RegisteredPerson competitor, String font, int fontSize) throws BadElementException, DocumentException, MalformedURLException, IOException {
             PdfPCell cell;
             Paragraph p;
             PdfPTable mainTable = new PdfPTable(1);
@@ -221,7 +221,7 @@ public class DiplomaPDF {
             //document.add(mainTable);
         }
 
-        private void statisticsTable(Document document, PdfWriter writer, Competitor competitor, String font, int fontSize) {
+        private void statisticsTable(Document document, PdfWriter writer, RegisteredPerson competitor, String font, int fontSize) {
             try {
                 PdfPCell cell;
                 float[] width = {(float) 0.3, (float) 0.3, (float) 0.3};
@@ -400,7 +400,7 @@ public class DiplomaPDF {
             return -1;
         }
 
-        private CategoryDataset createTeamRankingDataset(Competitor competitor) {
+        private CategoryDataset createTeamRankingDataset(RegisteredPerson competitor) {
             // row keys...
             final String series1 = transl.returnTag("WonMatchs");
             final String series2 = transl.returnTag("DrawMatchs");
@@ -492,7 +492,7 @@ public class DiplomaPDF {
             return image;
         }
 
-        private PdfPTable CompetitorTable(Competitor c, CompetitorRanking cr, int index, String font, int fontSize) {
+        private PdfPTable CompetitorTable(RegisteredPerson c, CompetitorRanking cr, int index, String font, int fontSize) {
             PdfPCell cell;
             Paragraph p;
             float[] width = {(float) 0.3, (float) 0.3, (float) 0.3};
@@ -525,7 +525,7 @@ public class DiplomaPDF {
             return table;
         }
 
-        private PdfPTable RankingTable(Competitor comp, String font, int fontSize) {
+        private PdfPTable RankingTable(RegisteredPerson comp, String font, int fontSize) {
             PdfPCell cell;
             float[] width = {(float) 0.2, (float) 0.2, (float) 0.2, (float) 0.2, (float) 0.2};
             PdfPTable table = new PdfPTable(width);
@@ -610,7 +610,7 @@ public class DiplomaPDF {
             return table;
         }
 
-        private int searchForCompetitorPosition(Competitor c) {
+        private int searchForCompetitorPosition(RegisteredPerson c) {
             for (int i = 0; i < competitorTopTen.size(); i++) {
                 if (competitorTopTen.get(i).id.equals(c.getId())) {
                     return i;

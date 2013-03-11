@@ -189,7 +189,7 @@ public class NewCompetitor extends KendoFrame {
         this.repaint();
     }
 
-    public Competitor acceptCompetitor() {
+    public RegisteredPerson acceptCompetitor() {
         if (ClubComboBox.getItemCount() > 0) {
             if (IDTextField.getText().length() > 0 && NameTextField.getText().length() > 0 && SurnameTextField.getText().length() > 0) {
                 CompetitorWithPhoto comp = new CompetitorWithPhoto(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim(), ClubComboBox.getSelectedItem().toString());
@@ -218,7 +218,7 @@ public class NewCompetitor extends KendoFrame {
             Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
                 if (MessageManager.questionMessage("isDNI", "DNI -> NIF")) {
-                    IDTextField.setText(Competitor.nifFromDni(dni));
+                    IDTextField.setText(RegisteredPerson.nifFromDni(dni));
                 }
             }
         } catch (NumberFormatException nfe) {

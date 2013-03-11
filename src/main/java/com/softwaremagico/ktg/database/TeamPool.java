@@ -1,5 +1,6 @@
 package com.softwaremagico.ktg.database;
 
+import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
@@ -54,7 +55,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
     @Override
     protected List<Team> sort(Tournament tournament) {
-        List<Team> unsorted = new ArrayList(get(tournament).values());
+        List<Team> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
@@ -65,12 +66,22 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      * @param level
      */
-    public void get(Tournament tournament, Integer level) {
-        throw new UnsupportedOperationException("Not implemented yet.");
+    public List<Team> get(Tournament tournament, Integer level) {
+        List<Team> results = new ArrayList<>();
+        List<Fight> fights = FightPool.getInstance().getFromLevel(tournament, level);
+        for (Fight fight : fights) {
+            if (!results.contains(fight.getTeam1())) {
+                results.add(fight.getTeam1());
+            }
+            if (!results.contains(fight.getTeam2())) {
+                results.add(fight.getTeam2());
+            }
+        }
+        return results;
     }
 
     public Team get(Tournament tournament, RegisteredPerson competitor) {
-        for (Team team : get(tournament).values()) {
+        for (Team team : getMap(tournament).values()) {
             if (team.isMember(competitor)) {
                 return team;
             }
@@ -90,7 +101,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     public void deleteTeamsGroup(Tournament tournament) {
-        List<Team> teams = new ArrayList<>(get(tournament).values());
+        List<Team> teams = new ArrayList<>(getMap(tournament).values());
         for (Team team : teams) {
             team.setGroup(0);
             update(tournament, team, team);
@@ -99,7 +110,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
     public List<RegisteredPerson> getCompetitorsWithoutTeam(Tournament tournament) {
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
-        List<Team> teams = new ArrayList<>(get(tournament).values());
+        List<Team> teams = new ArrayList<>(getMap(tournament).values());
         for (Team team : teams) {
             for (RegisteredPerson teamIntegrator : team.getMembersOrder(0).values()) {
                 competitors.remove(teamIntegrator);

@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -45,14 +45,14 @@ public abstract class StatisticsHits extends StatisticsGUI {
     List<Duel> duels = new ArrayList<>();
     List<Duel> duelsOfCompetitorWhenIsInTeamRight = new ArrayList<>();
     List<Duel> duelsOfCOmpetitorWhenIsInTeamLeft = new ArrayList<>();
-    Competitor competitor;
+    RegisteredPerson competitor;
 
     /**
      * Obtain all duels of a specific competitor.
      *
      * @param competitor
      */
-    protected void obtainDuels(Competitor competitor) {
+    protected void obtainDuels(RegisteredPerson competitor) {
         this.competitor = competitor;
         if (this.competitor == null) {
             duels = DatabaseConnection.getInstance().getDatabase().getAllDuels();

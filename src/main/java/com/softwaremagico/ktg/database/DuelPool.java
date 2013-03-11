@@ -57,13 +57,13 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected List<Duel> sort(Tournament tournament) {
-        List<Duel> unsorted = new ArrayList(get(tournament).values());
+        List<Duel> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
     public List<Duel> get(Tournament tournament, RegisteredPerson competitor) {
-        List<Duel> allDuels = new ArrayList<>(get(tournament).values());
+        List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
             if (duel.getFight().getTeam1().isMember(competitor)
@@ -97,7 +97,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     public List<Duel> get(Tournament tournament, Fight fight) {
         List<Duel> results = duelsPerFight.get(fight);
         if (results == null) {
-            List<Duel> allDuels = new ArrayList<>(get(tournament).values());
+            List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
             results = new ArrayList<>();
             for (Duel duel : allDuels) {
                 if (duel.getFight().equals(fight)) {

@@ -22,7 +22,7 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract void updateDatabase(HashMap<ElementPool, ElementPool> elementsToUpdate);
 
-    protected HashMap<String, ElementPool> get() {
+    protected HashMap<String, ElementPool> getMap() {
         if (elements == null) {
             elements = getFromDatabase();
         }
@@ -61,19 +61,19 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public ElementPool get(String elementName) {
-        return (ElementPool) get().get(elementName);
+        return (ElementPool) getMap().get(elementName);
     }
 
     public List<ElementPool> getAll() {
         List<ElementPool> results = new ArrayList<>();
-        results.addAll(get().values());
+        results.addAll(getMap().values());
         return results;
     }
 
     public void add(ElementPool element) {
         if (!elements.containsValue(element)) {
             sortedElements = null; //Sorted elements need to be recreated.
-            get().put(getId(element), element);
+            getMap().put(getId(element), element);
             addElementToStore(element);
         }
     }
@@ -85,9 +85,10 @@ public abstract class SimplePool<ElementPool> {
             remove(oldElement);
             add(newElement);
         } else {
-            get().remove(id);
-            get().put(id, newElement);
+            getMap().remove(id);
+            getMap().put(id, newElement);
 
+            //Not stored, not update but store the new one. 
             ElementPool elementStillNotInDatabase = elementsToStore.get(id);
             if (elementStillNotInDatabase != null) {
                 elementsToStore.remove(id);
@@ -100,7 +101,7 @@ public abstract class SimplePool<ElementPool> {
 
     public void remove(ElementPool element) {
         String id = getId(element);
-        if (get().remove(id) != null) {
+        if (getMap().remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
             ElementPool elementStillNotInDatabase = elementsToStore.get(id);
             if (elementStillNotInDatabase != null) {
@@ -122,7 +123,7 @@ public abstract class SimplePool<ElementPool> {
      */
     public List<ElementPool> search(String string) {
         List<ElementPool> result = new ArrayList<>();
-        for (ElementPool element : get().values()) {
+        for (ElementPool element : getMap().values()) {
             if (getId(element).contains(string)) {
                 result.add((ElementPool) element);
             }
@@ -135,7 +136,7 @@ public abstract class SimplePool<ElementPool> {
     public List<ElementPool> getSorted() {
         if (sortedElements != null) {
             return sortedElements;
-        } else if (get() != null) {
+        } else if (getMap() != null) {
             sortedElements = sort();
             return sortedElements;
         } else {

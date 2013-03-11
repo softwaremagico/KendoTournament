@@ -33,10 +33,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
     public Translator trans = null;

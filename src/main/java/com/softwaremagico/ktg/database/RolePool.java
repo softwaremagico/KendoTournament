@@ -64,7 +64,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     public Role getRole(Tournament tournament, RegisteredPerson participant) {
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (role.getCompetitor().equals(participant)) {
                 return role;
             }
@@ -73,7 +73,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament) {
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
                 role.setAccreditationPrinted(true);
                 update(tournament, role, role);
@@ -93,7 +93,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public List<RegisteredPerson> getRegisteredPeopleInTournamenteWithoutAccreditation(Tournament tournament) {
         List<RegisteredPerson> results = new ArrayList<>();
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
                 results.add(role.getCompetitor());
             }
@@ -103,7 +103,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament) {
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (!role.isDiplomaPrinted()) {
                 role.setDiplomaPrinted(true);
                 update(tournament, role, role);
@@ -113,7 +113,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) {
         List<RegisteredPerson> results = new ArrayList<>();
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
                 results.add(role.getCompetitor());
             }
@@ -124,7 +124,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public List<RegisteredPerson> getPeople(Tournament tournament) {
         List<RegisteredPerson> result = new ArrayList<>();
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (role.getCompetitor() != null) {
                 result.add(role.getCompetitor());
             }
@@ -141,7 +141,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public List<RegisteredPerson> getPeople(Tournament tournament, List<String> roleTags) {
         List<RegisteredPerson> result = new ArrayList<>();
-        for (Role role : get(tournament).values()) {
+        for (Role role : getMap(tournament).values()) {
             if (roleTags.contains(role.getDatabaseTag())) {
                 if (role.getCompetitor() != null) {
                     result.add(role.getCompetitor());

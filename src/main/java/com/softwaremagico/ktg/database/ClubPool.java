@@ -52,7 +52,7 @@ public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected List<Club> sort() {
-        List<Club> unsorted = new ArrayList(get().values());
+        List<Club> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }
@@ -62,7 +62,7 @@ public class ClubPool extends SimplePool<Club> {
      */
     public List<Club> searchClubByCity(String city) {
         List<Club> result = new ArrayList<>();
-        for (Club element : get().values()) {
+        for (Club element : getMap().values()) {
             if (element.getCity().contains(city)) {
                 result.add(element);
             }
@@ -76,7 +76,7 @@ public class ClubPool extends SimplePool<Club> {
      */
     public List<Club> searchClubByCountry(String country) {
         List<Club> result = new ArrayList<>();
-        for (Club element : get().values()) {
+        for (Club element : getMap().values()) {
             if (element.getCountry().contains(country)) {
                 result.add(element);
             }

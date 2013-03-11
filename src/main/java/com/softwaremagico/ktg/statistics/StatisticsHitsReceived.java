@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -36,7 +36,7 @@ import org.jfree.chart.JFreeChart;
  */
 public class StatisticsHitsReceived extends StatisticsHits {
 
-    public StatisticsHitsReceived(Competitor tmp_competitor) {
+    public StatisticsHitsReceived(RegisteredPerson tmp_competitor) {
         obtainDuels(competitor);
         start();
     }

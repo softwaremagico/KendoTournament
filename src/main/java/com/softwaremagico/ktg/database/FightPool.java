@@ -56,7 +56,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected List<Fight> sort(Tournament tournament) {
-        List<Fight> unsorted = new ArrayList(get(tournament).values());
+        List<Fight> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
@@ -69,9 +69,15 @@ public class FightPool extends TournamentDependentPool<Fight> {
         //Delete fight.
         super.remove(tournament, element);
     }
+    
+    public List<Fight> get(Tournament tournament){
+         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
+         Collections.sort(allFights);
+         return allFights;
+    }
 
     public List<Fight> get(Tournament tournament, Integer fightArea) {
-        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfArea = new ArrayList<>();
         for (Fight fight : allFights) {
             if (fight.getAsignedFightArea() == fightArea) {
@@ -83,7 +89,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public Fight get(Tournament tournament, Integer fightArea, Integer index) {
-        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         for (Fight fight : allFights) {
             if (fight.getAsignedFightArea() == fightArea && fight.getIndex() == index) {
                 return fight;
@@ -93,7 +99,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) {
-        for (Fight fight : get(tournament).values()) {
+        for (Fight fight : getMap(tournament).values()) {
             if (fight.getIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
                     && fight.getLevel() == level) {
                 return fight;
@@ -108,7 +114,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public void remove(Tournament tournament, Integer minLevel) {
-        List<Fight> allFights = new ArrayList<>(get(tournament).values());
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         for (Fight fight : allFights) {
             if (fight.getLevel() >= minLevel) {
                 remove(tournament, fight);
@@ -144,5 +150,25 @@ public class FightPool extends TournamentDependentPool<Fight> {
             }
         }
         return null;
+    }
+
+    public Integer getLastLevelUsed(Tournament tournament) {
+        Fight fight = getCurrentFight(tournament, 0);
+        if (fight == null) {
+            return 0;
+        }
+        return fight.getLevel();
+    }
+
+    public List<Fight> getFromLevel(Tournament tournament, Integer level) {
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
+        List<Fight> fightsOfLevel = new ArrayList<>();
+        for (Fight fight : allFights) {
+            if (fight.getLevel() == level) {
+                fightsOfLevel.add(fight);
+            }
+        }
+        Collections.sort(fightsOfLevel);
+        return fightsOfLevel;
     }
 }

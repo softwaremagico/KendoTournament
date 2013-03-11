@@ -61,14 +61,14 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected List<Tournament> sort() {
-        List<Tournament> unsorted = new ArrayList(get().values());
+        List<Tournament> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
     public Integer getLevelTournament(Tournament tournament) {
         int level = -1;
-        for (Fight fight : FightPool.getInstance().get(tournament).values()) {
+        for (Fight fight : FightPool.getInstance().getMap(tournament).values()) {
             if (fight.getLevel() > level) {
                 level = fight.getLevel();
             }

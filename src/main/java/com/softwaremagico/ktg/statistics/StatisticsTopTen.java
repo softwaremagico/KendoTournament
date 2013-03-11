@@ -25,8 +25,9 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Fight;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
@@ -52,7 +53,7 @@ public class StatisticsTopTen extends StatisticsGUI {
     Tournament tournament;
     List<CompetitorRanking> competitorTopTen;
     int startRange = 0;
-    private List<Competitor> competitors;
+    private List<RegisteredPerson> competitors;
     boolean changesAllowed = false;
 
     public StatisticsTopTen(Tournament tournament) {
@@ -92,7 +93,7 @@ public class StatisticsTopTen extends StatisticsGUI {
     }
 
     private List<CompetitorRanking> getCompetitorsOrderByScore() {
-        List<Competitor> competitorsList = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
+        List<RegisteredPerson> competitorsList = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         List<CompetitorRanking> ranking = new ArrayList<>();
         List<Fight> fights = DatabaseConnection.getInstance().getDatabase().getAllFights();
         for (int i = 0; i < competitorsList.size(); i++) {
@@ -107,7 +108,7 @@ public class StatisticsTopTen extends StatisticsGUI {
     }
 
     private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(Tournament tournament) {
-        List<Competitor> competitorsList = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
+        List<RegisteredPerson> competitorsList = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
         List<CompetitorRanking> ranking = new ArrayList<>();
         List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
         for (int i = 0; i < competitorsList.size(); i++) {
@@ -149,7 +150,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         return ordered;
     }
 
-    public int obtainWinnedDuels(Competitor c, List<Fight> fights) {
+    public int obtainWinnedDuels(RegisteredPerson c, List<Fight> fights) {
         int won = 0;
         for (int i = 0; i < fights.size(); i++) {
             Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
@@ -168,7 +169,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         return won;
     }
 
-    public int obtainTotalHits(Competitor c, List<Fight> fights) {
+    public int obtainTotalHits(RegisteredPerson c, List<Fight> fights) {
         int hits = 0;
         for (int i = 0; i < fights.size(); i++) {
             Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
@@ -287,9 +288,9 @@ public class StatisticsTopTen extends StatisticsGUI {
         }
     }
 
-    public void updateComboBox(Competitor c) {
-        if (c != null) {
-            SelectComboBox.setSelectedItem(c.getSurname() + ", " + c.getName() + " (" + c.getId() + ")");
+    public void updateComboBox(RegisteredPerson competitor) {
+        if (competitor != null) {
+            SelectComboBox.setSelectedItem(competitor.getSurname() + ", " + competitor.getName() + " (" + competitor.getId() + ")");
         }
     }
 
@@ -308,7 +309,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         }
     }
 
-    private int searchForCompetitorPosition(Competitor c) {
+    private int searchForCompetitorPosition(RegisteredPerson c) {
         for (int i = 0; i < competitorTopTen.size(); i++) {
             if (competitorTopTen.get(i).id.equals(c.getId())) {
                 return i;

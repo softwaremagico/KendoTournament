@@ -57,7 +57,7 @@ public class NewRole extends KendoFrame {
         refreshRole();
     }
 
-    public NewRole(boolean closeAfterUpdate, Competitor competitor) {
+    public NewRole(boolean closeAfterUpdate, RegisteredPerson competitor) {
         createWindow(closeAfterUpdate);
         defaultSelect(competitor);
     }
@@ -177,7 +177,7 @@ public class NewRole extends KendoFrame {
         }
     }
 
-    private void defaultSelect(Competitor competitor) {
+    private void defaultSelect(RegisteredPerson competitor) {
         KendoLog.finest(this.getClass().getName(), "Selecting default " + competitor.getSurnameName());
         refreshTournament = false;
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());

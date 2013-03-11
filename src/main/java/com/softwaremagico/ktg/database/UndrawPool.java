@@ -54,14 +54,14 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected List<Undraw> sort(Tournament tournament) {
-        List<Undraw> unsorted = new ArrayList(get(tournament).values());
+        List<Undraw> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
     public List<Team> getWinners(Tournament tournament, Integer level, Integer group) {
         List<Team> teams = new ArrayList<>();
-        List<Undraw> undraws = new ArrayList<>(get(tournament).values());
+        List<Undraw> undraws = new ArrayList<>(getMap(tournament).values());
         for (Undraw undraw : undraws) {
             if (undraw.getLevel() == level && undraw.getGroupIndex() == group) {
                 teams.add(undraw.getTeam());

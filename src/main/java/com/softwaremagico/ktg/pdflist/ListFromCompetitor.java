@@ -25,7 +25,8 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.Competitor;
+import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.gui.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -38,7 +39,7 @@ import java.util.List;
 public abstract class ListFromCompetitor extends KendoFrame {
 
     public Translator trans = null;
-    public List<Competitor> listCompetitors = new ArrayList<>();
+    public List<RegisteredPerson> listCompetitors = new ArrayList<>();
     private boolean voidTournament;
 
     public void Start(boolean tmp_voidTournament) {
@@ -71,7 +72,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
         }
     }
 
-    public Competitor returnSelectedCompetitor() {
+    public RegisteredPerson returnSelectedCompetitor() {
         if (voidTournament && CompetitorComboBox.getSelectedIndex() <= 0) {
             return null;
         }

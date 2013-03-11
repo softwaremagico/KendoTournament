@@ -70,7 +70,7 @@ public class OrderTeam extends NewTeam {
         newTeam = false;
         start();
         setLanguage2(KendoTournamentGenerator.getInstance().language);
-        competitors.add(0, new Competitor("", "", "", ""));
+        competitors.add(0, new RegisteredPerson("", "", "", ""));
         this.addWindowListener(new closeWindows());
         refreshTournament = false;
         TournamentComboBox.addItem(tournament);
@@ -92,7 +92,7 @@ public class OrderTeam extends NewTeam {
         team = t;
         try {
             if (t.realMembers() < tournament.getTeamSize()) {
-                competitors.add(0, new Competitor("", "", "", ""));
+                competitors.add(0, new RegisteredPerson("", "", "", ""));
             }
             NameTextField.setText(t.getName());
             AddTeamCompetitorsSorted(t);
@@ -118,7 +118,7 @@ public class OrderTeam extends NewTeam {
 
     private void AcceptButtonActionPerformed2(java.awt.event.ActionEvent evt) {
         try {
-            List<Competitor> participants = new ArrayList<>();
+            List<RegisteredPerson> participants = new ArrayList<>();
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));

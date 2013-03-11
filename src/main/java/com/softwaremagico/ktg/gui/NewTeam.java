@@ -44,7 +44,7 @@ import javax.swing.JFileChooser;
 public class NewTeam extends KendoFrame {
 
     protected Translator trans = null;
-    protected List<Competitor> competitors = new ArrayList<>();
+    protected List<RegisteredPerson> competitors = new ArrayList<>();
     private List<Tournament> tournaments = new ArrayList<>();
     protected boolean refreshTournament = true;
     private boolean individualTeams = false;
@@ -144,7 +144,7 @@ public class NewTeam extends KendoFrame {
         NameTextField.setText("");
         //fillTournaments();
         competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
-        competitors.add(0, new Competitor("", "", "", ""));
+        competitors.add(0, new RegisteredPerson("", "", "", ""));
         fillCompetitors();
 
     }
@@ -191,7 +191,7 @@ public class NewTeam extends KendoFrame {
     private void refreshCompetitors() {
         try {
             competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsWithoutTeamInTournament((Tournament) TournamentComboBox.getSelectedItem());
-            competitors.add(0, new Competitor("", "", "", ""));
+            competitors.add(0, new RegisteredPerson("", "", "", ""));
         } catch (NullPointerException npe) {
             competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
         }
@@ -461,7 +461,7 @@ public class NewTeam extends KendoFrame {
             Team t = new Team(NameTextField.getText(), tournaments.get(TournamentComboBox.getSelectedIndex()));
             //Team t = TeamPool.getManager(tournaments.get(TournamentComboBox.getSelectedIndex())).getTeam(NameTextField.getText());
 
-            List<Competitor> participants = new ArrayList<>();
+            List<RegisteredPerson> participants = new ArrayList<>();
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
@@ -526,7 +526,7 @@ public class NewTeam extends KendoFrame {
             } else {
                 try {
                     if (NameTextField.getText().length() > 0) {
-                        List<Competitor> participants = new ArrayList<>();
+                        List<RegisteredPerson> participants = new ArrayList<>();
                         Team t = new Team(NameTextField.getText().trim(), tournaments.get(TournamentComboBox.getSelectedIndex()));
 
                         for (int i = 0; i < competitorsPanel.size(); i++) {

@@ -25,6 +25,8 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.fight.*;
@@ -136,7 +138,7 @@ public class Controller {
         main.addRoleMenuItemListener(new NewRoleListener());
         main.addTournamentMenuItemListener(new NewTournamentListener());
         main.addConnectDatabaseMenuItemListener(new NewConnectDatabaseListener());
-        main.addUpdateDatabaseMenuItemListener(new UpdateDatabaseListener());
+        //main.addUpdateDatabaseMenuItemListener(new UpdateDatabaseListener());
         main.addClubMenuItemListener(new NewClubListener());
         main.addTeamMenuItemListener(new NewTeamListener());
         main.addTournamentPanelMenuItemListener(new NewTournamentPanelListener());
@@ -831,16 +833,16 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Competitor c;
+            RegisteredPerson competitor;
             newCompetitor.testNIF();
-            if ((c = newCompetitor.acceptCompetitor()) != null) {
+            if ((competitor = newCompetitor.acceptCompetitor()) != null) {
                 KendoLog.info(Controller.class.getName(), "New competitor added!");
                 try {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
                 }
-                if (TournamentPool.getAllTournaments().size() > 0) {
-                    participantFunction = new NewRole(true, c);
+                if (TournamentPool.getInstance().getAll().size() > 0) {
+                    participantFunction = new NewRole(true, competitor);
                     participantFunction.setVisible(true);
                     //participantFunction.defaultSelect(c);
                 }
@@ -1192,7 +1194,7 @@ public class Controller {
                 monitor.dispose();
             } catch (NullPointerException npe) {
             }
-            monitor = new Monitor(TournamentPool.getTournament(selectTournamentForMonitor.returnSelectedTournamentName()),
+            monitor = new Monitor(selectTournamentForMonitor.returnSelectedTournament(),
                     selectTournamentForMonitor.returnSelectedArena());
             monitor.setVisible(true);
             monitor.setExtendedState(monitor.getExtendedState() | JFrame.MAXIMIZED_BOTH);
@@ -1228,14 +1230,14 @@ public class Controller {
             }
 
             try {
-                Tournament championship = TournamentPool.getTournament(selectTournamentForTreeMonitor.returnSelectedTournamentName());
-                if (championship.getMode().equals(TournamentType.CHAMPIONSHIP) || championship.getMode().equals(TournamentType.LEAGUE_TREE)) {
-                    monitorTree = new MonitorTree(championship);
+                Tournament tournament = selectTournamentForTreeMonitor.returnSelectedTournament();
+                if (tournament.getMode().equals(TournamentType.CHAMPIONSHIP) || tournament.getMode().equals(TournamentType.LEAGUE_TREE)) {
+                    monitorTree = new MonitorTree(tournament);
                     monitorTree.setVisible(true);
                     monitorTree.setExtendedState(monitorTree.getExtendedState() | JFrame.MAXIMIZED_BOTH);
                     monitorTree.updateBlackBoard(selectTournamentForTreeMonitor.returnSelectedTournament(), false);
                 } else {
-                    monitorPosition = new MonitorPosition(championship);
+                    monitorPosition = new MonitorPosition(tournament);
                     monitorPosition.setVisible(true);
                 }
                 selectTournamentForTreeMonitor.dispose();
@@ -1429,19 +1431,13 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             Fight f;
+            f = new Fight(shortFight.getTournament(),
+                    shortFight.getTeam1(), shortFight.getTeam2(),
+                    shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()));
             try {
-                f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
-                        shortFight.getTournament(), shortFight.getArena(),
-                        FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).get(FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).size() - 1).level + 1);
-            } catch (IndexOutOfBoundsException aion) {
-                f = new Fight(shortFight.getTeam1(), shortFight.getTeam2(),
-                        shortFight.getTournament(), shortFight.getArena(), 0);
-            }
-            try {
-                FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).add(f);
+                FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
                 MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.fillFightsPanel();
-                //KendoTournamentGenerator.getInstance().tournamentManager.refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(shortFight.getTournament()));
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
