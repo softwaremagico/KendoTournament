@@ -33,16 +33,11 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
-public class DatabaseConnection {
+class DatabaseConnection {
 
     private Database database = null;
     private String password = "";

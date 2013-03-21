@@ -11,28 +11,28 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RolePool extends TournamentDependentPool<Role> {
-
+    
     private static RolePool instance;
-
+    
     private RolePool() {
     }
-
+    
     public static RolePool getInstance() {
         if (instance == null) {
             instance = new RolePool();
         }
         return instance;
     }
-
+    
     @Override
     protected String getId(Role element) {
         return element.getCompetitor().getId() + element.getTournament().getName();
     }
-
+    
     protected String getId(Tournament tournament, RegisteredPerson person) {
         return person.getId() + tournament.getName();
     }
-
+    
     @Override
     protected HashMap<String, Role> getFromDatabase(Tournament tournament) {
         List<Role> roles = DatabaseConnection.getInstance().getDatabase().getRoles(tournament);
@@ -42,27 +42,27 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return hashMap;
     }
-
+    
     @Override
     protected void storeInDatabase(Tournament tournament, List<Role> elementsToStore) {
         DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
     }
-
+    
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Role> elementsToDelete) {
         DatabaseConnection.getConnection().getDatabase().removeRoles(tournament, elementsToDelete);
     }
-
+    
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Role, Role> elementsToUpdate) {
         DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
     }
-
+    
     @Override
     protected List<Role> sort(Tournament tournament) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+    
     public Role getRole(Tournament tournament, RegisteredPerson participant) {
         for (Role role : getMap(tournament).values()) {
             if (role.getCompetitor().equals(participant)) {
@@ -71,7 +71,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return null;
     }
-
+    
     public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament) {
         for (Role role : getMap(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
@@ -80,7 +80,7 @@ public class RolePool extends TournamentDependentPool<Role> {
             }
         }
     }
-
+    
     public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament, List<RegisteredPerson> participants) {
         for (RegisteredPerson participant : participants) {
             Role role = getRole(tournament, participant);
@@ -90,7 +90,7 @@ public class RolePool extends TournamentDependentPool<Role> {
             }
         }
     }
-
+    
     public List<RegisteredPerson> getRegisteredPeopleInTournamenteWithoutAccreditation(Tournament tournament) {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
@@ -101,7 +101,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         Collections.sort(results);
         return results;
     }
-
+    
     public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament) {
         for (Role role : getMap(tournament).values()) {
             if (!role.isDiplomaPrinted()) {
@@ -110,18 +110,27 @@ public class RolePool extends TournamentDependentPool<Role> {
             }
         }
     }
-
+    
+    public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament, List<RoleTag> rolesWithDiploma) {
+        for (Role role : getMap(tournament).values()) {
+            if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
+                role.setDiplomaPrinted(true);
+                update(tournament, role, role);
+            }
+        }
+    }
+    
     public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
-            if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
+            if ((rolesWithDiploma == null || rolesWithDiploma.contains(role.getTag())) && !role.isDiplomaPrinted()) {
                 results.add(role.getCompetitor());
             }
         }
         Collections.sort(results);
         return results;
     }
-
+    
     public List<RegisteredPerson> getPeople(Tournament tournament) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
@@ -132,13 +141,13 @@ public class RolePool extends TournamentDependentPool<Role> {
         Collections.sort(result);
         return result;
     }
-
+    
     public List<RegisteredPerson> getPeople(Tournament tournament, String roleTag) {
         List<String> roles = new ArrayList<>();
         roles.add(roleTag);
         return getPeople(tournament, roles);
     }
-
+    
     public List<RegisteredPerson> getPeople(Tournament tournament, List<String> roleTags) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
@@ -151,7 +160,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         Collections.sort(result);
         return result;
     }
-
+    
     public Integer getVolunteerOrder(Tournament tournament, RegisteredPerson person) {
         List<RegisteredPerson> volunteers = getPeople(tournament, RoleTag.volunteerRoles);
         for (int i = 0; i < volunteers.size(); i++) {
@@ -161,12 +170,12 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return 0;
     }
-
+    
     public List<RegisteredPerson> getCompetitors(Tournament tournament) {
         List<RegisteredPerson> competitors = getPeople(tournament, RoleTag.competitorsRoles);
         return competitors;
     }
-
+    
     public List<RegisteredPerson> getPeople(Tournament tournament, Club club) {
         List<RegisteredPerson> results = new ArrayList<>();
         List<RegisteredPerson> registeredPeople = getPeople(tournament);

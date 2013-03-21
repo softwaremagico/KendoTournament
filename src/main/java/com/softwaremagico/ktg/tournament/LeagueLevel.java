@@ -181,7 +181,7 @@ public abstract class LeagueLevel {
 
     protected TournamentGroup getGroupOfFight(Fight fight) {
         for (TournamentGroup group : tournamentGroups) {
-            if (group.teams.contains(fight.team1) && group.teams.contains(fight.team2)) {
+            if (group.teams.contains(fight.getTeam1()) && group.teams.contains(fight.getTeam2())) {
                 return group;
             }
         }

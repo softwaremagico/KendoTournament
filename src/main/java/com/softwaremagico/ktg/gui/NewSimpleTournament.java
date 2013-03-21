@@ -197,7 +197,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         fightsModel.removeAllElements();
         if (((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE)) {
             for (int i = 0; i < fights.size(); i++) {
-                String text = fights.get(i).team1.getName() + " - " + fights.get(i).team2.getName();
+                String text = fights.get(i).getTeam1().getName() + " - " + fights.get(i).getTeam2().getName();
                 if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
                     text += "  (" + trans.returnTag("FightArea")
                             + " " + KendoTournamentGenerator.getInstance().returnShiaijo(fights.get(i).asignedFightArea) + ")";

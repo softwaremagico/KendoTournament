@@ -69,12 +69,6 @@ public class FightPool extends TournamentDependentPool<Fight> {
         //Delete fight.
         super.remove(tournament, element);
     }
-    
-    public List<Fight> get(Tournament tournament){
-         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
-         Collections.sort(allFights);
-         return allFights;
-    }
 
     public List<Fight> get(Tournament tournament, Integer fightArea) {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());

@@ -34,7 +34,7 @@ import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentType;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
 import java.util.List;
 
 /**
@@ -43,21 +43,21 @@ import java.util.List;
  */
 public class SummaryPDF extends ParentList {
 
-    private Tournament championship;
+    private Tournament tournament;
     private final int border = 0;
     private int useOnlyShiaijo = -1;
     protected boolean showNotFinishedFights = true; //If true, only show not finished fights, if false only show finished fights.
     protected boolean showAll = true; //If true, show finished and not finished fights;
 
     public SummaryPDF(Tournament tmp_championship, int shiaijo) {
-        championship = tmp_championship;
+        tournament = tmp_championship;
         useOnlyShiaijo = shiaijo;
     }
 
     protected String getDrawFight(Fight f, int duel) {
         //Draw Fights
         String draw;
-        if (f.duels.get(duel).winner() == 0 && f.isOver()) {
+        if (f.getDuels().get(duel).winner() == 0 && f.isOver()) {
             draw = "" + Score.DRAW.getAbbreviature();
         } else {
             draw = "" + Score.EMPTY.getAbbreviature();
@@ -67,13 +67,13 @@ public class SummaryPDF extends ParentList {
 
     protected String getFaults(Fight f, int duel, boolean leftTeam) {
         String faultSimbol;
-        int faults;
+        boolean faults;
         if (leftTeam) {
-            faults = f.duels.get(duel).faultsCompetitorA;
+            faults = f.getDuels().get(duel).getFaults(true);
         } else {
-            faults = f.duels.get(duel).faultsCompetitorB;
+            faults = f.getDuels().get(duel).getFaults(false);
         }
-        if (faults > 0) {
+        if (faults) {
             faultSimbol = "" + Score.FAULT.getAbbreviature();
         } else {
             faultSimbol = "" + Score.EMPTY.getAbbreviature();
@@ -83,9 +83,9 @@ public class SummaryPDF extends ParentList {
 
     protected String getScore(Fight f, int duel, int score, boolean leftTeam) {
         if (leftTeam) {
-            return f.duels.get(duel).hitsFromCompetitorA.get(score).getAbbreviature() + "";
+            return f.getDuels().get(duel).getHits(true).get(score).getAbbreviature() + "";
         } else {
-            return f.duels.get(duel).hitsFromCompetitorB.get(score).getAbbreviature() + "";
+            return f.getDuels().get(duel).getHits(false).get(score).getAbbreviature() + "";
         }
     }
 
@@ -98,17 +98,17 @@ public class SummaryPDF extends ParentList {
         }
 
         //Team1
-        Table.addCell(getHeader3(f.team1.getName(), 0, 4));
+        Table.addCell(getHeader3(f.getTeam1().getName(), 0, 4));
 
         //Separation Draw Fights
         Table.addCell(getEmptyCell());
 
         //Team2
-        Table.addCell(getHeader3(f.team2.getName(), 0, 4));
+        Table.addCell(getHeader3(f.getTeam2().getName(), 0, 4));
 
-        for (int i = 0; i < f.team1.getNumberOfMembers(f.level); i++) {
+        for (int i = 0; i < f.getTeam1().getNumberOfMembers(f.getLevel()); i++) {
             //Team 1
-            Table.addCell(getCell(f.team1.getMember(i, f.level).getSurnameNameIni(), 1, 1, Element.ALIGN_LEFT));
+            Table.addCell(getCell(f.getTeam1().getMember(i, f.getLevel()).getSurnameNameIni(), 1, 1, Element.ALIGN_LEFT));
 
             //Faults
             Table.addCell(getCell(getFaults(f, i, true), 1, 1, Element.ALIGN_CENTER));
@@ -127,7 +127,7 @@ public class SummaryPDF extends ParentList {
             Table.addCell(getCell(getFaults(f, i, false), 1, 1, Element.ALIGN_CENTER));
 
             //Team 2
-            Table.addCell(getCell(f.team2.getMember(i, f.level).getSurnameNameIni(), 1, 1, Element.ALIGN_RIGHT));
+            Table.addCell(getCell(f.getTeam2().getMember(i, f.getLevel()).getSurnameNameIni(), 1, 1, Element.ALIGN_RIGHT));
         }
         Table.addCell(getEmptyRow());
 
@@ -143,9 +143,9 @@ public class SummaryPDF extends ParentList {
 
         List<Fight> fights;
         if (useOnlyShiaijo < 0) {
-            fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(championship);
+            fights = FightPool.getInstance().get(tournament);
         } else {
-            fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournamentAndFightArea(championship, useOnlyShiaijo);
+            fights = FightPool.getInstance().get(tournament, useOnlyShiaijo);
         }
 
 
@@ -154,10 +154,10 @@ public class SummaryPDF extends ParentList {
                 /*
                  * Header of the phase
                  */
-                if (lastLevel != fights.get(i).level && !championship.getMode().equals(TournamentType.SIMPLE)) {
+                if (lastLevel != fights.get(i).getLevel() && !tournament.getMode().equals(TournamentType.SIMPLE)) {
                     mainTable.addCell(getEmptyRow());
-                    mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (fights.get(i).level + 1) + ":", 0, Element.ALIGN_LEFT));
-                    lastLevel = fights.get(i).level;
+                    mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (fights.get(i).getLevel() + 1) + ":", 0, Element.ALIGN_LEFT));
+                    lastLevel = fights.get(i).getLevel();
                 }
 
                 try {
@@ -192,7 +192,7 @@ public class SummaryPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(championship.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(tournament.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(getTableWidths().length);
         cell.setBorderWidth(headerBorder);

@@ -41,6 +41,8 @@ public abstract class TournamentDependentPool<ElementPool> {
         return elementsOfTournament;
     }
 
+    protected abstract List<ElementPool> sort(Tournament tournament);
+
     private void addElementToStore(Tournament tournament, ElementPool element) {
         HashMap<String, ElementPool> elementGroup = elementsToStore.get(tournament);
         if (elementGroup == null) {
@@ -81,13 +83,17 @@ public abstract class TournamentDependentPool<ElementPool> {
     public ElementPool get(Tournament tournament, String elementName) {
         return (ElementPool) getMap(tournament).get(elementName);
     }
-    
+
     public List<ElementPool> getAll() {
         List<ElementPool> results = new ArrayList<>();
         for (Tournament tournament : elements.keySet()) {
             results.addAll(getMap(tournament).values());
         }
         return results;
+    }
+
+    public List<ElementPool> get(Tournament tournament) {
+        return getSorted(tournament);
     }
 
     public void add(Tournament tournament, ElementPool element) {
@@ -161,8 +167,6 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return result;
     }
-
-    protected abstract List<ElementPool> sort(Tournament tournament);
 
     public List<ElementPool> getSorted(Tournament tournament) {
         List<ElementPool> sorted = sortedElements.get(tournament);

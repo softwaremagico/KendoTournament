@@ -153,15 +153,15 @@ public class StatisticsTopTen extends StatisticsGUI {
     public int obtainWinnedDuels(RegisteredPerson c, List<Fight> fights) {
         int won = 0;
         for (int i = 0; i < fights.size(); i++) {
-            Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
+            Integer index = fights.get(i).getTeam1().getMemberOrder(fights.get(i).getLevel(), c.getId());
             if (index != null && index >= 0) {
-                if (fights.get(i).duels.get(index).winner() < 0) {
+                if (fights.get(i).getDuels().get(index).winner() < 0) {
                     won++;
                 }
             }
-            index = fights.get(i).team2.getMemberOrder(fights.get(i).level, c.getId());
+            index = fights.get(i).getTeam2().getMemberOrder(fights.get(i).getLevel(), c.getId());
             if (index != null && index >= 0) {
-                if (fights.get(i).duels.get(index).winner() > 0) {
+                if (fights.get(i).getDuels().get(index).winner() > 0) {
                     won++;
                 }
             }
@@ -172,13 +172,13 @@ public class StatisticsTopTen extends StatisticsGUI {
     public int obtainTotalHits(RegisteredPerson c, List<Fight> fights) {
         int hits = 0;
         for (int i = 0; i < fights.size(); i++) {
-            Integer index = fights.get(i).team1.getMemberOrder(fights.get(i).level, c.getId());
+            Integer index = fights.get(i).getTeam1().getMemberOrder(fights.get(i).getLevel(), c.getId());
             if (index != null && index >= 0) {
-                hits += fights.get(i).duels.get(index).howManyPoints(true);
+                hits += fights.get(i).getDuels().get(index).getPoints(true);
             }
-            index = fights.get(i).team2.getMemberOrder(fights.get(i).level, c.getId());
+            index = fights.get(i).getTeam2().getMemberOrder(fights.get(i).getLevel(), c.getId());
             if (index != null && index >= 0) {
-                hits += fights.get(i).duels.get(index).howManyPoints(false);
+                hits += fights.get(i).getDuels().get(index).getPoints(false);
             }
         }
         return hits;

@@ -106,9 +106,9 @@ public class RoundFight extends JPanel {
         teamFights = new ArrayList<>();
         TeamFight tf;
         if (!KendoTournamentGenerator.getInstance().inverseTeams) {
-            tf = new TeamFight(tournament, this, f.team1, f, true, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
         } else {
-            tf = new TeamFight(tournament, this, f.team2, f, true, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
@@ -116,9 +116,9 @@ public class RoundFight extends JPanel {
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
         if (!KendoTournamentGenerator.getInstance().inverseTeams) {
-            tf = new TeamFight(tournament, this, f.team2, f, false, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total);
         } else {
-            tf = new TeamFight(tournament, this, f.team1, f, false, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.EAST);
         teamFights.add(tf);
@@ -187,7 +187,7 @@ public class RoundFight extends JPanel {
             add(new Box.Filler(minSize, prefSize, maxSize));
             //add(Box.createVerticalGlue());
 
-            for (int i = 0; i < fight.team1.getNumberOfMembers(fight.level); i++) {
+            for (int i = 0; i < fight.getTeam1().getNumberOfMembers(fight.getLevel()); i++) {
                 JPanel competitorPanel = new JPanel();
                 competitorPanel.setLayout(new BoxLayout(competitorPanel, javax.swing.BoxLayout.X_AXIS));
                 competitorPanel.setMinimumSize(new Dimension(50, 50));
@@ -263,7 +263,7 @@ public class RoundFight extends JPanel {
             }
 
             private void updateFight(char point) {
-                if (point == 'X' && fight.duels.get(fightIndex).winner() == 0) {
+                if (point == 'X' && fight.getDuels().get(fightIndex).winner() == 0) {
                     drawsAnnoted.set(fightIndex, true);
                 } else {
                     drawsAnnoted.set(fightIndex, false);
@@ -275,13 +275,13 @@ public class RoundFight extends JPanel {
         private void updateDrawsPanel() {
             boolean nextStarted;
             for (int i = 0; i < draws.size(); i++) {
-                if (i < fight.duels.size() - 1) {
-                    nextStarted = (fight.duels.get(i + 1).howManyPoints(true) > 0)
-                            || (fight.duels.get(i + 1).howManyPoints(false) > 0) || fight.duels.get(i + 1).isOver();
+                if (i < fight.getDuels().size() - 1) {
+                    nextStarted = (fight.getDuels().get(i + 1).getPoints(true) > 0)
+                            || (fight.getDuels().get(i + 1).getPoints(false) > 0) || fight.getDuels().get(i + 1).isOver();
                 } else {
                     nextStarted = false;
                 }
-                updateDrawPanel(draws.get(i), fight.duels.get(i).winner(), fight.getWinner(), nextStarted, i);
+                updateDrawPanel(draws.get(i), fight.getDuels().get(i).winner(), fight.getWinner(), nextStarted, i);
             }
         }
 

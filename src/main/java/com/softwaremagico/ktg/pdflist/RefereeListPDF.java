@@ -29,9 +29,10 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
+import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.RoleTag;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RolePool;
 import java.util.List;
 
 /**
@@ -52,9 +53,9 @@ public class RefereeListPDF extends ParentList {
         Paragraph p;
 
         mainTable.addCell(getHeader2(tournament.getName(), 0));
-        List<CompetitorWithPhoto> listReferee = DatabaseConnection.getInstance().getDatabase().searchRefereeByTournament(tournament, false, false);
+        List<RegisteredPerson> listReferee = RolePool.getInstance().getPeople(tournament, RoleTag.refereeRole);
         for (int i = 0; i < listReferee.size(); i++) {
-            mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).club + ")", 0));
+            mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).getClub() + ")", 0));
         }
     }
 

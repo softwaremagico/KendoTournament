@@ -74,6 +74,23 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         return results;
     }
 
+    public List<Duel> get(Tournament tournament, RegisteredPerson competitor, boolean team1) {
+        List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
+        List<Duel> results = new ArrayList<>();
+        for (Duel duel : allDuels) {
+            if (team1) {
+                if (duel.getFight().getTeam1().isMember(competitor)) {
+                    results.add(duel);
+                }
+            } else {
+                if (duel.getFight().getTeam2().isMember(competitor)) {
+                    results.add(duel);
+                }
+            }
+        }
+        return results;
+    }
+
     private List<Duel> createDuels(Tournament tournament, Fight fight) {
         List<Duel> duels = new ArrayList<>();
         try {
@@ -89,10 +106,12 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     /**
-     * Obtain the duels for a fight. If the fight is new, then create the new duels and enqueue it to store into the database.
+     * Obtain the duels for a fight. If the fight is new, then create the new
+     * duels and enqueue it to store into the database.
+     *
      * @param tournament
      * @param fight
-     * @return 
+     * @return
      */
     public List<Duel> get(Tournament tournament, Fight fight) {
         List<Duel> results = duelsPerFight.get(fight);

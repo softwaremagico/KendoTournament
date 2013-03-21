@@ -32,6 +32,7 @@ import java.util.Objects;
 
 public class RoleTag {
 
+    public static final String refereeRole = "Referee";
     public static final List<String> volunteerRoles;
     public static final List<String> competitorsRoles;
     private String tagName;     //Identical for all languages.

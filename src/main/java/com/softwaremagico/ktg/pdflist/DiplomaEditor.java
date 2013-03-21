@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.RoleTag;
 import com.softwaremagico.ktg.RoleTags;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -88,8 +89,8 @@ public class DiplomaEditor extends javax.swing.JFrame {
         }
     }
 
-    private RoleTags obtainSelectedRoles() {
-        RoleTags selectedRoles = new RoleTags();
+    private List<RoleTag> obtainSelectedRoles() {
+        List<RoleTag> selectedRoles = new ArrayList<>();
         for (int i = 0; i < rolesSelected.size(); i++) {
             JCheckBox cb = rolesSelected.get(i);
             if (cb.isSelected()) {

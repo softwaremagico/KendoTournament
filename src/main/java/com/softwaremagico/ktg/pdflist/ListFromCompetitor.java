@@ -26,8 +26,7 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.gui.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -61,7 +60,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 
     private void fillCompetitors() {
         try {
-            listCompetitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
+            listCompetitors = RegisteredPersonPool.getInstance().getAll();
             if (voidTournament) {
                 CompetitorComboBox.addItem(null);
             }
@@ -106,7 +105,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        CompetitorComboBox = new javax.swing.JComboBox<String>();
+        CompetitorComboBox = new javax.swing.JComboBox();
         CompetitorLabel = new javax.swing.JLabel();
         GenerateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
@@ -175,7 +174,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 }//GEN-LAST:event_CancelButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
-    protected javax.swing.JComboBox<String> CompetitorComboBox;
+    protected javax.swing.JComboBox CompetitorComboBox;
     private javax.swing.JLabel CompetitorLabel;
     protected javax.swing.JButton GenerateButton;
     // End of variables declaration//GEN-END:variables

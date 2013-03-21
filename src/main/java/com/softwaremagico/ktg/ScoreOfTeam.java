@@ -6,6 +6,11 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
 
     private Team team;
     private List<Fight> fights;
+    private Integer wonFights = null;
+    private Integer drawFights = null;
+    private Integer wonDuels = null;
+    private Integer drawDuels = null;
+    private Integer hits = null;
 
     public ScoreOfTeam(Team team, List<Fight> fights) {
         this.team = team;
@@ -16,57 +21,70 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return team;
     }
 
-    public int getWonFights() {
-        int total = 0;
-        for (int j = 0; j < fights.size(); j++) {
-            Fight fight = fights.get(j);
-            Team winner = fight.winner();
-            if (winner != null && winner.equals(team)) {
-                total++;
-            }
+    public Tournament getTournament() {
+        if (team != null) {
+            return team.getTournament();
         }
-        return total;
+        return null;
     }
 
-    public int getDrawFights() {
-        int total = 0;
-        for (int j = 0; j < fights.size(); j++) {
-            Fight fight = fights.get(j);
-            if ((fight.getTeam1().equals(team) || fight.getTeam2().equals(team))) {
-                if (fight.isDrawFight()) {
-                    total++;
+    public int getWonFights() {
+        if (wonFights == null) {
+            wonFights = 0;
+            for (int j = 0; j < fights.size(); j++) {
+                Fight fight = fights.get(j);
+                Team winner = fight.winner();
+                if (winner != null && winner.equals(team)) {
+                    wonFights++;
                 }
             }
         }
-        return total;
+        return wonFights;
+    }
+
+    public int getDrawFights() {
+        if (drawFights == null) {
+            drawFights = 0;
+            for (int j = 0; j < fights.size(); j++) {
+                Fight fight = fights.get(j);
+                if ((fight.getTeam1().equals(team) || fight.getTeam2().equals(team))) {
+                    if (fight.isDrawFight()) {
+                        drawFights++;
+                    }
+                }
+            }
+        }
+        return drawFights;
     }
 
     public int getWonDuels() {
-        int total = 0;
-        for (int j = 0; j < fights.size(); j++) {
-            Fight fight = fights.get(j);
-            total += fight.getWonDuels(team);
+        if (wonDuels == null) {
+            wonDuels = 0;
+            for (int j = 0; j < fights.size(); j++) {
+                wonDuels += fights.get(j).getWonDuels(team);
+            }
         }
-        return total;
+        return wonDuels;
     }
 
     public int getDrawDuels() {
-        int total = 0;
-        for (int j = 0; j < fights.size(); j++) {
-            Fight fight = fights.get(j);
-            if ((fight.getTeam1().equals(team) || fight.getTeam2().equals(team))) {
-                total += fight.getDrawDuels();
+        if (drawDuels == null) {
+            drawDuels = 0;
+            for (int j = 0; j < fights.size(); j++) {
+                drawDuels += fights.get(j).getDrawDuels(team);
             }
         }
-        return total;
+        return drawDuels;
     }
 
     public int getHits() {
-        int total = 0;
-        for (int j = 0; j < fights.size(); j++) {
-            fights.get(j).getScore(team);
+        if (hits == null) {
+            hits = 0;
+            for (int j = 0; j < fights.size(); j++) {
+                hits += fights.get(j).getScore(team);
+            }
         }
-        return total;
+        return hits;
     }
 
     @Override

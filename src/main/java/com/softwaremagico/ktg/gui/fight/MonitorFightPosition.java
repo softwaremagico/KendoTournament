@@ -107,7 +107,7 @@ public class MonitorFightPosition extends JFrame {
         setTeams();
 //        for (int i = 0; i < teams.size(); i++) {
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(group.getFights());
+        teamTopTen = ranking.getTeamRanking(group.getFights());
 
         /*
          * Team t = group.getTeamInOrderOfScore(i, fightManager, false); int

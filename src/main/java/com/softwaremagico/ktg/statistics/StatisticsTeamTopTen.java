@@ -56,9 +56,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tmp_championship, false);
         Ranking ranking = new Ranking();
         if (tournament != null) {
-            teamTopTen = ranking.getRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
+            teamTopTen = ranking.getTeamRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
         } else {
-            teamTopTen = ranking.getRanking(DatabaseConnection.getInstance().getDatabase().getAllFights());
+            teamTopTen = ranking.getTeamRanking(DatabaseConnection.getInstance().getDatabase().getAllFights());
         }
         transl = LanguagePool.getTranslator("gui.xml");
         start();

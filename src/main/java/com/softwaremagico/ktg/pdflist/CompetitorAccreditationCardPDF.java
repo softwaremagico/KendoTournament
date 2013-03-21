@@ -27,36 +27,33 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.Role;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-/**
- *
- * @author Jorge
- */
 public class CompetitorAccreditationCardPDF extends PdfDocument {
 
-    Tournament competition;
-    CompetitorWithPhoto competitor;
+    Tournament tournament;
+    RegisteredPerson competitor;
     private final int border = 0;
-    private String role;
+    private Role role;
     private com.itextpdf.text.Image banner = null;
 
-    public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition) throws Exception {
+    public CompetitorAccreditationCardPDF(RegisteredPerson competitor, Tournament tournament) throws Exception {
         this.competitor = competitor;
-        this.competition = competition;
-        role = DatabaseConnection.getInstance().getDatabase().getTagRole(competition, competitor);
+        this.tournament = tournament;
+        this.role = RolePool.getInstance().getRole(tournament, competitor);
     }
 
-    public CompetitorAccreditationCardPDF(CompetitorWithPhoto competitor, Tournament competition, com.itextpdf.text.Image banner) throws Exception {
+    public CompetitorAccreditationCardPDF(RegisteredPerson competitor, Tournament tournament, com.itextpdf.text.Image banner) throws Exception {
         this.competitor = competitor;
-        this.competition = competition;
-        role = DatabaseConnection.getInstance().getDatabase().getTagRole(competition, competitor);
+        this.tournament = tournament;
+        this.role = RolePool.getInstance().getRole(tournament, competitor);
         setBanner(banner);
     }
 
@@ -78,9 +75,9 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable table = new PdfPTable(widths);
         com.itextpdf.text.Image competitorImage;
 
-        if (competitor.photoSize > 0) {
+        if (competitor.getPhoto().getPhotoSize() > 0) {
             try {
-                competitorImage = Image.getInstance(competitor.photo(), null);
+                competitorImage = Image.getInstance(competitor.getPhoto().getPhoto(), null);
             } catch (NullPointerException npe) {
                 competitorImage = defaultPhoto;
             }
@@ -123,7 +120,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         table2.addCell(this.getEmptyCell(1));
 
-        p = new Paragraph(competitor.club, FontFactory.getFont(font, fontSize - 2));
+        p = new Paragraph(competitor.getClub().getName(), FontFactory.getFont(font, fontSize - 2));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);
@@ -152,7 +149,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable table2 = new PdfPTable(widths);
 
         table2.addCell(this.getEmptyCell());
-        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
+        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTranslation(role.getDatabaseTag()), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(1);
         cell.setBorderWidth(border);
@@ -163,8 +160,8 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         table2.addCell(getEmptyCell(1));
 
-        String identification = KendoTournamentGenerator.getInstance().getAvailableRoles().getAbbrev(role)
-                + "-" + KendoTournamentGenerator.getInstance().getRegisteredPersonNumber(competitor, role, competition);
+        String identification = KendoTournamentGenerator.getInstance().getAvailableRoles().getAbbrev(role.getDatabaseTag())
+                + "-" + KendoTournamentGenerator.getInstance().getRegisteredPersonNumber(competitor, role, tournament);
         p = new Paragraph(identification, FontFactory.getFont(font, fontSize + 20));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border + 2);
@@ -175,7 +172,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 
         try {
-            cell.setBackgroundColor(KendoTournamentGenerator.getInstance().getAvailableRoles().getRole(role).getItextColor());
+            cell.setBackgroundColor(role.getTag().getItextColor());
         } catch (NullPointerException npe) {
             cell.setBackgroundColor(new com.itextpdf.text.BaseColor(35, 144, 239));
         }
@@ -288,7 +285,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 
         try {
-            p = new Paragraph(competition.getName() + " (" + sqlTime + " " + sqlDate + ")",
+            p = new Paragraph(tournament.getName() + " (" + sqlTime + " " + sqlDate + ")",
                     FontFactory.getFont(font, fontSize));
         } catch (NullPointerException npen) {
             p = new Paragraph("Accredition Card (" + sqlTime + " " + sqlDate + ")",

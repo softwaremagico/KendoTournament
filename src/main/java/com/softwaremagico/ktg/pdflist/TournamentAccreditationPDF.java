@@ -29,9 +29,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -44,12 +44,12 @@ import java.util.List;
  */
 public class TournamentAccreditationPDF {
 
-    Tournament championship;
+    Tournament tournament;
     private final int border = 1;
     private boolean all;
 
     public TournamentAccreditationPDF(Tournament tmp_championship) throws Exception {
-        championship = tmp_championship;
+        tournament = tmp_championship;
     }
 
     public void setPrintAll(boolean value) {
@@ -121,11 +121,17 @@ public class TournamentAccreditationPDF {
                 mainTable.setTotalWidth(document.getPageSize().getWidth());
                 com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.getBannerPath());
 
-                List<CompetitorWithPhoto> competitors = DatabaseConnection.getInstance().getDatabase().selectAllParticipantsInTournamentWithoutAccreditation(championship, all);
+
+                List<RegisteredPerson> competitors;
+                if (all) {
+                    competitors = RolePool.getInstance().getPeople(tournament);
+                } else {
+                    competitors = RolePool.getInstance().getRegisteredPeopleInTournamenteWithoutAccreditation(tournament);
+                }
 
                 for (int i = 0; i < competitors.size(); i++) {
                     timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());
-                    CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), championship, banner);
+                    CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competitors.get(i), tournament, banner);
                     PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
                     competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
                     cell = new PdfPCell(competitorTable);

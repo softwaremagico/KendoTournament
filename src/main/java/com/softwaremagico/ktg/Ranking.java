@@ -37,7 +37,7 @@ public class Ranking {
         teams = new ArrayList<>();
     }
 
-    private List<Team> getTeams(List<Fight> fights) {
+    private static List<Team> getTeams(List<Fight> fights) {
         List<Team> teamsOfFights = new ArrayList<>();
         for (Fight fight : fights) {
             if (!teamsOfFights.contains(fight.getTeam1())) {
@@ -50,13 +50,95 @@ public class Ranking {
         return teamsOfFights;
     }
 
-    public List<ScoreOfTeam> getRanking(List<Fight> fights) {
+    private static List<RegisteredPerson> getRegisteredPersons(List<Fight> fights) {
+        List<RegisteredPerson> competitorsOfFight = new ArrayList<>();
+        List<RegisteredPerson> allCompetitors = new ArrayList<>();
+        for (Fight fight : fights) {
+            allCompetitors.addAll(fight.getTeam1().getMembersOrder(0).values());
+            allCompetitors.addAll(fight.getTeam2().getMembersOrder(0).values());
+        }
+        for (RegisteredPerson competitor : allCompetitors) {
+            if (!competitorsOfFight.contains(competitor)) {
+                competitorsOfFight.add(competitor);
+            }
+        }
+        return competitorsOfFight;
+    }
+
+    public static List<Team> getTeamRanking(List<Fight> fights) {
         List<Team> teamsOfFights = getTeams(fights);
         List<ScoreOfTeam> scores = new ArrayList<>();
         for (Team team : teamsOfFights) {
             scores.add(new ScoreOfTeam(team, fights));
         }
         Collections.sort(scores);
+        List<Team> teamRanking = new ArrayList<>();
+        for (ScoreOfTeam score : scores) {
+            teamRanking.add(score.getTeam());
+        }
+        return teamRanking;
+    }
+
+    public static List<ScoreOfTeam> getTeamScoreRanking(List<Fight> fights) {
+        List<Team> teamsOfFights = getTeams(fights);
+        List<ScoreOfTeam> scores = new ArrayList<>();
+        for (Team team : teamsOfFights) {
+            scores.add(new ScoreOfTeam(team, fights));
+        }
+        Collections.sort(scores);
+
         return scores;
+    }
+
+    public static List<ScoreOfCompetitor> getCompetitorsScoreRanking(List<Fight> fights) {
+        List<RegisteredPerson> competitors = getRegisteredPersons(fights);
+        List<ScoreOfCompetitor> scores = new ArrayList<>();
+        for (RegisteredPerson competitor : competitors) {
+            scores.add(new ScoreOfCompetitor(competitor, fights));
+        }
+        Collections.sort(scores);
+        return scores;
+    }
+
+    public static Integer getOrder(List<Fight> fights, Team team) {
+        List<Team> ranking = getTeamRanking(fights);
+
+        for (Integer i = 0; i < ranking.size(); i++) {
+            if (ranking.get(i).equals(team)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public static Integer getOrderFromRanking(List<ScoreOfTeam> ranking, Team team) {
+        for (Integer i = 0; i < ranking.size(); i++) {
+            if (ranking.get(i).getTeam().equals(team)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public static Team getTeam(List<Fight> fights, Integer order) {
+        List<Team> ranking = getTeamRanking(fights);
+        if (order < ranking.size() && order > 0) {
+            return ranking.get(order);
+        }
+        return null;
+    }
+
+    public static List<RegisteredPerson> getCompetitorsRanking(List<Fight> fights) {
+        List<RegisteredPerson> competitors = getRegisteredPersons(fights);
+        List<ScoreOfCompetitor> scores = new ArrayList<>();
+        for (RegisteredPerson competitor : competitors) {
+            scores.add(new ScoreOfCompetitor(competitor, fights));
+        }
+        Collections.sort(scores);
+        List<RegisteredPerson> competitorsRanking = new ArrayList<>();
+        for (ScoreOfCompetitor score : scores) {
+            competitorsRanking.add(score.getRegisteredPerson());
+        }
+        return competitorsRanking;
     }
 }

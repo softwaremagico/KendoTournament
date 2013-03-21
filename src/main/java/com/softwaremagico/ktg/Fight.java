@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Fight implements Serializable, Comparable<Fight> {
-    
+
     private static final String FIGHT_TAG = "FIGHT";
     private Team team1;
     private Team team2;
@@ -51,7 +51,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         this.index = order;
         this.level = level;
     }
-    
+
     public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level) {
         this.team1 = team1;
         this.team2 = team2;
@@ -60,27 +60,27 @@ public class Fight implements Serializable, Comparable<Fight> {
         this.index = FightPool.getInstance().get(tournament).size();
         this.level = level;
     }
-    
+
     public Integer getIndex() {
         return index;
     }
-    
+
     public boolean isOverStored() {
         return overUpdated;
     }
-    
+
     public Integer getLevel() {
         return level;
     }
-    
+
     public void setLevel(Integer level) {
         this.level = level;
     }
-    
+
     public void setOverStored(boolean overUpdated) {
         this.overUpdated = overUpdated;
     }
-    
+
     public void calculateOverWithDuels() {
         if (getWinner() == 2) {
             overUpdated = false;
@@ -88,55 +88,55 @@ public class Fight implements Serializable, Comparable<Fight> {
             overUpdated = true;
         }
     }
-    
+
     public Team getTeam1() {
         return team1;
     }
-    
+
     public void setTeam1(Team team1) {
         this.team1 = team1;
     }
-    
+
     public Team getTeam2() {
         return team2;
     }
-    
+
     public void setTeam2(Team team2) {
         this.team2 = team2;
     }
-    
+
     public Tournament getTournament() {
         return tournament;
     }
-    
+
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
-    
+
     public Integer getAsignedFightArea() {
         return asignedFightArea;
     }
-    
+
     public void setAsignedFightArea(int asignedFightArea) {
         this.asignedFightArea = asignedFightArea;
     }
-    
+
     public List<Duel> getDuels() {
         return DuelPool.getInstance().get(tournament, this);
     }
-    
+
     public boolean isOver() {
         return winner < 2;
     }
-    
+
     public Integer getWinner() {
         return winner;
     }
-    
+
     public void setWinner(Integer winner) {
         this.winner = winner;
     }
-    
+
     public void setOver(boolean over) {
         if (over) {
             completeIppons();
@@ -172,7 +172,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return false;
     }
-    
+
     public Team winner() {
         int points = 0;
         for (int i = 0; i < getDuels().size(); i++) {
@@ -188,8 +188,8 @@ public class Fight implements Serializable, Comparable<Fight> {
         int pointLeft = 0;
         int pointRight = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            pointLeft += getDuels().get(i).howManyPoints(true);
-            pointRight += getDuels().get(i).howManyPoints(false);
+            pointLeft += getDuels().get(i).getPoints(true);
+            pointRight += getDuels().get(i).getPoints(false);
         }
         if (pointLeft > pointRight) {
             return team1;
@@ -199,7 +199,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return null;
     }
-    
+
     public void showDuels() {
         System.out.println("---------------");
         System.out.println(team1.getName() + " vs " + team2.getName());
@@ -208,15 +208,15 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         System.out.println("---------------");
     }
-    
+
     public void setMaxWinners(int value) {
         maxWinners = value;
     }
-    
+
     public Integer getMaxWinners() {
         return maxWinners;
     }
-    
+
     private void completeIppons() {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
             if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, level) != null) //There is a player
@@ -229,7 +229,7 @@ public class Fight implements Serializable, Comparable<Fight> {
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
         }
-        
+
         for (int i = 0; i < team2.getNumberOfMembers(level); i++) {
             if (((i < team1.getNumberOfMembers(level) && team1.getMember(i, level) != null) //There is a player
                     && (!team1.getMember(i, level).getName().equals("")
@@ -241,9 +241,9 @@ public class Fight implements Serializable, Comparable<Fight> {
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
         }
-        
+
     }
-    
+
     public Integer getWonDuels(Team team) {
         if (team1.equals(team)) {
             return getWonDuels(true);
@@ -253,7 +253,20 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return 0;
     }
-    
+
+    public Integer getWonDuels(RegisteredPerson competitor) {
+        int winDuels = 0;
+        for (int i = 0; i < getDuels().size(); i++) {
+            if (team1.getMember(i, level).equals(competitor) && getDuels().get(i).winner() < 0) {
+                winDuels++;
+            }
+            if (team2.getMember(i, level).equals(competitor) && getDuels().get(i).winner() > 0) {
+                winDuels++;
+            }
+        }
+        return winDuels;
+    }
+
     public Integer getWonDuels(boolean team1) {
         int winDuels = 0;
         for (int i = 0; i < getDuels().size(); i++) {
@@ -266,17 +279,29 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return winDuels;
     }
-    
-    public Integer getDrawDuels() {
+
+    public Integer getDrawDuels(Team team) {
+        int drawDuels = 0;
+        if ((getTeam1().equals(team) || getTeam2().equals(team))) {
+            for (int i = 0; i < getDuels().size(); i++) {
+                if (getDuels().get(i).winner() == 0) {
+                    drawDuels++;
+                }
+            }
+        }
+        return drawDuels;
+    }
+
+    public Integer getDrawDuels(RegisteredPerson competitor) {
         int drawDuels = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            if (getDuels().get(i).winner() == 0) {
+            if ((team1.getMember(i, level).equals(competitor) || team2.getMember(i, level).equals(competitor)) && getDuels().get(i).winner() == 0) {
                 drawDuels++;
             }
         }
         return drawDuels;
     }
-    
+
     public Integer getScore(Team team) {
         if (team1.equals(team)) {
             return getScore(true);
@@ -286,15 +311,28 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return 0;
     }
-    
+
     public Integer getScore(boolean team1) {
         int score = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            score += getDuels().get(i).howManyPoints(team1);
+            score += getDuels().get(i).getPoints(team1);
         }
         return score;
     }
-    
+
+    public Integer getScore(RegisteredPerson competitor) {
+        int hits = 0;
+        for (int i = 0; i < getDuels().size(); i++) {
+            if (team1.getMember(i, level).equals(competitor)) {
+                hits += getDuels().get(i).getPoints(true);
+            }
+            if (team2.getMember(i, level).equals(competitor)) {
+                hits += getDuels().get(i).getPoints(false);
+            }
+        }
+        return hits;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -309,9 +347,9 @@ public class Fight implements Serializable, Comparable<Fight> {
                 && this.tournament.equals(otherFight.tournament)
                 && this.level == otherFight.level
                 && this.index == otherFight.index;
-        
+
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -321,11 +359,11 @@ public class Fight implements Serializable, Comparable<Fight> {
         hash = 59 * hash + this.level;
         return hash;
     }
-    
+
     public String show() {
         return "'" + team1.getName() + "' vs '" + team2.getName() + "'";
     }
-    
+
     @Override
     public String toString() {
         String text = "'" + team1.getName() + "' vs '" + team2.getName() + "'\n";
@@ -360,11 +398,11 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return csv;
     }
-    
+
     public static String getTag() {
         return FIGHT_TAG;
     }
-    
+
     @Override
     public int compareTo(Fight o) {
         Integer levelCompare = level.compareTo(o.level);

@@ -84,7 +84,7 @@ public class RoleTags {
         return null;
     }
 
-    public String getTraduction(String tag) {
+    public String getTranslation(String tag) {
         for (int i = 0; i < listRoles.size(); i++) {
             if (listRoles.get(i).getName().equals(tag)) {
                 return listRoles.get(i).name;

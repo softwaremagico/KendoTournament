@@ -149,7 +149,7 @@ public class NewRole extends KendoFrame {
                 if (role == null) {
                     RoleComboBox.setSelectedIndex(0);
                 } else {
-                    RoleComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getAvailableRoles().getTraduction(role));
+                    RoleComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getAvailableRoles().getTranslation(role));
                 }
             } catch (NullPointerException npe) {
                 RoleComboBox.setSelectedIndex(0);

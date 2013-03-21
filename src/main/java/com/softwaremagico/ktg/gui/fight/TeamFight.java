@@ -118,8 +118,8 @@ public class TeamFight extends JPanel {
     final void fill(Team t, boolean left, boolean selected, boolean menu) {
         removeAll();
         competitorFights = new ArrayList<>();
-        for (int i = 0; i < t.getNumberOfMembers(fight.level); i++) {
-            CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.level), fight, left, selected, menu);
+        for (int i = 0; i < t.getNumberOfMembers(fight.getLevel()); i++) {
+            CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.getLevel()), fight, left, selected, menu);
             addCompetitorFight(cp);
         }
         repaint();
@@ -146,9 +146,9 @@ public class TeamFight extends JPanel {
     private void showTeam() {
         //Are more than one member, and fight is not over, and there is not another fight in this level already done.
         if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
-            if (!FightPool.getManager(tournament).someFightWithTeamAndLevelIsStarted(team, fight.level)) {
+            if (!FightPool.getManager(tournament).someFightWithTeamAndLevelIsStarted(team, fight.getLevel())) {
                 OrderTeam orderTeam;
-                orderTeam = new OrderTeam(fight.tournament, fight.level, this);
+                orderTeam = new OrderTeam(fight.tournament, fight.getLevel(), this);
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             } else {

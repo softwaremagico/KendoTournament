@@ -28,13 +28,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.DuelPool;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.statistics.CompetitorRanking;
-import com.softwaremagico.ktg.statistics.TeamRanking;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -68,16 +69,21 @@ public class DiplomaPDF {
     float nameposition = 100;
     List<Duel> duels = new ArrayList<>();
     static int TOTAL_RANGES = 9;
-    List<TeamRanking> teamTopTen;
-    List<CompetitorRanking> competitorTopTen;
-    RoleTags rolesWithDiploma = null;
+    List<ScoreOfTeam> teamTopTen;
+    List<ScoreOfCompetitor> competitorTopTen;
+    List<RoleTag> rolesWithDiploma = null;
     private boolean allDiplomas;
 
-    public DiplomaPDF(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, RoleTags roles) {
+    public DiplomaPDF(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, List<RoleTag> roles) {
         tournament = tmp_championship;
         statistics = tmp_statistics;
         allDiplomas = printAllDiplomas;
         rolesWithDiploma = roles;
+        if (statistics) {
+            teamTopTen = Ranking.getTeamScoreRanking(FightPool.getInstance().get(tournament));
+            duels = DuelPool.getInstance().getSorted(tournament);
+            competitorTopTen = Ranking.getCompetitorsScoreRanking(FightPool.getInstance().get(tournament));
+        }
     }
 
     public boolean generateDiplomaPDF(String path, float nposition) {
@@ -126,7 +132,7 @@ public class DiplomaPDF {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
                 MessageManager.translatedMessage(this.getClass().getName(), "diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
-                DatabaseConnection.getInstance().getDatabase().setAllParticipantsInTournamentAsDiplomaPrinted(rolesWithDiploma, tournament);
+                RolePool.getInstance().setRegisteredPeopleInTournamentAsDiplomaPrinted(tournament, rolesWithDiploma);
                 error = false;
             } catch (NullPointerException npe) {
                 MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
@@ -179,14 +185,10 @@ public class DiplomaPDF {
         public void pageTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
             List<RegisteredPerson> competitors;
 
-            competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorWithDiplomaInTournament(rolesWithDiploma, tournament, allDiplomas);
-
-            if (statistics) {
-                duels = DatabaseConnection.getInstance().getDatabase().getDuelsOfTournament(tournament);
-                //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tournament.name, false);
-                Ranking ranking = new Ranking();
-                teamTopTen = ranking.getRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
-                competitorTopTen = DatabaseConnection.getInstance().getDatabase().getCompetitorsOrderByScore(true, tournament);
+            if (allDiplomas) {
+                competitors = RolePool.getInstance().getPeopleWithoutDiploma(tournament, null);
+            } else {
+                competitors = RolePool.getInstance().getPeopleWithoutDiploma(tournament, rolesWithDiploma);
             }
 
             for (int i = 0; i < competitors.size(); i++) {
@@ -240,8 +242,8 @@ public class DiplomaPDF {
                 List<Duel> duelsTeamRight;
                 List<Duel> duelsTeamLeft;
 
-                duelsTeamRight = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), true);
-                duelsTeamLeft = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), false);
+                duelsTeamRight = DuelPool.getInstance().get(tournament, competitor, true);
+                duelsTeamLeft = DuelPool.getInstance().get(tournament, competitor, false);
 
                 //Performed hits.
                 image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem")), null, false);
@@ -393,7 +395,7 @@ public class DiplomaPDF {
                 return -1;
             }
             for (int i = 0; i < teamTopTen.size(); i++) {
-                if (teamTopTen.get(i).name.equals(team.getName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
+                if (teamTopTen.get(i).getTeam().getName().equals(team.getName()) && teamTopTen.get(i).getTournament().equals(team.getTournament())) {
                     return i;
                 }
             }
@@ -413,7 +415,8 @@ public class DiplomaPDF {
 
             int centerValue;
             try {
-                centerValue = searchForTeamPosition(DatabaseConnection.getInstance().getDatabase().getTeamOfCompetitor(competitor.getId(), tournament, false));
+                Team team = TeamPool.getInstance().get(tournament, competitor);
+                centerValue = Ranking.getOrderFromRanking(teamTopTen, team);
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                 centerValue = 0;
@@ -437,15 +440,15 @@ public class DiplomaPDF {
             for (int i = startValue; i < endValue; i++) {
                 String c;
                 if (tournament == null) {
-                    c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
+                    c = (i + 1) + " - " + teamTopTen.get(i).getTeam().getName() + " (" + teamTopTen.get(i).getTournament().getName() + ")";
                 } else {
-                    c = (i + 1) + " - " + teamTopTen.get(i).name;
+                    c = (i + 1) + " - " + teamTopTen.get(i).getTeam().getName();
                 }
-                dataset.addValue(teamTopTen.get(i).wonMatchs, series1, c);
-                dataset.addValue(teamTopTen.get(i).drawMatchs, series2, c);
-                dataset.addValue(teamTopTen.get(i).wonFights, series3, c);
-                dataset.addValue(teamTopTen.get(i).drawFights, series4, c);
-                dataset.addValue(teamTopTen.get(i).score, series5, c);
+                dataset.addValue(teamTopTen.get(i).getWonFights(), series1, c);
+                dataset.addValue(teamTopTen.get(i).getDrawFights(), series2, c);
+                dataset.addValue(teamTopTen.get(i).getWonDuels(), series3, c);
+                dataset.addValue(teamTopTen.get(i).getDrawDuels(), series4, c);
+                dataset.addValue(teamTopTen.get(i).getHits(), series5, c);
             }
             return dataset;
         }
@@ -492,14 +495,13 @@ public class DiplomaPDF {
             return image;
         }
 
-        private PdfPTable CompetitorTable(RegisteredPerson c, CompetitorRanking cr, int index, String font, int fontSize) {
+        private PdfPTable CompetitorTable(RegisteredPerson c, ScoreOfCompetitor cr, int index, String font, int fontSize) {
             PdfPCell cell;
             Paragraph p;
             float[] width = {(float) 0.3, (float) 0.3, (float) 0.3};
             PdfPTable table = new PdfPTable(width);
-            int start, end;
 
-            if (!cr.id.equals(c.getId())) {
+            if (!cr.getRegisteredPerson().getId().equals(c.getId())) {
                 p = new Paragraph((index + 1) + "º ", FontFactory.getFont(font, fontSize - 8));
             } else {
                 p = new Paragraph((index + 1) + "º " + c.getAcronim(), FontFactory.getFont(font, fontSize - 8, Font.BOLD));
@@ -509,13 +511,13 @@ public class DiplomaPDF {
             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(cell);
 
-            p = new Paragraph(cr.victorias + "", FontFactory.getFont(font, fontSize - 8));
+            p = new Paragraph(cr.getWonDuels() + "", FontFactory.getFont(font, fontSize - 8));
             cell = new PdfPCell(p);
             cell.setBorderWidth(0);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(cell);
 
-            p = new Paragraph(cr.puntos + "", FontFactory.getFont(font, fontSize - 8));
+            p = new Paragraph(cr.getHits() + "", FontFactory.getFont(font, fontSize - 8));
             cell = new PdfPCell(p);
             cell.setBorderWidth(0);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -612,7 +614,7 @@ public class DiplomaPDF {
 
         private int searchForCompetitorPosition(RegisteredPerson c) {
             for (int i = 0; i < competitorTopTen.size(); i++) {
-                if (competitorTopTen.get(i).id.equals(c.getId())) {
+                if (competitorTopTen.get(i).getRegisteredPerson().getId().equals(c.getId())) {
                     return i;
                 }
             }

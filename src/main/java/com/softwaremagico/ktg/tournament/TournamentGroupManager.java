@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.tournament;
  */
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +63,9 @@ public class TournamentGroupManager implements Serializable {
     }
 
     public void update() {
-        KendoLog.debug(this.getClass().getName(), "Current number of fights over before updating design groups: " + FightPool.getManager(tournament).numberOfFightsOver());
         for (LeagueLevel level : levels) {
             level.updateGroups();
         }
-        KendoLog.debug(this.getClass().getName(), "Current number of fights over after updating design groups: " + FightPool.getManager(tournament).numberOfFightsOver());
     }
 
     public void color(boolean color) {
@@ -184,7 +183,7 @@ public class TournamentGroupManager implements Serializable {
         // Last group.
         try {
             TournamentGroup dg = levels.get(levels.size() - 1).getLastGroupOfLevel();
-            return dg.getTeamInOrderOfScore(0, fights, true);
+            return Ranking.getTeam(fights, 0);
         } catch (ArrayIndexOutOfBoundsException aiob) {
             return null;
         }
@@ -585,7 +584,7 @@ public class TournamentGroupManager implements Serializable {
 
     public TournamentGroup getGroupOfFight(Fight fight) {
         if (fight != null) {
-            return levels.get(fight.level).getGroupOfFight(fight);
+            return levels.get(fight.getLevel()).getGroupOfFight(fight);
         }
         return null;
     }
@@ -593,7 +592,7 @@ public class TournamentGroupManager implements Serializable {
     public ArrayList<Fight> getFightsOfLevel(List<Fight> fights, int level) {
         ArrayList<Fight> fightsOfLevel = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).level == level) {
+            if (fights.get(i).getLevel() == level) {
                 fightsOfLevel.add(fights.get(i));
             }
         }
@@ -663,13 +662,13 @@ public class TournamentGroupManager implements Serializable {
 
         for (int i = 0; i < fightsOfLevel.size(); i++) {
             // If one team exist in the group, then this fight is also of this group.
-            if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team1)) {
-                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team2)) {
-                    teamsOfGroup.add(fightsOfLevel.get(i).team2);
+            if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).getTeam1())) {
+                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).getTeam2())) {
+                    teamsOfGroup.add(fightsOfLevel.get(i).getTeam2());
                 }
-            } else if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team2)) {
-                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).team1)) {
-                    teamsOfGroup.add(fightsOfLevel.get(i).team1);
+            } else if (isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).getTeam2())) {
+                if (!isTeamIncludedInList(teamsOfGroup, fightsOfLevel.get(i).getTeam1())) {
+                    teamsOfGroup.add(fightsOfLevel.get(i).getTeam1());
                 }
             } else {
                 // If no team exist in this group, means that we find the fightManager of a new group.
@@ -683,8 +682,8 @@ public class TournamentGroupManager implements Serializable {
                 }
                 // Start generating the next group.
                 teamsOfGroup = new ArrayList<>();
-                teamsOfGroup.add(fightsOfLevel.get(i).team1);
-                teamsOfGroup.add(fightsOfLevel.get(i).team2);
+                teamsOfGroup.add(fightsOfLevel.get(i).getTeam1());
+                teamsOfGroup.add(fightsOfLevel.get(i).getTeam2());
             }
         }
         // Insert the last group.
@@ -747,7 +746,7 @@ public class TournamentGroupManager implements Serializable {
                     Fight readedFight = levels.get(Integer.parseInt(fields[3]))
                             .getGroups().get(Integer.parseInt(fields[2]))
                             .getFights().get(Integer.parseInt(fields[1]));
-                    if (readedFight.team1.getName().equals(fields[4]) && readedFight.team2.getName().equals(fields[5])) {
+                    if (readedFight.getTeam1().getName().equals(fields[4]) && readedFight.getTeam2().getName().equals(fields[5])) {
                         if (!readedFight.isOver()) {
                             fight = readedFight;
                             fightsImported++;
@@ -761,7 +760,7 @@ public class TournamentGroupManager implements Serializable {
                 }
             } else if (csvLine.startsWith(Duel.getCsvTag())) {
                 if (fight != null) {
-                    fight.duels.get(duelsCount).importFromCsv(csvLine);
+                    fight.getDuels().get(duelsCount).importFromCsv(csvLine);
                     duelsCount++;
                 }
             } else if (csvLine.startsWith(Undraw.getCsvTag())) {

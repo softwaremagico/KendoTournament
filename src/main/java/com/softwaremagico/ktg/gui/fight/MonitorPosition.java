@@ -96,7 +96,7 @@ public class MonitorPosition extends JFrame {
 
         //teamTopTen = tournament.database.getTeamsOrderByScore(championship.name, false);
         Ranking ranking = new Ranking();
-        teamTopTen = ranking.getRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(championship));
+        teamTopTen = ranking.getTeamRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(championship));
 
         if (teamTopTen.size() > 0) {
             if (fontSize > this.getWidth() / (teamTopTen.size() * 4)) {

@@ -24,7 +24,9 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.*;
@@ -33,32 +35,20 @@ import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 public class TournamentGroup extends Group implements Serializable {
 
     public static final int MAX_TEAMS_PER_GROUP = 8;
     private static final long serialVersionUID = -8425766161404716635L;
-    private static final Float SCORE_WON_FIGHTS = new Float(1000000);
-    private static final Float SCORE_WON_DUELS = new Float(10000);
-    private static final Float SCORE_HITS = new Float(1);
-    private static final Float SCORE_DRAW_FIGHTS = new Float(0.001);
-    private static final Float SCORE_DRAW_DUELS = new Float(0.000001);
-    private static final Float SCORE_GOLDEN_POINT = new Float(0.000001);
     transient Tournament tournament;
     transient DesignGroupWindow dgw;
     public List<Team> teams = new ArrayList<>();
     private boolean selected = false;
-    //Integer numberMaxOfTeams;
     private Integer numberMaxOfWinners = 1;
-    //Integer numberMaxOfWinnersLeague = 1;
     transient private Translator trans = null;
     private Integer level;
     transient public boolean listenerAdded = false;
-    private List<Double> teamsScore;
-    private List<Double> teamsScoreOrdered;
     public int arena = 0;
     transient private boolean color = true;
     transient private java.awt.event.MouseAdapter ma;
@@ -75,7 +65,6 @@ public class TournamentGroup extends Group implements Serializable {
         //numberMaxOfWinnersLeague = tmp_numberMaxOfWinners;
 
         updateSize();
-        setDefaultScore();
 
         setBackground(new Color(230, 230, 230));
         //setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -135,7 +124,7 @@ public class TournamentGroup extends Group implements Serializable {
         //variable participants of each teams are "transient". The program must obtain it from the database.
         try {
             for (int i = 0; i < teams.size(); i++) {
-                Team t = DatabaseConnection.getInstance().getDatabase().getTeamByName(teams.get(i).getName(), tournament, false);
+                Team t = TeamPool.getInstance().get(tournament, teams.get(i).getName());
                 if (t != null) {
                     updatedTeams.add(t);
                 } else {
@@ -152,24 +141,22 @@ public class TournamentGroup extends Group implements Serializable {
     private String returnText() {
         String text = "<html>";
 
-        updateScoreForTeams(FightPool.getManager(tournament).getFights());
-        List<Team> teamsO = getTeamsOrderedByScore();
-        if (teamsO.isEmpty()) {
+        List<Team> teamRanking = Ranking.getTeamRanking(FightPool.getInstance().get(tournament));
+        if (teamRanking.isEmpty()) {
             text += "<b>" + getDefaultLabel() + "</b>";
         } else {
-            for (int i = 0; i < teamsO.size(); i++) {
-                int order = getOrderOfTeam(teamsO.get(i));
-                Color c = obtainWinnerColor(order, true);
+            for (int i = 0; i < teamRanking.size(); i++) {
+                Color c = obtainWinnerColor(i, true);
 
                 if (color) {
                     //text += "<b><font size=\"+1\" color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
                     text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
                 }
-                text += teamsO.get(i).getShortName();
+                text += teamRanking.get(i).getShortName();
                 if (color) {
                     text += "</b></font>";
                 }
-                if (i < teamsO.size() - 1) {
+                if (i < teamRanking.size() - 1) {
                     text += "<br>";
                 }
             }
@@ -193,7 +180,7 @@ public class TournamentGroup extends Group implements Serializable {
 
     public Color obtainWinnerColor(int winner, boolean check) {
         int red, green, blue;
-        if ((!check) || (winner < numberMaxOfWinners && winner >= 0 && areFightsOver(FightPool.getManager(tournament).getFights()))) {
+        if ((!check) || (winner < numberMaxOfWinners && winner >= 0 && areFightsOver(FightPool.getInstance().get(tournament)))) {
             if (winner == 0) {
                 red = 220;
                 green = 20;
@@ -336,15 +323,12 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public List<Team> getWinners() {
-        List<Team> result = new ArrayList<>();
-        List<Team> orderedTeams = getTeamsOrderedByScore();
-        for (int i = 0; i < numberMaxOfWinners; i++) {
-            try {
-                result.add(orderedTeams.get(i));
-            } catch (IndexOutOfBoundsException iob) {
-            }
+        try {
+            return Ranking.getTeamRanking(FightPool.getInstance().get(tournament)).subList(0, numberMaxOfWinners);
+        } catch (Exception iob) {
         }
-        return result;
+
+        return new ArrayList<>();
     }
 
     /**
@@ -374,9 +358,9 @@ public class TournamentGroup extends Group implements Serializable {
 
         for (int j = 0; j < teams.size() - 1; j++) {
             if (count % 2 == 0) {
-                f = new Fight(teams.get(j), teams.get(j + 1), tournament, fightArea, level);
+                f = new Fight(tournament, teams.get(j), teams.get(j + 1), fightArea, level);
             } else {
-                f = new Fight(teams.get(j + 1), teams.get(j), tournament, fightArea, level);
+                f = new Fight(tournament, teams.get(j + 1), teams.get(j), fightArea, level);
             }
             f.setMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
@@ -387,9 +371,9 @@ public class TournamentGroup extends Group implements Serializable {
         //Last versus first.
         if (teams.size() > 2) {
             if (count % 2 == 0) {
-                f = new Fight(teams.get(teams.size() - 1), teams.get(0), tournament, fightArea, level);
+                f = new Fight(tournament, teams.get(teams.size() - 1), teams.get(0), fightArea, level);
             } else {
-                f = new Fight(teams.get(0), teams.get(teams.size() - 1), tournament, fightArea, level);
+                f = new Fight(tournament, teams.get(0), teams.get(teams.size() - 1), fightArea, level);
             }
             f.setMaxWinners(numberMaxOfWinners);
             if (!existFight(fights, f)) {
@@ -402,7 +386,7 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public boolean isFightOfGroup(Fight f) {
-        if (isTeamOfGroup(f.team1) && isTeamOfGroup(f.team2) && level == f.level) {
+        if (isTeamOfGroup(f.getTeam1()) && isTeamOfGroup(f.getTeam2()) && level == f.getLevel()) {
             return true;
         }
         return false;
@@ -411,7 +395,7 @@ public class TournamentGroup extends Group implements Serializable {
     public int getShiaijo(List<Fight> fights) {
         for (int i = 0; i < fights.size(); i++) {
             if (isFightOfGroup(fights.get(i))) {
-                return fights.get(i).asignedFightArea;
+                return fights.get(i).getAsignedFightArea();
             }
         }
         return 0;
@@ -422,7 +406,7 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     public List<Fight> getFights() {
-        return getFightsOfGroup(FightPool.getManager(tournament).getFightsOfLevel(level));
+        return getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
     }
 
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
@@ -430,9 +414,9 @@ public class TournamentGroup extends Group implements Serializable {
         for (int i = 0; i < fights.size(); i++) {
             for (int j = 0; j < teams.size(); j++) {
                 try {
-                    if ((fights.get(i).team1.getName().equals(teams.get(j).getName())
-                            || fights.get(i).team2.getName().equals(teams.get(j).getName()))
-                            && fights.get(i).level == level) {
+                    if ((fights.get(i).getTeam1().getName().equals(teams.get(j).getName())
+                            || fights.get(i).getTeam2().getName().equals(teams.get(j).getName()))
+                            && fights.get(i).getLevel() == level) {
                         fightsG.add(fights.get(i));
                         break;
                     }
@@ -492,339 +476,6 @@ public class TournamentGroup extends Group implements Serializable {
     }
 
     /**
-     * ********************************************
-     *
-     * SCORE
-     *
-     *********************************************
-     */
-    /**
-     * Init the score.
-     */
-    private void setDefaultScore() {
-        teamsScore = new ArrayList<>();
-        for (int i = 0; i < teams.size(); i++) {
-            teamsScore.add((double) 0);
-        }
-    }
-
-    /**
-     * Calculate the score regarding to the hits.
-     *
-     * @param fight
-     * @param team
-     * @return
-     */
-    private double obtainPointsForHits(Fight fight, Team team) {
-        double score = (double) 0;
-
-        //Team1
-        if (fight.team1.getName().equals(team.getName())) {
-            for (int k = 0; k < fight.duels.size(); k++) {
-                score += fight.duels.get(k).howManyPoints(true) * SCORE_HITS;
-            }
-        }
-
-        //Team2
-        if (fight.team2.getName().equals(team.getName())) {
-            for (int k = 0; k < fight.duels.size(); k++) {
-                score += fight.duels.get(k).howManyPoints(false) * SCORE_HITS;
-            }
-        }
-        return score;
-    }
-
-    private int obtainPointsForWonDuels(Fight fight, Team team) {
-        int score = 0;
-        //Team1
-        if (fight.team1.getName().equals(team.getName())) {
-            for (int k = 0; k < fight.duels.size(); k++) {
-                if (fight.duels.get(k).winner() < 0) {
-                    score += SCORE_WON_DUELS * tournament.getScoreForWin();
-                }
-                if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * tournament.getScoreForDraw();
-                }
-            }
-        }
-        //Team2
-        if (fight.team2.getName().equals(team.getName())) {
-            for (int k = 0; k < fight.duels.size(); k++) {
-                if (fight.duels.get(k).winner() > 0) {
-                    score += SCORE_WON_DUELS * tournament.getScoreForWin();
-                }
-                if (fight.duels.get(k).winner() == 0) {
-                    score += SCORE_WON_DUELS * tournament.getScoreForDraw();
-                }
-            }
-        }
-        return score;
-    }
-
-    private Float obtainPointsForDrawFights(Fight fight, Team team) {
-        Float score = new Float(0);
-        try {
-            if ((fight.team1.getName().equals(team.getName())
-                    || fight.team2.getName().equals(team.getName()))) {
-                for (int i = 0; i < fight.duels.size(); i++) {
-                    if (fight.duels.get(i).winner() == 0) {
-                        score += SCORE_DRAW_FIGHTS;
-                    }
-                }
-            }
-        } catch (NullPointerException npe) {
-        }
-        return score;
-    }
-
-    private Float obtainPointsForDrawDuels(Fight fight, Team team) {
-        try {
-            if ((fight.team1.getName().equals(team.getName())
-                    || fight.team2.getName().equals(team.getName()))
-                    && (fight.isDrawFight())) {
-                return SCORE_DRAW_DUELS;
-            }
-        } catch (NullPointerException npe) {
-        }
-        return new Float(0);
-    }
-
-    private Float obtainPointsForWonFights(Fight fight, Team team) {
-        try {
-            if (fight.winnerByDuels().getName().equals(team.getName())) {
-                return SCORE_WON_FIGHTS * tournament.getScoreForWin();
-            } else if (fight.isDrawFight() && (fight.team1.getName().equals(team.getName())
-                    || fight.team2.getName().equals(team.getName()))) {
-                return SCORE_WON_FIGHTS * tournament.getScoreForDraw();
-            }
-        } catch (NullPointerException npe) {
-        }
-        return new Float(0);
-    }
-
-    /**
-     * This function obtain the golden point for undraw two teams of a group.
-     *
-     * @param team
-     * @param level
-     * @return
-     */
-    private double obtainPointsForGoldenPoint(Team team) {
-        double score = (double) 0;
-        //Undraw hits.
-        double multiplier = (double) DatabaseConnection.getInstance().getDatabase().getValueWinnerInUndrawInGroup(tournament, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level, team.getName());
-        score += (double) SCORE_GOLDEN_POINT * multiplier;
-        return score;
-    }
-
-    /**
-     * Creates a score for a team. The score is 1000000 for each duel won, 1000
-     * for each fight won and 1 for each point.
-     */
-    void updateScoreForTeams(List<Fight> fights) {
-        setDefaultScore();
-
-        for (int i = 0; i < teams.size(); i++) {
-            Team team = teams.get(i);
-            double teamScore = (double) 0;
-
-            for (int j = 0; j < fights.size(); j++) {
-                Fight oneFight = fights.get(j);
-                if (oneFight.level == level) { //Only count the points of this designed group!!
-                    if (isFightOfGroup(oneFight) && (oneFight.team1.getName().equals(team.getName()) || oneFight.team2.getName().equals(team.getName()))) {
-                        teamScore += obtainPointsForWonFights(oneFight, team);
-                        teamScore += obtainPointsForWonDuels(oneFight, team);
-                        teamScore += obtainPointsForHits(oneFight, team);
-                        if (oneFight.tournament.getChoosedScore().equals("European")) { //In an European champiosnhip, draw fightManager are used to 
-                            teamScore += obtainPointsForDrawFights(oneFight, team);
-                            teamScore += obtainPointsForDrawDuels(oneFight, team);
-                        }
-                    }
-                }
-            }
-            teamScore += obtainPointsForGoldenPoint(team);
-            //Storing the score.
-            teamsScore.set(i, teamScore);
-        }
-    }
-
-    private int obtainTeamWithMaxScore(List<Double> tmp_teamsScore) {
-        Double max = (double) -1;
-        int index = -1;
-        for (int i = 0; i < tmp_teamsScore.size(); i++) {
-            if (tmp_teamsScore.get(i) > max) {
-                max = tmp_teamsScore.get(i);
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    private double obtainScoreOfTeam(int team) {
-        try {
-            return teamsScore.get(team);
-        } catch (IndexOutOfBoundsException iob) {
-            return 0;
-        }
-    }
-
-    private List<Team> getTeamsOrderedByScore() {
-        List<Team> sortedTeams = new ArrayList<>();
-        List<Team> tmp_teams = new ArrayList<>();
-        List<Double> tmp_teamsScore = new ArrayList<>();
-
-        tmp_teams.addAll(teams);
-        tmp_teamsScore.addAll(teamsScore);
-        teamsScoreOrdered = new ArrayList<>();
-
-        while (tmp_teams.size() > 0) {
-            int index = obtainTeamWithMaxScore(tmp_teamsScore);
-            if (index >= 0) {
-                sortedTeams.add(tmp_teams.get(index));
-                teamsScoreOrdered.add(tmp_teamsScore.get(index));
-                tmp_teams.remove(index);
-                tmp_teamsScore.remove(index);
-            } else {
-                break;
-            }
-        }
-
-        return sortedTeams;
-    }
-
-    public Team getTeamInOrderOfScore(int order, List<Fight> fights, boolean resolvDraws) {
-        if (teams.isEmpty()) {
-            return null;
-        }
-        updateScoreForTeams(fights);
-        List<Team> sortedTeams = getTeamsOrderedByScore();
-        try {
-            //if (resolvDraws && teamsScoreOrdered.getGroup(order).equals(teamsScoreOrdered.getGroup(order + 1)) && order >= numberMaxOfWinners - 1) {
-            if (resolvDraws && teamsScoreOrdered.get(order).equals(teamsScoreOrdered.get(order + 1))) {
-                return resolvDrawTeams(order, sortedTeams);
-            }
-        } catch (IndexOutOfBoundsException iob) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
-        }
-        try {
-            return sortedTeams.get(order);
-        } catch (IndexOutOfBoundsException iob) {
-            //If there are only one team in a group, there are no fightManager. In trees where are even groups.
-            try {
-                return teams.get(0);
-            } catch (IndexOutOfBoundsException iob2) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob2);
-                return null;
-            }
-        }
-    }
-
-    private int getOrderOfTeam(Team team) {
-        updateScoreForTeams(getFights());
-        List<Team> sortedTeams = new ArrayList<>();
-        try {
-            sortedTeams = getTeamsOrderedByScore();
-        } catch (NullPointerException npe) {
-            //npe.printStackTrace();
-        }
-
-        for (int i = 0; i < sortedTeams.size(); i++) {
-            if (sortedTeams.get(i).getName().equals(team.getName())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private Team resolvDrawTeams(int index, List<Team> sortedTeams) {
-        int select = -1;
-        List<Team> drawTeams = obtainDrawTeams(index, sortedTeams);
-        do {
-            select = resolvDrawTeams(drawTeams);
-        } while (select < 0);
-        return drawTeams.get(select);
-    }
-
-    /**
-     * Obtain a list of teams with the same score that the team selected with an
-     * index.
-     *
-     * @param index The index of the team to compare.
-     * @return
-     */
-    private List<Team> obtainDrawTeams(int index, List<Team> sortedTeams) {
-        List<Team> result = new ArrayList<>();
-        double drawScore;
-        try {
-            drawScore = teamsScoreOrdered.get(index);
-        } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
-            return null;
-        }
-        for (int i = 0; i < teamsScoreOrdered.size(); i++) {
-            if (teamsScoreOrdered.get(i).equals(drawScore)) {
-                result.add(sortedTeams.get(i));
-            }
-        }
-        return result;
-    }
-
-    /**
-     * If there are more than one team with the max punctuation, ask for a
-     * winner to the user.
-     *
-     * @param winnersOfgroup
-     * @return position in the list of the choosen one.
-     */
-    private int resolvDrawTeams(List<Team> drawTeams) {
-        JFrame frame = null;
-        List<Team> teamsDrawStored;
-
-        //If it is draw because there is only one team. Then it wins.
-        if (drawTeams.size() == 1) {
-            return 0;
-        }
-
-        //If the user has already define a winner. Use it.
-        if ((teamsDrawStored = getTeamsOfDrawsStored()) != null) {
-            for (int i = 0; i < drawTeams.size(); i++) {
-                if (teamsDrawStored.contains(drawTeams.get(i))) {
-                    return i;
-                }
-            }
-        }
-
-        //Ask the user who is the real winner.
-        List<String> optionsList = new ArrayList<>();
-        for (int i = 0; i < drawTeams.size(); i++) {
-            optionsList.add(drawTeams.get(i).getName());
-        }
-
-
-        Object[] options = optionsList.toArray();
-        int n = JOptionPane.showOptionDialog(frame,
-                trans.returnTag("DrawText"),
-                trans.returnTag("DrawTitle"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
-        if (n >= 0) {
-            DatabaseConnection.getInstance().getDatabase().storeUndraw(tournament, drawTeams.get(n), 0, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level);
-        }
-        return n;
-    }
-
-    private List<Team> getTeamsOfDrawsStored() {
-        return DatabaseConnection.getInstance().getDatabase().getWinnersInUndraws(tournament, level, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this));
-    }
-
-    private List<Undraw> getDrawsStored() {
-        return DatabaseConnection.getInstance().getDatabase().getUndraws();
-    }
-
-    /**
      * **********************************************
      *
      * LISTENERS
@@ -842,7 +493,7 @@ public class TournamentGroup extends Group implements Serializable {
                 csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournament).getIndexOfGroup(this), level));
             }
         }
-        List<Undraw> undraws = getDrawsStored();
+        List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournament);
         for (int i = 0; i < undraws.size(); i++) {
             csv.addAll(undraws.get(i).exportToCsv());
         }

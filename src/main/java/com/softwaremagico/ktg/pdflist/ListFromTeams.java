@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.gui.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -61,12 +61,12 @@ public abstract class ListFromTeams extends KendoFrame {
 
     private void fillTeams() {
         try {
-            listTeams = DatabaseConnection.getInstance().getDatabase().getAllTeams();
+            listTeams = TeamPool.getInstance().getAll();
             if (voidTournament) {
                 TeamComboBox.addItem(null);
             }
             for (int i = 0; i < listTeams.size(); i++) {
-                TeamComboBox.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).tournament.getName() + ")");
+                TeamComboBox.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).getTournament().getName() + ")");
             }
         } catch (NullPointerException npe) {
         }
@@ -109,7 +109,7 @@ public abstract class ListFromTeams extends KendoFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TeamComboBox = new javax.swing.JComboBox<String>();
+        TeamComboBox = new javax.swing.JComboBox();
         TeamLabel = new javax.swing.JLabel();
         GenerateButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
@@ -194,7 +194,7 @@ public abstract class ListFromTeams extends KendoFrame {
     private javax.swing.JButton CancelButton;
     public javax.swing.JCheckBox CheckBox;
     protected javax.swing.JButton GenerateButton;
-    protected javax.swing.JComboBox<String> TeamComboBox;
+    protected javax.swing.JComboBox TeamComboBox;
     private javax.swing.JLabel TeamLabel;
     // End of variables declaration//GEN-END:variables
 }

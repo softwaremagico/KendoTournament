@@ -26,13 +26,13 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.RoleTags;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.RoleTag;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 import javax.swing.JFileChooser;
 
 /**
@@ -45,13 +45,13 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
     InputStream photoInput;
     long size;
     private boolean statistics = false;
-    private RoleTags selectedRoles = null;
+    private List<RoleTag> selectedRoles = null;
 
-    public DiplomaGenerator(float nposition, boolean printStatistics, RoleTags roles) {
+    public DiplomaGenerator(float nposition, boolean printStatistics, List<RoleTag> roles) {
         super();
-        nameposition = nposition;
-        statistics = printStatistics;
-        selectedRoles = roles;
+        this.nameposition = nposition;
+        this.statistics = printStatistics;
+        this.selectedRoles = roles;
         this.setTitle(trans.returnTag("titleDiplomas"));
         CheckBox.setVisible(true);
         prepareCheckBox();

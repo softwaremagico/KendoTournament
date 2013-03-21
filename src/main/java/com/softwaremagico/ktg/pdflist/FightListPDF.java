@@ -30,7 +30,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
@@ -54,12 +54,12 @@ public class FightListPDF extends ParentList {
         PdfPTable fightTable = new PdfPTable(widths);
         fightTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
-        fightTable.addCell(getHeader3(f.team1.getName() + " Vs " + f.team2.getName(), 0));
+        fightTable.addCell(getHeader3(f.getTeam1().getName() + " Vs " + f.getTeam2().getName(), 0));
 
-        for (int i = 0; i < f.team1.getNumberOfMembers(f.level); i++) {
-            fightTable.addCell(getCell(f.team1.getMember(i, f.level).getSurnameNameIni(), 1, Element.ALIGN_LEFT));
+        for (int i = 0; i < f.getTeam1().getNumberOfMembers(f.getLevel()); i++) {
+            fightTable.addCell(getCell(f.getTeam1().getMember(i, f.getLevel()).getSurnameNameIni(), 1, Element.ALIGN_LEFT));
             fightTable.addCell(getEmptyCell());
-            fightTable.addCell(getCell(f.team2.getMember(i, f.level).getSurnameNameIni(), 1, Element.ALIGN_RIGHT));
+            fightTable.addCell(getCell(f.getTeam2().getMember(i, f.getLevel()).getSurnameNameIni(), 1, Element.ALIGN_RIGHT));
         }
 
         return fightTable;
@@ -71,7 +71,7 @@ public class FightListPDF extends ParentList {
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         for (int i = 0; i < tournament.getFightingAreas(); i++) {
-            List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournamentAndFightArea(tournament, i);
+            List<Fight> fights = FightPool.getInstance().get(tournament, i);
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getInstance().returnShiaijo(i), 0));
@@ -83,7 +83,7 @@ public class FightListPDF extends ParentList {
                 //if (fights.get(j).isOver()) {
                 //    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200, 200, 200));
                 //} else {
-                    cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
+                cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
                 //}
                 //cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 mainTable.addCell(cell);
@@ -96,8 +96,6 @@ public class FightListPDF extends ParentList {
     private PdfPTable championshipTable(PdfPTable mainTable) {
         PdfPCell cell;
 
-       FightPool.getManager(tournament).getFightsFromDatabase(tournament);
-        
         for (int l = 0; l < TournamentGroupPool.getManager(tournament).getLevels().size(); l++) {
             /*
              * Header of the phase
@@ -108,14 +106,15 @@ public class FightListPDF extends ParentList {
 
             List<TournamentGroup> groups = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(l);
 
+            List<Fight> fights = FightPool.getInstance().get(tournament);
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(FightPool.getManager(tournament).getFights())) + ")", 0));
+                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(fights)) + ")", 0));
+                
+                for (int j = 0; j < fights.size(); j++) {
+                    if (groups.get(i).isFightOfGroup(fights.get(j))) {
 
-                for (int j = 0; j < FightPool.getManager(tournament).size(); j++) {
-                    if (groups.get(i).isFightOfGroup(FightPool.getManager(tournament).get(j))) {
-
-                        cell = new PdfPCell(fightTable(FightPool.getManager(tournament).get(j), font, fontSize));
+                        cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
                         cell.setBorderWidth(1);
                         cell.setColspan(3);
                         //if (FightPool.getManager(tournament).get(j).isOver()) {

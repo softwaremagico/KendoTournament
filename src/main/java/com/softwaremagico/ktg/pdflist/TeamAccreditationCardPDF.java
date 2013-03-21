@@ -29,10 +29,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.CompetitorWithPhoto;
+import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
 
@@ -67,8 +66,8 @@ public class TeamAccreditationCardPDF extends PdfDocument {
         com.itextpdf.text.Image banner = com.itextpdf.text.Image.getInstance(Path.getBannerPath());
 
         for (i = 0; i < team.getNumberOfMembers(0); i++) {
-            CompetitorWithPhoto c = DatabaseConnection.getInstance().getDatabase().selectCompetitor(team.getMember(i, 0).getId(), false);
-            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(c, competition, banner);
+            RegisteredPerson person = team.getMember(i, 0);
+            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(person, competition, banner);
             PdfPTable competitorTable = competitorPDF.pageTable(width / 2, height / 2, writer, font, fontSize);
             competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
             cell = new PdfPCell(competitorTable);

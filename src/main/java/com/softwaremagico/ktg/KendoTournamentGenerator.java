@@ -23,7 +23,6 @@ package com.softwaremagico.ktg;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Folder;
@@ -165,7 +164,6 @@ public class KendoTournamentGenerator {
         obtainStoredNamePositionOnDiploma();
         obtainLogOption();
         obtainDebugOption();
-        obtainLazyUpdateOption();
         //obtainStoredScore();
     }
 
@@ -244,15 +242,6 @@ public class KendoTournamentGenerator {
         }
     }
 
-    private void obtainLazyUpdateOption() {
-        try {
-            DatabaseConnection.getInstance().setDatabaseLazyUpdate(Boolean.parseBoolean(obtainStoredDataInConfig("StrictStore:")));
-        } catch (Exception e) {
-            DatabaseConnection.getInstance().setDatabaseLazyUpdate(true);
-            storeConfig();
-        }
-    }
-
     public void storeConfig() {
         List<String> configData = new ArrayList<>();
         configData.add("Tournament:" + lastSelectedTournament);
@@ -260,7 +249,6 @@ public class KendoTournamentGenerator {
         configData.add("NameDiploma:" + nameDiplomaPosition);
         configData.add("Log:" + logActivated);
         configData.add("Debug:" + debugMode);
-        configData.add("StrictStore:" + DatabaseConnection.getInstance().isDatabaseLazyUpdate());
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);

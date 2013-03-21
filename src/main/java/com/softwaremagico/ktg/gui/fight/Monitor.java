@@ -169,7 +169,7 @@ public final class Monitor extends javax.swing.JFrame {
 
             //If the designedgroups are loaded, we can select only the shiaijos used in this level.
             try {
-                if (fightArea >= TournamentGroupPool.getManager(selectedTournament).getArenasOfLevel(FightPool.getManager(selectedTournament).getFights(), FightPool.getManager(selectedTournament).get(FightPool.getManager(selectedTournament).size() - 1).level)) {
+                if (fightArea >= TournamentGroupPool.getManager(selectedTournament).getArenasOfLevel(FightPool.getManager(selectedTournament).getFights(), FightPool.getManager(selectedTournament).get(FightPool.getManager(selectedTournament).size() - 1).getLevel())) {
                     fightArea = 0;
                 }
             } catch (NullPointerException npe2) {

@@ -31,7 +31,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TeamPool;
 import java.util.List;
 
 /**
@@ -40,11 +40,11 @@ import java.util.List;
  */
 public class TeamListPDF extends ParentList {
 
-    private Tournament championship;
+    private Tournament tournament;
     private final int border = 0;
 
     public TeamListPDF(Tournament tmp_championship) {
-        championship = tmp_championship;
+        tournament = tmp_championship;
     }
 
     public PdfPTable teamTable(Team t, String font, int fontSize) {
@@ -77,7 +77,7 @@ public class TeamListPDF extends ParentList {
 
         mainTable.addCell(getEmptyRow());
 
-        List<Team> listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournament(championship, false);
+        List<Team> listTeams = TeamPool.getInstance().get(tournament);
         for (int i = 0; i < listTeams.size(); i++) {
 
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));
@@ -112,7 +112,7 @@ public class TeamListPDF extends ParentList {
         PdfPCell cell;
         Paragraph p;
 
-        p = new Paragraph(championship.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        p = new Paragraph(tournament.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setBorderWidth(headerBorder);
         cell.setColspan(getTableWidths().length);
