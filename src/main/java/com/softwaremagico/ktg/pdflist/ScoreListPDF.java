@@ -31,6 +31,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentGroupPool;
@@ -99,22 +100,22 @@ public class ScoreListPDF extends ParentList {
                         mainTable.addCell(getCell(trans.returnTag("duelsWon"), 1, Element.ALIGN_CENTER));
                         mainTable.addCell(getCell(trans.returnTag("histsWon"), 1, Element.ALIGN_CENTER));
 
+                        List<Team> winnersUndraw = UndrawPool.getInstance().getWinners(tournament, groups.get(i).getLevel(), i);
 
-                        List<Team> winnersUndraw = DatabaseConnection.getInstance().getDatabase().getWinnersInUndraws(tournament, groups.get(i).getLevel(), i);
-
-                        for (int j = 0; j < groups.get(i).teams.size(); j++) {
+                        for (int j = 0; j < groups.get(i).getTeams().size(); j++) {
                             /*
                              * Header of the teams
                              */
-                            Team t = groups.get(i).getTeamInOrderOfScore(j, fights, false);
+                            Ranking ranking = new Ranking(fights);
+                            ScoreOfTeam scoreOfTeam = ranking.getScoreOfTeam(j);
 
-                            mainTable.addCell(getCell(t.getName(), 0, Element.ALIGN_LEFT));
-                            mainTable.addCell(getCell(Ranking.obtainWonFights(fights, t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawFights(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
-                            mainTable.addCell(getCell(Ranking.obtainWonDuels(fights, t, groups.get(i).getLevel()) + "/" + Ranking.obtainDrawDuels(FightPool.getManager(tournament).getFights(), t, groups.get(i).getLevel()), 0, Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(scoreOfTeam.getTeam().getName(), 0, Element.ALIGN_LEFT));
+                            mainTable.addCell(getCell(scoreOfTeam.getWonFights() + "/" + scoreOfTeam.getDrawFights(), 0, Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(scoreOfTeam.getWonDuels() + "/" + scoreOfTeam.getDrawDuels(), 0, Element.ALIGN_CENTER));
 
-                            String score = "" + (int) (float) (Ranking.obtainHits(fights, t, groups.get(i).getLevel()));
+                            String score = scoreOfTeam.getHits() + "";
                             if (winnersUndraw != null) {
-                                if (winnersUndraw.contains(t)) {
+                                if (winnersUndraw.contains(scoreOfTeam.getTeam())) {
                                     score += "*";
                                 }
                             }
@@ -131,9 +132,9 @@ public class ScoreListPDF extends ParentList {
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
         if (tournament.getMode().equals(TournamentType.SIMPLE)) {
-            mainTable = simpleTable(mainTable);
+            simpleTable(mainTable);
         } else {
-            mainTable = championshipTable(mainTable);
+            championshipTable(mainTable);
         }
     }
 

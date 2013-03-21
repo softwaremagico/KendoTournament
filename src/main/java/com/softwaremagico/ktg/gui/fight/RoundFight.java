@@ -276,8 +276,8 @@ public class RoundFight extends JPanel {
             boolean nextStarted;
             for (int i = 0; i < draws.size(); i++) {
                 if (i < fight.getDuels().size() - 1) {
-                    nextStarted = (fight.getDuels().get(i + 1).getPoints(true) > 0)
-                            || (fight.getDuels().get(i + 1).getPoints(false) > 0) || fight.getDuels().get(i + 1).isOver();
+                    nextStarted = (fight.getDuels().get(i + 1).getScore(true) > 0)
+                            || (fight.getDuels().get(i + 1).getScore(false) > 0) || fight.getDuels().get(i + 1).isOver();
                 } else {
                     nextStarted = false;
                 }

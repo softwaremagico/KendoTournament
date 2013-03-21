@@ -24,9 +24,11 @@ package com.softwaremagico.ktg.statistics;
  */
 
 import com.softwaremagico.ktg.Ranking;
+import com.softwaremagico.ktg.ScoreOfTeam;
 import com.softwaremagico.ktg.Team;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.List;
@@ -45,7 +47,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class StatisticsTeamTopTen extends StatisticsGUI {
 
     private Translator transl;
-    private List<TeamRanking> teamTopTen;
+    private List<ScoreOfTeam> teamTopTen;
     private int startRange = 0;
     private List<Team> teams;
     private boolean changesAllowed = false;
@@ -54,23 +56,22 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
     public StatisticsTeamTopTen(Tournament tournament) {
         this.tournament = tournament;
         //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tmp_championship, false);
-        Ranking ranking = new Ranking();
+        Ranking ranking;
         if (tournament != null) {
-            teamTopTen = ranking.getTeamRanking(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
+            ranking = new Ranking(FightPool.getInstance().get(tournament));
+            teams = TeamPool.getInstance().get(tournament);
         } else {
-            teamTopTen = ranking.getTeamRanking(DatabaseConnection.getInstance().getDatabase().getAllFights());
+            ranking = new Ranking(FightPool.getInstance().getAll());
+            teams = TeamPool.getInstance().getAll();
         }
+        teamTopTen = ranking.getTeamsScoreRanking();
         transl = LanguagePool.getTranslator("gui.xml");
         start();
         NumberSpinner.setVisible(true);
         NumberLabel.setVisible(true);
         this.setExtendedState(this.getExtendedState() | StatisticsTeamTopTen.MAXIMIZED_BOTH);
+
         try {
-            if (tournament == null) {
-                teams = DatabaseConnection.getInstance().getDatabase().getAllTeams();
-            } else {
-                teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournament(tournament, false);
-            }
             fillSelectComboBox();
             changesAllowed = true;
             NumberLabel.setText(trans.returnTag("NumberTeamsLabel"));
@@ -130,15 +131,15 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         for (int i = startValue; i < endValue; i++) {
             String c;
             if (tournament == null) {
-                c = (i + 1) + " - " + teamTopTen.get(i).name + " (" + teamTopTen.get(i).tournament + ")";
+                c = (i + 1) + " - " + teamTopTen.get(i).getTeam().getName() + " (" + teamTopTen.get(i).getTournament().getName() + ")";
             } else {
-                c = (i + 1) + " - " + teamTopTen.get(i).name;
+                c = (i + 1) + " - " + teamTopTen.get(i).getTeam().getName();
             }
-            dataset.addValue(teamTopTen.get(i).wonMatchs, series1, c);
-            dataset.addValue(teamTopTen.get(i).drawMatchs, series2, c);
-            dataset.addValue(teamTopTen.get(i).wonFights, series3, c);
-            dataset.addValue(teamTopTen.get(i).drawFights, series4, c);
-            dataset.addValue(teamTopTen.get(i).score, series5, c);
+            dataset.addValue(teamTopTen.get(i).getWonFights(), series1, c);
+            dataset.addValue(teamTopTen.get(i).getDrawFights(), series2, c);
+            dataset.addValue(teamTopTen.get(i).getWonDuels(), series3, c);
+            dataset.addValue(teamTopTen.get(i).getDrawDuels(), series4, c);
+            dataset.addValue(teamTopTen.get(i).getHits(), series5, c);
         }
         return dataset;
     }
@@ -192,7 +193,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     public void updateComboBox(Team team) {
         if (tournament == null) {
-            SelectComboBox.setSelectedItem(team.getName() + " (" + team.tournament.getName() + ")");
+            SelectComboBox.setSelectedItem(team.getName() + " (" + team.getTournament().getName() + ")");
         } else {
             SelectComboBox.setSelectedItem(team.getName());
         }
@@ -205,7 +206,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
         for (int i = 0; i < teams.size(); i++) {
             if (tournament == null) {
-                SelectComboBox.addItem(teams.get(i).getName() + " (" + teams.get(i).tournament.getName() + ")");
+                SelectComboBox.addItem(teams.get(i).getName() + " (" + teams.get(i).getTournament().getName() + ")");
             } else {
                 SelectComboBox.addItem(teams.get(i).getName());
             }
@@ -213,9 +214,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
         try {
             if (tournament == null) {
-                SelectComboBox.setSelectedItem(teamTopTen.get(0).name + " (" + teamTopTen.get(0).tournament + ")");
+                SelectComboBox.setSelectedItem(teamTopTen.get(0).getTeam().getName() + " (" + teamTopTen.get(0).getTournament().getName() + ")");
             } else {
-                SelectComboBox.setSelectedItem(teamTopTen.get(0).name);
+                SelectComboBox.setSelectedItem(teamTopTen.get(0).getTeam().getName());
             }
         } catch (NullPointerException | IndexOutOfBoundsException npe) {
         }
@@ -223,7 +224,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     private int searchForTeamPosition(Team team) {
         for (int i = 0; i < teamTopTen.size(); i++) {
-            if (teamTopTen.get(i).name.equals(team.getName()) && teamTopTen.get(i).tournament.equals(team.tournament)) {
+            if (teamTopTen.get(i).getTeam().equals(team)) {
                 return i;
             }
         }

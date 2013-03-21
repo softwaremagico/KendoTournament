@@ -165,7 +165,7 @@ public class Duel implements Serializable, Comparable<Duel> {
     }
 
     public void setFaults(boolean player1) {
-        int faultRound = getPoints((!player1));
+        int faultRound = getScore((!player1));
         if (player1) {
             if (faultsCompetitorA == true) {
                 setResultInRound(faultRound, Score.HANSOKU, !player1);
@@ -199,7 +199,7 @@ public class Duel implements Serializable, Comparable<Duel> {
         }
     }
 
-    public Integer getPoints(boolean player1) {
+    public Integer getScore(boolean player1) {
         int round = 0;
         if (player1) {
             for (int i = 0; i < hitsFromCompetitorA.size(); i++) {

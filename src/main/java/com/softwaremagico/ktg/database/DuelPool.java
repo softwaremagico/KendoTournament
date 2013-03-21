@@ -79,11 +79,28 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
             if (team1) {
-                if (duel.getFight().getTeam1().isMember(competitor)) {
+                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
                     results.add(duel);
                 }
             } else {
-                if (duel.getFight().getTeam2().isMember(competitor)) {
+                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                    results.add(duel);
+                }
+            }
+        }
+        return results;
+    }
+
+    public List<Duel> get(RegisteredPerson competitor, boolean team1) {
+        List<Duel> allDuels = getAll();
+        List<Duel> results = new ArrayList<>();
+        for (Duel duel : allDuels) {
+            if (team1) {
+                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                    results.add(duel);
+                }
+            } else {
+                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
                     results.add(duel);
                 }
             }

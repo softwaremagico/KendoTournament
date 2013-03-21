@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.Duel;
 import com.softwaremagico.ktg.Score;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.DuelPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
@@ -49,9 +49,9 @@ public class StatisticsGeneralHits extends StatisticsGUI {
     public StatisticsGeneralHits(Tournament tournament) {
         this.tournament = tournament;
         if (tournament == null) { //null == all.
-            duels = DatabaseConnection.getInstance().getDatabase().getAllDuels();
+            duels = DuelPool.getInstance().getAll();
         } else {
-            duels = DatabaseConnection.getInstance().getDatabase().getDuelsOfTournament(tournament);
+            duels = DuelPool.getInstance().get(tournament);
         }
         start();
     }

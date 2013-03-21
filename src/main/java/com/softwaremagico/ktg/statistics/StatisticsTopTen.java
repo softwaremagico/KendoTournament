@@ -25,15 +25,16 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
+import com.softwaremagico.ktg.Ranking;
 import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.RoleTag;
+import com.softwaremagico.ktg.ScoreOfCompetitor;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -51,17 +52,20 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     Translator transl;
     Tournament tournament;
-    List<CompetitorRanking> competitorTopTen;
+    List<ScoreOfCompetitor> competitorTopTen;
     int startRange = 0;
     private List<RegisteredPerson> competitors;
     boolean changesAllowed = false;
 
     public StatisticsTopTen(Tournament tournament) {
         this.tournament = tournament;
+        Ranking ranking;
         if (tournament == null) {
-            competitorTopTen = getCompetitorsOrderByScore();
+            ranking = new Ranking(FightPool.getInstance().getAll());
+            competitorTopTen = ranking.getCompetitorsScoreRanking();
         } else {
-            competitorTopTen = getCompetitorsOrderByScoreInChampionship(tournament);
+            ranking = new Ranking(FightPool.getInstance().get(tournament));
+            competitorTopTen = ranking.getCompetitorsScoreRanking();
         }
         transl = LanguagePool.getTranslator("gui.xml");
         start();
@@ -69,119 +73,13 @@ public class StatisticsTopTen extends StatisticsGUI {
         NumberLabel.setVisible(true);
         this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
         if (tournament != null) {
-            competitors = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
+            competitors = RolePool.getInstance().getPeople(tournament, RoleTag.competitorsRoles);
         } else {
-            competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
+            competitors = RolePool.getInstance().getPeople(RoleTag.competitorsRoles);
         }
         fillSelectComboBox();
         changesAllowed = true;
         NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
-    }
-
-    public StatisticsTopTen() {
-        //usa la formula vieja!! 
-        competitorTopTen = getCompetitorsOrderByScore();
-        transl = LanguagePool.getTranslator("gui.xml");
-        start();
-        NumberSpinner.setVisible(true);
-        NumberLabel.setVisible(true);
-        this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
-        competitors = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
-        fillSelectComboBox();
-        changesAllowed = true;
-        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
-    }
-
-    private List<CompetitorRanking> getCompetitorsOrderByScore() {
-        List<RegisteredPerson> competitorsList = DatabaseConnection.getInstance().getDatabase().getAllCompetitors();
-        List<CompetitorRanking> ranking = new ArrayList<>();
-        List<Fight> fights = DatabaseConnection.getInstance().getDatabase().getAllFights();
-        for (int i = 0; i < competitorsList.size(); i++) {
-            if (competitorsList.get(i) != null) {
-                int victories = obtainWinnedDuels(competitorsList.get(i), fights);
-                int score = obtainTotalHits(competitorsList.get(i), fights);
-                ranking.add(new CompetitorRanking(competitorsList.get(i).getName(), competitorsList.get(i).getSurname(), competitorsList.get(i).getId(), victories, score));
-            }
-        }
-        return OrderCompetitorRanking(ranking);
-
-    }
-
-    private List<CompetitorRanking> getCompetitorsOrderByScoreInChampionship(Tournament tournament) {
-        List<RegisteredPerson> competitorsList = DatabaseConnection.getInstance().getDatabase().selectAllCompetitorsInTournament(tournament);
-        List<CompetitorRanking> ranking = new ArrayList<>();
-        List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
-        for (int i = 0; i < competitorsList.size(); i++) {
-            if (competitorsList.get(i) != null) {
-                int victories = obtainWinnedDuels(competitorsList.get(i), fights);
-                int score = obtainTotalHits(competitorsList.get(i), fights);
-                ranking.add(new CompetitorRanking(competitorsList.get(i).getName(), competitorsList.get(i).getSurname(), competitorsList.get(i).getId(), victories, score));
-            }
-        }
-        return OrderCompetitorRanking(ranking);
-
-    }
-
-    private List<CompetitorRanking> OrderCompetitorRanking(List<CompetitorRanking> competitorsScore) {
-        List<CompetitorRanking> ordered = new ArrayList<>();
-        while (!competitorsScore.isEmpty()) {
-            int max = 0;
-            int maxVictories = 0;
-            int maxScore = 0;
-            for (int i = 0; i < competitorsScore.size(); i++) {
-                if (competitorsScore.get(i).victorias > maxVictories) {
-                    max = i;
-                    maxVictories = competitorsScore.get(i).victorias;
-                    maxScore = competitorsScore.get(i).puntos;
-                } else {
-                    if (competitorsScore.get(i).victorias == maxVictories) {
-                        //Draw victories but has more score.
-                        if (competitorsScore.get(i).puntos > maxScore) {
-                            max = i;
-                            maxScore = competitorsScore.get(i).puntos;
-                        }
-                    }
-                }
-            }
-            //Add competitior as the next with more score.
-            ordered.add(competitorsScore.get(max));
-            competitorsScore.remove(max);
-        }
-        return ordered;
-    }
-
-    public int obtainWinnedDuels(RegisteredPerson c, List<Fight> fights) {
-        int won = 0;
-        for (int i = 0; i < fights.size(); i++) {
-            Integer index = fights.get(i).getTeam1().getMemberOrder(fights.get(i).getLevel(), c.getId());
-            if (index != null && index >= 0) {
-                if (fights.get(i).getDuels().get(index).winner() < 0) {
-                    won++;
-                }
-            }
-            index = fights.get(i).getTeam2().getMemberOrder(fights.get(i).getLevel(), c.getId());
-            if (index != null && index >= 0) {
-                if (fights.get(i).getDuels().get(index).winner() > 0) {
-                    won++;
-                }
-            }
-        }
-        return won;
-    }
-
-    public int obtainTotalHits(RegisteredPerson c, List<Fight> fights) {
-        int hits = 0;
-        for (int i = 0; i < fights.size(); i++) {
-            Integer index = fights.get(i).getTeam1().getMemberOrder(fights.get(i).getLevel(), c.getId());
-            if (index != null && index >= 0) {
-                hits += fights.get(i).getDuels().get(index).getPoints(true);
-            }
-            index = fights.get(i).getTeam2().getMemberOrder(fights.get(i).getLevel(), c.getId());
-            if (index != null && index >= 0) {
-                hits += fights.get(i).getDuels().get(index).getPoints(false);
-            }
-        }
-        return hits;
     }
 
     @Override
@@ -233,10 +131,10 @@ public class StatisticsTopTen extends StatisticsGUI {
         }
 
         for (int i = startValue; i < endValue; i++) {
-            String c = (i + 1) + " - " + competitorTopTen.get(i).name + " " + competitorTopTen.get(i).surname;
+            String c = (i + 1) + " - " + competitorTopTen.get(i).getCompetitor().getName() + " " + competitorTopTen.get(i).getCompetitor().getSurname();
 
-            dataset.addValue(competitorTopTen.get(i).victorias, series1, c);
-            dataset.addValue(competitorTopTen.get(i).puntos, series2, c);
+            dataset.addValue(competitorTopTen.get(i).getWonDuels(), series1, c);
+            dataset.addValue(competitorTopTen.get(i).getHits(), series2, c);
         }
         return dataset;
     }
@@ -303,15 +201,16 @@ public class StatisticsTopTen extends StatisticsGUI {
             SelectComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName() + " (" + competitors.get(i).getId() + ")");
         }
 
+        //Select the winner.
         try {
-            SelectComboBox.setSelectedItem(competitorTopTen.get(0).surname + ", " + competitorTopTen.get(0).name + " (" + competitorTopTen.get(0).id + ")");
+            SelectComboBox.setSelectedItem(competitorTopTen.get(0).getCompetitor().getSurname() + ", " + competitorTopTen.get(0).getCompetitor().getName() + " (" + competitorTopTen.get(0).getCompetitor().getId() + ")");
         } catch (NullPointerException | IndexOutOfBoundsException npe) {
         }
     }
 
     private int searchForCompetitorPosition(RegisteredPerson c) {
         for (int i = 0; i < competitorTopTen.size(); i++) {
-            if (competitorTopTen.get(i).id.equals(c.getId())) {
+            if (competitorTopTen.get(i).getCompetitor().getId().equals(c.getId())) {
                 return i;
             }
         }

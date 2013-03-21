@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.RegisteredPerson;
 import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.database.DuelPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.util.ArrayList;
@@ -36,16 +36,12 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
-/**
- *
- * @author jhortelano
- */
 public abstract class StatisticsHits extends StatisticsGUI {
 
-    List<Duel> duels = new ArrayList<>();
-    List<Duel> duelsOfCompetitorWhenIsInTeamRight = new ArrayList<>();
-    List<Duel> duelsOfCOmpetitorWhenIsInTeamLeft = new ArrayList<>();
-    RegisteredPerson competitor;
+    private List<Duel> duels = new ArrayList<>();
+    private List<Duel> duelsOfCompetitorWhenIsInTeamRight = new ArrayList<>();
+    private List<Duel> duelsOfCompetitorWhenIsInTeamLeft = new ArrayList<>();
+    protected RegisteredPerson competitor;
 
     /**
      * Obtain all duels of a specific competitor.
@@ -55,10 +51,10 @@ public abstract class StatisticsHits extends StatisticsGUI {
     protected void obtainDuels(RegisteredPerson competitor) {
         this.competitor = competitor;
         if (this.competitor == null) {
-            duels = DatabaseConnection.getInstance().getDatabase().getAllDuels();
+            duels = DuelPool.getInstance().getAll();
         } else {
-            duelsOfCompetitorWhenIsInTeamRight = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), true);
-            duelsOfCOmpetitorWhenIsInTeamLeft = DatabaseConnection.getInstance().getDatabase().getDuelsOfcompetitor(competitor.getId(), false);
+            duelsOfCompetitorWhenIsInTeamRight = DuelPool.getInstance().get(competitor, true);
+            duelsOfCompetitorWhenIsInTeamLeft = DuelPool.getInstance().get(competitor, false);
         }
     }
 
@@ -93,8 +89,8 @@ public abstract class StatisticsHits extends StatisticsGUI {
             ippones += d.getIppones(!performedHits);
         }
 
-        for (int i = 0; i < duelsOfCOmpetitorWhenIsInTeamLeft.size(); i++) {
-            Duel d = duelsOfCOmpetitorWhenIsInTeamLeft.get(i);
+        for (int i = 0; i < duelsOfCompetitorWhenIsInTeamLeft.size(); i++) {
+            Duel d = duelsOfCompetitorWhenIsInTeamLeft.get(i);
             mems += d.getMems(performedHits);
             kotes += d.getKotes(performedHits);
             tsukis += d.getTsukis(performedHits);

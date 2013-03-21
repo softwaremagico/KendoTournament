@@ -1405,7 +1405,7 @@ public class Controller {
                 statisticsTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTopTen = new StatisticsTopTen();
+            statisticsTopTen = new StatisticsTopTen(null);
             statisticsTopTen.setVisible(true);
             statisticsTopTen.updateComboBox(selectWonFightsOfCompetitor.returnSelectedCompetitor());
             selectWonFightsOfCompetitor.dispose();

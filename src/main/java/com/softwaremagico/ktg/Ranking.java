@@ -31,10 +31,74 @@ import java.util.List;
 
 public class Ranking {
 
-    public List<Team> teams;
+    List<Fight> fights;
+    List<Team> teamRanking = null;
+    List<RegisteredPerson> competitorsRanking = null;
+    List<ScoreOfTeam> teamScoreRanking = null;
+    List<ScoreOfCompetitor> competitorsScoreRanking = null;
 
-    public Ranking() {
-        teams = new ArrayList<>();
+    public Ranking(List<Fight> fights) {
+        this.fights = fights;
+    }
+
+    public List<Team> getTeamsRanking() {
+        if (teamRanking == null) {
+            teamRanking = getTeamsRanking(fights);
+        }
+        return teamRanking;
+    }
+
+    public List<ScoreOfTeam> getTeamsScoreRanking() {
+        if (teamScoreRanking == null) {
+            teamScoreRanking = getTeamsScoreRanking(fights);
+        }
+        return teamScoreRanking;
+    }
+
+    public Team getTeam(Integer order) {
+        List<Team> teamsOrder = getTeamsRanking();
+        if (order >= 0 && order < teamsOrder.size()) {
+            return teamsOrder.get(order);
+        }
+        return null;
+    }
+
+    public ScoreOfTeam getScoreOfTeam(Integer order) {
+        List<ScoreOfTeam> teamsOrder = getTeamsScoreRanking();
+        if (order >= 0 && order < teamsOrder.size()) {
+            return teamsOrder.get(order);
+        }
+        return null;
+    }
+
+    public List<RegisteredPerson> getCompetitorsRanking() {
+        if (competitorsRanking == null) {
+            competitorsRanking = getCompetitorsRanking(fights);
+        }
+        return competitorsRanking;
+    }
+
+    public List<ScoreOfCompetitor> getCompetitorsScoreRanking() {
+        if (competitorsScoreRanking == null) {
+            competitorsScoreRanking = getCompetitorsScoreRanking(fights);
+        }
+        return competitorsScoreRanking;
+    }
+
+    public RegisteredPerson getCompetitor(Integer order) {
+        List<RegisteredPerson> competitorOrder = getCompetitorsRanking();
+        if (order >= 0 && order < competitorOrder.size()) {
+            return competitorOrder.get(order);
+        }
+        return null;
+    }
+
+    public ScoreOfCompetitor getScoreOfCompetitor(Integer order) {
+        List<ScoreOfCompetitor> teamsOrder = getCompetitorsScoreRanking();
+        if (order >= 0 && order < teamsOrder.size()) {
+            return teamsOrder.get(order);
+        }
+        return null;
     }
 
     private static List<Team> getTeams(List<Fight> fights) {
@@ -65,7 +129,7 @@ public class Ranking {
         return competitorsOfFight;
     }
 
-    public static List<Team> getTeamRanking(List<Fight> fights) {
+    public static List<Team> getTeamsRanking(List<Fight> fights) {
         List<Team> teamsOfFights = getTeams(fights);
         List<ScoreOfTeam> scores = new ArrayList<>();
         for (Team team : teamsOfFights) {
@@ -79,7 +143,7 @@ public class Ranking {
         return teamRanking;
     }
 
-    public static List<ScoreOfTeam> getTeamScoreRanking(List<Fight> fights) {
+    public static List<ScoreOfTeam> getTeamsScoreRanking(List<Fight> fights) {
         List<Team> teamsOfFights = getTeams(fights);
         List<ScoreOfTeam> scores = new ArrayList<>();
         for (Team team : teamsOfFights) {
@@ -101,7 +165,7 @@ public class Ranking {
     }
 
     public static Integer getOrder(List<Fight> fights, Team team) {
-        List<Team> ranking = getTeamRanking(fights);
+        List<Team> ranking = getTeamsRanking(fights);
 
         for (Integer i = 0; i < ranking.size(); i++) {
             if (ranking.get(i).equals(team)) {
@@ -121,8 +185,8 @@ public class Ranking {
     }
 
     public static Team getTeam(List<Fight> fights, Integer order) {
-        List<Team> ranking = getTeamRanking(fights);
-        if (order < ranking.size() && order > 0) {
+        List<Team> ranking = getTeamsRanking(fights);
+        if (order < ranking.size() && order >= 0) {
             return ranking.get(order);
         }
         return null;
@@ -137,7 +201,7 @@ public class Ranking {
         Collections.sort(scores);
         List<RegisteredPerson> competitorsRanking = new ArrayList<>();
         for (ScoreOfCompetitor score : scores) {
-            competitorsRanking.add(score.getRegisteredPerson());
+            competitorsRanking.add(score.getCompetitor());
         }
         return competitorsRanking;
     }

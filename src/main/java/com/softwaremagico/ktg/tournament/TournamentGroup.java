@@ -43,7 +43,7 @@ public class TournamentGroup extends Group implements Serializable {
     private static final long serialVersionUID = -8425766161404716635L;
     transient Tournament tournament;
     transient DesignGroupWindow dgw;
-    public List<Team> teams = new ArrayList<>();
+    private List<Team> teams = new ArrayList<>();
     private boolean selected = false;
     private Integer numberMaxOfWinners = 1;
     transient private Translator trans = null;
@@ -77,7 +77,7 @@ public class TournamentGroup extends Group implements Serializable {
         label.setForeground(Color.BLACK);
         add(label, c);
     }
-
+ 
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         if (level == 0) {
@@ -141,7 +141,7 @@ public class TournamentGroup extends Group implements Serializable {
     private String returnText() {
         String text = "<html>";
 
-        List<Team> teamRanking = Ranking.getTeamRanking(FightPool.getInstance().get(tournament));
+        List<Team> teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournament));
         if (teamRanking.isEmpty()) {
             text += "<b>" + getDefaultLabel() + "</b>";
         } else {
@@ -324,7 +324,7 @@ public class TournamentGroup extends Group implements Serializable {
 
     public List<Team> getWinners() {
         try {
-            return Ranking.getTeamRanking(FightPool.getInstance().get(tournament)).subList(0, numberMaxOfWinners);
+            return Ranking.getTeamsRanking(FightPool.getInstance().get(tournament)).subList(0, numberMaxOfWinners);
         } catch (Exception iob) {
         }
 

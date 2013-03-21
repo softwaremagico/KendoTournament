@@ -15,7 +15,7 @@ public class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor> {
         this.fights = fights;
     }
 
-    public RegisteredPerson getRegisteredPerson() {
+    public RegisteredPerson getCompetitor() {
         return competitor;
     }
 
@@ -65,6 +65,6 @@ public class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor> {
             return 1;
         }
         //Draw score, order by name;
-        return getRegisteredPerson().getSurnameName().compareTo(o.getRegisteredPerson().getSurnameName());
+        return getCompetitor().getSurnameName().compareTo(o.getCompetitor().getSurnameName());
     }
 }

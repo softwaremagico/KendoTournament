@@ -30,10 +30,6 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 
-/**
- *
- * @author Jorge
- */
 public class StatisticsHitsReceived extends StatisticsHits {
 
     public StatisticsHitsReceived(RegisteredPerson tmp_competitor) {

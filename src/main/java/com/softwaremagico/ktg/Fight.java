@@ -188,8 +188,8 @@ public class Fight implements Serializable, Comparable<Fight> {
         int pointLeft = 0;
         int pointRight = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            pointLeft += getDuels().get(i).getPoints(true);
-            pointRight += getDuels().get(i).getPoints(false);
+            pointLeft += getDuels().get(i).getScore(true);
+            pointRight += getDuels().get(i).getScore(false);
         }
         if (pointLeft > pointRight) {
             return team1;
@@ -315,7 +315,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     public Integer getScore(boolean team1) {
         int score = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            score += getDuels().get(i).getPoints(team1);
+            score += getDuels().get(i).getScore(team1);
         }
         return score;
     }
@@ -324,10 +324,10 @@ public class Fight implements Serializable, Comparable<Fight> {
         int hits = 0;
         for (int i = 0; i < getDuels().size(); i++) {
             if (team1.getMember(i, level).equals(competitor)) {
-                hits += getDuels().get(i).getPoints(true);
+                hits += getDuels().get(i).getScore(true);
             }
             if (team2.getMember(i, level).equals(competitor)) {
-                hits += getDuels().get(i).getPoints(false);
+                hits += getDuels().get(i).getScore(false);
             }
         }
         return hits;
