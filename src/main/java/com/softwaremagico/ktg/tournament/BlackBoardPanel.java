@@ -23,11 +23,8 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Color;
@@ -50,15 +47,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         setBackground(new Color(255, 255, 255));
     }
 
-    public void updateBlackBoard(Tournament tournament, boolean refill) {
+    public void updateBlackBoard(Tournament tournament) {
         this.tournament = tournament;
         //removeAll();
-        if (!refill) {
-            //TournamentGroupPool.getManager(selectedTournament).updateInnerLevel(0);
-        } else {
-            FightPool.getManager(tournament).getFightsFromDatabase(tournament);
-            List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        }
         paintDesignedGroups();
         paintSpaces();
     }

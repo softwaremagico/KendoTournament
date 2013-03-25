@@ -173,15 +173,9 @@ public abstract class LeagueLevel {
         return true;
     }
 
-    protected void updateScoreOfTeams(List<Fight> fights) {
-        for (TournamentGroup group : tournamentGroups) {
-            group.updateScoreForTeams(fights);
-        }
-    }
-
     protected TournamentGroup getGroupOfFight(Fight fight) {
         for (TournamentGroup group : tournamentGroups) {
-            if (group.teams.contains(fight.getTeam1()) && group.teams.contains(fight.getTeam2())) {
+            if (group.getTeams().contains(fight.getTeam1()) && group.getTeams().contains(fight.getTeam2())) {
                 return group;
             }
         }
@@ -191,7 +185,7 @@ public abstract class LeagueLevel {
     protected List<Team> getUsedTeams() {
         List<Team> usedTeams = new ArrayList<>();
         for (TournamentGroup group : tournamentGroups) {
-            usedTeams.addAll(group.teams);
+            usedTeams.addAll(group.getTeams());
         }
         return usedTeams;
     }
@@ -384,7 +378,7 @@ public abstract class LeagueLevel {
         String info = "Level: " + level + " Groups: ";
 
         for (TournamentGroup group : tournamentGroups) {
-            info += group.teams.size() + "\t";
+            info += group.getTeams().size() + "\t";
         }
         return info;
     }
@@ -401,7 +395,7 @@ public abstract class LeagueLevel {
     public void showTeams() {
         System.out.println("-------------------------------------");
         for (TournamentGroup group : tournamentGroups) {
-            for (Team team : group.teams) {
+            for (Team team : group.getTeams()) {
                 System.out.print(team.getName() + " ");
             }
             System.out.println();

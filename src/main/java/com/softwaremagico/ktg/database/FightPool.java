@@ -70,6 +70,12 @@ public class FightPool extends TournamentDependentPool<Fight> {
         super.remove(tournament, element);
     }
 
+    @Override
+    public void reset() {
+        super.reset();
+        DuelPool.getInstance().reset();
+    }
+
     public List<Fight> get(Tournament tournament, Integer fightArea) {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfArea = new ArrayList<>();
@@ -154,6 +160,17 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return fight.getLevel();
     }
 
+    public Integer getMaxLevel(Tournament tournament) {
+        Integer maxLevel = 0;
+        List<Fight> fights = get(tournament);
+        for (Fight fight : fights) {
+            if (fight.getLevel() > maxLevel) {
+                maxLevel = fight.getLevel();
+            }
+        }
+        return maxLevel;
+    }
+
     public List<Fight> getFromLevel(Tournament tournament, Integer level) {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfLevel = new ArrayList<>();
@@ -164,5 +181,25 @@ public class FightPool extends TournamentDependentPool<Fight> {
         }
         Collections.sort(fightsOfLevel);
         return fightsOfLevel;
+    }
+
+    public boolean areAllOver(Tournament tournament) {
+        List<Fight> fights = get(tournament);
+        for (Fight fight : fights) {
+            if (!fight.isOver()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean areAllOver(Tournament tournament, Integer arena) {
+        List<Fight> fights = get(tournament);
+        for (Fight fight : fights) {
+            if (!fight.isOver() && fight.getAsignedFightArea().equals(arena)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

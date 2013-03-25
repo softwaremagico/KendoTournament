@@ -82,12 +82,12 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private void fillGroupArea() {
         groupModel.removeAllElements();
-        if (dg.teams != null) {
-            for (int i = 0; i < dg.teams.size(); i++) {
-                groupModel.addElement(dg.teams.get(i).getName());
+        if (dg.getTeams() != null) {
+            for (int i = 0; i < dg.getTeams().size(); i++) {
+                groupModel.addElement(dg.getTeams().get(i).getName());
             }
         }
-        if (dg.teams.isEmpty()) {
+        if (dg.getTeams().isEmpty()) {
             groupModel.addElement(trans.returnTag("noTeams"));
             disable(true);
         } else {
@@ -104,7 +104,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private void showTeam() {
         int index = GroupList.getSelectedIndex();
-        Team t = dg.teams.get(index);
+        Team t = dg.getTeams().get(index);
         NewTeam newTeam;
         newTeam = new NewTeam(t);
         newTeam.setVisible(true);
@@ -135,13 +135,13 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         GroupScrollPane = new javax.swing.JScrollPane();
-        GroupList = new javax.swing.JList<String>();
+        GroupList = new javax.swing.JList();
         UpButton = new javax.swing.JButton();
         DownButton = new javax.swing.JButton();
         PassLabel = new javax.swing.JLabel();
         PassSpinner = new javax.swing.JSpinner();
         ArenaLabel = new javax.swing.JLabel();
-        FightAreaComboBox = new javax.swing.JComboBox<String>();
+        FightAreaComboBox = new javax.swing.JComboBox();
         DeleteButton = new javax.swing.JButton();
         ShowButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();
@@ -281,22 +281,22 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void UpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpButtonActionPerformed
         int index = GroupList.getSelectedIndex();
-        Team t = dg.teams.remove(index);
+        Team t = dg.getTeams().remove(index);
         if (index > 0) {
             index--;
         }
-        dg.teams.add(index, t);
+        dg.getTeams().add(index, t);
         fillGroupArea();
         GroupList.setSelectedIndex(index);
     }//GEN-LAST:event_UpButtonActionPerformed
 
     private void DownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownButtonActionPerformed
         int index = GroupList.getSelectedIndex();
-        Team t = dg.teams.remove(index);
-        if (index < dg.teams.size()) {
+        Team t = dg.getTeams().remove(index);
+        if (index < dg.getTeams().size()) {
             index++;
         }
-        dg.teams.add(index, t);
+        dg.getTeams().add(index, t);
         fillGroupArea();
         GroupList.setSelectedIndex(index);
     }//GEN-LAST:event_DownButtonActionPerformed
@@ -306,16 +306,16 @@ public class DesignGroupWindow extends javax.swing.JFrame {
             PassSpinner.setValue(0);
         }
         /*
-         * if (dg.teams.isEmpty()) { if ((Integer) PassSpinner.getValue() >
+         * if (dg.getTeams().isEmpty()) { if ((Integer) PassSpinner.getValue() >
          * dg.getMaxNumberOfWinners()) {
          * PassSpinner.setValue(dg.getMaxNumberOfWinners()); } } else { //More
          * than one team. if((Integer) PassSpinner.getValue() >
-         * dg.teams.size()-1){ PassSpinner.setValue(dg.teams.size()-1); }
+         * dg.getTeams().size()-1){ PassSpinner.setValue(dg.getTeams().size()-1); }
         }
          */
-        if (dg.teams.size() > 1) {
-            if ((Integer) PassSpinner.getValue() >= dg.teams.size()) {
-                PassSpinner.setValue(dg.teams.size() - 1);
+        if (dg.getTeams().size() > 1) {
+            if ((Integer) PassSpinner.getValue() >= dg.getTeams().size()) {
+                PassSpinner.setValue(dg.getTeams().size() - 1);
             }
         }
         dg.updateMaxNumberOfWinners((Integer) PassSpinner.getValue());
@@ -330,10 +330,10 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         if (MessageManager.questionMessage("questionRemoveTeam", "Warning!")) {
             int index = GroupList.getSelectedIndex();
-            dg.teams.remove(index);
+            dg.getTeams().remove(index);
             fillGroupArea();
             index--;
-            if (index < dg.teams.size() && index >= 0) {
+            if (index < dg.getTeams().size() && index >= 0) {
                 GroupList.setSelectedIndex(index);
             }
         }
@@ -361,8 +361,8 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private javax.swing.JButton CloseButton;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton DownButton;
-    private javax.swing.JComboBox<String> FightAreaComboBox;
-    private javax.swing.JList<String> GroupList;
+    private javax.swing.JComboBox FightAreaComboBox;
+    private javax.swing.JList GroupList;
     private javax.swing.JScrollPane GroupScrollPane;
     private javax.swing.JLabel PassLabel;
     private javax.swing.JSpinner PassSpinner;

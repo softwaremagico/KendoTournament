@@ -29,7 +29,7 @@ package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.Fight;
 import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class TournamentGroupPool {
         if (tournamentGroupManager == null) {
             tournamentGroupManager = createGroupManager(tournament);
             existingManagers.put(tournament, tournamentGroupManager);
-            List<Fight> fights = DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament);
+            List<Fight> fights = FightPool.getInstance().get(tournament);
             if (fights != null) {
                 tournamentGroupManager.refillDesigner(fights);
             }
@@ -74,7 +74,7 @@ public class TournamentGroupPool {
 
     public static void updateGroupManagers(List<Fight> fights) {
         if (fights.size() > 0) {
-            TournamentGroupManager tournamentGroupManager = getManager(fights.get(0).tournament);
+            TournamentGroupManager tournamentGroupManager = getManager(fights.get(0).getTournament());
             tournamentGroupManager.refillDesigner(fights);
         }
     }

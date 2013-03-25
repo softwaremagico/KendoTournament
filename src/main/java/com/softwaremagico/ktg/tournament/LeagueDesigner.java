@@ -24,7 +24,9 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
@@ -113,7 +115,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = TournamentPool.getAllTournaments();
+            listTournaments = TournamentPool.getInstance().getAll();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
@@ -266,7 +268,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             tournament = (Tournament) (TournamentComboBox.getSelectedItem());
             numberMaxOfWinners = TournamentGroupPool.getManager(tournament).getDefaultNumberOfTeamsPassNextRound();
             //TournamentGroupPool.getManager(tournament) = new TournamentGroupManager(tournament);
-            teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournamentExactName(tournament, false);
+            teams = TeamPool.getInstance().get(tournament);
 
             //if (!tournament.mode.equals(TournamentType.SIMPLE)) {
             //If it is not stored in a file, generate it. 
@@ -288,7 +290,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         try {
             Integer select = TournamentGroupPool.getManager(tournament).getIndexLastSelected();
             if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
-                bbp.updateBlackBoard((Tournament) TournamentComboBox.getSelectedItem(), false);
+                bbp.updateBlackBoard((Tournament) TournamentComboBox.getSelectedItem());
                 TournamentGroupPool.getManager(tournament).enhance(false);
             } else {
                 bbp.clearBlackBoard();
@@ -398,11 +400,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 AddTeamButton.setVisible(true);
                 AcceptButton.setVisible(true);
             }
-            if (refreshMode) {
-                //Update tournament.
-                DatabaseConnection.getInstance().getDatabase().updateTournament(tournament, false);
-            }
-            //TournamentGroupPool.getManager(tournament).updateInnerLevels();
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
@@ -497,7 +494,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             group.setSelected(TournamentGroupPool.getManager(tournament));
-        } else if (group.getLevel() == 1 && group.teams.isEmpty()) {
+        } else if (group.getLevel() == 1 && group.getTeams().isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
             if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) {
                 TournamentGroupPool.getManager(tournament).addLink(TournamentGroupPool.getManager(tournament).getLastGroupSelected(), group);
@@ -530,11 +527,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
         ManualRadioButton = new javax.swing.JRadioButton();
         SimpleRadioButton = new javax.swing.JRadioButton();
         TournamentLabel = new javax.swing.JLabel();
-        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
+        TournamentComboBox = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
         BlackBoardScrollPane = new javax.swing.JScrollPane();
         DeleteLevelLabel = new javax.swing.JLabel();
-        LevelComboBox = new javax.swing.JComboBox<String>();
+        LevelComboBox = new javax.swing.JComboBox();
         DeleteLevelButton = new javax.swing.JButton();
         AddButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
@@ -544,7 +541,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         PassSpinner = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         TeamScrollPane = new javax.swing.JScrollPane();
-        TeamList = new javax.swing.JList<String>();
+        TeamList = new javax.swing.JList();
         AddTeamButton = new javax.swing.JButton();
         DeleteTeamsButton = new javax.swing.JButton();
         CleanLinksButton = new javax.swing.JButton();
@@ -972,14 +969,13 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (!(TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) || TournamentGroupPool.getManager(tournament).allGroupsHaveManualLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
                     KendoLog.finer(this.getClass().getName(), "Deleting old fights");
-                    FightPool.getManager(tournament).deleteAllFights(tournament, false);
-                    if (FightPool.getManager(tournament).setAll(TournamentGroupPool.getManager(tournament).generateLevelFights(0), true)) {
-                        TournamentGroupPool.getManager(tournament).emptyInnerLevels();
-                        TournamentGroupPool.updateGroupManagers(FightPool.getManager(tournament).getFights());
-                        //Delete inner levels when delete old fightManager.
-                        KendoLog.finest(this.getClass().getName(), "Deleting inner levels of old tournament");
-                        this.dispose();
-                    }
+                    FightPool.getInstance().remove(tournament);
+                    FightPool.getInstance().add(tournament, TournamentGroupPool.getManager(tournament).generateLevelFights(0));
+                    TournamentGroupPool.getManager(tournament).emptyInnerLevels();
+                    TournamentGroupPool.updateGroupManagers(FightPool.getInstance().get(tournament));
+                    //Delete inner levels when delete old fightManager.
+                    KendoLog.finest(this.getClass().getName(), "Deleting inner levels of old tournament");
+                    this.dispose();
                     //Update Groups with new fights.
                 }
             } else {
@@ -999,7 +995,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
         try {
-            FightPool.getManager(tournament).deleteAllFightsButNotFromDatabase(tournament, false);
+            FightPool.getInstance().reset();
             TournamentGroupPool.cleanGroupManager(tournament);
             TournamentGroupPool.getManager(tournament).setNumberOfTeamsPassNextRound(numberMaxOfWinners);
             updateMode();
@@ -1070,15 +1066,13 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void DeleteLevelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteLevelButtonActionPerformed
         //Select All levels
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
-            if (FightPool.getManager(tournament).deleteAllFights(tournament, true)) {
-                TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(0);
-                MessageManager.translatedMessage(this.getClass().getName(),"fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
-            }
+            FightPool.getInstance().remove(tournament);
+            TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(0);
+            MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (FightPool.getManager(tournament).deleteFightsOfLevel(tournament, LevelComboBox.getSelectedIndex(), true)) {
-                TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
-                MessageManager.translatedMessage(this.getClass().getName(),"fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
-            }
+            FightPool.getInstance().remove(tournament, LevelComboBox.getSelectedIndex());
+            TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
+            MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
         updateBlackBoard();
         fillTeams();
@@ -1086,8 +1080,8 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
         if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
-            FightPool.getManager(tournament).setAll(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament), false);
-            TournamentGroupPool.getManager(tournament).refillDesigner(FightPool.getManager(tournament).getFights());
+            FightPool.getInstance().reset();
+            TournamentGroupPool.getManager(tournament).refillDesigner(FightPool.getInstance().get(tournament));
             TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
             fillTeams();
             updateListeners();
@@ -1118,15 +1112,15 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JLabel DeleteLevelLabel;
     private javax.swing.JButton DeleteTeamsButton;
     private javax.swing.JLabel GroupEditionLabel;
-    private javax.swing.JComboBox<String> LevelComboBox;
+    private javax.swing.JComboBox LevelComboBox;
     private javax.swing.JButton LoadButton;
     private javax.swing.JRadioButton ManualRadioButton;
     private javax.swing.JLabel PassLabel;
     private javax.swing.JSpinner PassSpinner;
     private javax.swing.JRadioButton SimpleRadioButton;
-    private javax.swing.JList<String> TeamList;
+    private javax.swing.JList TeamList;
     private javax.swing.JScrollPane TeamScrollPane;
-    private javax.swing.JComboBox<Tournament> TournamentComboBox;
+    private javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.ButtonGroup TreeChampionshipButtonGroup;
     private javax.swing.JLabel TreeEditionLabel;

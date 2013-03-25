@@ -104,6 +104,12 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
+    public void add(Tournament tournament, List<ElementPool> elements) {
+        for (ElementPool element : elements) {
+            add(tournament, element);
+        }
+    }
+
     public void update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
         String id = getId(oldElement);
         if (!id.equals(getId(newElement))) {
@@ -199,5 +205,13 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {
         return getAll().subList(fromRow, fromRow + numberOfRows);
+    }
+
+    public void reset() {
+        sortedElements = null;
+        elements = null;
+        elementsToStore = null;
+        elementsToDelete = null;
+        elementsToUpdate = null;
     }
 }

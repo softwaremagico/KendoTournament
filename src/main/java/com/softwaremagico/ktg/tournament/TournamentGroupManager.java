@@ -24,38 +24,30 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.UndrawPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jorge
- */
 public class TournamentGroupManager implements Serializable {
 
     private static final long serialVersionUID = 8486984938854712658L;
     private List<LeagueLevel> levels;
     transient Tournament tournament;
-    private final String FOLDER = "designer";
     public int default_max_winners = 1;
 
-    public TournamentGroupManager(Tournament championship) {
+    public TournamentGroupManager(Tournament tournament) {
         try {
             //mode = tournament.mode;
-            tournament = championship;
+            this.tournament = tournament;
             // levels.add(0);
             levels = new ArrayList<>();
         } catch (NullPointerException npe) {
             KendoLog.severe(this.getClass().getName(), "Error when creating a Tournament:" + this.getClass());
         }
-    }
-
-    public void setFights(List<Fight> fights) {
-        refillDesigner(fights);
     }
 
     public List<LeagueLevel> getLevels() {
@@ -163,7 +155,6 @@ public class TournamentGroupManager implements Serializable {
      * @param group group to complete relative to the level.
      */
     protected void fillGroupWithWinnersPreviousLevel(TournamentGroup group, List<Fight> fights, boolean resolvDraw) {
-        updateScoreForTeams(fights);
         if (group.getLevel() > 0) {
             List<TournamentGroup> groups = returnGroupsOfLevel(group.getLevel() - 1);
             for (TournamentGroup previousGroup : groups) {
@@ -462,7 +453,7 @@ public class TournamentGroupManager implements Serializable {
             KendoLog.severe(this.getClass().getName(), "No winner obtained!");
         }
         // Show message when last fight is selected.
-        if (FightPool.getManager(tournament).areAllOver() && FightPool.getManager(tournament).size() > 0) {
+        if (FightPool.getInstance().areAllOver(tournament) && FightPool.getInstance().get(tournament).size() > 0) {
             MessageManager.winnerMessage(this.getClass().getName(), "leagueFinished", "Finally!", "<html><b>" + winnername + "</b></html>", JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -472,29 +463,20 @@ public class TournamentGroupManager implements Serializable {
         KendoLog.finer(this.getClass().getName(), "All fights are over.");
 
         if (MessageManager.questionMessage("nextLevel", "Warning!")) {
-            KendoLog.debug(this.getClass().getName(), "Current number of fights over before updating winners: "
-                    + FightPool.getManager(tournament).numberOfFightsOver());
             List<TournamentGroup> groups = returnGroupsOfLevel(nextLevel);
             for (TournamentGroup g : groups) {
-                fillGroupWithWinnersPreviousLevel(g, FightPool.getManager(tournament).getFights(), true);
+                fillGroupWithWinnersPreviousLevel(g, FightPool.getInstance().get(tournament), true);
             }
-            KendoLog.debug(this.getClass().getName(), "Current number of fights over after updating winners: "
-                    + FightPool.getManager(tournament).numberOfFightsOver());
-
         }
         // set the team members order in the new level.
         // updateOrderTeamsOfLevel(nextLevel);
 
-        KendoLog.debug(this.getClass().getName(), "Current number of fights over before generating next level fights: "
-                + FightPool.getManager(tournament).numberOfFightsOver());
         ArrayList<Fight> newFights = generateLevelFights(nextLevel);
-        KendoLog.debug(this.getClass().getName(), "Current number of fights over after generating next level fights: "
-                + FightPool.getManager(tournament).numberOfFightsOver());
         KendoLog.exiting(this.getClass().getName(), "generateNextLevelFights");
         return newFights;
     }
 
-    public List<Fight> nextLevel(List<Fight> fights, int fightArea, Tournament tournament) {
+    public List<Fight> nextLevel(List<Fight> fights, Integer fightArea, Tournament tournament) {
         KendoLog.entering(this.getClass().getName(), "nextLevel");
         Integer nextLevel = getIndexLastLevelNotUsed();
         int arena;
@@ -505,18 +487,16 @@ public class TournamentGroupManager implements Serializable {
             // Update fightManager to load the fightManager of other arenas and computers.
             if (tournament.getFightingAreas() > 1) {
                 KendoLog.finest(this.getClass().getName(), "Retrieving data from other arenas.");
-                KendoLog.debug(this.getClass().getName(), "Current number of fights over before updating data: " + FightPool.getManager(tournament).numberOfFightsOver());
-                FightPool.getManager(tournament).getFightsFromDatabase(tournament);
-                KendoLog.debug(this.getClass().getName(), "Current number of fights over after updating data: " + FightPool.getManager(tournament).numberOfFightsOver());
+                FightPool.getInstance().reset();
             }
 
             // But the level is over and need more fights.
-            if (FightPool.getManager(tournament).areAllOver()) {
+            if (FightPool.getInstance().areAllOver(tournament)) {
                 newFights = generateNextLevelFights(nextLevel);
             } else {
                 // Only one arena is finished: show message for waiting all fightManager are over.
-                if ((arena = FightPool.getManager(tournament).allArenasAreOver()) != -1) {
-                    MessageManager.informationMessage(this.getClass().getName(), "waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(arena) + "");
+                if (FightPool.getInstance().areAllOver(tournament, fightArea)) {
+                    MessageManager.informationMessage(this.getClass().getName(), "waitingArena", "", KendoTournamentGenerator.getInstance().returnShiaijo(fightArea) + "");
                 }
             }
         } else {
@@ -569,12 +549,6 @@ public class TournamentGroupManager implements Serializable {
         return fights;
     }
 
-    public void updateScoreForTeams(List<Fight> fights) {
-        for (LeagueLevel level : levels) {
-            level.updateScoreOfTeams(fights);
-        }
-    }
-
     public TournamentGroup getGroupOfFight(List<Fight> fights, int fightIndex) {
         if (fightIndex >= 0 && fightIndex < fights.size()) {
             return getGroupOfFight(fights.get(fightIndex));
@@ -587,16 +561,6 @@ public class TournamentGroupManager implements Serializable {
             return levels.get(fight.getLevel()).getGroupOfFight(fight);
         }
         return null;
-    }
-
-    public ArrayList<Fight> getFightsOfLevel(List<Fight> fights, int level) {
-        ArrayList<Fight> fightsOfLevel = new ArrayList<>();
-        for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).getLevel() == level) {
-                fightsOfLevel.add(fights.get(i));
-            }
-        }
-        return fightsOfLevel;
     }
 
     /**
@@ -632,19 +596,19 @@ public class TournamentGroupManager implements Serializable {
      *********************************************
      */
     /**
-     * Restore a designer with the data stored in a database.
+     * Restore a designer with the data obtained from a database.
      */
-    public void refillDesigner(List<Fight> fights) {
+    public void refillDesigner() {
+        List<Fight> fights = FightPool.getInstance().get(tournament);
         if (fights.size() > 0) {
             default_max_winners = fights.get(0).getMaxWinners();
         }
 
         if (fights.size() > 0) {
-            tournament = fights.get(0).tournament;
             createLevelZero();
 
             // Fill levels with fights defined.
-            int maxFightLevel = FightManager.getMaxLevelOfFights(fights);
+            int maxFightLevel = FightPool.getInstance().getMaxLevel(tournament);
             for (int i = 0; i <= maxFightLevel; i++) {
                 refillLevel(fights, i);
             }
@@ -656,7 +620,7 @@ public class TournamentGroupManager implements Serializable {
     }
 
     private void refillLevel(List<Fight> fights, int level) {
-        List<Fight> fightsOfLevel = getFightsOfLevel(fights, level);
+        List<Fight> fightsOfLevel = FightPool.getInstance().getFromLevel(tournament, level);
         List<Team> teamsOfGroup = new ArrayList<>();
         deleteGroups(level);
 
@@ -675,7 +639,7 @@ public class TournamentGroupManager implements Serializable {
                 // Store the previous group.
                 if (teamsOfGroup.size() > 0) {
                     TournamentGroup designedFight = new TournamentGroup(fightsOfLevel.get(i).getMaxWinners(), tournament, level,
-                            fightsOfLevel.get(i - 1).asignedFightArea);
+                            fightsOfLevel.get(i - 1).getAsignedFightArea());
                     designedFight.addTeams(teamsOfGroup);
                     add(designedFight, false);
                     designedFight.update();
@@ -690,7 +654,7 @@ public class TournamentGroupManager implements Serializable {
         try {
             if (!fightsOfLevel.isEmpty()) {
                 TournamentGroup designedFight = new TournamentGroup(fightsOfLevel.get(fightsOfLevel.size() - 1).getMaxWinners(),
-                        tournament, level, fightsOfLevel.get(fightsOfLevel.size() - 1).asignedFightArea);
+                        tournament, level, fightsOfLevel.get(fightsOfLevel.size() - 1).getAsignedFightArea());
                 designedFight.addTeams(teamsOfGroup);
                 add(designedFight, false);
                 designedFight.update();
@@ -725,7 +689,6 @@ public class TournamentGroupManager implements Serializable {
         Fight fight = null;
         int fightsInFile = 0;
         int fightsImported = 0;
-        List<Undraw> undraws = new ArrayList<>();
         for (String csvLine : csv) {
             String[] fields = csvLine.split(";");
             if (csvLine.startsWith(Fight.getTag())) {
@@ -735,14 +698,8 @@ public class TournamentGroupManager implements Serializable {
                 //Obtain fight.
                 int fightNumber = Integer.parseInt(fields[1]);
 
-                if (fightNumber < FightPool.getManager(tournament).getFights().size() && fightNumber >= 0) {
+                if (fightNumber < FightPool.getInstance().get(tournament).size() && fightNumber >= 0) {
                     //Fight not finished and correct.
-                        /*if (!FightPool.getManager(tournament).getFights().getGroup(fightNumber).isOver()) {
-                     fight = FightPool.getManager(tournament).getFights().getGroup(fightNumber);
-                     fightsImported++;
-                     fight.setOver();
-                     fight.setOverStored(false);
-                     }*/
                     Fight readedFight = levels.get(Integer.parseInt(fields[3]))
                             .getGroups().get(Integer.parseInt(fields[2]))
                             .getFights().get(Integer.parseInt(fields[1]));
@@ -750,9 +707,11 @@ public class TournamentGroupManager implements Serializable {
                         if (!readedFight.isOver()) {
                             fight = readedFight;
                             fightsImported++;
-                            fight.setOver();
+                            fight.setOver(true);
                             fight.setOverStored(false);
                         }
+                        //Add the fight.
+                        FightPool.getInstance().add(tournament, fight);
                     } else {
                         MessageManager.errorMessage(this.getClass().getName(), "csvNotImported", "Error");
                         return false;
@@ -764,17 +723,12 @@ public class TournamentGroupManager implements Serializable {
                     duelsCount++;
                 }
             } else if (csvLine.startsWith(Undraw.getCsvTag())) {
-                undraws.add(new Undraw(tournament, getGroupOfFight(fight), TeamPool.getManager(tournament).getTeam(fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
+                UndrawPool.getInstance().add(tournament, new Undraw(tournament, getGroupOfFight(fight), TeamPool.getInstance().get(tournament, fields[1]), Integer.parseInt(fields[2]), Integer.parseInt(fields[3])));
             }
         }
 
         if (fightsImported > 0) {
             MessageManager.informationMessage(this.getClass().getName(), "csvImported", "CSV", " (" + fightsImported + "/" + fightsInFile + ")");
-            if (FightPool.getManager(tournament).storeNotUpdatedFightsAndDuels()) {
-                for (Undraw undraw : undraws) {
-                    DatabaseConnection.getInstance().getDatabase().storeUndraw(undraw);
-                }
-            }
             return true;
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "csvNotImported", "Error");
