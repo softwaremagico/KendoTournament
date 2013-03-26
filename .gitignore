@@ -12,3 +12,4 @@
 *.class
 *.deb
 /kendotournament-core/target/
+/kendotournament-gui/target/
