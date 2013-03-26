@@ -11,3 +11,4 @@
 **/Thumbs.db
 *.class
 *.deb
+/kendotournament-core/target/
