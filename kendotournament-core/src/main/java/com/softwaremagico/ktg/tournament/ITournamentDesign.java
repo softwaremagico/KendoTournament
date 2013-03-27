@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Fight;
 import java.util.List;
 
-public interface ILeague {
+public interface ITournamentDesign {
 
     List<Fight> nextFights();
 }

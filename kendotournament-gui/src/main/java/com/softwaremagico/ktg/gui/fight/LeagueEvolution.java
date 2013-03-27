@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.Tournament;
 import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;

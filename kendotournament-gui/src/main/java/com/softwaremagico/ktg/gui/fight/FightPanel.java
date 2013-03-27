@@ -23,18 +23,24 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -58,7 +64,7 @@ public final class FightPanel extends javax.swing.JFrame {
      */
     public FightPanel() {
         initComponents();
-        listTournaments = TournamentPool.getAllTournaments();
+        listTournaments = TournamentPool.getInstance().getAll();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
@@ -66,7 +72,7 @@ public final class FightPanel extends javax.swing.JFrame {
         createBanner();
 
         try {
-            selectedTournament = TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString());
+            selectedTournament = (Tournament) TournamentComboBox.getSelectedItem();
             scorePanel = new ScorePanel(selectedTournament);
             updateTournament();
             changeNextButtonText();
@@ -82,7 +88,7 @@ public final class FightPanel extends javax.swing.JFrame {
             dispose();
         }
 
-        if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).isEmpty()) {
+        if (FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem()).isEmpty()) {
             MessageManager.informationMessage(this.getClass().getName(), "noFight", "Error");
         }
     }
@@ -165,7 +171,6 @@ public final class FightPanel extends javax.swing.JFrame {
             BannerPanel.repaint();
             BannerPanel.revalidate();
             fillFightingAreas();
-            FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFightsFromDatabase((Tournament) TournamentComboBox.getSelectedItem());
             fillFightsPanel();
         } catch (IOException ex) {
         }
@@ -173,7 +178,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void changeTournament() {
         try {
-            selectedTournament = TournamentPool.getTournament(TournamentComboBox.getSelectedItem().toString());
+            selectedTournament = (Tournament) TournamentComboBox.getSelectedItem();
             scorePanel.updateTournament(selectedTournament);
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(selectedTournament.getName());
             updateTournament();
@@ -204,56 +209,18 @@ public final class FightPanel extends javax.swing.JFrame {
         return FightAreaComboBox.getSelectedIndex();
     }
 
-    private boolean isThisGroupOver(TournamentGroup dg) {
-        try {
-            if (dg.areFightsOver()) {
-                return true;
-            }
-        } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
-        }
-        return false;
-    }
-
-    private void showWinnersOfGroup(TournamentGroup groupFinished, boolean message) {
-        String text = "";
-        //int groupFinished = KendoTournamentGenerator.getInstance().tournamentManager.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
-        List<Team> winnersOfGroup = new ArrayList<>();
-        for (int i = 0; i < groupFinished.getMaxNumberOfWinners(); i++) {
-            winnersOfGroup.add(groupFinished.getTeamInOrderOfScore(i, FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(), true));
-        }
-        for (int i = 0; i < winnersOfGroup.size(); i++) {
-            if (i > 0) {
-                if (winnersOfGroup.get(i).getName().contains(", ")) {
-                    text += "; ";
-                } else {
-                    text += ", ";
-                }
-            }
-            text += winnersOfGroup.get(i).getName();
-        }
-        if (message) {
-            MessageManager.informationMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!!", text);
-        }
-    }
-
     private void changeNextButtonText() {
         //Change label of next button when is last fight.
-        if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).isLastFightOfArena(FightAreaComboBox.getSelectedIndex())) {
+        if (FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem()).isLastFightOfArena(FightAreaComboBox.getSelectedIndex())) {
             NextButton.setText(trans.returnTag("FinishtButton"));
         } else {
             NextButton.setText(trans.returnTag("NextButton"));
         }
     }
 
-    private Fight getCurrentFight() {
-        return FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex());
-    }
-
     private void messagesFinishedGroup(TournamentGroup currentGroup) {
         //When a group is finished, show different messages with the winner, score, etc.
-        if (isThisGroupOver(currentGroup)) {
+        if (currentGroup.areFightsOver()) {
             //Show score.
             MonitorFightPosition mfp = new MonitorFightPosition(currentGroup, true);
             mfp.setVisible(true);
@@ -269,7 +236,7 @@ public final class FightPanel extends javax.swing.JFrame {
             }
 
             //Alert message with the passing teams. 
-            showWinnersOfGroup(currentGroup, message);
+            currentGroup.showWinnersOfGroup();
         }
     }
 
@@ -538,16 +505,12 @@ public final class FightPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_TournamentComboBoxActionPerformed
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
-        KendoLog.entering(this.getClass().getName(), "NextButtonActionPerformed");
         try {
             Fight currentFight = getCurrentFight();
-            KendoLog.debug(this.getClass().getName(), currentFight.toString());
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).setFightAsOver(currentFight);
 
             //Store fights if it is necesary.
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeLazyFights(FightAreaComboBox.getSelectedIndex());
-
-            KendoLog.debug(this.getClass().getName(), "Current number of fights over: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
 
             //If championship or similar...
             if (!((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
@@ -558,26 +521,20 @@ public final class FightPanel extends javax.swing.JFrame {
                 //If all arena fights are over.
                 if (FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).areArenaOver(FightAreaComboBox.getSelectedIndex())) {
                     //Obtain next fights.
-                    KendoLog.finest(this.getClass().getName(), "Calculating next fights for arena " + FightAreaComboBox.getSelectedIndex() + " in " + ((Tournament) TournamentComboBox.getSelectedItem()).getName());
-                    FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).add(TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).nextLevel(
+                    FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).add(TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).nextFights(
                             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getFights(), FightAreaComboBox.getSelectedIndex(), ((Tournament) TournamentComboBox.getSelectedItem())));
                 }
             } else { //Simple championship
                 messagesFinishedSimpleChampionship(false);
             }
 
-            KendoLog.debug(this.getClass().getName(), "Current number of fights over before GUI: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
-            KendoLog.debug(this.getClass().getName(), currentFight.toString());
-            KendoLog.finest(this.getClass().getName(), "Updating the GUI.");
             //Update GUI
             fillFightsPanel();
             changeNextButtonText();
-            KendoLog.debug(this.getClass().getName(), "Current number of fights over after GUI: " + FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).numberOfFightsOver());
-
+           
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
         }
-        KendoLog.exiting(this.getClass().getName(), "NextButtonActionPerformed");
     }//GEN-LAST:event_NextButtonActionPerformed
 
     private void PreviousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PreviousButtonActionPerformed

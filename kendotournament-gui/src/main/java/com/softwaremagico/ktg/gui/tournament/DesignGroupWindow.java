@@ -29,7 +29,6 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.gui.NewTeam;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import javax.swing.DefaultListModel;
@@ -38,21 +37,21 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 9161777233520978498L;
     private DefaultListModel<String> groupModel = new DefaultListModel<>();
-    TournamentGroup dg;
+    TournamentGroupBox tournamentGroupBox;
     private Translator trans = null;
     private boolean refresh = true;
 
     /**
      * Creates new form DesignGroupWindow
      */
-    public DesignGroupWindow(TournamentGroup tmp_dg) {
-        dg = tmp_dg;
+    public DesignGroupWindow(TournamentGroupBox tournamentGroupBox) {
+        this.tournamentGroupBox = tournamentGroupBox;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
         fillGroupArea();
-        PassSpinner.setValue(dg.getMaxNumberOfWinners());
+        PassSpinner.setValue(tournamentGroupBox.getMaxNumberOfWinners());
         fillFightingAreas();
         refresh = false;
     }
@@ -60,12 +59,12 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     private void fillFightingAreas() {
         FightAreaComboBox.removeAllItems();
         try {
-            for (int i = 0; i < dg.tournament.getFightingAreas(); i++) {
+            for (int i = 0; i < tournamentGroupBox.tournament.getFightingAreas(); i++) {
                 FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
             }
         } catch (NullPointerException npe) {
         }
-        FightAreaComboBox.setSelectedIndex(dg.arena);
+        FightAreaComboBox.setSelectedIndex(tournamentGroupBox.arena);
     }
 
     private void setLanguage() {
@@ -83,12 +82,12 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private void fillGroupArea() {
         groupModel.removeAllElements();
-        if (dg.getTeams() != null) {
-            for (int i = 0; i < dg.getTeams().size(); i++) {
-                groupModel.addElement(dg.getTeams().get(i).getName());
+        if (tournamentGroupBox.getTeams() != null) {
+            for (int i = 0; i < tournamentGroupBox.getTeams().size(); i++) {
+                groupModel.addElement(tournamentGroupBox.getTeams().get(i).getName());
             }
         }
-        if (dg.getTeams().isEmpty()) {
+        if (tournamentGroupBox.getTeams().isEmpty()) {
             groupModel.addElement(trans.returnTag("noTeams"));
             disable(true);
         } else {
@@ -105,7 +104,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private void showTeam() {
         int index = GroupList.getSelectedIndex();
-        Team t = dg.getTeams().get(index);
+        Team t = tournamentGroupBox.getTeams().get(index);
         NewTeam newTeam;
         newTeam = new NewTeam(t);
         newTeam.setVisible(true);
@@ -282,22 +281,22 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void UpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpButtonActionPerformed
         int index = GroupList.getSelectedIndex();
-        Team t = dg.getTeams().remove(index);
+        Team t = tournamentGroupBox.getTeams().remove(index);
         if (index > 0) {
             index--;
         }
-        dg.getTeams().add(index, t);
+        tournamentGroupBox.getTeams().add(index, t);
         fillGroupArea();
         GroupList.setSelectedIndex(index);
     }//GEN-LAST:event_UpButtonActionPerformed
 
     private void DownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DownButtonActionPerformed
         int index = GroupList.getSelectedIndex();
-        Team t = dg.getTeams().remove(index);
-        if (index < dg.getTeams().size()) {
+        Team t = tournamentGroupBox.getTeams().remove(index);
+        if (index < tournamentGroupBox.getTeams().size()) {
             index++;
         }
-        dg.getTeams().add(index, t);
+        tournamentGroupBox.getTeams().add(index, t);
         fillGroupArea();
         GroupList.setSelectedIndex(index);
     }//GEN-LAST:event_DownButtonActionPerformed
@@ -314,27 +313,27 @@ public class DesignGroupWindow extends javax.swing.JFrame {
          * dg.getTeams().size()-1){ PassSpinner.setValue(dg.getTeams().size()-1); }
         }
          */
-        if (dg.getTeams().size() > 1) {
-            if ((Integer) PassSpinner.getValue() >= dg.getTeams().size()) {
-                PassSpinner.setValue(dg.getTeams().size() - 1);
+        if (tournamentGroupBox.getTeams().size() > 1) {
+            if ((Integer) PassSpinner.getValue() >= tournamentGroupBox.getTeams().size()) {
+                PassSpinner.setValue(tournamentGroupBox.getTeams().size() - 1);
             }
         }
-        dg.updateMaxNumberOfWinners((Integer) PassSpinner.getValue());
+        tournamentGroupBox.updateMaxNumberOfWinners((Integer) PassSpinner.getValue());
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void FightAreaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FightAreaComboBoxActionPerformed
         if (!refresh) {
-            dg.arena = FightAreaComboBox.getSelectedIndex();
+            tournamentGroupBox.arena = FightAreaComboBox.getSelectedIndex();
         }
     }//GEN-LAST:event_FightAreaComboBoxActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         if (MessageManager.questionMessage("questionRemoveTeam", "Warning!")) {
             int index = GroupList.getSelectedIndex();
-            dg.getTeams().remove(index);
+            tournamentGroupBox.getTeams().remove(index);
             fillGroupArea();
             index--;
-            if (index < dg.getTeams().size() && index >= 0) {
+            if (index < tournamentGroupBox.getTeams().size() && index >= 0) {
                 GroupList.setSelectedIndex(index);
             }
         }

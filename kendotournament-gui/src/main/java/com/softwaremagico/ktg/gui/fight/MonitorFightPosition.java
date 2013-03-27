@@ -32,7 +32,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.statistics.TeamRanking;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -149,7 +149,7 @@ public class MonitorFightPosition extends JFrame {
 
     void addTitle(int fontSize) {
         JLabel nameLabel;
-        nameLabel = new JLabel(transl.returnTag("GroupString") + " " + (TournamentGroupPool.getManager(group.getChampionshipOfGroup()).returnPositionOfGroupInItsLevel(group) + 1) + " / "
+        nameLabel = new JLabel(transl.returnTag("GroupString") + " " + (TournamentGroupPool.getManager(group.getTournament()).returnPositionOfGroupInItsLevel(group) + 1) + " / "
                 + transl.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(group.arena));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);

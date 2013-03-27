@@ -88,6 +88,24 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return fightsOfArea;
     }
 
+    public Fight getFightFromCurrent(Tournament tournament, Integer fightArea, Integer fightIndex) {
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
+        List<Fight> fightsOfArea = new ArrayList<>();
+        for (Fight fight : allFights) {
+            if (fight.getAsignedFightArea() == fightArea) {
+                fightsOfArea.add(fight);
+            }
+        }
+
+        Collections.sort(fightsOfArea);
+
+        Integer index = getCurrentFightIndex(tournament, fightArea) + fightIndex;
+        if (index >= 0 && index < fightsOfArea.size()) {
+            return fightsOfArea.get(index);
+        }
+        return null;
+    }
+
     public Fight get(Tournament tournament, Integer fightArea, Integer index) {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         for (Fight fight : allFights) {
@@ -147,6 +165,26 @@ public class FightPool extends TournamentDependentPool<Fight> {
         for (Integer i = 0; i < fightsOfArena.size(); i++) {
             if (!fightsOfArena.get(i).isOver()) {
                 return fightsOfArena.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the first fight not over.
+     *
+     * @param tournament
+     * @param fightArea
+     * @return Null if all fights are over.
+     */
+    public Integer getCurrentFightIndex(Tournament tournament, Integer fightArea) {
+        List<Fight> fightsOfArena = get(tournament, fightArea);
+        if (fightsOfArena == null || fightsOfArena.isEmpty()) {
+            return null;
+        }
+        for (Integer i = 0; i < fightsOfArena.size(); i++) {
+            if (!fightsOfArena.get(i).isOver()) {
+                return i;
             }
         }
         return null;

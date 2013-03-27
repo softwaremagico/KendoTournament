@@ -1,5 +1,5 @@
 
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -24,7 +24,9 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
+import com.softwaremagico.ktg.gui.tournament.LeagueLevel;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
 
 
 public class LeagueLevelSimple extends LeagueLevel {

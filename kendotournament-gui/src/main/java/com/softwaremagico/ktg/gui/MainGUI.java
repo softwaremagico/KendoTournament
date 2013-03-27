@@ -25,13 +25,11 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;

@@ -32,7 +32,7 @@ import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.util.List;
 
 public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {

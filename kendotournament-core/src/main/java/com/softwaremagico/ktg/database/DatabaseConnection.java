@@ -116,7 +116,7 @@ class DatabaseConnection {
         DatabaseConnection.connection = connection;
     }
 
-    public boolean startDatabaseConnection(String password, String user, String databaseName, String server) {
+    public boolean testDatabaseConnection(String password, String user, String databaseName, String server) {
         this.password = password;
         this.user = user;
         this.databaseName = databaseName;
@@ -124,7 +124,7 @@ class DatabaseConnection {
         generateDatabaseConnectionFile();
         this.database = databaseEngine.getDatabaseClass();
         this.database.disconnect();
-        //databaseConnected = database.connect(password, user, databaseName, server, true, true);
+        databaseConnected = database.connect(password, user, databaseName, server, true, true);
         return databaseConnected;
     }
 
@@ -228,10 +228,6 @@ class DatabaseConnection {
 
     public void setDatabaseLazyUpdate(boolean value) {
         databaseLazyUpdate = value;
-    }
-
-    public boolean databaseConnection() {
-        return (databaseConnected = startDatabaseConnection(password, user, databaseName, server));
     }
 
     public void updateDatabase() {

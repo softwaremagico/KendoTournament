@@ -23,10 +23,11 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -44,10 +45,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
-/**
- *
- * @author Jorge
- */
 public class RoundFight extends JPanel {
 
     private List<TeamFight> teamFights = new ArrayList<>();
@@ -57,21 +54,21 @@ public class RoundFight extends JPanel {
     DrawPanel DW = null;
     private Tournament tournament;
 
-    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number, int fight_total) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number) {
         this.tournament = tournament;
         setLanguage(KendoTournamentGenerator.getInstance().language);
         decoration(selected);
         if (f != null) {
-            fillCurrentFightPanel(f, selected, selected, fight_number, fight_total);
+            fillCurrentFightPanel(f, selected, selected, fight_number);
         }
     }
 
-    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, int fight_total) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number) {
         this.tournament = tournament;
         setLanguage(KendoTournamentGenerator.getInstance().language);
         decoration(selected);
         if (f != null) {
-            fillCurrentFightPanel(f, selected, menu, fight_number, fight_total);
+            fillCurrentFightPanel(f, selected, menu, fight_number);
         }
     }
 
@@ -100,11 +97,12 @@ public class RoundFight extends JPanel {
 
     }
 
-    private void fillCurrentFightPanel(Fight f, boolean selected, boolean menu, int fight_number, int fight_total) {
+    private void fillCurrentFightPanel(Fight f, boolean selected, boolean menu, int fight_number) {
         fight = f;
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
+        int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
         if (!KendoTournamentGenerator.getInstance().inverseTeams) {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
         } else {

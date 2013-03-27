@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.tournament;
 
 /*
  * #%L
@@ -34,16 +34,16 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.database.FightPool;
-import java.io.Serializable;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-public class TournamentGroupManager implements Serializable {
+public class TournamentGroupManager {
 
     private static final long serialVersionUID = 8486984938854712658L;
     private List<LeagueLevel> levels;
-    transient Tournament tournament;
+    private Tournament tournament;
     public int default_max_winners = 1;
 
     public TournamentGroupManager(Tournament tournament) {

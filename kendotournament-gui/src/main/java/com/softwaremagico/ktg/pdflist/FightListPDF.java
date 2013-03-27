@@ -33,7 +33,7 @@ import com.softwaremagico.ktg.*;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.util.List;
 
 /**

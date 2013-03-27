@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,10 +28,6 @@ package com.softwaremagico.ktg.tournament;
 import java.awt.Font;
 import javax.swing.JLabel;
 
-/**
- *
- * @author Jorge
- */
 public abstract class Group extends javax.swing.JPanel {
 
     int xSize;

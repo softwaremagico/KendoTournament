@@ -8,7 +8,7 @@ import com.softwaremagico.ktg.FightPool;
 import com.softwaremagico.ktg.KendoTournamentGenerator;
 import com.softwaremagico.ktg.TournamentType;
 import com.softwaremagico.ktg.files.Folder;
-import com.softwaremagico.ktg.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.io.IOException;
 
 /*

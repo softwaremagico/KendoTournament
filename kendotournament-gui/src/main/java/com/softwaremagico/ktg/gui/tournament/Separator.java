@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,16 +25,13 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
+import com.softwaremagico.ktg.gui.tournament.Group;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 
-/**
- *
- * @author Jorge
- */
 public class Separator extends Group {
 
     public Separator() {

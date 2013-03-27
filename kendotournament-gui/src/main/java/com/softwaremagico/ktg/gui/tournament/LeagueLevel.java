@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.tournament;
 
 /*
  * #%L
@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +34,14 @@ public abstract class LeagueLevel {
 
     protected int level;
     private Tournament tournament;
-    protected List<TournamentGroup> tournamentGroups;
+    protected List<TournamentGroupBox> tournamentGroupBoxs;
     protected LeagueLevel nextLevel;
     protected LeagueLevel previousLevel;
     protected TournamentGroupManager groupManager;
 
     LeagueLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
         this.tournament = tournament;
-        tournamentGroups = new ArrayList<>();
+        tournamentGroupBoxs = new ArrayList<>();
         this.level = level;
         this.nextLevel = nextLevel;
         this.previousLevel = previousLevel;
@@ -48,56 +49,56 @@ public abstract class LeagueLevel {
     }
 
     protected void updateGroups() {
-        for (TournamentGroup t : tournamentGroups) {
-            t.update();
+        for (TournamentGroupBox tgb : tournamentGroupBoxs) {
+            tgb.update();
         }
     }
 
     protected void activateGroupsColor(boolean color) {
-        for (TournamentGroup t : tournamentGroups) {
-            t.activateColor(color);
+        for (TournamentGroupBox tgb : tournamentGroupBoxs) {
+            tgb.activateColor(color);
         }
     }
 
     protected void enhanceGroups(boolean yes) {
-        for (TournamentGroup t : tournamentGroups) {
-            t.enhance(yes);
+        for (TournamentGroupBox tgb : tournamentGroupBoxs) {
+            tgb.enhance(yes);
         }
     }
 
     protected void onlyShow() {
-        for (TournamentGroup t : tournamentGroups) {
-            t.onlyShow();
+        for (TournamentGroupBox tgb : tournamentGroupBoxs) {
+            tgb.onlyShow();
         }
     }
 
     protected int size() {
-        return tournamentGroups.size();
+        return tournamentGroupBoxs.size();
     }
 
     public List<TournamentGroup> getGroups() {
-        return tournamentGroups;
+        return tournamentGroupBoxs;
     }
 
     /**
      * Return the las group of the level.
      */
     protected TournamentGroup getLastGroupOfLevel() {
-        if (tournamentGroups.size() > 0) {
-            return tournamentGroups.get(tournamentGroups.size() - 1);
+        if (tournamentGroupBoxs.size() > 0) {
+            return tournamentGroupBoxs.get(tournamentGroupBoxs.size() - 1);
         } else {
             return null;
         }
     }
 
     protected void deleteTeams() {
-        for (TournamentGroup g : tournamentGroups) {
+        for (TournamentGroup g : tournamentGroupBoxs) {
             g.deleteTeams();
         }
     }
 
     protected boolean isFightOfLevel(Fight fight) {
-        for (TournamentGroup t : tournamentGroups) {
+        for (TournamentGroup t : tournamentGroupBoxs) {
             if (t.isFightOfGroup(fight)) {
                 return true;
             }
@@ -106,7 +107,7 @@ public abstract class LeagueLevel {
     }
 
     protected boolean isGroupOfLevel(TournamentGroup tgroup) {
-        for (TournamentGroup t : tournamentGroups) {
+        for (TournamentGroup t : tournamentGroupBoxs) {
             if (tgroup.equals(t)) {
                 return true;
             }
@@ -115,7 +116,7 @@ public abstract class LeagueLevel {
     }
 
     protected boolean isLevelFinished(ArrayList<Fight> fights) {
-        for (TournamentGroup t : tournamentGroups) {
+        for (TournamentGroup t : tournamentGroupBoxs) {
             if (!t.areFightsOverOrNull(fights)) {
                 return false;
             }
@@ -125,29 +126,29 @@ public abstract class LeagueLevel {
 
     protected int getNumberOfTotalTeamsPassNextRound() {
         int teams = 0;
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            teams += tournamentGroups.get(i).getMaxNumberOfWinners();
+        for (int i = 0; i < tournamentGroupBoxs.size(); i++) {
+            teams += tournamentGroupBoxs.get(i).getMaxNumberOfWinners();
         }
         return teams;
     }
 
     protected void updateArenaOfGroups() {
-        if (tournamentGroups.size() > 0) {
+        if (tournamentGroupBoxs.size() > 0) {
             /**
              * The arena of a group in a level > 1 is the same arena of the
              * group in the same row.
              */
             if (previousLevel != null) {
-                for (int j = 0; j < tournamentGroups.size(); j++) {
-                    tournamentGroups.get(j).arena = previousLevel.getGroups().get((int) (j * (((long) previousLevel.size()) / size()))).arena;
+                for (int j = 0; j < tournamentGroupBoxs.size(); j++) {
+                    tournamentGroupBoxs.get(j).arena = previousLevel.getGroups().get((int) (j * (((long) previousLevel.size()) / size()))).arena;
                 }
             } else {
                 /**
                  * In level zero, all groups are divided by arenas.
                  */
-                double groupsPerArena = Math.ceil((double) tournamentGroups.size() / (double) tournament.getFightingAreas());
-                for (int j = 0; j < tournamentGroups.size(); j++) {
-                    tournamentGroups.get(j).arena = (j) / (int) groupsPerArena;
+                double groupsPerArena = Math.ceil((double) tournamentGroupBoxs.size() / (double) tournament.getFightingAreas());
+                for (int j = 0; j < tournamentGroupBoxs.size(); j++) {
+                    tournamentGroupBoxs.get(j).arena = (j) / (int) groupsPerArena;
                 }
             }
         }
@@ -157,8 +158,8 @@ public abstract class LeagueLevel {
     }
 
     protected boolean loadLevel(Tournament tournament) {
-        for (TournamentGroup group : tournamentGroups) {
-            if (!group.load(tournament)) {
+        for (TournamentGroup group : tournamentGroupBoxs) {
+            if (!group.loadTeams(tournament)) {
                 return false;
             }
         }
@@ -166,7 +167,7 @@ public abstract class LeagueLevel {
     }
 
     protected TournamentGroup getGroupOfFight(Fight fight) {
-        for (TournamentGroup group : tournamentGroups) {
+        for (TournamentGroup group : tournamentGroupBoxs) {
             if (group.getTeams().contains(fight.getTeam1()) && group.getTeams().contains(fight.getTeam2())) {
                 return group;
             }
@@ -176,33 +177,33 @@ public abstract class LeagueLevel {
 
     protected List<Team> getUsedTeams() {
         List<Team> usedTeams = new ArrayList<>();
-        for (TournamentGroup group : tournamentGroups) {
+        for (TournamentGroup group : tournamentGroupBoxs) {
             usedTeams.addAll(group.getTeams());
         }
         return usedTeams;
     }
 
     protected TournamentGroup getLastSelected() {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).isSelected()) {
-                return tournamentGroups.get(i);
+        for (int i = 0; i < tournamentGroupBoxs.size(); i++) {
+            if (tournamentGroupBoxs.get(i).isSelected()) {
+                return tournamentGroupBoxs.get(i);
             }
         }
         return null;
     }
 
     protected Integer getIndexLastSelected() {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).isSelected()) {
+        for (int i = 0; i < tournamentGroupBoxs.size(); i++) {
+            if (tournamentGroupBoxs.get(i).isSelected()) {
                 return new Integer(i);
             }
         }
         return null;
     }
 
-    protected Integer getIndexOfGroup(TournamentGroup group) {
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (tournamentGroups.get(i).equals(group)) {
+    protected Integer getIndexOfGroup(TournamentGroupBox group) {
+        for (int i = 0; i < tournamentGroupBoxs.size(); i++) {
+            if (tournamentGroupBoxs.get(i).equals(group)) {
                 return i;
             }
         }
@@ -212,11 +213,11 @@ public abstract class LeagueLevel {
     protected int getGlobalPositionWinner(TournamentGroup group, int winner) {
         int total = 0;
 
-        for (int i = 0; i < tournamentGroups.size() && i < getIndexOfGroup(group); i++) {
+        for (int i = 0; i < tournamentGroupBoxs.size() && i < getIndexOfGroup(group); i++) {
             if (level > 0) {
                 total++;
             } else {
-                total += tournamentGroups.get(i).getMaxNumberOfWinners();
+                total += tournamentGroupBoxs.get(i).getMaxNumberOfWinners();
             }
         }
         total += winner;
@@ -230,9 +231,9 @@ public abstract class LeagueLevel {
      */
     protected int getArenasUsed() {
         List<Integer> arenas = new ArrayList<>();
-        for (int i = 0; i < tournamentGroups.size(); i++) {
-            if (!arenas.contains(tournamentGroups.get(i).arena)) {
-                arenas.add(tournamentGroups.get(i).arena);
+        for (int i = 0; i < tournamentGroupBoxs.size(); i++) {
+            if (!arenas.contains(tournamentGroupBoxs.get(i).arena)) {
+                arenas.add(tournamentGroupBoxs.get(i).arena);
             }
         }
         return arenas.size();
@@ -276,13 +277,13 @@ public abstract class LeagueLevel {
             TournamentGroupManager groupManager);
 
     protected void addGroup(TournamentGroup group) {
-        addGroup(group, tournamentGroups.size());
+        addGroup(group, tournamentGroupBoxs.size());
     }
 
     protected void addGroup(TournamentGroup group, int index) {
-        tournamentGroups.add(index, group);
+        tournamentGroupBoxs.add(index, group);
 
-        if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
+        if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroupBoxs.size() > 1)) {
             nextLevel = addNewLevel(tournament, level + 1, null, this, groupManager);
             groupManager.getLevels().add(nextLevel);
         }
@@ -293,8 +294,8 @@ public abstract class LeagueLevel {
     }
 
     protected void removeGroup() {
-        if (tournamentGroups.size() > 0) {
-            tournamentGroups.remove(tournamentGroups.size() - 1);
+        if (tournamentGroupBoxs.size() > 0) {
+            tournamentGroupBoxs.remove(tournamentGroupBoxs.size() - 1);
             if (nextLevel != null) {
                 nextLevel.updateGroupsSize();
                 if (nextLevel.size() == 0) {
@@ -304,9 +305,9 @@ public abstract class LeagueLevel {
         }
     }
 
-    protected void removeGroup(TournamentGroup group) {
-        if (tournamentGroups.size() > 0) {
-            tournamentGroups.remove(group);
+    protected void removeGroup(TournamentGroupBox group) {
+        if (tournamentGroupBoxs.size() > 0) {
+            tournamentGroupBoxs.remove(group);
             if (nextLevel != null) {
                 nextLevel.updateGroupsSize();
                 if (nextLevel.size() == 0) {
@@ -317,7 +318,7 @@ public abstract class LeagueLevel {
     }
 
     protected void removeGroups() {
-        tournamentGroups = new ArrayList<>();
+        tournamentGroupBoxs = new ArrayList<>();
     }
 
     /**
@@ -348,13 +349,13 @@ public abstract class LeagueLevel {
     protected abstract Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner);
 
     protected TournamentGroup getGroupDestinationOfWinner(TournamentGroup group, int winner) {
-        return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));
+        return nextLevel.tournamentGroupBoxs.get(getGroupIndexDestinationOfWinner(group, winner));
     }
 
     protected Integer getGroupIndexSourceOfWinner(TournamentGroup group, int winner) {
         if (level > 0) {
-            for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
-                if (previousLevel.getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
+            for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroupBoxs.size(); groupIndex++) {
+                if (previousLevel.getGroupDestinationOfWinner(previousLevel.tournamentGroupBoxs.get(groupIndex), winner).equals(group)) {
                     return groupIndex;
                 }
             }
@@ -363,13 +364,13 @@ public abstract class LeagueLevel {
     }
 
     protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, int winner) {
-        return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
+        return previousLevel.tournamentGroupBoxs.get(getGroupIndexSourceOfWinner(group, winner));
     }
 
     public String levelInfo() {
         String info = "Level: " + level + " Groups: ";
 
-        for (TournamentGroup group : tournamentGroups) {
+        for (TournamentGroup group : tournamentGroupBoxs) {
             info += group.getTeams().size() + "\t";
         }
         return info;
@@ -386,7 +387,7 @@ public abstract class LeagueLevel {
 
     public void showTeams() {
         System.out.println("-------------------------------------");
-        for (TournamentGroup group : tournamentGroups) {
+        for (TournamentGroup group : tournamentGroupBoxs) {
             for (Team team : group.getTeams()) {
                 System.out.print(team.getName() + " ");
             }
