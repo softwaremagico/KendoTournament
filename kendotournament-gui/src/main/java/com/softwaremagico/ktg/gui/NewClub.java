@@ -26,8 +26,8 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;

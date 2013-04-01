@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
 import java.awt.Color;
 import java.awt.Dimension;

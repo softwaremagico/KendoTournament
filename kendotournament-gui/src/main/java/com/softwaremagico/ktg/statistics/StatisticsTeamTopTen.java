@@ -23,10 +23,10 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.ScoreOfTeam;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.ScoreOfTeam;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.language.LanguagePool;

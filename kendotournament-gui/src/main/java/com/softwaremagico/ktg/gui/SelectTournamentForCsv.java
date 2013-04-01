@@ -23,7 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import javax.swing.JFileChooser;
 
 public abstract class SelectTournamentForCsv extends SelectTournament {

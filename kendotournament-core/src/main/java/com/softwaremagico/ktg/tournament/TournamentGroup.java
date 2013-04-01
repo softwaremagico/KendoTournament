@@ -29,7 +29,6 @@ import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
-import com.softwaremagico.ktg.database.TeamPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,26 +50,6 @@ public class TournamentGroup implements Serializable {
         this.level = level;
         this.fightArea = fightArea;
         this.numberMaxOfWinners = numberMaxOfWinners;
-    }
-
-    protected boolean loadTeams(Tournament tournament) {
-        this.tournament = tournament;
-        List<Team> updatedTeams = new ArrayList<>();
-        //variable participants of each teams are "transient". The program must obtain it from the database.
-        try {
-            for (int i = 0; i < teams.size(); i++) {
-                Team t = TeamPool.getInstance().get(tournament, teams.get(i).getName());
-                if (t != null) {
-                    updatedTeams.add(t);
-                } else {
-                    return false;
-                }
-            }
-        } catch (IndexOutOfBoundsException iob) {
-            return false;
-        }
-        teams = updatedTeams;
-        return true;
     }
 
     public void updateMaxNumberOfWinners(int value) {

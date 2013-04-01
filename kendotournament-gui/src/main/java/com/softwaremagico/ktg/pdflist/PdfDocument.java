@@ -27,24 +27,18 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import com.softwaremagico.ktg.KendoLog;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.PdfDocument;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-/**
- * Basical document in PDF.
- *
- * @author LOCAL\jhortelano
- */
 public abstract class PdfDocument {
 
     protected int fontSize = 12;

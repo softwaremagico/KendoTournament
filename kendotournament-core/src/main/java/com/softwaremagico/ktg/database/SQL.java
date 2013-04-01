@@ -560,7 +560,7 @@ public abstract class SQL extends Database {
                 stmt.setInt(4, tournament.getFightingAreas());
                 stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(6, tournament.getTeamSize());
-                stmt.setString(7, tournament.getMode().getSqlName());
+                stmt.setString(7, tournament.getType().getSqlName());
                 stmt.setFloat(8, tournament.getScoreForWin());
                 stmt.setFloat(9, tournament.getScoreForDraw());
                 stmt.setString(10, tournament.getChoosedScore());
@@ -658,7 +658,7 @@ public abstract class SQL extends Database {
                 stmt.setInt(3, tournament.getFightingAreas());
                 stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(5, tournament.getTeamSize());
-                stmt.setString(6, tournament.getMode().getSqlName());
+                stmt.setString(6, tournament.getType().getSqlName());
                 stmt.setFloat(7, tournament.getScoreForWin());
                 stmt.setFloat(8, tournament.getScoreForDraw());
                 stmt.setString(9, tournament.getChoosedScore());

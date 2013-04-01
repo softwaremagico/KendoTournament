@@ -25,8 +25,8 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.RegisteredPerson;
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.DuelPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;

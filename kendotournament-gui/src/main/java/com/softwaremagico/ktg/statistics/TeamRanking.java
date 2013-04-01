@@ -1,6 +1,6 @@
 package com.softwaremagico.ktg.statistics;
 
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Tournament;
 
 /*
  * #%L

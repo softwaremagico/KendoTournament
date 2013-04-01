@@ -41,7 +41,7 @@ public class KendoTournamentGenerator {
     public String language = "en";
     private String explorationFolder = null;
     //public TournamentGroupManager tournamentManager = null;
-    private char[] shiaijosName = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
     private int nameDiplomaPosition = 100;
@@ -279,9 +279,9 @@ public class KendoTournamentGenerator {
         return myFormatter.format(role.getAccreditationOrder());
     }
 
-    public String returnShiaijo(int pos) {
-        if (pos < shiaijosName.length) {
-            return shiaijosName[pos] + "";
+    public static String getFightAreaName(int pos) {
+        if (pos < fightAreaNames.length) {
+            return fightAreaNames[pos] + "";
         } else {
             return (pos + 1) + "";
         }

@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;

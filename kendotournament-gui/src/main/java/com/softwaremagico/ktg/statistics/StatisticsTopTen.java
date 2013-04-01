@@ -25,11 +25,11 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Ranking;
-import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.RoleTag;
-import com.softwaremagico.ktg.ScoreOfCompetitor;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.gui.fight.FightPanel;

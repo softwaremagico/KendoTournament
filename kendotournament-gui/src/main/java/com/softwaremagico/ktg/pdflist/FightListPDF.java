@@ -29,23 +29,25 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class FightListPDF extends ParentList {
 
     private Tournament tournament;
+    private ITournamentManager tournamentManager;
 
     public FightListPDF(Tournament tournament) {
         this.tournament = tournament;
+        this.tournamentManager = TournamentManagerPool.getManager(tournament);
         trans = LanguagePool.getTranslator("gui.xml");
     }
 
@@ -74,7 +76,7 @@ public class FightListPDF extends ParentList {
             List<Fight> fights = FightPool.getInstance().get(tournament, i);
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
-            mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getInstance().returnShiaijo(i), 0));
+            mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getFightAreaName(i), 0));
 
             for (int j = 0; j < fights.size(); j++) {
                 cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
@@ -96,7 +98,7 @@ public class FightListPDF extends ParentList {
     private PdfPTable championshipTable(PdfPTable mainTable) {
         PdfPCell cell;
 
-        for (int l = 0; l < TournamentGroupPool.getManager(tournament).getLevels().size(); l++) {
+        for (int l = 0; l < tournamentManager.getNumberOfLevels(); l++) {
             /*
              * Header of the phase
              */
@@ -104,13 +106,13 @@ public class FightListPDF extends ParentList {
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
-            List<TournamentGroup> groups = TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(l);
+            List<TournamentGroup> groups = tournamentManager.getGroups(l);
 
             List<Fight> fights = FightPool.getInstance().get(tournament);
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(groups.get(i).getShiaijo(fights)) + ")", 0));
-                
+                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));
+
                 for (int j = 0; j < fights.size(); j++) {
                     if (groups.get(i).isFightOfGroup(fights.get(j))) {
 
@@ -133,7 +135,7 @@ public class FightListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        if (tournament.getMode().equals(TournamentType.SIMPLE)) {
+        if (tournament.getType().equals(TournamentType.SIMPLE)) {
             simpleTable(mainTable);
         } else {
             championshipTable(mainTable);

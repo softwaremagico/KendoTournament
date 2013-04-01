@@ -26,18 +26,14 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.itextpdf.text.Document;
-import com.softwaremagico.ktg.Duel;
+import com.softwaremagico.ktg.core.Duel;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author  jorge
- */
 public class TimerPanel extends javax.swing.JFrame {
 
-    List<Duel> duels = new ArrayList<Duel>();
+    List<Duel> duels = new ArrayList<>();
     protected int fontSize = 17;
     Document document;
 

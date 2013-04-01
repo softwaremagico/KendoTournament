@@ -27,7 +27,16 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.core.ScoreOfTeam;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DuelPool;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.RolePool;
@@ -56,10 +65,6 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-/**
- *
- * @author Jorge
- */
 public class DiplomaPDF {
 
     protected int fontSize = 17;

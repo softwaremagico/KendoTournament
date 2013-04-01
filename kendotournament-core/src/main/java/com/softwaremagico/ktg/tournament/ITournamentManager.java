@@ -1,10 +1,9 @@
-
 package com.softwaremagico.ktg.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
  * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
+ * Copyright (C) 2008 - 2013 Softwaremagico
  * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
@@ -24,23 +23,14 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Fight;
+import java.util.List;
 
+public interface ITournamentManager {
 
-public class LeagueLevelSimple extends LeagueLevel {
- 
-    public LeagueLevelSimple(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
-        super(tournament, level, nextLevel, previousLevel, groupManager);
-    }
+    List<Fight> nextFights();
 
-    @Override
-    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
-        return null;
-    }
+    Integer getNumberOfLevels();
 
-    @Override
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
-        return null;
-    }
-    
+    List<TournamentGroup> getGroups(Integer level);
 }

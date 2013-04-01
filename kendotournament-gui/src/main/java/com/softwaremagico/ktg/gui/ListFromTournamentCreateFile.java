@@ -23,9 +23,9 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentPool;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -64,7 +64,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = TournamentPool.getAllTournaments();
+            listTournaments = TournamentPool.getInstance().getAll();
             if (voidTournament) {
                 TournamentComboBox.addItem(null);
             }
@@ -119,7 +119,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
             if (selectedTourn >= 0) {
                 for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
-                    ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
+                    ArenaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
                 }
             }
         } catch (NullPointerException | IndexOutOfBoundsException npe) {
@@ -180,13 +180,13 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
+        TournamentComboBox = new javax.swing.JComboBox();
         TournamentLabel = new javax.swing.JLabel();
         CancelButton = new javax.swing.JButton();
         GenerateButton = new javax.swing.JButton();
         CheckBox = new javax.swing.JCheckBox();
         ArenaLabel = new javax.swing.JLabel();
-        ArenaComboBox = new javax.swing.JComboBox<String>();
+        ArenaComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -295,12 +295,12 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JComboBox<String> ArenaComboBox;
+    protected javax.swing.JComboBox ArenaComboBox;
     protected javax.swing.JLabel ArenaLabel;
     private javax.swing.JButton CancelButton;
     public javax.swing.JCheckBox CheckBox;
     protected javax.swing.JButton GenerateButton;
-    protected javax.swing.JComboBox<Tournament> TournamentComboBox;
+    protected javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     // End of variables declaration//GEN-END:variables
 }

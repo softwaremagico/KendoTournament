@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.RoleTag;
-import com.softwaremagico.ktg.RoleTags;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.GridBagConstraints;

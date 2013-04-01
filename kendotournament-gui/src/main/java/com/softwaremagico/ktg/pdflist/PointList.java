@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-/**
- *
- * @author Jorge
- */
+
 public class PointList extends ListFromTournamentCreatePDF {
 
     public PointList() {

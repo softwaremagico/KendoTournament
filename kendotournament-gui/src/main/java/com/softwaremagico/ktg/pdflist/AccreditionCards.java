@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
@@ -34,10 +34,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author Jorge
- */
 public class AccreditionCards extends ListFromTournamentCreatePDF {
 
     InputStream photoInput;

@@ -23,9 +23,9 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.Duel;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DuelPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;

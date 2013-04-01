@@ -25,10 +25,10 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Team;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -102,7 +102,7 @@ public class ShortNewFight extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < tournament.getFightingAreas(); i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
             }
             FightAreaComboBox.setSelectedIndex(selectedArena);
         } catch (NullPointerException npe) {

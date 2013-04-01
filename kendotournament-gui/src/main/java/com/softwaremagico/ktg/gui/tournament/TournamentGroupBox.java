@@ -1,15 +1,14 @@
 package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,16 +23,18 @@ import javax.swing.JLabel;
 
 public class TournamentGroupBox extends Group {
 
+    private TournamentGroup tournamentGroup;
+    private ITournamentManager tournamentManager;
     DesignGroupWindow dgw;
     private boolean selected = false;
     private Translator trans = null;
     private boolean color = true;
     private java.awt.event.MouseAdapter ma;
-    private TournamentGroup tournamentGroup;
     public boolean listenerAdded = false;
 
-    public TournamentGroupBox(Integer numberMaxOfWinners, Tournament championship, Integer level, Integer arena) {
-        tournamentGroup = new TournamentGroup(numberMaxOfWinners, championship, level, arena);
+    public TournamentGroupBox(ITournamentManager tournamentManager, TournamentGroup tournamentGroup) {
+        this.tournamentGroup = tournamentGroup;
+        this.tournamentManager = tournamentManager;
         setLayout(new GridBagLayout());
         setLanguage();
         updateText();
@@ -118,9 +119,9 @@ public class TournamentGroupBox extends Group {
     public String getDefaultLabel() {
         //Select label
         String s;
-        if (tournamentGroup.getLevel() < TournamentGroupPool.getManager(tournamentGroup.getTournament()).getLevels().size() - 2) {
-            s = trans.returnTag("Round") + " " + (TournamentGroupPool.getManager(tournamentGroup.getTournament()).getLevels().size() - tournamentGroup.getLevel());
-        } else if (tournamentGroup.getLevel() == TournamentGroupPool.getManager(tournamentGroup.getTournament()).getLevels().size() - 2) {
+        if (tournamentGroup.getLevel() <  tournamentManager.getNumberOfLevels() - 2) {
+            s = trans.returnTag("Round") + " " + (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
+        } else if (tournamentGroup.getLevel() == tournamentManager.getNumberOfLevels() - 2) {
             s = trans.returnTag("SemiFinalLabel");
         } else {
             s = trans.returnTag("FinalLabel");
@@ -148,9 +149,8 @@ public class TournamentGroupBox extends Group {
         return new Color(0, 0, 0);
     }
 
-    public void setSelected(TournamentGroupManager ds) {
+    public void setSelected() {
         if (tournamentGroup.getLevel() == 0) {
-            ds.unselectDesignedGroups();
             selected = true;
             setBackground(new Color(200, 200, 200));
             //setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
@@ -178,7 +178,7 @@ public class TournamentGroupBox extends Group {
     }
 
     public void openDesignGroupWindow(LeagueDesigner jf) {
-        dgw = new DesignGroupWindow(this);
+        dgw = new DesignGroupWindow(tournamentGroup);
         addDesignGroupListeners(jf);
         dgw.setVisible(true);
     }
@@ -188,25 +188,9 @@ public class TournamentGroupBox extends Group {
         label.setText(returnText());
         updateSize();
     }
-
-    public void showWinners() {
-        String text = "";
-        //int groupFinished = KendoTournamentGenerator.getInstance().tournamentManager.getGroupOfFight(KendoTournamentGenerator.getInstance().fightManager.getFights(), KendoTournamentGenerator.getInstance().fightManager.getPositionOfPreviousAreaFight(FightAreaComboBox.getSelectedIndex()));
-        List<Team> winnersOfGroup = new ArrayList<>();
-        for (int i = 0; i < tournamentGroup.getMaxNumberOfWinners(); i++) {
-            winnersOfGroup.add(tournamentGroup.getTeamInOrderOfScore(i, FightPool.getInstance().get(tournamentGroup.getTournament()), true));
-        }
-        for (int i = 0; i < winnersOfGroup.size(); i++) {
-            if (i > 0) {
-                if (winnersOfGroup.get(i).getName().contains(", ")) {
-                    text += "; ";
-                } else {
-                    text += ", ";
-                }
-            }
-            text += winnersOfGroup.get(i).getName();
-        }
-        MessageManager.informationMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!!", text);
+    
+    public Integer getMaxNumberOfWinners(){
+        return tournamentGroup.getMaxNumberOfWinners();
     }
 
     /**
@@ -217,7 +201,7 @@ public class TournamentGroupBox extends Group {
         List<Fight> fights = tournamentGroup.getFights();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).isOver()) {
-                csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
+             //  csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
             }
         }
         List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournamentGroup.getTournament());
@@ -275,7 +259,7 @@ public class TournamentGroupBox extends Group {
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
-            TournamentGroupPool.getManager(tournamentGroup.getTournament()).updateArenas(1);
+          //  TournamentGroupPool.getManager(tournamentGroup.getTournament()).updateArenas(1);
             blackboard.updateBlackBoard();
             blackboard.fillTeams();
             blackboard.repaint();

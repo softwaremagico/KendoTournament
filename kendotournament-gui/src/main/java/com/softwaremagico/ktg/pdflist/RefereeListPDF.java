@@ -29,9 +29,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.RegisteredPerson;
-import com.softwaremagico.ktg.RoleTag;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.RolePool;
 import java.util.List;
 

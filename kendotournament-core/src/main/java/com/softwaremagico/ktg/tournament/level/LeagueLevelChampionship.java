@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui.tournament;
+package com.softwaremagico.ktg.tournament.level;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -23,25 +23,24 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.tournament.LeagueLevel;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 
 public class LeagueLevelChampionship extends LeagueLevel {
 
-    LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
-        super(tournament, level, nextLevel, previousLevel, groupManager);
+    LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+        super(tournament, level, nextLevel, previousLevel);
     }
 
     @Override
-    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
+    protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         if (level > 0) {
-            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel, groupManager);
+            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
         }
-        return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel, groupManager);
+        return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
     }
 
-    private Integer obtainPositionOfOneWinnerPair(int branch, int branchs) {
+    private Integer obtainPositionOfOneWinnerPair(Integer branch, Integer branchs) {
         if (branch % 2 == 0) {
             return branch / 2;
         } else {
@@ -49,7 +48,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
         }
     }
 
-    private Integer obtainPositionOfOneWinnerOdd(int branch, int branchs) {
+    private Integer obtainPositionOfOneWinnerOdd(Integer branch, Integer branchs) {
         if (branch % 2 == 0) {
             return branch / 2;
         } else {
@@ -58,9 +57,9 @@ public class LeagueLevelChampionship extends LeagueLevel {
     }
    
     @Override
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {
-        int winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
-        int winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
+    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
+        Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
+        Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
         if ((size() % 2) == 0) {
             return obtainPositionOfOneWinnerPair(winnerIndex, winnerTeams);
         } else {

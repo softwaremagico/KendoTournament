@@ -128,11 +128,11 @@ public class Tournament implements Serializable, Comparable<Tournament> {
         this.teamSize = teamSize;
     }
 
-    public TournamentType getMode() {
+    public TournamentType getType() {
         return mode;
     }
 
-    public void setMode(TournamentType mode) {
+    public void setType(TournamentType mode) {
         this.mode = mode;
     }
 

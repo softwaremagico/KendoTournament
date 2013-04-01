@@ -29,18 +29,14 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.Fight;
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Score;
-import com.softwaremagico.ktg.Tournament;
-import com.softwaremagico.ktg.TournamentType;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class SummaryPDF extends ParentList {
 
     private Tournament tournament;
@@ -154,7 +150,7 @@ public class SummaryPDF extends ParentList {
                 /*
                  * Header of the phase
                  */
-                if (lastLevel != fights.get(i).getLevel() && !tournament.getMode().equals(TournamentType.SIMPLE)) {
+                if (lastLevel != fights.get(i).getLevel() && !tournament.getType().equals(TournamentType.SIMPLE)) {
                     mainTable.addCell(getEmptyRow());
                     mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (fights.get(i).getLevel() + 1) + ":", 0, Element.ALIGN_LEFT));
                     lastLevel = fights.get(i).getLevel();

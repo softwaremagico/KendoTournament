@@ -115,7 +115,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void hideTreeButton() {
         try {
-            if (!selectedTournament.getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(selectedTournament).size() > 1) {
+            if (!selectedTournament.getType().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(selectedTournament).size() > 1) {
                 TreeButton.setVisible(true);
             } else {
                 TreeButton.setVisible(false);
@@ -157,7 +157,7 @@ public final class FightPanel extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < selectedTournament.getFightingAreas(); i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().returnShiaijo(i));
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
             }
         } catch (NullPointerException npe) {
         }
@@ -513,7 +513,7 @@ public final class FightPanel extends javax.swing.JFrame {
             FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).storeLazyFights(FightAreaComboBox.getSelectedIndex());
 
             //If championship or similar...
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
+            if (!((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).size() > 1) {
                 TournamentGroup currentGroup = TournamentGroupPool.getManager(((Tournament) TournamentComboBox.getSelectedItem())).getGroupOfFight(currentFight);
                 //Show scores, messages, etc. 
                 messagesFinishedGroup(currentGroup);
@@ -595,7 +595,7 @@ public final class FightPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_RefreshButtonActionPerformed
 
     private void RankingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankingButtonActionPerformed
-        if (((Tournament) TournamentComboBox.getSelectedItem()).getMode().equals(TournamentType.SIMPLE)) {
+        if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE)) {
             messagesFinishedSimpleChampionship(true);
         } else {
             Fight currentFight = FightPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSelectedFight(FightAreaComboBox.getSelectedIndex());

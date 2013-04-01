@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui.tournament;
+package com.softwaremagico.ktg.tournament.level;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.tournament.LeagueLevel;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.io.Serializable;
@@ -34,13 +33,13 @@ public class LeagueLevelManual extends LeagueLevel {
 
     private Links links;
 
-    public LeagueLevelManual(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
-        super(tournament, level, nextLevel, previousLevel, groupManager);
+    public LeagueLevelManual(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+        super(tournament, level, nextLevel, previousLevel);
         links = new Links();
     }
 
     @Override
-    protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, int winner) {
+    protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, Integer winner) {
         Links sources = new Links();
 
         //Get all sources of Winner
@@ -59,16 +58,16 @@ public class LeagueLevelManual extends LeagueLevel {
     }
 
     @Override
-    protected LeagueLevel addNewLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, TournamentGroupManager groupManager) {
+    protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         //Only first level is particular. 
         if (level > 0) {
-            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel, groupManager);
+            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
         }
-        return new LeagueLevelManual(tournament, level, nextLevel, previousLevel, groupManager);
+        return new LeagueLevelManual(tournament, level, nextLevel, previousLevel);
     }
 
     @Override
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, int winner) {        
+    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {        
         Links destinations = new Links();
 
         //Get all destination of Winner
@@ -207,10 +206,10 @@ public class LeagueLevelManual extends LeagueLevel {
         }
     }
 
-    void removeLinksSelectedGroup() {
+    void removeLinksSelectedGroup(TournamentGroup lastSelected) {
         try {
             for (int i = 0; i < links.size(); i++) {
-                if (links.get(i).source.equals(getLastSelected())) {
+                if (links.get(i).source.equals(lastSelected)) {
                     links.remove(i);
                     i--;
                 }

@@ -23,8 +23,8 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
-import com.softwaremagico.ktg.Tournament;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
@@ -103,7 +103,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 //int arena = (i) / (int) Math.ceil((double) grps.size() / (double) TournamentGroupPool.getManager(selectedTournament).returnNumberOfArenas());
 
                 Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
-                        + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().returnShiaijo(grps.get(i).arena));
+                        + "<br>" + trans.returnTag("ArenaString") + " " + KendoTournamentGenerator.getInstance().getFightAreaName(grps.get(i).arena));
                 s.updateFont("sansserif", 24);
                 add(s, c);
             }
@@ -220,7 +220,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         g.setColor(Color.black);
         for (int i = 0; i < grps.size(); i++) {
             if (i > 0) {
-                if (grps.get(i).arena != grps.get(i - 1).arena) {
+                if (grps.get(i).getFightArea() != grps.get(i - 1).getFightArea()) {
                     g.drawLine((int) 0, (int) grps.get(i).getY(), (int) this.getWidth(), (int) (int) grps.get(i).getY());
                 }
             }
@@ -237,7 +237,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         }
     }
 
-    private void drawLink(Graphics g, TournamentGroup d1, TournamentGroup d2, int winner, int originNumber, int destinationNumber, boolean half) {
+    private void drawLink(Graphics g, TournamentGroupBox d1, TournamentGroupBox d2, int winner, int originNumber, int destinationNumber, boolean half) {
         Rectangle r1 = d1.getBounds();
         Rectangle r2 = d2.getBounds();
         g.setColor(d1.obtainWinnerColor(winner, false));

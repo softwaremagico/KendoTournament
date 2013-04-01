@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 
 /**
  *
@@ -43,7 +43,7 @@ public class SummaryList extends ListFromTournamentCreatePDF {
     public String defaultFileName() {
         String shiaijo = "";
         if (returnSelectedArena() >= 0) {
-            shiaijo = "_" + KendoTournamentGenerator.getInstance().returnShiaijo(returnSelectedArena());
+            shiaijo = "_" + KendoTournamentGenerator.getInstance().getFightAreaName(returnSelectedArena());
         }
         try {
             return TournamentComboBox.getSelectedItem().toString() + "_Summary" + shiaijo;

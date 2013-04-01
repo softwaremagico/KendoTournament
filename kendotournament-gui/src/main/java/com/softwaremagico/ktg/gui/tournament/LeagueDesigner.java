@@ -23,13 +23,17 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.level.LeagueLevel;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -43,24 +47,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JViewport;
 import javax.swing.Timer;
 
-/**
- *
- * @author jorge
- */
 public class LeagueDesigner extends javax.swing.JFrame {
 
     private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
-    List<Team> teams;
-    Tournament tournament;
+    private List<Team> teams;
+    private Tournament tournament;
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshMode = true;
-    Integer numberMaxOfWinners = 1;
-    Timer timer;
+    private Integer numberMaxOfWinners = 1;
+    private Timer timer;
     private boolean wasDoubleClick = true;
     private BlackBoardPanel bbp;
-    //private final String FOLDER = "designer";
     private Point p;
     private JViewport viewport;
     private boolean refreshSpinner = true;
@@ -160,7 +159,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelLevelZero() {
         try {
-            if (!tournament.getMode().equals(TournamentType.SIMPLE)
+            if (!tournament.getType().equals(TournamentType.SIMPLE)
                     && TournamentGroupPool.getManager(tournament).sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
@@ -277,7 +276,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
             //}
 
-            TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
+            TournamentGroupPool.getManager(tournament).setMode(tournament.getType());
 
             fillTeams();
             updateListeners();
@@ -313,7 +312,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (TournamentGroupPool.getManager(tournament).default_max_winners > 1 && TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.LEAGUE_TREE)) {
                 ChampionshipRadioButton.setSelected(true);
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
-                tournament.setMode(TournamentGroupPool.getManager(tournament).getMode());
+                tournament.setType(TournamentGroupPool.getManager(tournament).getMode());
                 updateBlackBoard();
             }
         } catch (NullPointerException npe) {
@@ -361,19 +360,19 @@ public class LeagueDesigner extends javax.swing.JFrame {
             TournamentType oldMode = TournamentGroupPool.getManager(tournament).getMode();
             if (ManualRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.MANUAL);
-                tournament.setMode(TournamentType.MANUAL);
+                tournament.setType(TournamentType.MANUAL);
                 CleanLinksButton.setVisible(true);
             } else if (ChampionshipRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
-                tournament.setMode(TournamentType.CHAMPIONSHIP);
+                tournament.setType(TournamentType.CHAMPIONSHIP);
                 CleanLinksButton.setVisible(false);
             } else if (TreeRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.LEAGUE_TREE);
-                tournament.setMode(TournamentType.LEAGUE_TREE);
+                tournament.setType(TournamentType.LEAGUE_TREE);
                 CleanLinksButton.setVisible(false);
             } else if (SimpleRadioButton.isSelected()) {
                 TournamentGroupPool.getManager(tournament).setMode(TournamentType.SIMPLE);
-                tournament.setMode(TournamentType.SIMPLE);
+                tournament.setType(TournamentType.SIMPLE);
                 CleanLinksButton.setVisible(false);
             }
 
@@ -941,7 +940,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeamListMouseClicked
-        if (!tournament.getMode().equals(TournamentType.SIMPLE)) {
+        if (!tournament.getType().equals(TournamentType.SIMPLE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }
@@ -1070,7 +1069,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
             FightPool.getInstance().reset();
             TournamentGroupPool.getManager(tournament).refillDesigner();
-            TournamentGroupPool.getManager(tournament).setMode(tournament.getMode());
+            TournamentGroupPool.getManager(tournament).setMode(tournament.getType());
             fillTeams();
             updateListeners();
             updateBlackBoard();
