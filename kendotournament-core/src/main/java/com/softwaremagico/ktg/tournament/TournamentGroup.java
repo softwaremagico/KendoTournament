@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
@@ -104,6 +103,10 @@ public class TournamentGroup implements Serializable {
 
     public Integer getFightArea() {
         return fightArea;
+    }
+    
+    public void setFightArea(Integer fightArea){
+        this.fightArea = fightArea;
     }
 
     public int numberOfTeams() {
