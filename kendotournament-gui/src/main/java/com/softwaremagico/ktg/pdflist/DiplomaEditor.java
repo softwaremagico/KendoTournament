@@ -28,6 +28,7 @@ package com.softwaremagico.ktg.pdflist;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.RoleTags;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.GridBagConstraints;
@@ -80,7 +81,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
         lc.gridwidth = GridBagConstraints.REMAINDER;
         lc.fill = GridBagConstraints.BOTH;
 
-        roles = KendoTournamentGenerator.getInstance().getAvailableRoles();
+        roles = RolePool.getInstance().getRoleTags();
 
         for (int i = 0; i < roles.size(); i++) {
             JCheckBox cb = new JCheckBox(roles.get(i).name);

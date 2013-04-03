@@ -67,7 +67,7 @@ public class TeamAccreditationCardPDF extends PdfDocument {
 
         for (i = 0; i < team.getNumberOfMembers(0); i++) {
             RegisteredPerson person = team.getMember(i, 0);
-            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(person, competition, banner);
+            CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(competition, person, banner);
             PdfPTable competitorTable = competitorPDF.pageTable(width / 2, height / 2, writer, font, fontSize);
             competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
             cell = new PdfPCell(competitorTable);

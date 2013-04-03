@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.gui.tournament;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.TournamentType;
@@ -32,20 +33,17 @@ import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.level.LeagueLevel;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JViewport;
-import javax.swing.Timer;
 
 public class LeagueDesigner extends javax.swing.JFrame {
 
@@ -57,36 +55,29 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private boolean refreshTournament = true;
     private boolean refreshMode = true;
     private Integer numberMaxOfWinners = 1;
-    private Timer timer;
-    private boolean wasDoubleClick = true;
     private BlackBoardPanel bbp;
     private Point p;
     private JViewport viewport;
     private boolean refreshSpinner = true;
+    private ITournamentManager tournamentManager;
+    private Integer selectedGroup;
 
     /**
      * Creates new form LeagueDesigner
      */
     public LeagueDesigner() {
-        try {
-            refreshMode = false;
-            initComponents();
-            setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                    (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-            setLanguage();
-            bbp = new BlackBoardPanel();
-            BlackBoardScrollPane.setViewportView(bbp);
-            fillTournaments();
-            updateInterface();
-            updateLevel();
-
-            if (TournamentGroupPool.getManager(tournament).size() == 0) {
-                addDesignedPanelLevelZero();
-            }
-            updateMode();
-            refreshMode = true;
-        } catch (NullPointerException npe) {
-        }
+        refreshMode = false;
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setLanguage();
+        bbp = new BlackBoardPanel(this);
+        BlackBoardScrollPane.setViewportView(bbp);
+        fillTournaments();
+        updateInterface();
+        updateLevel();
+        updateMode();
+        refreshMode = true;
     }
 
     private void setLanguage() {
@@ -114,6 +105,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void fillTournaments() {
         refreshTournament = false;
+        TournamentComboBox.removeAllItems();
         try {
             listTournaments = TournamentPool.getInstance().getAll();
             for (int i = 0; i < listTournaments.size(); i++) {
@@ -132,7 +124,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         try {
             teamModel.removeAllElements();
             for (int i = 0; i < teams.size(); i++) {
-                if (!TournamentGroupPool.getManager(tournament).isTeamContainedInTournament(teams.get(i))) {
+                if (!TournamentManagerPool.getManager(tournament).exist(teams.get(i))) {
                     teamModel.addElement(teams.get(i).getName());
                 }
             }
@@ -157,20 +149,16 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void addDesignedPanelLevelZero() {
+    private void addDesignedPanelToLevelZero() {
         try {
             if (!tournament.getType().equals(TournamentType.SIMPLE)
-                    && TournamentGroupPool.getManager(tournament).sizeOfTournamentLevelZero(TournamentComboBox.getSelectedItem().toString()) < obtainNumberOfGroupsOfLeague()) {
-                //int defaultArena = (TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
+                    && TournamentManagerPool.getManager(tournament).getGroups(0).size() < obtainNumberOfGroupsOfLeague()) {
+                //int defaultArena = (TournamentManagerPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
-                TournamentGroup designedFight = new TournamentGroup(numberMaxOfWinners, tournament, 0, defaultArena);
-                designedFight.addMouseClickListener(new MouseAdapters(designedFight));
-                TournamentGroupPool.getManager(tournament).add(designedFight, true);
-                designedFight.setSelected(TournamentGroupPool.getManager(tournament));
-                TournamentGroupPool.getManager(tournament).updateArenas(0);
-                updateBlackBoard();
-                updateDesignerGroups();
-                updateListeners();
+                TournamentGroup group = new TournamentGroup(numberMaxOfWinners, tournament, 0, defaultArena);
+                TournamentManagerPool.getManager(tournament).addGroup(group);
+                TournamentManagerPool.getManager(tournament).setDefaultFightAreas();
+                updateInfo();
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
@@ -178,47 +166,23 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }
 
     private void addTeamToSelectedPanel(Team t) {
-        for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
-            if (TournamentGroupPool.getManager(tournament).getGroup(i).isSelected()) {
-                TournamentGroupPool.getManager(tournament).getGroup(i).addTeam(t);
-                break;
-            }
-        }
-        updateTeams();
-        updateDesignerGroups();
+        bbp.getSelectedBox().getTournamentGroup().addTeam(t);
+        updateInfo();
     }
 
     private void removeSelectedPanel() {
         try {
-            TournamentGroup group = TournamentGroupPool.getManager(tournament).getLastGroupSelected();
-            Integer select = TournamentGroupPool.getManager(tournament).getIndexLastSelected();
-            TournamentGroupPool.getManager(tournament).removeGroupOfLevelZero(group);
-            if ((select == null) || (select < 0) || (select > TournamentGroupPool.getManager(tournament).getSizeOfLevel(0) - 1)) {
-                //Select the last group.
-                TournamentGroupPool.getManager(tournament).selectLastGroup();
-            } else {
-                //Select the previous one. 
-                TournamentGroupPool.getManager(tournament).selectGroup(select);
-            }
-            updateTeams();
-            updateBlackBoard();
-            updateDesignerGroups();
+            TournamentGroupBox groupBox = bbp.getSelectedBox();
+            TournamentManagerPool.getManager(tournament).removeGroup(groupBox.getTournamentGroup());
+            updateInfo();
         } catch (NullPointerException npe) {
         }
     }
 
-    private void DeleteTeamsOfSelectedPanel() {
-        try {
-            for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
-                if (TournamentGroupPool.getManager(tournament).getGroup(i).isSelected()) {
-                    TournamentGroupPool.getManager(tournament).getGroup(i).deleteTeams();
-                }
-            }
-            updateTeams();
-        } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
-        updateBlackBoard();
+    private void deleteTeamsOfSelectedPanel() {
+        TournamentGroupBox groupBox = bbp.getSelectedBox();
+        groupBox.getTournamentGroup().removeTeams();
+        updateInfo();
     }
 
     private Team returnTeamByName(String name) {
@@ -247,58 +211,38 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void updateDesignerGroups() {
-        TournamentGroupPool.getManager(tournament).update();
-    }
-
     public int obtainNumberOfGroupsOfLeague() {
         return teams.size() / 2;
-    }
-
-    public int obtainMaxNumberOfTeamsByGroup() {
-        try {
-            return (int) Math.min(Math.floor((float) teams.size() / TournamentGroupPool.getManager(tournament).getSizeOfLevel(0)), 4);
-        } catch (NullPointerException npe) {
-            return 0;
-        }
     }
 
     private void updateInterface() {
         try {
             tournament = (Tournament) (TournamentComboBox.getSelectedItem());
-            numberMaxOfWinners = TournamentGroupPool.getManager(tournament).getDefaultNumberOfTeamsPassNextRound();
-            //TournamentGroupPool.getManager(tournament) = new TournamentGroupManager(tournament);
+            numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
+            //TournamentManagerPool.getManager(tournament) = new TournamentGroupManager(tournament);
             teams = TeamPool.getInstance().get(tournament);
 
             //if (!tournament.mode.equals(TournamentType.SIMPLE)) {
             //If it is not stored in a file, generate it. 
-            //TournamentGroupPool.getManager(tournament).refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
+            //TournamentManagerPool.getManager(tournament).refillDesigner(DatabaseConnection.getInstance().getDatabase().searchFightsByTournament(tournament));
             //FightPool.getManager(tournament).getFightsFromDatabase(tournament);
             //}
 
-            TournamentGroupPool.getManager(tournament).setMode(tournament.getType());
-
             fillTeams();
-            updateListeners();
             updateBlackBoard();
-            updateRadioButton();
+            updateTournamentType();
         } catch (NullPointerException npe) {
         }
     }
 
-    void updateBlackBoard() {
-        try {
-            Integer select = TournamentGroupPool.getManager(tournament).getIndexLastSelected();
-            if (!TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
-                bbp.updateBlackBoard((Tournament) TournamentComboBox.getSelectedItem());
-                TournamentGroupPool.getManager(tournament).enhance(false);
-            } else {
-                bbp.clearBlackBoard();
-            }
-            if (select != null && select >= 0) {
-                TournamentGroupPool.getManager(tournament).selectGroup(select);
-            }
+    protected void updateInfo() {
+        updateTeams();
+        updateBlackBoard();
+    }
 
+    private void updateBlackBoard() {
+        try {
+            bbp.update(tournament);
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
         } catch (NullPointerException npe) {
@@ -306,50 +250,27 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void consistentTree() {
-        try {
-            //It is impossible in a tree league that are more than one winner. If it is, change to a tournament.
-            if (TournamentGroupPool.getManager(tournament).default_max_winners > 1 && TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.LEAGUE_TREE)) {
-                ChampionshipRadioButton.setSelected(true);
-                TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
-                tournament.setType(TournamentGroupPool.getManager(tournament).getMode());
-                updateBlackBoard();
-            }
-        } catch (NullPointerException npe) {
-        }
-    }
-
-    private void updateRadioButton() {
-        switch (TournamentGroupPool.getManager(tournament).getMode()) {
-            case CHAMPIONSHIP:
-                ChampionshipRadioButton.setSelected(true);
-                break;
-            case MANUAL:
-                ManualRadioButton.setSelected(true);
-                break;
-            case LEAGUE_TREE:
-                TreeRadioButton.setSelected(true);
-                break;
-            case SIMPLE:
-                SimpleRadioButton.setSelected(true);
-                break;
-        }
-    }
-
-    private void enableSpinner() {
+    private void updateTournamentType() {
         refreshSpinner = false;
-        switch (TournamentGroupPool.getManager(tournament).getMode()) {
-            case LEAGUE_TREE:
-            case SIMPLE:
-                PassSpinner.setValue(1);
-                PassSpinner.setEnabled(false);
-                break;
+        switch (tournament.getType()) {
             case CHAMPIONSHIP:
+                ChampionshipRadioButton.setSelected(true);
                 PassSpinner.setValue(2);
                 PassSpinner.setEnabled(false);
                 break;
             case MANUAL:
+                ManualRadioButton.setSelected(true);
                 PassSpinner.setEnabled(true);
+                break;
+            case LEAGUE_TREE:
+                TreeRadioButton.setSelected(true);
+                PassSpinner.setValue(1);
+                PassSpinner.setEnabled(false);
+                break;
+            case SIMPLE:
+                SimpleRadioButton.setSelected(true);
+                PassSpinner.setValue(1);
+                PassSpinner.setEnabled(false);
                 break;
         }
         refreshSpinner = true;
@@ -357,34 +278,29 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateMode() {
         try {
-            TournamentType oldMode = TournamentGroupPool.getManager(tournament).getMode();
+            TournamentType oldMode = tournament.getType();
             if (ManualRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentType.MANUAL);
                 tournament.setType(TournamentType.MANUAL);
                 CleanLinksButton.setVisible(true);
             } else if (ChampionshipRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentType.CHAMPIONSHIP);
                 tournament.setType(TournamentType.CHAMPIONSHIP);
                 CleanLinksButton.setVisible(false);
             } else if (TreeRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentType.LEAGUE_TREE);
                 tournament.setType(TournamentType.LEAGUE_TREE);
                 CleanLinksButton.setVisible(false);
             } else if (SimpleRadioButton.isSelected()) {
-                TournamentGroupPool.getManager(tournament).setMode(TournamentType.SIMPLE);
                 tournament.setType(TournamentType.SIMPLE);
                 CleanLinksButton.setVisible(false);
             }
 
             //Mode has changed. Update Levels
-            if (!oldMode.equals(TournamentGroupPool.getManager(tournament).getMode()) && TournamentGroupPool.getManager(tournament).getLevels().size() > 0) {
-                LeagueLevel levelZero = TournamentGroupPool.getManager(tournament).getLevels().get(0);
-                TournamentGroupPool.getManager(tournament).convertFirstLevelsToCurrentChampionship(levelZero);
+            if (!oldMode.equals(tournament.getType()) && TournamentManagerPool.getManager(tournament).getNumberOfLevels() > 0) {
+                TournamentManagerPool.getManager(tournament).removeGroups(0);
             }
 
-            enableSpinner();
+            updateTournamentType();
 
-            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.SIMPLE)) {
+            if (tournament.getType().equals(TournamentType.SIMPLE)) {
                 AddButton.setVisible(false);
                 DeleteButton.setVisible(false);
                 DeleteAllButton.setVisible(false);
@@ -404,15 +320,15 @@ public class LeagueDesigner extends javax.swing.JFrame {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
 
-        updateBlackBoard();
+        updateInfo();
     }
 
     private void updateLevel() {
         LevelComboBox.removeAllItems();
-        for (int i = 0; i < TournamentGroupPool.getManager(tournament).getLevels().size(); i++) {
-            if (i < TournamentGroupPool.getManager(tournament).getLevels().size() - 2) {
-                LevelComboBox.addItem(trans.returnTag("Round") + " " + (TournamentGroupPool.getManager(tournament).getLevels().size() - i));
-            } else if (i == TournamentGroupPool.getManager(tournament).getLevels().size() - 2) {
+        for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
+            if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
+                LevelComboBox.addItem(trans.returnTag("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
+            } else if (i == TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
                 LevelComboBox.addItem(trans.returnTag("SemiFinalLabel"));
             } else {
                 LevelComboBox.addItem(trans.returnTag("FinalLabel"));
@@ -427,10 +343,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
         Dimension de = viewport.getExtentSize();
 
 
-        int columnsWide = this.getWidth() / TournamentGroupPool.getManager(tournament).getLevels().size();
+        int columnsWide = this.getWidth() / TournamentManagerPool.getManager(tournament).getNumberOfLevels();
         int rowsWide;
-        if (TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size() > 0) {
-            rowsWide = this.getWidth() / TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size();
+        if (TournamentManagerPool.getManager(tournament).getGroups(0).size() > 0) {
+            rowsWide = this.getWidth() / TournamentManagerPool.getManager(tournament).getGroups(0).size();
         } else {
             rowsWide = 1;
         }
@@ -439,77 +355,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
         p.y = rowsWide * y;
 
         viewport.setViewPosition(p);
-    }
-
-    /**
-     * **********************************************
-     *
-     * LISTENERS
-     *
-     ***********************************************
-     */
-    /**
-     * When clicking to a box.
-     */
-    class MouseAdapters extends MouseAdapter {
-
-        TournamentGroup designedFight;
-
-        MouseAdapters(TournamentGroup d) {
-            designedFight = d;
-        }
-
-        @Override
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            clicked(evt, designedFight);
-        }
-    }
-
-    void clicked(java.awt.event.MouseEvent e, TournamentGroup group) {
-        final boolean selected = group.isSelected();
-
-        if (group.getLevel() == 0) {
-            if (e.getClickCount() == 2) {
-                group.openDesignGroupWindow(this);
-                wasDoubleClick = true;
-            } else {
-                //Avoid to run the one-click functions when performing a doubleclick.
-                Integer timerinterval = (Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval");
-                timer = new Timer(timerinterval.intValue(), new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (wasDoubleClick) {
-                            wasDoubleClick = false; // reset flag
-                        } else {
-                            //If is a group already selected, add the selected team.
-                            if (selected) {
-                                //addTeam();
-                            }
-
-                        }
-                    }
-                });
-                timer.setRepeats(false);
-                timer.start();
-            }
-
-            group.setSelected(TournamentGroupPool.getManager(tournament));
-        } else if (group.getLevel() == 1 && group.getTeams().isEmpty()) {
-            //Clicking in the second level is only useful for defining links and the tournament has not started. 
-            if (TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) {
-                TournamentGroupPool.getManager(tournament).addLink(TournamentGroupPool.getManager(tournament).getLastGroupSelected(), group);
-                updateBlackBoard();
-            }
-        }
-        updateListeners();
-    }
-
-    private void updateListeners() {
-        for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
-            if (!TournamentGroupPool.getManager(tournament).getGroup(i).listenerAdded) {
-                TournamentGroupPool.getManager(tournament).getGroup(i).addMouseClickListener(new MouseAdapters(TournamentGroupPool.getManager(tournament).getGroup(i)));
-            }
-        }
     }
 
     /**
@@ -553,13 +398,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                formWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -909,7 +747,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        addDesignedPanelLevelZero();
+        addDesignedPanelToLevelZero();
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void AddTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTeamButtonActionPerformed
@@ -918,7 +756,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_AddTeamButtonActionPerformed
 
     private void DeleteTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteTeamsButtonActionPerformed
-        DeleteTeamsOfSelectedPanel();
+        deleteTeamsOfSelectedPanel();
     }//GEN-LAST:event_DeleteTeamsButtonActionPerformed
 
     private void PassSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PassSpinnerStateChanged
@@ -933,7 +771,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
             if (refreshSpinner) {
                 numberMaxOfWinners = (Integer) PassSpinner.getValue();
-                TournamentGroupPool.getManager(tournament).setNumberOfTeamsPassNextRound(numberMaxOfWinners);
+                tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
             }
         } catch (NullPointerException npe) {
         }
@@ -953,17 +791,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
-            if (!(TournamentGroupPool.getManager(tournament).getMode().equals(TournamentType.MANUAL)) || TournamentGroupPool.getManager(tournament).allGroupsHaveManualLink()) {
+            if (!TournamentManagerPool.getManager(tournament).allGroupsHaveNextLink()) {
                 if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
-                    KendoLog.finer(this.getClass().getName(), "Deleting old fights");
                     FightPool.getInstance().remove(tournament);
-                    FightPool.getInstance().add(tournament, TournamentGroupPool.getManager(tournament).generateLevelFights(0));
-                    TournamentGroupPool.getManager(tournament).emptyInnerLevels();
-                    TournamentGroupPool.updateGroupManagers(tournament);
-                    //Delete inner levels when delete old fightManager.
-                    KendoLog.finest(this.getClass().getName(), "Deleting inner levels of old tournament");
+                    FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament).getFights(0));
                     this.dispose();
-                    //Update Groups with new fights.
                 }
             } else {
                 MessageManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
@@ -976,15 +808,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
         /*
          * if (TournamentComboBox.getItemCount() > 0 &&
          * FightPool.getManager(tournament).size() == 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner(); }
+         * TournamentManagerPool.getManager(tournament).storeDesigner(); }
          */
     }//GEN-LAST:event_formWindowClosing
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
         try {
             FightPool.getInstance().reset();
-            TournamentGroupPool.cleanGroupManager(tournament);
-            TournamentGroupPool.getManager(tournament).setNumberOfTeamsPassNextRound(numberMaxOfWinners);
+            TournamentManagerPool.getManager(tournament).removeGroups(0);
             updateMode();
             updateBlackBoard();
             fillTeams();
@@ -997,13 +828,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
         /*
          * if (TournamentComboBox.getItemCount() > 0 &&
          * FightPool.getManager(tournament).size() == 0) {
-         * TournamentGroupPool.getManager(tournament).storeDesigner(); }
+         * TournamentManagerPool.getManager(tournament).storeDesigner(); }
          */
     }//GEN-LAST:event_TournamentComboBoxFocusGained
-
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        consistentTree();
-    }//GEN-LAST:event_formWindowGainedFocus
 
     private void ManualRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ManualRadioButtonItemStateChanged
         if (refreshMode && ManualRadioButton.isSelected()) {
@@ -1016,7 +843,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         if (refreshMode && ChampionshipRadioButton.isSelected()) {
             numberMaxOfWinners = 2;
             PassSpinner.setValue(numberMaxOfWinners);
-            TournamentGroupPool.getManager(tournament).setNumberOfTeamsPassNextRound(numberMaxOfWinners);
+            tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
             updateMode();
             updateBlackBoard();
         }
@@ -1027,7 +854,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             if (refreshMode && TreeRadioButton.isSelected()) {
                 numberMaxOfWinners = 1;
                 PassSpinner.setValue(numberMaxOfWinners);
-                TournamentGroupPool.getManager(tournament).setNumberOfTeamsPassNextRound(numberMaxOfWinners);
+                tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
                 updateMode();
                 updateBlackBoard();
             }
@@ -1037,7 +864,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void CleanLinksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanLinksButtonActionPerformed
         try {
-            TournamentGroupPool.getManager(tournament).cleanLinksSelectedGroup();
+            TournamentManagerPool.getManager(tournament).removeLinks();
             updateBlackBoard();
         } catch (NullPointerException npe) {
         }
@@ -1054,11 +881,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
         //Select All levels
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             FightPool.getInstance().remove(tournament);
-            TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(0);
+            TournamentManagerPool.getManager(tournament).deleteTeams(0);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } else {
             FightPool.getInstance().remove(tournament, LevelComboBox.getSelectedIndex());
-            TournamentGroupPool.getManager(tournament).deleteTeamsOfLevel(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
+            TournamentManagerPool.getManager(tournament).deleteTeams(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
         updateBlackBoard();
@@ -1068,15 +895,13 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
         if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
             FightPool.getInstance().reset();
-            TournamentGroupPool.getManager(tournament).refillDesigner();
-            TournamentGroupPool.getManager(tournament).setMode(tournament.getType());
+            tournament.setType(tournament.getType());
             fillTeams();
-            updateListeners();
             updateBlackBoard();
             refreshMode = false;
-            updateRadioButton();
+            updateTournamentType();
             refreshMode = true;
-            //TournamentGroupPool.getManager(tournament).storeDesigner();
+            //TournamentManagerPool.getManager(tournament).storeDesigner();
         }
     }//GEN-LAST:event_LoadButtonActionPerformed
 

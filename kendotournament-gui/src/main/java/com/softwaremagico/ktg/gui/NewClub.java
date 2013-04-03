@@ -25,11 +25,13 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.database.ClubPool;
 import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -87,8 +89,8 @@ public class NewClub extends javax.swing.JFrame {
             AddressTextField.setText(c.getAddress());
             FillCompetitorsFromClub(c);
             selectRepresentative(c);
-            PhoneTextField.setText(c.phone);
-            MailTextField.setText(c.email);
+            PhoneTextField.setText(c.getPhone());
+            MailTextField.setText(c.getMail());
         } catch (NullPointerException npe) {
         }
     }
@@ -104,12 +106,12 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     public void FillCompetitorsFromClub(Club club) {
-        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsByClub(club.getName(), false);
+        competitors = RegisteredPersonPool.getInstance().getByClub(club.getName());
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
             RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
-            if (club.representativeID != null && club.representativeID.equals(competitors.get(i).getId())) {
+            if (club.getRepresentativeID() != null && club.getRepresentativeID().equals(competitors.get(i).getId())) {
                 RepresentativeComboBox.setSelectedIndex(i);
             }
         }
@@ -117,7 +119,7 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     private void FillCompetitors() {
-        competitors = DatabaseConnection.getInstance().getDatabase().searchCompetitorsWithoutClub(false);
+        competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
         RepresentativeComboBox.removeAllItems();
         RepresentativeComboBox.addItem("");
         for (int i = 0; i < competitors.size(); i++) {
@@ -128,7 +130,7 @@ public class NewClub extends javax.swing.JFrame {
 
     private void selectRepresentative(Club c) {
         for (int i = 0; i < competitors.size(); i++) {
-            if (competitors.get(i).getId().equals(c.representativeID)) {
+            if (competitors.get(i).getId().equals(c.getRepresentativeID())) {
                 RepresentativeComboBox.setSelectedIndex(i + 1);
             }
         }
@@ -151,16 +153,15 @@ public class NewClub extends javax.swing.JFrame {
                     c.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
-                if (DatabaseConnection.getInstance().getDatabase().addClub(c, true)) {
-                    CleanWindow();
-                }
+                ClubPool.getInstance().add(c);
+                CleanWindow();
                 if (newCompetitor != null) {
                     //newCompetitor.fillClub();
-                    newCompetitor.addClub(c);  //Uodate competitor window.
+                    newCompetitor.addClub(c);  //Update competitor window.
                     if (updateClubOfCompetitor) { //Update club of selected competitor.
                         if (RepresentativeComboBox.getSelectedIndex() > 0) {
-                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).club = c.getName();
-                            DatabaseConnection.getInstance().getDatabase().updateClubCompetitor(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), false);
+                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).setClub(c);
+                            RegisteredPersonPool.getInstance().update(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), competitors.get(RepresentativeComboBox.getSelectedIndex() - 1));
                         }
                     }
                     this.dispose();
@@ -218,7 +219,7 @@ public class NewClub extends javax.swing.JFrame {
         AcceptButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         RepresentativePanel = new javax.swing.JPanel();
-        RepresentativeComboBox = new javax.swing.JComboBox<String>();
+        RepresentativeComboBox = new javax.swing.JComboBox();
         PhoneTextField = new javax.swing.JTextField();
         MailTextField = new javax.swing.JTextField();
         RepresentativeLabel = new javax.swing.JLabel();
@@ -441,7 +442,7 @@ public class NewClub extends javax.swing.JFrame {
     private javax.swing.JTextField NameTextField;
     private javax.swing.JLabel PhoneLabel;
     private javax.swing.JTextField PhoneTextField;
-    private javax.swing.JComboBox<String> RepresentativeComboBox;
+    private javax.swing.JComboBox RepresentativeComboBox;
     private javax.swing.JLabel RepresentativeLabel;
     private javax.swing.JPanel RepresentativePanel;
     private javax.swing.JButton SearchButton;

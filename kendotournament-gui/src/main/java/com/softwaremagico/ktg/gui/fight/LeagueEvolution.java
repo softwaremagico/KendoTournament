@@ -24,9 +24,8 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.TournamentType;
+import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
-import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -34,10 +33,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
 
-/**
- *
- * @author Jorge
- */
 public class LeagueEvolution extends javax.swing.JFrame {
 
     BlackBoardPanel bbp;
@@ -56,7 +51,7 @@ public class LeagueEvolution extends javax.swing.JFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         this.setSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.setExtendedState(this.getExtendedState() | LeagueEvolution.MAXIMIZED_BOTH);
-        bbp = new BlackBoardPanel();
+        bbp = new BlackBoardPanel(tournament);
         BlackBoardScrollPane.setViewportView(bbp);
         updateListeners();
     }
@@ -172,17 +167,11 @@ public class LeagueEvolution extends javax.swing.JFrame {
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         int ke = evt.getKeyCode();
 
-        //if (ke == 27) {
         // ESC or q pressed (with bloq num and without)
         if ((ke == 1048689) || (ke == 1048603) || (ke == 27) || (ke == 113)) {
             timer.stop();
             timer = null;
             this.dispose();
-        }
-
-        //Ctrl + P pressed.
-        if (ke == 17) {
-            //PrintUtilities.printComponent(this);
         }
     }//GEN-LAST:event_formKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables

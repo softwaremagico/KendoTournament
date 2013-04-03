@@ -164,8 +164,6 @@ public class KendoTournamentGenerator {
 
     /**
      * Return the roles defined into a XML file.
-     *
-     * @return
      */
     public RoleTags getAvailableRoles() {
         return new Translator("roles.xml").returnAvailableRoles(language);
@@ -248,15 +246,6 @@ public class KendoTournamentGenerator {
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);
         Folder.saveListInFile(configData, Path.getPathConfigInHome());
-    }
-
-    public boolean existCompetitor(List<RegisteredPerson> competitors, RegisteredPerson competitor) {
-        for (int i = 0; i < competitors.size(); i++) {
-            if (competitors.get(i).id.equals(competitor.id)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

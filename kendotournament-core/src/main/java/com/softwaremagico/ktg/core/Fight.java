@@ -221,10 +221,10 @@ public class Fight implements Serializable, Comparable<Fight> {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
             if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, level) != null) //There is a player
                     && (!team2.getMember(i, level).getName().equals("")
-                    || !team2.getMember(i, level).id.equals("")))
+                    || !team2.getMember(i, level).getId().equals("")))
                     && ((team1.getMember(i, level) == null) //Versus no player.
                     || (team1.getMember(i, level).getName().equals("")
-                    && team1.getMember(i, level).id.equals("")))) {
+                    && team1.getMember(i, level).getId().equals("")))) {
                 getDuels().get(i).completeIppons(false);
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
@@ -233,10 +233,10 @@ public class Fight implements Serializable, Comparable<Fight> {
         for (int i = 0; i < team2.getNumberOfMembers(level); i++) {
             if (((i < team1.getNumberOfMembers(level) && team1.getMember(i, level) != null) //There is a player
                     && (!team1.getMember(i, level).getName().equals("")
-                    || !team1.getMember(i, level).id.equals("")))
+                    || !team1.getMember(i, level).getId().equals("")))
                     && ((team2.getMember(i, level) == null) //Versus no player.
                     || (team2.getMember(i, level).getName().equals("")
-                    && team2.getMember(i, level).id.equals("")))) {
+                    && team2.getMember(i, level).getId().equals("")))) {
                 getDuels().get(i).completeIppons(true);
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }

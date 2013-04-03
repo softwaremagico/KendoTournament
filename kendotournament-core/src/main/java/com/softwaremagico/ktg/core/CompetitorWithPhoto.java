@@ -119,13 +119,13 @@ public class CompetitorWithPhoto extends RegisteredPerson implements Serializabl
     public String returnTag() {
         //Tag is the initials of name and surname plus a random number.
         String n1, n2;
-        if (name != null) {
-            n1 = name.substring(0, 1);
+        if (getName() != null) {
+            n1 = getName().substring(0, 1);
         } else {
             n1 = "0";
         }
-        if (surname != null) {
-            n2 = surname.substring(0, 1);
+        if (getSurname() != null) {
+            n2 = getSurname().substring(0, 1);
         } else {
             n2 = "0";
         }
@@ -135,6 +135,9 @@ public class CompetitorWithPhoto extends RegisteredPerson implements Serializabl
 
     @Override
     public boolean equals(Object object) {
+        if (!(object instanceof RegisteredPerson)) {
+            return false;
+        }
         return super.equals(object);
     }
 

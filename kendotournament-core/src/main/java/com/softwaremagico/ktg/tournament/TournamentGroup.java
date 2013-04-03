@@ -34,7 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Defines a group of teams that fight together in a tournament. A league has multiple groups but a simple tournament only has one. 
+ * Defines a group of teams that fight together in a tournament. A league has
+ * multiple groups but a simple tournament only has one.
  */
 public class TournamentGroup implements Serializable {
 
@@ -83,8 +84,8 @@ public class TournamentGroup implements Serializable {
     public Integer getFightArea() {
         return fightArea;
     }
-    
-    public void setFightArea(Integer fightArea){
+
+    public void setFightArea(Integer fightArea) {
         this.fightArea = fightArea;
     }
 
@@ -92,7 +93,7 @@ public class TournamentGroup implements Serializable {
         return teams.size();
     }
 
-    public void deleteTeams() {
+    public void removeTeams() {
         teams = new ArrayList<>();
     }
 
@@ -180,6 +181,17 @@ public class TournamentGroup implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public boolean areFightsStarted() {
+        List<Fight> fights = getFights();
+
+        for (int i = 0; i < fights.size(); i++) {
+            if (fights.get(i).isOver()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

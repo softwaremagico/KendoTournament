@@ -10,6 +10,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,16 +26,16 @@ public class TournamentGroupBox extends Group {
 
     private TournamentGroup tournamentGroup;
     private ITournamentManager tournamentManager;
-    DesignGroupWindow dgw;
+    private DesignGroupWindow dgw;
     private boolean selected = false;
     private Translator trans = null;
     private boolean color = true;
     private java.awt.event.MouseAdapter ma;
-    public boolean listenerAdded = false;
+    private boolean listenerAdded = false;
 
-    public TournamentGroupBox(ITournamentManager tournamentManager, TournamentGroup tournamentGroup) {
+    public TournamentGroupBox(TournamentGroup tournamentGroup) {
         this.tournamentGroup = tournamentGroup;
-        this.tournamentManager = tournamentManager;
+        this.tournamentManager = TournamentManagerPool.getManager(tournamentGroup.getTournament());
         setLayout(new GridBagLayout());
         setLanguage();
         updateText();
@@ -53,6 +54,10 @@ public class TournamentGroupBox extends Group {
     public void update() {
         updateText();
         updateSize();
+    }
+
+    public TournamentGroup getTournamentGroup() {
+        return tournamentGroup;
     }
 
     void onlyShow() {
@@ -119,7 +124,7 @@ public class TournamentGroupBox extends Group {
     public String getDefaultLabel() {
         //Select label
         String s;
-        if (tournamentGroup.getLevel() <  tournamentManager.getNumberOfLevels() - 2) {
+        if (tournamentGroup.getLevel() < tournamentManager.getNumberOfLevels() - 2) {
             s = trans.returnTag("Round") + " " + (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
         } else if (tournamentGroup.getLevel() == tournamentManager.getNumberOfLevels() - 2) {
             s = trans.returnTag("SemiFinalLabel");
@@ -184,12 +189,12 @@ public class TournamentGroupBox extends Group {
     }
 
     public void deleteTeams() {
-        tournamentGroup.deleteTeams();
+        tournamentGroup.removeTeams();
         label.setText(returnText());
         updateSize();
     }
-    
-    public Integer getMaxNumberOfWinners(){
+
+    public Integer getMaxNumberOfWinners() {
         return tournamentGroup.getMaxNumberOfWinners();
     }
 
@@ -201,7 +206,7 @@ public class TournamentGroupBox extends Group {
         List<Fight> fights = tournamentGroup.getFights();
         for (int i = 0; i < fights.size(); i++) {
             if (fights.get(i).isOver()) {
-             //  csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
+                //  csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
             }
         }
         List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournamentGroup.getTournament());
@@ -250,19 +255,18 @@ public class TournamentGroupBox extends Group {
 
     class closeWindows extends WindowAdapter {
 
-        LeagueDesigner blackboard;
+       private LeagueDesigner leagueDesigner;
 
         closeWindows(LeagueDesigner jf) {
-            blackboard = jf;
+            leagueDesigner = jf;
         }
 
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
-          //  TournamentGroupPool.getManager(tournamentGroup.getTournament()).updateArenas(1);
-            blackboard.updateBlackBoard();
-            blackboard.fillTeams();
-            blackboard.repaint();
+            //  TournamentGroupPool.getManager(tournamentGroup.getTournament()).updateArenas(1);
+            leagueDesigner.updateInfo();
+            leagueDesigner.repaint();
         }
     }
 }

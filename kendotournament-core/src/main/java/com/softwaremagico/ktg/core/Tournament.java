@@ -26,20 +26,14 @@ package com.softwaremagico.ktg.core;
  */
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class Tournament implements Serializable, Comparable<Tournament> {
 
     private String name;
-    private transient InputStream bannerInput;
-    private transient InputStream diplomaInput;
-    private transient InputStream accreditationInput;
-    private long bannerSize;
-    private long diplomaSize;
-    private long accreditationSize;
+    private transient Photo banner;
+    private transient Photo diploma;
+    private transient Photo accreditation;
     private int fightingAreas;
     private int howManyTeamsOfGroupPassToTheTree;
     private int teamSize;
@@ -47,7 +41,7 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     private float scoreForWin = 1;
     private float scoreForDraw = 0;
     private String choosedScore = "European";
-    
+
     public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType mode) {
         this.name = name;
         fightingAreas = areas;
@@ -56,52 +50,28 @@ public class Tournament implements Serializable, Comparable<Tournament> {
         this.mode = mode;
     }
 
-    public InputStream getBannerInput() {
-        return bannerInput;
+    public Photo getBanner() {
+        return banner;
     }
 
-    public void setBannerInput(InputStream bannerInput) {
-        this.bannerInput = bannerInput;
+    public void setBanner(Photo banner) {
+        this.banner = banner;
     }
 
-    public InputStream getDiplomaInput() {
-        return diplomaInput;
+    public Photo getDiploma() {
+        return diploma;
     }
 
-    public void setDiplomaInput(InputStream diplomaInput) {
-        this.diplomaInput = diplomaInput;
+    public void setDiploma(Photo diploma) {
+        this.diploma = diploma;
     }
 
-    public InputStream getAccreditationInput() {
-        return accreditationInput;
+    public Photo getAccreditation() {
+        return accreditation;
     }
 
-    public void setAccreditationInput(InputStream accreditationInput) {
-        this.accreditationInput = accreditationInput;
-    }
-
-    public long getBannerSize() {
-        return bannerSize;
-    }
-
-    public void setBannerSize(long bannerSize) {
-        this.bannerSize = bannerSize;
-    }
-
-    public long getDiplomaSize() {
-        return diplomaSize;
-    }
-
-    public void setDiplomaSize(long diplomaSize) {
-        this.diplomaSize = diplomaSize;
-    }
-
-    public long getAccreditationSize() {
-        return accreditationSize;
-    }
-
-    public void setAccreditationSize(long accreditationSize) {
-        this.accreditationSize = accreditationSize;
+    public void setAccreditation(Photo accreditation) {
+        this.accreditation = accreditation;
     }
 
     public int getFightingAreas() {
@@ -140,60 +110,6 @@ public class Tournament implements Serializable, Comparable<Tournament> {
         return name;
     }
 
-    public void addBanner(InputStream tmp_photo, long size) {
-        bannerInput = tmp_photo;
-        bannerSize = size;
-    }
-
-    public void addBanner(Image img) {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            BufferedImage bb = toBufferedImage(img);
-            ImageIO.write(bb, "png", os);
-        } catch (IOException ex) {
-        }
-        bannerInput = new ByteArrayInputStream(os.toByteArray());
-        bannerSize = os.toByteArray().length;
-    }
-
-    public Image banner() throws IOException {
-        if (bannerInput != null) {
-            return ImageIO.read(bannerInput);
-        } else {
-            return null;
-        }
-    }
-
-    public byte[] getBytesFromBanner() throws IOException {
-
-        // Get the size of the file
-        long length = bannerInput.available();
-
-        if (length > Integer.MAX_VALUE) {
-            // File is too large
-        }
-
-        // Create the byte array to hold the data
-        byte[] bytes = new byte[(int) length];
-
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length
-                && (numRead = bannerInput.read(bytes, offset, bytes.length - offset)) >= 0) {
-            offset += numRead;
-        }
-
-        // Ensure all the bytes have been read in
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file ");
-        }
-
-        // Close the input stream and return bytes
-        bannerInput.close();
-        return bytes;
-    }
-
     public void changeScoreOptions(String type, float win, float draw) {
         choosedScore = type;
         scoreForWin = win;
@@ -213,92 +129,34 @@ public class Tournament implements Serializable, Comparable<Tournament> {
         return choosedScore;
     }
 
-    public static BufferedImage toBufferedImage(Image image) {
-        if (image instanceof BufferedImage) {
-            return (BufferedImage) image;
-        }
-
-        // This code ensures that all the pixels in the image are loaded
-        image = new ImageIcon(image).getImage();
-
-        // Create a buffered image with a format that's compatible with the screen
-        BufferedImage bimage = null;
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        try {
-            // Determine the type of transparency of the new buffered image
-            int transparency = Transparency.OPAQUE;
-
-            // Create the buffered image
-            GraphicsDevice gs = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gs.getDefaultConfiguration();
-            bimage = gc.createCompatibleImage(
-                    image.getWidth(null), image.getHeight(null), transparency);
-        } catch (HeadlessException e) {
-            // The system does not have a screen
-        }
-
-        if (bimage == null) {
-            // Create a buffered image using the default color model
-            int type = BufferedImage.TYPE_INT_RGB;
-            bimage = new BufferedImage(image.getWidth(null), image.getHeight(null), type);
-        }
-
-        // Copy image to buffered image
-        Graphics g = bimage.createGraphics();
-
-        // Paint the image onto the buffered image
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-
-        return bimage;
+    public void addBanner(InputStream input, int size) {
+        banner = new Photo(getName());
+        banner.setImage(input, size);
     }
 
-    public void addDiploma(InputStream tmp_photo, long size) {
-        diplomaInput = tmp_photo;
-        diplomaSize = size;
+    public void addBanner(Image img) {
+        banner = new Photo(getName());
+        banner.setImage(img);
+    }
+
+    public void addDiploma(InputStream input, int size) {
+        diploma = new Photo(getName());
+        diploma.setImage(input, size);
     }
 
     public void addDiploma(Image img) {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            BufferedImage bb = toBufferedImage(img);
-            ImageIO.write(bb, "png", os);
-        } catch (IOException ex) {
-        }
-        diplomaInput = new ByteArrayInputStream(os.toByteArray());
-        diplomaSize = os.toByteArray().length;
+        diploma = new Photo(getName());
+        diploma.setImage(img);
     }
 
-    public Image diploma() throws IOException {
-        if (diplomaInput != null) {
-            return ImageIO.read(diplomaInput);
-        } else {
-            return null;
-        }
-    }
-
-    public void addAccreditation(InputStream tmp_photo, long size) {
-        accreditationInput = tmp_photo;
-        accreditationSize = size;
+    public void addAccreditation(InputStream input, int size) {
+        accreditation = new Photo(getName());
+        accreditation.setImage(input, size);
     }
 
     public void addAccreditation(Image img) {
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        try {
-            BufferedImage bb = toBufferedImage(img);
-            ImageIO.write(bb, "png", os);
-        } catch (IOException ex) {
-        }
-        accreditationInput = new ByteArrayInputStream(os.toByteArray());
-        accreditationSize = os.toByteArray().length;
-    }
-
-    public Image accreditation() throws IOException {
-        if (accreditationInput != null) {
-            return ImageIO.read(accreditationInput);
-        } else {
-            return null;
-        }
+        accreditation = new Photo(getName());
+        accreditation.setImage(img);
     }
 
     @Override

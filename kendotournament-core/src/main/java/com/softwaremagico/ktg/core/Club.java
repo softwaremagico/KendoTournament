@@ -146,7 +146,7 @@ public class Club implements Serializable, Comparable<Club> {
         return phone;
     }
 
-    public String getRepresentative() {
+    public String getRepresentativeID() {
         return representativeID;
     }
 

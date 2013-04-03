@@ -57,7 +57,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
     }
    
     @Override
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
+    public Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
         Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
         Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
         if ((size() % 2) == 0) {

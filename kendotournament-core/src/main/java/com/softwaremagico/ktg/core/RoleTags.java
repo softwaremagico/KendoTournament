@@ -72,7 +72,7 @@ public class RoleTags {
                 return listRoles.get(i).abbrev;
             }
         }
-        return "D";
+        return "X";
     }
 
     public RoleTag getRole(String tag) {

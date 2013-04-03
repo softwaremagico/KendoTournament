@@ -60,7 +60,21 @@ public class ClubPool extends SimplePool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> searchClubByCity(String city) {
+    public List<Club> getByName(String name) {
+        List<Club> result = new ArrayList<>();
+        for (Club element : getMap().values()) {
+            if (element.getName().contains(name)) {
+                result.add(element);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    /**
+     * Obtain all elements that contains the desired string
+     */
+    public List<Club> getByCity(String city) {
         List<Club> result = new ArrayList<>();
         for (Club element : getMap().values()) {
             if (element.getCity().contains(city)) {
@@ -74,7 +88,7 @@ public class ClubPool extends SimplePool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> searchClubByCountry(String country) {
+    public List<Club> getByCountry(String country) {
         List<Club> result = new ArrayList<>();
         for (Club element : getMap().values()) {
             if (element.getCountry().contains(country)) {

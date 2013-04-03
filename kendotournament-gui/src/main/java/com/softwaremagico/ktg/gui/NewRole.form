@@ -42,7 +42,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="CancelButton" linkSize="1" min="-2" pref="86" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="RoleComboBox" alignment="1" max="32767" attributes="1"/>
+                  <Component id="RoleTagsComboBox" alignment="1" max="32767" attributes="1"/>
                   <Component id="CompetitorComboBox" alignment="1" max="32767" attributes="1"/>
                   <Component id="TournamentComboBox" alignment="1" max="32767" attributes="1"/>
               </Group>
@@ -65,7 +65,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="RoleComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="RoleTagsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="RoleLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TournamentComboBoxActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Tournament&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="CompetitorComboBox">
@@ -104,17 +104,17 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CompetitorComboBoxActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JComboBox" name="RoleComboBox">
+    <Component class="javax.swing.JComboBox" name="RoleTagsComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="TournamentLabel">

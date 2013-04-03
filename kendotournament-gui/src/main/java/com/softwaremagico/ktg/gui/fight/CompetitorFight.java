@@ -25,7 +25,11 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -185,8 +189,8 @@ public class CompetitorFight extends JPanel {
         panel.repaint();
     }
 
-    private void updateFaultPanel(PanelBackground panel, int fault) {
-        if (fault > 0) {
+    private void updateFaultPanel(PanelBackground panel, boolean fault) {
+        if (fault) {
             panel.setBackground(Score.getImage(Score.FAULT.getImageName()));
         } else {
             panel.setBackground(Score.getImage(Score.EMPTY.getImageName()));
@@ -201,15 +205,15 @@ public class CompetitorFight extends JPanel {
             if (fight != null) {
                 if ((player = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
                     Duel d = fight.getDuels().get(player);
-                    updateScorePanel(round1, d.hitsFromCompetitorA.get(0));
-                    updateScorePanel(round2, d.hitsFromCompetitorA.get(1));
-                    updateFaultPanel(faults, d.faultsCompetitorA);
+                    updateScorePanel(round1, d.getHits(true).get(0));
+                    updateScorePanel(round2, d.getHits(true).get(1));
+                    updateFaultPanel(faults, d.getFaults(true));
                 }
                 if ((player = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
                     Duel d = fight.getDuels().get(player);
-                    updateScorePanel(round1, d.hitsFromCompetitorB.get(0));
-                    updateScorePanel(round2, d.hitsFromCompetitorB.get(1));
-                    updateFaultPanel(faults, d.faultsCompetitorB);
+                    updateScorePanel(round1, d.getHits(false).get(0));
+                    updateScorePanel(round2, d.getHits(false).get(1));
+                    updateFaultPanel(faults, d.getFaults(false));
                 }
             }
         } catch (NullPointerException npe) {
@@ -281,22 +285,16 @@ public class CompetitorFight extends JPanel {
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, true);
                 } else {
-                    d.setErasedPoints(true);
                     d.clearResultInRound(round, true);
                 }
-                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
-                //  updateScorePanels();
             }
             if ((index = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, false);
                 } else {
-                    d.setErasedPoints(true);
                     d.clearResultInRound(round, false);
                 }
-                //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
-                //   updateScorePanels();
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
@@ -332,7 +330,6 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
-                d.setErasedPoints(true);
                 d.resetFaults(true);
                 fight.setOverStored(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
@@ -340,7 +337,6 @@ public class CompetitorFight extends JPanel {
             }
             if ((index = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
-                d.setErasedPoints(true);
                 d.resetFaults(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();

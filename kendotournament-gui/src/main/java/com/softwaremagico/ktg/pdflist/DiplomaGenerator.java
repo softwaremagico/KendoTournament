@@ -26,7 +26,9 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
@@ -35,15 +37,11 @@ import java.io.InputStream;
 import java.util.List;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author Jorge
- */
 public class DiplomaGenerator extends ListFromTournamentCreatePDF {
 
-    float nameposition = 100;
-    InputStream photoInput;
-    long size;
+    private float nameposition = 100;
+    private InputStream photoInput;
+    private int size;
     private boolean statistics = false;
     private List<RoleTag> selectedRoles = null;
 
@@ -79,9 +77,12 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                  */
                 photoInput = new FileInputStream(Path.getDiplomaPath());
                 File fileImage = new File(Path.getDiplomaPath());
-                size = fileImage.length();
-                listTournaments.get(TournamentComboBox.getSelectedIndex()).setDiplomaInput(photoInput);
-                listTournaments.get(TournamentComboBox.getSelectedIndex()).setDiplomaSize(size);
+                size = (int)fileImage.length();
+
+                Photo photo = new Photo(((Tournament) TournamentComboBox.getSelectedItem()).getName());
+                photo.setImage(photoInput, size);
+
+                listTournaments.get(TournamentComboBox.getSelectedIndex()).setDiploma(photo);
                 TournamentPool.getInstance().update(listTournaments.get(TournamentComboBox.getSelectedIndex()), listTournaments.get(TournamentComboBox.getSelectedIndex()));
 
                 if (pdf.generateDiplomaPDF(file, nameposition)) {

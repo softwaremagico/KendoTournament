@@ -29,10 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- *
- * @author LOCAL\jhortelano
- */
+
 public enum DatabaseEngine {
 
     MySQL(true, new MySQL()),

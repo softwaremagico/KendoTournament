@@ -166,8 +166,8 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void updateTournament() {
         try {
-            banner.CleanPhoto();
-            banner.ChangePhoto(selectedTournament.banner(), selectedTournament.getBannerInput(), selectedTournament.getBannerSize());
+            banner.cleanPhoto();
+            banner.changePhoto(selectedTournament.banner(), selectedTournament.getBannerInput(), selectedTournament.getBannerSize());
             BannerPanel.repaint();
             BannerPanel.revalidate();
             fillFightingAreas();

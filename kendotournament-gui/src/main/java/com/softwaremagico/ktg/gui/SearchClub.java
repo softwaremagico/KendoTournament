@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.Club;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.Club;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.database.ClubPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -73,11 +73,11 @@ public final class SearchClub extends Search<Club> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchClubByName(NameTextField.getText(), true);
+            results = ClubPool.getInstance().getByName(NameTextField.getText());
         } else if (CountryTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchClubByCountry(CountryTextField.getText(), true);
+            results = ClubPool.getInstance().getByCountry(NameTextField.getText());
         } else if (CityTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchClubByCity(CityTextField.getText(), true);
+            results = ClubPool.getInstance().getByCity(NameTextField.getText());
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -94,6 +94,7 @@ public final class SearchClub extends Search<Club> {
 
     @Override
     protected boolean deleteFromDatabase(Club object) {
-        return DatabaseConnection.getInstance().getDatabase().deleteClub(object, true);
+        ClubPool.getInstance().remove(object);
+        return true;
     }
 }

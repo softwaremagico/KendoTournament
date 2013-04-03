@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.tournament.Group;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

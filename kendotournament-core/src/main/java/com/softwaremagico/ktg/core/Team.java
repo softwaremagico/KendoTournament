@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -51,11 +52,13 @@ public class Team implements Serializable, Comparable<Team> {
     }
 
     public void setMember(RegisteredPerson member, Integer order, Integer level) {
-        HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(level);
-        if (levelOrder == null) {
-            levelOrder = new HashMap<>();
+        if (member.isValid()) {
+            HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(level);
+            if (levelOrder == null) {
+                levelOrder = new HashMap<>();
+            }
+            levelOrder.put(order, member);
         }
-        levelOrder.put(order, member);
     }
 
     public RegisteredPerson getMember(int order, int level) {
@@ -87,10 +90,14 @@ public class Team implements Serializable, Comparable<Team> {
     }
 
     public Integer getMemberOrder(int level, String competitorID) {
+        return getMemberOrder(level, RegisteredPersonPool.getInstance().get(competitorID));
+    }
+
+    public Integer getMemberOrder(int level, RegisteredPerson competitor) {
         try {
             HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
             for (Integer order : orderInLevel.keySet()) {
-                if (orderInLevel.get(order).id.equals(competitorID)) {
+                if (orderInLevel.get(order).equals(competitor)) {
                     return order;
                 }
             }

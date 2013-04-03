@@ -25,169 +25,96 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.files.Path;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class PhotoFrame extends JPanel {
 
-    Image photo;
-    InputStream photoInput;
-    JPanel parentFrame;
-    long size;
+    private Photo photo;
+    private JPanel parentFrame;
 
     public PhotoFrame(JPanel container, String defaultImage) {
-        photo(container, defaultImage);
+        parentFrame = container;
+        changePhoto(defaultImage);
     }
 
-    private void photo(JPanel container, String inputImage) {
+    public long getPhotoSize() {
+        return photo.getSize();
+    }
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public final void changePhoto(String imagePath) {
         try {
-            parentFrame = container;
+            Image scaledImage;
             Toolkit toolkit = Toolkit.getDefaultToolkit();
-            photo = toolkit.getImage(inputImage);
-            photoInput = new FileInputStream(inputImage);
-            BufferedImage input = ImageIO.read(photoInput);
+            Image image = toolkit.getImage(imagePath);
+            InputStream inputStream = new FileInputStream(imagePath);
+            BufferedImage input = ImageIO.read(inputStream);
             int srcHeight = input.getHeight();
             int srcWidth = input.getWidth();
             if ((double) parentFrame.getHeight() / srcHeight < (double) parentFrame.getWidth() / srcWidth) {
-                photo = photo.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
+                scaledImage = image.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
             } else {
                 try {
-                    photo = photo.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                    scaledImage = image.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
                 } catch (IllegalArgumentException iae) {
-                    photo = photo.getScaledInstance(parentFrame.getPreferredSize().width, (int) ((((double) parentFrame.getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                    scaledImage = image.getScaledInstance(parentFrame.getPreferredSize().width, (int) ((((double) parentFrame.getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
                 }
             }
-            File file = new File(inputImage);
-            size = file.length();
-            photoInput = new FileInputStream(inputImage);
-        } catch (StackOverflowError | IOException sof) {
+            photo.setImage(scaledImage);
+        } catch (IOException | NullPointerException sof) {
+            cleanPhoto();
         }
     }
 
-    private static Image Resize(Image picture, double xFactor, double yFactor) {
-        BufferedImage buffer;
-        Graphics2D g;
-        AffineTransform transformer;
-        AffineTransformOp operation;
-
-        buffer = new BufferedImage(
-                picture.getWidth(null),
-                picture.getHeight(null),
-                BufferedImage.TYPE_INT_ARGB);
-        g = buffer.createGraphics();
-        g.drawImage(picture, 0, 0, null);
-        transformer = new AffineTransform();
-        transformer.scale(xFactor, yFactor);
-        operation = new AffineTransformOp(transformer, AffineTransformOp.TYPE_BILINEAR);
-        buffer = operation.filter(buffer, null);
-        return (Toolkit.getDefaultToolkit().createImage(buffer.getSource()));
-    }
-
-    public void Resize(int width, int height) throws Exception {
-        InputStream tmp_image;
-        BufferedImage src = ImageIO.read(photoInput);
-        BufferedImage dest = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = dest.createGraphics();
-        AffineTransform at = AffineTransform.getScaleInstance((double) width / src.getWidth(), (double) height / src.getHeight());
-        g.drawRenderedImage(src, at);
-        ImageIO.write(dest, "PNG", new File(Path.getImagePath() + "tmp.png"));
-        tmp_image = new FileInputStream(Path.getImagePath() + "tmp.png");
-        File file = new File(Path.getImagePath() + "tmp.png");
-        size = file.length();
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        photo = toolkit.getImage(Path.getImagePath() + "tmp.png");
-        photoInput = tmp_image;
-    }
-
-    void ChangePhoto(String path) {
-        CleanPhoto();
-        try {
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            photo = toolkit.getImage(path);
-            photoInput = new FileInputStream(path);
-            BufferedImage input = ImageIO.read(photoInput);
-            float srcHeight = input.getHeight();
-            float srcWidth = input.getWidth();
-            if ((double) parentFrame.getHeight() / srcHeight < (double) parentFrame.getWidth() / srcWidth) {
-                photo = photo.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
-            } else {
-                photo = photo.getScaledInstance(parentFrame.getWidth(), (int) ((double) (parentFrame.getWidth() / srcWidth) * srcHeight), Image.SCALE_FAST);
-            }
-            File file = new File(path);
-            size = file.length();
-            photoInput = new FileInputStream(path);
-        } catch (IOException ex) {
-            Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void ChangePhoto(Image imagePhoto, InputStream tmp_photoInput, long tmp_size) {
+    public void changePhoto(Photo imagePhoto) {
         if (imagePhoto != null) {
             try {
-                CleanPhoto();
-                photo = imagePhoto;
-                tmp_photoInput.reset();
-                photoInput = tmp_photoInput;
-                size = tmp_size;
-                BufferedImage input = (BufferedImage) imagePhoto;
-                //BufferedImage input = ImageIO.read(photoInput);
+                Image scaledImage;
+                Image image = imagePhoto.getImage();
+                BufferedImage input = imagePhoto.getBufferedImage();
                 int srcHeight = input.getHeight();
                 int srcWidth = input.getWidth();
                 if ((double) parentFrame.getHeight() / srcHeight < (double) parentFrame.getWidth() / srcWidth) {
-                    photo = photo.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
+                    scaledImage = image.getScaledInstance((int) (((double) parentFrame.getHeight() / srcHeight) * srcWidth), parentFrame.getHeight(), Image.SCALE_AREA_AVERAGING);
                 } else {
-                    photo = photo.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                    try {
+                        scaledImage = image.getScaledInstance(parentFrame.getWidth(), (int) ((((double) parentFrame.getWidth() / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                    } catch (IllegalArgumentException iae) {
+                        scaledImage = image.getScaledInstance(parentFrame.getPreferredSize().width, (int) ((((double) parentFrame.getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+                    }
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NullPointerException npe) {
+                photo.setImage(scaledImage);
+            } catch (NullPointerException sof) {
+                cleanPhoto();
             }
-        } else {
-            photo = null;
-            photoInput = null;
-            size = 0;
         }
     }
 
-    public void CleanPhoto() {
-        try {
-            Toolkit toolkit = Toolkit.getDefaultToolkit();
-            photo = toolkit.getImage(Path.getWhiteSquare());
-            photoInput = new FileInputStream(Path.getWhiteSquare());
-            BufferedImage input = ImageIO.read(photoInput);
-            photo = photo.getScaledInstance(600, 600, Image.SCALE_FAST);
-            File file = new File(Path.getWhiteSquare());
-            size = file.length();
-            //photoInput.close();
-            this.repaint();
-            this.revalidate();
-        } catch (IOException ex) {
-            Logger.getLogger(PhotoFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void cleanPhoto() {
+        changePhoto(Path.getWhiteSquare());
     }
 
     @Override
     public void paint(Graphics screen) {
         try {
-            int iWidth = photo.getWidth(this);
-            int iHeight = photo.getHeight(this);
-            int xPos = parentFrame.getWidth() / 2 - (photo.getWidth(this)) / 2;
-            int yPos = parentFrame.getHeight() / 2 - (photo.getHeight(this)) / 2;
-            screen.drawImage(photo, xPos, yPos,
+            int iWidth = photo.getImage().getWidth(this);
+            int iHeight = photo.getImage().getHeight(this);
+            int xPos = parentFrame.getWidth() / 2 - (photo.getImage().getWidth(this)) / 2;
+            int yPos = parentFrame.getHeight() / 2 - (photo.getImage().getHeight(this)) / 2;
+            screen.drawImage(photo.getImage(), xPos, yPos,
                     iWidth, iHeight, this);
         } catch (NullPointerException npe) {
         }

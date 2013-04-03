@@ -90,4 +90,9 @@ public class RoleTag {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

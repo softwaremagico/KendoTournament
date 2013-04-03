@@ -23,7 +23,8 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
+import com.softwaremagico.ktg.core.Club;
+import com.softwaremagico.ktg.core.CompetitorWithPhoto;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TournamentPool;
@@ -31,6 +32,14 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.core.Configuration;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.pdflist.*;
 import com.softwaremagico.ktg.statistics.*;
 import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
@@ -43,13 +52,10 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.monitor.Monitor;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jorge
- */
 public class Controller {
 
     MainGUI main;
@@ -89,8 +95,6 @@ public class Controller {
     private NewSimpleTournament newFight;
     private NewRingTournament newRing;
     private LeagueEvolution leagueEvolution = null;
-    private MonitorTree monitorTree = null;
-    private MonitorPosition monitorPosition = null;
     private Monitor monitor = null;
     private SelectTournamentForMonitor selectTournamentForMonitor = null;
     private SelectTournamentForTreeMonitor selectTournamentForTreeMonitor = null;
@@ -834,9 +838,8 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             RegisteredPerson competitor;
-            newCompetitor.testNIF();
+            newCompetitor.correctNif();
             if ((competitor = newCompetitor.acceptCompetitor()) != null) {
-                KendoLog.info(Controller.class.getName(), "New competitor added!");
                 try {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
@@ -986,8 +989,8 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Team t = searchTeam.returnSelectedItem();
-            newTeam.updateWindow(t);
+            Team team = searchTeam.returnSelectedItem();
+            newTeam.updateWindow(team);
             newTeam.setVisible(true);
             searchTeam.dispose();
         }

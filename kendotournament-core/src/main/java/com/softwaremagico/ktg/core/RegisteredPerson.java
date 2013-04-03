@@ -32,9 +32,9 @@ import java.util.Locale;
 
 public class RegisteredPerson implements Serializable, Comparable<RegisteredPerson> {
 
-    protected String id;
-    protected String name;
-    protected String surname;
+    private String id;
+    private String name;
+    private String surname;
     private Club club;
 
     public RegisteredPerson(String id, String name, String surname) {
@@ -49,6 +49,10 @@ public class RegisteredPerson implements Serializable, Comparable<RegisteredPers
 
     public String getId() {
         return id;
+    }
+
+    public boolean isValid() {
+        return getName().length() > 0 && getId().length() > 0;
     }
 
     protected final void setName(String value) {

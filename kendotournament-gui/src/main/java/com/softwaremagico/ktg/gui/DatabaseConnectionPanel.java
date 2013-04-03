@@ -127,6 +127,10 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         return DatabaseComboBox.getSelectedItem().toString();
     }
 
+    public String getSelectedEngine() {
+        return selectedEngine;
+    }
+
     public void resetPassword() {
         PasswordField.setText("");
     }
@@ -135,10 +139,6 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         ServerTextField.setEnabled(engine.getHasNetworkConnection());
         UserTextField.setEnabled(engine.getHasNetworkConnection());
         PasswordField.setEnabled(engine.getHasNetworkConnection());
-    }
-
-    public String getSelectedEngine() {
-        return selectedEngine;
     }
 
     public void setSelectedEngine(String selectedEngine) {
@@ -180,7 +180,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         EngineLabel = new javax.swing.JLabel();
-        EngineComboBox = new javax.swing.JComboBox<String>();
+        EngineComboBox = new javax.swing.JComboBox();
         ServerTextField = new javax.swing.JTextField();
         ServerLabel = new javax.swing.JLabel();
         DatabaseLabel = new javax.swing.JLabel();
@@ -201,22 +201,12 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         });
 
         ServerTextField.setText("localhost");
-        ServerTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ServerTextFieldKeyReleased(evt);
-            }
-        });
 
         ServerLabel.setText("Server:");
 
         DatabaseLabel.setText("Database:");
 
         UserTextField.setText("root");
-        UserTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                UserTextFieldKeyReleased(evt);
-            }
-        });
 
         UserLabel.setText("User:");
 
@@ -280,21 +270,14 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
             setSelectedEngine(EngineComboBox.getSelectedItem().toString());
             hasNetworkConnection(DatabaseEngine.getDatabase(EngineComboBox.getSelectedItem().toString()));
             fillDatabaseList();
-            resetPassword();
+            //resetPassword();
         }
     }//GEN-LAST:event_EngineComboBoxActionPerformed
 
-    private void ServerTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ServerTextFieldKeyReleased
-        DatabaseConnection.getInstance().setServer(ServerTextField.getText());
-    }//GEN-LAST:event_ServerTextFieldKeyReleased
-
-    private void UserTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UserTextFieldKeyReleased
-        DatabaseConnection.getInstance().setUser(UserTextField.getText());
-    }//GEN-LAST:event_UserTextFieldKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox DatabaseComboBox;
     private javax.swing.JLabel DatabaseLabel;
-    private javax.swing.JComboBox<String> EngineComboBox;
+    private javax.swing.JComboBox EngineComboBox;
     private javax.swing.JLabel EngineLabel;
     private javax.swing.JPasswordField PasswordField;
     private javax.swing.JLabel PasswordLabel;

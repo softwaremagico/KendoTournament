@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.database.RolePool;
 import java.io.Serializable;
 
 /**
@@ -45,6 +46,15 @@ public class Role implements Serializable {
         this.competitor = competitor;
         this.tag = tag;
         this.accreditationOrder = accreditationOrder;
+        this.accreditationPrinted = accreditationPrinted;
+        this.diplomaPrinted = diplomaPrinted;
+    }
+
+    public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag, boolean accreditationPrinted, boolean diplomaPrinted) {
+        this.tournament = tournament;
+        this.competitor = competitor;
+        this.tag = tag;
+        this.accreditationOrder = RolePool.getInstance().getPeople(tournament).size() + 1;
         this.accreditationPrinted = accreditationPrinted;
         this.diplomaPrinted = diplomaPrinted;
     }
@@ -110,5 +120,10 @@ public class Role implements Serializable {
         hash = 67 * hash + (this.competitor != null ? this.competitor.hashCode() : 0);
         hash = 67 * hash + (this.tag != null ? this.tag.hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return RolePool.getInstance().getRoleTags().getTranslation(getDatabaseTag());
     }
 }

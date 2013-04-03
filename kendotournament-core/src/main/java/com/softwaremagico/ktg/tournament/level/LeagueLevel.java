@@ -67,7 +67,7 @@ public abstract class LeagueLevel {
 
     protected void deleteTeams() {
         for (TournamentGroup g : tournamentGroups) {
-            g.deleteTeams();
+            g.removeTeams();
         }
     }
 
@@ -299,7 +299,7 @@ public abstract class LeagueLevel {
         }
     }
 
-    protected abstract Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner);
+    public abstract Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner);
 
     protected TournamentGroup getGroupDestinationOfWinner(TournamentGroup group, Integer winner) {
         return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));

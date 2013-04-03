@@ -44,13 +44,13 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
     private Role role;
     private com.itextpdf.text.Image banner = null;
 
-    public CompetitorAccreditationCardPDF(RegisteredPerson competitor, Tournament tournament) throws Exception {
+    public CompetitorAccreditationCardPDF(Tournament tournament, RegisteredPerson competitor) throws Exception {
         this.competitor = competitor;
         this.tournament = tournament;
         this.role = RolePool.getInstance().getRole(tournament, competitor);
     }
 
-    public CompetitorAccreditationCardPDF(RegisteredPerson competitor, Tournament tournament, com.itextpdf.text.Image banner) throws Exception {
+    public CompetitorAccreditationCardPDF(Tournament tournament, RegisteredPerson competitor, com.itextpdf.text.Image banner) throws Exception {
         this.competitor = competitor;
         this.tournament = tournament;
         this.role = RolePool.getInstance().getRole(tournament, competitor);
@@ -75,9 +75,9 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable table = new PdfPTable(widths);
         com.itextpdf.text.Image competitorImage;
 
-        if (competitor.getPhoto().getPhotoSize() > 0) {
+        if (competitor.getPhoto().getSize() > 0) {
             try {
-                competitorImage = Image.getInstance(competitor.getPhoto().getPhoto(), null);
+                competitorImage = Image.getInstance(competitor.getPhoto().getImage(), null);
             } catch (NullPointerException npe) {
                 competitorImage = defaultPhoto;
             }
@@ -149,7 +149,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
         PdfPTable table2 = new PdfPTable(widths);
 
         table2.addCell(this.getEmptyCell());
-        p = new Paragraph(KendoTournamentGenerator.getInstance().getAvailableRoles().getTranslation(role.getDatabaseTag()), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
+        p = new Paragraph(RolePool.getInstance().getRoleTags().getTranslation(role.getDatabaseTag()), FontFactory.getFont(font, fontSize - 2, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setColspan(1);
         cell.setBorderWidth(border);
@@ -160,7 +160,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         table2.addCell(getEmptyCell(1));
 
-        String identification = KendoTournamentGenerator.getInstance().getAvailableRoles().getAbbrev(role.getDatabaseTag())
+        String identification = RolePool.getInstance().getRoleTags().getAbbrev(role.getDatabaseTag())
                 + "-" + KendoTournamentGenerator.getInstance().getRegisteredPersonNumber(competitor, role, tournament);
         p = new Paragraph(identification, FontFactory.getFont(font, fontSize + 20));
         cell = new PdfPCell(p);

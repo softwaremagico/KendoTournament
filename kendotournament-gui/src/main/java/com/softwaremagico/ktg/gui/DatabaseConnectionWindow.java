@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -69,7 +68,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
 
     public void performConnection() {
         DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
-        if (DatabaseConnection.getInstance().startDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
+        if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
                 connectionPanel.getDatabase(), connectionPanel.getServer())) {
             this.dispose();
         } else {

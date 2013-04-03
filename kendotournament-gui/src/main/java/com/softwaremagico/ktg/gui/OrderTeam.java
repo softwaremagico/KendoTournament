@@ -25,8 +25,12 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -70,7 +74,7 @@ public class OrderTeam extends NewTeam {
         newTeam = false;
         start();
         setLanguage2(KendoTournamentGenerator.getInstance().language);
-        competitors.add(0, new RegisteredPerson("", "", "", ""));
+        competitors.add(0, new RegisteredPerson("", "", ""));
         this.addWindowListener(new closeWindows());
         refreshTournament = false;
         TournamentComboBox.addItem(tournament);
@@ -92,11 +96,11 @@ public class OrderTeam extends NewTeam {
         team = t;
         try {
             if (t.realMembers() < tournament.getTeamSize()) {
-                competitors.add(0, new RegisteredPerson("", "", "", ""));
+                competitors.add(0, new RegisteredPerson("", "", ""));
             }
             NameTextField.setText(t.getName());
             AddTeamCompetitorsSorted(t);
-            fillCompetitors();
+            fillCompetitorsComboBox();
             NameTextField.setEnabled(false);
             TournamentComboBox.setEnabled(false);
             for (int i = 0; i < competitorsPanel.size(); i++) {
@@ -117,27 +121,22 @@ public class OrderTeam extends NewTeam {
     }
 
     private void AcceptButtonActionPerformed2(java.awt.event.ActionEvent evt) {
-        try {
-            List<RegisteredPerson> participants = new ArrayList<>();
+        List<RegisteredPerson> participants = new ArrayList<>();
 
-            for (int i = 0; i < competitorsPanel.size(); i++) {
-                participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
-            }
+        for (int i = 0; i < competitorsPanel.size(); i++) {
+            participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
+        }
 
-            if (repeatedCompetitor()) {
-                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
-            } else {
-                //Insert the change into the database.
-                team.addMembers(participants, level);
-                if (DatabaseConnection.getInstance().getDatabase().insertMembersOfTeamInLevel(team, level, false)) {
-                    //Insert the change into the fightManager already loaded.
-                    FightPool.getManager(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).updateFightsWithNewOrderOfTeam(team);
-                    MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
-                    this.dispose();
-                }
+        if (repeatedCompetitor()) {
+            MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
+        } else {
+            //Insert the change into the database.
+            for (int i = 0; i < participants.size(); i++) {
+                team.setMember(participants.get(i), i, level);
             }
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            TeamPool.getInstance().add(tournament, team);
+            MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
+            this.dispose();
         }
     }
 

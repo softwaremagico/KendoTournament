@@ -98,7 +98,7 @@ public class ClubListPDF extends ParentList {
                     color = new Color(230, 230, 230);
                 }
                 mainTable.addCell(getCell(competitors.get(j).getSurnameName() + " (" + competitors.get(j).getId() + ")", 1, Element.ALIGN_LEFT, color));
-                mainTable.addCell(getCell(KendoTournamentGenerator.getInstance().getAvailableRoles().getTranslation(RolePool.getInstance().getRole(tournament, competitors.get(j)).getDatabaseTag()), 1, 1, color));
+                mainTable.addCell(getCell(RolePool.getInstance().getRoleTags().getTranslation(RolePool.getInstance().getRole(tournament, competitors.get(j)).getDatabaseTag()), 1, 1, color));
 
                 cellNumber++;
             }

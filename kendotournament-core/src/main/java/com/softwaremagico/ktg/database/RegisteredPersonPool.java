@@ -27,23 +27,28 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected HashMap<String, RegisteredPerson> getFromDatabase() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
+        HashMap<String, RegisteredPerson> hashMap = new HashMap<>();
+        for (RegisteredPerson person : people) {
+            hashMap.put(getId(person), person);
+        }
+        return hashMap;
     }
 
     @Override
     protected void storeInDatabase(List<RegisteredPerson> elementsToStore) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
     }
 
     @Override
     protected void removeFromDatabase(List<RegisteredPerson> elementsToDelete) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
     }
 
     @Override
     protected void updateDatabase(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) {
         PhotoPool.getInstance().updateDatabase();
-        throw new UnsupportedOperationException("Not supported yet.");
+        DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
     }
 
     @Override
@@ -59,7 +64,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         add(oldPerson);
     }
 
-    public List<RegisteredPerson> searchByName(String name) {
+    public List<RegisteredPerson> getByName(String name) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getName().contains(name)) {
@@ -70,7 +75,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> searchBySurname(String surname) {
+    public List<RegisteredPerson> getBySurname(String surname) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getSurname().contains(surname)) {
@@ -81,7 +86,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> searchByClub(String club) {
+    public List<RegisteredPerson> getByClub(String club) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getClub().getName().contains(club)) {

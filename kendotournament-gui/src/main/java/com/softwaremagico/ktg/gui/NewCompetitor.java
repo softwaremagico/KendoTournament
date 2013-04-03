@@ -25,8 +25,14 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.Club;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Photo;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.database.ClubPool;
+import com.softwaremagico.ktg.database.PhotoPool;
+import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -34,21 +40,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author jorge
- */
 public class NewCompetitor extends KendoFrame {
 
     private Translator trans = null;
-    private PhotoFrame photo = null;
+    private PhotoFrame photoFrame = null;
     private boolean refreshClub;
+    private RegisteredPerson oldCompetitor = null;
 
     /**
      * Creates new form NewCompetitor
@@ -64,14 +64,14 @@ public class NewCompetitor extends KendoFrame {
 
     public final void fillClub() {
         refreshClub = false;
-        List<String> clubs;
+        List<Club> clubs;
         ClubComboBox.removeAllItems();
-        clubs = DatabaseConnection.getInstance().getDatabase().returnClubsName();
+        clubs = ClubPool.getInstance().getAll();
         if (clubs != null && clubs.size() > 0) {
             for (int i = 0; i < clubs.size(); i++) {
                 ClubComboBox.addItem(clubs.get(i));
             }
-            ClubComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedClub());
+            ClubComboBox.setSelectedItem(ClubPool.getInstance().get(KendoTournamentGenerator.getInstance().getLastSelectedClub()));
         } else {
             NewClub newClub;
             MessageManager.errorMessage(this.getClass().getName(), "noClubsInserted", "MySQL");
@@ -84,9 +84,9 @@ public class NewCompetitor extends KendoFrame {
         refreshClub = true;
     }
 
-    public final void addClub(Club c) {
+    public final void addClub(Club club) {
         refreshClub = false;
-        ClubComboBox.addItem(c.getName());
+        ClubComboBox.addItem(club);
         refreshClub = true;
     }
 
@@ -113,23 +113,23 @@ public class NewCompetitor extends KendoFrame {
      */
     public final void createPhoto() {
         //photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
-        photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
+        photoFrame = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
         Dimension d;
         try {
-            if (PhotoPanel.getWidth() / photo.getWidth() > photo.getHeight() / photo.getHeight()) {
-                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / photo.getWidth()) * photo.getHeight());
+            if (PhotoPanel.getWidth() / photoFrame.getWidth() > photoFrame.getHeight() / photoFrame.getHeight()) {
+                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / photoFrame.getWidth()) * photoFrame.getHeight());
             } else {
-                d = new Dimension((PhotoPanel.getHeight() / photo.getHeight()) * photo.getWidth(), PhotoPanel.getHeight());
+                d = new Dimension((PhotoPanel.getHeight() / photoFrame.getHeight()) * photoFrame.getWidth(), PhotoPanel.getHeight());
             }
         } catch (ArithmeticException ae) {
             d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
         }
-        photo.setPreferredSize(d);
+        photoFrame.setPreferredSize(d);
         PhotoPanel.removeAll();
         PhotoPanel.setBackground(new Color(255, 255, 255));
-        PhotoPanel.add(photo, 0);
+        PhotoPanel.add(photoFrame, 0);
         PhotoPanel.revalidate();
-        photo.repaint();
+        photoFrame.repaint();
         PhotoPanel.repaint();
     }
 
@@ -138,30 +138,29 @@ public class NewCompetitor extends KendoFrame {
         return "";
     }
 
-    public void updateWindow(CompetitorWithPhoto c) {
+    public void updateWindow(RegisteredPerson competitor) {
         try {
-            NameTextField.setText(c.getName());
-            SurnameTextField.setText(c.getSurname());
-            IDTextField.setText(c.getId());
-            ClubComboBox.setSelectedItem(c.club);
+            oldCompetitor = competitor;
+            NameTextField.setText(competitor.getName());
+            SurnameTextField.setText(competitor.getSurname());
+            IDTextField.setText(competitor.getId());
+            ClubComboBox.setSelectedItem(competitor.getClub());
             PhotoTextField.setText("");
             try {
-                photo.CleanPhoto();
+                photoFrame.cleanPhoto();
             } catch (NullPointerException npe) {
             }
             try {
                 //photo.ChangeInputStream(c.photoInput, c.photoSize);
                 PhotoPanel.removeAll();
                 PhotoPanel.setBackground(new Color(255, 255, 255));
-                if (c.photo() != null) {  
-                    photo.ChangePhoto(c.photo(), c.photoInput, c.photoSize);
-                    PhotoPanel.add(photo, 0);
-                    photo.repaint();
+                if (competitor.getPhoto()!= null) {
+                    photoFrame.changePhoto(competitor.getPhoto());
+                    PhotoPanel.add(photoFrame, 0);
+                    photoFrame.repaint();
                 } else {
-                    photo.ChangePhoto(null, null, 0);
+                    photoFrame.changePhoto(Path.getDefaultPhoto());
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IllegalArgumentException iae) {
                 //iae.printStackTrace();
                 createPhoto();
@@ -172,40 +171,38 @@ public class NewCompetitor extends KendoFrame {
     }
 
     private void cleanWindow() {
+        oldCompetitor = null;
         NameTextField.setText("");
         SurnameTextField.setText("");
         IDTextField.setText("");
         PhotoTextField.setText("");
-        if (photo != null) {
-            photo.CleanPhoto();
+        if (photoFrame != null) {
+            photoFrame.cleanPhoto();
         }
         createPhoto();
-        /*
-         * PhotoPanel.removeAll(); PhotoPanel.add(photo, 0);
-         */
-        /*
-         * photo.repaint(); PhotoPanel.repaint();
-         */
         this.repaint();
     }
 
     public RegisteredPerson acceptCompetitor() {
         if (ClubComboBox.getItemCount() > 0) {
             if (IDTextField.getText().length() > 0 && NameTextField.getText().length() > 0 && SurnameTextField.getText().length() > 0) {
-                CompetitorWithPhoto comp = new CompetitorWithPhoto(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim(), ClubComboBox.getSelectedItem().toString());
-                try {
-                    try{
-                        comp.addImage(photo.photoInput, photo.photoInput.available());
-                    }catch(NullPointerException npe){}
-                } catch (IOException ex) {
-                    Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
-                    KendoLog.severe(NewCompetitor.class.getName(), ex.getMessage());
+                RegisteredPerson comp = new RegisteredPerson(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim());
+                comp.setClub((Club) ClubComboBox.getSelectedItem());
+                    try {
+                        Photo competitorPhoto = new Photo(comp.getId());
+                        competitorPhoto.setImage(photoFrame.getPhoto().getInput(), photoFrame.getPhoto().getSize());
+                        PhotoPool.getInstance().set(competitorPhoto);
+                    } catch (NullPointerException npe) {
+                    }
+                if (oldCompetitor != null) {
+                    RegisteredPersonPool.getInstance().update(oldCompetitor, comp);
+                } else {
+                    RegisteredPersonPool.getInstance().add(comp);
                 }
-                if (DatabaseConnection.getInstance().getDatabase().storeCompetitor(comp, true)) {
-                    cleanWindow();
-                    this.repaint();
-                    return comp;
-                }
+                cleanWindow();
+                this.repaint();
+                return comp;
+
             } else {
                 MessageManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
             }
@@ -213,7 +210,7 @@ public class NewCompetitor extends KendoFrame {
         return null;
     }
 
-    public void testNIF() {
+    public void correctNif() {
         try {
             Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
@@ -265,7 +262,7 @@ public class NewCompetitor extends KendoFrame {
         PhotoLabel = new javax.swing.JLabel();
         PhotoTextField = new javax.swing.JTextField();
         ExploreButton = new javax.swing.JButton();
-        ClubComboBox = new javax.swing.JComboBox<String>();
+        ClubComboBox = new javax.swing.JComboBox();
         CleanButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
         AcceptButton = new javax.swing.JButton();
@@ -444,11 +441,11 @@ public class NewCompetitor extends KendoFrame {
         //photo.CleanPhoto();
         if (!(file = exploreWindow("Select",
                 JFileChooser.FILES_ONLY)).equals("")) {
-            photo.CleanPhoto();
+            photoFrame.cleanPhoto();
             PhotoTextField.setText(file);
             PhotoPanel.removeAll();
-            photo.ChangePhoto(file);
-            PhotoPanel.add(photo, 0);
+            photoFrame.changePhoto(file);
+            PhotoPanel.add(photoFrame, 0);
         }
     }//GEN-LAST:event_ExploreButtonActionPerformed
 
@@ -472,7 +469,7 @@ public class NewCompetitor extends KendoFrame {
     }//GEN-LAST:event_ClubComboBoxActionPerformed
 
     private void CleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanButtonActionPerformed
-        photo.CleanPhoto();
+        photoFrame.cleanPhoto();
         createPhoto();
         this.repaint();
     }//GEN-LAST:event_CleanButtonActionPerformed
@@ -488,7 +485,7 @@ public class NewCompetitor extends KendoFrame {
     private javax.swing.JButton AcceptButton;
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton CleanButton;
-    private javax.swing.JComboBox<String> ClubComboBox;
+    private javax.swing.JComboBox ClubComboBox;
     private javax.swing.JLabel ClubLabel;
     private javax.swing.JButton ExploreButton;
     private javax.swing.JLabel IDLabel;

@@ -24,13 +24,45 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.tournament.level.LeagueLevel;
 import java.util.List;
 
 public interface ITournamentManager {
 
-    List<Fight> nextFights();
+    List<Fight> getFights(Integer level);
 
     Integer getNumberOfLevels();
+    
+    List<TournamentGroup> getGroups();
 
     List<TournamentGroup> getGroups(Integer level);
+    
+    TournamentGroup getGroup(Fight fight);
+    
+    void addGroup(TournamentGroup group);
+    
+    void removeGroup(Integer level, Integer groupIndex);
+    
+    void removeGroup(TournamentGroup group);
+    
+    void removeGroups(Integer level);
+    
+    LeagueLevel getLevel(Integer level);
+    
+    boolean exist(Team team);
+    
+    boolean allGroupsHaveNextLink();
+    
+    void addLink(TournamentGroup source, TournamentGroup address);
+    
+    void removeLinks();
+    
+    void deleteTeams(Integer level);
+    
+    /**
+     * Divide groups into fight areas.
+     */
+    void setDefaultFightAreas();
+
 }

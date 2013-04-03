@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softwaremagico.ktg.database;
 /*
  * #%L
@@ -37,7 +33,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-class DatabaseConnection {
+public class DatabaseConnection {
 
     private Database database = null;
     private String password = "";

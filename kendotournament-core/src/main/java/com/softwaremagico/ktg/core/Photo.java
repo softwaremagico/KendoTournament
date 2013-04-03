@@ -17,24 +17,24 @@ import javax.swing.ImageIcon;
 
 public class Photo {
 
-    private String competitorId;
+    private String id;
     private transient InputStream photoInput;
     private Integer photoSize;
 
-    public Photo(String competitorId) {
-        this.competitorId = competitorId;
+    public Photo(String id) {
+        this.id = id;
     }
 
     public String getId() {
-        return competitorId;
+        return id;
     }
 
-    public void addImage(InputStream tmp_photo, Integer size) {
+    public void setImage(InputStream tmp_photo, Integer size) {
         photoInput = tmp_photo;
         photoSize = size;
     }
 
-    public Image getPhoto() throws IOException {
+    public Image getImage() {
         if (photoInput != null) {
             try {
                 if (photoInput.markSupported()) {
@@ -45,6 +45,10 @@ public class Photo {
             }
         }
         return null;
+    }
+
+    public BufferedImage getBufferedImage() {
+        return toBufferedImage(getImage());
     }
 
     public static BufferedImage toBufferedImage(Image image) {
@@ -87,14 +91,9 @@ public class Photo {
         return bimage;
     }
 
-    public void setPhoto(Image img) {
+    public void setImage(Image img) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
-            /*
-             * ToolkitImage toolkitImage = (ToolkitImage) img;
-             * ImageRepresentation ir = toolkitImage.getImageRep();
-             * BufferedImage bb = ir.getOpaqueRGBImage();
-             */
             BufferedImage bb = toBufferedImage(img);
             ImageIO.write(bb, "png", os);
         } catch (IOException ex) {
@@ -103,15 +102,17 @@ public class Photo {
         photoSize = new Integer(os.toByteArray().length);
     }
 
-    public InputStream getPhotoInput() {
+    public InputStream getInput() {
         try {
-            photoInput.reset();
+            if (photoInput.markSupported()) {
+                photoInput.reset();
+            }
         } catch (IOException ex) {
         }
         return photoInput;
     }
 
-    public Integer getPhotoSize() {
+    public Integer getSize() {
         return photoSize;
     }
 }

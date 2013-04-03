@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.RolePool;
 
 /**
  *
@@ -41,7 +41,7 @@ public class RefereeList extends ListFromTournamentCreatePDF {
     @Override
     public String defaultFileName() {
         try {
-            return TournamentComboBox.getSelectedItem().toString() + "_" + KendoTournamentGenerator.getInstance().getAvailableRoles().getRole("Referee").name;
+            return TournamentComboBox.getSelectedItem().toString() + "_" + RolePool.getInstance().getRoleTags().getRole("Referee").name;
         } catch (NullPointerException npe) {
             return null;
         }

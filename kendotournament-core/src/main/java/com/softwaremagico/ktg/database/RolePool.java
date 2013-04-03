@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.List;
 public class RolePool extends TournamentDependentPool<Role> {
 
     private static RolePool instance;
+    private static RoleTags roleTags = null;
 
     private RolePool() {
     }
@@ -199,4 +201,21 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return results;
     }
+
+    public void remove(Tournament tournament, RegisteredPerson person) {
+        List<Role> roles = get(tournament);
+        for (Role role : roles) {
+            if (role.getCompetitor().equals(person)) {
+                remove(tournament, role);
+            }
+        }
+    }
+
+    public RoleTags getRoleTags() {
+        if (roleTags == null) {
+            roleTags = RolePool.getInstance().getRoleTags();
+        }
+        return roleTags;
+    }
+    
 }

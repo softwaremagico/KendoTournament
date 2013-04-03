@@ -25,8 +25,12 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -73,7 +77,7 @@ public final class SearchTeam extends Search<Team> {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            List<Tournament> listTournaments = TournamentPool.getAllTournaments();
+            List<Tournament> listTournaments = TournamentPool.getInstance().getAll();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
@@ -102,7 +106,7 @@ public final class SearchTeam extends Search<Team> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchTeamsByNameAndTournament(NameTextField.getText().trim(), (Tournament) TournamentComboBox.getSelectedItem(), true);
+            results = TeamPool.getInstance().search((Tournament) TournamentComboBox.getSelectedItem(), NameTextField.getText().trim());
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -114,7 +118,8 @@ public final class SearchTeam extends Search<Team> {
 
     @Override
     protected boolean deleteFromDatabase(Team object) {
-        return DatabaseConnection.getInstance().getDatabase().deleteTeam(object, true);
+        TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), object);
+        return true;
     }
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {

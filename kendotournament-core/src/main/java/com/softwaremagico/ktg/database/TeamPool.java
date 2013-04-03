@@ -90,6 +90,10 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     public void setIndividualTeams(Tournament tournament) {
+        //Delete old teams of tournament.
+        remove(tournament);
+        
+        //Create new teams with only one member.
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         //MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);
         for (RegisteredPerson competitor : competitors) {
@@ -97,10 +101,10 @@ public class TeamPool extends TournamentDependentPool<Team> {
             team.setMember(competitor, 0, 0);
             add(tournament, team);
         }
-
+        tournament.setTeamSize(1);
     }
 
-    public void deleteTeamsGroup(Tournament tournament) {
+    public void removeTeamsGroup(Tournament tournament) {
         List<Team> teams = new ArrayList<>(getMap(tournament).values());
         for (Team team : teams) {
             team.setGroup(0);

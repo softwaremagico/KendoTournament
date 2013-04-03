@@ -38,7 +38,7 @@ public class LeagueLevelTree extends LeagueLevel {
     }
 
     @Override
-    protected  Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
+    public  Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
         int winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
         int winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
         return obtainPositionOfOneWinnerInTree(winnerIndex, winnerTeams);

@@ -25,24 +25,26 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 public class NewTournament extends KendoFrame {
 
     Translator trans = null;
-    private PhotoFrame banner;
+    private PhotoFrame bannerFrame;
     private Integer maxCompetitorTeam = null;
+    private Tournament oldTournament = null;
 
     /**
      * Creates new form NewTournament
@@ -77,7 +79,7 @@ public class NewTournament extends KendoFrame {
      * Show the photo of the selected user or a default one.
      */
     public final void CreateBanner() {
-        banner = new PhotoFrame(BannerPanel, Path.getDefaultBanner());
+        bannerFrame = new PhotoFrame(BannerPanel, Path.getDefaultBanner());
         //banner.setPreferredSize(new Dimension(BannerPanel.getWidth(), BannerPanel.getHeight()));
         /*
          * try { banner.Resize(BannerPanel.getWidth(), BannerPanel.getHeight());
@@ -85,39 +87,39 @@ public class NewTournament extends KendoFrame {
          * Logger.getLogger(NewTournament.class.getName()).log(Level.SEVERE,
          * null, ex); }
          */
-        BannerPanel.add(banner, 0);
-        banner.repaint();
+        BannerPanel.add(bannerFrame, 0);
+        bannerFrame.repaint();
         BannerPanel.repaint();
         BannerPanel.revalidate();
     }
 
     private void cleanWindow() {
+        oldTournament = null;
         NameTextField.setText("");
         NameTextField.setEditable(true);
         BannerTextField.setText("");
-        banner.CleanPhoto();
+        bannerFrame.cleanPhoto();
         CreateBanner();
     }
 
     public void updateWindow(Tournament tournament) {
         try {
+            oldTournament = tournament;
             maxCompetitorTeam = tournament.getTeamSize();
             NameTextField.setText(tournament.getName());
             NameTextField.setEditable(false);
             NumCompetitorsSpinner.setValue(tournament.getTeamSize());
             BannerTextField.setText("");
-            banner.CleanPhoto();
+            bannerFrame.cleanPhoto();
             try {
-                banner.ChangePhoto(tournament.banner(), tournament.getBannerInput(), tournament.getBannerSize());
+                bannerFrame.changePhoto(tournament.getBanner());
                 //banner.ChangeInputStream(t.BannerInput, t.bannerSize);
-                banner.repaint();
+                bannerFrame.repaint();
                 BannerPanel.repaint();
                 BannerPanel.revalidate();
             } catch (IllegalArgumentException iae) {
             }
             AreasSpinner.setValue(tournament.getFightingAreas());
-        } catch (IOException ex) {
-            Logger.getLogger(NewCompetitor.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NullPointerException npe) {
         }
     }
@@ -137,18 +139,20 @@ public class NewTournament extends KendoFrame {
 
     public boolean storeTournament() {
         if (NameTextField.getText().length() > 0) {
-            Tournament tournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
-            tournament.addBanner(banner.photoInput, banner.size);
+            Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
+            newTournament.addBanner(bannerFrame.getPhoto().getImage());
             //Store tournament into database
-            if (DatabaseConnection.getInstance().getDatabase().storeTournament(tournament, true)) {
-                KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
-                TournamentPool.addTournament(tournament);
-                cleanWindow();
+            if (oldTournament != null) {
+                TournamentPool.getInstance().update(oldTournament, newTournament);
+                //If tournament team size has changed (tournament update), delete old teams of tournament.
+                if (maxCompetitorTeam != null && maxCompetitorTeam != newTournament.getTeamSize()) {
+                    TeamPool.getInstance().remove(oldTournament);
+                }
+            } else {
+                TournamentPool.getInstance().add(newTournament);
             }
-            //If tournamnet team size has changed (tournament update), delete old teams of tournament.
-            if (maxCompetitorTeam != null && maxCompetitorTeam != tournament.getTeamSize()) {
-                DatabaseConnection.getInstance().getDatabase().deleteTeamsOfTournament(tournament, false);
-            }
+            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
+            cleanWindow();
             return true;
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
@@ -354,8 +358,8 @@ public class NewTournament extends KendoFrame {
         if (!(file = exploreWindow("Select",
                 JFileChooser.FILES_ONLY)).equals("")) {
             BannerTextField.setText(file);
-            banner.ChangePhoto(file);
-            banner.repaint();
+            bannerFrame.changePhoto(file);
+            bannerFrame.repaint();
             BannerPanel.repaint();
             BannerPanel.revalidate();
         }

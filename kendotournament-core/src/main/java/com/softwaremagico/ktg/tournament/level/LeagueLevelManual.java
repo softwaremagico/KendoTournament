@@ -67,7 +67,7 @@ public class LeagueLevelManual extends LeagueLevel {
     }
 
     @Override
-    protected Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {        
+    public Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
         Links destinations = new Links();
 
         //Get all destination of Winner
@@ -100,8 +100,8 @@ public class LeagueLevelManual extends LeagueLevel {
                 links.add(new Link(from, to));
             }
         }
-        
-        void add(Link link){
+
+        void add(Link link) {
             links.add(link);
         }
 
@@ -129,12 +129,12 @@ public class LeagueLevelManual extends LeagueLevel {
         }
     }
 
-    void addLink(TournamentGroup source, TournamentGroup address) {
+    protected void addLink(TournamentGroup source, TournamentGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
             if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
             }
-            if(numberOfSourcesOfLink(source) >= source.getTeams().size()-1){
+            if (numberOfSourcesOfLink(source) >= source.getTeams().size() - 1) {
                 removefirstSourceLink(source);
             }
             if (numberOfAddressesOfLink(address) >= 2) {
@@ -144,7 +144,7 @@ public class LeagueLevelManual extends LeagueLevel {
         }
     }
 
-    int numberOfSourcesOfLink(TournamentGroup from) {
+    protected int numberOfSourcesOfLink(TournamentGroup from) {
         int number = 0;
 
         for (int i = 0; i < links.size(); i++) {
@@ -156,7 +156,7 @@ public class LeagueLevelManual extends LeagueLevel {
 
     }
 
-    int numberOfAddressesOfLink(TournamentGroup to) {
+    protected int numberOfAddressesOfLink(TournamentGroup to) {
         int number = 0;
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(to)) {
@@ -167,7 +167,7 @@ public class LeagueLevelManual extends LeagueLevel {
 
     }
 
-    void removefirstSourceLink(TournamentGroup from) {
+    protected void removefirstSourceLink(TournamentGroup from) {
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).source.equals(from)) {
                 links.remove(i);
@@ -176,7 +176,7 @@ public class LeagueLevelManual extends LeagueLevel {
         }
     }
 
-    void removefirstAddressLink(TournamentGroup to) {
+    protected void removefirstAddressLink(TournamentGroup to) {
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(to)) {
                 links.remove(i);
@@ -206,7 +206,7 @@ public class LeagueLevelManual extends LeagueLevel {
         }
     }
 
-    void removeLinksSelectedGroup(TournamentGroup lastSelected) {
+    protected void removeLinksSelectedGroup(TournamentGroup lastSelected) {
         try {
             for (int i = 0; i < links.size(); i++) {
                 if (links.get(i).source.equals(lastSelected)) {
