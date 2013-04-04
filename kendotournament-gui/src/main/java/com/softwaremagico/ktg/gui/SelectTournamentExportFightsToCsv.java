@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softwaremagico.ktg.gui;
 /*
  * #%L
@@ -27,13 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.FightPool;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.TournamentType;
-import com.softwaremagico.ktg.files.Folder;
-import com.softwaremagico.ktg.files.MyFile;
-import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
-import java.util.List;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 
 public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
 
@@ -43,12 +33,12 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
 
     @Override
     public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + FightPool.getManager(returnSelectedTournament()).getLastLevel() + ".csv";
+        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerPool.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
     }
 
     @Override
     protected boolean doAction(String file) {
-        if (!MyFile.fileExist(file) || MessageManager.questionMessage("existFile", "Warning!")) {
+        /*if (!MyFile.fileExist(file) || MessageManager.questionMessage("existFile", "Warning!")) {
 
             List<String> csv;
             if (returnSelectedTournament().getType().equals(TournamentType.SIMPLE)) {
@@ -61,7 +51,7 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
                 MessageManager.informationMessage(this.getClass().getName(), "csvExported", "CSV");
                 return true;
             }
-        }
+        }*/
         return false;
     }
 }

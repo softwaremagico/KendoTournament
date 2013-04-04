@@ -41,15 +41,15 @@ public class Language {
         flag = pathFlag;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public String abbreviature() {
+    public String getAbbreviature() {
         return abbreviation;
     }
 
-    public String flag() {
+    public String getFlag() {
         return flag;
     }
 }

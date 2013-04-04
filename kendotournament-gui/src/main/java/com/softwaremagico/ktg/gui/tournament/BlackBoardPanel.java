@@ -44,7 +44,7 @@ import java.util.List;
 import javax.swing.Timer;
 
 public class BlackBoardPanel extends javax.swing.JPanel {
-    
+
     private static final long serialVersionUID = -6193257530262904629L;
     private GridBagConstraints c = new GridBagConstraints();
     private Tournament tournament;
@@ -56,24 +56,26 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private Timer timer;
     private boolean wasDoubleClick = true;
     private LeagueDesigner parent;
-    
-    public BlackBoardPanel(LeagueDesigner parent) {
+    private boolean interactive = false;
+
+    public BlackBoardPanel(LeagueDesigner parent, boolean interactive) {
         this.parent = parent;
+        this.interactive = interactive;
         setLayout(new java.awt.GridBagLayout());
         setBackground(new Color(255, 255, 255));
     }
-    
+
     public void update(Tournament tournament) {
         this.tournament = tournament;
         //removeAll();
         paintDesignedGroups();
         paintSpaces();
     }
-    
+
     public void clearBlackBoard() {
         this.removeAll();
     }
-    
+
     private void paintDesignedGroups() {
         Integer lastSelected = getSelectedBoxIndex();
         removeAll();
@@ -83,14 +85,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         }
         c.gridx = 0;
         c.gridy = 1;
-        
+
         GridBagConstraints lc = new GridBagConstraints();
-        
+
         Separator sp = new Separator(tournament.getName());
         sp.updateFont("sansserif", 44);
         lc.gridwidth = GridBagConstraints.REMAINDER;
         add(sp, lc);
-        
+
         add(new Separator(), c);
 
         /*
@@ -99,7 +101,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
             c.gridx = (i + 1) * 2;
             c.gridy = 1;
-            
+
             Separator s;
             if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
                 s = new Separator(trans.returnTag("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
@@ -120,7 +122,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             for (int i = 0; i < grps.size(); i++) {
                 c.gridx = 0;
                 c.gridy = i + 2;
-                
+
                 Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
                         + "<br>" + trans.returnTag("ArenaString") + " "
                         + KendoTournamentGenerator.getFightAreaName(grps.get(i).getFightArea()));
@@ -148,11 +150,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                                     c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
                                 }
                             }
-                            
+
                             c.weightx = 0.5;
                             TournamentGroupBox tournamentGroupBox = createBox(TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex), level);
                             add(tournamentGroupBox, c);
-                            if (level == 0 && groupIndex == 0) {
+                            if (level == 0 && groupIndex == 0 && interactive) {
                                 tournamentGroupBox.setSelected();
                             }
                         }
@@ -165,7 +167,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         } catch (ClassCastException e) {
         }
     }
-    
+
     private TournamentGroupBox createBox(TournamentGroup tournamentGroup, Integer level) {
         TournamentGroupBox tournamentGroupBox = new TournamentGroupBox(tournamentGroup);
         List<TournamentGroupBox> list = grpsBox.get(level);
@@ -177,10 +179,15 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
         list.add(tournamentGroupBox);
-        tournamentGroupBox.addMouseClickListener(new MouseAdapters(tournamentGroupBox));
+        if (interactive) {
+            tournamentGroupBox.addMouseClickListener(new MouseAdapters(tournamentGroupBox));
+            tournamentGroupBox.activateColor(false);
+        } else {
+            tournamentGroupBox.activateColor(true);
+        }
         return tournamentGroupBox;
     }
-    
+
     private void paintSpaces() {
         for (int i = 1; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
             c.gridx = i * 2 + TITLE_COLUMN;
@@ -188,7 +195,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             add(new Separator(), c);
         }
     }
-    
+
     private void paintLinks(Graphics g) {
         Integer destination;
         try {
@@ -214,7 +221,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
         }
     }
-    
+
     private void paintArrow(Graphics g, double x0, double y0, double x1, double y1) {
         double deltaX = x1 - x0;
         double deltaY = y1 - y0;
@@ -234,7 +241,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          */
         deltaX = deltaXUnit * mult;
         deltaY = deltaYUnit * mult;
-        
+
         g.drawLine((int) x0, (int) y0, (int) x1, (int) y1);
         int xpoints[] = {(int) x1,
             (int) x1 - (int) ((1 - frac) * deltaX + frac / 3 * deltaY),
@@ -245,11 +252,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             (int) y1 - (int) ((1 - frac) * deltaY - frac / 3 * deltaX),
             (int) y1 - (int) ((1 - frac) * deltaY + frac / 3 * deltaX)
         };
-        
+
         int npoints = 3;
         g.fillPolygon(xpoints, ypoints, npoints);
     }
-    
+
     private void paintSeparationLines(Graphics g) {
         g.setColor(Color.black);
         List<TournamentGroupBox> groupList = grpsBox.get(0);
@@ -261,7 +268,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     private void customPaintingMethod(Graphics g) {
         try {
             //paintDesignedGroups();
@@ -271,7 +278,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         } catch (NullPointerException npe) {
         }
     }
-    
+
     private void drawLink(Graphics g, TournamentGroupBox d1, TournamentGroupBox d2, int winner, int originNumber, int destinationNumber, boolean half) {
         Rectangle r1 = d1.getBounds();
         Rectangle r2 = d2.getBounds();
@@ -292,24 +299,24 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
         }
     }
-    
+
     public void selectGroup(Integer index) {
-        if (index != null) {
+        if (index != null && interactive) {
             for (TournamentGroupBox grpBox : grpsBox.get(0)) {
                 grpBox.setUnselected();
             }
             grpsBox.get(0).get(index).setSelected();
         }
     }
-    
+
     public TournamentGroupBox getSelectedBox() {
         return selected;
     }
-    
+
     public Integer getSelectedBoxIndex() {
         return grpsBox.get(0).indexOf(selected);
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -327,24 +334,26 @@ public class BlackBoardPanel extends javax.swing.JPanel {
      * When clicking to a box.
      */
     class MouseAdapters extends MouseAdapter {
-        
+
         TournamentGroupBox designedFight;
-        
+
         MouseAdapters(TournamentGroupBox d) {
             designedFight = d;
         }
-        
+
         @Override
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             clicked(evt, designedFight);
         }
     }
-    
+
     void clicked(java.awt.event.MouseEvent e, TournamentGroupBox group) {
-        
+
         if (group.getTournamentGroup().getLevel() == 0) {
             if (e.getClickCount() == 2) {
-                group.openDesignGroupWindow(parent);
+                if (parent != null) {
+                    group.openDesignGroupWindow(parent);
+                }
                 wasDoubleClick = true;
             } else {
                 //Avoid to run the one-click functions when performing a doubleclick.
@@ -363,7 +372,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             }
             group.setSelected();
             selected = group;
-            
+
         } else if (group.getTournamentGroup().getLevel() == 1 && group.getTournamentGroup().getTeams().isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
             if (tournament.getType().equals(TournamentType.MANUAL)) {

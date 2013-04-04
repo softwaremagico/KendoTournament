@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -60,7 +60,7 @@ public class ShortNewFight extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournamentExactName(tournament, false);
+        listTeams = TeamPool.getInstance().get(tournament);
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();
@@ -102,7 +102,7 @@ public class ShortNewFight extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < tournament.getFightingAreas(); i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
             }
             FightAreaComboBox.setSelectedIndex(selectedArena);
         } catch (NullPointerException npe) {
@@ -168,12 +168,12 @@ public class ShortNewFight extends javax.swing.JFrame {
 
         NewFightPanel = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
-        Team1ComboBox = new javax.swing.JComboBox<String>();
-        Team2ComboBox = new javax.swing.JComboBox<String>();
+        Team1ComboBox = new javax.swing.JComboBox();
+        Team2ComboBox = new javax.swing.JComboBox();
         Team1Label = new javax.swing.JLabel();
         Team2Label = new javax.swing.JLabel();
         FightAreaLabel = new javax.swing.JLabel();
-        FightAreaComboBox = new javax.swing.JComboBox<String>();
+        FightAreaComboBox = new javax.swing.JComboBox();
         CancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -288,12 +288,12 @@ public class ShortNewFight extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JButton CancelButton;
-    private javax.swing.JComboBox<String> FightAreaComboBox;
+    private javax.swing.JComboBox FightAreaComboBox;
     private javax.swing.JLabel FightAreaLabel;
     private javax.swing.JPanel NewFightPanel;
-    private javax.swing.JComboBox<String> Team1ComboBox;
+    private javax.swing.JComboBox Team1ComboBox;
     private javax.swing.JLabel Team1Label;
-    private javax.swing.JComboBox<String> Team2ComboBox;
+    private javax.swing.JComboBox Team2ComboBox;
     private javax.swing.JLabel Team2Label;
     // End of variables declaration//GEN-END:variables
 }

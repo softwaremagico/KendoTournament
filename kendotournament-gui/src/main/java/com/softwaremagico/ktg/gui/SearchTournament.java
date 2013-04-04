@@ -25,19 +25,15 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author jorge
- */
 public final class SearchTournament extends Search<Tournament> {
 
     private JLabel NameLabel = new JLabel("Name:");
@@ -76,7 +72,7 @@ public final class SearchTournament extends Search<Tournament> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = DatabaseConnection.getInstance().getDatabase().searchTournamentsByName(NameTextField.getText().trim(), true);
+            results = TournamentPool.getInstance().getByName(NameTextField.getText().trim());
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
@@ -85,6 +81,7 @@ public final class SearchTournament extends Search<Tournament> {
 
     @Override
     protected boolean deleteFromDatabase(Tournament tournament) {
-        return DatabaseConnection.getInstance().getDatabase().deleteTournament(tournament);
+        TournamentPool.getInstance().remove(tournament);
+        return true;
     }
 }

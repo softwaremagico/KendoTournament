@@ -77,7 +77,20 @@ public abstract class SimplePool<ElementPool> {
             addElementToStore(element);
         }
     }
+    
+    /**
+     * Update an element that the primary key has no changed. 
+     * @param elementUpdated 
+     */
+    public void update(ElementPool elementUpdated){
+        update(elementUpdated, elementUpdated);
+    }
 
+    /**
+     * Exchange one element to the other.
+     * @param oldElement
+     * @param newElement 
+     */
     public void update(ElementPool oldElement, ElementPool newElement) {
         String id = getId(oldElement);
         if (!id.equals(getId(newElement))) {

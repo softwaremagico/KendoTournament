@@ -13,11 +13,6 @@ public class SimpleTournamentManager implements ITournamentManager {
     TournamentGroup group;
 
     @Override
-    public List<Fight> nextFights() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public Integer getNumberOfLevels() {
         return 1;
     }
@@ -89,6 +84,26 @@ public class SimpleTournamentManager implements ITournamentManager {
 
     @Override
     public void setDefaultFightAreas() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Fight> getRandomFights() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<Fight> getSortedFights() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public TournamentGroup getGroup(Fight fight) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Integer getLastLevelUsed() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

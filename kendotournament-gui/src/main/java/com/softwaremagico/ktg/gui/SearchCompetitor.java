@@ -27,7 +27,6 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;

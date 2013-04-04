@@ -24,7 +24,8 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -36,10 +37,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-/**
- *
- * @author jorge
- */
 public class MainGUI extends KendoFrame {
 
     Translator trans = null;
@@ -141,10 +138,10 @@ public class MainGUI extends KendoFrame {
      * files
      */
     private void completeLanguageMenu() {
-        for (int i = 0; i < KendoTournamentGenerator.getInstance().languages.size(); i++) {
+        for (int i = 0; i < Translator.getAvailableLanguages().size(); i++) {
             javax.swing.JRadioButtonMenuItem MenuItem;
-            MenuItem = new javax.swing.JRadioButtonMenuItem(KendoTournamentGenerator.getInstance().languages.getName(i), new ImageIcon(Path.getImagePath() + KendoTournamentGenerator.getInstance().languages.getPathToFlag(i)));
-            if (KendoTournamentGenerator.getInstance().language.equals(KendoTournamentGenerator.getInstance().languages.getAbbreviature(i))) {
+            MenuItem = new javax.swing.JRadioButtonMenuItem(Translator.getAvailableLanguages().get(i).getName(), new ImageIcon(Path.getImagePath() + Translator.getAvailableLanguages().get(i).getFlag()));
+            if (KendoTournamentGenerator.getInstance().language.equals(Translator.getAvailableLanguages().get(i).getAbbreviature())) {
                 MenuItem.setSelected(true);
             }
             LanguageMenu.add(MenuItem);
@@ -156,7 +153,7 @@ public class MainGUI extends KendoFrame {
     public String ReturnSelectedLanguage() {
         for (int i = 0; i < languageList.size(); i++) {
             if (languageList.get(i).isSelected()) {
-                return KendoTournamentGenerator.getInstance().languages.getAbbreviature(i);
+                return Translator.getAvailableLanguages().get(i).getAbbreviature();
             }
         }
         return KendoTournamentGenerator.getInstance().language;

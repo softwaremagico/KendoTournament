@@ -1,14 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softwaremagico.ktg.gui;
-
-import com.softwaremagico.ktg.FightPool;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.MessageManager;
-import com.softwaremagico.ktg.files.Folder;
-import java.io.IOException;
 
 /*
  * #%L

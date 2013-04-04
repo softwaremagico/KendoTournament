@@ -66,6 +66,17 @@ public class TournamentPool extends SimplePool<Tournament> {
         return unsorted;
     }
 
+    public List<Tournament> getByName(String name) {
+        List<Tournament> result = new ArrayList<>();
+        for (Tournament element : getAll()) {
+            if (element.getName().contains(name)) {
+                result.add(element);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
     public Integer getLevelTournament(Tournament tournament) {
         int level = -1;
         for (Fight fight : FightPool.getInstance().getMap(tournament).values()) {

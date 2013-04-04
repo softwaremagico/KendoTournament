@@ -59,6 +59,8 @@ public class Translator {
     private boolean retried = false;
     private boolean showedMessage = false;
     private static HashMap<String, Translator> existingTags = new HashMap<>();
+    private static List<Language> languagesList = null;
+    private static RoleTags rolesList;
 
     public Translator(String tmp_file) {
         fileTranslated = tmp_file;
@@ -70,7 +72,7 @@ public class Translator {
      *
      * @param tagName Tag of the data to be readed
      */
-    private Document parseFile(Document usedDoc, String fileParsed) {
+    private static Document parseFile(Document usedDoc, String fileParsed) {
         DocumentBuilderFactory dbf;
         DocumentBuilder db;
         try {
@@ -81,12 +83,12 @@ public class Translator {
             usedDoc.getDocumentElement().normalize();
         } catch (SAXParseException ex) {
             String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
-            MessageManager.basicErrorMessage(this.getClass().getName(), text, "Language");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            MessageManager.basicErrorMessage(Translator.class.getName(), text, "Language");
+            KendoTournamentGenerator.showErrorInformation(Translator.class.getName(), ex);
         } catch (SAXException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoTournamentGenerator.showErrorInformation(Translator.class.getName(), ex);
         } catch (ParserConfigurationException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoTournamentGenerator.showErrorInformation(Translator.class.getName(), ex);
         } catch (FileNotFoundException fnf) {
             String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
             System.out.println(text);
@@ -149,67 +151,70 @@ public class Translator {
         }
     }
 
-    public List<Language> returnAvailableLanguages() {
-        List<Language> languagesList = new ArrayList<>();
-        Document storedLanguages = null;
-        storedLanguages = parseFile(storedLanguages, "languages.xml");
-        NodeList nodeLst = storedLanguages.getElementsByTagName("languages");
-        for (int s = 0; s < nodeLst.getLength(); s++) {
-            Node fstNode = nodeLst.item(s);
-            try {
-                Language lang = new Language(fstNode.getTextContent(),
-                        fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(),
-                        fstNode.getAttributes().getNamedItem("flag").getNodeValue());
-                languagesList.add(lang);
-            } catch (NullPointerException npe) {
-                MessageManager.basicErrorMessage(this.getClass().getName(), "errorLanguage", "Language");
+    public static List<Language> getAvailableLanguages() {
+        if (languagesList == null) {
+            languagesList = new ArrayList<>();
+            Document storedLanguages = null;
+            storedLanguages = parseFile(storedLanguages, "languages.xml");
+            NodeList nodeLst = storedLanguages.getElementsByTagName("languages");
+            for (int s = 0; s < nodeLst.getLength(); s++) {
+                Node fstNode = nodeLst.item(s);
+                try {
+                    Language lang = new Language(fstNode.getTextContent(),
+                            fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(),
+                            fstNode.getAttributes().getNamedItem("flag").getNodeValue());
+                    languagesList.add(lang);
+                } catch (NullPointerException npe) {
+                    MessageManager.basicErrorMessage(Translator.class.getName(), "errorLanguage", "Language");
+                }
             }
         }
         return languagesList;
     }
 
-    public RoleTags returnAvailableRoles(String language) {
-        int red, green, blue;
-
-        RoleTags rolesList = new RoleTags();
-        Document storedRoles = null;
-        storedRoles = parseFile(storedRoles, "roles.xml");
-        NodeList nodeLst = storedRoles.getElementsByTagName("role");
-        for (int i = 0; i < nodeLst.getLength(); i++) {
-            org.w3c.dom.Node firstNode = nodeLst.item(i);
-            if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) firstNode;
-                String tag = element.getAttributes().getNamedItem("tag").getNodeValue();
-                String abbrev = element.getAttributes().getNamedItem("abbrev").getNodeValue();
-                try {
-                    red = Integer.parseInt(element.getAttributes().getNamedItem("red").getNodeValue());
-                } catch (NullPointerException npe) {
-                    red = i * 127;
-                    if (red > 224) {
-                        red = red % 225;
+    public static RoleTags getAvailableRoles(String language) {
+        if (rolesList == null) {
+            int red, green, blue;
+            rolesList = new RoleTags();
+            Document storedRoles = null;
+            storedRoles = parseFile(storedRoles, "roles.xml");
+            NodeList nodeLst = storedRoles.getElementsByTagName("role");
+            for (int i = 0; i < nodeLst.getLength(); i++) {
+                org.w3c.dom.Node firstNode = nodeLst.item(i);
+                if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element element = (Element) firstNode;
+                    String tag = element.getAttributes().getNamedItem("tag").getNodeValue();
+                    String abbrev = element.getAttributes().getNamedItem("abbrev").getNodeValue();
+                    try {
+                        red = Integer.parseInt(element.getAttributes().getNamedItem("red").getNodeValue());
+                    } catch (NullPointerException npe) {
+                        red = i * 127;
+                        if (red > 224) {
+                            red = red % 225;
+                        }
                     }
-                }
-                try {
-                    green = Integer.parseInt(element.getAttributes().getNamedItem("green").getNodeValue());
-                } catch (NullPointerException npe) {
-                    green = i * 17;
-                    if (green > 224) {
-                        green = green % 225;
+                    try {
+                        green = Integer.parseInt(element.getAttributes().getNamedItem("green").getNodeValue());
+                    } catch (NullPointerException npe) {
+                        green = i * 17;
+                        if (green > 224) {
+                            green = green % 225;
+                        }
                     }
-                }
-                try {
-                    blue = Integer.parseInt(element.getAttributes().getNamedItem("blue").getNodeValue());
-                } catch (NullPointerException npe) {
-                    blue = 255 - i * 73;
-                    if (blue < 0) {
-                        blue = 255 + blue % 255;
+                    try {
+                        blue = Integer.parseInt(element.getAttributes().getNamedItem("blue").getNodeValue());
+                    } catch (NullPointerException npe) {
+                        blue = 255 - i * 73;
+                        if (blue < 0) {
+                            blue = 255 + blue % 255;
+                        }
                     }
+                    NodeList translatedRoles = element.getElementsByTagName(language);
+                    Element rol = (Element) translatedRoles.item(0);
+                    RoleTag role = new RoleTag(tag, rol.getTextContent().trim(), abbrev);
+                    role.addColor(red, green, blue);
+                    rolesList.add(role);
                 }
-                NodeList translatedRoles = element.getElementsByTagName(language);
-                Element rol = (Element) translatedRoles.item(0);
-                RoleTag role = new RoleTag(tag, rol.getTextContent().trim(), abbrev);
-                role.addColor(red, green, blue);
-                rolesList.add(role);
             }
         }
         return rolesList;

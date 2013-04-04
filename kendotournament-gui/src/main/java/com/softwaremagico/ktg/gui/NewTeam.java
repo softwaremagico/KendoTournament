@@ -52,8 +52,8 @@ public class NewTeam extends KendoFrame {
     protected boolean refreshTournament = true;
     private boolean individualTeams = false;
     protected List<CompetitorPanel> competitorsPanel = new ArrayList<>();
-    private Tournament tournament = null;
-    private boolean newTeam = true; //To avoid that OrderTeam also use the event . 
+    protected Tournament tournament = null;
+    protected boolean newTeam = true; //To avoid that OrderTeam also use the event . 
     private Team oldTeam = null;
 
     /**

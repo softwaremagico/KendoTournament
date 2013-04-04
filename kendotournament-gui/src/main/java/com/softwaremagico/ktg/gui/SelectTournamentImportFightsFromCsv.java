@@ -1,15 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softwaremagico.ktg.gui;
 
-import com.softwaremagico.ktg.FightPool;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.TournamentType;
-import com.softwaremagico.ktg.files.Folder;
-import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
-import java.io.IOException;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 
 /*
  * #%L
@@ -34,10 +25,7 @@ import java.io.IOException;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-/**
- *
- * @author jhortelano
- */
+
 public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv {
 
     public SelectTournamentImportFightsFromCsv(String title, String buttonTag) {
@@ -46,12 +34,12 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
 
     @Override
     public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + FightPool.getManager(returnSelectedTournament()).getLastLevel() + ".csv";
+        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerPool.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
     }
 
     @Override
     protected boolean doAction(String file) {
-        try {
+       /* try {
             if (returnSelectedTournament().getType().equals(TournamentType.SIMPLE)) {
                 if (FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file, false))) {
                     return true;
@@ -63,7 +51,7 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
             }
         } catch (IOException ex) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ex);
-        }
+        }*/
         return false;
     }
 }

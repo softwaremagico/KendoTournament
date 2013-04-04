@@ -10,6 +10,7 @@
         <artifactId>kendo-tournament-generator</artifactId>
         <version>0.9.8.1</version>
     </parent>
+    
     <dependencies>
         <dependency>
             <groupId>mysql</groupId>

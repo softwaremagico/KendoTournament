@@ -25,9 +25,15 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.*;
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
@@ -36,10 +42,6 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.DefaultListModel;
 
-/**
- *
- * @author jorge
- */
 public class NewRingTournament extends javax.swing.JFrame {
 
     Translator trans = null;
@@ -60,7 +62,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         setLanguage();
         fillTournaments();
         RefreshTournament();
-        listTeams = DatabaseConnection.getInstance().getDatabase().searchTeamsByTournament((Tournament) TournamentComboBox.getSelectedItem(), false);
+        listTeams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
         fillTeam1ComboBox();
     }
 
@@ -86,7 +88,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
-            List<Tournament> listTournaments = TournamentPool.getAllTournaments();
+            List<Tournament> listTournaments = TournamentPool.getInstance().getAll();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
@@ -182,7 +184,7 @@ public class NewRingTournament extends javax.swing.JFrame {
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
             for (int j = i + 1; j < teams.size(); j++) {
-                fights.add(new Fight(teams.get(i), teams.get(j % teams.size()), ((Tournament) TournamentComboBox.getSelectedItem()), 0, level));
+                fights.add(new Fight(((Tournament) TournamentComboBox.getSelectedItem()), teams.get(i), teams.get(j % teams.size()), 0, level));
             }
         }
         return fights;
@@ -193,10 +195,10 @@ public class NewRingTournament extends javax.swing.JFrame {
         for (int i = 0; i < teams.size(); i++) {
             int level = i;
             for (int j = i + 1; j < teams.size(); j++) { //First, fightManager with teams that not have played the ring.
-                fights.add(new Fight(teams.get(i), teams.get(j % teams.size()), ((Tournament) TournamentComboBox.getSelectedItem()), 0, level));
+                fights.add(new Fight(((Tournament) TournamentComboBox.getSelectedItem()), teams.get(i), teams.get(j % teams.size()), 0, level));
             }
             for (int j = 0; j < i; j++) { //Next, fightManager with exhausted teams.
-                fights.add(new Fight(teams.get(i), teams.get(j % teams.size()), ((Tournament) TournamentComboBox.getSelectedItem()), 0, level));
+                fights.add(new Fight(((Tournament) TournamentComboBox.getSelectedItem()), teams.get(i), teams.get(j % teams.size()), 0, level));
             }
         }
         return fights;
@@ -211,11 +213,11 @@ public class NewRingTournament extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TournamentComboBox = new javax.swing.JComboBox<Tournament>();
+        TournamentComboBox = new javax.swing.JComboBox();
         TournamentLabel = new javax.swing.JLabel();
         NewFightPanel = new javax.swing.JPanel();
         AddButton = new javax.swing.JButton();
-        Team1ComboBox = new javax.swing.JComboBox<String>();
+        Team1ComboBox = new javax.swing.JComboBox();
         Team1Label = new javax.swing.JLabel();
         RandomButton = new javax.swing.JButton();
         AvoidRepetitionCheckBox = new javax.swing.JCheckBox();
@@ -461,13 +463,12 @@ public class NewRingTournament extends javax.swing.JFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (teams.size() > 0) {
             if (!AvoidRepetitionCheckBox.isSelected()) {
-                DatabaseConnection.getInstance().getDatabase().storeFights(obtainRingFightsWithRepetition(), true, true);
+                FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), obtainRingFightsWithRepetition());
             } else {
-                DatabaseConnection.getInstance().getDatabase().storeFights(obtainRingFightsWithoutRepetition(), true, true);
+                FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), obtainRingFightsWithoutRepetition());
             }
-            TeamPool.getInstance().deleteTeamGroups((Tournament) TournamentComboBox.getSelectedItem());
-            ((Tournament) TournamentComboBox.getSelectedItem()).setMode(TournamentType.SIMPLE);
-            DatabaseConnection.getInstance().getDatabase().updateTournament(((Tournament) TournamentComboBox.getSelectedItem()), false);
+            ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
+            TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
             this.dispose();
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTeam", "New Fight");
@@ -525,10 +526,10 @@ public class NewRingTournament extends javax.swing.JFrame {
     private javax.swing.JPanel FightsPanel;
     private javax.swing.JPanel NewFightPanel;
     private javax.swing.JButton RandomButton;
-    private javax.swing.JComboBox<String> Team1ComboBox;
+    private javax.swing.JComboBox Team1ComboBox;
     private javax.swing.JLabel Team1Label;
     private javax.swing.JList TeamList;
-    private javax.swing.JComboBox<Tournament> TournamentComboBox;
+    private javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.JButton UpButton;
     // End of variables declaration//GEN-END:variables

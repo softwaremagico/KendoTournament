@@ -24,25 +24,23 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.core.CompetitorWithPhoto;
+import com.softwaremagico.ktg.core.Configuration;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.fight.*;
-import com.softwaremagico.ktg.core.Configuration;
-import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
-import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
+import com.softwaremagico.ktg.gui.tournament.LeagueEvolution;
 import com.softwaremagico.ktg.pdflist.*;
 import com.softwaremagico.ktg.statistics.*;
-import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -52,7 +50,6 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.management.monitor.Monitor;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -95,9 +92,6 @@ public class Controller {
     private NewSimpleTournament newFight;
     private NewRingTournament newRing;
     private LeagueEvolution leagueEvolution = null;
-    private Monitor monitor = null;
-    private SelectTournamentForMonitor selectTournamentForMonitor = null;
-    private SelectTournamentForTreeMonitor selectTournamentForTreeMonitor = null;
     private SelectTournament selectTournament = null;
     private SelectTournamentExportFightsToCsv selectTournamentExportFightsToCsv = null;
     private SelectTournamentImportFightsFromCsv selectTournamentImportFightsFromCsv = null;
@@ -164,8 +158,6 @@ public class Controller {
         main.addRingMenuItemListener(new NewRingListener());
         main.addDesignerMenuItemListener(new DesignerListener());
         main.addTeamTopTenListener(new NewTeamTopTenStatisticsListener());
-        main.addScoreMonitorListener(new ScoreMonitorListener());
-        main.addTreeMonitorListener(new TreeMonitorListener());
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
         main.addScoreMenuItemListener(new ChooseScoreListener());
@@ -593,34 +585,6 @@ public class Controller {
         }
     }
 
-    class ScoreMonitorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                selectTournamentForMonitor.dispose();
-            } catch (NullPointerException npe) {
-            }
-            selectTournamentForMonitor = new SelectTournamentForMonitor();
-            selectTournamentForMonitor.setVisible(true);
-            AddSelectTournamentMonitorListeners();
-        }
-    }
-
-    class TreeMonitorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                selectTournamentForTreeMonitor.dispose();
-            } catch (NullPointerException npe) {
-            }
-            selectTournamentForTreeMonitor = new SelectTournamentForTreeMonitor();
-            selectTournamentForTreeMonitor.setVisible(true);
-            AddSelectTournamentTreeMonitorListeners();
-        }
-    }
-
     class ChooseScoreListener implements ActionListener {
 
         @Override
@@ -871,7 +835,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            CompetitorWithPhoto c = searchCompetitor.returnSelectedItem();
+            RegisteredPerson c = searchCompetitor.returnSelectedItem();
             newCompetitor.updateWindow(c);
             newCompetitor.setVisible(true);
             searchCompetitor.dispose();
@@ -1172,80 +1136,6 @@ public class Controller {
             statisticsTopTen = new StatisticsTopTen(selectTournament.returnSelectedTournament());
             statisticsTopTen.setVisible(true);
             selectTournament.dispose();
-        }
-    }
-
-    /**
-     * *******************************************************************
-     *
-     * SELECT TOURNAMENT FOR MONITOR
-     *
-     ********************************************************************
-     */
-    /**
-     * Add all listeners to GUI.
-     */
-    private void AddSelectTournamentMonitorListeners() {
-        selectTournamentForMonitor.addGenerateButtonListener(new SelectTournamentMonitorListener());
-    }
-
-    class SelectTournamentMonitorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                monitor.dispose();
-            } catch (NullPointerException npe) {
-            }
-            monitor = new Monitor(selectTournamentForMonitor.returnSelectedTournament(),
-                    selectTournamentForMonitor.returnSelectedArena());
-            monitor.setVisible(true);
-            monitor.setExtendedState(monitor.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-            selectTournamentForMonitor.dispose();
-        }
-    }
-
-    /**
-     * *******************************************************************
-     *
-     * SELECT TOURNAMENT FOR TREE MONITOR
-     *
-     ********************************************************************
-     */
-    /**
-     * Add all listeners to GUI.
-     */
-    private void AddSelectTournamentTreeMonitorListeners() {
-        selectTournamentForTreeMonitor.addGenerateButtonListener(new SelectTournamentTreeMonitorListener());
-    }
-
-    class SelectTournamentTreeMonitorListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                monitorTree.dispose();
-            } catch (NullPointerException npe) {
-            }
-            try {
-                monitorPosition.dispose();
-            } catch (NullPointerException npe) {
-            }
-
-            try {
-                Tournament tournament = selectTournamentForTreeMonitor.returnSelectedTournament();
-                if (tournament.getMode().equals(TournamentType.CHAMPIONSHIP) || tournament.getMode().equals(TournamentType.LEAGUE_TREE)) {
-                    monitorTree = new MonitorTree(tournament);
-                    monitorTree.setVisible(true);
-                    monitorTree.setExtendedState(monitorTree.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-                    monitorTree.updateBlackBoard(selectTournamentForTreeMonitor.returnSelectedTournament(), false);
-                } else {
-                    monitorPosition = new MonitorPosition(tournament);
-                    monitorPosition.setVisible(true);
-                }
-                selectTournamentForTreeMonitor.dispose();
-            } catch (NullPointerException npe) {
-            }
         }
     }
 

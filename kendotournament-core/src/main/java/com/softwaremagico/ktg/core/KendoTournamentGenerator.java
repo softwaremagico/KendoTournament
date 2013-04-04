@@ -40,7 +40,6 @@ public class KendoTournamentGenerator {
     private static boolean debugMode = true;
     public String language = "en";
     private String explorationFolder = null;
-    //public TournamentGroupManager tournamentManager = null;
     private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
     private String lastSelectedClub = "";
@@ -166,7 +165,7 @@ public class KendoTournamentGenerator {
      * Return the roles defined into a XML file.
      */
     public RoleTags getAvailableRoles() {
-        return new Translator("roles.xml").returnAvailableRoles(language);
+        return Translator.getAvailableRoles(language);
     }
 
     public String getDefaultDirectory() {

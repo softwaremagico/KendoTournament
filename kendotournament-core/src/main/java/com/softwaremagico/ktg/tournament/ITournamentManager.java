@@ -30,39 +30,49 @@ import java.util.List;
 
 public interface ITournamentManager {
 
+    /**
+     * Generate fights of level.
+     * @param level
+     * @return 
+     */
     List<Fight> getFights(Integer level);
-
-    Integer getNumberOfLevels();
     
+    List<Fight> getRandomFights();
+    
+    List<Fight> getSortedFights();
+
     List<TournamentGroup> getGroups();
 
     List<TournamentGroup> getGroups(Integer level);
-    
+
     TournamentGroup getGroup(Fight fight);
-    
+
     void addGroup(TournamentGroup group);
-    
+
     void removeGroup(Integer level, Integer groupIndex);
-    
+
     void removeGroup(TournamentGroup group);
-    
+
     void removeGroups(Integer level);
-    
+
     LeagueLevel getLevel(Integer level);
-    
+
+    Integer getNumberOfLevels();
+
+    Integer getLastLevelUsed();
+
     boolean exist(Team team);
-    
+
     boolean allGroupsHaveNextLink();
-    
+
     void addLink(TournamentGroup source, TournamentGroup address);
-    
+
     void removeLinks();
-    
+
     void deleteTeams(Integer level);
-    
+
     /**
      * Divide groups into fight areas.
      */
     void setDefaultFightAreas();
-
 }

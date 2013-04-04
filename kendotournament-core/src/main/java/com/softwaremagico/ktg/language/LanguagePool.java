@@ -27,10 +27,6 @@ package com.softwaremagico.ktg.language;
 
 import java.util.HashMap;
 
-/**
- *
- * @author jhortelano
- */
 public class LanguagePool {
 
     private static HashMap<String, Translator> existingTranslators = new HashMap<>();

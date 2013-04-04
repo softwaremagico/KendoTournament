@@ -110,6 +110,10 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
+    public void update(Tournament tournament, ElementPool elementUpdated) {
+        update(tournament, elementUpdated, elementUpdated);
+    }
+
     public void update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
         String id = getId(oldElement);
         if (!id.equals(getId(newElement))) {

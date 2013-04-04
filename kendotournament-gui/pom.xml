@@ -277,6 +277,7 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>kendo-tournament-generator-core</artifactId>
             <version>${project.version}</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.swinglabs</groupId>

@@ -29,26 +29,22 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PhotoFrame;
-import com.softwaremagico.ktg.gui.tournament.TournamentGroupPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Jorge
- */
 public final class FightPanel extends javax.swing.JFrame {
 
     private Translator trans = null;
@@ -56,8 +52,8 @@ public final class FightPanel extends javax.swing.JFrame {
     private Tournament selectedTournament = null;
     private PhotoFrame banner;
     private boolean refreshTournament = true;
-    private MonitorPosition mp;
     private ScorePanel scorePanel;
+    private MonitorPosition mp;
 
     /**
      * Creates new form FightPanel
@@ -115,7 +111,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
     private void hideTreeButton() {
         try {
-            if (!selectedTournament.getType().equals(TournamentType.SIMPLE) && TournamentGroupPool.getManager(selectedTournament).size() > 1) {
+            if (!selectedTournament.getType().equals(TournamentType.SIMPLE) && TournamentManagerPool.getManager(selectedTournament).getGroups().size() > 1) {
                 TreeButton.setVisible(true);
             } else {
                 TreeButton.setVisible(false);
@@ -157,7 +153,7 @@ public final class FightPanel extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < selectedTournament.getFightingAreas(); i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
             }
         } catch (NullPointerException npe) {
         }
@@ -165,15 +161,12 @@ public final class FightPanel extends javax.swing.JFrame {
     }
 
     private void updateTournament() {
-        try {
-            banner.cleanPhoto();
-            banner.changePhoto(selectedTournament.banner(), selectedTournament.getBannerInput(), selectedTournament.getBannerSize());
-            BannerPanel.repaint();
-            BannerPanel.revalidate();
-            fillFightingAreas();
-            fillFightsPanel();
-        } catch (IOException ex) {
-        }
+        banner.cleanPhoto();
+        banner.changePhoto(selectedTournament.getBanner());
+        BannerPanel.repaint();
+        BannerPanel.revalidate();
+        fillFightingAreas();
+        fillFightsPanel();
     }
 
     private void changeTournament() {
@@ -229,7 +222,7 @@ public final class FightPanel extends javax.swing.JFrame {
 
             //The message of next group will be shown only if there are more levels in the championship.
             //The last level always only has one group!
-            if (TournamentGroupPool.getManager(selectedTournament).returnGroupsOfLevel(currentGroup.getLevel()).size() > 1) {
+            if (TournamentManagerPool.getManager(selectedTournament).getGroups(currentGroup.getLevel()).size() > 1) {
                 message = true;
             } else {
                 message = false;
@@ -531,7 +524,7 @@ public final class FightPanel extends javax.swing.JFrame {
             //Update GUI
             fillFightsPanel();
             changeNextButtonText();
-           
+
         } catch (IndexOutOfBoundsException | NullPointerException iob) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), iob);
         }

@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui.fight;
+package com.softwaremagico.ktg.gui.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.TournamentType;
-import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -51,21 +51,14 @@ public class LeagueEvolution extends javax.swing.JFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         this.setSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.setExtendedState(this.getExtendedState() | LeagueEvolution.MAXIMIZED_BOTH);
-        bbp = new BlackBoardPanel(tournament);
+        bbp = new BlackBoardPanel(null, false);
         BlackBoardScrollPane.setViewportView(bbp);
-        updateListeners();
     }
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
-        this.tournament=tournament;
+        this.tournament = tournament;
         if (!tournament.getType().equals(TournamentType.SIMPLE)) {
-            TournamentGroupPool.getManager(tournament).color(true);
-            TournamentGroupPool.getManager(tournament).update();
-            bbp.updateBlackBoard(tournament, refill);
-            TournamentGroupPool.getManager(tournament).unselectDesignedGroups();
-            TournamentGroupPool.getManager(tournament).enhance(true);
-            TournamentGroupPool.getManager(tournament).onlyShow();
-
+            bbp.update(tournament);
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
             if (timer == null) {
@@ -78,7 +71,6 @@ public class LeagueEvolution extends javax.swing.JFrame {
 
     private void startTimer(final Tournament tournament) {
         timer = new Timer(seconds * 100, new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent evt) {
                 updateBlackBoard(tournament, true);
@@ -89,34 +81,26 @@ public class LeagueEvolution extends javax.swing.JFrame {
         timer.start();
     }
 
-    final void updateListeners() {
-        for (int i = 0; i < TournamentGroupPool.getManager(tournament).size(); i++) {
-            if (TournamentGroupPool.getManager(tournament).getGroup(i).listenerAdded) {
-                TournamentGroupPool.getManager(tournament).getGroup(i).removeMouseClickListener();
-            }
-        }
-    }
-
     private void centerImage() {
         JScrollBar verticalScrollBar = BlackBoardScrollPane.getVerticalScrollBar();
         JScrollBar horizontalScrollBar = BlackBoardScrollPane.getHorizontalScrollBar();
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / TournamentGroupPool.getManager(tournament).getLevels().size();
-            rows = verticalScrollBar.getMaximum() / TournamentGroupPool.getManager(tournament).returnGroupsOfLevel(0).size();
+            columns = horizontalScrollBar.getMaximum() / TournamentManagerPool.getManager(tournament).getNumberOfLevels();
+            rows = verticalScrollBar.getMaximum() / TournamentManagerPool.getManager(tournament).getGroups(0).size();
         } catch (ArithmeticException ae) {
         }
 
-        Integer x = TournamentGroupPool.getManager(tournament).getIndexLastLevelNotUsed();
+        Integer x = TournamentManagerPool.getManager(tournament).getLastLevelUsed();
 
         if (x == null) {
-            x = TournamentGroupPool.getManager(tournament).getLevels().size() - 1;
+            x = TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 1;
         }
 
         int y;
 
-        if (TournamentGroupPool.getManager(tournament).default_max_winners < 2) {
+        if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
             y = (int) (Math.pow(2, x + 1));
         } else {
             if (x == 0) {

@@ -71,7 +71,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        bbp = new BlackBoardPanel(this);
+        bbp = new BlackBoardPanel(this, true);
         BlackBoardScrollPane.setViewportView(bbp);
         fillTournaments();
         updateInterface();
