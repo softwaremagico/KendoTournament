@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -32,6 +33,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,7 +56,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
         mainPanel.add(connectionPanel);
         if (connectionPanel.getPasswordEnabled()) {
             connectionPanel.setFocusOnPassword();
-        }else{
+        } else {
             ConnectButton.requestFocusInWindow();
         }
     }
@@ -70,6 +72,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
         DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
         if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
                 connectionPanel.getDatabase(), connectionPanel.getServer())) {
+            MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } else {
             connectionPanel.resetPassword();

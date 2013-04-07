@@ -8,49 +8,57 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ClubPool extends SimplePool<Club> {
-    
+
     private static ClubPool instance;
-    
+
     private ClubPool() {
     }
-    
+
     public static ClubPool getInstance() {
         if (instance == null) {
             instance = new ClubPool();
         }
         return instance;
     }
-    
+
     @Override
     protected String getId(Club element) {
         return element.getName();
     }
-    
+
     @Override
     protected HashMap<String, Club> getFromDatabase() {
+        DatabaseConnection.getInstance().connect();
         List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Club> hashMap = new HashMap<>();
         for (Club c : clubs) {
             hashMap.put(getId(c), c);
         }
         return hashMap;
     }
-    
+
     @Override
     protected void storeInDatabase(List<Club> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
+        }
     }
-    
+
     @Override
     protected void removeFromDatabase(List<Club> elementsToDelete) {
-        DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
+        }
     }
-    
+
     @Override
     protected void updateDatabase(HashMap<Club, Club> elementsToUpdate) {
-        DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
+        }
     }
-    
+
     @Override
     protected List<Club> sort() {
         List<Club> unsorted = new ArrayList(getMap().values());

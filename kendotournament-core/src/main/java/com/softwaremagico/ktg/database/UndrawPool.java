@@ -29,7 +29,9 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected HashMap<String, Undraw> getFromDatabase(Tournament tournament) {
+        DatabaseConnection.getInstance().connect();
         List<Undraw> undraws = DatabaseConnection.getConnection().getDatabase().getUndraws(tournament);
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Undraw> hashMap = new HashMap<>();
         for (Undraw undraw : undraws) {
             hashMap.put(getId(undraw), undraw);
@@ -39,17 +41,23 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected void storeInDatabase(Tournament tournament, List<Undraw> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) {
-        DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
+        }
     }
 
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) {
-        DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
+        }
     }
 
     @Override

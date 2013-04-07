@@ -32,9 +32,12 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DatabaseConnection {
 
+    private static Integer ALIVE_CONNECTION = 2; //Database connection keep alive for X tenths of a second 
     private Database database = null;
     private String password = "";
     private String user = "kendouser";
@@ -42,8 +45,11 @@ public class DatabaseConnection {
     private String server = "localhost";
     private DatabaseEngine databaseEngine = null;
     private boolean databaseLazyUpdate = false;
-    private boolean databaseConnected = false;
+    private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
+    private boolean stillConnected = false;
+    Timer timer = new Timer("Database Connection");
+    Task timerTask;
 
     private DatabaseConnection() {
         obtainStoredDatabaseConnection();
@@ -61,6 +67,7 @@ public class DatabaseConnection {
     }
 
     public void setDatabase(Database database) {
+        databaseConnectionTested = false;
         this.database = database;
     }
 
@@ -69,6 +76,7 @@ public class DatabaseConnection {
     }
 
     public void setPassword(String password) {
+        databaseConnectionTested = false;
         this.password = password;
     }
 
@@ -77,6 +85,7 @@ public class DatabaseConnection {
     }
 
     public void setUser(String user) {
+        databaseConnectionTested = false;
         this.user = user;
     }
 
@@ -85,6 +94,7 @@ public class DatabaseConnection {
     }
 
     public void setDatabaseName(String databaseName) {
+        databaseConnectionTested = false;
         this.databaseName = databaseName;
     }
 
@@ -93,15 +103,12 @@ public class DatabaseConnection {
     }
 
     public void setServer(String server) {
+        databaseConnectionTested = false;
         this.server = server;
     }
 
-    public boolean isDatabaseConnected() {
-        return databaseConnected;
-    }
-
-    public void setDatabaseConnected(boolean databaseConnected) {
-        this.databaseConnected = databaseConnected;
+    public boolean isDatabaseConnectionTested() {
+        return databaseConnectionTested;
     }
 
     public static DatabaseConnection getConnection() {
@@ -119,9 +126,9 @@ public class DatabaseConnection {
         this.server = server;
         generateDatabaseConnectionFile();
         this.database = databaseEngine.getDatabaseClass();
-        this.database.disconnect();
-        databaseConnected = database.connect(password, user, databaseName, server, true, true);
-        return databaseConnected;
+        disconnect();
+        databaseConnectionTested = connect();
+        return databaseConnectionTested;
     }
 
     public void resetPassword() {
@@ -227,7 +234,7 @@ public class DatabaseConnection {
     }
 
     public void updateDatabase() {
-        getDatabase().connect(password, user, databaseName, server, false, true);
+        connect();
         ClubPool.getInstance().updateDatabase();
         RegisteredPersonPool.getInstance().updateDatabase();
         PhotoPool.getInstance().updateDatabase();
@@ -237,6 +244,44 @@ public class DatabaseConnection {
         FightPool.getInstance().updateDatabase();
         DuelPool.getInstance().updateDatabase();
         UndrawPool.getInstance().updateDatabase();
+        disconnect();
+    }
+
+    public boolean connect() {
+        if (!stillConnected) {
+            stillConnected = getDatabase().connect(password, user, databaseName, server, false, true);
+            if (stillConnected) {
+                timerTask = new Task();
+                timer.schedule(timerTask, 0, 100);
+            }
+            return stillConnected;
+        } else {
+            timerTask.resetTime();
+            return true;
+        }
+    }
+
+    public void disconnect() {
         getDatabase().disconnect();
+    }
+
+    class Task extends TimerTask {
+        //times member represent calling times.
+
+        private int times = 0;
+
+        @Override
+        public void run() {
+            times++;
+            if (times >= ALIVE_CONNECTION) {
+                disconnect();
+                stillConnected = false;
+                this.cancel();
+            }
+        }
+
+        public void resetTime() {
+            times = 0;
+        }
     }
 }

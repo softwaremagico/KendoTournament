@@ -60,12 +60,11 @@ public abstract class Database {
      * @param retry do another try if can solve the SQL problem.
      * @return true if the connection is ok.
      */
-    public abstract boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry);
+    protected abstract boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry);
 
     protected abstract void disconnectDatabase();
 
-    public void disconnect() {
-        DatabaseConnection.getInstance().setDatabaseConnected(false);
+    protected void disconnect() {
         disconnectDatabase();
     }
 

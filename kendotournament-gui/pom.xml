@@ -14,11 +14,11 @@
     <properties>
         <url>http://kendotournament.sourceforge.net/</url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <linux.releasedir>install_linux</linux.releasedir>
-        <linux.origin>linux-basic-files</linux.origin>
+        <linux.releasedir>../install_linux</linux.releasedir>
+        <linux.origin>../linux-basic-files</linux.origin>
         <linux.destination-folder>/usr/share/kendo-tournament-generator</linux.destination-folder>
-        <windows.releasedir>install_windows</windows.releasedir>
-        <windows.origin>windows-basic-files</windows.origin>
+        <windows.releasedir>../install_windows</windows.releasedir>
+        <windows.origin>../windows-basic-files</windows.origin>
         <winexe>KendoTournamentGenerator.exe</winexe>
         <license.licenseName>gnugpl</license.licenseName>
         <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
@@ -173,25 +173,25 @@
                                     <fileset dir="./target/lib" includes="**/*.jar" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/translations" overwrite="true" >
-                                    <fileset dir="./translations" includes="**/*.xml" />
+                                    <fileset dir="../translations" includes="**/*.xml" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
-                                    <fileset dir="./images" excludes="**/*.svg" />
+                                    <fileset dir="../images" excludes="**/*.svg" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/database" overwrite="true" >
-                                    <fileset dir="./database" includes="**/*_empty.*" />
+                                    <fileset dir="../database" includes="**/*_empty.*" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
-                                    <fileset dir="./manual" includes="**/*.pdf" />
+                                    <fileset dir="../manual" includes="**/*.pdf" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
-                                    <fileset dir="./manual" includes="**/*.txt" />
+                                    <fileset dir="../manual" includes="**/*.txt" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
-                                    <fileset dir="./" includes="**/gnu.txt" />
+                                    <fileset dir="../" includes="**/gnu.txt" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
-                                    <fileset dir="./" includes="**/Readme.txt" />
+                                    <fileset dir="../" includes="**/Readme.txt" />
                                 </copy>
                                 <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator" perm="755"/>
                                 <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator-doc" perm="755"/>
@@ -205,25 +205,25 @@
                                     <fileset dir="./target/lib" includes="**/*.jar" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/translations" overwrite="true" >
-                                    <fileset dir="./translations" includes="**/*.xml" />
+                                    <fileset dir="../translations" includes="**/*.xml" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/images" overwrite="true" >
-                                    <fileset dir="./images" excludes="**/*.svg" />
+                                    <fileset dir="../images" excludes="**/*.svg" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/database" overwrite="true" >
-                                    <fileset dir="./database" includes="**/*_empty.*" />
+                                    <fileset dir="../database" includes="**/*_empty.*" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/manual" overwrite="true" >
-                                    <fileset dir="./manual" includes="**/*.pdf" />
+                                    <fileset dir="../manual" includes="**/*.pdf" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/manual" overwrite="true" >
-                                    <fileset dir="./manual" includes="**/*.txt" />
+                                    <fileset dir="../manual" includes="**/*.txt" />
                                 </copy>
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                    <fileset dir="./" includes="**/gnu.txt" />
+                                    <fileset dir="../" includes="**/gnu.txt" />
                                 </copy>
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                    <fileset dir="./" includes="**/Readme.txt" />
+                                    <fileset dir="../" includes="**/Readme.txt" />
                                 </copy>   
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
                                     <fileset dir="${windows.origin}/" includes="**/icon.ico" />

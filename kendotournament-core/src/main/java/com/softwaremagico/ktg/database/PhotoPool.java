@@ -42,16 +42,25 @@ public class PhotoPool {
     }
 
     protected Photo getFromDatabase(String competitorId) {
-        return DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
+        DatabaseConnection.getInstance().connect();
+        Photo photo = DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
+        DatabaseConnection.getInstance().disconnect();
+        return photo;
     }
 
     protected boolean storeInDatabase(List<Photo> photos) {
-        Boolean result = DatabaseConnection.getInstance().getDatabase().setPhotos(photos);
-        photosToStore = new ArrayList<>();
-        return result;
+        if (photos.size() > 0) {
+            Boolean result = DatabaseConnection.getInstance().getDatabase().setPhotos(photos);
+            photosToStore = new ArrayList<>();
+            return result;
+        }
+        return true;
     }
 
     protected boolean updateDatabase() {
-        return storeInDatabase(photosToStore);
+        if (photosToStore.size() > 0) {
+            return storeInDatabase(photosToStore);
+        }
+        return true;
     }
 }

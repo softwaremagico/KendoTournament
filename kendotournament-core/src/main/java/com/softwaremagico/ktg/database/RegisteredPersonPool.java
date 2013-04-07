@@ -28,7 +28,9 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected HashMap<String, RegisteredPerson> getFromDatabase() {
+        DatabaseConnection.getInstance().connect();
         List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, RegisteredPerson> hashMap = new HashMap<>();
         for (RegisteredPerson person : people) {
             hashMap.put(getId(person), person);
@@ -38,18 +40,24 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected void storeInDatabase(List<RegisteredPerson> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(List<RegisteredPerson> elementsToDelete) {
-        DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
+        }
     }
 
     @Override
     protected void updateDatabase(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) {
-        PhotoPool.getInstance().updateDatabase();
-        DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
+        if (elementsToUpdate.size() > 0) {
+            PhotoPool.getInstance().updateDatabase();
+            DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
+        }
     }
 
     @Override

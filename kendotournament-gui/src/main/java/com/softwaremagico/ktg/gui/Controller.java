@@ -104,7 +104,7 @@ public class Controller {
         main = tmp_gui;
         AddMainMenuListeners();
         main.setVisible(true);
-        connectDatabase(!DatabaseConnection.getInstance().isDatabaseConnected());
+        connectDatabase(!DatabaseConnection.getInstance().isDatabaseConnectionTested());
     }
 
     private void connectDatabase(boolean connect) {
@@ -167,6 +167,15 @@ public class Controller {
         main.addImportParticipantCsvMenuItemListener(new ImportParticipantCsvListener("CvsMenuItem", "ImportMenu"));
         main.addChangeTeamMenuItemListener(new ChangeTeamListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
+        main.addSaveMenuItemListener(new SaveListener());
+    }
+
+    class SaveListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            DatabaseConnection.getInstance().updateDatabase();
+        }
     }
 
     class AddLanguagesListener implements ActionListener {
@@ -1048,8 +1057,8 @@ public class Controller {
      * Add all listeners to GUI.
      */
     private void AddFightPanelListeners() {
-       // tournamentPanel.addTreeListener(new TreeButtonListener());
-       // tournamentPanel.addFightListener(new AddFightToPanelListener());
+        // tournamentPanel.addTreeListener(new TreeButtonListener());
+        // tournamentPanel.addFightListener(new AddFightToPanelListener());
     }
 
     class TreeButtonListener implements ActionListener {

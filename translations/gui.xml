@@ -2059,4 +2059,12 @@
 		<ca>Actualització diferida de dades</ca>
 		<it>Agiornamento differito dei dati</it>
 	</StrictStore> 
+	<SaveMenuItem>
+		<en>Save</en>
+		<es>Guardar</es>
+		<nl>Save</nl>
+		<de>Save</de>
+		<ca>Save</ca>
+		<it>Salvare</it>
+	</SaveMenuItem> 
 </translator>

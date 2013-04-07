@@ -30,7 +30,9 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
     @Override
     protected HashMap<String, Team> getFromDatabase(Tournament tournament) {
+        DatabaseConnection.getInstance().connect();
         List<Team> teams = DatabaseConnection.getConnection().getDatabase().getTeams(tournament);
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Team> hashMap = new HashMap<>();
         for (Team t : teams) {
             hashMap.put(getId(t), t);
@@ -39,18 +41,24 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected void updateDatabase(Tournament tournament, HashMap<Team, Team> elementsToExchange) {
-        DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToExchange);
+    protected void updateDatabase(Tournament tournament, HashMap<Team, Team> elementsToUpdate) {
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
+        }
     }
 
     @Override
     protected void storeInDatabase(Tournament tournament, List<Team> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Team> elementsToDelete) {
-        DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
+        }
     }
 
     @Override
@@ -92,7 +100,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     public void setIndividualTeams(Tournament tournament) {
         //Delete old teams of tournament.
         remove(tournament);
-        
+
         //Create new teams with only one member.
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         //MessageManager.translatedMessage(this.getClass().getName(), "oneTeamPerCompetitor", this.getClass().getName(), JOptionPane.INFORMATION_MESSAGE);

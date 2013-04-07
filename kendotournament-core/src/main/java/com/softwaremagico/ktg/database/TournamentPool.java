@@ -29,7 +29,9 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected HashMap<String, Tournament> getFromDatabase() {
+        DatabaseConnection.getInstance().connect();
         List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getTournaments();
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Tournament> hashMap = new HashMap<>();
         for (Tournament t : tournaments) {
             hashMap.put(getId(t), t);
@@ -39,25 +41,31 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected void storeInDatabase(List<Tournament> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(List<Tournament> elementsToDelete) {
-        for (Tournament tournament : elementsToDelete) {
-            //Delete fights.
-            FightPool.getInstance().remove(tournament);
-            //Delete teams.
-            TeamPool.getInstance().remove(tournament);
-            //Delete roles.            
-            RolePool.getInstance().remove(tournament);
+        if (elementsToDelete.size() > 0) {
+            for (Tournament tournament : elementsToDelete) {
+                //Delete fights.
+                FightPool.getInstance().remove(tournament);
+                //Delete teams.
+                TeamPool.getInstance().remove(tournament);
+                //Delete roles.            
+                RolePool.getInstance().remove(tournament);
+            }
+            DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
         }
-        DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
     }
 
     @Override
     protected void updateDatabase(HashMap<Tournament, Tournament> elementsToUpdate) {
-        DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
+        }
     }
 
     @Override

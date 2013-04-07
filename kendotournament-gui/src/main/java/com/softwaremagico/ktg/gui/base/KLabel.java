@@ -25,12 +25,17 @@ package com.softwaremagico.ktg.gui.base;
 
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import javax.swing.JButton;
+import javax.swing.JLabel;
 
-public class KButton extends JButton {
+public class KLabel extends JLabel {
 
-    public void setTranslatedText(String tag) {
+    public KLabel(String tag) {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        setText(trans.returnTag(tag));
+        String label = trans.returnTag(tag);
+        if (label != null) {
+            setText(label);
+        }else{
+            setText("** error tag '" + tag + "' **");
+        }
     }
 }

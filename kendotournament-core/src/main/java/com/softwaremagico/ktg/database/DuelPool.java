@@ -32,7 +32,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected HashMap<String, Duel> getFromDatabase(Tournament tournament) {
+        DatabaseConnection.getInstance().connect();
         List<Duel> duels = DatabaseConnection.getConnection().getDatabase().getDuels(tournament);
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Duel> hashMap = new HashMap<>();
         for (Duel duel : duels) {
             hashMap.put(getId(duel), duel);
@@ -42,17 +44,23 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected void storeInDatabase(Tournament tournament, List<Duel> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addDuels(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addDuels(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Duel> elementsToDelete) {
+         if (elementsToDelete.size() > 0) {
         DatabaseConnection.getConnection().getDatabase().removeDuels(elementsToDelete);
+         }
     }
 
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Duel, Duel> elementsToUpdate) {
+         if (elementsToUpdate.size() > 0) {
         DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
+         }
     }
 
     @Override

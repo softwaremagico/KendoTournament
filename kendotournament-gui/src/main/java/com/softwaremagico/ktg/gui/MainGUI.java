@@ -64,6 +64,7 @@ public class MainGUI extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
+        SaveMenuItem.setText(trans.returnTag("SaveMenuItem"));
         TournamentMenu.setText(trans.returnTag("FileMenu"));
         LanguageMenu.setText(trans.returnTag("LanguageMenu"));
         OptionsMenu.setText(trans.returnTag("OptionsMenu"));
@@ -160,8 +161,9 @@ public class MainGUI extends KendoFrame {
     }
 
     public final void changeMenuIsConnectedToDatabase() {
-        boolean connected = DatabaseConnection.getInstance().isDatabaseConnected();
+        boolean connected = DatabaseConnection.getInstance().isDatabaseConnectionTested();
         DiplomaMenuItem.setEnabled(connected);
+        SaveMenuItem.setEnabled(connected);
         TournamentPanelMenuItem.setEnabled(connected);
         TournamentTopTenMenuItem.setEnabled(connected);
         PointListMenuItem.setEnabled(connected);
@@ -374,6 +376,10 @@ public class MainGUI extends KendoFrame {
     public void addFightsCardMenuItemListener(ActionListener al) {
         FightsCardMenuItem.addActionListener(al);
     }
+    
+    public void addSaveMenuItemListener(ActionListener al){
+        SaveMenuItem.addActionListener(al);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -393,6 +399,7 @@ public class MainGUI extends KendoFrame {
         DatabaseConnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"connect.png"));
         DatabaseDisconnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"disconnect.png"));
         ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"convertDatabase.png"));
+        SaveMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"save.png"));
         MonitorMenu = new javax.swing.JMenu();
         MonitorMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"monitor.png"));
         ScoreMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));
@@ -495,6 +502,15 @@ public class MainGUI extends KendoFrame {
         DatabaseMenu.add(ConvertDatabaseMenuItem);
 
         ProgramMenu.add(DatabaseMenu);
+
+        SaveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        SaveMenuItem.setText("Save");
+        SaveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveMenuItemActionPerformed(evt);
+            }
+        });
+        ProgramMenu.add(SaveMenuItem);
 
         MonitorMenu.setText("Monitor");
 
@@ -739,14 +755,14 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
-        DatabaseConnection.getInstance().getDatabase().disconnect();
+        DatabaseConnection.getInstance().disconnect();
         changeMenuIsConnectedToDatabase();
         MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
@@ -774,6 +790,11 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
         DatabaseConnection.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
         KendoTournamentGenerator.getInstance().storeConfig();
     }//GEN-LAST:event_StoreFightsCheckBoxStateChanged
+
+    private void SaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveMenuItemActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;
@@ -824,6 +845,7 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem RefereeListMenuItem;
     private javax.swing.JMenuItem RingMenuItem;
     private javax.swing.JMenuItem RoleMenuItem;
+    private javax.swing.JMenuItem SaveMenuItem;
     private javax.swing.JMenuItem ScoreMenuItem;
     private javax.swing.JMenuItem ScoreMonitorMenuItem;
     private javax.swing.JMenu StatisticsMenu;

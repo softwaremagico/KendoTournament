@@ -66,7 +66,7 @@ public class NewCompetitor extends KendoFrame {
         refreshClub = false;
         List<Club> clubs;
         ClubComboBox.removeAllItems();
-        clubs = ClubPool.getInstance().getAll();
+        clubs = ClubPool.getInstance().getSorted();
         if (clubs != null && clubs.size() > 0) {
             for (int i = 0; i < clubs.size(); i++) {
                 ClubComboBox.addItem(clubs.get(i));

@@ -51,7 +51,7 @@ public class Path {
             if (f.exists()) {
                 return f.getPath() + File.separator;
             } else {
-                return "";
+                return "../"; //Descent to parent project from child project.
             }
         } else if (soName.contains("Windows") || soName.contains("windows") || soName.contains("vista") || soName.contains("Vista")) {
             return "";

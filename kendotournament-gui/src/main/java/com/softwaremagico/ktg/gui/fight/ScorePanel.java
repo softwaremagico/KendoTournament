@@ -26,28 +26,29 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;
 import javax.swing.Box;
 
-public class ScorePanel extends javax.swing.JPanel {
+public class ScorePanel extends KPanel {
 
     private Tournament tournament = null;
+    private Integer fightArea = null;
 
-    public ScorePanel(Tournament selectedTournament) {
-        this.tournament = selectedTournament;
+    public ScorePanel() {
         setMinimumSize(new java.awt.Dimension(0, 200));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
     }
 
-    public void updateTournament(Tournament selectedTournament) {
+    public void updateTournament(Tournament selectedTournament, Integer fightArea) {
         this.tournament = selectedTournament;
-
+        this.fightArea = fightArea;
+        fillFightsPanel();
     }
 
-    public void fillFightsPanel(int fightArea) {
-        //roundFights = new ArrayList<RoundFight>();
+    private void fillFightsPanel() {
         removeAll();
-        if (FightPool.getInstance().get(tournament).size() > 0) {
+        if (tournament != null && FightPool.getInstance().get(tournament).size() > 0) {
             int showedFights = 0;
             Dimension minSize = new Dimension(0, 5);
             Dimension prefSize = new Dimension(5, 5);

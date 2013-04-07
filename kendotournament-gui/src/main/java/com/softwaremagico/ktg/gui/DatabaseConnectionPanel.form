@@ -120,9 +120,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="PasswordField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="password"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="DatabaseComboBox">
       <Properties>

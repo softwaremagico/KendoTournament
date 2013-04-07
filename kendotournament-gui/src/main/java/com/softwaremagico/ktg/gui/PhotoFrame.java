@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -37,7 +38,7 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class PhotoFrame extends JPanel {
+public class PhotoFrame extends KPanel {
 
     private Photo photo;
     private JPanel parentFrame;
@@ -75,7 +76,9 @@ public class PhotoFrame extends JPanel {
             }
             photo.setImage(scaledImage);
         } catch (IOException | NullPointerException sof) {
-            cleanPhoto();
+            if (!imagePath.equals(Path.getWhiteSquare())) {
+                cleanPhoto();
+            }
         }
     }
 

@@ -35,10 +35,6 @@ import com.softwaremagico.ktg.language.Translator;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-/**
- *
- * @author LOCAL\jhortelano
- */
 public class DatabaseConnectionPanel extends javax.swing.JPanel {
 
     private boolean engineUpdate = true;
@@ -211,8 +207,6 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         UserLabel.setText("User:");
 
         PasswordLabel.setText("Password:");
-
-        PasswordField.setText("password");
 
         DatabaseComboBox.setEditable(true);
 

@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.files.MyFile;
@@ -115,12 +114,6 @@ public class MySQL extends SQL {
                 error = true;
             }
         }
-        if (!error) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + server + ")", JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(MySQL.class.getName(), "MySQL");
-        }
         return !error;
     }
 
@@ -128,7 +121,6 @@ public class MySQL extends SQL {
     public void disconnectDatabase() {
         try {
             connection.close();
-            DatabaseConnection.getInstance().resetPassword();
         } catch (NullPointerException | SQLException npe) {
         }
     }

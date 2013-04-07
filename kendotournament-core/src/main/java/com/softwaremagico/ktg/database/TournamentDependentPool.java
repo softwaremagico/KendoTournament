@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class TournamentDependentPool<ElementPool> {
 
-    private HashMap<Tournament, HashMap<String, ElementPool>> elements;
-    private HashMap<Tournament, List<ElementPool>> sortedElements = null;
+    private HashMap<Tournament, HashMap<String, ElementPool>> elements = new HashMap<>();
+    private HashMap<Tournament, List<ElementPool>> sortedElements = new HashMap<>();
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToStore = new HashMap<>();
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToDelete = new HashMap<>();
     private HashMap<Tournament, HashMap<ElementPool, ElementPool>> elementsToUpdate = new HashMap<>(); //New element replace old one.
@@ -99,7 +99,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public void add(Tournament tournament, ElementPool element) {
         if (!elements.get(tournament).containsValue(element)) {
-            sortedElements = null; //Sorted elements need to be recreated.
+            sortedElements = new HashMap<>(); //Sorted elements need to be recreated.
             getMap(tournament).put(getId(element), element);
             addElementToStore(tournament, element);
         }
@@ -213,10 +213,10 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void reset() {
-        sortedElements = null;
-        elements = null;
-        elementsToStore = null;
-        elementsToDelete = null;
-        elementsToUpdate = null;
+        sortedElements = new HashMap<>();
+        elements = new HashMap<>();
+        elementsToStore = new HashMap<>();
+        elementsToDelete = new HashMap<>();
+        elementsToUpdate = new HashMap<>();
     }
 }

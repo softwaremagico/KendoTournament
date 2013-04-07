@@ -37,7 +37,9 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected HashMap<String, Role> getFromDatabase(Tournament tournament) {
+        DatabaseConnection.getInstance().connect();
         List<Role> roles = DatabaseConnection.getInstance().getDatabase().getRoles(tournament);
+        DatabaseConnection.getInstance().disconnect();
         HashMap<String, Role> hashMap = new HashMap<>();
         for (Role role : roles) {
             hashMap.put(getId(role), role);
@@ -47,17 +49,23 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected void storeInDatabase(Tournament tournament, List<Role> elementsToStore) {
-        DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
+        if (elementsToStore.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
+        }
     }
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Role> elementsToDelete) {
-        DatabaseConnection.getConnection().getDatabase().removeRoles(tournament, elementsToDelete);
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeRoles(tournament, elementsToDelete);
+        }
     }
 
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Role, Role> elementsToUpdate) {
-        DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
+        }
     }
 
     @Override
@@ -217,5 +225,4 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return roleTags;
     }
-    
 }
