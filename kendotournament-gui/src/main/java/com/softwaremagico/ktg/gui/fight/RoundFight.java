@@ -56,7 +56,7 @@ public class RoundFight extends JPanel {
 
     RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number) {
         this.tournament = tournament;
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         decoration(selected);
         if (f != null) {
             fillCurrentFightPanel(f, selected, selected, fight_number);
@@ -65,7 +65,7 @@ public class RoundFight extends JPanel {
 
     RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number) {
         this.tournament = tournament;
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         decoration(selected);
         if (f != null) {
             fillCurrentFightPanel(f, selected, menu, fight_number);
@@ -73,15 +73,15 @@ public class RoundFight extends JPanel {
     }
 
     RoundFight(int teamSize, boolean selected, int fight_number, int fight_total) {
-        setLanguage(KendoTournamentGenerator.getInstance().language);
+        setLanguage();
         decoration(selected);
         fillCurrentFightPanel(teamSize, fight_number, fight_total);
     }
 
     /**
-     * Translate the GUI to the selected language.
+     * Translate the GUI.
      */
-    public final void setLanguage(String language) {
+    public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
     }
 

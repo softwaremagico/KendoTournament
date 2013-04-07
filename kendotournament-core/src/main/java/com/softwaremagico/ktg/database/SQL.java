@@ -53,10 +53,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author LOCAL\jhortelano
- */
 public abstract class SQL extends Database {
 
     @Override
@@ -163,16 +159,13 @@ public abstract class SQL extends Database {
     protected List<RegisteredPerson> getRegisteredPeople() {
         KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
         List<RegisteredPerson> results = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname;")) {
-                while (rs.next()) {
-                    RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
-                    registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
-                }
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname;")) {
+            while (rs.next()) {
+                RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
+                registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
         } catch (NullPointerException npe) {
             MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
@@ -334,14 +327,13 @@ public abstract class SQL extends Database {
 
         List<Role> results = new ArrayList<>();
 
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), RegisteredPersonPool.getInstance().get(rs.getObject("Competitor").toString()), RolePool.getInstance().getRoleTags().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"), rs.getBoolean("DiplomaPrinted"));
-                    results.add(role);
-                }
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery(query)) {
+            while (rs.next()) {
+                Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), RegisteredPersonPool.getInstance().get(rs.getObject("Competitor").toString()), RolePool.getInstance().getRoleTags().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"), rs.getBoolean("DiplomaPrinted"));
+                results.add(role);
             }
+
             if (results.isEmpty()) {
                 MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
@@ -446,36 +438,34 @@ public abstract class SQL extends Database {
     protected List<Club> getClubs() {
         KendoLog.entering(this.getClass().getName(), "getClubs");
         List<Club> results = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery("SELECT * FROM club ORDER BY Name")) {
-                while (rs.next()) {
-                    String city = "";
-                    if (rs.getObject("City") != null) {
-                        city = rs.getObject("City").toString();
-                    }
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery("SELECT * FROM club ORDER BY Name")) {
+            while (rs.next()) {
+                String city = "";
+                if (rs.getObject("City") != null) {
+                    city = rs.getObject("City").toString();
+                }
 
-                    String country = "";
-                    if (rs.getObject("Country") != null) {
-                        country = rs.getObject("Country").toString();
-                    }
+                String country = "";
+                if (rs.getObject("Country") != null) {
+                    country = rs.getObject("Country").toString();
+                }
 
-                    Club c = new Club(rs.getObject("Name").toString(), country, city);
+                Club c = new Club(rs.getObject("Name").toString(), country, city);
+                try {
+                    c.setAddress(rs.getObject("Address").toString());
+                } catch (NullPointerException npe) {
+                }
+                try {
+                    c.storeWeb(rs.getObject("Web").toString());
+                } catch (NullPointerException npe) {
+                }
+                if (c != null) {
                     try {
-                        c.setAddress(rs.getObject("Address").toString());
+                        c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
                     } catch (NullPointerException npe) {
                     }
-                    try {
-                        c.storeWeb(rs.getObject("Web").toString());
-                    } catch (NullPointerException npe) {
-                    }
-                    if (c != null) {
-                        try {
-                            c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
-                        } catch (NullPointerException npe) {
-                        }
-                        results.add(c);
-                    }
+                    results.add(c);
                 }
             }
         } catch (SQLException ex) {
@@ -593,29 +583,27 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "getTournaments");
         List<Tournament> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
-        try {
-            try (Statement st = connection.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
-                while (rs.next()) {
-                    Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
-                    t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
-                    InputStream sImage = getBinaryStream(rs, "Banner");
-                    Integer size = rs.getInt("Size");
-                    Photo banner = new Photo(t.getName());
-                    banner.setImage(sImage, size);
-                    t.setBanner(banner);
-                    sImage = getBinaryStream(rs, "Accreditation");
-                    size = rs.getInt("AccreditationSize");
-                    Photo accreditation = new Photo(t.getName());
-                    accreditation.setImage(sImage, size);
-                    t.setAccreditation(accreditation);
-                    sImage = getBinaryStream(rs, "Diploma");
-                    size = rs.getInt("DiplomaSize");
-                    Photo diploma = new Photo(t.getName());
-                    diploma.setImage(sImage, size);
-                    t.setDiploma(diploma);
-                    results.add(t);
-                }
+        try (Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
+            while (rs.next()) {
+                Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
+                t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw"));
+                InputStream sImage = getBinaryStream(rs, "Banner");
+                Integer size = rs.getInt("Size");
+                Photo banner = new Photo(t.getName());
+                banner.setImage(sImage, size);
+                t.setBanner(banner);
+                sImage = getBinaryStream(rs, "Accreditation");
+                size = rs.getInt("AccreditationSize");
+                Photo accreditation = new Photo(t.getName());
+                accreditation.setImage(sImage, size);
+                t.setAccreditation(accreditation);
+                sImage = getBinaryStream(rs, "Diploma");
+                size = rs.getInt("DiplomaSize");
+                Photo diploma = new Photo(t.getName());
+                diploma.setImage(sImage, size);
+                t.setDiploma(diploma);
+                results.add(t);
             }
             KendoLog.exiting(this.getClass().getName(), "getTournaments");
             return results;
@@ -822,7 +810,7 @@ public abstract class SQL extends Database {
             while (rs.next()) {
                 Fight f = new Fight(tournament,
                         TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
-                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),                        
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
                         rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("Index"));
                 f.setWinner(rs.getInt("Winner"));
                 f.setMaxWinners(rs.getInt("MaxWinners"));
@@ -1085,16 +1073,14 @@ public abstract class SQL extends Database {
         String query = "SELECT * FROM undraw WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.finer(SQL.class.getName(), query);
         List<Undraw> results = new ArrayList<>();
-        try {
-            try (Statement s = connection.createStatement();
-                    ResultSet rs = s.executeQuery(query)) {
-                while (rs.next()) {
-                    Undraw u = new Undraw(tournament,
-                            Integer.parseInt(rs.getObject("Group").toString()),
-                            TeamPool.getInstance().get(tournament, rs.getObject("Team").toString()),
-                            (Integer) rs.getObject("Player"), (Integer) rs.getObject("Level"));
-                    results.add(u);
-                }
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery(query)) {
+            while (rs.next()) {
+                Undraw u = new Undraw(tournament,
+                        Integer.parseInt(rs.getObject("Group").toString()),
+                        TeamPool.getInstance().get(tournament, rs.getObject("Team").toString()),
+                        (Integer) rs.getObject("Player"), (Integer) rs.getObject("Level"));
+                results.add(u);
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());

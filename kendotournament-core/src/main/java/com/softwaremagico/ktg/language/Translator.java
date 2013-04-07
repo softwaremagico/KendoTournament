@@ -100,7 +100,7 @@ public class Translator {
     }
 
     public String returnTag(String tag) {
-        return readTag(tag, KendoTournamentGenerator.getInstance().language);
+        return readTag(tag, KendoTournamentGenerator.getInstance().getLanguage());
     }
 
     private String readTag(String tag, String language) {

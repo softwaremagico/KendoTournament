@@ -119,7 +119,7 @@ public class NewTeam extends KendoFrame {
     protected void fillCompetitorsComboBox() {
         competitorsPanel = new ArrayList<>();
         for (int i = 0; i < tournament.getTeamSize(); i++) {
-            CompetitorPanel cp = new CompetitorPanel(KendoTournamentGenerator.getInstance().language, i + 1);
+            CompetitorPanel cp = new CompetitorPanel(i + 1);
 
             for (int j = 0; j < competitors.size(); j++) {
                 if (competitors.get(j).getName().equals("") && competitors.get(j).getSurname().equals("")) {

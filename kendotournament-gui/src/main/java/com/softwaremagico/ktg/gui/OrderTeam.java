@@ -53,7 +53,7 @@ public class OrderTeam extends NewTeam {
         windowParent = tf;
         newTeam = false;
         start();
-        setLanguage2(KendoTournamentGenerator.getInstance().language);
+        setLanguage2(KendoTournamentGenerator.getInstance().getLanguage());
         this.addWindowListener(new closeWindows());
         refreshTournament = false;
         fillTournaments();
@@ -73,7 +73,7 @@ public class OrderTeam extends NewTeam {
         level = levelOrder;
         newTeam = false;
         start();
-        setLanguage2(KendoTournamentGenerator.getInstance().language);
+        setLanguage2(KendoTournamentGenerator.getInstance().getLanguage());
         competitors.add(0, new RegisteredPerson("", "", ""));
         this.addWindowListener(new closeWindows());
         refreshTournament = false;

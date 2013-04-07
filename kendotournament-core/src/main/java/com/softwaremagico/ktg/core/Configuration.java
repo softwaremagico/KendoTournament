@@ -34,11 +34,13 @@ import java.util.logging.Logger;
 
 public class Configuration {
 
-    /************************************************
+    /**
+     * **********************************************
      *
-     *                    DATABASE
+     * DATABASE
      *
-     ************************************************/
+     ***********************************************
+     */
     /**
      * Stores into a file the language selected.
      */
@@ -54,18 +56,17 @@ public class Configuration {
         try {
             String text = Folder.readFileAsText(Path.getPathLanguageConfigFile(), false);
             if (text.length() > 1) {
-                KendoTournamentGenerator.getInstance().language = text;
+                KendoTournamentGenerator.getInstance().setLanguage(text);
             }
             if (text.startsWith("Error opening the file")) {
-                    KendoTournamentGenerator.getInstance().language = "en";
-                    File f = new File(Path.getPathLanguageConfigFile());
-                    f.createNewFile();                    
-                    storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
+                KendoTournamentGenerator.getInstance().setLanguage("en");
+                File f = new File(Path.getPathLanguageConfigFile());
+                f.createNewFile();
+                storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
             }
         } catch (IOException ex) {
             Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
 
+    }
 }

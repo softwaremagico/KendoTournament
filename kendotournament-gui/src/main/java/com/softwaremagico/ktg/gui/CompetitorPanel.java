@@ -47,7 +47,7 @@ public class CompetitorPanel extends JPanel {
     JLabel competitorLabel;
     int position;
 
-    CompetitorPanel(String language, int tmp_position) {
+    CompetitorPanel(int tmp_position) {
         competitorComboBox = new JComboBox<>();
         competitorLabel = new JLabel();
         position = tmp_position;

@@ -38,7 +38,7 @@ public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
-    public String language = "en";
+    private String language = "en";
     private String explorationFolder = null;
     private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
@@ -120,6 +120,14 @@ public class KendoTournamentGenerator {
             return text;
         }
         return MyFile.readTextFromJar("/version.txt");
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     /**

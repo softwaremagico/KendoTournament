@@ -142,7 +142,7 @@ public class MainGUI extends KendoFrame {
         for (int i = 0; i < Translator.getAvailableLanguages().size(); i++) {
             javax.swing.JRadioButtonMenuItem MenuItem;
             MenuItem = new javax.swing.JRadioButtonMenuItem(Translator.getAvailableLanguages().get(i).getName(), new ImageIcon(Path.getImagePath() + Translator.getAvailableLanguages().get(i).getFlag()));
-            if (KendoTournamentGenerator.getInstance().language.equals(Translator.getAvailableLanguages().get(i).getAbbreviature())) {
+            if (KendoTournamentGenerator.getInstance().getLanguage().equals(Translator.getAvailableLanguages().get(i).getAbbreviature())) {
                 MenuItem.setSelected(true);
             }
             LanguageMenu.add(MenuItem);
@@ -151,13 +151,13 @@ public class MainGUI extends KendoFrame {
         }
     }
 
-    public String ReturnSelectedLanguage() {
+    public String getSelectedLanguage() {
         for (int i = 0; i < languageList.size(); i++) {
             if (languageList.get(i).isSelected()) {
                 return Translator.getAvailableLanguages().get(i).getAbbreviature();
             }
         }
-        return KendoTournamentGenerator.getInstance().language;
+        return KendoTournamentGenerator.getInstance().getLanguage();
     }
 
     public final void changeMenuIsConnectedToDatabase() {
@@ -376,8 +376,8 @@ public class MainGUI extends KendoFrame {
     public void addFightsCardMenuItemListener(ActionListener al) {
         FightsCardMenuItem.addActionListener(al);
     }
-    
-    public void addSaveMenuItemListener(ActionListener al){
+
+    public void addSaveMenuItemListener(ActionListener al) {
         SaveMenuItem.addActionListener(al);
     }
 
@@ -763,6 +763,7 @@ public class MainGUI extends KendoFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
         DatabaseConnection.getInstance().disconnect();
+        DatabaseConnection.getInstance().setPassword("");
         changeMenuIsConnectedToDatabase();
         MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
@@ -794,7 +795,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private void SaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SaveMenuItemActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;

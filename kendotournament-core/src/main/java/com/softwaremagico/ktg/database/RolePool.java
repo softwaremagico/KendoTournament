@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Club;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.RoleTag;
@@ -221,8 +222,12 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public RoleTags getRoleTags() {
         if (roleTags == null) {
-            roleTags = RolePool.getInstance().getRoleTags();
+            roleTags = KendoTournamentGenerator.getInstance().getAvailableRoles();
         }
         return roleTags;
+    }
+    
+    public void resetRoleTags(){
+        roleTags = null;
     }
 }

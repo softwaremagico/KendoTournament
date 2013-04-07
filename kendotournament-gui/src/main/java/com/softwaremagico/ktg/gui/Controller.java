@@ -33,6 +33,7 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
@@ -182,9 +183,10 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            KendoTournamentGenerator.getInstance().language = main.ReturnSelectedLanguage();
-            Locale.setDefault(new Locale(KendoTournamentGenerator.getInstance().language));
-            Configuration.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().language);
+            KendoTournamentGenerator.getInstance().setLanguage(main.getSelectedLanguage());
+            RolePool.getInstance().resetRoleTags();
+            Locale.setDefault(new Locale(KendoTournamentGenerator.getInstance().getLanguage()));
+            Configuration.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
             main.setLanguage();
         }
     }
@@ -216,7 +218,7 @@ public class Controller {
             } catch (NullPointerException npe) {
             }
             helpWindow = new HelpWindow();
-            String filename = Path.getManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().language.toUpperCase() + ".txt";
+            String filename = Path.getManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().getLanguage().toUpperCase() + ".txt";
             String text = "";
             try {
                 text = MyFile.inString(filename, true);
@@ -1338,7 +1340,7 @@ public class Controller {
                     shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()));
             try {
                 FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
-                MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
+                MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);
                 tournamentPanel.updateScorePanel();
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);

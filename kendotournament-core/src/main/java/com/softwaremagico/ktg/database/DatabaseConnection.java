@@ -128,6 +128,7 @@ public class DatabaseConnection {
         this.database = databaseEngine.getDatabaseClass();
         disconnect();
         databaseConnectionTested = connect();
+        stillConnected = databaseConnectionTested;
         return databaseConnectionTested;
     }
 
@@ -253,6 +254,8 @@ public class DatabaseConnection {
             if (stillConnected) {
                 timerTask = new Task();
                 timer.schedule(timerTask, 0, 100);
+            } else{
+                System.out.println("Error en la conexion");
             }
             return stillConnected;
         } else {
@@ -263,6 +266,7 @@ public class DatabaseConnection {
 
     public void disconnect() {
         getDatabase().disconnect();
+        stillConnected = false;
     }
 
     class Task extends TimerTask {
@@ -275,7 +279,6 @@ public class DatabaseConnection {
             times++;
             if (times >= ALIVE_CONNECTION) {
                 disconnect();
-                stillConnected = false;
                 this.cancel();
             }
         }
