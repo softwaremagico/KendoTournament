@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Tools;
 import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,7 +70,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     public List<Tournament> getByName(String name) {
         List<Tournament> result = new ArrayList<>();
         for (Tournament element : getAll()) {
-            if (element.getName().contains(name)) {
+            if (Tools.isSimilar(element.getName(), name)) {
                 result.add(element);
             }
         }

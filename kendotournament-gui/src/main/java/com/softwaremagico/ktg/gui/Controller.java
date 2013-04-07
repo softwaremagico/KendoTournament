@@ -1048,8 +1048,8 @@ public class Controller {
      * Add all listeners to GUI.
      */
     private void AddFightPanelListeners() {
-        tournamentPanel.addTreeListener(new TreeButtonListener());
-        tournamentPanel.addFightListener(new AddFightToPanelListener());
+       // tournamentPanel.addTreeListener(new TreeButtonListener());
+       // tournamentPanel.addFightListener(new AddFightToPanelListener());
     }
 
     class TreeButtonListener implements ActionListener {
@@ -1075,7 +1075,7 @@ public class Controller {
                 shortFight.dispose();
             } catch (NullPointerException npe) {
             }
-            shortFight = new ShortNewFight(tournamentPanel.getSelectedTournament(), tournamentPanel.getSelectedArena());
+            shortFight = new ShortNewFight(tournamentPanel.getSelectedTournament(), tournamentPanel.getSelectedFightArea());
             AddShortNewFightListeners();
             if (shortFight.filled()) {
                 shortFight.setVisible(true);
@@ -1330,7 +1330,7 @@ public class Controller {
             try {
                 FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
                 MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().language, JOptionPane.INFORMATION_MESSAGE);
-                tournamentPanel.fillFightsPanel();
+                tournamentPanel.updateScorePanel();
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }

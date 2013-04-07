@@ -1,5 +1,6 @@
 package com.softwaremagico.ktg.database;
 
+import com.softwaremagico.ktg.core.Tools;
 import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -168,10 +169,10 @@ public abstract class TournamentDependentPool<ElementPool> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<ElementPool> search(Tournament tournament, String string) {
+    public List<ElementPool> getById(Tournament tournament, String string) {
         List<ElementPool> result = new ArrayList<>();
         for (ElementPool element : getMap(tournament).values()) {
-            if (getId(element).contains(string)) {
+            if (Tools.isSimilar(getId(element), string)) {
                 result.add((ElementPool) element);
             }
         }

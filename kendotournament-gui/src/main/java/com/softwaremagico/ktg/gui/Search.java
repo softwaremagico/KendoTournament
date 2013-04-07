@@ -32,10 +32,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
-/**
- *
- * @author jorge
- */
 public abstract class Search<T> extends javax.swing.JFrame {
 
     protected Translator trans = null;

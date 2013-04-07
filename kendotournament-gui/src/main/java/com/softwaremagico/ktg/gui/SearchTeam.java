@@ -106,7 +106,7 @@ public final class SearchTeam extends Search<Team> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (NameTextField.getText().length() > 0) {
-            results = TeamPool.getInstance().search((Tournament) TournamentComboBox.getSelectedItem(), NameTextField.getText().trim());
+            results = TeamPool.getInstance().getById((Tournament) TournamentComboBox.getSelectedItem(), NameTextField.getText().trim());
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
         }
