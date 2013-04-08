@@ -107,7 +107,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         refreshTournament = false;
         TournamentComboBox.removeAllItems();
         try {
-            listTournaments = TournamentPool.getInstance().getAll();
+            listTournaments = TournamentPool.getInstance().getSorted();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }

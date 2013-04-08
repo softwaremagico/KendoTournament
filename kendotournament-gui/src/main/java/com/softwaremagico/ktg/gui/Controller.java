@@ -819,7 +819,7 @@ public class Controller {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
                 }
-                if (TournamentPool.getInstance().getAll().size() > 0) {
+                if (TournamentPool.getInstance().getSorted().size() > 0) {
                     participantFunction = new NewRole(true, competitor);
                     participantFunction.setVisible(true);
                     //participantFunction.defaultSelect(c);

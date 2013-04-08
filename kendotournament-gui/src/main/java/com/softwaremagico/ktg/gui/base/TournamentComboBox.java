@@ -36,7 +36,7 @@ public class TournamentComboBox extends KComboBox {
     private KFrame parent;
 
     public TournamentComboBox(KFrame parent) {
-        listTournaments = TournamentPool.getInstance().getAll();
+        listTournaments = TournamentPool.getInstance().getSorted();
         this.parent = parent;
         fillTournaments();
         addActionListener(new ComboBoxActionListener());

@@ -99,7 +99,7 @@ public class NewRole extends KendoFrame {
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
-            listTournaments = TournamentPool.getInstance().getAll();
+            listTournaments = TournamentPool.getInstance().getSorted();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
@@ -114,7 +114,7 @@ public class NewRole extends KendoFrame {
         refreshCompetitor = false;
         try {
             CompetitorComboBox.removeAllItems();
-            List<RegisteredPerson> listParticipants = RegisteredPersonPool.getInstance().getAll();
+            List<RegisteredPerson> listParticipants = RegisteredPersonPool.getInstance().getSorted();
             for (int i = 0; i < listParticipants.size(); i++) {
                 CompetitorComboBox.addItem(listParticipants.get(i));
             }

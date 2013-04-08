@@ -76,7 +76,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = TournamentPool.getInstance().getAll();
+            listTournaments = TournamentPool.getInstance().getSorted();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }

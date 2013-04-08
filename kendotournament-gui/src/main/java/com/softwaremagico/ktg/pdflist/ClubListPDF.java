@@ -30,7 +30,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.ClubPool;
@@ -69,7 +68,7 @@ public class ClubListPDF extends ParentList {
         int cellNumber = 0;
         boolean firstClub = true;
 
-        List<Club> clubs = ClubPool.getInstance().getAll();
+        List<Club> clubs = ClubPool.getInstance().getSorted();
 
         for (int i = 0; i < clubs.size(); i++) {
             List<RegisteredPerson> competitors = RolePool.getInstance().getPeople(tournament, clubs.get(i));

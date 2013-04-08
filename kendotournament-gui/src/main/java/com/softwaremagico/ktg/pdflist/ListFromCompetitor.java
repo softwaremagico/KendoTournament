@@ -60,7 +60,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 
     private void fillCompetitors() {
         try {
-            listCompetitors = RegisteredPersonPool.getInstance().getAll();
+            listCompetitors = RegisteredPersonPool.getInstance().getSorted();
             if (voidTournament) {
                 CompetitorComboBox.addItem(null);
             }

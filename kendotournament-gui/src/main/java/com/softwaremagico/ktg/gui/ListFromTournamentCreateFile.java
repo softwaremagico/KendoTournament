@@ -64,7 +64,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     private void fillTournaments() {
         refreshTournament = false;
         try {
-            listTournaments = TournamentPool.getInstance().getAll();
+            listTournaments = TournamentPool.getInstance().getSorted();
             if (voidTournament) {
                 TournamentComboBox.addItem(null);
             }

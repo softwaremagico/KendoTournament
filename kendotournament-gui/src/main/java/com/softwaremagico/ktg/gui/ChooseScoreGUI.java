@@ -93,7 +93,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
 
     private void fillTournaments() {
         refreshing = true;
-        List<Tournament> listTournaments = TournamentPool.getInstance().getAll();
+        List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
         try {
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));

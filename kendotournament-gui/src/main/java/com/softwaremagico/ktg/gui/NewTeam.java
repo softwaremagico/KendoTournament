@@ -105,7 +105,7 @@ public class NewTeam extends KendoFrame {
     void fillTournaments() {
         refreshTournament = false;
         try {
-            tournaments = TournamentPool.getInstance().getAll();
+            tournaments = TournamentPool.getInstance().getSorted();
             for (int i = 0; i < tournaments.size(); i++) {
                 TournamentComboBox.addItem(tournaments.get(i));
             }

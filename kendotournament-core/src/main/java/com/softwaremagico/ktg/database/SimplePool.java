@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class SimplePool<ElementPool> {
 
-    private HashMap<String, ElementPool> elements;
+    private HashMap<String, ElementPool> elements = null;
     private List<ElementPool> sortedElements = null;
     private HashMap<String, ElementPool> elementsToStore = new HashMap<>();
     private HashMap<String, ElementPool> elementsToDelete = new HashMap<>();
@@ -64,7 +64,7 @@ public abstract class SimplePool<ElementPool> {
         return (ElementPool) getMap().get(elementName);
     }
 
-    public List<ElementPool> getAll() {
+    protected List<ElementPool> getAll() {
         List<ElementPool> results = new ArrayList<>();
         results.addAll(getMap().values());
         return results;
@@ -93,6 +93,7 @@ public abstract class SimplePool<ElementPool> {
      */
     public void update(ElementPool oldElement, ElementPool newElement) {
         String id = getId(oldElement);
+        sortedElements = null;
         if (!id.equals(getId(newElement))) {
             //Not the same element. Cannot update!
             remove(oldElement);

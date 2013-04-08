@@ -90,7 +90,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         refreshTournament = false;
         try {
             TournamentComboBox.removeAllItems();
-            List<Tournament> listTournaments = TournamentPool.getInstance().getAll();
+            List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
             for (int i = 0; i < listTournaments.size(); i++) {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }

@@ -164,6 +164,7 @@ public abstract class SQL extends Database {
             while (rs.next()) {
                 RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
                 registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
+                results.add(registered);
             }
         } catch (SQLException ex) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
@@ -332,10 +333,6 @@ public abstract class SQL extends Database {
             while (rs.next()) {
                 Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), RegisteredPersonPool.getInstance().get(rs.getObject("Competitor").toString()), RolePool.getInstance().getRoleTags().getRole(rs.getObject("Role").toString()), rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"), rs.getBoolean("DiplomaPrinted"));
                 results.add(role);
-            }
-
-            if (results.isEmpty()) {
-                MessageManager.errorMessage(this.getClass().getName(), "noResults", "SQL");
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());

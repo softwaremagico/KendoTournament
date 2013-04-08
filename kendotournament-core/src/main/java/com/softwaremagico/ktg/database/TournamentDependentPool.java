@@ -18,7 +18,7 @@ public abstract class TournamentDependentPool<ElementPool> {
      * Ensure that the class knows all existent tournaments.
      */
     protected TournamentDependentPool() {
-        for (Tournament tournament : TournamentPool.getInstance().getAll()) {
+        for (Tournament tournament : TournamentPool.getInstance().getSorted()) {
             elements.put(tournament, null);
         }
     }
