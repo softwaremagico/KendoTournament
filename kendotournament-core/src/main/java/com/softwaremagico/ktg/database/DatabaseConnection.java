@@ -47,7 +47,7 @@ public class DatabaseConnection {
     private boolean databaseLazyUpdate = false;
     private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
-    private boolean stillConnected = false;
+    private Integer stillConnected = 0;
     Timer timer = new Timer("Database Connection");
     Task timerTask;
 
@@ -128,7 +128,7 @@ public class DatabaseConnection {
         this.database = databaseEngine.getDatabaseClass();
         disconnect();
         databaseConnectionTested = connect();
-        stillConnected = databaseConnectionTested;
+        stillConnected = 0;
         return databaseConnectionTested;
     }
 
@@ -249,24 +249,19 @@ public class DatabaseConnection {
     }
 
     public boolean connect() {
-        if (!stillConnected) {
-            stillConnected = getDatabase().connect(password, user, databaseName, server, false, true);
-            if (stillConnected) {
-                timerTask = new Task();
-                timer.schedule(timerTask, 0, 100);
-            } else{
-                System.out.println("Error en la conexion");
-            }
-            return stillConnected;
-        } else {
-            timerTask.resetTime();
-            return true;
+        boolean connectionSuccess = true;
+        if (stillConnected == 0) {
+            connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
         }
+        stillConnected++;
+        timerTask.cancel();
+        return connectionSuccess;
     }
 
     public void disconnect() {
-        getDatabase().disconnect();
-        stillConnected = false;
+        stillConnected--;
+        timerTask = new Task();
+        timer.schedule(timerTask, 0, 100);
     }
 
     class Task extends TimerTask {
@@ -277,14 +272,10 @@ public class DatabaseConnection {
         @Override
         public void run() {
             times++;
-            if (times >= ALIVE_CONNECTION) {
-                disconnect();
+            if (times >= ALIVE_CONNECTION && stillConnected == 0) {
+                getDatabase().disconnect();
                 this.cancel();
             }
-        }
-
-        public void resetTime() {
-            times = 0;
         }
     }
 }
