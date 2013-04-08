@@ -30,7 +30,6 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.ClubPool;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -38,14 +37,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class NewClub extends javax.swing.JFrame {
 
     private Translator trans = null;
-    private Club c;
+    private Club club;
     private List<RegisteredPerson> competitors;
     private NewCompetitor newCompetitor = null;
     private boolean updateClubOfCompetitor = false;
@@ -82,15 +77,15 @@ public class NewClub extends javax.swing.JFrame {
 
     public void UpdateWindow(Club tmp_c) {
         try {
-            c = tmp_c;
-            NameTextField.setText(c.getName());
-            CountryTextField.setText(c.getCountry());
-            CityTextField.setText(c.getCity());
-            AddressTextField.setText(c.getAddress());
-            FillCompetitorsFromClub(c);
-            selectRepresentative(c);
-            PhoneTextField.setText(c.getPhone());
-            MailTextField.setText(c.getMail());
+            club = tmp_c;
+            NameTextField.setText(club.getName());
+            CountryTextField.setText(club.getCountry());
+            CityTextField.setText(club.getCity());
+            AddressTextField.setText(club.getAddress());
+            FillCompetitorsFromClub(club);
+            selectRepresentative(club);
+            PhoneTextField.setText(club.getPhone());
+            MailTextField.setText(club.getMail());
         } catch (NullPointerException npe) {
         }
     }
@@ -136,38 +131,33 @@ public class NewClub extends javax.swing.JFrame {
         }
     }
 
-    private void UpdateRepresentative() {
-        try {
-            c.setRepresentative(RepresentativeComboBox.getSelectedItem().toString(), MailTextField.getText(), PhoneTextField.getText());
-        } catch (NullPointerException npe) {
-        }
-    }
-
     public void acceptClub() {
         try {
             setAlwaysOnTop(false);
             if (NameTextField.getText().length() > 0 && CountryTextField.getText().length() > 0 && CityTextField.getText().length() > 0) {
-                c = new Club(NameTextField.getText().trim(), CountryTextField.getText().trim(), CityTextField.getText().trim());
-                c.setAddress(AddressTextField.getText());
+                club = new Club(NameTextField.getText().trim(), CountryTextField.getText().trim(), CityTextField.getText().trim());
+                club.setAddress(AddressTextField.getText());
                 try {
-                    c.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
+                    club.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
-                ClubPool.getInstance().add(c);
+                if(ClubPool.getInstance().add(club)){
+                    MessageManager.informationMessage(this.getClass().getName(), "clubStored", "SQL");
+                }
                 CleanWindow();
                 if (newCompetitor != null) {
                     //newCompetitor.fillClub();
-                    newCompetitor.addClub(c);  //Update competitor window.
+                    newCompetitor.addClub(club);  //Update competitor window.
                     if (updateClubOfCompetitor) { //Update club of selected competitor.
                         if (RepresentativeComboBox.getSelectedIndex() > 0) {
-                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).setClub(c);
+                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).setClub(club);
                             RegisteredPersonPool.getInstance().update(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1), competitors.get(RepresentativeComboBox.getSelectedIndex() - 1));
                         }
                     }
                     this.dispose();
                 }
             } else {
-                MessageManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "MySQL");
+                MessageManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "SQL");
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
@@ -373,11 +363,10 @@ public class NewClub extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SearchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
-                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AcceptButton)
-                        .addGap(2, 2, 2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(RepresentativePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ClubPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())

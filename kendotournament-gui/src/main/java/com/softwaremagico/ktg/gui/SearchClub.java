@@ -93,8 +93,7 @@ public final class SearchClub extends Search<Club> {
     }
 
     @Override
-    protected boolean deleteFromDatabase(Club object) {
-        ClubPool.getInstance().remove(object);
-        return true;
+    protected boolean deleteElement(Club object) {
+        return ClubPool.getInstance().remove(object);         
     }
 }

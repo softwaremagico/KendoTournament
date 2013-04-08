@@ -175,7 +175,10 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            DatabaseConnection.getInstance().updateDatabase();
+            if (MessageManager.questionMessage("questionUpdateDatabase", "SQL")) {
+                DatabaseConnection.getInstance().updateDatabase();
+                MessageManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+            }
         }
     }
 

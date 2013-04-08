@@ -70,12 +70,14 @@ public abstract class SimplePool<ElementPool> {
         return results;
     }
 
-    public void add(ElementPool element) {
+    public boolean add(ElementPool element) {
         if (!elements.containsValue(element)) {
             sortedElements = null; //Sorted elements need to be recreated.
             getMap().put(getId(element), element);
             addElementToStore(element);
+            return true;
         }
+        return false;
     }
     
     /**
@@ -113,7 +115,7 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public void remove(ElementPool element) {
+    public boolean remove(ElementPool element) {
         String id = getId(element);
         if (getMap().remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
@@ -126,6 +128,7 @@ public abstract class SimplePool<ElementPool> {
             sortedElements.remove(element);
             elementsToUpdate.remove(element);
         }
+        return true;
     }
 
     public void remove(String elementName) {

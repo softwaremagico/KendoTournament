@@ -80,8 +80,7 @@ public final class SearchTournament extends Search<Tournament> {
     }
 
     @Override
-    protected boolean deleteFromDatabase(Tournament tournament) {
-        TournamentPool.getInstance().remove(tournament);
-        return true;
+    protected boolean deleteElement(Tournament tournament) {
+        return TournamentPool.getInstance().remove(tournament);
     }
 }

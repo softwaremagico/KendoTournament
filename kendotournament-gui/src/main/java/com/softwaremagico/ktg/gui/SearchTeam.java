@@ -117,9 +117,8 @@ public final class SearchTeam extends Search<Team> {
     }
 
     @Override
-    protected boolean deleteFromDatabase(Team object) {
-        TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), object);
-        return true;
+    protected boolean deleteElement(Team object) {
+        return TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), object);
     }
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {

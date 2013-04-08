@@ -112,7 +112,7 @@ public abstract class Search<T> extends javax.swing.JFrame {
 
     protected abstract void searchButtonActionPerformed(java.awt.event.ActionEvent evt);
 
-    protected abstract boolean deleteFromDatabase(T object);
+    protected abstract boolean deleteElement(T object);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -264,11 +264,11 @@ public abstract class Search<T> extends javax.swing.JFrame {
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         try {
             T o = results.get(ResultList.getSelectedIndex());
-            if (deleteFromDatabase(o)) {
+            if (deleteElement(o)) {
                 results.remove(o);
                 fillResults(results);
                 if (results.size() > 0) {
-                    ResultList.setSelectedIndex(1);
+                    ResultList.setSelectedIndex(0);
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException aiob) {

@@ -102,9 +102,8 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
     }
 
     @Override
-    protected boolean deleteFromDatabase(RegisteredPerson object) {
-        RegisteredPersonPool.getInstance().remove(object);
-        return true;
+    protected boolean deleteElement(RegisteredPerson object) {
+        return RegisteredPersonPool.getInstance().remove(object);
     }
 
     public class IDKeyEvent implements KeyListener {

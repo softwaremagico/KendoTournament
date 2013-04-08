@@ -70,12 +70,13 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    public void remove(Tournament tournament, Fight element) {
+    public boolean remove(Tournament tournament, Fight element) {
         //Delete duels.
         List<Duel> duels = DuelPool.getInstance().get(tournament, element);
         DuelPool.getInstance().remove(tournament, duels);
         //Delete fight.
         super.remove(tournament, element);
+        return true;
     }
 
     @Override

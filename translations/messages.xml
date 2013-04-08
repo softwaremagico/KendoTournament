@@ -73,7 +73,7 @@
 		<it>Si è verificato un errore nel disconnettersi dal database.</it>
 	</disconnectDatabaseFail>
 	<questionUpdateDatabase>
-		<en>The database will be upgrade. Are you sure to continue?</en>
+		<en>The database will be upgraded. Are you sure to continue?</en>
 		<es>Se procederá a la actualización de la base de datos. ¿Está seguro de continuar?</es>
 		<nl>Datbase zal worden geupgrade. Weet je zeker dat je door wilt gaan?</nl>
 		<de>Die Datenbank wird upgedated. Sind Sie sicher, dass Sie fortfahren wollen?</de>
@@ -89,12 +89,12 @@
 		<it>Il database non si è aggiornato.</it>
 	</notUpdateDatabase>
 	<updatedDatabase>
-		<en>The database has been updated to version</en>
-		<es>Se ha actualizado la base de datos a la versión</es>
-		<nl>De database is geupdate naar versie</nl>
-		<de>Die Datenbank wurde geupdated auf die Version</de>
-		<ca>S'ha actualitzat la base de dades a la versió</ca>
-		<it>Il database è stato aggiornato alla versione</it>
+		<en>The database has been updated</en>
+		<es>Se ha actualizado la base de datos</es>
+		<nl>De database is geupdate</nl>
+		<de>Die Datenbank wurde geupdated</de>
+		<ca>S'ha actualitzat la base de dades</ca>
+		<it>Il database è stato aggiornato</it>
 	</updatedDatabase>
 	<storeCompetitorError>
 		<en>Error when trying to store a competitor into the database.</en>

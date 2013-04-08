@@ -234,7 +234,7 @@ public class DatabaseConnection {
         databaseLazyUpdate = value;
     }
 
-    public void updateDatabase() {
+    public boolean updateDatabase() {
         connect();
         ClubPool.getInstance().updateDatabase();
         RegisteredPersonPool.getInstance().updateDatabase();
@@ -246,6 +246,7 @@ public class DatabaseConnection {
         DuelPool.getInstance().updateDatabase();
         UndrawPool.getInstance().updateDatabase();
         disconnect();
+        return true;
     }
 
     public boolean connect() {

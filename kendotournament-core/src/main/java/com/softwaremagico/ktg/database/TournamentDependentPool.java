@@ -141,7 +141,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
-    public void remove(Tournament tournament, ElementPool element) {
+    public boolean remove(Tournament tournament, ElementPool element) {
         String id = getId(element);
         if (getMap(tournament).remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
@@ -154,6 +154,7 @@ public abstract class TournamentDependentPool<ElementPool> {
             sortedElements.get(tournament).remove(element);
             elementsToUpdate.get(tournament).remove(element);
         }
+        return true;
     }
 
     public void remove(Tournament tournament, List<ElementPool> elements) {

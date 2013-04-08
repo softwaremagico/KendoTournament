@@ -484,7 +484,6 @@ public abstract class SQL extends Database {
             query += "DELETE FROM club WHERE Name='" + club.getName() + "'; ";
         }
         try (Statement s = connection.createStatement()) {
-            System.out.println(query);
             s.executeUpdate(query);
         } catch (SQLException ex) {
             if (!showSQLError(ex.getErrorCode())) {
