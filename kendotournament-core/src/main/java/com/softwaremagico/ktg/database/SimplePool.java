@@ -71,7 +71,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean add(ElementPool element) {
-        if (!elements.containsValue(element)) {
+        if (!getMap().containsValue(element)) {
             sortedElements = null; //Sorted elements need to be recreated.
             getMap().put(getId(element), element);
             addElementToStore(element);

@@ -1,7 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.core.Tools;
+import com.softwaremagico.ktg.tools.Tools;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -73,10 +73,16 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         add(oldPerson);
     }
 
+    public List<RegisteredPerson> getById(String id) {
+        List<RegisteredPerson> result = search(id);
+        Collections.sort(result);
+        return result;
+    }
+
     public List<RegisteredPerson> getByName(String name) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
-            if (Tools.isSimilar(element.getName(), name)) {
+            if (element.getName() != null && Tools.isSimilar(element.getName(), name)) {
                 result.add(element);
             }
         }
@@ -87,7 +93,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     public List<RegisteredPerson> getBySurname(String surname) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
-            if (Tools.isSimilar(element.getSurname(), surname)) {
+            if (element.getSurname() != null && Tools.isSimilar(element.getSurname(), surname)) {
                 result.add(element);
             }
         }
@@ -98,7 +104,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     public List<RegisteredPerson> getByClub(String club) {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
-            if (Tools.isSimilar(element.getClub().getName(), club)) {
+            if (element.getClub() != null && Tools.isSimilar(element.getClub().getName(), club)) {
                 result.add(element);
             }
         }

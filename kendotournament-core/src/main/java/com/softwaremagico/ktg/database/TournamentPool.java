@@ -1,7 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.Tools;
+import com.softwaremagico.ktg.tools.Tools;
 import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;

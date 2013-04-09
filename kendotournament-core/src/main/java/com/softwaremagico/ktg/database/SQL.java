@@ -242,6 +242,7 @@ public abstract class SQL extends Database {
                 } catch (NullPointerException npe) {
                     photo.setImage(null, 0);
                 }
+                return photo;
             }
         } catch (SQLException ex) {
             showSQLError(ex.getErrorCode());
@@ -542,8 +543,13 @@ public abstract class SQL extends Database {
         for (Tournament tournament : tournaments) {
             try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
                 stmt.setString(1, tournament.getName());
-                storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
-                stmt.setLong(3, tournament.getBanner().getSize());
+                if (tournament.getBanner() != null) {
+                    storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
+                    stmt.setLong(3, tournament.getBanner().getSize());
+                } else {
+                    storeBinaryStream(stmt, 2, null, 0);
+                    stmt.setLong(3, 0);
+                }
                 stmt.setInt(4, tournament.getFightingAreas());
                 stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(6, tournament.getTeamSize());
@@ -551,10 +557,20 @@ public abstract class SQL extends Database {
                 stmt.setFloat(8, tournament.getScoreForWin());
                 stmt.setFloat(9, tournament.getScoreForDraw());
                 stmt.setString(10, tournament.getChoosedScore());
-                storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
-                stmt.setLong(12, tournament.getDiploma().getSize());
-                storeBinaryStream(stmt, 13, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
-                stmt.setLong(14, tournament.getAccreditation().getSize());
+                if (tournament.getDiploma() != null) {
+                    storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
+                    stmt.setLong(12, tournament.getDiploma().getSize());
+                } else {
+                    storeBinaryStream(stmt, 11, null, 0);
+                    stmt.setLong(12, 0);
+                }
+                if (tournament.getAccreditation() != null) {
+                    storeBinaryStream(stmt, 13, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
+                    stmt.setLong(14, tournament.getAccreditation().getSize());
+                } else {
+                    storeBinaryStream(stmt, 13, null, 0);
+                    stmt.setLong(14, 0);
+                }
                 stmt.executeUpdate();
             } catch (MysqlDataTruncation mdt) {
                 MessageManager.errorMessage(this.getClass().getName(), "storeImageError", "SQL");

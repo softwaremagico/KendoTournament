@@ -1,7 +1,7 @@
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.core.Tools;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tools.Tools;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -194,13 +194,19 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     private void updateDatabase(Tournament tournament) {
-        removeFromDatabase(tournament, new ArrayList(elementsToDelete.get(tournament).values()));
-        elementsToDelete = new HashMap<>();
-        storeInDatabase(tournament, new ArrayList(elementsToStore.get(tournament).values()));
-        elementsToStore = new HashMap<>();
+        if (elementsToDelete.get(tournament) != null) {
+            removeFromDatabase(tournament, new ArrayList(elementsToDelete.get(tournament).values()));
+        }
+        elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
+        if (elementsToStore.get(tournament) != null) {
+            storeInDatabase(tournament, new ArrayList(elementsToStore.get(tournament).values()));
+        }
+        elementsToStore.put(tournament, new HashMap<String, ElementPool>());
         //Update must be done after store. 
-        updateDatabase(tournament, elementsToUpdate.get(tournament));
-        elementsToUpdate = new HashMap<>();
+        if (elementsToUpdate.get(tournament) != null) {
+            updateDatabase(tournament, elementsToUpdate.get(tournament));
+        }
+        elementsToStore.put(tournament, new HashMap<String, ElementPool>());
     }
 
     public void updateDatabase() {

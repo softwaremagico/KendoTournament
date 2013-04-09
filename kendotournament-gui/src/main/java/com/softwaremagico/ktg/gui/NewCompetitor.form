@@ -32,14 +32,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="Panel" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="PhotoPanel" min="-2" pref="320" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="SearchButton" linkSize="3" min="-2" pref="91" max="-2" attributes="0"/>
-                      <EmptySpace pref="613" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="AcceptButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CancelButton" linkSize="3" min="-2" max="-2" attributes="0"/>
@@ -53,17 +53,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="PhotoPanel" min="-2" pref="200" max="-2" attributes="2"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="Panel" min="-2" pref="207" max="-2" attributes="1"/>
+                  <Component id="PhotoPanel" max="32767" attributes="2"/>
               </Group>
-              <EmptySpace type="unrelated" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="SearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="AcceptButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="SearchButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="AcceptButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="CancelButton" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -75,6 +75,9 @@
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
           </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[420, 215]"/>
         </Property>
       </Properties>
 
@@ -92,17 +95,17 @@
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="NameTextField" alignment="0" pref="351" max="32767" attributes="2"/>
+                      <Component id="NameTextField" alignment="0" max="32767" attributes="2"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="PhotoTextField" pref="207" max="32767" attributes="2"/>
+                          <Component id="PhotoTextField" pref="162" max="32767" attributes="2"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="ExploreButton" linkSize="4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Component id="CleanButton" linkSize="4" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="IDTextField" alignment="0" pref="351" max="32767" attributes="2"/>
-                      <Component id="SurnameTextField" alignment="0" pref="351" max="32767" attributes="2"/>
-                      <Component id="ClubComboBox" alignment="0" pref="351" max="32767" attributes="0"/>
+                      <Component id="IDTextField" alignment="0" max="32767" attributes="2"/>
+                      <Component id="SurnameTextField" alignment="0" max="32767" attributes="2"/>
+                      <Component id="ClubComboBox" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -166,7 +169,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="IDLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Identification Number:"/>
+            <Property name="text" type="java.lang.String" value="Id. Number:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="ClubLabel">
@@ -244,13 +247,13 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[320, 200]"/>
+          <Dimension value="[300, 200]"/>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[320, 200]"/>
+          <Dimension value="[300, 200]"/>
         </Property>
         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[320, 200]"/>
+          <Dimension value="[300, 200]"/>
         </Property>
       </Properties>
       <LayoutCode>

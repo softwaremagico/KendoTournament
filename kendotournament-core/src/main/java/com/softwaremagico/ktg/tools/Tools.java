@@ -1,13 +1,9 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.tools;
 
-import java.text.Collator;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
-import java.util.Locale;
 
 public class Tools {
-
-    private static final Collator collator = Collator.getInstance(new Locale("es", "ES"));
 
     private Tools() {
     }
@@ -19,4 +15,6 @@ public class Tools {
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
         return newString1.contains(newString2);
     }
+
+    
 }

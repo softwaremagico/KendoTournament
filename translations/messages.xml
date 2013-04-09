@@ -257,20 +257,20 @@
 		<it>Si devono riempire i campi della squadra!</it>
 	</noTeamFieldsFilled>
 	<competitorStored>
-		<en>The new competitor has been stored into the database.</en>
-		<es>Se ha agregado un nuevo competidor a la base de datos.</es>
+		<en>The new competitor has been stored added.</en>
+		<es>Se ha agregado un nuevo competidor.</es>
 		<nl>De deelnemer is aan de database toegevoegd.</nl>
 		<de>Der neue Teilnehmer wurde gespeichert.</de>
-		<ca>S'ha agregat un nou competidor a la base de dades.</ca>
-		<it>Un nuovo competitore è stato aggiunto nel database</it>
+		<ca>S'ha agregat un nou competidor.</ca>
+		<it>Un nuovo competitore è stato aggiunto</it>
 	</competitorStored>
 	<tournamentStored>
-		<en>The new tournament has been stored into the database.</en>
-		<es>Se ha agregado un nuevo campeonato a la base de datos.</es>
+		<en>The new tournament has been stored.</en>
+		<es>Se ha agregado un nuevo campeonato.</es>
 		<nl>Het toernooi is aan de databse toegevoegd.</nl>
 		<de>Der neue Wettkampf wurde gespeichert.</de>
-		<ca>S'ha agregat un nou campionat a la base de dades.</ca>
-		<it>Un nuovo campionato è stato aggiunto nel database</it>
+		<ca>S'ha agregat un nou campionat.</ca>
+		<it>Un nuovo campionato è stato aggiunto.</it>
 	</tournamentStored>
 	<teamStored>
 		<en>The new team has been stored into the database.</en>

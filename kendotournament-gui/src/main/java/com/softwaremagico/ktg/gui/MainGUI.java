@@ -29,11 +29,16 @@ import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.tools.Media;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
@@ -41,7 +46,6 @@ public class MainGUI extends KendoFrame {
 
     Translator trans = null;
     private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
-    private PhotoFrame banner;
     private boolean refresh = true;
 
     /**
@@ -129,9 +133,21 @@ public class MainGUI extends KendoFrame {
     }
 
     private void setPhoto() {
-        banner = new PhotoFrame(MainPhotoPanel, Path.getMainPhoto());
-        MainPhotoPanel.add(banner, 0);
-        banner.repaint();
+        setPhoto(Path.getMainPhoto());
+    }
+
+    private void setPhoto(String path) {
+        setPhoto(Media.getImageFitted(path, MainPhotoPanel));
+    }
+
+    private void setPhoto(BufferedImage image) {
+        if (image != null) {
+            JLabel picLabel = new JLabel(new ImageIcon(image));
+            MainPhotoPanel.removeAll();
+            MainPhotoPanel.add(picLabel, 0);
+            MainPhotoPanel.revalidate();
+            MainPhotoPanel.repaint();
+        }
     }
 
     /**

@@ -269,6 +269,7 @@ public class NewCompetitor extends KendoFrame {
         });
 
         Panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Panel.setMaximumSize(new java.awt.Dimension(420, 215));
 
         NameLabel.setText("Name:");
 
@@ -285,7 +286,7 @@ public class NewCompetitor extends KendoFrame {
             }
         });
 
-        IDLabel.setText("Identification Number:");
+        IDLabel.setText("Id. Number:");
 
         ClubLabel.setText("Club:");
 
@@ -325,16 +326,16 @@ public class NewCompetitor extends KendoFrame {
                     .addComponent(NameLabel))
                 .addGap(26, 26, 26)
                 .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                    .addComponent(NameTextField)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
-                        .addComponent(PhotoTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                        .addComponent(PhotoTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ExploreButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CleanButton))
-                    .addComponent(IDTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                    .addComponent(SurnameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                    .addComponent(ClubComboBox, 0, 351, Short.MAX_VALUE))
+                    .addComponent(IDTextField)
+                    .addComponent(SurnameTextField)
+                    .addComponent(ClubComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -384,9 +385,9 @@ public class NewCompetitor extends KendoFrame {
         PhotoPanel.setBackground(new java.awt.Color(255, 255, 255));
         PhotoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PhotoPanel.setForeground(new java.awt.Color(255, 255, 255));
-        PhotoPanel.setMaximumSize(new java.awt.Dimension(320, 200));
-        PhotoPanel.setMinimumSize(new java.awt.Dimension(320, 200));
-        PhotoPanel.setPreferredSize(new java.awt.Dimension(320, 200));
+        PhotoPanel.setMaximumSize(new java.awt.Dimension(300, 200));
+        PhotoPanel.setMinimumSize(new java.awt.Dimension(300, 200));
+        PhotoPanel.setPreferredSize(new java.awt.Dimension(300, 200));
         java.awt.GridBagLayout PhotoPanelLayout = new java.awt.GridBagLayout();
         PhotoPanelLayout.columnWidths = new int[] {1};
         PhotoPanelLayout.rowHeights = new int[] {1};
@@ -401,13 +402,13 @@ public class NewCompetitor extends KendoFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(AcceptButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CancelButton)))
@@ -420,15 +421,15 @@ public class NewCompetitor extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SearchButton)
-                    .addComponent(CancelButton)
-                    .addComponent(AcceptButton))
-                .addContainerGap())
+                    .addComponent(AcceptButton)
+                    .addComponent(CancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

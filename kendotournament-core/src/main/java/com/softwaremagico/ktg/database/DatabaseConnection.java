@@ -126,9 +126,7 @@ public class DatabaseConnection {
         this.server = server;
         generateDatabaseConnectionFile();
         this.database = databaseEngine.getDatabaseClass();
-        disconnect();
         databaseConnectionTested = connect();
-        stillConnected = 0;
         return databaseConnectionTested;
     }
 
@@ -251,11 +249,17 @@ public class DatabaseConnection {
 
     public boolean connect() {
         boolean connectionSuccess = true;
-        if (stillConnected == 0) {
+        if (stillConnected <= 0) {
             connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
+            stillConnected = 0;
         }
-        stillConnected++;
-        timerTask.cancel();
+        if (connectionSuccess) {
+            stillConnected++;
+        }
+        try {
+            timerTask.cancel();
+        } catch (NullPointerException npe) {
+        }
         return connectionSuccess;
     }
 
