@@ -1008,7 +1008,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (newTournament.storeTournament()) {
+            if (newTournament.acceptTournament()) {
                 newTournament.dispose();
                 try {
                     participantFunction.dispose();

@@ -85,7 +85,7 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
         if (IDTextField.getText().length() > 0) {
-            results = RegisteredPersonPool.getInstance().search(IDTextField.getText().trim());
+            results = RegisteredPersonPool.getInstance().getById(IDTextField.getText().trim());
         } else if (SurnameTextField.getText().length() > 0) {
             results = RegisteredPersonPool.getInstance().getBySurname(SurnameTextField.getText().trim());
         } else if (NameTextField.getText().length() > 0) {

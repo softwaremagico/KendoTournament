@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.TournamentType;
 import com.softwaremagico.ktg.database.TeamPool;
@@ -35,16 +36,23 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
+import com.softwaremagico.ktg.tools.Media;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 public class NewTournament extends KendoFrame {
 
     Translator trans = null;
-    private PhotoFrame bannerFrame;
     private Integer maxCompetitorTeam = null;
     private Tournament oldTournament = null;
+    private BufferedImage banner;
+    private boolean defaultBanner = true;
 
     /**
      * Creates new form NewTournament
@@ -54,7 +62,7 @@ public class NewTournament extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        CreateBanner();
+        createBanner();
         NameTextField.setEditable(true);
     }
 
@@ -75,22 +83,29 @@ public class NewTournament extends KendoFrame {
         SearchButton.setText(trans.returnTag("SearchButton"));
     }
 
-    /**
-     * Show the photo of the selected user or a default one.
-     */
-    public final void CreateBanner() {
-        bannerFrame = new PhotoFrame(BannerPanel, Path.getDefaultBanner());
-        //banner.setPreferredSize(new Dimension(BannerPanel.getWidth(), BannerPanel.getHeight()));
-        /*
-         * try { banner.Resize(BannerPanel.getWidth(), BannerPanel.getHeight());
-         * } catch (Exception ex) {
-         * Logger.getLogger(NewTournament.class.getName()).log(Level.SEVERE,
-         * null, ex); }
-         */
-        BannerPanel.add(bannerFrame, 0);
-        bannerFrame.repaint();
-        BannerPanel.repaint();
-        BannerPanel.revalidate();
+    private void createBanner() {
+        createBanner(Path.getDefaultBanner());
+        defaultBanner = true;
+    }
+
+    private void createBanner(String path) {
+        createBanner(Media.getImageFitted(path, bannerPanel));
+        defaultBanner = false;
+    }
+
+    private void createBanner(Photo photo) {
+        createBanner(Media.getImageFitted(photo, bannerPanel));
+        defaultBanner = false;
+    }
+
+    private void createBanner(BufferedImage image) {
+        banner = image;
+        JLabel picLabel = new JLabel(new ImageIcon(image));
+        bannerPanel.removeAll();
+        bannerPanel.add(picLabel, 0);
+        bannerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        bannerPanel.revalidate();
+        bannerPanel.repaint();
     }
 
     private void cleanWindow() {
@@ -98,8 +113,7 @@ public class NewTournament extends KendoFrame {
         NameTextField.setText("");
         NameTextField.setEditable(true);
         BannerTextField.setText("");
-        bannerFrame.cleanPhoto();
-        CreateBanner();
+        createBanner();
     }
 
     public void updateWindow(Tournament tournament) {
@@ -110,14 +124,10 @@ public class NewTournament extends KendoFrame {
             NameTextField.setEditable(false);
             NumCompetitorsSpinner.setValue(tournament.getTeamSize());
             BannerTextField.setText("");
-            bannerFrame.cleanPhoto();
-            try {
-                bannerFrame.changePhoto(tournament.getBanner());
-                //banner.ChangeInputStream(t.BannerInput, t.bannerSize);
-                bannerFrame.repaint();
-                BannerPanel.repaint();
-                BannerPanel.revalidate();
-            } catch (IllegalArgumentException iae) {
+            if (tournament.getBanner() != null) {
+                createBanner(tournament.getBanner());
+            } else {
+                createBanner();
             }
             AreasSpinner.setValue(tournament.getFightingAreas());
         } catch (NullPointerException npe) {
@@ -137,10 +147,12 @@ public class NewTournament extends KendoFrame {
         }
     }
 
-    public boolean storeTournament() {
+    public boolean acceptTournament() {
         if (NameTextField.getText().length() > 0) {
             Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
-            newTournament.addBanner(bannerFrame.getPhoto().getImage());
+            if (!defaultBanner) {
+                newTournament.addBanner(banner);
+            }
             //Store tournament into database
             if (oldTournament != null) {
                 TournamentPool.getInstance().update(oldTournament, newTournament);
@@ -152,7 +164,7 @@ public class NewTournament extends KendoFrame {
                 TournamentPool.getInstance().add(newTournament);
             }
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
-            cleanWindow();
+            MessageManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
             return true;
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
@@ -200,7 +212,7 @@ public class NewTournament extends KendoFrame {
         BannerLabel = new javax.swing.JLabel();
         BannerTextField = new javax.swing.JTextField();
         ExploreButton = new javax.swing.JButton();
-        BannerPanel = new javax.swing.JPanel();
+        bannerPanel = new javax.swing.JPanel();
         FightingAreasLabel = new javax.swing.JLabel();
         AreasSpinner = new javax.swing.JSpinner();
         NumCompetitorsSpinner = new javax.swing.JSpinner();
@@ -227,7 +239,9 @@ public class NewTournament extends KendoFrame {
             }
         });
 
-        BannerPanel.setLayout(new java.awt.BorderLayout());
+        bannerPanel.setBackground(new java.awt.Color(254, 254, 254));
+        bannerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        bannerPanel.setLayout(new java.awt.BorderLayout());
 
         FightingAreasLabel.setText("Fighting Areas:");
 
@@ -255,7 +269,7 @@ public class NewTournament extends KendoFrame {
             .addGroup(TournamentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BannerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+                    .addComponent(bannerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
                     .addGroup(TournamentPanelLayout.createSequentialGroup()
                         .addGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(FightingAreasLabel)
@@ -294,7 +308,7 @@ public class NewTournament extends KendoFrame {
                     .addComponent(BannerLabel)
                     .addComponent(ExploreButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BannerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bannerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -358,10 +372,7 @@ public class NewTournament extends KendoFrame {
         if (!(file = exploreWindow("Select",
                 JFileChooser.FILES_ONLY)).equals("")) {
             BannerTextField.setText(file);
-            bannerFrame.changePhoto(file);
-            bannerFrame.repaint();
-            BannerPanel.repaint();
-            BannerPanel.revalidate();
+            createBanner(file);
         }
     }//GEN-LAST:event_ExploreButtonActionPerformed
 
@@ -404,7 +415,6 @@ public class NewTournament extends KendoFrame {
     private javax.swing.JButton AcceptButton;
     private javax.swing.JSpinner AreasSpinner;
     private javax.swing.JLabel BannerLabel;
-    private javax.swing.JPanel BannerPanel;
     private javax.swing.JTextField BannerTextField;
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton ExploreButton;
@@ -416,5 +426,6 @@ public class NewTournament extends KendoFrame {
     private javax.swing.JButton PDFButton;
     private javax.swing.JButton SearchButton;
     private javax.swing.JPanel TournamentPanel;
+    private javax.swing.JPanel bannerPanel;
     // End of variables declaration//GEN-END:variables
 }

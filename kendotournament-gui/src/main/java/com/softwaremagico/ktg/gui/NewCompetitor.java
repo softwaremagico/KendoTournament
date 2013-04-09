@@ -36,19 +36,25 @@ import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.tools.Media;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 public class NewCompetitor extends KendoFrame {
 
     private Translator trans = null;
-    private PhotoFrame photoFrame = null;
+    //private PhotoFrame photoFrame = null;
     private boolean refreshClub;
     private RegisteredPerson oldCompetitor = null;
+    private BufferedImage picture;
+    private boolean defaultImage = true;
 
     /**
      * Creates new form NewCompetitor
@@ -108,28 +114,28 @@ public class NewCompetitor extends KendoFrame {
         PhotoLabel.setText(trans.returnTag("PhotoLabel"));
     }
 
-    /**
-     * Show the photo of the selected user or a default one.
-     */
-    public final void createPhoto() {
-        //photo = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
-        photoFrame = new PhotoFrame(PhotoPanel, Path.getDefaultPhoto());
-        Dimension d;
-        try {
-            if (PhotoPanel.getWidth() / photoFrame.getWidth() > photoFrame.getHeight() / photoFrame.getHeight()) {
-                d = new Dimension(PhotoPanel.getWidth(), (PhotoPanel.getWidth() / photoFrame.getWidth()) * photoFrame.getHeight());
-            } else {
-                d = new Dimension((PhotoPanel.getHeight() / photoFrame.getHeight()) * photoFrame.getWidth(), PhotoPanel.getHeight());
-            }
-        } catch (ArithmeticException ae) {
-            d = new Dimension(PhotoPanel.getHeight(), PhotoPanel.getHeight());
-        }
-        photoFrame.setPreferredSize(d);
+    private void createPhoto() {
+        createPhoto(Path.getDefaultPhoto());
+        defaultImage = true;
+    }
+
+    private void createPhoto(String path) {
+        createPhoto(Media.getImageFitted(path, PhotoPanel));
+        defaultImage = false;
+    }
+
+    private void createPhoto(Photo photo) {
+        createPhoto(Media.getImageFitted(photo, PhotoPanel));
+        defaultImage = false;
+    }
+
+    private void createPhoto(BufferedImage image) {
+        picture = image;
+        JLabel picLabel = new JLabel(new ImageIcon(image));
         PhotoPanel.removeAll();
-        PhotoPanel.setBackground(new Color(255, 255, 255));
-        PhotoPanel.add(photoFrame, 0);
+        PhotoPanel.add(picLabel, 0);
+        PhotoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         PhotoPanel.revalidate();
-        photoFrame.repaint();
         PhotoPanel.repaint();
     }
 
@@ -146,26 +152,11 @@ public class NewCompetitor extends KendoFrame {
             IDTextField.setText(competitor.getId());
             ClubComboBox.setSelectedItem(competitor.getClub());
             PhotoTextField.setText("");
-            try {
-                photoFrame.cleanPhoto();
-            } catch (NullPointerException npe) {
-            }
-            try {
-                //photo.ChangeInputStream(c.photoInput, c.photoSize);
-                PhotoPanel.removeAll();
-                PhotoPanel.setBackground(new Color(255, 255, 255));
-                if (competitor.getPhoto()!= null) {
-                    photoFrame.changePhoto(competitor.getPhoto());
-                    PhotoPanel.add(photoFrame, 0);
-                    photoFrame.repaint();
-                } else {
-                    photoFrame.changePhoto(Path.getDefaultPhoto());
-                }
-            } catch (IllegalArgumentException iae) {
-                //iae.printStackTrace();
+            if (competitor.getPhoto() != null) {
+                createPhoto(competitor.getPhoto());
+            } else {
                 createPhoto();
             }
-            PhotoPanel.repaint();
         } catch (NullPointerException npe) {
         }
     }
@@ -176,9 +167,6 @@ public class NewCompetitor extends KendoFrame {
         SurnameTextField.setText("");
         IDTextField.setText("");
         PhotoTextField.setText("");
-        if (photoFrame != null) {
-            photoFrame.cleanPhoto();
-        }
         createPhoto();
         this.repaint();
     }
@@ -188,12 +176,14 @@ public class NewCompetitor extends KendoFrame {
             if (IDTextField.getText().length() > 0 && NameTextField.getText().length() > 0 && SurnameTextField.getText().length() > 0) {
                 RegisteredPerson comp = new RegisteredPerson(IDTextField.getText(), NameTextField.getText().trim(), SurnameTextField.getText().trim());
                 comp.setClub((Club) ClubComboBox.getSelectedItem());
+                if (!defaultImage) {
                     try {
                         Photo competitorPhoto = new Photo(comp.getId());
-                        competitorPhoto.setImage(photoFrame.getPhoto().getInput(), photoFrame.getPhoto().getSize());
+                        competitorPhoto.setImage(picture);
                         PhotoPool.getInstance().set(competitorPhoto);
                     } catch (NullPointerException npe) {
                     }
+                }
                 if (oldCompetitor != null) {
                     RegisteredPersonPool.getInstance().update(oldCompetitor, comp);
                 } else {
@@ -201,8 +191,8 @@ public class NewCompetitor extends KendoFrame {
                 }
                 cleanWindow();
                 this.repaint();
+                MessageManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
                 return comp;
-
             } else {
                 MessageManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
             }
@@ -392,10 +382,17 @@ public class NewCompetitor extends KendoFrame {
         SearchButton.setText("Search");
 
         PhotoPanel.setBackground(new java.awt.Color(255, 255, 255));
-        PhotoPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        PhotoPanel.setMaximumSize(new java.awt.Dimension(20, 30));
-        PhotoPanel.setOpaque(false);
-        PhotoPanel.setLayout(new java.awt.BorderLayout());
+        PhotoPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        PhotoPanel.setForeground(new java.awt.Color(255, 255, 255));
+        PhotoPanel.setMaximumSize(new java.awt.Dimension(320, 200));
+        PhotoPanel.setMinimumSize(new java.awt.Dimension(320, 200));
+        PhotoPanel.setPreferredSize(new java.awt.Dimension(320, 200));
+        java.awt.GridBagLayout PhotoPanelLayout = new java.awt.GridBagLayout();
+        PhotoPanelLayout.columnWidths = new int[] {1};
+        PhotoPanelLayout.rowHeights = new int[] {1};
+        PhotoPanelLayout.columnWeights = new double[] {1.0};
+        PhotoPanelLayout.rowWeights = new double[] {1.0};
+        PhotoPanel.setLayout(PhotoPanelLayout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -407,10 +404,10 @@ public class NewCompetitor extends KendoFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(PhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(PhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 543, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 613, Short.MAX_VALUE)
                         .addComponent(AcceptButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CancelButton)))
@@ -424,9 +421,9 @@ public class NewCompetitor extends KendoFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                    .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(PhotoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SearchButton)
                     .addComponent(CancelButton)
@@ -441,11 +438,8 @@ public class NewCompetitor extends KendoFrame {
         //photo.CleanPhoto();
         if (!(file = exploreWindow("Select",
                 JFileChooser.FILES_ONLY)).equals("")) {
-            photoFrame.cleanPhoto();
             PhotoTextField.setText(file);
-            PhotoPanel.removeAll();
-            photoFrame.changePhoto(file);
-            PhotoPanel.add(photoFrame, 0);
+            createPhoto(file);
         }
     }//GEN-LAST:event_ExploreButtonActionPerformed
 
@@ -469,7 +463,6 @@ public class NewCompetitor extends KendoFrame {
     }//GEN-LAST:event_ClubComboBoxActionPerformed
 
     private void CleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanButtonActionPerformed
-        photoFrame.cleanPhoto();
         createPhoto();
         this.repaint();
     }//GEN-LAST:event_CleanButtonActionPerformed

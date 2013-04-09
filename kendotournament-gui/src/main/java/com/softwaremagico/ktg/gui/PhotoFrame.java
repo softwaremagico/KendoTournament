@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KPanel;
@@ -42,6 +43,16 @@ public class PhotoFrame extends KPanel {
 
     private Photo photo;
     private JPanel parentFrame;
+    private static BufferedImage defaultImage;
+
+    static {
+        try {
+            InputStream inputStream = new FileInputStream(Path.getDefaultPhoto());
+            defaultImage = ImageIO.read(inputStream);
+        } catch (IOException ex) {
+            MessageManager.errorMessage(PhotoFrame.class.getName(), "Default image not found!", "Error!");
+        }
+    }
 
     public PhotoFrame(JPanel container, String defaultImage) {
         parentFrame = container;
