@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui.base;
+package com.softwaremagico.ktg.gui.base.buttons;
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -26,29 +26,24 @@ package com.softwaremagico.ktg.gui.base;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
-public class CloseButton extends KButton {
+public abstract class SearchButton extends KButton {
 
-    private static final long serialVersionUID = -3656938562430153336L;
-    protected JFrame window;
-
-    public CloseButton(JFrame window) {
-        setTranslatedText("CloseButton");
-        this.window = window;
+    public SearchButton() {
+        setTranslatedText("SearchButton");
         this.setPreferredSize(new Dimension(80, 40));
-        addActionListener(new CloseListener());
+        setIcon(new ImageIcon("search.png"));
+        addActionListener(new SearchListener());
     }
 
-    protected void closeAction() {
-        window.dispose();
-    }
+    public abstract void searchAction();
 
-    class CloseListener implements ActionListener {
+    class SearchListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            closeAction();
+            searchAction();
         }
     }
 }
