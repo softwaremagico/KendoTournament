@@ -97,11 +97,14 @@ public abstract class TournamentDependentPool<ElementPool> {
         return getSorted(tournament);
     }
 
-    public void add(Tournament tournament, ElementPool element) {
+    public boolean add(Tournament tournament, ElementPool element) {
         if (!elements.get(tournament).containsValue(element)) {
             sortedElements = new HashMap<>(); //Sorted elements need to be recreated.
             getMap(tournament).put(getId(element), element);
             addElementToStore(tournament, element);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -111,11 +114,11 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
-    public void update(Tournament tournament, ElementPool elementUpdated) {
-        update(tournament, elementUpdated, elementUpdated);
+    public boolean update(Tournament tournament, ElementPool elementUpdated) {
+        return update(tournament, elementUpdated, elementUpdated);
     }
 
-    public void update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
+    public boolean update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
         String id = getId(oldElement);
         if (!id.equals(getId(newElement))) {
             //Not the same element. Cannot update!
@@ -133,6 +136,7 @@ public abstract class TournamentDependentPool<ElementPool> {
                 addElementToUpdate(tournament, oldElement, newElement);
             }
         }
+        return true;
     }
 
     public void remove(Tournament tournament) {

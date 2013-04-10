@@ -325,9 +325,13 @@ public class NewRole extends KendoFrame {
                 Role newRole = new Role((Tournament) TournamentComboBox.getSelectedItem(), (RegisteredPerson) CompetitorComboBox.getSelectedItem(), (RoleTag) RoleTagsComboBox.getSelectedItem(), false, false);
                 //Update or insert?
                 if (oldRole != null) {
-                    RolePool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem(), oldRole, newRole);
+                    if (RolePool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem(), oldRole, newRole)) {
+                        MessageManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                    }
                 } else {
-                    RolePool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), newRole);
+                    if (RolePool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), newRole)) {
+                        MessageManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                    }
                 }
                 if (close) {
                     this.dispose();
