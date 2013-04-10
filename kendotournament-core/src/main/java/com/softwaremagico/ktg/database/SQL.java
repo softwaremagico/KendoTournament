@@ -307,7 +307,6 @@ public abstract class SQL extends Database {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }
         }
-
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {

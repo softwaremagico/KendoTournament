@@ -30,13 +30,11 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -107,9 +105,6 @@ public class MainGUI extends KendoFrame {
         RingMenuItem.setText(trans.returnTag("RingMenuItem"));
         DesignerMenuItem.setText(trans.returnTag("DesignerMenuItem"));
         TeamTopTenMenuItem.setText(trans.returnTag("TeamTopTenMenuItem"));
-        MonitorMenu.setText(trans.returnTag("MonitorMenuItem"));
-        ScoreMonitorMenuItem.setText(trans.returnTag("ScoreMonitorMenuItem"));
-        TreeMonitorMenuItem.setText(trans.returnTag("TreeMonitorMenuItem"));
         AccreditationMenuItem.setText(trans.returnTag("AccreditationMenuItem"));
         HelpMenuItem.setText(trans.returnTag("HelpMenuItem"));
         SummaryMenuItem.setText(trans.returnTag("SummaryMenuItem"));
@@ -200,9 +195,6 @@ public class MainGUI extends KendoFrame {
         ManualFightsMenuItem.setEnabled(connected);
         TeamStatisticsMenu.setEnabled(connected);
         DefineFightsMenu.setEnabled(connected);
-        ScoreMonitorMenuItem.setEnabled(connected);
-        TreeMonitorMenuItem.setEnabled(connected);
-        MonitorMenu.setEnabled(connected);
         AccreditationMenuItem.setEnabled(connected);
         ScoreMenuItem.setEnabled(connected);
         SummaryMenuItem.setEnabled(connected);
@@ -345,14 +337,6 @@ public class MainGUI extends KendoFrame {
         TeamTopTenMenuItem.addActionListener(al);
     }
 
-    public void addScoreMonitorListener(ActionListener al) {
-        ScoreMonitorMenuItem.addActionListener(al);
-    }
-
-    public void addTreeMonitorListener(ActionListener al) {
-        TreeMonitorMenuItem.addActionListener(al);
-    }
-
     public void addAccreditionCardMenuItemListener(ActionListener al) {
         AccreditationMenuItem.addActionListener(al);
     }
@@ -416,10 +400,6 @@ public class MainGUI extends KendoFrame {
         DatabaseDisconnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"disconnect.png"));
         ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"convertDatabase.png"));
         SaveMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"save.png"));
-        MonitorMenu = new javax.swing.JMenu();
-        MonitorMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"monitor.png"));
-        ScoreMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));
-        TreeMonitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
         DataExchangeMenu = new javax.swing.JMenu();
         ExchangeParticipantsMenu = new javax.swing.JMenu();
         ExportParticipantMenu = new javax.swing.JMenu();
@@ -527,18 +507,6 @@ public class MainGUI extends KendoFrame {
             }
         });
         ProgramMenu.add(SaveMenuItem);
-
-        MonitorMenu.setText("Monitor");
-
-        ScoreMonitorMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        ScoreMonitorMenuItem.setText("Score");
-        MonitorMenu.add(ScoreMonitorMenuItem);
-
-        TreeMonitorMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
-        TreeMonitorMenuItem.setText("Tree");
-        MonitorMenu.add(TreeMonitorMenuItem);
-
-        ProgramMenu.add(MonitorMenu);
 
         DataExchangeMenu.setText("Data Exchange");
         DataExchangeMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"importExport.png"));
@@ -771,7 +739,7 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -852,7 +820,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuBar MainMenuBar;
     private javax.swing.JPanel MainPhotoPanel;
     private javax.swing.JMenuItem ManualFightsMenuItem;
-    private javax.swing.JMenu MonitorMenu;
     private javax.swing.JMenu OptionsMenu;
     private javax.swing.JMenuItem PerformedHitsMenuItem;
     private javax.swing.JMenuItem PointListMenuItem;
@@ -863,7 +830,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem RoleMenuItem;
     private javax.swing.JMenuItem SaveMenuItem;
     private javax.swing.JMenuItem ScoreMenuItem;
-    private javax.swing.JMenuItem ScoreMonitorMenuItem;
     private javax.swing.JMenu StatisticsMenu;
     private javax.swing.JCheckBoxMenuItem StoreFightsCheckBox;
     private javax.swing.JMenuItem SummaryMenuItem;
@@ -877,7 +843,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem TournamentPanelMenuItem;
     private javax.swing.JMenu TournamentStatisticsMenu;
     private javax.swing.JMenuItem TournamentTopTenMenuItem;
-    private javax.swing.JMenuItem TreeMonitorMenuItem;
     private javax.swing.JMenuItem WonLostMenuItem;
     // End of variables declaration//GEN-END:variables
 }

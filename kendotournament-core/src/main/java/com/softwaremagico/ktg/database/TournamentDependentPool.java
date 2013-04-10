@@ -14,13 +14,7 @@ public abstract class TournamentDependentPool<ElementPool> {
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToDelete = new HashMap<>();
     private HashMap<Tournament, HashMap<ElementPool, ElementPool>> elementsToUpdate = new HashMap<>(); //New element replace old one.
 
-    /**
-     * Ensure that the class knows all existent tournaments.
-     */
     protected TournamentDependentPool() {
-        for (Tournament tournament : TournamentPool.getInstance().getSorted()) {
-            elements.put(tournament, null);
-        }
     }
 
     protected abstract String getId(ElementPool element);
@@ -48,8 +42,8 @@ public abstract class TournamentDependentPool<ElementPool> {
         HashMap<String, ElementPool> elementGroup = elementsToStore.get(tournament);
         if (elementGroup == null) {
             elementGroup = new HashMap<>();
-            elementGroup.put(getId(element), element);
         }
+        elementGroup.put(getId(element), element);
         elementsToStore.put(tournament, elementGroup);
     }
 
@@ -98,7 +92,7 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public boolean add(Tournament tournament, ElementPool element) {
-        if (!elements.get(tournament).containsValue(element)) {
+        if (!getMap(tournament).containsValue(element)) {
             sortedElements = new HashMap<>(); //Sorted elements need to be recreated.
             getMap(tournament).put(getId(element), element);
             addElementToStore(tournament, element);
@@ -210,7 +204,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         if (elementsToUpdate.get(tournament) != null) {
             updateDatabase(tournament, elementsToUpdate.get(tournament));
         }
-        elementsToStore.put(tournament, new HashMap<String, ElementPool>());
+        elementsToUpdate.put(tournament, new HashMap<ElementPool, ElementPool>());
     }
 
     public void updateDatabase() {
