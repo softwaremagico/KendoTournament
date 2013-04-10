@@ -103,7 +103,7 @@ public class NewCompetitor extends KendoFrame {
         trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewCompetitor"));
         ExploreButton.setText(trans.returnTag("ExploreButton"));
-        CleanButton.setText(trans.returnTag("CleanPhoto"));
+        CleanButton.setText(trans.returnTag("Clean"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));
         CancelButton.setText(trans.returnTag("CancelButton"));
         SearchButton.setText(trans.returnTag("SearchButton"));

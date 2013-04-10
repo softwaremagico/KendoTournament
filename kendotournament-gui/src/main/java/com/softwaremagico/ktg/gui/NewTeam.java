@@ -30,7 +30,6 @@ import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -93,9 +92,9 @@ public class NewTeam extends KendoFrame {
         trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.returnTag("titleNewTeam"));
         AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
+        CloseButton.setText(trans.returnTag("CloseButton"));
         SearchButton.setText(trans.returnTag("SearchButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        CleanButton.setText(trans.returnTag("CancelButton"));
         PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
         NameLabel.setText(trans.returnTag("NameTeamLabel"));
         IndividualTeamsCheckBox.setText(trans.returnTag("IndividualTeamsCheckBox"));
@@ -148,10 +147,7 @@ public class NewTeam extends KendoFrame {
     private void cleanWindow() {
         oldTeam = null;
         NameTextField.setText("");
-        //fillTournaments();
-        refreshCompetitors();
-        fillCompetitorsComboBox();
-
+        TournamentComboBox.setEnabled(true);
     }
 
     public final void updateWindow(Team team) {
@@ -196,7 +192,7 @@ public class NewTeam extends KendoFrame {
 
     private void refreshCompetitors() {
         try {
-            competitors = RolePool.getInstance().getCompetitors(tournament);
+            competitors = TeamPool.getInstance().getCompetitorsWithoutTeam(tournament);
             competitors.add(0, new RegisteredPerson("", "", ""));
         } catch (NullPointerException npe) {
         }
@@ -315,10 +311,10 @@ public class NewTeam extends KendoFrame {
         IndividualTeamsCheckBox = new javax.swing.JCheckBox();
         CompetitorsFrame = new javax.swing.JPanel();
         AcceptButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
+        CloseButton = new javax.swing.JButton();
         SearchButton = new javax.swing.JButton();
         PDFButton = new javax.swing.JButton();
-        DeleteButton = new javax.swing.JButton();
+        CleanButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Generate Team");
@@ -394,10 +390,10 @@ public class NewTeam extends KendoFrame {
             }
         });
 
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
+        CloseButton.setText("Close");
+        CloseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
+                CloseButtonActionPerformed(evt);
             }
         });
 
@@ -410,10 +406,10 @@ public class NewTeam extends KendoFrame {
             }
         });
 
-        DeleteButton.setText("Delete");
-        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+        CleanButton.setText("Clean");
+        CleanButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DeleteButtonActionPerformed(evt);
+                CleanButtonActionPerformed(evt);
             }
         });
 
@@ -432,13 +428,13 @@ public class NewTeam extends KendoFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                         .addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DeleteButton)
+                        .addComponent(CleanButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton)))
+                        .addComponent(CloseButton)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AcceptButton, CancelButton, DeleteButton, PDFButton, SearchButton});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AcceptButton, CleanButton, CloseButton, PDFButton, SearchButton});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -449,17 +445,17 @@ public class NewTeam extends KendoFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SearchButton)
                     .addComponent(PDFButton)
-                    .addComponent(CancelButton)
-                    .addComponent(DeleteButton)
+                    .addComponent(CloseButton)
+                    .addComponent(CleanButton)
                     .addComponent(AcceptButton))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
+    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         this.dispose();
-    }//GEN-LAST:event_CancelButtonActionPerformed
+    }//GEN-LAST:event_CloseButtonActionPerformed
 
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
@@ -500,15 +496,10 @@ public class NewTeam extends KendoFrame {
         }
     }//GEN-LAST:event_TournamentComboBoxActionPerformed
 
-    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        try {
-            TeamPool.getInstance().remove(tournament, NameTextField.getText());
-            refreshTournament();
-            NameTextField.setText("");
-            NameTextField.setEnabled(true);
-        } catch (NullPointerException npe) {
-        }
-    }//GEN-LAST:event_DeleteButtonActionPerformed
+    private void CleanButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanButtonActionPerformed
+        cleanWindow();
+        refreshTournament();
+    }//GEN-LAST:event_CleanButtonActionPerformed
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (newTeam) {
@@ -526,8 +517,7 @@ public class NewTeam extends KendoFrame {
 
                     if (repeatedCompetitor()) {
                         MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
-                    }
-                    if (!checkTeam()) {
+                    } else if (!checkTeam()) {
                         MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                     } else {
                         for (int i = 0; i < participants.size(); i++) {
@@ -535,11 +525,16 @@ public class NewTeam extends KendoFrame {
                         }
                         //Insert or update?
                         if (oldTeam != null) {
-                            TeamPool.getInstance().update(tournament, oldTeam, team);
+                            if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
+                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                            }
                         } else {
-                            TeamPool.getInstance().add(tournament, team);
+                            if (TeamPool.getInstance().add(tournament, team)) {
+                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                            }
                         }
                         cleanWindow();
+                        refreshTournament();
                     }
                 } else {
                     MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
@@ -554,9 +549,9 @@ public class NewTeam extends KendoFrame {
     }//GEN-LAST:event_formWindowOpened
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton AcceptButton;
-    private javax.swing.JButton CancelButton;
+    private javax.swing.JButton CleanButton;
+    private javax.swing.JButton CloseButton;
     private javax.swing.JPanel CompetitorsFrame;
-    private javax.swing.JButton DeleteButton;
     private javax.swing.JCheckBox IndividualTeamsCheckBox;
     private javax.swing.JLabel NameLabel;
     protected javax.swing.JTextField NameTextField;

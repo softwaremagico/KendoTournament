@@ -408,14 +408,14 @@
 		<ca>Guardar</ca>
 		<it>Salvare</it>
 	</SaveButton>
-	<CleanPhoto>
+	<Clean>
 		<en>Clean</en>
 		<es>Borrar</es>
 		<nl>Opruimen</nl>
 		<de>Aufräumen</de>
 		<ca>Esborrar</ca>
 		<it>Cancellare</it>
-	</CleanPhoto>
+	</Clean>
 	<CleanButton>
 		<en>Clean Teams</en>
 		<es>Borrar Equipos</es>

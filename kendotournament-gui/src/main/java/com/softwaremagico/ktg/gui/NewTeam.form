@@ -38,9 +38,9 @@
                       <EmptySpace pref="117" max="32767" attributes="0"/>
                       <Component id="AcceptButton" linkSize="1" min="-2" pref="88" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="DeleteButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="CleanButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CancelButton" linkSize="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="CloseButton" linkSize="1" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -56,8 +56,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="SearchButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="PDFButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="DeleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CloseButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CleanButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="AcceptButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -178,12 +178,12 @@
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="4"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="CancelButton">
+    <Component class="javax.swing.JButton" name="CloseButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cancel"/>
+        <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="SearchButton">
@@ -199,12 +199,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PDFButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="DeleteButton">
+    <Component class="javax.swing.JButton" name="CleanButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Delete"/>
+        <Property name="text" type="java.lang.String" value="Clean"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CleanButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

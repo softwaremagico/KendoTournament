@@ -715,7 +715,7 @@ public abstract class SQL extends Database {
      */
     @Override
     protected List<Team> getTeams(Tournament tournament) {
-        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' GROUP BY Name ORDER BY Name; ";
+        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
 

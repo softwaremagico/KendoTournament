@@ -81,6 +81,12 @@ public final class SearchTournament extends Search<Tournament> {
 
     @Override
     protected boolean deleteElement(Tournament tournament) {
+        if (MessageManager.questionMessage("tournamentDeleteQuestion", "Competitor")) {
+            if (TournamentPool.getInstance().remove(tournament)) {
+                MessageManager.informationMessage(this.getClass().getName(), "tournamentDeleted", "Tournament");
+                return true;
+            }
+        }
         return TournamentPool.getInstance().remove(tournament);
     }
 }

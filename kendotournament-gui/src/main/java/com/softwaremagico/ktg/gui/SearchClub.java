@@ -83,7 +83,7 @@ public final class SearchClub extends Search<Club> {
         }
         fillResults(results);
         if (results.size() > 0) {
-            ResultList.setSelectedIndex(0);
+            resultList.setSelectedIndex(0);
         }
     }
 
@@ -94,6 +94,12 @@ public final class SearchClub extends Search<Club> {
 
     @Override
     protected boolean deleteElement(Club object) {
-        return ClubPool.getInstance().remove(object);         
+        if (MessageManager.questionMessage("questionDeleteClub", "Competitor")) {
+            if (ClubPool.getInstance().remove(object)) {
+                MessageManager.informationMessage(this.getClass().getName(), "clubDeleted", "Club");
+                return true;
+            }
+        }
+        return false;
     }
 }

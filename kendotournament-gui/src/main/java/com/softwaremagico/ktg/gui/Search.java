@@ -62,13 +62,13 @@ public abstract class Search<T> extends javax.swing.JFrame {
     }
 
     protected abstract void fillSearchFieldPanel();
-    
+
     protected abstract String getResultInformation(T object);
 
     /**
      * Fill the list with the results obtained
      */
-    protected void fillResults(List<T> objects){
+    protected void fillResults(List<T> objects) {
         resultModel.removeAllElements();
         for (int i = 0; i < objects.size(); i++) {
             resultModel.addElement(getResultInformation(objects.get(i)));
@@ -77,7 +77,7 @@ public abstract class Search<T> extends javax.swing.JFrame {
 
     public T returnSelectedItem() {
         try {
-            int index = ResultList.getSelectedIndex();
+            int index = resultList.getSelectedIndex();
             return results.get(index);
         } catch (NullPointerException npe) {
             return null;
@@ -102,7 +102,6 @@ public abstract class Search<T> extends javax.swing.JFrame {
 
     private void addListerners() {
         SearchButton.addActionListener(new java.awt.event.ActionListener() {
-
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchButtonActionPerformed(evt);
@@ -128,7 +127,7 @@ public abstract class Search<T> extends javax.swing.JFrame {
         SearchFieldPanel = new javax.swing.JPanel();
         ResultPanel = new javax.swing.JPanel();
         ResultScrollPanel = new javax.swing.JScrollPane();
-        ResultList = new javax.swing.JList();
+        resultList = new javax.swing.JList();
         SelectButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
         CancelButton = new javax.swing.JButton();
@@ -177,9 +176,9 @@ public abstract class Search<T> extends javax.swing.JFrame {
 
         ResultPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        ResultList.setModel(resultModel);
-        ResultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        ResultScrollPanel.setViewportView(ResultList);
+        resultList.setModel(resultModel);
+        resultList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        ResultScrollPanel.setViewportView(resultList);
 
         SelectButton.setText("Select");
 
@@ -263,27 +262,28 @@ public abstract class Search<T> extends javax.swing.JFrame {
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
         try {
-            T o = results.get(ResultList.getSelectedIndex());
-            if (deleteElement(o)) {
-                results.remove(o);
-                fillResults(results);
-                if (results.size() > 0) {
-                    ResultList.setSelectedIndex(0);
+            if (resultList.getSelectedIndex() >= 0 && resultList.getSelectedIndex() < resultList.getModel().getSize()) {
+                T o = results.get(resultList.getSelectedIndex());
+                if (deleteElement(o)) {
+                    results.remove(o);
+                    fillResults(results);
+                    if (results.size() > 0) {
+                        resultList.setSelectedIndex(0);
+                    }
                 }
             }
         } catch (ArrayIndexOutOfBoundsException | NullPointerException aiob) {
         }
     }//GEN-LAST:event_DeleteButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton DeleteButton;
-    protected javax.swing.JList ResultList;
     private javax.swing.JPanel ResultPanel;
     private javax.swing.JScrollPane ResultScrollPanel;
     private javax.swing.JButton SearchButton;
     protected javax.swing.JPanel SearchFieldPanel;
     private javax.swing.JPanel SearchPanel;
     private javax.swing.JButton SelectButton;
+    protected javax.swing.JList resultList;
     // End of variables declaration//GEN-END:variables
 }

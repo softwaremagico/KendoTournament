@@ -39,10 +39,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-/**
- *
- * @author jorge
- */
 public final class SearchTeam extends Search<Team> {
 
     private JLabel NameLabel = new JLabel("Name:");
@@ -112,13 +108,19 @@ public final class SearchTeam extends Search<Team> {
         }
         fillResults(results);
         if (results.size() > 0) {
-            ResultList.setSelectedIndex(0);
+            resultList.setSelectedIndex(0);
         }
     }
 
     @Override
-    protected boolean deleteElement(Team object) {
-        return TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), object);
+    protected boolean deleteElement(Team team) {        
+            if (MessageManager.questionMessage("questionDeleteTeam", "Team")) {
+                if (TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), team)) {
+                    MessageManager.informationMessage(this.getClass().getName(), "teamDeleted", "Team");
+                    return true;
+                }
+            }
+        return false;
     }
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {

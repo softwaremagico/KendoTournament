@@ -377,7 +377,7 @@
 		<it>Il club già esiste? Si vuole aggionarlo?</it>
 	</questionUpdateClub>
 	<questionDeleteTeam>
-		<en>This action will erase the selected team. Are you sure you want to continue?</en>
+		<en>This action will remove the selected team. Are you sure you want to continue?</en>
 		<es>Esta acción borrará el equipo seleccionado. ¿Estas seguro de continuar?</es>
 		<nl>Hiermee verwijder je het geselecteerde team. Weet je zeker dat je wilt doorgaan?</nl>
 		<de>Diese Aktion löscht das ausgewählte Team. Wollen Sie fortfahren?</de>

@@ -97,13 +97,19 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
         }
         fillResults(results);
         if (results.size() > 0) {
-            ResultList.setSelectedIndex(0);
+            resultList.setSelectedIndex(0);
         }
     }
 
     @Override
     protected boolean deleteElement(RegisteredPerson object) {
-        return RegisteredPersonPool.getInstance().remove(object);
+        if (MessageManager.questionMessage("questionDeleteCompetitor", "Competitor")) {
+            if (RegisteredPersonPool.getInstance().remove(object)) {
+                MessageManager.informationMessage(this.getClass().getName(), "competitorDeleted", "Competitor");
+                return true;
+            }
+        }
+        return false;
     }
 
     public class IDKeyEvent implements KeyListener {
