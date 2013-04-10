@@ -321,12 +321,12 @@
 		<it>Il club è stato aggiornato nel database</it>
 	</clubUpdated>
 	<tournamentUpdated>
-		<en>The tournament has been updated into the database.</en>
-		<es>El campeonato ha sido actualizado en la base de datos.</es>
+		<en>The tournament has been updated.</en>
+		<es>El campeonato ha sido actualizado.</es>
 		<nl>De gegevens van het toernooi zijn in de database aangepast.</nl>
 		<de>Der Wettkampf wurde gespeichert.</de>
-		<ca>El campionat ha sigut actualitzat a la base de dades.</ca>
-		<it>Il campionato è stato aggiornato nel database</it>
+		<ca>El campionat ha sigut actualitzat.</ca>
+		<it>Il campionato è stato aggiornato</it>
 	</tournamentUpdated>
 	<fillFields>
 		<en>You must fill one of the fields to start a search.</en>

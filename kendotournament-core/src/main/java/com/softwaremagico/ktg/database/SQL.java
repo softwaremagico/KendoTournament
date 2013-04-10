@@ -660,8 +660,13 @@ public abstract class SQL extends Database {
         for (Tournament tournament : newTournaments) {
             Tournament oldTournament = tournamentsExchange.get(tournament);
             try (PreparedStatement stmt = connection.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=? WHERE Name='" + oldTournament.getName() + "';")) {
-                storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
-                stmt.setLong(2, tournament.getBanner().getSize());
+                try {
+                    storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
+                    stmt.setLong(2, tournament.getBanner().getSize());
+                } catch (NullPointerException npe) {
+                    storeBinaryStream(stmt, 1, null, 0);
+                    stmt.setLong(2, 0);
+                }
                 stmt.setInt(3, tournament.getFightingAreas());
                 stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(5, tournament.getTeamSize());
@@ -669,10 +674,20 @@ public abstract class SQL extends Database {
                 stmt.setFloat(7, tournament.getScoreForWin());
                 stmt.setFloat(8, tournament.getScoreForDraw());
                 stmt.setString(9, tournament.getChoosedScore());
-                storeBinaryStream(stmt, 10, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
-                stmt.setLong(11, tournament.getDiploma().getSize());
-                storeBinaryStream(stmt, 12, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
-                stmt.setLong(13, tournament.getAccreditation().getSize());
+                try {
+                    storeBinaryStream(stmt, 10, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
+                    stmt.setLong(11, tournament.getDiploma().getSize());
+                } catch (NullPointerException npe) {
+                    storeBinaryStream(stmt, 10, null, 0);
+                    stmt.setLong(11, 0);
+                }
+                try {
+                    storeBinaryStream(stmt, 12, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
+                    stmt.setLong(13, tournament.getAccreditation().getSize());
+                } catch (NullPointerException npe) {
+                    storeBinaryStream(stmt, 12, null, 0);
+                    stmt.setLong(13, 0);
+                }
                 stmt.setString(14, tournament.getName());
                 stmt.executeUpdate();
             } catch (SQLException ex) {

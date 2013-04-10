@@ -36,7 +36,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="ScorePanel" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="CloseButton" alignment="1" min="-2" pref="93" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="AcceptButton" linkSize="2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CloseButton" linkSize="2" min="-2" pref="93" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -50,7 +55,10 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="ScorePanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="CloseButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CloseButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="AcceptButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -137,9 +145,6 @@
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Classic"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ClassicRadioButtonActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="EuropeanRadioButton">
           <Properties>
@@ -151,9 +156,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="European"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EuropeanRadioButtonActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="CustomRadioButton">
           <Properties>
@@ -165,9 +167,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Custom"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CustomRadioButtonActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JSpinner" name="WinSpinner">
           <Properties>
@@ -282,5 +281,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="AcceptButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Accept"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AcceptButtonActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
