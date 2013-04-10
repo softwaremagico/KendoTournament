@@ -34,10 +34,6 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TeamPool;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class TeamListPDF extends ParentList {
 
     private Tournament tournament;
@@ -81,7 +77,6 @@ public class TeamListPDF extends ParentList {
         for (int i = 0; i < listTeams.size(); i++) {
 
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));
-            cell.setBorderWidth(1);
             cell.setColspan(1);
             mainTable.addCell(cell);
 

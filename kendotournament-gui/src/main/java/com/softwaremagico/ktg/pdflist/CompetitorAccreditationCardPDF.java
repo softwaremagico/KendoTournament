@@ -259,18 +259,24 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         cell = new PdfPCell(mainTable(width, height, font, fontSize));
         cell.setBorderWidth(border);
+        cell.setBorderWidthBottom(1);
+        cell.setBorderWidthLeft(1);
+        cell.setBorderWidthTop(1);
         cell.setColspan(1);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         mainTable.addCell(cell);
 
         cell = new PdfPCell(createSignature(font, fontSize - 5));
         cell.setBorderWidth(border);
+        cell.setBorderWidthBottom(1);
+        cell.setBorderWidthRight(1);
+        cell.setBorderWidthTop(1);
         cell.setColspan(1);
         cell.setPaddingBottom(0);
         cell.setPaddingRight(0);
         cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
         mainTable.addCell(cell);
-
+        
         return mainTable;
     }
 
