@@ -79,7 +79,7 @@ public abstract class Search<T> extends javax.swing.JFrame {
         try {
             int index = resultList.getSelectedIndex();
             return results.get(index);
-        } catch (NullPointerException npe) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException npe) {
             return null;
         }
     }

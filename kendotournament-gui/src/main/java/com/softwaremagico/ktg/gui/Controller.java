@@ -849,10 +849,12 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            RegisteredPerson c = searchCompetitor.returnSelectedItem();
-            newCompetitor.updateWindow(c);
-            newCompetitor.setVisible(true);
-            searchCompetitor.dispose();
+            RegisteredPerson competitor = searchCompetitor.returnSelectedItem();
+            if (competitor != null) {
+                newCompetitor.updateWindow(competitor);
+                newCompetitor.setVisible(true);
+                searchCompetitor.dispose();
+            }
         }
     }
 
@@ -913,10 +915,12 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Club c = searchClub.returnSelectedItem();
-            newClub.UpdateWindow(c);
-            newClub.setVisible(true);
-            searchClub.dispose();
+            Club club = searchClub.returnSelectedItem();
+            if (club != null) {
+                newClub.UpdateWindow(club);
+                newClub.setVisible(true);
+                searchClub.dispose();
+            }
         }
     }
 
@@ -968,9 +972,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             Team team = searchTeam.returnSelectedItem();
-            newTeam.updateWindow(team);
-            newTeam.setVisible(true);
-            searchTeam.dispose();
+            if (team != null) {
+                newTeam.updateWindow(team);
+                newTeam.setVisible(true);
+                searchTeam.dispose();
+            }
         }
     }
 
@@ -1044,10 +1050,12 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Tournament t = searchTournament.returnSelectedItem();
-            newTournament.setVisible(true);
-            newTournament.updateWindow(t);
-            searchTournament.dispose();
+            Tournament tournament = searchTournament.returnSelectedItem();
+            if (tournament != null) {
+                newTournament.setVisible(true);
+                newTournament.updateWindow(tournament);
+                searchTournament.dispose();
+            }
         }
     }
 

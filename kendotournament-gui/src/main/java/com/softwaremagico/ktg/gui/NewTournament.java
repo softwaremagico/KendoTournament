@@ -160,11 +160,12 @@ public class NewTournament extends KendoFrame {
                 if (maxCompetitorTeam != null && maxCompetitorTeam != newTournament.getTeamSize()) {
                     TeamPool.getInstance().remove(oldTournament);
                 }
+                MessageManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
             } else {
                 TournamentPool.getInstance().add(newTournament);
+                MessageManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
             }
             KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
-            MessageManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
             return true;
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");

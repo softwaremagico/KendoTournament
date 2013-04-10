@@ -45,7 +45,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         return elementsOfTournament;
     }
 
-    private HashMap<String, ElementPool> getElementToDelete(Tournament tournament) {
+    private HashMap<String, ElementPool> getElementToRemove(Tournament tournament) {
         HashMap<String, ElementPool> elementsOfTournament = elementsToDelete.get(tournament);
         if (elementsOfTournament == null) {
             elementsOfTournament = new HashMap<>();
@@ -103,7 +103,7 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     private void addElementToRemove(Tournament tournament, ElementPool element) {
-        HashMap<String, ElementPool> elementGroup = getElementToDelete(tournament);
+        HashMap<String, ElementPool> elementGroup = getElementToRemove(tournament);
         elementGroup.put(getId(element), element);
         elementsToDelete.put(tournament, elementGroup);
     }
@@ -167,7 +167,13 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void remove(Tournament tournament) {
+        List<ElementPool> listToDelete = new ArrayList<>();
         for (ElementPool element : getMap(tournament).values()) {
+            listToDelete.add(element);
+
+        }
+        //Two loops to avoid ConcurrentModificationException.
+        for (ElementPool element : listToDelete) {
             remove(tournament, element);
         }
     }
@@ -226,8 +232,8 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     private void updateDatabase(Tournament tournament) {
-        if (getElementToDelete(tournament).size() > 0) {
-            removeFromDatabase(tournament, new ArrayList(getElementToDelete(tournament).values()));
+        if (getElementToRemove(tournament).size() > 0) {
+            removeFromDatabase(tournament, new ArrayList(getElementToRemove(tournament).values()));
         }
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
         if (getElementToStore(tournament) != null) {

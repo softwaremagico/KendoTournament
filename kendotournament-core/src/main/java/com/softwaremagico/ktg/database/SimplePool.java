@@ -29,35 +29,45 @@ public abstract class SimplePool<ElementPool> {
         return elements;
     }
 
-    private void addElementToStore(ElementPool element) {
+    private HashMap<String, ElementPool> getElementToStore() {
         if (elementsToStore == null) {
             elementsToStore = new HashMap<>();
         }
-        elementsToStore.put(getId(element), element);
+        return elementsToStore;
+    }
+
+    private HashMap<String, ElementPool> getElementToRemove() {
+        if (elementsToDelete == null) {
+            elementsToDelete = new HashMap<>();
+        }
+        return elementsToDelete;
+    }
+
+    private HashMap<ElementPool, ElementPool> getElementToUpdate() {
+        if (elementsToUpdate == null) {
+            elementsToUpdate = new HashMap<>();
+        }
+        return elementsToUpdate;
+    }
+
+    private void addElementToStore(ElementPool element) {
+        getElementToStore().put(getId(element), element);
     }
 
     private void addElementToUpdate(ElementPool oldElement, ElementPool newElement) {
-        if (elementsToUpdate == null) {
-            elementsToUpdate = new HashMap<>();
-            elementsToUpdate.put(newElement, oldElement);
+        //Can be an update that older update. Then must be only the last update and the old database element to replace.
+        ElementPool element = getElementToUpdate().get(oldElement); //Here, oldElement is the previous newElement.
+        if (element != null) {
+            //Exist an older update. Must be replaced with the correct information that exist in database.
+            getElementToUpdate().remove(oldElement);
+            getElementToUpdate().put(newElement, element);
         } else {
-            //Can be an update that older update. Then must be only the last update and the old database element to replace.
-            ElementPool element = elementsToUpdate.get(oldElement); //Here, oldElement is the previous newElement.
-            if (element != null) {
-                //Exist an older update. Must be replaced with the correct information that exist in database.
-                elementsToUpdate.remove(oldElement);
-                elementsToUpdate.put(newElement, element);
-            } else {
-                elementsToUpdate.put(newElement, oldElement);
-            }
+            getElementToUpdate().put(newElement, oldElement);
         }
     }
 
     private void addElementToRemove(ElementPool element) {
-        if (elementsToDelete == null) {
-            elementsToDelete = new HashMap<>();
-        }
-        elementsToDelete.put(getId(element), element);
+        getElementToRemove().put(getId(element), element);
     }
 
     public ElementPool get(String elementName) {
@@ -107,10 +117,10 @@ public abstract class SimplePool<ElementPool> {
             getMap().put(id, newElement);
 
             //Not stored, not update but store the new one. 
-            ElementPool elementStillNotInDatabase = elementsToStore.get(id);
+            ElementPool elementStillNotInDatabase = getElementToStore().get(id);
             if (elementStillNotInDatabase != null) {
-                elementsToStore.remove(id);
-                elementsToStore.put(id, newElement);
+                getElementToStore().remove(id);
+                getElementToStore().put(id, newElement);
             } else {
                 addElementToUpdate(oldElement, newElement);
             }
@@ -122,14 +132,16 @@ public abstract class SimplePool<ElementPool> {
         String id = getId(element);
         if (getMap().remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
-            ElementPool elementStillNotInDatabase = elementsToStore.get(id);
+            ElementPool elementStillNotInDatabase = getElementToStore().get(id);
             if (elementStillNotInDatabase != null) {
-                elementsToStore.remove(id);
+                getElementToStore().remove(id);
             } else {
                 addElementToRemove(element);
             }
-            sortedElements.remove(element);
-            elementsToUpdate.remove(element);
+            if (sortedElements != null) {
+                sortedElements.remove(element);
+            }
+            getElementToUpdate().remove(element);
         }
         return true;
     }
@@ -165,12 +177,12 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public void updateDatabase() {
-        removeFromDatabase(new ArrayList(elementsToDelete.values()));
+        removeFromDatabase(new ArrayList(getElementToRemove().values()));
         elementsToDelete = new HashMap<>();
-        storeInDatabase(new ArrayList(elementsToStore.values()));
+        storeInDatabase(new ArrayList(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
-        updateDatabase(elementsToUpdate);
+        updateDatabase(getElementToUpdate());
         elementsToUpdate = new HashMap<>();
     }
 

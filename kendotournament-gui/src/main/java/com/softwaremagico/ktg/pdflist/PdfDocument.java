@@ -34,7 +34,6 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.PdfDocument;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;

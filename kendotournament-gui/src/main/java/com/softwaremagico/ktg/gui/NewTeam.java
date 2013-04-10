@@ -526,7 +526,7 @@ public class NewTeam extends KendoFrame {
                         //Insert or update?
                         if (oldTeam != null) {
                             if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
-                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                                MessageManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
                             }
                         } else {
                             if (TeamPool.getInstance().add(tournament, team)) {

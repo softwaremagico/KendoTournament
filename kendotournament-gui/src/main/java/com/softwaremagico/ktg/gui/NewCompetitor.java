@@ -186,12 +186,13 @@ public class NewCompetitor extends KendoFrame {
                 }
                 if (oldCompetitor != null) {
                     RegisteredPersonPool.getInstance().update(oldCompetitor, comp);
+                    MessageManager.informationMessage(this.getClass().getName(), "competitorUpdated", "SQL");
                 } else {
                     RegisteredPersonPool.getInstance().add(comp);
+                    MessageManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
                 }
                 cleanWindow();
                 this.repaint();
-                MessageManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
                 return comp;
             } else {
                 MessageManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
