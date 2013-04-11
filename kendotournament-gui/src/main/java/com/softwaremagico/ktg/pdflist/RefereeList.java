@@ -35,7 +35,7 @@ public class RefereeList extends ListFromTournamentCreatePDF {
 
     public RefereeList() {
         super();
-        this.setTitle(trans.returnTag("titleListReferee"));
+        this.setTitle(trans.getTranslatedText("titleListReferee"));
     }
 
     @Override

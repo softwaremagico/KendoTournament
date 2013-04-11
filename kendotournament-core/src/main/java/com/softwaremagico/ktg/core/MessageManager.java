@@ -46,11 +46,11 @@ public class MessageManager {
      * @param language
      */
     public static void errorMessage(String className, String code, String title) {
-        customMessage(className, trans.returnTag(code), title, JOptionPane.ERROR_MESSAGE);
+        customMessage(className, trans.getTranslatedText(code), title, JOptionPane.ERROR_MESSAGE);
     }
 
     public static void errorMessage(String className, String code, String title, String finalText) {
-        String text = trans.returnTag(code);
+        String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
@@ -58,7 +58,7 @@ public class MessageManager {
     }
 
     public static void winnerMessage(String className, String code, String title, String finalText, int option) {
-        String text = trans.returnTag(code);
+        String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
@@ -73,7 +73,7 @@ public class MessageManager {
     }
 
     public static void translatedMessage(String className, String code, String title, String finalText, int option) {
-        String text = trans.returnTag(code);
+        String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
@@ -90,7 +90,7 @@ public class MessageManager {
      * @param option
      */
     public static void translatedMessage(String className, String code, String title, int option) {
-        customMessage(className, trans.returnTag(code), title, option);
+        customMessage(className, trans.getTranslatedText(code), title, option);
     }
 
     public static void basicErrorMessage(String className, String text, String title) {
@@ -150,7 +150,7 @@ public class MessageManager {
 
     public static boolean questionMessage(String code, String title) {
         JFrame frame = null;
-        int n = JOptionPane.showConfirmDialog(frame, trans.returnTag(code), title, JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(frame, trans.getTranslatedText(code), title, JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
             return true;
         } else if (n == JOptionPane.NO_OPTION) {

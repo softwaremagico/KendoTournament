@@ -37,7 +37,7 @@ public class FightList extends ListFromTournamentCreatePDF {
 
     public FightList() {
         super();
-        this.setTitle(trans.returnTag("titleListFights"));
+        this.setTitle(trans.getTranslatedText("titleListFights"));
     }
 
     @Override

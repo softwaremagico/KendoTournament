@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.AutoSave;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -52,6 +53,7 @@ public class Main {
         Configuration.readLanguageConfiguration();
 
         MainGUI gui = new MainGUI();
+        AutoSave autoSave = AutoSave.getInstance();
         try {
             Controller controller = new Controller(gui);
         } catch (Exception ex) {

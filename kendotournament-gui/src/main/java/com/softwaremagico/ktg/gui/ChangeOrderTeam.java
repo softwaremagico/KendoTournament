@@ -66,11 +66,11 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("TitleOrderTeam"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        SelectButton.setText(trans.returnTag("SelectButton"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        AvailableTeamLabel.setText(trans.returnTag("AvailableTeam"));
+        this.setTitle(trans.getTranslatedText("TitleOrderTeam"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        SelectButton.setText(trans.getTranslatedText("SelectButton"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        AvailableTeamLabel.setText(trans.getTranslatedText("AvailableTeam"));
     }
 
     private void fillTournaments() {
@@ -89,7 +89,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void update() {
         try {
             level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             //teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
             teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
             fillTeams();
@@ -107,17 +107,21 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     }
 
     private Team returnSelectedTeam() {
-        return teams.get(TeamList.getSelectedIndex());
+        if (TeamList.getSelectedIndex() >= 0) {
+            return teams.get(TeamList.getSelectedIndex());
+        }
+        return null;
     }
 
     private void openOrderTeamWindow() {
         Team team = returnSelectedTeam();
-
-        OrderTeam newTeam;
-        newTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
-        newTeam.updateOrderWindow(team);
-        newTeam.setVisible(true);
-        newTeam.toFront();
+        if (team != null) {
+            OrderTeam newTeam;
+            newTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
+            newTeam.updateOrderWindow(team);
+            newTeam.setVisible(true);
+            newTeam.toFront();
+        }
     }
 
     /**

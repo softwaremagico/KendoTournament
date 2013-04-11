@@ -93,7 +93,7 @@ public class TeamFight extends JPanel {
         if (left) {
             title.setTitleJustification(TitledBorder.LEFT);
 
-            if (KendoTournamentGenerator.getInstance().inverseColours) {
+            if (KendoTournamentGenerator.getInstance().isInverseColours()) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
@@ -101,7 +101,7 @@ public class TeamFight extends JPanel {
         } else {
             title.setTitleJustification(TitledBorder.RIGHT);
 
-            if (!KendoTournamentGenerator.getInstance().inverseColours) {
+            if (!KendoTournamentGenerator.getInstance().isInverseColours()) {
                 title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             } else {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));

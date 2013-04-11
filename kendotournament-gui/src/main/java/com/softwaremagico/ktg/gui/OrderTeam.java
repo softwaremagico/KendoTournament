@@ -89,7 +89,7 @@ public class OrderTeam extends NewTeam {
     }
 
     public final void setLanguage2(String language) {
-        this.setTitle(trans.returnTag("titleOrderTeam"));
+        this.setTitle(trans.getTranslatedText("titleOrderTeam"));
     }
 
     public void updateOrderWindow(Team t) {

@@ -33,7 +33,7 @@ public class TeamList extends ListFromTournamentCreatePDF {
 
     public TeamList() {
         super();
-        this.setTitle(trans.returnTag("titleListTeams"));
+        this.setTitle(trans.getTranslatedText("titleListTeams"));
     }
 
     @Override

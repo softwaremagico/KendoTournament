@@ -59,10 +59,10 @@ public class ScoreListPDF extends ParentList {
     private PdfPTable simpleTable(PdfPTable mainTable) {
         teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
 
-        mainTable.addCell(getCell(trans.returnTag("Team"), 0, Element.ALIGN_CENTER));
-        mainTable.addCell(getCell(trans.returnTag("fightsWon"), 0, Element.ALIGN_CENTER));
-        mainTable.addCell(getCell(trans.returnTag("duelsWon"), 0, Element.ALIGN_CENTER));
-        mainTable.addCell(getCell(trans.returnTag("histsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("Team"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 0, Element.ALIGN_CENTER));
 
 
         for (int i = 0; i < teamTopTen.size(); i++) {
@@ -89,21 +89,21 @@ public class ScoreListPDF extends ParentList {
             if (printTitle) {
                 mainTable.addCell(getEmptyRow());
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
+                mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
                 for (int i = 0; i < groups.size(); i++) {
                     if (groups.get(i).areFightsOver()) {
                         mainTable.addCell(getEmptyRow());
-                        String head = trans.returnTag("GroupString") + " " + (i + 1);
+                        String head = trans.getTranslatedText("GroupString") + " " + (i + 1);
                         if (tournament.getFightingAreas() > 1) {
-                            head += " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")";
+                            head += " (" + trans.getTranslatedText("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")";
                         }
 
                         mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));
-                        mainTable.addCell(getCell(trans.returnTag("Team"), 1, Element.ALIGN_CENTER));
-                        mainTable.addCell(getCell(trans.returnTag("fightsWon"), 1, Element.ALIGN_CENTER));
-                        mainTable.addCell(getCell(trans.returnTag("duelsWon"), 1, Element.ALIGN_CENTER));
-                        mainTable.addCell(getCell(trans.returnTag("histsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("Team"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 1, Element.ALIGN_CENTER));
 
                         List<Team> winnersUndraw = UndrawPool.getInstance().getWinners(tournament, groups.get(i).getLevel(), i);
 

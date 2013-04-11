@@ -54,11 +54,11 @@ public abstract class Search<T> extends javax.swing.JFrame {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleSearch"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        SearchButton.setText(trans.returnTag("SearchButton"));
-        SelectButton.setText(trans.returnTag("SelectButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
+        this.setTitle(trans.getTranslatedText("titleSearch"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
+        SelectButton.setText(trans.getTranslatedText("SelectButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
     }
 
     protected abstract void fillSearchFieldPanel();

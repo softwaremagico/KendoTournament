@@ -82,25 +82,25 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleLeagueDesigner"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        PassLabel.setText(trans.returnTag("PassLabel"));
-        AddButton.setText(trans.returnTag("AddGroupButton"));
-        DeleteButton.setText(trans.returnTag("DeleteGroupButton"));
-        DeleteTeamsButton.setText(trans.returnTag("CleanButton"));
-        DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
-        AddTeamButton.setText(trans.returnTag("AddTeamButton"));
-        AcceptButton.setText(trans.returnTag("GenerateMatchButton"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        ChampionshipRadioButton.setText(trans.returnTag("ChampionshipRadioButton"));
-        TreeRadioButton.setText(trans.returnTag("TreeRadioButton"));
-        SimpleRadioButton.setText(trans.returnTag("SimpleRadioButton"));
-        CleanLinksButton.setText(trans.returnTag("CleanLinks"));
-        DeleteLevelLabel.setText(trans.returnTag("DeleteLevelLabel"));
-        DeleteLevelButton.setText(trans.returnTag("DeleteButton"));
-        LoadButton.setText(trans.returnTag("ButtonLoadTournament"));
-        TreeEditionLabel.setText(trans.returnTag("TournamentLabel"));
-        GroupEditionLabel.setText(trans.returnTag("GroupLabel"));
+        this.setTitle(trans.getTranslatedText("titleLeagueDesigner"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        PassLabel.setText(trans.getTranslatedText("PassLabel"));
+        AddButton.setText(trans.getTranslatedText("AddGroupButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteGroupButton"));
+        DeleteTeamsButton.setText(trans.getTranslatedText("CleanButton"));
+        DeleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
+        AddTeamButton.setText(trans.getTranslatedText("AddTeamButton"));
+        AcceptButton.setText(trans.getTranslatedText("GenerateMatchButton"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        ChampionshipRadioButton.setText(trans.getTranslatedText("ChampionshipRadioButton"));
+        TreeRadioButton.setText(trans.getTranslatedText("TreeRadioButton"));
+        SimpleRadioButton.setText(trans.getTranslatedText("SimpleRadioButton"));
+        CleanLinksButton.setText(trans.getTranslatedText("CleanLinks"));
+        DeleteLevelLabel.setText(trans.getTranslatedText("DeleteLevelLabel"));
+        DeleteLevelButton.setText(trans.getTranslatedText("DeleteButton"));
+        LoadButton.setText(trans.getTranslatedText("ButtonLoadTournament"));
+        TreeEditionLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        GroupEditionLabel.setText(trans.getTranslatedText("GroupLabel"));
     }
 
     private void fillTournaments() {
@@ -327,14 +327,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
         LevelComboBox.removeAllItems();
         for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
             if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                LevelComboBox.addItem(trans.returnTag("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
+                LevelComboBox.addItem(trans.getTranslatedText("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
             } else if (i == TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                LevelComboBox.addItem(trans.returnTag("SemiFinalLabel"));
+                LevelComboBox.addItem(trans.getTranslatedText("SemiFinalLabel"));
             } else {
-                LevelComboBox.addItem(trans.returnTag("FinalLabel"));
+                LevelComboBox.addItem(trans.getTranslatedText("FinalLabel"));
             }
         }
-        LevelComboBox.addItem(trans.returnTag("All"));
+        LevelComboBox.addItem(trans.getTranslatedText("All"));
     }
 
     private void focus(int x, int y) {
@@ -737,7 +737,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             updateInterface();
         }
     }//GEN-LAST:event_TournamentComboBoxActionPerformed

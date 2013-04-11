@@ -73,8 +73,8 @@ public class TournamentAccreditationPDF {
         public ThreadAccreditation(TimerPanel tp, String p, boolean printAll) {
             transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("AccreditationProgressBarTitle"));
-            tp.updateLabel(transl.returnTag("AccreditationProgressBarLabel"));
+            tp.updateTitle(transl.getTranslatedText("AccreditationProgressBarTitle"));
+            tp.updateLabel(transl.getTranslatedText("AccreditationProgressBarLabel"));
             path = p;
             all = printAll;
         }
@@ -130,7 +130,7 @@ public class TournamentAccreditationPDF {
                 }
 
                 for (int i = 0; i < competitors.size(); i++) {
-                    timerPanel.updateText(transl.returnTag("AccreditationProgressBarLabel"), i, competitors.size());
+                    timerPanel.updateText(transl.getTranslatedText("AccreditationProgressBarLabel"), i, competitors.size());
                     CompetitorAccreditationCardPDF competitorPDF = new CompetitorAccreditationCardPDF(tournament, competitors.get(i), banner);
                     PdfPTable competitorTable = competitorPDF.pageTable(document.getPageSize().getWidth() / 2, document.getPageSize().getHeight() / 2, writer, font, fontSize);
                     competitorTable.setTableEvent(new PdfDocument.TableBgEvent());
@@ -141,7 +141,7 @@ public class TournamentAccreditationPDF {
                     cell.addElement(competitorTable);
                     mainTable.addCell(cell);
                 }
-                timerPanel.updateLabel(transl.returnTag("WrittingToDisk"));
+                timerPanel.updateLabel(transl.getTranslatedText("WrittingToDisk"));
                 mainTable.completeRow();
                 return mainTable;
             }

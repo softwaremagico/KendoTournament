@@ -398,8 +398,8 @@ public abstract class PdfDocument {
                 table.addCell(header);
                 table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
                 //table.addCell(String.format("Page %d of", writer.getPageNumber()));
-                table.addCell(String.format(trans.returnTag("Page")
-                        + " %d " + trans.returnTag("Of"), writer.getPageNumber()));
+                table.addCell(String.format(trans.getTranslatedText("Page")
+                        + " %d " + trans.getTranslatedText("Of"), writer.getPageNumber()));
                 PdfPCell cell = new PdfPCell(Image.getInstance(total));
                 cell.setBorder(Rectangle.TOP);
                 table.addCell(cell);

@@ -65,10 +65,10 @@ public class DatabaseConversor extends javax.swing.JFrame {
 
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("ConvertDatabase"));
-        FromDatabaseLabel.setText(trans.returnTag("FromDatabaseLabel"));
-        ToDatabaseLabel.setText(trans.returnTag("ToDatabaseLabel"));
-        ExportButton.setText(trans.returnTag("ConvertButton"));
+        this.setTitle(trans.getTranslatedText("ConvertDatabase"));
+        FromDatabaseLabel.setText(trans.getTranslatedText("FromDatabaseLabel"));
+        ToDatabaseLabel.setText(trans.getTranslatedText("ToDatabaseLabel"));
+        ExportButton.setText(trans.getTranslatedText("ConvertButton"));
     }
 
     /**

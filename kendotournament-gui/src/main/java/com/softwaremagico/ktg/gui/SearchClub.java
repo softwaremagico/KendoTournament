@@ -54,9 +54,9 @@ public final class SearchClub extends Search<Club> {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        CountryLabel.setText(trans.returnTag("CountryLabel"));
-        CityLabel.setText(trans.returnTag("CityLabel"));
-        NameLabel.setText(trans.returnTag("NameLabel"));
+        CountryLabel.setText(trans.getTranslatedText("CountryLabel"));
+        CityLabel.setText(trans.getTranslatedText("CityLabel"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
     }
 
     @Override

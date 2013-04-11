@@ -67,15 +67,15 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleDesignGroupWindow"));
-        UpButton.setText(trans.returnTag("UpButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
-        DownButton.setText(trans.returnTag("DownButton"));
-        PassLabel.setText(trans.returnTag("PassLabel"));
-        ArenaLabel.setText(trans.returnTag("FightArea"));
-        ShowButton.setText(trans.returnTag("ShowTeam"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        TeamLabel.setText(trans.returnTag("Teams"));
+        this.setTitle(trans.getTranslatedText("titleDesignGroupWindow"));
+        UpButton.setText(trans.getTranslatedText("UpButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
+        DownButton.setText(trans.getTranslatedText("DownButton"));
+        PassLabel.setText(trans.getTranslatedText("PassLabel"));
+        ArenaLabel.setText(trans.getTranslatedText("FightArea"));
+        ShowButton.setText(trans.getTranslatedText("ShowTeam"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        TeamLabel.setText(trans.getTranslatedText("Teams"));
     }
 
     private void fillGroupArea() {
@@ -86,7 +86,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
             }
         }
         if (tournamentGroup.getTeams().isEmpty()) {
-            groupModel.addElement(trans.returnTag("noTeams"));
+            groupModel.addElement(trans.getTranslatedText("noTeams"));
             disable(true);
         } else {
             GroupList.setSelectedIndex(0);

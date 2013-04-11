@@ -98,7 +98,7 @@ public class StatisticsLines extends StatisticsGUI {
     private JFreeChart createChart(XYDataset dataset) {
         // create the chart…
         JFreeChart chart = ChartFactory.createXYLineChart(
-                transl.returnTag("TopTenTitle"), // Titulo de grafico
+                transl.getTranslatedText("TopTenTitle"), // Titulo de grafico
                 "X", // Etiqueta del eje x
                 "Y", // Etiqueta del eje y
                 dataset, // data

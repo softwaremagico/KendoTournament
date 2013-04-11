@@ -66,8 +66,8 @@ public final class SearchTeam extends Search<Team> {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        NameLabel.setText(trans.returnTag("NameLabel"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
     }
 
     private void fillTournaments() {
@@ -125,7 +125,7 @@ public final class SearchTeam extends Search<Team> {
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         if (refreshTournament) {
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
         }
     }
 }

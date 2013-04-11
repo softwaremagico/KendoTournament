@@ -31,7 +31,7 @@ public class SelectCompetitorForReceivedHits extends ListFromCompetitor {
 
     public SelectCompetitorForReceivedHits() {
         Start(true);
-        this.setTitle(trans.returnTag("titleHitStatistics"));
+        this.setTitle(trans.getTranslatedText("titleHitStatistics"));
     }
 
     @Override

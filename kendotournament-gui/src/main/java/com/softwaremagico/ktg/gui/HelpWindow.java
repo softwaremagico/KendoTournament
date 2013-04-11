@@ -49,8 +49,8 @@ public final class HelpWindow extends javax.swing.JFrame {
 
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleHelp"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
+        this.setTitle(trans.getTranslatedText("titleHelp"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
     }
 
     public void UpdateText(String text) {

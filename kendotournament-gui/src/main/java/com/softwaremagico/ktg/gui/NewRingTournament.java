@@ -71,17 +71,17 @@ public class NewRingTournament extends javax.swing.JFrame {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewFight"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        Team1Label.setText(trans.returnTag("Team1Label"));
-        AddButton.setText(trans.returnTag("AddButton"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
-        RandomButton.setText(trans.returnTag("RandomButton"));
-        UpButton.setText(trans.returnTag("UpButton"));
-        DownButton.setText(trans.returnTag("DownButton"));
-        DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
-        AvoidRepetitionCheckBox.setText(trans.returnTag("AvoidRepetitions"));
+        this.setTitle(trans.getTranslatedText("titleNewFight"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        Team1Label.setText(trans.getTranslatedText("Team1Label"));
+        AddButton.setText(trans.getTranslatedText("AddButton"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
+        RandomButton.setText(trans.getTranslatedText("RandomButton"));
+        UpButton.setText(trans.getTranslatedText("UpButton"));
+        DownButton.setText(trans.getTranslatedText("DownButton"));
+        DeleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
+        AvoidRepetitionCheckBox.setText(trans.getTranslatedText("AvoidRepetitions"));
     }
 
     private void fillTournaments() {
@@ -410,7 +410,7 @@ public class NewRingTournament extends javax.swing.JFrame {
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             RefreshTournament();
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
         }
 }//GEN-LAST:event_TournamentComboBoxActionPerformed
 

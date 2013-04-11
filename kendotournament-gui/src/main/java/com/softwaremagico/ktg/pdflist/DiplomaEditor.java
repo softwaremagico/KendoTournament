@@ -68,12 +68,12 @@ public class DiplomaEditor extends javax.swing.JFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleDiplomaEditor"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        InformationLabel.setText(trans.returnTag("InformationDiplomaLabel"));
-        StatisticsCheckBox.setText(trans.returnTag("StatisticsCheckBox"));
-        RoleLabel.setText(trans.returnTag("DiplomaRole"));
+        this.setTitle(trans.getTranslatedText("titleDiplomaEditor"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        InformationLabel.setText(trans.getTranslatedText("InformationDiplomaLabel"));
+        StatisticsCheckBox.setText(trans.getTranslatedText("StatisticsCheckBox"));
+        RoleLabel.setText(trans.getTranslatedText("DiplomaRole"));
     }
 
     private void addRoles() {
@@ -272,7 +272,7 @@ public class DiplomaEditor extends javax.swing.JFrame {
 
     private void SliderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SliderMouseReleased
         DiplomaPanel.changeLine(Slider.getValue());
-        KendoTournamentGenerator.getInstance().changeLastNamePositionOnDiploma(Slider.getValue());
+        KendoTournamentGenerator.getInstance().setLastNamePositionOnDiploma(Slider.getValue());
     }//GEN-LAST:event_SliderMouseReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AcceptButton;

@@ -71,16 +71,16 @@ public class NewTournament extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewTournament"));
-        ExploreButton.setText(trans.returnTag("ExploreButton"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        NameLabel.setText(trans.returnTag("NameTournamentLabel"));
-        NumberCompetitorsLabel.setText(trans.returnTag("NumberLabel"));
-        BannerLabel.setText(trans.returnTag("BannerLabel"));
-        FightingAreasLabel.setText(trans.returnTag("FightArea"));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
-        SearchButton.setText(trans.returnTag("SearchButton"));
+        this.setTitle(trans.getTranslatedText("titleNewTournament"));
+        ExploreButton.setText(trans.getTranslatedText("ExploreButton"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        NameLabel.setText(trans.getTranslatedText("NameTournamentLabel"));
+        NumberCompetitorsLabel.setText(trans.getTranslatedText("NumberLabel"));
+        BannerLabel.setText(trans.getTranslatedText("BannerLabel"));
+        FightingAreasLabel.setText(trans.getTranslatedText("FightArea"));
+        PDFButton.setText(trans.getTranslatedText("AccreditationPDFButton"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
     }
 
     private void createBanner() {
@@ -165,7 +165,7 @@ public class NewTournament extends KendoFrame {
                 TournamentPool.getInstance().add(newTournament);
                 MessageManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
             }
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(NameTextField.getText());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(NameTextField.getText());
             return true;
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
@@ -393,7 +393,7 @@ public class NewTournament extends KendoFrame {
 
             try {
                 String file;
-                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+                if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(t);
                     pdf.setPrintAll(true);

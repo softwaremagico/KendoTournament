@@ -35,7 +35,7 @@ public class SelectTeamForTopTen extends ListFromTeams {
 
     public SelectTeamForTopTen() {
         Start(true);
-        this.setTitle(trans.returnTag("titleHitStatistics"));
+        this.setTitle(trans.getTranslatedText("titleHitStatistics"));
     }
 
     @Override

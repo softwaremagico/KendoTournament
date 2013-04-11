@@ -246,7 +246,7 @@ public class CompetitorFight extends JPanel {
             }
 
             menMenu = new JMenuItem();
-            menMenu.setText(trans.returnTag(Score.EMPTY.getName()));
+            menMenu.setText(trans.getTranslatedText(Score.EMPTY.getName()));
             menMenu.addActionListener(new MenuListener(round));
             contextMenu.add(menMenu);
         } catch (IndexOutOfBoundsException iofb) {
@@ -267,7 +267,7 @@ public class CompetitorFight extends JPanel {
         public void actionPerformed(ActionEvent e) {
             JMenuItem sourceItem = (JMenuItem) e.getSource();
 
-            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName()))) {
+            if (sourceItem.getText().equals(trans.getTranslatedText(Score.EMPTY.getName()))) {
                 updateDuel(Score.EMPTY, round);
             } else {
                 updateDuel(Score.getScore(sourceItem.getText()), round);
@@ -351,9 +351,9 @@ public class CompetitorFight extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             JMenuItem sourceItem = (JMenuItem) e.getSource();
-            if (sourceItem.getText().equals(trans.returnTag(Score.EMPTY.getName()))) {
+            if (sourceItem.getText().equals(trans.getTranslatedText(Score.EMPTY.getName()))) {
                 resetFault();
-            } else if (sourceItem.getText().equals(trans.returnTag(Score.FAULT.getName()))) {
+            } else if (sourceItem.getText().equals(trans.getTranslatedText(Score.FAULT.getName()))) {
                 increaseFault();
             }
         }
@@ -364,12 +364,12 @@ public class CompetitorFight extends JPanel {
         JMenuItem menMenu = new JMenuItem();
         try {
 
-            menMenu.setText(trans.returnTag(Score.FAULT.getName()));
+            menMenu.setText(trans.getTranslatedText(Score.FAULT.getName()));
             menMenu.addActionListener(new FaultMenuListener());
             contextMenu.add(menMenu);
 
             menMenu = new JMenuItem();
-            menMenu.setText(trans.returnTag(Score.EMPTY.getName()));
+            menMenu.setText(trans.getTranslatedText(Score.EMPTY.getName()));
             menMenu.addActionListener(new FaultMenuListener());
             contextMenu.add(menMenu);
 

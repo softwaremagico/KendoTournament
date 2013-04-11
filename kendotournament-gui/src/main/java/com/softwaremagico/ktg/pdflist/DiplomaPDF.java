@@ -120,8 +120,8 @@ public class DiplomaPDF {
         public ThreadDiploma(TimerPanel tp, Document d, String p) {
             transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("DiplomaProgressBarTitle"));
-            tp.updateLabel(transl.returnTag("DiplomaProgressBarLabel"));
+            tp.updateTitle(transl.getTranslatedText("DiplomaProgressBarTitle"));
+            tp.updateLabel(transl.getTranslatedText("DiplomaProgressBarLabel"));
             document = d;
             path = p;
         }
@@ -197,7 +197,7 @@ public class DiplomaPDF {
             }
 
             for (int i = 0; i < competitors.size(); i++) {
-                timerPanel.updateText(transl.returnTag("DiplomaProgressBarLabel") + ": " + (i + 1) + "/" + competitors.size(), i, competitors.size());
+                timerPanel.updateText(transl.getTranslatedText("DiplomaProgressBarLabel") + ": " + (i + 1) + "/" + competitors.size(), i, competitors.size());
                 diplomaTable(document, writer, competitors.get(i), font, fontSize);
                 if (statistics) {
                     statisticsTable(document, writer, competitors.get(i), font, fontSize);
@@ -237,7 +237,7 @@ public class DiplomaPDF {
                 document.newPage();
 
                 //General hits.
-                Image image = com.itextpdf.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.returnTag("TitleHits")), null, false);
+                Image image = com.itextpdf.text.Image.getInstance(createPieChart(createGeneralHitsDataset(), transl.getTranslatedText("TitleHits")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -251,7 +251,7 @@ public class DiplomaPDF {
                 duelsTeamLeft = DuelPool.getInstance().get(tournament, competitor, false);
 
                 //Performed hits.
-                image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("PerformedHitsStatisticsMenuItem")), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.getTranslatedText("PerformedHitsStatisticsMenuItem")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -259,7 +259,7 @@ public class DiplomaPDF {
 
 
                 //Received hits.
-                image = com.itextpdf.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.returnTag("ReceivedHitsStatisticsMenuItem")), null, false);
+                image = com.itextpdf.text.Image.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.getTranslatedText("ReceivedHitsStatisticsMenuItem")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -274,7 +274,7 @@ public class DiplomaPDF {
                 mainTable.addCell(cell);
 
                 //Team ranking.
-                image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.returnTag("TopTenTeamTitle"), transl.returnTag("NumberOfWinnedTopTen")), null, false);
+                image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor), transl.getTranslatedText("TopTenTeamTitle"), transl.getTranslatedText("NumberOfWinnedTopTen")), null, false);
                 cell = new PdfPCell(image, true);
                 cell.setBorderWidth(1);
                 cell.setColspan(3);
@@ -409,11 +409,11 @@ public class DiplomaPDF {
 
         private CategoryDataset createTeamRankingDataset(RegisteredPerson competitor) {
             // row keys...
-            final String series1 = transl.returnTag("WonMatchs");
-            final String series2 = transl.returnTag("DrawMatchs");
-            final String series3 = transl.returnTag("WonFights");
-            final String series4 = transl.returnTag("DrawFights");
-            final String series5 = transl.returnTag("PerformedHitStatistics");
+            final String series1 = transl.getTranslatedText("WonMatchs");
+            final String series2 = transl.getTranslatedText("DrawMatchs");
+            final String series3 = transl.getTranslatedText("WonFights");
+            final String series4 = transl.getTranslatedText("DrawFights");
+            final String series5 = transl.getTranslatedText("PerformedHitStatistics");
 
             // create the dataset...
             final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -540,7 +540,7 @@ public class DiplomaPDF {
             int files = 7;
 
 
-            Paragraph p = new Paragraph(transl.returnTag("TopTenCompetitorTitle"));
+            Paragraph p = new Paragraph(transl.getTranslatedText("TopTenCompetitorTitle"));
             cell = new PdfPCell(p);
             cell.setBorderWidth(1);
             cell.setColspan(columns);
@@ -551,19 +551,19 @@ public class DiplomaPDF {
                 float[] width2 = {(float) 0.3, (float) 0.3, (float) 0.3};
                 PdfPTable table2 = new PdfPTable(width2);
 
-                p = new Paragraph(transl.returnTag("TopTenCompetitorNumber"), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.getTranslatedText("TopTenCompetitorNumber"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell);
 
-                p = new Paragraph(transl.returnTag("Fights"), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.getTranslatedText("Fights"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table2.addCell(cell);
 
-                p = new Paragraph(transl.returnTag("Hits"), FontFactory.getFont(font, fontSize - 12));
+                p = new Paragraph(transl.getTranslatedText("Hits"), FontFactory.getFont(font, fontSize - 12));
                 cell = new PdfPCell(p);
                 cell.setBorderWidth(1);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);

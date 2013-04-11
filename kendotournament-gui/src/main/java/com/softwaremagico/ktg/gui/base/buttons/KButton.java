@@ -31,6 +31,6 @@ public class KButton extends JButton {
 
     public void setTranslatedText(String tag) {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        setText(trans.returnTag(tag));
+        setText(trans.getTranslatedText(tag));
     }
 }

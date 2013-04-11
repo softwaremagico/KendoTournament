@@ -104,14 +104,14 @@ public class FightListPDF extends ParentList {
              */
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
-            mainTable.addCell(getHeader1(trans.returnTag("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
+            mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
             List<TournamentGroup> groups = tournamentManager.getGroups(l);
 
             List<Fight> fights = FightPool.getInstance().get(tournament);
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
-                mainTable.addCell(getHeader2(trans.returnTag("GroupString") + " " + (i + 1) + " (" + trans.returnTag("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));
+                mainTable.addCell(getHeader2(trans.getTranslatedText("GroupString") + " " + (i + 1) + " (" + trans.getTranslatedText("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));
 
                 for (int j = 0; j < fights.size(); j++) {
                     if (groups.get(i).isFightOfGroup(fights.get(j))) {

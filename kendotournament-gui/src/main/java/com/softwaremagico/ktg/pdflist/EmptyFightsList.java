@@ -35,10 +35,10 @@ public class EmptyFightsList extends ListFromTournamentCreatePDF {
     
      public EmptyFightsList() {
         super();
-        this.setTitle(trans.returnTag("titleSummary"));
+        this.setTitle(trans.getTranslatedText("titleSummary"));
         ArenaComboBox.setEnabled(true);
         CheckBox.setVisible(true);
-        changeCheckBoxText(trans.returnTag("ShowEndFights"));
+        changeCheckBoxText(trans.getTranslatedText("ShowEndFights"));
     }
 
     @Override

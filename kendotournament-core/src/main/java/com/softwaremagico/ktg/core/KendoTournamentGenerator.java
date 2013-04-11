@@ -38,6 +38,7 @@ public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
+    private static boolean autosave = true;
     private String language = "en";
     private String explorationFolder = null;
     private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -45,8 +46,8 @@ public class KendoTournamentGenerator {
     private String lastSelectedClub = "";
     private int nameDiplomaPosition = 100;
     private boolean logActivated = true;
-    public boolean inverseColours = false;
-    public boolean inverseTeams = false;
+    private boolean inverseColours = false;
+    private boolean inverseTeams = false;
 
     private KendoTournamentGenerator() {
         loadConfig();
@@ -59,28 +60,33 @@ public class KendoTournamentGenerator {
         return kendoTournament;
     }
 
-    public void changeLastSelectedTournament(String selected) {
+    public void setLastSelectedTournament(String selected) {
         lastSelectedTournament = selected;
         storeConfig();
     }
 
-    public void changeLastSelectedClub(String selected) {
+    public void setLastSelectedClub(String selected) {
         lastSelectedClub = selected;
         storeConfig();
     }
 
-    public void changeLastNamePositionOnDiploma(int selected) {
+    public void setLastNamePositionOnDiploma(int selected) {
         nameDiplomaPosition = selected;
         storeConfig();
     }
 
-    public void changeLogOption(boolean option) {
+    public void setLogOption(boolean option) {
         logActivated = option;
         storeConfig();
     }
 
-    public void changeDebugOption(boolean option) {
+    public void setDebugOption(boolean option) {
         debugMode = option;
+        storeConfig();
+    }
+
+    public void setAutosaveOption(boolean option) {
+        autosave = option;
         storeConfig();
     }
 
@@ -130,6 +136,26 @@ public class KendoTournamentGenerator {
         this.language = language;
     }
 
+    public static boolean isAutosaveOptionSelected() {
+        return autosave;
+    }
+
+    public boolean isInverseColours() {
+        return inverseColours;
+    }
+
+    public void setInverseColours(boolean inverseColours) {
+        this.inverseColours = inverseColours;
+    }
+
+    public boolean isInverseTeams() {
+        return inverseTeams;
+    }
+
+    public void setInverseTeams(boolean inverseTeams) {
+        this.inverseTeams = inverseTeams;
+    }
+
     /**
      * **********************************************
      *
@@ -166,6 +192,7 @@ public class KendoTournamentGenerator {
         obtainStoredNamePositionOnDiploma();
         obtainLogOption();
         obtainDebugOption();
+        obtainAutosaveOption();
         //obtainStoredScore();
     }
 
@@ -242,6 +269,15 @@ public class KendoTournamentGenerator {
         }
     }
 
+    private boolean obtainAutosaveOption() {
+        try {
+            autosave = Boolean.parseBoolean(obtainStoredDataInConfig("Autosave:"));
+            return autosave;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+
     public void storeConfig() {
         List<String> configData = new ArrayList<>();
         configData.add("Tournament:" + lastSelectedTournament);
@@ -249,6 +285,7 @@ public class KendoTournamentGenerator {
         configData.add("NameDiploma:" + nameDiplomaPosition);
         configData.add("Log:" + logActivated);
         configData.add("Debug:" + debugMode);
+        configData.add("Autosave:" + autosave);
 //        configData.add("ScoreOption:" + choosedScore);
 //        configData.add("ScoreWin:" + scoreForWin);
 //        configData.add("ScoreDraw:" + scoreForDraw);

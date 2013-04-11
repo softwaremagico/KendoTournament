@@ -62,17 +62,17 @@ public class NewClub extends javax.swing.JFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleClub"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        NameLabel.setText(trans.returnTag("NameLabel"));
-        CountryLabel.setText(trans.returnTag("CountryLabel"));
-        CityLabel.setText(trans.returnTag("CityLabel"));
-        AddressLabel.setText(trans.returnTag("AddressLabel"));
-        RepresentativeLabel.setText(trans.returnTag("RepresentativeLabel"));
-        PhoneLabel.setText(trans.returnTag("PhoneLabel"));
-        MailLabel.setText(trans.returnTag("MailLabel"));
-        SearchButton.setText(trans.returnTag("SearchButton"));
+        this.setTitle(trans.getTranslatedText("titleClub"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
+        CountryLabel.setText(trans.getTranslatedText("CountryLabel"));
+        CityLabel.setText(trans.getTranslatedText("CityLabel"));
+        AddressLabel.setText(trans.getTranslatedText("AddressLabel"));
+        RepresentativeLabel.setText(trans.getTranslatedText("RepresentativeLabel"));
+        PhoneLabel.setText(trans.getTranslatedText("PhoneLabel"));
+        MailLabel.setText(trans.getTranslatedText("MailLabel"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
     }
 
     public void UpdateWindow(Club tmp_c) {

@@ -55,15 +55,15 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
 
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("Hits"));
-        ClassicRadioButton.setText(trans.returnTag("ClassicRadioButton"));
-        EuropeanRadioButton.setText(trans.returnTag("EuropeanRadioButton"));
-        CustomRadioButton.setText(trans.returnTag("CustomRadioButton"));
-        WinLabel.setText(trans.returnTag("WinTag"));
-        DrawLabel.setText(trans.returnTag("DrawTag"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        EuropeanUndrawLabel.setText(trans.returnTag("EuropeanUndrawLabel"));
+        this.setTitle(trans.getTranslatedText("Hits"));
+        ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
+        EuropeanRadioButton.setText(trans.getTranslatedText("EuropeanRadioButton"));
+        CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
+        WinLabel.setText(trans.getTranslatedText("WinTag"));
+        DrawLabel.setText(trans.getTranslatedText("DrawTag"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        EuropeanUndrawLabel.setText(trans.getTranslatedText("EuropeanUndrawLabel"));
     }
 
     private void selectStyle() {

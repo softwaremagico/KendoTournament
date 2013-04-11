@@ -53,7 +53,7 @@ public class TournamentComboBox extends KComboBox {
                 setSelectedItem(selectedTournament);
             } else if (getItemCount() > 0) {
                 setSelectedIndex(0);
-                KendoTournamentGenerator.getInstance().changeLastSelectedTournament(getSelectedTournament().toString());
+                KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().toString());
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);

@@ -32,7 +32,7 @@ public class SelectCompetitorForPerformedHits extends ListFromCompetitor {
     public SelectCompetitorForPerformedHits() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         Start(true);
-        this.setTitle(trans.returnTag("titleHitStatistics"));
+        this.setTitle(trans.getTranslatedText("titleHitStatistics"));
     }
 
     @Override

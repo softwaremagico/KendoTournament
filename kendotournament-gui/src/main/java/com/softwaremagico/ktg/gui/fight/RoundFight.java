@@ -103,7 +103,7 @@ public class RoundFight extends JPanel {
         teamFights = new ArrayList<>();
         TeamFight tf;
         int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
-        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total);
@@ -113,7 +113,7 @@ public class RoundFight extends JPanel {
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        if (!KendoTournamentGenerator.getInstance().inverseTeams) {
+        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total);
@@ -227,13 +227,13 @@ public class RoundFight extends JPanel {
             JMenuItem drawMenu = new JMenuItem();
             try {
 
-                drawMenu.setText(trans.returnTag("DrawMenuItem"));
+                drawMenu.setText(trans.getTranslatedText("DrawMenuItem"));
                 drawMenu.addActionListener(new MenuListener(fight));
                 contextMenu.add(drawMenu);
 
 
                 drawMenu = new JMenuItem();
-                drawMenu.setText(trans.returnTag("ClearMenuItem"));
+                drawMenu.setText(trans.getTranslatedText("ClearMenuItem"));
                 drawMenu.addActionListener(new MenuListener(fight));
                 contextMenu.add(drawMenu);
             } catch (IndexOutOfBoundsException iofb) {
@@ -253,9 +253,9 @@ public class RoundFight extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JMenuItem sourceItem = (JMenuItem) e.getSource();
-                if (sourceItem.getText().equals(trans.returnTag("DrawMenuItem"))) {
+                if (sourceItem.getText().equals(trans.getTranslatedText("DrawMenuItem"))) {
                     updateFight('X');
-                } else if (sourceItem.getText().equals(trans.returnTag("ClearMenuItem"))) {
+                } else if (sourceItem.getText().equals(trans.getTranslatedText("ClearMenuItem"))) {
                     updateFight(' ');
                 }
             }

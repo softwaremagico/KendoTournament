@@ -30,7 +30,7 @@ public class PointList extends ListFromTournamentCreatePDF {
 
     public PointList() {
         super();
-        this.setTitle(trans.returnTag("titleListPoints"));
+        this.setTitle(trans.getTranslatedText("titleListPoints"));
     }
 
     @Override

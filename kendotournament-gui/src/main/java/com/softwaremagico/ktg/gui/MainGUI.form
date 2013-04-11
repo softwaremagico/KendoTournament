@@ -60,9 +60,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveMenuItemActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;save.png&quot;));"/>
               </AuxValues>
@@ -489,16 +486,16 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;language.png&quot;));"/>
               </AuxValues>
             </Menu>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="StoreFightsCheckBox">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="AutosaveCheckBox">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Database Lazy Update"/>
+                <Property name="text" type="java.lang.String" value="Autosave"/>
               </Properties>
               <Events>
-                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="StoreFightsCheckBoxStateChanged"/>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="AutosaveCheckBoxStateChanged"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="StoreFightsCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;session-save.png&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="AutosaveCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;session-save.png&quot;));"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="LogMenuCheckBox">
@@ -594,7 +591,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="276" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="280" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

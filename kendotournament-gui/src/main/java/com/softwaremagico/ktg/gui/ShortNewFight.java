@@ -68,12 +68,12 @@ public class ShortNewFight extends javax.swing.JFrame {
 
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleShortFight"));
-        Team1Label.setText(trans.returnTag("Team1Label"));
-        Team2Label.setText(trans.returnTag("Team2Label"));
-        AddButton.setText(trans.returnTag("AddButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        FightAreaLabel.setText(trans.returnTag("FightArea"));
+        this.setTitle(trans.getTranslatedText("titleShortFight"));
+        Team1Label.setText(trans.getTranslatedText("Team1Label"));
+        Team2Label.setText(trans.getTranslatedText("Team2Label"));
+        AddButton.setText(trans.getTranslatedText("AddButton"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        FightAreaLabel.setText(trans.getTranslatedText("FightArea"));
     }
 
     private void fillTeam1ComboBox() {

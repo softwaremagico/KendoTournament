@@ -31,7 +31,7 @@ public class KLabel extends JLabel {
 
     public KLabel(String tag) {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        String label = trans.returnTag(tag);
+        String label = trans.getTranslatedText(tag);
         if (label != null) {
             setText(label);
         }else{

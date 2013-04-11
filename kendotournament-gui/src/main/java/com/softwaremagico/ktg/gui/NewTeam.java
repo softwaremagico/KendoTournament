@@ -90,15 +90,15 @@ public class NewTeam extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewTeam"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        SearchButton.setText(trans.returnTag("SearchButton"));
-        CleanButton.setText(trans.returnTag("CancelButton"));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
-        NameLabel.setText(trans.returnTag("NameTeamLabel"));
-        IndividualTeamsCheckBox.setText(trans.returnTag("IndividualTeamsCheckBox"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
+        this.setTitle(trans.getTranslatedText("titleNewTeam"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
+        CleanButton.setText(trans.getTranslatedText("CancelButton"));
+        PDFButton.setText(trans.getTranslatedText("AccreditationPDFButton"));
+        NameLabel.setText(trans.getTranslatedText("NameTeamLabel"));
+        IndividualTeamsCheckBox.setText(trans.getTranslatedText("IndividualTeamsCheckBox"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
     }
 
     void fillTournaments() {
@@ -468,7 +468,7 @@ public class NewTeam extends KendoFrame {
 
             try {
                 String file;
-                if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+                if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                         JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                     TeamAccreditationCardPDF pdf = new TeamAccreditationCardPDF(t, tournaments.get(TournamentComboBox.getSelectedIndex()));
                     pdf.createFile(file);
@@ -490,7 +490,7 @@ public class NewTeam extends KendoFrame {
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             tournament = (Tournament) TournamentComboBox.getSelectedItem();
             refreshTournament();
         }

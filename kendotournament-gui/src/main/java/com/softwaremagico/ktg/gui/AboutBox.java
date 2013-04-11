@@ -61,8 +61,8 @@ public final class AboutBox extends javax.swing.JFrame {
      */
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleAboutBox"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
+        this.setTitle(trans.getTranslatedText("titleAboutBox"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
     }
 
     public void UpdateText(String texto) {

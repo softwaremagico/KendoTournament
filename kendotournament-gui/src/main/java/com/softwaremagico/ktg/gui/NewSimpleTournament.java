@@ -71,19 +71,19 @@ public class NewSimpleTournament extends javax.swing.JFrame {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewFight"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        Team1Label.setText(trans.returnTag("Team1Label"));
-        Team2Label.setText(trans.returnTag("Team2Label"));
-        AddButton.setText(trans.returnTag("AddButton"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
-        RandomButton.setText(trans.returnTag("RandomButton"));
-        FightAreaLabel.setText(trans.returnTag("FightArea"));
-        UpButton.setText(trans.returnTag("UpButton"));
-        DownButton.setText(trans.returnTag("DownButton"));
-        DeleteAllButton.setText(trans.returnTag("CleanAllButton"));
-        SortedButton.setText(trans.returnTag("SortedButton"));
+        this.setTitle(trans.getTranslatedText("titleNewFight"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        Team1Label.setText(trans.getTranslatedText("Team1Label"));
+        Team2Label.setText(trans.getTranslatedText("Team2Label"));
+        AddButton.setText(trans.getTranslatedText("AddButton"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
+        RandomButton.setText(trans.getTranslatedText("RandomButton"));
+        FightAreaLabel.setText(trans.getTranslatedText("FightArea"));
+        UpButton.setText(trans.getTranslatedText("UpButton"));
+        DownButton.setText(trans.getTranslatedText("DownButton"));
+        DeleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
+        SortedButton.setText(trans.getTranslatedText("SortedButton"));
     }
 
     private void fillTournaments() {
@@ -202,7 +202,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             for (int i = 0; i < fights.size(); i++) {
                 String text = fights.get(i).getTeam1().getName() + " - " + fights.get(i).getTeam2().getName();
                 if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
-                    text += "  (" + trans.returnTag("FightArea")
+                    text += "  (" + trans.getTranslatedText("FightArea")
                             + " " + KendoTournamentGenerator.getFightAreaName(fights.get(i).getAsignedFightArea()) + ")";
 
                 }
@@ -494,7 +494,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             RefreshTournament();
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
         }
     }//GEN-LAST:event_TournamentComboBoxActionPerformed
 

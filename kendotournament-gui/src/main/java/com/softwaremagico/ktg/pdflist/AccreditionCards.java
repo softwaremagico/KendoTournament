@@ -43,9 +43,9 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
 
     public AccreditionCards() {
         super();
-        this.setTitle(trans.returnTag("titleAccreditionCard"));
+        this.setTitle(trans.getTranslatedText("titleAccreditionCard"));
         CheckBox.setVisible(true);
-        changeCheckBoxText(trans.returnTag("PrintAll"));
+        changeCheckBoxText(trans.getTranslatedText("PrintAll"));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
 
                 /*

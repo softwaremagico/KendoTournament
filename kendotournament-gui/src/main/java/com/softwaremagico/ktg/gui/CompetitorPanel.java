@@ -81,7 +81,7 @@ public class CompetitorPanel extends JPanel {
 
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        competitorLabel.setText(position + "º " + trans.returnTag("CompetitorLabel"));
+        competitorLabel.setText(position + "º " + trans.getTranslatedText("CompetitorLabel"));
 
     }
 }

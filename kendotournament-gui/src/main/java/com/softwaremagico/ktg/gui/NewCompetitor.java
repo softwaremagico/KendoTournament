@@ -101,17 +101,17 @@ public class NewCompetitor extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewCompetitor"));
-        ExploreButton.setText(trans.returnTag("ExploreButton"));
-        CleanButton.setText(trans.returnTag("Clean"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        SearchButton.setText(trans.returnTag("SearchButton"));
-        NameLabel.setText(trans.returnTag("NameLabel"));
-        SurnameLabel.setText(trans.returnTag("SurnameLabel"));
-        IDLabel.setText(trans.returnTag("IDLabel"));
-        ClubLabel.setText(trans.returnTag("ClubLabel"));
-        PhotoLabel.setText(trans.returnTag("PhotoLabel"));
+        this.setTitle(trans.getTranslatedText("titleNewCompetitor"));
+        ExploreButton.setText(trans.getTranslatedText("ExploreButton"));
+        CleanButton.setText(trans.getTranslatedText("Clean"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
+        SurnameLabel.setText(trans.getTranslatedText("SurnameLabel"));
+        IDLabel.setText(trans.getTranslatedText("IDLabel"));
+        ClubLabel.setText(trans.getTranslatedText("ClubLabel"));
+        PhotoLabel.setText(trans.getTranslatedText("PhotoLabel"));
     }
 
     private void createPhoto() {
@@ -460,7 +460,7 @@ public class NewCompetitor extends KendoFrame {
 
     private void ClubComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClubComboBoxActionPerformed
         if (refreshClub) {
-            KendoTournamentGenerator.getInstance().changeLastSelectedClub(ClubComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedClub(ClubComboBox.getSelectedItem().toString());
         }
     }//GEN-LAST:event_ClubComboBoxActionPerformed
 

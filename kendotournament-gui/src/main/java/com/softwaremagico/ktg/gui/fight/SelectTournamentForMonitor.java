@@ -35,8 +35,8 @@ public class SelectTournamentForMonitor extends ListFromTournamentCreateFile {
 
     public SelectTournamentForMonitor() {
         createGui(false);
-        this.setTitle(trans.returnTag("titleMonitorTournament"));
-        GenerateButton.setText(trans.returnTag("ButtonMonitorTournament"));
+        this.setTitle(trans.getTranslatedText("titleMonitorTournament"));
+        GenerateButton.setText(trans.getTranslatedText("ButtonMonitorTournament"));
         ArenaComboBox.setEnabled(true);
     }
 

@@ -98,9 +98,9 @@ public class TournamentGroupBox extends Group {
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         if (tournamentGroup.getLevel() == 0) {
-            this.setToolTipText(trans.returnTag("ToolTipEditable"));
+            this.setToolTipText(trans.getTranslatedText("ToolTipEditable"));
         } else {
-            this.setToolTipText(trans.returnTag("ToolTipNotEditable"));
+            this.setToolTipText(trans.getTranslatedText("ToolTipNotEditable"));
         }
     }
 
@@ -148,11 +148,11 @@ public class TournamentGroupBox extends Group {
         //Select label
         String s;
         if (tournamentGroup.getLevel() < tournamentManager.getNumberOfLevels() - 2) {
-            s = trans.returnTag("Round") + " " + (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
+            s = trans.getTranslatedText("Round") + " " + (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
         } else if (tournamentGroup.getLevel() == tournamentManager.getNumberOfLevels() - 2) {
-            s = trans.returnTag("SemiFinalLabel");
+            s = trans.getTranslatedText("SemiFinalLabel");
         } else {
-            s = trans.returnTag("FinalLabel");
+            s = trans.getTranslatedText("FinalLabel");
         }
         return s;
     }

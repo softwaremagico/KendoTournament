@@ -50,7 +50,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
         this.nameposition = nposition;
         this.statistics = printStatistics;
         this.selectedRoles = roles;
-        this.setTitle(trans.returnTag("titleDiplomas"));
+        this.setTitle(trans.getTranslatedText("titleDiplomas"));
         CheckBox.setVisible(true);
         prepareCheckBox();
     }
@@ -68,7 +68,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 DiplomaPDF pdf = new DiplomaPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), statistics && TournamentComboBox.getSelectedIndex() != 0, CheckBox.isSelected(), selectedRoles);
 
@@ -100,7 +100,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
 
     private void prepareCheckBox() {
         CheckBox.setEnabled(true);
-        CheckBox.setText(trans.returnTag("PrintAll"));
+        CheckBox.setText(trans.getTranslatedText("PrintAll"));
     }
 
     @Override

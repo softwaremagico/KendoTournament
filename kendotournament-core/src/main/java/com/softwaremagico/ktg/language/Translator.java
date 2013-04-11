@@ -99,7 +99,7 @@ public class Translator {
         return usedDoc;
     }
 
-    public String returnTag(String tag) {
+    public String getTranslatedText(String tag) {
         return readTag(tag, KendoTournamentGenerator.getInstance().getLanguage());
     }
 

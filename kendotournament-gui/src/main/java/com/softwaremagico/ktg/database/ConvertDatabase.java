@@ -81,8 +81,8 @@ public class ConvertDatabase {
         public ThreadConversion(TimerPanel tp) {
             transl = LanguagePool.getTranslator("gui.xml");
             timerPanel = tp;
-            tp.updateTitle(transl.returnTag("ExportDatabaseProgressBarTitle"));
-            tp.updateLabel(transl.returnTag("ExportDatabaseProgressBarLabelTournament"));
+            tp.updateTitle(transl.getTranslatedText("ExportDatabaseProgressBarTitle"));
+            tp.updateLabel(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"));
         }
 
         @Override
@@ -92,39 +92,39 @@ public class ConvertDatabase {
 
         private boolean dumpData() {
             try {
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTournament"), 0, 1);
+                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"), 0, 1);
                 List<Tournament> tournaments = fromDatabase.getTournaments();
                 toDatabase.addTournaments(tournaments);
 
                 Integer total = 3 + tournaments.size() * 5;
                 Integer current = 0;
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelClub"), current++, total);
+                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelClub"), current++, total);
                 List<Club> clubs = fromDatabase.getClubs();
                 toDatabase.addClubs(clubs);
 
-                timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelCompetitor"), current++, total);
+                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelCompetitor"), current++, total);
                 List<RegisteredPerson> people = fromDatabase.getRegisteredPeople();
                 toDatabase.addRegisteredPeople(people);
 
                 for (Tournament tournament : tournaments) {
-                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")", current++, total);
+                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")", current++, total);
                     List<Role> roles = fromDatabase.getRoles(tournament);
                     toDatabase.addRoles(roles);
 
-                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"), current++, total);
+                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"), current++, total);
                     List<Team> teams = fromDatabase.getTeams(tournament);
                     toDatabase.addTeams(teams);
 
-                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
                     List<Fight> fights = fromDatabase.getFights(tournament);
                     toDatabase.addFights(fights);
 
-                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
                     List<Duel> duels = fromDatabase.getDuels(tournament);
                     toDatabase.addDuels(duels);
 
-                    timerPanel.updateText(transl.returnTag("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
+                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
                     List<Undraw> undraws = fromDatabase.getUndraws(tournament);
                     toDatabase.addUndraws(undraws);
                 }

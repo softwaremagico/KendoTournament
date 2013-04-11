@@ -74,7 +74,7 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
         try {
             fillSelectComboBox();
             changesAllowed = true;
-            NumberLabel.setText(trans.returnTag("NumberTeamsLabel"));
+            NumberLabel.setText(trans.getTranslatedText("NumberTeamsLabel"));
         } catch (NullPointerException npe) {
         }
     }
@@ -97,11 +97,11 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
     private CategoryDataset createDataset() {
 
         // row keys...
-        final String series1 = transl.returnTag("WonMatchs");
-        final String series2 = transl.returnTag("DrawMatchs");
-        final String series3 = transl.returnTag("WonFights");
-        final String series4 = transl.returnTag("DrawFights");
-        final String series5 = transl.returnTag("PerformedHitStatistics");
+        final String series1 = transl.getTranslatedText("WonMatchs");
+        final String series2 = transl.getTranslatedText("DrawMatchs");
+        final String series3 = transl.getTranslatedText("WonFights");
+        final String series4 = transl.getTranslatedText("DrawFights");
+        final String series5 = transl.getTranslatedText("PerformedHitStatistics");
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -147,9 +147,9 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
     private JFreeChart createChart(CategoryDataset dataset) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-                transl.returnTag("TopTenTitle"), // chart title
+                transl.getTranslatedText("TopTenTitle"), // chart title
                 "",
-                transl.returnTag("NumberOfWinnedTopTen"), // domain axis label
+                transl.getTranslatedText("NumberOfWinnedTopTen"), // domain axis label
                 dataset, // data
                 PlotOrientation.VERTICAL, // orientation
                 true, // include legend

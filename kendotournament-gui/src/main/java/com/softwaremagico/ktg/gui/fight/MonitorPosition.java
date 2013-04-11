@@ -109,23 +109,23 @@ public class MonitorPosition extends JFrame {
     }
 
     void addTitle(int fontSize) {
-        nameLabel = new JLabel(transl.returnTag("TeamTopTenMenuItem"));
+        nameLabel = new JLabel(transl.getTranslatedText("TeamTopTenMenuItem"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
 
-        nameLabel = new JLabel(transl.returnTag("WonMatchs"));
+        nameLabel = new JLabel(transl.getTranslatedText("WonMatchs"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("WonFights"));
+        nameLabel = new JLabel(transl.getTranslatedText("WonFights"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);
 
-        nameLabel = new JLabel(transl.returnTag("PerformedHitStatistics"));
+        nameLabel = new JLabel(transl.getTranslatedText("PerformedHitStatistics"));
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, fontSize));
         nameLabel.setHorizontalAlignment(JLabel.CENTER);
         TablePanel.add(nameLabel);

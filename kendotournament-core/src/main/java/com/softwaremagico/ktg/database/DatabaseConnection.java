@@ -48,8 +48,8 @@ public class DatabaseConnection {
     private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
     private Integer stillConnected = 0;
-    Timer timer = new Timer("Database Connection");
-    Task timerTask;
+    private Timer timer = new Timer("Database Connection");
+    private Task timerTask;
 
     private DatabaseConnection() {
         obtainStoredDatabaseConnection();

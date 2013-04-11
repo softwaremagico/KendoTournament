@@ -53,9 +53,9 @@ public abstract class ListFromCompetitor extends KendoFrame {
 
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        CompetitorLabel.setText(trans.returnTag("CompetitorLabel"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        GenerateButton.setText(trans.returnTag("GenerateButton"));
+        CompetitorLabel.setText(trans.getTranslatedText("CompetitorLabel"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
     }
 
     private void fillCompetitors() {

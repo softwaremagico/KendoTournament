@@ -66,65 +66,65 @@ public class MainGUI extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        SaveMenuItem.setText(trans.returnTag("SaveMenuItem"));
-        TournamentMenu.setText(trans.returnTag("FileMenu"));
-        LanguageMenu.setText(trans.returnTag("LanguageMenu"));
-        OptionsMenu.setText(trans.returnTag("OptionsMenu"));
-        StatisticsMenu.setText(trans.returnTag("StatisticsMenu"));
-        InsertMenu.setText(trans.returnTag("InsertMenu"));
-        TournamentMenu.setText(trans.returnTag("TournamentMenu"));
-        TournamentPanelMenuItem.setText(trans.returnTag("TournamentPanelMenuItem"));
-        HelpMenu.setText(trans.returnTag("HelpMenu"));
-        AboutMenuItem.setText(trans.returnTag("AboutMenu"));
-        CompetitorMenuItem.setText(trans.returnTag("CompetitorMenuItem"));
-        RoleMenuItem.setText(trans.returnTag("RoleMenuItem"));
-        TournamentMenuItem.setText(trans.returnTag("TournamentMenuItem"));
-        ClubMenuItem.setText(trans.returnTag("ClubMenuItem"));
-        TeamMenuItem.setText(trans.returnTag("TeamMenuItem"));
-        FightMenuItem.setText(trans.returnTag("FightMenuItem"));
-        DatabaseMenu.setText(trans.returnTag("DatabaseMenu"));
-        DatabaseConnectMenuItem.setText(trans.returnTag("DatabaseConnectMenuItem"));
-        DatabaseDisconnectMenuItem.setText(trans.returnTag("DatabaseDisconnectMenuItem"));
-        ListMenu.setText(trans.returnTag("ListMenu"));
-        TeamListMenuItem.setText(trans.returnTag("TeamListMenuItem"));
-        FightListMenuItem.setText(trans.returnTag("FightListMenuItem"));
-        PointListMenuItem.setText(trans.returnTag("PointListMenuItem"));
-        DiplomaMenuItem.setText(trans.returnTag("DiplomaMenuItem"));
-        CompetitorStatisticsMenu.setText(trans.returnTag("CompetitorStatisticsMenu"));
-        PerformedHitsMenuItem.setText(trans.returnTag("PerformedHitsStatisticsMenuItem"));
-        ReceivedHitsMenuItem.setText(trans.returnTag("ReceivedHitsStatisticsMenuItem"));
-        WonLostMenuItem.setText(trans.returnTag("WonLostMenuItem"));
-        TournamentStatisticsMenu.setText(trans.returnTag("TournamentStatisticsMenu"));
-        TeamStatisticsMenu.setText(trans.returnTag("TeamStatisticsMenu"));
-        TournamentTopTenMenuItem.setText(trans.returnTag("TournamentTopTenMenuItem"));
-        TournamentHitsStatisticsMenuItem.setText(trans.returnTag("TournamentHitsStatisticsMenuItem"));
-        DefineFightsMenu.setText(trans.returnTag("DefineFightsMenu"));
-        ProgramMenu.setText(trans.returnTag("ProgramMenu"));
-        ExitMenuItem.setText(trans.returnTag("ExitMenuItem"));
-        ManualFightsMenuItem.setText(trans.returnTag("ManualFightsMenuItem"));
-        RingMenuItem.setText(trans.returnTag("RingMenuItem"));
-        DesignerMenuItem.setText(trans.returnTag("DesignerMenuItem"));
-        TeamTopTenMenuItem.setText(trans.returnTag("TeamTopTenMenuItem"));
-        AccreditationMenuItem.setText(trans.returnTag("AccreditationMenuItem"));
-        HelpMenuItem.setText(trans.returnTag("HelpMenuItem"));
-        SummaryMenuItem.setText(trans.returnTag("SummaryMenuItem"));
-        ClubListMenuItem.setText(trans.returnTag("ClubListMenuItem"));
-        RefereeListMenuItem.setText(trans.returnTag("RefereeListMenuItem"));
-        ScoreMenuItem.setText(trans.returnTag("ScoreMenuItem"));
-        DataExchangeMenu.setText(trans.returnTag("DataExchange"));
-        ImportFightCsvMenuItem.setText(trans.returnTag("CvsMenuItem"));
-        ChangeTeamMenuItem.setText(trans.returnTag("ChangeTeamOrder"));
-        LogMenuCheckBox.setText(trans.returnTag("LogOption"));
-        DebugMenuCheckBox.setText(trans.returnTag("DebugOption"));
-        ConvertDatabaseMenuItem.setText(trans.returnTag("ConvertDatabase"));
-        FightsCardMenuItem.setText(trans.returnTag("FightsCard"));
-        ImportFightMenu.setText(trans.returnTag("Import"));
-        ExportFightMenu.setText(trans.returnTag("Export"));
-        ExchangeFightsMenu.setText(trans.returnTag("Fights"));
-        ExchangeParticipantsMenu.setText(trans.returnTag("CompetitorMenu"));
-        ImportParticipantMenu.setText(trans.returnTag("Import"));
-        ExportParticipantMenu.setText(trans.returnTag("Export"));
-        StoreFightsCheckBox.setText(trans.returnTag("StrictStore"));
+        SaveMenuItem.setText(trans.getTranslatedText("SaveMenuItem"));
+        TournamentMenu.setText(trans.getTranslatedText("FileMenu"));
+        LanguageMenu.setText(trans.getTranslatedText("LanguageMenu"));
+        OptionsMenu.setText(trans.getTranslatedText("OptionsMenu"));
+        StatisticsMenu.setText(trans.getTranslatedText("StatisticsMenu"));
+        InsertMenu.setText(trans.getTranslatedText("InsertMenu"));
+        TournamentMenu.setText(trans.getTranslatedText("TournamentMenu"));
+        TournamentPanelMenuItem.setText(trans.getTranslatedText("TournamentPanelMenuItem"));
+        HelpMenu.setText(trans.getTranslatedText("HelpMenu"));
+        AboutMenuItem.setText(trans.getTranslatedText("AboutMenu"));
+        CompetitorMenuItem.setText(trans.getTranslatedText("CompetitorMenuItem"));
+        RoleMenuItem.setText(trans.getTranslatedText("RoleMenuItem"));
+        TournamentMenuItem.setText(trans.getTranslatedText("TournamentMenuItem"));
+        ClubMenuItem.setText(trans.getTranslatedText("ClubMenuItem"));
+        TeamMenuItem.setText(trans.getTranslatedText("TeamMenuItem"));
+        FightMenuItem.setText(trans.getTranslatedText("FightMenuItem"));
+        DatabaseMenu.setText(trans.getTranslatedText("DatabaseMenu"));
+        DatabaseConnectMenuItem.setText(trans.getTranslatedText("DatabaseConnectMenuItem"));
+        DatabaseDisconnectMenuItem.setText(trans.getTranslatedText("DatabaseDisconnectMenuItem"));
+        ListMenu.setText(trans.getTranslatedText("ListMenu"));
+        TeamListMenuItem.setText(trans.getTranslatedText("TeamListMenuItem"));
+        FightListMenuItem.setText(trans.getTranslatedText("FightListMenuItem"));
+        PointListMenuItem.setText(trans.getTranslatedText("PointListMenuItem"));
+        DiplomaMenuItem.setText(trans.getTranslatedText("DiplomaMenuItem"));
+        CompetitorStatisticsMenu.setText(trans.getTranslatedText("CompetitorStatisticsMenu"));
+        PerformedHitsMenuItem.setText(trans.getTranslatedText("PerformedHitsStatisticsMenuItem"));
+        ReceivedHitsMenuItem.setText(trans.getTranslatedText("ReceivedHitsStatisticsMenuItem"));
+        WonLostMenuItem.setText(trans.getTranslatedText("WonLostMenuItem"));
+        TournamentStatisticsMenu.setText(trans.getTranslatedText("TournamentStatisticsMenu"));
+        TeamStatisticsMenu.setText(trans.getTranslatedText("TeamStatisticsMenu"));
+        TournamentTopTenMenuItem.setText(trans.getTranslatedText("TournamentTopTenMenuItem"));
+        TournamentHitsStatisticsMenuItem.setText(trans.getTranslatedText("TournamentHitsStatisticsMenuItem"));
+        DefineFightsMenu.setText(trans.getTranslatedText("DefineFightsMenu"));
+        ProgramMenu.setText(trans.getTranslatedText("ProgramMenu"));
+        ExitMenuItem.setText(trans.getTranslatedText("ExitMenuItem"));
+        ManualFightsMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
+        RingMenuItem.setText(trans.getTranslatedText("RingMenuItem"));
+        DesignerMenuItem.setText(trans.getTranslatedText("DesignerMenuItem"));
+        TeamTopTenMenuItem.setText(trans.getTranslatedText("TeamTopTenMenuItem"));
+        AccreditationMenuItem.setText(trans.getTranslatedText("AccreditationMenuItem"));
+        HelpMenuItem.setText(trans.getTranslatedText("HelpMenuItem"));
+        SummaryMenuItem.setText(trans.getTranslatedText("SummaryMenuItem"));
+        ClubListMenuItem.setText(trans.getTranslatedText("ClubListMenuItem"));
+        RefereeListMenuItem.setText(trans.getTranslatedText("RefereeListMenuItem"));
+        ScoreMenuItem.setText(trans.getTranslatedText("ScoreMenuItem"));
+        DataExchangeMenu.setText(trans.getTranslatedText("DataExchange"));
+        ImportFightCsvMenuItem.setText(trans.getTranslatedText("CvsMenuItem"));
+        ChangeTeamMenuItem.setText(trans.getTranslatedText("ChangeTeamOrder"));
+        LogMenuCheckBox.setText(trans.getTranslatedText("LogOption"));
+        DebugMenuCheckBox.setText(trans.getTranslatedText("DebugOption"));
+        ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
+        FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
+        ImportFightMenu.setText(trans.getTranslatedText("Import"));
+        ExportFightMenu.setText(trans.getTranslatedText("Export"));
+        ExchangeFightsMenu.setText(trans.getTranslatedText("Fights"));
+        ExchangeParticipantsMenu.setText(trans.getTranslatedText("CompetitorMenu"));
+        ImportParticipantMenu.setText(trans.getTranslatedText("Import"));
+        ExportParticipantMenu.setText(trans.getTranslatedText("Export"));
+        AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
     }
 
     private void setPhoto() {
@@ -216,7 +216,7 @@ public class MainGUI extends KendoFrame {
         LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
         DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
         refresh = true;
-        StoreFightsCheckBox.setState(DatabaseConnection.getInstance().isDatabaseLazyUpdate());
+        AutosaveCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
     }
 
     /**
@@ -458,8 +458,8 @@ public class MainGUI extends KendoFrame {
         OptionsMenu = new javax.swing.JMenu();
         LanguageMenu = new javax.swing.JMenu();
         LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"language.png"));
-        StoreFightsCheckBox = new javax.swing.JCheckBoxMenuItem();
-        StoreFightsCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
+        AutosaveCheckBox = new javax.swing.JCheckBoxMenuItem();
+        AutosaveCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
         LogMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
         LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"log.png"));
         DebugMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
@@ -501,11 +501,6 @@ public class MainGUI extends KendoFrame {
 
         SaveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         SaveMenuItem.setText("Save");
-        SaveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SaveMenuItemActionPerformed(evt);
-            }
-        });
         ProgramMenu.add(SaveMenuItem);
 
         DataExchangeMenu.setText("Data Exchange");
@@ -683,14 +678,14 @@ public class MainGUI extends KendoFrame {
         LanguageMenu.setText("Language");
         OptionsMenu.add(LanguageMenu);
 
-        StoreFightsCheckBox.setSelected(true);
-        StoreFightsCheckBox.setText("Database Lazy Update");
-        StoreFightsCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+        AutosaveCheckBox.setSelected(true);
+        AutosaveCheckBox.setText("Autosave");
+        AutosaveCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                StoreFightsCheckBoxStateChanged(evt);
+                AutosaveCheckBoxStateChanged(evt);
             }
         });
-        OptionsMenu.add(StoreFightsCheckBox);
+        OptionsMenu.add(AutosaveCheckBox);
 
         LogMenuCheckBox.setSelected(true);
         LogMenuCheckBox.setText("Log");
@@ -739,7 +734,7 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -758,30 +753,24 @@ public class MainGUI extends KendoFrame {
 
 private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LogMenuCheckBoxItemStateChanged
     if (refresh) {
-        KendoTournamentGenerator.getInstance().changeLogOption(LogMenuCheckBox.getState());
+        KendoTournamentGenerator.getInstance().setLogOption(LogMenuCheckBox.getState());
     }
 }//GEN-LAST:event_LogMenuCheckBoxItemStateChanged
 
     private void DebugMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_DebugMenuCheckBoxItemStateChanged
         if (refresh) {
-            KendoTournamentGenerator.getInstance().changeDebugOption(DebugMenuCheckBox.getState());
+            KendoTournamentGenerator.getInstance().setDebugOption(DebugMenuCheckBox.getState());
         }
     }//GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
 
-    private void StoreFightsCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_StoreFightsCheckBoxStateChanged
-        if (StoreFightsCheckBox.isSelected() && DatabaseConnection.getInstance().isDatabaseLazyUpdate() != StoreFightsCheckBox.isSelected()) {
-            MessageManager.warningMessage(this.getClass().getName(), "disableMonitor", "Atention");
-        }
-        DatabaseConnection.getInstance().setDatabaseLazyUpdate(StoreFightsCheckBox.getState());
-        KendoTournamentGenerator.getInstance().storeConfig();
-    }//GEN-LAST:event_StoreFightsCheckBoxStateChanged
+    private void AutosaveCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_AutosaveCheckBoxStateChanged
+        KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveCheckBox.getState());
+    }//GEN-LAST:event_AutosaveCheckBoxStateChanged
 
-    private void SaveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SaveMenuItemActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;
+    private javax.swing.JCheckBoxMenuItem AutosaveCheckBox;
     private javax.swing.JMenuItem ChangeTeamMenuItem;
     private javax.swing.JMenuItem ClubListMenuItem;
     private javax.swing.JMenuItem ClubMenuItem;
@@ -831,7 +820,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem SaveMenuItem;
     private javax.swing.JMenuItem ScoreMenuItem;
     private javax.swing.JMenu StatisticsMenu;
-    private javax.swing.JCheckBoxMenuItem StoreFightsCheckBox;
     private javax.swing.JMenuItem SummaryMenuItem;
     private javax.swing.JMenuItem TeamListMenuItem;
     private javax.swing.JMenuItem TeamMenuItem;

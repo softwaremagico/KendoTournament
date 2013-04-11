@@ -50,7 +50,7 @@ public final class SearchTournament extends Search<Tournament> {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        NameLabel.setText(trans.returnTag("NameLabel"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
     }
 
     @Override

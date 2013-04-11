@@ -55,10 +55,10 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        ArenaLabel.setText(trans.returnTag("FightArea"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        GenerateButton.setText(trans.returnTag("GenerateButton"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        ArenaLabel.setText(trans.getTranslatedText("FightArea"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
     }
 
     private void fillTournaments() {
@@ -114,7 +114,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
         try {
             int selectedTourn = returnSelectedTournamentOfList();
             if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
-                ArenaComboBox.addItem(trans.returnTag("All"));
+                ArenaComboBox.addItem(trans.getTranslatedText("All"));
             }
 
             if (selectedTourn >= 0) {
@@ -276,7 +276,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             try {
-                KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+                KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             } catch (NullPointerException npe) {
                 //No problem "All tournaments selected".
             }

@@ -114,9 +114,9 @@ public abstract class StatisticsHits extends StatisticsGUI {
         Translator transl = LanguagePool.getTranslator("gui.xml");
         String title;
         if (competitor != null) {
-            title = transl.returnTag(tag) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico
+            title = transl.getTranslatedText(tag) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico
         } else {
-            title = transl.returnTag(tag);
+            title = transl.getTranslatedText(tag);
         }
         // create the chart…
         try {

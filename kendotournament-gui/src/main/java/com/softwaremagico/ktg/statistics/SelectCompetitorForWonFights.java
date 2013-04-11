@@ -31,7 +31,7 @@ public class SelectCompetitorForWonFights extends ListFromCompetitor {
 
     public SelectCompetitorForWonFights() {
         Start(true);
-        this.setTitle(trans.returnTag("titleWonStatistics"));
+        this.setTitle(trans.getTranslatedText("titleWonStatistics"));
     }
 
     @Override

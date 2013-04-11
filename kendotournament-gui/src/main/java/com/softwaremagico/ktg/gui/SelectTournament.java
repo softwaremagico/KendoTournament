@@ -32,13 +32,13 @@ public class SelectTournament extends ListFromTournamentCreateFile {
 
     public SelectTournament(String title, String buttonTag) {
         createGui(false);
-        this.setTitle(trans.returnTag(title));
-        GenerateButton.setText(trans.returnTag(buttonTag));
+        this.setTitle(trans.getTranslatedText(title));
+        GenerateButton.setText(trans.getTranslatedText(buttonTag));
     }
     
     public SelectTournament(String title) {
         createGui(true);
-        this.setTitle(trans.returnTag(title));
+        this.setTitle(trans.getTranslatedText(title));
     }
 
     @Override

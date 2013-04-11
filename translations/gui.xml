@@ -2067,4 +2067,12 @@
 		<ca>Save</ca>
 		<it>Salvare</it>
 	</SaveMenuItem> 
+	<AutosaveMenuItem>
+		<en>Autosave</en>
+		<es>Autoguardado</es>
+		<nl>Autosave</nl>
+		<de>Autosave</de>
+		<ca>Autoguardar</ca>
+		<it>Autosalvare</it>
+	</AutosaveMenuItem> 
 </translator>

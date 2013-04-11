@@ -45,7 +45,7 @@ public abstract class KFrame extends JFrame {
         setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
     }
 
-    protected void defineWindow(Integer width, Integer height) {
+    public void defineWindow(Integer width, Integer height) {
         setSize(width, height);
         setMinimumSize(new Dimension(width, height));
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2

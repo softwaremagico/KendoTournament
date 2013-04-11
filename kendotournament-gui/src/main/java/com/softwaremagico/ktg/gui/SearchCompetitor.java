@@ -59,10 +59,10 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
      */
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        NameLabel.setText(trans.returnTag("NameLabel"));
-        SurnameLabel.setText(trans.returnTag("SurnameLabel"));
-        IDLabel.setText(trans.returnTag("IDLabel"));
-        ClubLabel.setText(trans.returnTag("ClubLabel"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
+        SurnameLabel.setText(trans.getTranslatedText("SurnameLabel"));
+        IDLabel.setText(trans.getTranslatedText("IDLabel"));
+        ClubLabel.setText(trans.getTranslatedText("ClubLabel"));
     }
 
     @Override

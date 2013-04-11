@@ -84,14 +84,14 @@ public class NewRole extends KendoFrame {
      */
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleNewRole"));
-        AcceptButton.setText(trans.returnTag("AcceptButton"));
-        CancelButton.setText(trans.returnTag("CloseButton"));
-        DeleteButton.setText(trans.returnTag("DeleteButton"));
-        PDFButton.setText(trans.returnTag("AccreditationPDFButton"));
-        TournamentLabel.setText(trans.returnTag("TournamentLabel"));
-        CompetitorLabel.setText(trans.returnTag("CompetitorLabel"));
-        RoleLabel.setText(trans.returnTag("RoleLabel"));
+        this.setTitle(trans.getTranslatedText("titleNewRole"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CancelButton.setText(trans.getTranslatedText("CloseButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
+        PDFButton.setText(trans.getTranslatedText("AccreditationPDFButton"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        CompetitorLabel.setText(trans.getTranslatedText("CompetitorLabel"));
+        RoleLabel.setText(trans.getTranslatedText("RoleLabel"));
     }
 
     private void fillTournaments() {
@@ -352,7 +352,7 @@ public class NewRole extends KendoFrame {
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 RegisteredPerson person = RegisteredPersonPool.getInstance().get(((RegisteredPerson) CompetitorComboBox.getSelectedItem()).getId());
                 CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF(((Tournament) TournamentComboBox.getSelectedItem()), person);
@@ -365,7 +365,7 @@ public class NewRole extends KendoFrame {
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
-            KendoTournamentGenerator.getInstance().changeLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             refreshRole();
         }
     }//GEN-LAST:event_TournamentComboBoxActionPerformed

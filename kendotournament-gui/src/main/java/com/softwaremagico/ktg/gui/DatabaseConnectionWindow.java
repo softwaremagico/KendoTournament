@@ -63,9 +63,9 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
 
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleDatabaseConnection"));
-        ConnectButton.setText(trans.returnTag("ConnectButton"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
+        this.setTitle(trans.getTranslatedText("titleDatabaseConnection"));
+        ConnectButton.setText(trans.getTranslatedText("ConnectButton"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
     }
 
     public void performConnection() {

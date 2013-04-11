@@ -64,9 +64,9 @@ public abstract class StatisticsGUI extends KendoFrame {
 
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.returnTag("titleStatistics"));
-        CloseButton.setText(trans.returnTag("CloseButton"));
-        SaveButton.setText(trans.returnTag("SaveButton"));
+        this.setTitle(trans.getTranslatedText("titleStatistics"));
+        CloseButton.setText(trans.getTranslatedText("CloseButton"));
+        SaveButton.setText(trans.getTranslatedText("SaveButton"));
     }
 
     public abstract void generateStatistics();
@@ -190,7 +190,7 @@ public abstract class StatisticsGUI extends KendoFrame {
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
         String file = "";
         try {
-            if (!(file = exploreWindowsForPng(trans.returnTag("ExportPNG"),
+            if (!(file = exploreWindowsForPng(trans.getTranslatedText("ExportPNG"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
             }
         } catch (Exception ex) {

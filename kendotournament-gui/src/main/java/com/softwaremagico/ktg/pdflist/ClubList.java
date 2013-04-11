@@ -33,7 +33,7 @@ public class ClubList extends ListFromTournamentCreatePDF {
 
     public ClubList() {
         super();
-        this.setTitle(trans.returnTag("titleSummary"));
+        this.setTitle(trans.getTranslatedText("titleSummary"));
     }
 
     @Override

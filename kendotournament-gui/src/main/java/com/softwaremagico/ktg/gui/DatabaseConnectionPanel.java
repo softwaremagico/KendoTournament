@@ -52,11 +52,11 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
 
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
-        UserLabel.setText(trans.returnTag("UserLabel"));
-        ServerLabel.setText(trans.returnTag("ServerLabel"));
-        PasswordLabel.setText(trans.returnTag("PasswordLabel"));
-        DatabaseLabel.setText(trans.returnTag("DatabaseLabel"));
-        EngineLabel.setText(trans.returnTag("DatabaseEngineLabel"));
+        UserLabel.setText(trans.getTranslatedText("UserLabel"));
+        ServerLabel.setText(trans.getTranslatedText("ServerLabel"));
+        PasswordLabel.setText(trans.getTranslatedText("PasswordLabel"));
+        DatabaseLabel.setText(trans.getTranslatedText("DatabaseLabel"));
+        EngineLabel.setText(trans.getTranslatedText("DatabaseEngineLabel"));
     }
 
     private void setDefaultText() {

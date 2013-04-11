@@ -1042,5 +1042,13 @@
 		<ca>Error mentre s'intentava esborrar un duel a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando un incontro nel database</it>
 	</deleteDuelError>
+	<autosaving>
+		<en>Autosaving...</en>
+		<es>Auto guardando...</es>
+		<nl>Autosaving...</nl>
+		<de>Autosaving...</de>
+		<ca>Auto guardant...</ca>
+		<it>Autosalvare...</it>
+	</autosaving>
 </translator>
 

@@ -82,7 +82,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
         Translator transl = LanguagePool.getTranslator("gui.xml");
         // create the chart…
         JFreeChart chart = ChartFactory.createPieChart(
-                transl.returnTag("TitleHits") + ": " + tournament, // Titulo de grafico
+                transl.getTranslatedText("TitleHits") + ": " + tournament, // Titulo de grafico
                 dataset, // data
                 true, // incluye leyenda
                 true, // visualiza tooltips

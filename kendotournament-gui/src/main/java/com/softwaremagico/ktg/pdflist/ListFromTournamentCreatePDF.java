@@ -47,7 +47,7 @@ public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCrea
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.returnTag("ExportPDF"),
+            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
                 ParentList pdf = getPdfGenerator();
                 if (pdf.createFile(file)) {

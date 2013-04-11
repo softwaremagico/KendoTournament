@@ -54,9 +54,9 @@ public abstract class ListFromTeams extends KendoFrame {
 
     public void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
-        TeamLabel.setText(trans.returnTag("TeamLabel"));
-        CancelButton.setText(trans.returnTag("CancelButton"));
-        GenerateButton.setText(trans.returnTag("GenerateButton"));
+        TeamLabel.setText(trans.getTranslatedText("TeamLabel"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
     }
 
     private void fillTeams() {

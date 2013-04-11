@@ -104,11 +104,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
             Separator s;
             if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                s = new Separator(trans.returnTag("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
+                s = new Separator(trans.getTranslatedText("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
             } else if (i == TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                s = new Separator(trans.returnTag("SemiFinalLabel"));
+                s = new Separator(trans.getTranslatedText("SemiFinalLabel"));
             } else {
-                s = new Separator(trans.returnTag("FinalLabel"));
+                s = new Separator(trans.getTranslatedText("FinalLabel"));
             }
             s.updateFont("sansserif", 24);
             add(s, c);
@@ -123,8 +123,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 c.gridx = 0;
                 c.gridy = i + 2;
 
-                Separator s = new Separator(trans.returnTag("GroupString") + " " + (i + 1)
-                        + "<br>" + trans.returnTag("ArenaString") + " "
+                Separator s = new Separator(trans.getTranslatedText("GroupString") + " " + (i + 1)
+                        + "<br>" + trans.getTranslatedText("ArenaString") + " "
                         + KendoTournamentGenerator.getFightAreaName(grps.get(i).getFightArea()));
                 s.updateFont("sansserif", 24);
                 add(s, c);

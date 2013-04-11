@@ -35,7 +35,7 @@ public class SummaryList extends ListFromTournamentCreatePDF {
 
     public SummaryList() {
         super();
-        this.setTitle(trans.returnTag("titleSummary"));
+        this.setTitle(trans.getTranslatedText("titleSummary"));
         ArenaComboBox.setEnabled(true);
     }
 

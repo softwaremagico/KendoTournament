@@ -79,7 +79,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         }
         fillSelectComboBox();
         changesAllowed = true;
-        NumberLabel.setText(trans.returnTag("NumberCompetitorsLabel"));
+        NumberLabel.setText(trans.getTranslatedText("NumberCompetitorsLabel"));
     }
 
     @Override
@@ -101,8 +101,8 @@ public class StatisticsTopTen extends StatisticsGUI {
     private CategoryDataset createDataset() {
 
         // row keys...
-        final String series1 = transl.returnTag("WonFights");
-        final String series2 = transl.returnTag("PerformedHitStatistics");
+        final String series1 = transl.getTranslatedText("WonFights");
+        final String series2 = transl.getTranslatedText("PerformedHitStatistics");
 
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -142,9 +142,9 @@ public class StatisticsTopTen extends StatisticsGUI {
     private JFreeChart createChart(CategoryDataset dataset) {
         // create the chart...
         final JFreeChart chart = ChartFactory.createBarChart(
-                transl.returnTag("TopTenTitle"), // chart title
+                transl.getTranslatedText("TopTenTitle"), // chart title
                 "",
-                transl.returnTag("NumberOfWinnedTopTen"), // domain axis label
+                transl.getTranslatedText("NumberOfWinnedTopTen"), // domain axis label
                 dataset, // data
                 PlotOrientation.VERTICAL, // orientation
                 true, // include legend
