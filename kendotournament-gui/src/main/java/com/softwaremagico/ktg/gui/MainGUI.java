@@ -32,6 +32,8 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class MainGUI extends KendoFrame {
         setPhoto();
         changeMenuIsConnectedToDatabase();
         updateConfig();
+        addCloseAction();
     }
 
     /**
@@ -217,6 +220,37 @@ public class MainGUI extends KendoFrame {
         DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
         refresh = true;
         AutosaveCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
+    }
+
+    private void close() {
+        //No data to store. Exit.
+        if (!DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
+            System.exit(0);
+        }
+        //Data not stored. Ask the user. 
+        int confirmed = JOptionPane.showConfirmDialog(null,
+                LanguagePool.getTranslator("messages.xml").getTranslatedText("saveBeforeExit"), "Exit",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+        if (confirmed == JOptionPane.YES_OPTION) {
+            if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
+                DatabaseConnection.getInstance().updateDatabase();
+            }
+            System.exit(0);
+        } else if (confirmed == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        } else {
+            //Do nothing.
+        }
+    }
+
+    private void addCloseAction() {
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                close();
+            }
+        });
     }
 
     /**
@@ -468,9 +502,15 @@ public class MainGUI extends KendoFrame {
         HelpMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"help.png"));
         AboutMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"info.png"));
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Kendo Tournament Administration Tool");
+        setName("mainGui"); // NOI18N
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                WindowClose(evt);
+            }
+        });
 
         MainPhotoPanel.setBorder(null);
         MainPhotoPanel.setForeground(new java.awt.Color(5, 0, 0));
@@ -734,7 +774,7 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -748,7 +788,7 @@ public class MainGUI extends KendoFrame {
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed
-        this.dispose();
+        close();
     }//GEN-LAST:event_ExitMenuItemActionPerformed
 
 private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_LogMenuCheckBoxItemStateChanged
@@ -767,6 +807,9 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
         KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveCheckBox.getState());
     }//GEN-LAST:event_AutosaveCheckBoxStateChanged
 
+    private void WindowClose(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_WindowClose
+        close();
+    }//GEN-LAST:event_WindowClose
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;

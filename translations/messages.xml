@@ -1050,5 +1050,13 @@
 		<ca>Auto guardant...</ca>
 		<it>Autosalvare...</it>
 	</autosaving>
+	<saveBeforeExit>
+		<en>There are some unsaved changes. Do you want to save it in the database?</en>
+		<es>Existen cambios sin guardar. ¿Quieres guardar estos cambios en la base de datos?</es>
+		<nl>There are some unsaved changes. Do you want to save it in the database?</nl>
+		<de>There are some unsaved changes. Do you want to save it in the database?</de>
+		<ca>Hi ha canvis per guardar. Vols guardar estos canvis a la base de dades?</ca>
+		<it>Ci sono dati modificati non salvati. Vuoi salvare li dati nel database?</it>
+	</saveBeforeExit>
 </translator>
 

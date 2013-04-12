@@ -63,4 +63,8 @@ public class PhotoPool {
         }
         return true;
     }
+
+    public boolean needsToBeStoredInDatabase() {
+        return (photosToStore.size() > 0);
+    }
 }

@@ -264,4 +264,26 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToDelete = new HashMap<>();
         elementsToUpdate = new HashMap<>();
     }
+
+    public boolean needsToBeStoredInDatabase() {
+        for (Tournament tournament : elementsToStore.keySet()) {
+            if (elementsToStore.get(tournament).size() > 0) {
+                return true;
+            }
+        }
+
+        for (Tournament tournament : elementsToDelete.keySet()) {
+            if (elementsToDelete.get(tournament).size() > 0) {
+                return true;
+            }
+        }
+
+        for (Tournament tournament : elementsToUpdate.keySet()) {
+            if (elementsToUpdate.get(tournament).size() > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

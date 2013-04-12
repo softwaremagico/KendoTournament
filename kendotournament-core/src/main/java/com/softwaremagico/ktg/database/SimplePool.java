@@ -189,4 +189,8 @@ public abstract class SimplePool<ElementPool> {
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {
         return getAll().subList(fromRow, fromRow + numberOfRows);
     }
+
+    public boolean needsToBeStoredInDatabase() {
+        return (elementsToStore.size() > 0 || elementsToDelete.size() > 0 || elementsToUpdate.size() > 0);
+    }
 }

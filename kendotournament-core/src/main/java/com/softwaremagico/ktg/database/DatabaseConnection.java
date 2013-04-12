@@ -224,14 +224,6 @@ public class DatabaseConnection {
         databaseEngine = DatabaseEngine.getDatabase(engine);
     }
 
-    public boolean isDatabaseLazyUpdate() {
-        return databaseLazyUpdate;
-    }
-
-    public void setDatabaseLazyUpdate(boolean value) {
-        databaseLazyUpdate = value;
-    }
-
     public boolean updateDatabase() {
         connect();
         ClubPool.getInstance().updateDatabase();
@@ -244,7 +236,20 @@ public class DatabaseConnection {
         DuelPool.getInstance().updateDatabase();
         UndrawPool.getInstance().updateDatabase();
         disconnect();
+        AutoSave.getInstance().restetTime();
         return true;
+    }
+
+    public boolean needsToBeStoredInDatabase() {
+        return ClubPool.getInstance().needsToBeStoredInDatabase()
+                || RegisteredPersonPool.getInstance().needsToBeStoredInDatabase()
+                || PhotoPool.getInstance().needsToBeStoredInDatabase()
+                || TournamentPool.getInstance().needsToBeStoredInDatabase()
+                || RolePool.getInstance().needsToBeStoredInDatabase()
+                || TeamPool.getInstance().needsToBeStoredInDatabase()
+                || FightPool.getInstance().needsToBeStoredInDatabase()
+                || DuelPool.getInstance().needsToBeStoredInDatabase()
+                || UndrawPool.getInstance().needsToBeStoredInDatabase();
     }
 
     public boolean connect() {
