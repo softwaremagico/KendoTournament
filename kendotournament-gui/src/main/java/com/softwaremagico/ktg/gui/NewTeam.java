@@ -39,6 +39,7 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JFileChooser;
 
@@ -70,6 +71,12 @@ public class NewTeam extends KendoFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
+        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcceptButtonActionPerformed(evt);
+            }
+        });
     }
 
     public void fill() {
@@ -155,7 +162,7 @@ public class NewTeam extends KendoFrame {
             oldTeam = team;
             NameTextField.setText(team.getName());
             TournamentComboBox.setSelectedItem(team.getTournament());
-            AddTeamCompetitorsSorted(team);
+            addTeamCompetitorsSorted(team);
             fillCompetitorsComboBox();
             inidividualTeams();
             NameTextField.setEnabled(false);
@@ -253,29 +260,10 @@ public class NewTeam extends KendoFrame {
         return false;
     }
 
-    protected void AddTeamCompetitorsSorted(Team t) {
-        int i;
-        if (t.levelChangesSize() > 0) {
-            for (int j = 0; j < t.getNumberOfMembers(t.levelChangesSize() - 1); j++) {
-                if (competitors.size() > 0) {
-                    for (i = 0; i < competitors.size(); i++) {
-                        if (competitors.get(i).getSurnameName().compareTo(t.getMember(j, 0).getSurnameName()) > 0) {
-                            if (t.getMember(j, 0).getSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).getName().replaceAll("-", "").trim().length() > 0) {
-                                competitors.add(i, t.getMember(j, 0));
-                            }
-                            break;
-                        }
-                    }
-                    if (i == competitors.size()) { //If has not been added, then add it in the last position.
-                        if (t.getMember(j, 0).getSurnameName().replaceAll("-", "").trim().length() > 0 || t.getMember(j, 0).getName().replaceAll("-", "").trim().length() > 0) {
-                            competitors.add(t.getMember(j, 0));
-                        }
-                    }
-                } else {
-                    competitors.add(t.getMember(j, 0));
-                }
-            }
-        }
+    protected void addTeamCompetitorsSorted(Team t) {
+        List<RegisteredPerson> teamCompetitors = new ArrayList<>(t.getMembersOrder(0).values());
+        competitors.addAll(teamCompetitors);
+        Collections.sort(competitors);
     }
 
     /**
@@ -292,6 +280,49 @@ public class NewTeam extends KendoFrame {
      */
     public void addSearchListener(ActionListener al) {
         SearchButton.addActionListener(al);
+    }
+
+    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        if (newTeam) {
+            if (individualTeams) {
+                TeamPool.getInstance().setIndividualTeams(tournament);
+                this.dispose();
+            } else {
+                if (NameTextField.getText().length() > 0) {
+                    List<RegisteredPerson> participants = new ArrayList<>();
+                    Team team = new Team(NameTextField.getText().trim(), tournaments.get(TournamentComboBox.getSelectedIndex()));
+
+                    for (int i = 0; i < competitorsPanel.size(); i++) {
+                        participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
+                    }
+
+                    if (repeatedCompetitor()) {
+                        MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
+                    } else if (!checkTeam()) {
+                        MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
+                    } else {
+                        for (int i = 0; i < participants.size(); i++) {
+                            team.setMember(participants.get(i), i, LEVEL);
+                        }
+                        //Insert or update?
+                        if (oldTeam != null) {
+                            if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
+                                MessageManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
+                            }
+                        } else {
+                            if (TeamPool.getInstance().add(tournament, team)) {
+                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                            }
+                        }
+                        cleanWindow();
+                        refreshTournament();
+                    }
+                } else {
+                    MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
+                }
+            }
+            NameTextField.setEnabled(true);
+        }
     }
 
     /**
@@ -384,11 +415,6 @@ public class NewTeam extends KendoFrame {
         );
 
         AcceptButton.setText("Accept");
-        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed(evt);
-            }
-        });
 
         CloseButton.setText("Close");
         CloseButton.addActionListener(new java.awt.event.ActionListener() {
@@ -500,49 +526,6 @@ public class NewTeam extends KendoFrame {
         cleanWindow();
         refreshTournament();
     }//GEN-LAST:event_CleanButtonActionPerformed
-
-    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        if (newTeam) {
-            if (individualTeams) {
-                TeamPool.getInstance().setIndividualTeams(tournament);
-                this.dispose();
-            } else {
-                if (NameTextField.getText().length() > 0) {
-                    List<RegisteredPerson> participants = new ArrayList<>();
-                    Team team = new Team(NameTextField.getText().trim(), tournaments.get(TournamentComboBox.getSelectedIndex()));
-
-                    for (int i = 0; i < competitorsPanel.size(); i++) {
-                        participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
-                    }
-
-                    if (repeatedCompetitor()) {
-                        MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
-                    } else if (!checkTeam()) {
-                        MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
-                    } else {
-                        for (int i = 0; i < participants.size(); i++) {
-                            team.setMember(participants.get(i), i, LEVEL);
-                        }
-                        //Insert or update?
-                        if (oldTeam != null) {
-                            if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
-                                MessageManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
-                            }
-                        } else {
-                            if (TeamPool.getInstance().add(tournament, team)) {
-                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
-                            }
-                        }
-                        cleanWindow();
-                        refreshTournament();
-                    }
-                } else {
-                    MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
-                }
-            }
-            NameTextField.setEnabled(true);
-        }
-    }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();

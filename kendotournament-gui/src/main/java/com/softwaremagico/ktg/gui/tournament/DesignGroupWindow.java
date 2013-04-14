@@ -58,7 +58,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
         FightAreaComboBox.removeAllItems();
         try {
             for (int i = 0; i < tournamentGroup.getTournament().getFightingAreas(); i++) {
-                FightAreaComboBox.addItem(KendoTournamentGenerator.getInstance().getFightAreaName(i));
+                FightAreaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
             }
         } catch (NullPointerException npe) {
         }

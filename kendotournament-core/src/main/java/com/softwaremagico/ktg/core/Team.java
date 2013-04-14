@@ -29,10 +29,6 @@ import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import java.io.Serializable;
 import java.util.HashMap;
 
-/**
- *
- * @author Jorge
- */
 public class Team implements Serializable, Comparable<Team> {
 
     private Tournament tournament;

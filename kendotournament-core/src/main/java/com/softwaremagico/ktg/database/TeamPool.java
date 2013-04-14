@@ -77,6 +77,11 @@ public class TeamPool extends TournamentDependentPool<Team> {
     public List<Team> get(Tournament tournament, Integer level) {
         List<Team> results = new ArrayList<>();
         List<Fight> fights = FightPool.getInstance().getFromLevel(tournament, level);
+        //If level is zero and no fights.
+        if (level == 0 && fights.isEmpty()) {
+            return get(tournament);
+        }
+        //If tournament has started.
         for (Fight fight : fights) {
             if (!results.contains(fight.getTeam1())) {
                 results.add(fight.getTeam1());

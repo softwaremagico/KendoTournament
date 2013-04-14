@@ -146,20 +146,26 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public boolean update(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
-        String id = getId(oldElement);
-        if (!id.equals(getId(newElement))) {
+        String oldId = getId(oldElement);
+        String newId = getId(newElement);
+        if (!oldId.equals(newId)) {
             //Not the same element. Cannot update!
             remove(tournament, oldElement);
             add(tournament, newElement);
         } else {
-            getMap(tournament).remove(id);
-            getMap(tournament).put(id, newElement);
+            //Change element. 
+            getMap(tournament).remove(oldId);
+            getMap(tournament).put(newId, newElement);
+            sortedElements =  new HashMap<>();
 
-            ElementPool elementStillNotInDatabase = getElementToStore(tournament).get(id);
+            //Element added previously but not stored in database.
+            ElementPool elementStillNotInDatabase = getElementToStore(tournament).get(oldId);
             if (elementStillNotInDatabase != null) {
-                getElementToStore(tournament).remove(id);
-                getElementToStore(tournament).put(id, newElement);
-            } else {
+                getElementToStore(tournament).remove(oldId);
+                getElementToStore(tournament).put(newId, newElement);
+            }             
+            //Element previously updated. Change the new one.            
+            else {
                 addElementToUpdate(tournament, oldElement, newElement);
             }
         }
@@ -220,9 +226,9 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public List<ElementPool> getSorted(Tournament tournament) {
         List<ElementPool> sorted = getSortedElements(tournament);
-        if (sorted != null) {
+        if (!sorted.isEmpty()) {
             return sorted;
-        } else if (getMap(tournament) != null) {
+        } else if (!getMap(tournament).isEmpty()) {
             sorted = sort(tournament);
             sortedElements.put(tournament, sorted);
             return sorted;

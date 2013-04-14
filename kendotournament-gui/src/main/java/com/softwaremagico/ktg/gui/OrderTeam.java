@@ -37,10 +37,6 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class OrderTeam extends NewTeam {
 
     private int level;
@@ -63,7 +59,7 @@ public class OrderTeam extends NewTeam {
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed2(evt);
+                AcceptButtonActionPerformed(evt);
             }
         });
     }
@@ -83,7 +79,7 @@ public class OrderTeam extends NewTeam {
         AcceptButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed2(evt);
+                AcceptButtonActionPerformed(evt);
             }
         });
     }
@@ -99,7 +95,7 @@ public class OrderTeam extends NewTeam {
                 competitors.add(0, new RegisteredPerson("", "", ""));
             }
             NameTextField.setText(t.getName());
-            AddTeamCompetitorsSorted(t);
+            addTeamCompetitorsSorted(t);
             fillCompetitorsComboBox();
             NameTextField.setEnabled(false);
             TournamentComboBox.setEnabled(false);
@@ -120,7 +116,7 @@ public class OrderTeam extends NewTeam {
         }
     }
 
-    private void AcceptButtonActionPerformed2(java.awt.event.ActionEvent evt) {
+    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {
         List<RegisteredPerson> participants = new ArrayList<>();
 
         for (int i = 0; i < competitorsPanel.size(); i++) {
@@ -134,7 +130,7 @@ public class OrderTeam extends NewTeam {
             for (int i = 0; i < participants.size(); i++) {
                 team.setMember(participants.get(i), i, level);
             }
-            TeamPool.getInstance().add(tournament, team);
+            TeamPool.getInstance().update(tournament, team);
             MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
             this.dispose();
         }

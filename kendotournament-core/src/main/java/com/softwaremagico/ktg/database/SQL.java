@@ -766,7 +766,6 @@ public abstract class SQL extends Database {
                 }
             }
         }
-
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {

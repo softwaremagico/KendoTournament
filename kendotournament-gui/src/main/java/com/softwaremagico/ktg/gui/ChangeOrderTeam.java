@@ -44,7 +44,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private Translator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
     private List<Team> teams = new ArrayList<>();
-    DefaultListModel<String> teamsModel = new DefaultListModel<>();
+    DefaultListModel<Team> teamsModel = new DefaultListModel<>();
     protected boolean refreshTournament = true;
     int level = 0;
 
@@ -90,7 +90,6 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         try {
             level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            //teams = DatabaseConnection.getInstance().getDatabase().searchTeamsByLevel((Tournament) TournamentComboBox.getSelectedItem(), level, false);
             teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
             fillTeams();
         } catch (NullPointerException npe) {
@@ -102,7 +101,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void fillTeams() {
         teamsModel.removeAllElements();
         for (int i = 0; i < teams.size(); i++) {
-            teamsModel.addElement(teams.get(i).getName());
+            teamsModel.addElement(teams.get(i));
         }
     }
 
@@ -116,11 +115,11 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void openOrderTeamWindow() {
         Team team = returnSelectedTeam();
         if (team != null) {
-            OrderTeam newTeam;
-            newTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
-            newTeam.updateOrderWindow(team);
-            newTeam.setVisible(true);
-            newTeam.toFront();
+            OrderTeam orderTeam;
+            orderTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
+            orderTeam.updateOrderWindow(team);
+            orderTeam.setVisible(true);
+            orderTeam.toFront();
         }
     }
 
