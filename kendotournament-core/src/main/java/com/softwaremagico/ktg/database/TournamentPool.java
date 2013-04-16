@@ -1,8 +1,8 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.tools.Tools;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tools.Tools;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,14 +40,15 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected void storeInDatabase(List<Tournament> elementsToStore) {
+    protected boolean storeInDatabase(List<Tournament> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(List<Tournament> elementsToDelete) {
+    protected boolean removeFromDatabase(List<Tournament> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
             for (Tournament tournament : elementsToDelete) {
                 //Delete fights.
@@ -57,15 +58,17 @@ public class TournamentPool extends SimplePool<Tournament> {
                 //Delete roles.            
                 RolePool.getInstance().remove(tournament);
             }
-            DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
         }
+        return true;
     }
 
     @Override
-    protected void updateDatabase(HashMap<Tournament, Tournament> elementsToUpdate) {
+    protected boolean updateDatabase(HashMap<Tournament, Tournament> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
         }
+        return true;
     }
 
     @Override

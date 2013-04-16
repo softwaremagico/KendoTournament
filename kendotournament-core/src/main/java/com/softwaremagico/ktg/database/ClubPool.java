@@ -39,24 +39,27 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected void storeInDatabase(List<Club> elementsToStore) {
+    protected boolean storeInDatabase(List<Club> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(List<Club> elementsToDelete) {
+    protected boolean removeFromDatabase(List<Club> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
         }
+        return true;
     }
 
     @Override
-    protected void updateDatabase(HashMap<Club, Club> elementsToUpdate) {
+    protected boolean updateDatabase(HashMap<Club, Club> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
         }
+        return true;
     }
 
     @Override

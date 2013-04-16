@@ -218,7 +218,6 @@ public class SimpleTournamentManager implements ITournamentManager {
                 }
             }
 
-            System.out.println(teamGroup.size() + "---" + maxAdv);
             //Select one of the teams with max adversaries
             List<Team> possibleAdversaries = new ArrayList<>();
             for (Team team : teamGroup) {

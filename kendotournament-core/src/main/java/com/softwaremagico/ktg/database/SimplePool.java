@@ -16,11 +16,11 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract HashMap<String, ElementPool> getFromDatabase();
 
-    protected abstract void storeInDatabase(List<ElementPool> elementsToStore);
+    protected abstract boolean storeInDatabase(List<ElementPool> elementsToStore);
 
-    protected abstract void removeFromDatabase(List<ElementPool> elementsToDelete);
+    protected abstract boolean removeFromDatabase(List<ElementPool> elementsToDelete);
 
-    protected abstract void updateDatabase(HashMap<ElementPool, ElementPool> elementsToUpdate);
+    protected abstract boolean updateDatabase(HashMap<ElementPool, ElementPool> elementsToUpdate);
 
     protected HashMap<String, ElementPool> getMap() {
         if (elements == null) {
@@ -176,14 +176,17 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public void updateDatabase() {
-        removeFromDatabase(new ArrayList(getElementToRemove().values()));
+    public boolean updateDatabase() {
+        if (!removeFromDatabase(new ArrayList(getElementToRemove().values()))) {
+            return false;
+        }
         elementsToDelete = new HashMap<>();
         storeInDatabase(new ArrayList(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
         updateDatabase(getElementToUpdate());
         elementsToUpdate = new HashMap<>();
+        return true;
     }
 
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {

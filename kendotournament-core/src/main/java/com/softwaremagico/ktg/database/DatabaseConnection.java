@@ -226,17 +226,35 @@ public class DatabaseConnection {
 
     public boolean updateDatabase() {
         connect();
-        ClubPool.getInstance().updateDatabase();
-        RegisteredPersonPool.getInstance().updateDatabase();
-        PhotoPool.getInstance().updateDatabase();
-        TournamentPool.getInstance().updateDatabase();
-        RolePool.getInstance().updateDatabase();
-        TeamPool.getInstance().updateDatabase();
-        FightPool.getInstance().updateDatabase();
-        DuelPool.getInstance().updateDatabase();
-        UndrawPool.getInstance().updateDatabase();
+        if (!ClubPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!RegisteredPersonPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!PhotoPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!TournamentPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!RolePool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!TeamPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!FightPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!DuelPool.getInstance().updateDatabase()) {
+            return false;
+        }
+        if (!UndrawPool.getInstance().updateDatabase()) {
+            return false;
+        }
         disconnect();
-        AutoSave.getInstance().restetTime();
+        AutoSave.getInstance().resetTime();
         return true;
     }
 

@@ -39,25 +39,28 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected void storeInDatabase(List<RegisteredPerson> elementsToStore) {
+    protected boolean storeInDatabase(List<RegisteredPerson> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(List<RegisteredPerson> elementsToDelete) {
+    protected boolean removeFromDatabase(List<RegisteredPerson> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
         }
+        return true;
     }
 
     @Override
-    protected void updateDatabase(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) {
+    protected boolean updateDatabase(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
             PhotoPool.getInstance().updateDatabase();
-            DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
         }
+        return true;
     }
 
     @Override

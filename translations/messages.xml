@@ -262,7 +262,7 @@
 		<nl>De deelnemer is aan de database toegevoegd.</nl>
 		<de>Der neue Teilnehmer wurde gespeichert.</de>
 		<ca>S'ha agregat un nou competidor.</ca>
-		<it>Un nuovo competitore è stato aggiunto</it>
+		<it>Un nuovo competitore è stato aggiunto.</it>
 	</competitorStored>
 	<tournamentStored>
 		<en>The new tournament has been stored.</en>
@@ -278,15 +278,15 @@
 		<nl>Het team is aan de database toegevoegd.</nl>
 		<de>Das neue Team wurde gespeichert.</de>
 		<ca>S'ha agregat un nou equip a la base de dades.</ca>
-		<it>Una nuova squadra è stata aggiunta nel database</it>
+		<it>Una nuova squadra è stata aggiunta nel database.</it>
 	</teamStored>
 	<fightStored>
-		<en>The match has been stored into the database.</en>
-		<es>Se han agregado los distintos partidos a la base de datos.</es>
+		<en>The match has been stored.</en>
+		<es>Se han agregado los distintos partidos.</es>
 		<nl>De competitie is aan de database toegevoegd.</nl>
 		<de>Der Kampf wurde gespeichert.</de>
-		<ca>S'han agragat els distints partits a la base de dades.</ca>
-		<it>Gli incontri sono stati salvati nel database</it>
+		<ca>S'han agragat els distints partits.</ca>
+		<it>Gli incontri sono stati salvati.</it>
 	</fightStored>
 	<duelStored>
 		<en>The duel has been stored into the database.</en>
@@ -294,7 +294,7 @@
 		<nl>De wedstrijd is aan de database toegevoegd.</nl>
 		<de>Das Kampfduell wurde gespeichert.</de>
 		<ca>S'ha agregat el duel a la base de dades.</ca>
-		<it>Il combattimento è stato inserito nel database</it>
+		<it>Il combattimento è stato inserito nel database.</it>
 	</duelStored>
 	<teamUpdated>
 		<en>The team has been updated into the database.</en>
@@ -302,7 +302,7 @@
 		<nl>De teamgegevens zijn in de database aangapast.</nl>
 		<de>Das Team wurde gespeichert.</de>
 		<ca>L'equip ha sigut actualitzat a la base de dades.</ca>
-		<it>La squadra è stata aggiornata nel database</it>
+		<it>La squadra è stata aggiornata nel database.</it>
 	</teamUpdated>
 	<competitorUpdated>
 		<en>The competitor has been updated in the database.</en>
@@ -310,7 +310,7 @@
 		<nl>De gegevens van de deelnemer is in de database aangepast.</nl>
 		<de>Der Teilnehmer wurde gespeichert.</de>
 		<ca>El participant ha sigut actualitzat a la base de dades.</ca>
-		<it>Il competitore è stato aggiornato nel database</it>
+		<it>Il competitore è stato aggiornato nel database.</it>
 	</competitorUpdated>
 	<clubUpdated>
 		<en>The club has been updated into the database.</en>
@@ -318,7 +318,7 @@
 		<nl>De gevens van de club zijn in de database aangepast.</nl>
 		<de>Der Klub wurde gespeichert.</de>
 		<ca>el club ha sigut actualitzat a la base de dades.</ca>
-		<it>Il club è stato aggiornato nel database</it>
+		<it>Il club è stato aggiornato nel database.</it>
 	</clubUpdated>
 	<tournamentUpdated>
 		<en>The tournament has been updated.</en>
@@ -326,7 +326,7 @@
 		<nl>De gegevens van het toernooi zijn in de database aangepast.</nl>
 		<de>Der Wettkampf wurde gespeichert.</de>
 		<ca>El campionat ha sigut actualitzat.</ca>
-		<it>Il campionato è stato aggiornato</it>
+		<it>Il campionato è stato aggiornato.</it>
 	</tournamentUpdated>
 	<fillFields>
 		<en>You must fill one of the fields to start a search.</en>

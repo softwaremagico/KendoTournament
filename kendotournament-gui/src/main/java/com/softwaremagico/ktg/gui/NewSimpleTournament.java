@@ -518,6 +518,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         if (fights != null && fights.size() > 0) {
             FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
             TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
+            MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
             this.dispose();
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");

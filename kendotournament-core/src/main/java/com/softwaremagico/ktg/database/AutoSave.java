@@ -45,7 +45,7 @@ public class AutoSave {
         return instance;
     }
     
-    public void restetTime() {
+    public void resetTime() {
         timerTask.reset();
     }
     

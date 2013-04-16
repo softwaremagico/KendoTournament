@@ -156,15 +156,14 @@ public abstract class TournamentDependentPool<ElementPool> {
             //Change element. 
             getMap(tournament).remove(oldId);
             getMap(tournament).put(newId, newElement);
-            sortedElements =  new HashMap<>();
+            sortedElements = new HashMap<>();
 
             //Element added previously but not stored in database.
             ElementPool elementStillNotInDatabase = getElementToStore(tournament).get(oldId);
             if (elementStillNotInDatabase != null) {
                 getElementToStore(tournament).remove(oldId);
                 getElementToStore(tournament).put(newId, newElement);
-            }             
-            //Element previously updated. Change the new one.            
+            } //Element previously updated. Change the new one.            
             else {
                 addElementToUpdate(tournament, oldElement, newElement);
             }
@@ -253,10 +252,11 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToUpdate.put(tournament, new HashMap<ElementPool, ElementPool>());
     }
 
-    public void updateDatabase() {
+    public boolean updateDatabase() {
         for (Tournament tournament : elements.keySet()) {
             updateDatabase(tournament);
         }
+        return true;
     }
 
     public List<ElementPool> getAll(int fromRow, int numberOfRows) {

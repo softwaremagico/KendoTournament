@@ -31,6 +31,7 @@ import java.util.List;
 
 public class Fight implements Serializable, Comparable<Fight> {
 
+    private static final Integer DEFAULT_WINNER_VALUE = 2;
     private static final String FIGHT_TAG = "FIGHT";
     private Team team1;
     private Team team2;
@@ -130,7 +131,10 @@ public class Fight implements Serializable, Comparable<Fight> {
     }
 
     public Integer getWinner() {
-        return winner;
+        if (winner != null) {
+            return winner;
+        }
+        return DEFAULT_WINNER_VALUE;
     }
 
     public void setWinner(Integer winner) {
