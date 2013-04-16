@@ -46,11 +46,15 @@ public class TournamentGroup implements Serializable {
     protected Integer level;
     private Integer fightArea = 0;
 
-    public TournamentGroup(Integer numberMaxOfWinners, Tournament championship, Integer level, Integer fightArea) {
-        this.tournament = championship;
+    public TournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
+        this.tournament = tournament;
         this.level = level;
         this.fightArea = fightArea;
-        this.numberMaxOfWinners = numberMaxOfWinners;
+        if (level == 0) {
+            this.numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
+        } else {
+            this.numberMaxOfWinners = 1;
+        }
     }
 
     public void updateMaxNumberOfWinners(int value) {
@@ -79,6 +83,10 @@ public class TournamentGroup implements Serializable {
 
     public List<Team> getTeams() {
         return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public Integer getFightArea() {

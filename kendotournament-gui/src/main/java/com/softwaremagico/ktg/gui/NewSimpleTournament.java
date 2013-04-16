@@ -116,9 +116,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }
 
     private void fillTeam2ComboBox() {
-        String selected = "";
+        Team selected = null;
         try {
-            selected = Team2ComboBox.getSelectedItem().toString();
+            selected = (Team) Team2ComboBox.getSelectedItem();
         } catch (NullPointerException npe) {
         }
         Team2ComboBox.removeAllItems();
@@ -128,14 +128,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                     Team2ComboBox.addItem(listTeams.get(i));
                 }
             }
-            /*
-             * Mantain the last selected index
-             */
-            for (int i = 0; i < Team2ComboBox.getItemCount(); i++) {
-                if (Team2ComboBox.getItemAt(i).toString().equals(selected)) {
-                    Team2ComboBox.setSelectedIndex(i);
-                    break;
-                }
+            if (selected != null) {
+                Team2ComboBox.setSelectedItem(selected);
             }
         } catch (NullPointerException npe) {
             //npe.printStackTrace();
@@ -453,37 +447,27 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         try {
-            boolean answer = false;
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE)) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!");
-                if (answer) {
-                    fightsModel.removeAllElements();
-                    ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
-                    fights.clear();
+            ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
+            if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
+                //Fight fight = new Fight(DatabaseConnection.getInstance().getDatabase().getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
+                Fight fight = new Fight((Tournament) TournamentComboBox.getSelectedItem(),
+                        (Team) (Team1ComboBox.getSelectedItem()),
+                        (Team) (Team2ComboBox.getSelectedItem()),
+                        FightAreaComboBox.getSelectedIndex(),
+                        fights.size()); //each fight is one new level to allow the order of teams to be changed anytime. 
+                int ind = FightsList.getSelectedIndex();
+                if (ind >= 0) {
+                    fights.add(ind + 1, fight);
+                } else {
+                    fights.add(fight);
                 }
-            }
-            if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE) || (answer)) {
-                if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
-                    //Fight fight = new Fight(DatabaseConnection.getInstance().getDatabase().getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
-                    Fight fight = new Fight((Tournament) TournamentComboBox.getSelectedItem(),
-                            (Team) (Team1ComboBox.getSelectedItem()),
-                            (Team) (Team2ComboBox.getSelectedItem()),
-                            FightAreaComboBox.getSelectedIndex(),
-                            fights.size()); //each fight is one new level to allow the order of teams to be changed anytime. 
-                    int ind = FightsList.getSelectedIndex();
-                    if (ind >= 0) {
-                        fights.add(ind + 1, fight);
-                    } else {
-                        fights.add(fight);
-                    }
 
-                    fillFights();
-                    if (fights.size() > 0) {
-                        if (ind >= 0) {
-                            FightsList.setSelectedIndex(ind + 1);
-                        } else {
-                            FightsList.setSelectedIndex(fightsModel.getSize() - 1);
-                        }
+                fillFights();
+                if (fights.size() > 0) {
+                    if (ind >= 0) {
+                        FightsList.setSelectedIndex(ind + 1);
+                    } else {
+                        FightsList.setSelectedIndex(fightsModel.getSize() - 1);
                     }
                 }
             }
@@ -500,24 +484,13 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RandomButtonActionPerformed
         try {
-            boolean answer = false;
-            if (!((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE) || fightsModel.size() > 0) {
-                answer = MessageManager.questionMessage("deleteFights", "Warning!");
-                if (answer) {
-                    fightsModel.removeAllElements();
-                    ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
-                    fights.clear();
-                }
-            }
-            if (fightsModel.isEmpty() || (answer)) {
+            if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+                fightsModel.removeAllElements();
+                ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
                 fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getRandomFights();
-
-                int ind = FightsList.getSelectedIndex();
-
                 fillFights();
-
                 try {
-                    FightsList.setSelectedIndex(ind);
+                    FightsList.setSelectedIndex(0);
                 } catch (ArrayIndexOutOfBoundsException aiob) {
                 }
             }
@@ -542,7 +515,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        if (fights.size() > 0) {
+        if (fights != null && fights.size() > 0) {
             FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
             TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
             this.dispose();
@@ -572,26 +545,24 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }//GEN-LAST:event_DownButtonActionPerformed
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
-        fights = new ArrayList<>();
-        fightsModel.removeAllElements();
+        if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+            fights = new ArrayList<>();
+            fightsModel.removeAllElements();
+        }
     }//GEN-LAST:event_DeleteAllButtonActionPerformed
 
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
-            //Tournament tour = DatabaseConnection.getInstance().getDatabase().getTournamentByName(TournamentComboBox.getSelectedItem().toString(), false);
-            fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSortedFights();
-
-            int ind = FightsList.getSelectedIndex();
-
-            if (fightsModel.size() > 0 && MessageManager.questionMessage("deleteFights", "Warning!")) {
+            if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSortedFights();
                 fightsModel.removeAllElements();
-            }
 
-            fillFights();
+                fillFights();
 
-            try {
-                FightsList.setSelectedIndex(ind);
-            } catch (ArrayIndexOutOfBoundsException aiob) {
+                try {
+                    FightsList.setSelectedIndex(0);
+                } catch (ArrayIndexOutOfBoundsException aiob) {
+                }
             }
         } catch (NullPointerException npe) {
         }

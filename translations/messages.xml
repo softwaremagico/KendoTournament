@@ -1058,5 +1058,13 @@
 		<ca>Hi ha canvis per guardar. Vols guardar estos canvis a la base de dades?</ca>
 		<it>Ci sono dati modificati non salvati. Vuoi salvare li dati nel database?</it>
 	</saveBeforeExit>
+	<repatedTeam>
+		<en>A team with this name already exist.</en>
+		<es>Ya existe un equipo con ese nombre.</es>
+		<nl>A team with this name already exist.</nl>
+		<de>A team with this name already exist.</de>
+		<ca>Existeix un equip amb aquest nom.</ca>
+		<it>Esiste un squadra con questo nome.</it>
+	</repatedTeam>
 </translator>
 

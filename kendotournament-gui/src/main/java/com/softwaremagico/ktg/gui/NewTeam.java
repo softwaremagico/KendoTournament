@@ -312,6 +312,8 @@ public class NewTeam extends KendoFrame {
                         } else {
                             if (TeamPool.getInstance().add(tournament, team)) {
                                 MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                            } else {
+                                MessageManager.informationMessage(this.getClass().getName(), "repatedTeam", "Team");
                             }
                         }
                         cleanWindow();

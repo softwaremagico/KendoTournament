@@ -942,7 +942,7 @@ public abstract class SQL extends Database {
      */
     @Override
     protected List<Duel> getDuels(Tournament tournament) {
-        String query = "SELECT * FROM Duel WHERE Tournament='" + tournament.getName() + "'";
+        String query = "SELECT * FROM duel WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.entering(this.getClass().getName(), "getDuels");
         KendoLog.finer(SQL.class.getName(), query);
 
@@ -1020,6 +1020,7 @@ public abstract class SQL extends Database {
             }
         }
 
+        System.out.println(query);
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {

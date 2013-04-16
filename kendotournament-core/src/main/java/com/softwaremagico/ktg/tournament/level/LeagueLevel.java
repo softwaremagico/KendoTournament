@@ -198,7 +198,7 @@ public abstract class LeagueLevel {
      */
     protected void updateGroupsSize() {
         while ((previousLevel != null) && ((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
-            addGroup(new TournamentGroup(1, tournament, level, 0));
+            addGroup(new TournamentGroup(tournament, level, 0));
         }
 
         // When we remove two groups in one level, we must remove one in the next one.

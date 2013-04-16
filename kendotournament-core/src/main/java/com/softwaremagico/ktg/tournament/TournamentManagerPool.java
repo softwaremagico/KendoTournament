@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class TournamentManagerPool {
 
-    private static HashMap<Tournament, ITournamentManager> managers;
+    private static HashMap<Tournament, ITournamentManager> managers = new HashMap<>();
 
     public static ITournamentManager getManager(Tournament tournament) {
         if (tournament != null) {
@@ -27,7 +27,7 @@ public class TournamentManagerPool {
             case MANUAL:
             case SIMPLE:
             default:
-                manager = new SimpleTournamentManager();
+                manager = new SimpleTournamentManager(tournament);
         }
         return manager;
     }

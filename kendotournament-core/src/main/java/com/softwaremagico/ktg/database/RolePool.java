@@ -71,7 +71,9 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected List<Role> sort(Tournament tournament) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<Role> unsorted = new ArrayList(getMap(tournament).values());
+        Collections.sort(unsorted);
+        return unsorted;
     }
 
     public Role getRole(Tournament tournament, RegisteredPerson participant) {
@@ -226,8 +228,8 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return roleTags;
     }
-    
-    public void resetRoleTags(){
+
+    public void resetRoleTags() {
         roleTags = null;
     }
 }

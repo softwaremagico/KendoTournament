@@ -54,7 +54,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshMode = true;
-    private Integer numberMaxOfWinners = 1;
     private BlackBoardPanel bbp;
     private Point p;
     private JViewport viewport;
@@ -155,7 +154,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                     && TournamentManagerPool.getManager(tournament).getGroups(0).size() < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentManagerPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
-                TournamentGroup group = new TournamentGroup(numberMaxOfWinners, tournament, 0, defaultArena);
+                TournamentGroup group = new TournamentGroup(tournament, 0, defaultArena);
                 TournamentManagerPool.getManager(tournament).addGroup(group);
                 TournamentManagerPool.getManager(tournament).setDefaultFightAreas();
                 updateInfo();
@@ -218,7 +217,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void updateInterface() {
         try {
             tournament = (Tournament) (TournamentComboBox.getSelectedItem());
-            numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
             //TournamentManagerPool.getManager(tournament) = new TournamentGroupManager(tournament);
             teams = TeamPool.getInstance().get(tournament);
 
@@ -770,8 +768,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             }
 
             if (refreshSpinner) {
-                numberMaxOfWinners = (Integer) PassSpinner.getValue();
-                tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
+                tournament.setHowManyTeamsOfGroupPassToTheTree((Integer) PassSpinner.getValue());
             }
         } catch (NullPointerException npe) {
         }
@@ -841,9 +838,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void ChampionshipRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ChampionshipRadioButtonItemStateChanged
         if (refreshMode && ChampionshipRadioButton.isSelected()) {
-            numberMaxOfWinners = 2;
-            PassSpinner.setValue(numberMaxOfWinners);
-            tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
+            PassSpinner.setValue(2);
             updateMode();
             updateBlackBoard();
         }
@@ -852,9 +847,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void TreeRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TreeRadioButtonItemStateChanged
         try {
             if (refreshMode && TreeRadioButton.isSelected()) {
-                numberMaxOfWinners = 1;
-                PassSpinner.setValue(numberMaxOfWinners);
-                tournament.setHowManyTeamsOfGroupPassToTheTree(numberMaxOfWinners);
+                PassSpinner.setValue(1);
                 updateMode();
                 updateBlackBoard();
             }

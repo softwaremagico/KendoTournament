@@ -51,16 +51,16 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Duel> elementsToDelete) {
-         if (elementsToDelete.size() > 0) {
-        DatabaseConnection.getConnection().getDatabase().removeDuels(elementsToDelete);
-         }
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeDuels(elementsToDelete);
+        }
     }
 
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Duel, Duel> elementsToUpdate) {
-         if (elementsToUpdate.size() > 0) {
-        DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
-         }
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
+        }
     }
 
     @Override
@@ -139,6 +139,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
      * @return
      */
     public List<Duel> get(Tournament tournament, Fight fight) {
+        if (duelsPerFight == null) {
+            duelsPerFight = new HashMap<>();
+        }
         List<Duel> results = duelsPerFight.get(fight);
         if (results == null) {
             List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
