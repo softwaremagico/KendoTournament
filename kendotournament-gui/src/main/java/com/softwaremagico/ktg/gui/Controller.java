@@ -91,7 +91,7 @@ public class Controller {
     private ShortNewFight shortFight = null;
     private LeagueDesigner designer = null;
     private NewSimpleTournament newFight;
-    private NewRingTournament newRing;
+    private NewLoopTournament newRing;
     private LeagueEvolution leagueEvolution = null;
     private SelectTournament selectTournament = null;
     private SelectTournamentExportFightsToCsv selectTournamentExportFightsToCsv = null;
@@ -580,7 +580,7 @@ public class Controller {
                 newRing.dispose();
             } catch (NullPointerException npe) {
             }
-            newRing = new NewRingTournament();
+            newRing = new NewLoopTournament();
             newRing.setVisible(true);
 
         }

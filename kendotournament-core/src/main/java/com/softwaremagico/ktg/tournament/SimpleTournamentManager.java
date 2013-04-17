@@ -184,10 +184,18 @@ public class SimpleTournamentManager implements ITournamentManager {
         List<Team> teams;
         HashMap<Team, List<Team>> combination;
 
-        RemainingFights(List<Team> teams) {
+        protected RemainingFights(List<Team> teams) {
             this.teams = teams;
             Collections.sort(teams);
             combination = getAdversaries();
+        }
+
+        public List<Team> getAdversaries(Team team) {
+            return combination.get(team);
+        }
+
+        public List<Team> getTeams() {
+            return teams;
         }
 
         private HashMap<Team, List<Team>> getAdversaries() {

@@ -44,22 +44,22 @@ public class FightPool extends TournamentDependentPool<Fight> {
     @Override
     protected void storeInDatabase(Tournament tournament, List<Fight> elementsToStore) {
         if (elementsToStore.size() > 0) {
-        DatabaseConnection.getConnection().getDatabase().addFights(elementsToStore);
+            DatabaseConnection.getConnection().getDatabase().addFights(elementsToStore);
         }
     }
 
     @Override
     protected void removeFromDatabase(Tournament tournament, List<Fight> elementsToDelete) {
-         if (elementsToDelete.size() > 0) {
-        DatabaseConnection.getConnection().getDatabase().removeFights(elementsToDelete);
-         }
+        if (elementsToDelete.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().removeFights(elementsToDelete);
+        }
     }
 
     @Override
     protected void updateDatabase(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate) {
-         if (elementsToUpdate.size() > 0) {
-        DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);
-         }
+        if (elementsToUpdate.size() > 0) {
+            DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);
+        }
     }
 
     @Override
@@ -248,5 +248,16 @@ public class FightPool extends TournamentDependentPool<Fight> {
             }
         }
         return true;
+    }
+
+    public static boolean existRepeatedFight(List<Fight> fights) {
+        for (int i = 0; i < fights.size(); i++) {
+            for (int j = i + 1; j < fights.size(); j++) {
+                if (fights.get(i).equals(fights.get(j))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

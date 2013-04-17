@@ -22,9 +22,12 @@ public class TournamentManagerPool {
     private static ITournamentManager createManager(Tournament tournament) {
         ITournamentManager manager;
         switch (tournament.getType()) {
+             case LOOP:
+                manager = new LoopTournamentManager(tournament);
+                break;
             case CHAMPIONSHIP:
             case LEAGUE_TREE:
-            case MANUAL:
+            case MANUAL:           
             case SIMPLE:
             default:
                 manager = new SimpleTournamentManager(tournament);

@@ -24,10 +24,10 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.database.DuelPool;
-import com.softwaremagico.ktg.database.FightPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Fight implements Serializable, Comparable<Fight> {
 
@@ -58,7 +58,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         this.team2 = team2;
         this.tournament = tournament;
         this.asignedFightArea = asignedArea;
-        this.index = FightPool.getInstance().get(tournament).size();
+        this.index = 0;
         this.level = level;
     }
 
@@ -337,32 +337,45 @@ public class Fight implements Serializable, Comparable<Fight> {
         return hits;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Fight)) {
-            return false;
-        }
-        Fight otherFight = (Fight) object;
-        return this.team1.equals(otherFight.team1)
-                && this.team2.equals(otherFight.team2)
-                && this.tournament.equals(otherFight.tournament)
-                && this.level == otherFight.level
-                && this.index == otherFight.index;
-
-    }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + (this.team1 != null ? this.team1.hashCode() : 0);
-        hash = 59 * hash + (this.team2 != null ? this.team2.hashCode() : 0);
-        hash = 59 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
-        hash = 59 * hash + this.level;
+        hash = 41 * hash + Objects.hashCode(this.team1);
+        hash = 41 * hash + Objects.hashCode(this.team2);
+        hash = 41 * hash + Objects.hashCode(this.tournament);
+        hash = 41 * hash + Objects.hashCode(this.index);
+        hash = 41 * hash + Objects.hashCode(this.level);
         return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Fight other = (Fight) obj;
+        if (!Objects.equals(this.team1, other.team1)) {
+            return false;
+        }
+        if (!Objects.equals(this.team2, other.team2)) {
+            return false;
+        }
+        if (!Objects.equals(this.tournament, other.tournament)) {
+            return false;
+        }
+        if (!Objects.equals(this.index, other.index)) {
+            return false;
+        }
+        if (!Objects.equals(this.level, other.level)) {
+            return false;
+        }
+        return true;
+    }
+
 
     public String show() {
         return "'" + team1.getName() + "' vs '" + team2.getName() + "'";

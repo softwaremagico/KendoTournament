@@ -1066,5 +1066,13 @@
 		<ca>Existeix un equip amb aquest nom.</ca>
 		<it>Esiste un squadra con questo nome.</it>
 	</repatedTeam>
+	<repeatedFight>
+		<en>There is a repeated fight in the tournament.</en>
+		<es>Existe un combate repetido en el torneo.</es>
+		<nl>There is a repeated fight in the tournament.</nl>
+		<de>There is a repeated fight in the tournament.</de>
+		<ca>Existeix un combat repetit al campionat.</ca>
+		<it>Esiste un incontro ripetuto en il campionato.</it>
+	</repeatedFight>
 </translator>
 

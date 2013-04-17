@@ -44,10 +44,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     Translator trans = null;
     DefaultListModel<String> fightsModel = new DefaultListModel<>();
-    //List<Tournament> listTournaments = new ArrayList<>();
     List<Team> listTeams = new ArrayList<>();
     List<Fight> fights = new ArrayList<>();
-    //Tournament competition = null;
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;
 
@@ -192,7 +190,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
      */
     public void fillFights() {
         fightsModel.removeAllElements();
-        if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(TournamentType.SIMPLE)) {
+        if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(getDefinedType())) {
             for (int i = 0; i < fights.size(); i++) {
                 String text = fights.get(i).getTeam1().getName() + " - " + fights.get(i).getTeam2().getName();
                 if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
@@ -203,6 +201,14 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 fightsModel.addElement(text);
             }
         }
+    }
+
+    private void setTournamentType() {
+        ((Tournament) TournamentComboBox.getSelectedItem()).setType(getDefinedType());
+    }
+
+    protected TournamentType getDefinedType() {
+        return TournamentType.SIMPLE;
     }
 
     @SuppressWarnings("unchecked")
@@ -447,14 +453,14 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         try {
-            ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
+            setTournamentType();
             if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
                 //Fight fight = new Fight(DatabaseConnection.getInstance().getDatabase().getTeamByName(Team1ComboBox.getSelectedItem().toString(), (Tournament) TournamentComboBox.getSelectedItem(), true),
                 Fight fight = new Fight((Tournament) TournamentComboBox.getSelectedItem(),
                         (Team) (Team1ComboBox.getSelectedItem()),
                         (Team) (Team2ComboBox.getSelectedItem()),
                         FightAreaComboBox.getSelectedIndex(),
-                        fights.size()); //each fight is one new level to allow the order of teams to be changed anytime. 
+                        0); 
                 int ind = FightsList.getSelectedIndex();
                 if (ind >= 0) {
                     fights.add(ind + 1, fight);
@@ -486,7 +492,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
-                ((Tournament) TournamentComboBox.getSelectedItem()).setType(TournamentType.SIMPLE);
+                setTournamentType();
                 fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getRandomFights();
                 fillFights();
                 try {
@@ -516,10 +522,15 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         if (fights != null && fights.size() > 0) {
-            FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
-            TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
-            MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
-            this.dispose();
+            if (!FightPool.existRepeatedFight(fights)) {
+                FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
+                FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
+                TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
+                MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                this.dispose();
+            } else {
+                MessageManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");
+            }
         } else {
             MessageManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
         }
@@ -555,6 +566,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+                setTournamentType();
                 fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSortedFights();
                 fightsModel.removeAllElements();
 
@@ -586,7 +598,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private javax.swing.JLabel Team1Label;
     private javax.swing.JComboBox Team2ComboBox;
     private javax.swing.JLabel Team2Label;
-    private javax.swing.JComboBox TournamentComboBox;
+    protected javax.swing.JComboBox TournamentComboBox;
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.JButton UpButton;
     // End of variables declaration//GEN-END:variables
