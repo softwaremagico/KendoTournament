@@ -35,7 +35,7 @@ import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.ScoreOfTeam;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.language.LanguagePool;

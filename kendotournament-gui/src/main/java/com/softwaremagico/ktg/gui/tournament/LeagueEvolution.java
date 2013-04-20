@@ -24,7 +24,7 @@ package com.softwaremagico.ktg.gui.tournament;
  */
 
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;

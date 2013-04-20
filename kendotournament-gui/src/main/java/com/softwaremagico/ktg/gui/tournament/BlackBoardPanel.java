@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;

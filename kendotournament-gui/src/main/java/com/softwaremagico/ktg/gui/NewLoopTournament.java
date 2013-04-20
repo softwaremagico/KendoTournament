@@ -23,7 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.TournamentType;
+import com.softwaremagico.ktg.tournament.TournamentType;
 
 public class NewLoopTournament extends NewSimpleTournament {
 
