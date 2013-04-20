@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament.level;
+package com.softwaremagico.ktg.tournament;
 
 /*
  * #%L
@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.tournament.level;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.util.ArrayList;
 import java.util.List;
 

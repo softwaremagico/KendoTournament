@@ -7,7 +7,9 @@ import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FightPool extends TournamentDependentPool<Fight> {
 
@@ -251,12 +253,10 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public static boolean existRepeatedFight(List<Fight> fights) {
-        for (int i = 0; i < fights.size(); i++) {
-            for (int j = i + 1; j < fights.size(); j++) {
-                if (fights.get(i).equals(fights.get(j))) {
-                    return true;
-                }
-            }
+        Set<Fight> set = new HashSet<>(fights);
+
+        if (set.size() < fights.size()) {
+            return true;
         }
         return false;
     }

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class LoopTournamentManager extends SimpleTournamentManager {
 
-    public LoopTournamentManager(Tournament tournament) {
+    protected LoopTournamentManager(Tournament tournament) {
         super(tournament);
     }
 

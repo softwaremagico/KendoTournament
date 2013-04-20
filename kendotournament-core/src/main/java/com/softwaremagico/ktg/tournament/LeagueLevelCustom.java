@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament.level;
+package com.softwaremagico.ktg.tournament;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -24,16 +24,15 @@ package com.softwaremagico.ktg.tournament.level;
  */
 
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeagueLevelManual extends LeagueLevel {
+public class LeagueLevelCustom extends LeagueLevel {
 
     private Links links;
 
-    public LeagueLevelManual(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+    public LeagueLevelCustom(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
         links = new Links();
     }
@@ -63,7 +62,7 @@ public class LeagueLevelManual extends LeagueLevel {
         if (level > 0) {
             return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
         }
-        return new LeagueLevelManual(tournament, level, nextLevel, previousLevel);
+        return new LeagueLevelCustom(tournament, level, nextLevel, previousLevel);
     }
 
     @Override

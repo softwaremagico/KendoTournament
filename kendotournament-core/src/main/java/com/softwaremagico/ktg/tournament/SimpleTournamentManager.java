@@ -5,7 +5,6 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
-import com.softwaremagico.ktg.tournament.level.LeagueLevel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +19,7 @@ public class SimpleTournamentManager implements ITournamentManager {
     Tournament tournament;
     TournamentGroup group;
 
-    public SimpleTournamentManager(Tournament tournament) {
+    protected SimpleTournamentManager(Tournament tournament) {
         this.tournament = tournament;
         addGroup();
     }

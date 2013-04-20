@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.*;
 import java.io.*;
 
