@@ -1,10 +1,7 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,33 +14,18 @@ public class LoopTournamentManager extends SimpleTournamentManager {
     }
 
     @Override
-    public List<Fight> getRandomFights() {
-        return getFights(true);
+    public List<Fight> createRandomFights(Integer level) {
+        if (group == null || level != 0) {
+            return null;
+        }
+        return group.createLoopFights(true);
     }
 
     @Override
-    public List<Fight> getSortedFights() {
-        return getFights(false);
-    }
-
-    private List<Fight> getFights(boolean random) {
-        if (group == null || group.getTeams().size() < 2) {
+    public List<Fight> createSortedFights(Integer level) {
+        if (group == null || level != 0) {
             return null;
         }
-        List<Fight> fights = new ArrayList<>();
-        RemainingFights remainingFights = new RemainingFights(group.getTeams());
-
-        List<Team> teams = remainingFights.getTeams();
-        if (random) {
-            Collections.shuffle(teams);
-        }
-        for (Team team : teams) {
-            for (Team adversary : remainingFights.getAdversaries(team)) {
-                Fight fight = new Fight(tournament, team, adversary, group.getFightArea(), group.getLevel());
-                fights.add(fight);
-            }
-        }
-
-        return fights;
+        return group.createLoopFights(false);
     }
 }

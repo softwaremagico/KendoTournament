@@ -3,84 +3,121 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.FightPool;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Championship implements ITournamentManager {
 
-    Tournament tournament;
+    private Tournament tournament;
+    private List<LeagueLevel> levels;
 
     protected Championship(Tournament tournament) {
         this.tournament = tournament;
+        levels = new ArrayList<>();
     }
 
     @Override
     public List<Fight> getFights(Integer level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return FightPool.getInstance().getFromLevel(tournament, level);
     }
 
     @Override
-    public List<Fight> getRandomFights() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Fight> createRandomFights(Integer level) {
+        return createFightsOfGroups(level, true);
     }
 
     @Override
-    public List<Fight> getSortedFights() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Fight> createSortedFights(Integer level) {
+        return createFightsOfGroups(level, false);
+    }
+
+    private List<Fight> createFightsOfGroups(Integer level, boolean random) {
+        List<Fight> fights = new ArrayList<>();
+        List<TournamentGroup> groupsOfLevel = getGroups(level);
+        for (TournamentGroup group : groupsOfLevel) {
+            fights.addAll(group.createFights(random));
+        }
+        return fights;
     }
 
     @Override
     public List<TournamentGroup> getGroups() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<TournamentGroup> allGroups = new ArrayList<>();
+        for (int i = 0; i < levels.size(); i++) {
+            allGroups.addAll(getLevel(i).getGroups());
+        }
+        return allGroups;
     }
 
     @Override
     public List<TournamentGroup> getGroups(Integer level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return getLevel(level).getGroups();
     }
 
     @Override
     public TournamentGroup getGroup(Fight fight) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (TournamentGroup group : getGroups()) {
+            if (group.isFightOfGroup(fight)) {
+                return group;
+            }
+        }
+        return null;
     }
 
     @Override
     public void addGroup(TournamentGroup group) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getLevel(0).addGroup(group);
     }
 
     @Override
     public void removeGroup(Integer level, Integer groupIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getLevel(level).removeGroup(getGroups(level).get(groupIndex));
     }
 
     @Override
     public void removeGroup(TournamentGroup group) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getLevel(group.getLevel()).getGroups().remove(group);
     }
 
     @Override
     public void removeGroups(Integer level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getLevel(level).removeGroups();
     }
 
     @Override
     public LeagueLevel getLevel(Integer level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        LeagueLevel leagueLevel = levels.get(level);
+        if (leagueLevel == null && level == 0) {
+            leagueLevel = new LeagueLevelChampionship(tournament, 0, null, null);
+        }
+        return leagueLevel;
     }
 
     @Override
     public Integer getNumberOfLevels() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return levels.size();
     }
 
     @Override
     public Integer getLastLevelUsed() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for (int i = 0; i < levels.size(); i++) {
+            if (getLevel(i).isLevelFinished()) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     @Override
     public boolean exist(Team team) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<TournamentGroup> groups = getGroups(0);
+        for (TournamentGroup group : groups) {
+            if (group.getTeams().contains(team)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -99,8 +136,8 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public void deleteTeams(Integer level) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void removeTeams(Integer level) {
+        getLevel(level).removeTeams();
     }
 
     @Override

@@ -31,7 +31,10 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Defines a group of teams that fight together in a tournament. A league has
@@ -45,6 +48,7 @@ public class TournamentGroup implements Serializable {
     private Integer numberMaxOfWinners = 1;
     protected Integer level;
     private Integer fightArea = 0;
+    private List<Fight> fightsOfGroup;
 
     public TournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
         this.tournament = tournament;
@@ -141,7 +145,10 @@ public class TournamentGroup implements Serializable {
     }
 
     public List<Fight> getFights() {
-        return getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
+        if (fightsOfGroup != null || fightsOfGroup.isEmpty()) {
+            fightsOfGroup = getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
+        }
+        return fightsOfGroup;
     }
 
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
@@ -161,6 +168,55 @@ public class TournamentGroup implements Serializable {
             }
         }
         return fightsG;
+    }
+
+    public List<Fight> createFights(boolean random) {
+        if (getTeams().size() < 2) {
+            return null;
+        }
+        List<Fight> fights = new ArrayList<>();
+        RemainingFights remainingFights = new RemainingFights(getTeams());
+
+        Team team1 = remainingFights.getTeamWithMoreAdversaries(random);
+        Fight fight;
+        while (remainingFights.remainFights()) {
+            Team team2 = remainingFights.getNextAdversary(team1, random);
+            //Team1 has no more adversaries. Use another one. 
+            if (team2 == null) {
+                team1 = remainingFights.getTeamWithMoreAdversaries(random);
+                continue;
+            }
+            if (fights.size() % 2 == 0) {
+                fight = new Fight(tournament, team1, team2, getFightArea(), getLevel());
+            } else {
+                fight = new Fight(tournament, team2, team1, getFightArea(), getLevel());
+            }
+            fights.add(fight);
+            remainingFights.removeAdveresary(team1, team2);
+            team1 = team2;
+        }
+        return fights;
+    }
+
+    public List<Fight> createLoopFights(boolean random) {
+        if (getTeams().size() < 2) {
+            return null;
+        }
+        List<Fight> fights = new ArrayList<>();
+        RemainingFights remainingFights = new RemainingFights(getTeams());
+
+        List<Team> remainingTeams = remainingFights.getTeams();
+        if (random) {
+            Collections.shuffle(remainingTeams);
+        }
+        for (Team team : remainingTeams) {
+            for (Team adversary : remainingFights.getAdversaries(team)) {
+                Fight fight = new Fight(tournament, team, adversary, getFightArea(), getLevel());
+                fights.add(fight);
+            }
+        }
+
+        return fights;
     }
 
     public boolean areFightsOver(List<Fight> allFights) {
@@ -202,12 +258,17 @@ public class TournamentGroup implements Serializable {
         return true;
     }
 
+    public boolean areFightsOverOrNull() {
+        if (teams.size() < 2) {
+            return true;
+        }
+        return areFightsOverOrNull(getFights());
+    }
+
     /**
      * If the fightManager are over or fightManager are not needed.
      */
-    public boolean areFightsOverOrNull(List<Fight> allFights) {
-        List<Fight> fights = getFightsOfGroup(allFights);
-
+    public static boolean areFightsOverOrNull(List<Fight> fights) {
         if (fights.size() > 0) {
             for (int i = 0; i < fights.size(); i++) {
                 if (!fights.get(i).isOver()) {
@@ -215,9 +276,92 @@ public class TournamentGroup implements Serializable {
                 }
             }
             return true;
-        } else if (teams.size() > 1) { //If there are only one team, no fightManager are needed.
-            return false;
         }
         return true;
+    }
+
+    class RemainingFights {
+
+        List<Team> teams;
+        HashMap<Team, List<Team>> combination;
+
+        protected RemainingFights(List<Team> teams) {
+            this.teams = teams;
+            Collections.sort(teams);
+            combination = getAdversaries();
+        }
+
+        public List<Team> getAdversaries(Team team) {
+            return combination.get(team);
+        }
+
+        public List<Team> getTeams() {
+            return teams;
+        }
+
+        private HashMap<Team, List<Team>> getAdversaries() {
+            HashMap<Team, List<Team>> combinations = new HashMap<>();
+            for (int i = 0; i < teams.size(); i++) {
+                List<Team> otherTeams = new ArrayList<>();
+                combinations.put(teams.get(i), otherTeams);
+
+                for (int j = 0; j < teams.size(); j++) {
+                    if (i != j) {
+                        otherTeams.add(teams.get(j));
+                    }
+                }
+            }
+            return combinations;
+        }
+
+        public Team getTeamWithMoreAdversaries(boolean random) {
+            return getTeamWithMoreAdversaries(teams, random);
+        }
+
+        public Team getTeamWithMoreAdversaries(List<Team> teamGroup, boolean random) {
+            Integer maxAdv = -1;
+            //Get max Adversaries value:
+            for (Team team : teamGroup) {
+                if (combination.get(team).size() > maxAdv) {
+                    maxAdv = combination.get(team).size();
+                }
+            }
+
+            //Select one of the teams with max adversaries
+            List<Team> possibleAdversaries = new ArrayList<>();
+            for (Team team : teamGroup) {
+                if (combination.get(team).size() == maxAdv) {
+                    //If no random, return the first one. 
+                    if (!random) {
+                        return team;
+                    } else {
+                        possibleAdversaries.add(team);
+                    }
+                }
+            }
+
+            if (possibleAdversaries.size() > 0) {
+                return possibleAdversaries.get(new Random().nextInt(possibleAdversaries.size()));
+            }
+            return null;
+        }
+
+        public Team getNextAdversary(Team team, boolean random) {
+            return getTeamWithMoreAdversaries(combination.get(team), random);
+        }
+
+        public void removeAdveresary(Team team, Team adversary) {
+            combination.get(team).remove(adversary);
+            combination.get(adversary).remove(team);
+        }
+
+        public boolean remainFights() {
+            for (Team team : teams) {
+                if (combination.get(team).size() > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

@@ -28,13 +28,13 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
@@ -460,7 +460,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                         (Team) (Team1ComboBox.getSelectedItem()),
                         (Team) (Team2ComboBox.getSelectedItem()),
                         FightAreaComboBox.getSelectedIndex(),
-                        0); 
+                        0);
                 int ind = FightsList.getSelectedIndex();
                 if (ind >= 0) {
                     fights.add(ind + 1, fight);
@@ -493,7 +493,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
                 setTournamentType();
-                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getRandomFights();
+                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).createRandomFights(0);
                 fillFights();
                 try {
                     FightsList.setSelectedIndex(0);
@@ -567,7 +567,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
                 setTournamentType();
-                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).getSortedFights();
+                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).createSortedFights(0);
                 fightsModel.removeAllElements();
 
                 fillFights();

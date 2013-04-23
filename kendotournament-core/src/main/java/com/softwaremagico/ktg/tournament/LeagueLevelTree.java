@@ -27,7 +27,7 @@ import com.softwaremagico.ktg.core.Tournament;
 
 public class LeagueLevelTree extends LeagueLevel {
 
-    LeagueLevelTree(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+    protected LeagueLevelTree(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
     }
 

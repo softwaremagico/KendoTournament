@@ -25,11 +25,11 @@ package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -61,6 +61,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     public BlackBoardPanel(LeagueDesigner parent, boolean interactive) {
         this.parent = parent;
         this.interactive = interactive;
+        grpsBox = new HashMap<>();
         setLayout(new java.awt.GridBagLayout());
         setBackground(new Color(255, 255, 255));
     }
@@ -79,7 +80,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private void paintDesignedGroups() {
         Integer lastSelected = getSelectedBoxIndex();
         removeAll();
-        //Simple tournamnet is not defined in the blackboard. 
+        //Simple tournament is not defined in the blackboard. 
         if (tournament.getType().equals(TournamentType.SIMPLE)) {
             return;
         }
@@ -136,9 +137,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
          */
         try {
             for (int level = 0; level < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); level++) {
-                for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getLevel(level).getGroups().size(); groupIndex++) {
+                for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getGroups(level).size(); groupIndex++) {
                     try {
-                        if (TournamentManagerPool.getManager(tournament).getLevel(level).getGroups().get(groupIndex).getTournament().equals(tournament)) {
+                        if (TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex).getTournament().equals(tournament)) {
                             c.anchor = GridBagConstraints.WEST;
                             c.gridx = level * 2 + 1 + TITLE_COLUMN;
                             if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
@@ -314,7 +315,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     public Integer getSelectedBoxIndex() {
-        return grpsBox.get(0).indexOf(selected);
+        try {
+            return grpsBox.get(0).indexOf(selected);
+        } catch (NullPointerException npe) {
+            return null;
+        }
     }
 
     @Override

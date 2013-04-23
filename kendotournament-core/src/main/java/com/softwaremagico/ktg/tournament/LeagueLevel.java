@@ -37,7 +37,7 @@ public abstract class LeagueLevel {
     protected LeagueLevel nextLevel;
     protected LeagueLevel previousLevel;
 
-    LeagueLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+    protected LeagueLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         this.tournament = tournament;
         tournamentGroups = new ArrayList<>();
         this.level = level;
@@ -49,7 +49,7 @@ public abstract class LeagueLevel {
         return tournamentGroups.size();
     }
 
-    public List<TournamentGroup> getGroups() {
+    protected List<TournamentGroup> getGroups() {
         return tournamentGroups;
     }
 
@@ -64,7 +64,7 @@ public abstract class LeagueLevel {
         }
     }
 
-    protected void deleteTeams() {
+    protected void removeTeams() {
         for (TournamentGroup g : tournamentGroups) {
             g.removeTeams();
         }
@@ -88,9 +88,9 @@ public abstract class LeagueLevel {
         return false;
     }
 
-    protected boolean isLevelFinished(ArrayList<Fight> fights) {
+    protected boolean isLevelFinished() {
         for (TournamentGroup t : tournamentGroups) {
-            if (!t.areFightsOverOrNull(fights)) {
+            if (!t.areFightsOverOrNull()) {
                 return false;
             }
         }
@@ -319,7 +319,7 @@ public abstract class LeagueLevel {
         return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
     }
 
-    public String levelInfo() {
+    protected String levelInfo() {
         String info = "Level: " + level + " Groups: ";
 
         for (TournamentGroup group : tournamentGroups) {
@@ -328,7 +328,7 @@ public abstract class LeagueLevel {
         return info;
     }
 
-    public void showTree() {
+    protected void showTree() {
         System.out.println("-------------------------------------");
         System.out.println(levelInfo());
         if (nextLevel != null) {
@@ -337,7 +337,7 @@ public abstract class LeagueLevel {
         System.out.println("-------------------------------------");
     }
 
-    public void showTeams() {
+    protected void showTeams() {
         System.out.println("-------------------------------------");
         for (TournamentGroup group : tournamentGroups) {
             for (Team team : group.getTeams()) {

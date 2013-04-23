@@ -39,9 +39,9 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -1014,7 +1014,7 @@ public abstract class SQL extends Database {
             try {
                 query += "INSERT INTO duel (Team1, Team2, Tournament, GroupIndex, Level, Order, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES ('" + duel.getFight().getTeam1().getName() + "', '" + duel.getFight().getTeam2().getName() + "', '" + duel.getFight().getTournament().getName() + "', "
                         + duel.getFight().getIndex() + ", " + duel.getFight().getLevel() + ", " + duel.getOrder() + ", "
-                        + duel.getHits(true).get(0) + ", " + duel.getHits(true).get(1) + ", " + duel.getHits(false).get(0) + ", " + duel.getHits(false).get(1) + ", " + duel.getFaults(true) + ", " + duel.getFaults(false) + "); ";
+                        + duel.getHits(true).get(0).getAbbreviature() + ", " + duel.getHits(true).get(1).getAbbreviature() + ", " + duel.getHits(false).get(0).getAbbreviature() + ", " + duel.getHits(false).get(1).getAbbreviature() + ", " + duel.getFaults(true) + ", " + duel.getFaults(false) + "); ";
             } catch (NullPointerException npe) {
                 KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
             }

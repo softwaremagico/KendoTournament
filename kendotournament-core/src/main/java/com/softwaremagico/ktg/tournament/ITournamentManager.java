@@ -36,9 +36,9 @@ public interface ITournamentManager {
      */
     List<Fight> getFights(Integer level);
     
-    List<Fight> getRandomFights();
+    List<Fight> createRandomFights(Integer level);
     
-    List<Fight> getSortedFights();
+    List<Fight> createSortedFights(Integer level);
 
     List<TournamentGroup> getGroups();
 
@@ -68,7 +68,7 @@ public interface ITournamentManager {
 
     void removeLinks();
 
-    void deleteTeams(Integer level);
+    void removeTeams(Integer level);
 
     /**
      * Divide groups into fight areas.

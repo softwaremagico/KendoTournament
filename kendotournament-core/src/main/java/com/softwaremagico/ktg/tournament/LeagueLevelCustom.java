@@ -32,7 +32,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     private Links links;
 
-    public LeagueLevelCustom(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+    protected LeagueLevelCustom(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
         links = new Links();
     }
@@ -60,7 +60,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         //Only first level is particular. 
         if (level > 0) {
-            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
+            return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
         }
         return new LeagueLevelCustom(tournament, level, nextLevel, previousLevel);
     }
@@ -87,7 +87,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     /**
      * Stores the arrows of the designer.
      */
-    class Links implements Serializable {
+    private class Links implements Serializable {
 
         private List<Link> links = new ArrayList<>();
 

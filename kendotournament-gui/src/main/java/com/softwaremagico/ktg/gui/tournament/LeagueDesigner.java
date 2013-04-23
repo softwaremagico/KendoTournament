@@ -27,7 +27,6 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
@@ -36,6 +35,7 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -101,6 +101,14 @@ public class LeagueDesigner extends javax.swing.JFrame {
         GroupEditionLabel.setText(trans.getTranslatedText("GroupLabel"));
     }
 
+    private void setTournamentType() {
+        ((Tournament) TournamentComboBox.getSelectedItem()).setType(getDefinedType());
+    }
+
+    protected TournamentType getDefinedType() {
+        return TournamentType.CHAMPIONSHIP;
+    }
+
     private void fillTournaments() {
         refreshTournament = false;
         TournamentComboBox.removeAllItems();
@@ -112,6 +120,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         } catch (NullPointerException npe) {
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+        tournament = (Tournament) (TournamentComboBox.getSelectedItem());
         refreshTournament = true;
     }
 
@@ -149,8 +158,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelToLevelZero() {
         try {
-            if (!tournament.getType().equals(TournamentType.SIMPLE)
-                    && TournamentManagerPool.getManager(tournament).getGroups(0).size() < obtainNumberOfGroupsOfLeague()) {
+            if (TournamentManagerPool.getManager(tournament).getGroups(0).size() < obtainNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentManagerPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
                 TournamentGroup group = new TournamentGroup(tournament, 0, defaultArena);
@@ -215,7 +223,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void updateInterface() {
         try {
-            tournament = (Tournament) (TournamentComboBox.getSelectedItem());
             //TournamentManagerPool.getManager(tournament) = new TournamentGroupManager(tournament);
             teams = TeamPool.getInstance().get(tournament);
 
@@ -698,6 +705,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
+            tournament = (Tournament) (TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             updateInterface();
         }
@@ -708,6 +716,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
+        setTournamentType();
         addDesignedPanelToLevelZero();
     }//GEN-LAST:event_AddButtonActionPerformed
 
@@ -830,11 +839,11 @@ public class LeagueDesigner extends javax.swing.JFrame {
         //Select All levels
         if (LevelComboBox.getSelectedIndex() == LevelComboBox.getItemCount() - 1) {
             FightPool.getInstance().remove(tournament);
-            TournamentManagerPool.getManager(tournament).deleteTeams(0);
+            TournamentManagerPool.getManager(tournament).removeTeams(0);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } else {
             FightPool.getInstance().remove(tournament, LevelComboBox.getSelectedIndex());
-            TournamentManagerPool.getManager(tournament).deleteTeams(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
+            TournamentManagerPool.getManager(tournament).removeTeams(LevelComboBox.getSelectedIndex() > 0 ? LevelComboBox.getSelectedIndex() : 1);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
         updateBlackBoard();

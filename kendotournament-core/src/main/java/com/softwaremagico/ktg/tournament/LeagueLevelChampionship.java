@@ -27,15 +27,15 @@ import com.softwaremagico.ktg.core.Tournament;
 
 public class LeagueLevelChampionship extends LeagueLevel {
 
-    LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+    protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
     }
 
     @Override
     protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-        if (level > 0) {
+        /*if (level > 0) {
             return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
-        }
+        }*/
         return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
     }
 
@@ -54,7 +54,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
             return ((branch + 1) % branchs) / 2;
         }
     }
-   
+
     @Override
     public Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
         Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
