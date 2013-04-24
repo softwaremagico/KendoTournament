@@ -53,7 +53,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private static int TITLE_ROW = 2;
     transient private Translator trans = LanguagePool.getTranslator("gui.xml");
     private HashMap<Integer, List<TournamentGroupBox>> grpsBox;  //GroupBox per level.
-    private TournamentGroupBox selected = null;
+    private Integer selectedGroupIndex = null;
     private Timer timer;
     private boolean wasDoubleClick = true;
     private LeagueDesigner parent;
@@ -62,7 +62,6 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     public BlackBoardPanel(LeagueDesigner parent, boolean interactive) {
         this.parent = parent;
         this.interactive = interactive;
-        grpsBox = new HashMap<>();
         setLayout(new java.awt.GridBagLayout());
         setBackground(new Color(255, 255, 255));
     }
@@ -74,12 +73,13 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     public void clearBlackBoard() {
-        this.removeAll();
+        removeAll();
     }
 
     private void paintDesignedGroups() {
-        Integer lastSelected = getSelectedBoxIndex();
+        Integer lastSelectedGroupIndex = getSelectedBoxIndex();
         removeAll();
+        grpsBox = new HashMap<>();
         //Simple tournament is not defined in the blackboard. 
         if (tournament.getType().equals(TournamentType.SIMPLE)) {
             return;
@@ -96,76 +96,79 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
         add(new Separator(), c);
 
-        /*
-         * Paint information row
-         */
-        for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
-            c.gridx = (i + 1) * 2;
-            c.gridy = 1;
+        if (tournament.getType().equals(TournamentType.CHAMPIONSHIP) || tournament.getType().equals(TournamentType.MANUAL)) {
 
-            Separator s;
-            if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                s = new Separator(trans.getTranslatedText("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
-            } else if (i == TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
-                s = new Separator(trans.getTranslatedText("SemiFinalLabel"));
-            } else {
-                s = new Separator(trans.getTranslatedText("FinalLabel"));
-            }
-            s.updateFont("sansserif", 24);
-            add(s, c);
-        }
+            /*
+             * Paint information row
+             */
+            for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
+                c.gridx = (i + 1) * 2;
+                c.gridy = 1;
 
-        /*
-         * Paint information column
-         */
-        List<TournamentGroup> grps = TournamentManagerPool.getManager(tournament).getGroups(0);
-        if (grps != null) {
-            for (int i = 0; i < grps.size(); i++) {
-                c.gridx = 0;
-                c.gridy = i + 2;
-
-                Separator s = new Separator(trans.getTranslatedText("GroupString") + " " + (i + 1)
-                        + "<br>" + trans.getTranslatedText("ArenaString") + " "
-                        + KendoTournamentGenerator.getFightAreaName(grps.get(i).getFightArea()));
+                Separator s;
+                if (i < TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
+                    s = new Separator(trans.getTranslatedText("Round") + " " + (TournamentManagerPool.getManager(tournament).getNumberOfLevels() - i));
+                } else if (i == TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 2) {
+                    s = new Separator(trans.getTranslatedText("SemiFinalLabel"));
+                } else {
+                    s = new Separator(trans.getTranslatedText("FinalLabel"));
+                }
                 s.updateFont("sansserif", 24);
                 add(s, c);
             }
-        }
 
-        /*
-         * Paint teams group
-         */
-        try {
-            for (int level = 0; level < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); level++) {
-                for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getGroups(level).size(); groupIndex++) {
-                    try {
-                        if (TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex).getTournament().equals(tournament)) {
-                            c.anchor = GridBagConstraints.WEST;
-                            c.gridx = level * 2 + 1 + TITLE_COLUMN;
-                            if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
-                                c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
-                            } else {
-                                if (level == 0) {
-                                    c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
-                                } else {
-                                    c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
-                                }
-                            }
+            /*
+             * Paint information column
+             */
+            List<TournamentGroup> grps = TournamentManagerPool.getManager(tournament).getGroups(0);
+            if (grps != null) {
+                for (int i = 0; i < grps.size(); i++) {
+                    c.gridx = 0;
+                    c.gridy = i + 2;
 
-                            c.weightx = 0.5;
-                            TournamentGroupBox tournamentGroupBox = createBox(TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex), level);
-                            add(tournamentGroupBox, c);
-                            if (level == 0 && groupIndex == 0 && interactive) {
-                                tournamentGroupBox.setSelected();
-                            }
-                        }
-                    } catch (NullPointerException npe) {
-                        KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-                    }
+                    Separator s = new Separator(trans.getTranslatedText("GroupString") + " " + (i + 1)
+                            + "<br>" + trans.getTranslatedText("ArenaString") + " "
+                            + KendoTournamentGenerator.getFightAreaName(grps.get(i).getFightArea()));
+                    s.updateFont("sansserif", 24);
+                    add(s, c);
                 }
             }
-            selectGroup(lastSelected);
-        } catch (ClassCastException e) {
+
+            /*
+             * Paint teams group
+             */
+            try {
+                for (int level = 0; level < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); level++) {
+                    for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getGroups(level).size(); groupIndex++) {
+                        try {
+                            if (TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex).getTournament().equals(tournament)) {
+                                c.anchor = GridBagConstraints.WEST;
+                                c.gridx = level * 2 + 1 + TITLE_COLUMN;
+                                if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
+                                    c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
+                                } else {
+                                    if (level == 0) {
+                                        c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
+                                    } else {
+                                        c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
+                                    }
+                                }
+
+                                c.weightx = 0.5;
+                                TournamentGroupBox tournamentGroupBox = createBox(TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex), level);
+                                add(tournamentGroupBox, c);
+                                if (level == 0 && groupIndex == 0 && interactive) {
+                                    tournamentGroupBox.setSelected();
+                                }
+                            }
+                        } catch (NullPointerException npe) {
+                            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                        }
+                    }
+                }
+                selectGroup(lastSelectedGroupIndex);
+            } catch (ClassCastException e) {
+            }
         }
     }
 
@@ -175,9 +178,6 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         if (list == null) {
             list = new ArrayList<>();
             grpsBox.put(level, list);
-            if (level == 0) {
-                selected = tournamentGroupBox;
-            }
         }
         list.add(tournamentGroupBox);
         if (interactive) {
@@ -186,6 +186,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         } else {
             tournamentGroupBox.activateColor(true);
         }
+        tournamentGroupBox.setUnselected();
         return tournamentGroupBox;
     }
 
@@ -302,7 +303,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     public void selectGroup(Integer index) {
-        if (index != null && interactive) {
+        if (index != null && interactive && grpsBox.size() > 0) {
             for (TournamentGroupBox grpBox : grpsBox.get(0)) {
                 grpBox.setUnselected();
             }
@@ -311,15 +312,21 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     public TournamentGroupBox getSelectedBox() {
-        return selected;
+        try {
+            if (selectedGroupIndex != null && selectedGroupIndex >= 0) {
+                return grpsBox.get(0).get(selectedGroupIndex);
+            }
+        } catch (NullPointerException npe) {
+        }
+        return null;
     }
 
     public Integer getSelectedBoxIndex() {
-        try {
-            return grpsBox.get(0).indexOf(selected);
-        } catch (NullPointerException npe) {
-            return null;
+        if (selectedGroupIndex != null && grpsBox != null && grpsBox.get(0) != null
+                && selectedGroupIndex >= 0 && selectedGroupIndex < grpsBox.get(0).size()) {
+            return selectedGroupIndex;
         }
+        return null;
     }
 
     @Override
@@ -375,14 +382,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 timer.setRepeats(false);
                 timer.start();
             }
-            group.setSelected();
-            selected = group;
+            selectedGroupIndex = grpsBox.get(0).indexOf(group);
+            selectGroup(getSelectedBoxIndex());
 
         } else if (group.getTournamentGroup().getLevel() == 1 && group.getTournamentGroup().getTeams().isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
             if (tournament.getType().equals(TournamentType.MANUAL)) {
                 ManualChampionship championship = (ManualChampionship) TournamentManagerPool.getManager(tournament);
-                championship.addLink(selected.getTournamentGroup(), group.getTournamentGroup());
+                championship.addLink(getSelectedBox().getTournamentGroup(), group.getTournamentGroup());
                 update(tournament);
             }
         }

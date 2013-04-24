@@ -93,6 +93,7 @@ public class Championship implements ITournamentManager {
         }
         if (leagueLevel == null && level == 0) {
             leagueLevel = new LeagueLevelChampionship(tournament, 0, null, null);
+            //leagueLevel.addGroup(new TournamentGroup(tournament, 0, 0));
             levels.add(leagueLevel);
         }
         return leagueLevel;

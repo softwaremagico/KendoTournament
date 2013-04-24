@@ -64,7 +64,6 @@ public class TournamentGroupBox extends Group {
         updateText();
         updateSize();
         setBackground(new Color(230, 230, 230));
-        //setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
         removeAll();
         label.setHorizontalTextPosition(JLabel.LEFT);
@@ -190,7 +189,6 @@ public class TournamentGroupBox extends Group {
         if (tournamentGroup.getLevel() == 0) {
             selected = true;
             setBackground(new Color(200, 200, 200));
-            //setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
             setBorder(javax.swing.BorderFactory.createLoweredBevelBorder());
         }
     }
@@ -198,7 +196,6 @@ public class TournamentGroupBox extends Group {
     public void setUnselected() {
         selected = false;
         setBackground(new Color(230, 230, 230));
-        //setBorder(javax.swing.BorderFactory.createEtchedBorder());
         if (listenerAdded) {
             setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
         } else {
@@ -296,7 +293,6 @@ public class TournamentGroupBox extends Group {
         @Override
         public void windowClosed(WindowEvent evt) {
             update();
-            //  TournamentGroupPool.getManager(tournamentGroup.getTournament()).updateArenas(1);
             leagueDesigner.updateInfo();
             leagueDesigner.repaint();
         }
