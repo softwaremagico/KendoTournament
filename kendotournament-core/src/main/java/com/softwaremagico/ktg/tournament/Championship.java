@@ -136,4 +136,15 @@ public class Championship implements ITournamentManager {
     public void setDefaultFightAreas() {
         getLevel(0).updateArenaOfGroups();
     }
+    
+    @Override
+    public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
+        tournament.setHowManyTeamsOfGroupPassToTheTree(winners);
+        for(TournamentGroup group : levelZero.getGroups()){
+            group.setMaxNumberOfWinners(winners);
+        }
+        if (levelZero.nextLevel != null) {
+            levelZero.nextLevel.updateGroupsSize();
+        }
+    }
 }

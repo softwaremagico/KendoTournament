@@ -139,4 +139,9 @@ public class SimpleTournamentManager implements ITournamentManager {
     public Integer getLastLevelUsed() {
         return 0;
     }
+
+    @Override
+    public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
+        
+    }
 }

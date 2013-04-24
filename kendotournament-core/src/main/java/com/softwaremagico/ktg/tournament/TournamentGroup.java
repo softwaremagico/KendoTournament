@@ -61,7 +61,7 @@ public class TournamentGroup implements Serializable {
         }
     }
 
-    public void updateMaxNumberOfWinners(int value) {
+    public void setMaxNumberOfWinners(int value) {
         if (numberMaxOfWinners < 1) {
             numberMaxOfWinners = 1;
         } else {

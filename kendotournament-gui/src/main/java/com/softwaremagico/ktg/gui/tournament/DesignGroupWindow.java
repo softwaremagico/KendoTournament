@@ -316,7 +316,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
                 PassSpinner.setValue(tournamentGroup.getTeams().size() - 1);
             }
         }
-        tournamentGroup.updateMaxNumberOfWinners((Integer) PassSpinner.getValue());
+        tournamentGroup.setMaxNumberOfWinners((Integer) PassSpinner.getValue());
     }//GEN-LAST:event_PassSpinnerStateChanged
 
     private void FightAreaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FightAreaComboBoxActionPerformed

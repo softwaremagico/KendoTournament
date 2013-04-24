@@ -68,4 +68,6 @@ public interface ITournamentManager {
      * Divide groups into fight areas.
      */
     void setDefaultFightAreas();
+    
+    void setHowManyTeamsOfGroupPassToTheTree(Integer winners);
 }

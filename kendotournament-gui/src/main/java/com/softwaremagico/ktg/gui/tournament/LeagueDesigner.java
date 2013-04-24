@@ -600,7 +600,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void winnerPassSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_winnerPassSpinnerStateChanged
         if (refreshSpinner) {
             try {
-                tournament.setHowManyTeamsOfGroupPassToTheTree((Integer) winnerPassSpinner.getValue());
+                TournamentManagerPool.getManager(tournament).setHowManyTeamsOfGroupPassToTheTree((Integer) winnerPassSpinner.getValue());
             } catch (NullPointerException npe) {
             }
             updateBlackBoard();
