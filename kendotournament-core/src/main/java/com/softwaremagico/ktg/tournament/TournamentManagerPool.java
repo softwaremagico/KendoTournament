@@ -33,7 +33,7 @@ public class TournamentManagerPool {
                 manager = new Championship(tournament);
                 break;
             case MANUAL:
-                manager = new ManualChampionship(tournament);
+                manager = new CustomChampionship(tournament);
                 break;
             case SIMPLE:
             default:

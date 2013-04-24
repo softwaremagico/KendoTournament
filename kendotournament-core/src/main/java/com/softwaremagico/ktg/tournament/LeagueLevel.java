@@ -229,7 +229,6 @@ public abstract class LeagueLevel {
 
         if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
             nextLevel = addNewLevel(tournament, level + 1, null, this);
-            //groupManager.getLevels().add(nextLevel);
         }
 
         if (nextLevel != null) {
@@ -271,6 +270,7 @@ public abstract class LeagueLevel {
 
     protected void removeGroups() {
         tournamentGroups = new ArrayList<>();
+        nextLevel = null;
     }
 
     /**

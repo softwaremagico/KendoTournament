@@ -15,7 +15,6 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
   <Events>
-    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
   </Events>
   <AuxValues>
@@ -41,7 +40,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="TournamentLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TournamentComboBox" max="32767" attributes="0"/>
+                      <Component id="tournamentComboBox" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="manualCheckBox" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -57,7 +56,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="TournamentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TournamentComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tournamentComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="manualCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -77,15 +76,14 @@
         <Property name="text" type="java.lang.String" value="Tournament:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="TournamentComboBox">
+    <Component class="javax.swing.JComboBox" name="tournamentComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TournamentComboBoxActionPerformed"/>
-        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="TournamentComboBoxFocusGained"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tournamentComboBoxActionPerformed"/>
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
@@ -110,18 +108,18 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="TreeEditionLabel" min="-2" max="-2" attributes="0"/>
                               <Component id="addGroupButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
-                              <Component id="DeleteButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
-                              <Component id="DeleteAllButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
+                              <Component id="deleteButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
+                              <Component id="deleteAllButton" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="DeleteLevelLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LevelComboBox" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
-                              <Component id="DeleteLevelButton" linkSize="6" alignment="0" max="32767" attributes="1"/>
+                              <Component id="levelComboBox" linkSize="6" alignment="0" pref="149" max="32767" attributes="1"/>
+                              <Component id="deleteLevelButton" linkSize="6" alignment="0" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="PassLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PassSpinner" linkSize="6" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                          <Component id="winnerPassSpinner" linkSize="6" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -140,19 +138,19 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="addGroupButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="DeleteButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="DeleteAllButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteAllButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="DeleteLevelLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="LevelComboBox" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="levelComboBox" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="DeleteLevelButton" linkSize="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteLevelButton" linkSize="3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="PassLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="PassSpinner" min="-2" max="-2" attributes="0"/>
+                          <Component id="winnerPassSpinner" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="BlackBoardScrollPane" max="32767" attributes="0"/>
                   </Group>
@@ -179,7 +177,7 @@
             <Property name="text" type="java.lang.String" value="Delete Level:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="LevelComboBox">
+        <Component class="javax.swing.JComboBox" name="levelComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
@@ -189,12 +187,12 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteLevelButton">
+        <Component class="javax.swing.JButton" name="deleteLevelButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteLevelButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteLevelButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="addGroupButton">
@@ -205,20 +203,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addGroupButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteButton">
+        <Component class="javax.swing.JButton" name="deleteButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteAllButton">
+        <Component class="javax.swing.JButton" name="deleteAllButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete All"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteAllButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteAllButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="TreeEditionLabel">
@@ -237,14 +235,14 @@
             <Property name="text" type="java.lang.String" value="Pass:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="PassSpinner">
+        <Component class="javax.swing.JSpinner" name="winnerPassSpinner">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="2" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="PassSpinnerStateChanged"/>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="winnerPassSpinnerStateChanged"/>
           </Events>
         </Component>
       </SubComponents>
@@ -265,9 +263,9 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="GroupEditionLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="AddTeamButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                      <Component id="DeleteTeamsButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                      <Component id="CleanLinksButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                      <Component id="addTeamButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                      <Component id="deleteTeamsButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
+                      <Component id="cleanLinksButton" linkSize="7" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="TeamScrollPane" max="32767" attributes="2"/>
@@ -283,11 +281,11 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="GroupEditionLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="AddTeamButton" linkSize="5" min="-2" max="-2" attributes="0"/>
+                          <Component id="addTeamButton" linkSize="5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="DeleteTeamsButton" linkSize="5" min="-2" max="-2" attributes="0"/>
+                          <Component id="deleteTeamsButton" linkSize="5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="CleanLinksButton" linkSize="5" min="-2" max="-2" attributes="0"/>
+                          <Component id="cleanLinksButton" linkSize="5" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="TeamScrollPane" min="-2" pref="122" max="-2" attributes="0"/>
                   </Group>
@@ -301,14 +299,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="TeamList">
+            <Component class="javax.swing.JList" name="teamList">
               <Properties>
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="teamModel" type="code"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TeamListMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="teamListMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
@@ -316,28 +314,28 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="AddTeamButton">
+        <Component class="javax.swing.JButton" name="addTeamButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Team"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddTeamButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addTeamButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="DeleteTeamsButton">
+        <Component class="javax.swing.JButton" name="deleteTeamsButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeleteTeamsButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteTeamsButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="CleanLinksButton">
+        <Component class="javax.swing.JButton" name="cleanLinksButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Clear Links"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CleanLinksButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cleanLinksButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="GroupEditionLabel">
@@ -356,47 +354,47 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="LoadButton" min="-2" pref="246" max="-2" attributes="0"/>
+                  <Component id="loadButton" min="-2" pref="246" max="-2" attributes="0"/>
                   <EmptySpace pref="248" max="32767" attributes="0"/>
-                  <Component id="AcceptButton" linkSize="8" min="-2" pref="138" max="-2" attributes="0"/>
+                  <Component id="acceptButton" linkSize="8" min="-2" pref="138" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="CloseButton" linkSize="8" min="-2" max="-2" attributes="0"/>
+                  <Component id="closeButton" linkSize="8" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="LoadButton" linkSize="4" min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="loadButton" linkSize="4" min="-2" pref="36" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="AcceptButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="CloseButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="acceptButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="closeButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="AcceptButton">
+        <Component class="javax.swing.JButton" name="acceptButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Accept"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AcceptButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="acceptButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="CloseButton">
+        <Component class="javax.swing.JButton" name="closeButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Close"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CloseButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="LoadButton">
+        <Component class="javax.swing.JButton" name="loadButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Load"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

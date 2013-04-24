@@ -27,7 +27,7 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.tournament.ManualChampionship;
+import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -388,7 +388,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         } else if (group.getTournamentGroup().getLevel() == 1 && group.getTournamentGroup().getTeams().isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
             if (tournament.getType().equals(TournamentType.MANUAL)) {
-                ManualChampionship championship = (ManualChampionship) TournamentManagerPool.getManager(tournament);
+                CustomChampionship championship = (CustomChampionship) TournamentManagerPool.getManager(tournament);
                 championship.addLink(getSelectedBox().getTournamentGroup(), group.getTournamentGroup());
                 update(tournament);
             }

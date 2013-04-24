@@ -29,13 +29,13 @@ public class LeagueLevelChampionship extends LeagueLevel {
 
     protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
+        if (level > 0) { //Inner levels always have at least one group.
+            addGroup(new TournamentGroup(tournament, level, 0));
+        }
     }
 
     @Override
     protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-        /*if (level > 0) {
-            return new LeagueLevelTree(tournament, level, nextLevel, previousLevel);
-        }*/
         return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
     }
 

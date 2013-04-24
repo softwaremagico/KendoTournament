@@ -196,7 +196,7 @@ public class TournamentGroupBox extends Group {
     public void setUnselected() {
         selected = false;
         setBackground(new Color(230, 230, 230));
-        if (listenerAdded) {
+        if (tournamentGroup.getLevel() == 0) {
             setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
         } else {
             setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));

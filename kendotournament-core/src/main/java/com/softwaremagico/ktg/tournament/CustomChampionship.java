@@ -2,10 +2,11 @@ package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
 
-public class ManualChampionship extends Championship {
+public class CustomChampionship extends Championship {
     
-    public ManualChampionship(Tournament tournament){
+    public CustomChampionship(Tournament tournament){
         super(tournament);
+        levelZero = new LeagueLevelCustom(tournament, 0, null, null);
     }
 
     public boolean allGroupsHaveNextLink() {
