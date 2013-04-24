@@ -42,12 +42,8 @@
                       <Component id="TournamentLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="TournamentComboBox" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="ManualRadioButton" min="-2" pref="77" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="ChampionshipRadioButton" min="-2" pref="124" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="TreeRadioButton" min="-2" pref="98" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="manualCheckBox" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
               </Group>
@@ -62,9 +58,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="TournamentLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="TournamentComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ManualRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ChampionshipRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TreeRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="manualCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
@@ -246,9 +240,8 @@
         <Component class="javax.swing.JSpinner" name="PassSpinner">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="1" maximum="3" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="1" maximum="2" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="PassSpinnerStateChanged"/>
@@ -364,7 +357,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Component id="LoadButton" min="-2" pref="246" max="-2" attributes="0"/>
-                  <EmptySpace pref="319" max="32767" attributes="0"/>
+                  <EmptySpace pref="248" max="32767" attributes="0"/>
                   <Component id="AcceptButton" linkSize="8" min="-2" pref="138" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="CloseButton" linkSize="8" min="-2" max="-2" attributes="0"/>
@@ -408,38 +401,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JRadioButton" name="ManualRadioButton">
+    <Component class="javax.swing.JCheckBox" name="manualCheckBox">
       <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="TreeChampionshipButtonGroup"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Manual"/>
       </Properties>
       <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ManualRadioButtonItemStateChanged"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="TreeRadioButton">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="TreeChampionshipButtonGroup"/>
-        </Property>
-        <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Tree"/>
-      </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="TreeRadioButtonItemStateChanged"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="ChampionshipRadioButton">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="TreeChampionshipButtonGroup"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Championship"/>
-      </Properties>
-      <Events>
-        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChampionshipRadioButtonItemStateChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manualCheckBoxActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

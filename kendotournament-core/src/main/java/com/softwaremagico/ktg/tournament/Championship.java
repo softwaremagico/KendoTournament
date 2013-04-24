@@ -87,9 +87,13 @@ public class Championship implements ITournamentManager {
 
     @Override
     public LeagueLevel getLevel(Integer level) {
-        LeagueLevel leagueLevel = levels.get(level);
+        LeagueLevel leagueLevel = null;
+        if (level < levels.size()) {
+            leagueLevel = levels.get(level);
+        }
         if (leagueLevel == null && level == 0) {
             leagueLevel = new LeagueLevelChampionship(tournament, 0, null, null);
+            levels.add(leagueLevel);
         }
         return leagueLevel;
     }
@@ -121,27 +125,12 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public boolean allGroupsHaveNextLink() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void addLink(TournamentGroup source, TournamentGroup address) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void removeLinks() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void removeTeams(Integer level) {
         getLevel(level).removeTeams();
     }
 
     @Override
     public void setDefaultFightAreas() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        getLevel(0).updateArenaOfGroups();
     }
 }

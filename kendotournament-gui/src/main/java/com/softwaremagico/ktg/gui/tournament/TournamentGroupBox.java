@@ -113,10 +113,15 @@ public class TournamentGroupBox extends Group {
         setMinimumSize(new Dimension(0, 0));
     }
 
-    private String returnText() {
+    private String getText(boolean withScore) {
         String text = "<html>";
 
-        List<Team> teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
+        List<Team> teamRanking;
+        if (withScore) {
+            teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
+        } else {
+            teamRanking = tournamentGroup.getTeams();
+        }
         if (teamRanking.isEmpty()) {
             text += "<b>" + getDefaultLabel() + "</b>";
         } else {
@@ -141,7 +146,11 @@ public class TournamentGroupBox extends Group {
     }
 
     public final void updateText() {
-        label.setText(returnText());
+        label.setText(getText(false));
+    }
+
+    public final void updateTextOrderByScore() {
+        label.setText(getText(true));
     }
 
     public String getDefaultLabel() {
@@ -211,9 +220,9 @@ public class TournamentGroupBox extends Group {
         dgw.setVisible(true);
     }
 
-    public void deleteTeams() {
+    public void removeTeams() {
         tournamentGroup.removeTeams();
-        label.setText(returnText());
+        label.setText(getText(false));
         updateSize();
     }
 
@@ -278,7 +287,7 @@ public class TournamentGroupBox extends Group {
 
     class closeWindows extends WindowAdapter {
 
-       private LeagueDesigner leagueDesigner;
+        private LeagueDesigner leagueDesigner;
 
         closeWindows(LeagueDesigner jf) {
             leagueDesigner = jf;

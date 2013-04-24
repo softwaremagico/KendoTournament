@@ -33,6 +33,7 @@ import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
+import com.softwaremagico.ktg.tournament.ManualChampionship;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -75,7 +76,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         fillTournaments();
         updateInterface();
         updateLevel();
-        updateMode();
+        //updateMode();
         refreshMode = true;
     }
 
@@ -91,8 +92,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         AddTeamButton.setText(trans.getTranslatedText("AddTeamButton"));
         AcceptButton.setText(trans.getTranslatedText("GenerateMatchButton"));
         CloseButton.setText(trans.getTranslatedText("CloseButton"));
-        ChampionshipRadioButton.setText(trans.getTranslatedText("ChampionshipRadioButton"));
-        TreeRadioButton.setText(trans.getTranslatedText("TreeRadioButton"));
+        manualCheckBox.setText(trans.getTranslatedText("ManualFightsMenuItem"));
         CleanLinksButton.setText(trans.getTranslatedText("CleanLinks"));
         DeleteLevelLabel.setText(trans.getTranslatedText("DeleteLevelLabel"));
         DeleteLevelButton.setText(trans.getTranslatedText("DeleteButton"));
@@ -106,6 +106,9 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }
 
     protected TournamentType getDefinedType() {
+        if (manualCheckBox.isSelected()) {
+            return TournamentType.MANUAL;
+        }
         return TournamentType.CHAMPIONSHIP;
     }
 
@@ -158,7 +161,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void addDesignedPanelToLevelZero() {
         try {
-            if (TournamentManagerPool.getManager(tournament).getGroups(0).size() < obtainNumberOfGroupsOfLeague()) {
+            if (TournamentManagerPool.getManager(tournament).getGroups(0).size() < getNumberOfGroupsOfLeague()) {
                 //int defaultArena = (TournamentManagerPool.getManager(tournament).returnGroupsOfLevel(0).size()) / tournament.fightingAreas;
                 int defaultArena = 0;
                 TournamentGroup group = new TournamentGroup(tournament, 0, defaultArena);
@@ -185,13 +188,13 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void deleteTeamsOfSelectedPanel() {
+    private void removeTeamsOfSelectedPanel() {
         TournamentGroupBox groupBox = bbp.getSelectedBox();
-        groupBox.getTournamentGroup().removeTeams();
+        groupBox.removeTeams();
         updateInfo();
     }
 
-    private Team returnTeamByName(String name) {
+    private Team getTeamByName(String name) {
         try {
             for (int i = 0; i < teams.size(); i++) {
                 if (teams.get(i).getName().equals(name)) {
@@ -204,20 +207,20 @@ public class LeagueDesigner extends javax.swing.JFrame {
         return null;
     }
 
-    private Team returnSelectedTeam() {
+    private Team getSelectedTeam() {
         String name = (String) TeamList.getSelectedValue();
         //int index = TeamList.getSelectedIndex();
-        return returnTeamByName(name);
+        return getTeamByName(name);
     }
 
     private void addTeam() {
-        Team t = returnSelectedTeam();
+        Team t = getSelectedTeam();
         if (t != null) {
-            addTeamToSelectedPanel(returnSelectedTeam());
+            addTeamToSelectedPanel(getSelectedTeam());
         }
     }
 
-    public int obtainNumberOfGroupsOfLeague() {
+    public int getNumberOfGroupsOfLeague() {
         return teams.size() / 2;
     }
 
@@ -234,7 +237,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
             fillTeams();
             updateBlackBoard();
-            updateTournamentType();
+            //updateTournamentType();
         } catch (NullPointerException npe) {
         }
     }
@@ -254,71 +257,70 @@ public class LeagueDesigner extends javax.swing.JFrame {
         }
     }
 
-    private void updateTournamentType() {
-        refreshSpinner = false;
-        switch (tournament.getType()) {
-            case CHAMPIONSHIP:
-                ChampionshipRadioButton.setSelected(true);
-                PassSpinner.setValue(2);
-                PassSpinner.setEnabled(false);
-                break;
-            case MANUAL:
-                ManualRadioButton.setSelected(true);
-                PassSpinner.setEnabled(true);
-                break;
-            case LEAGUE_TREE:
-                TreeRadioButton.setSelected(true);
-                PassSpinner.setValue(1);
-                PassSpinner.setEnabled(false);
-                break;
-        }
-        refreshSpinner = true;
-    }
+    /*private void updateTournamentType() {
+     refreshSpinner = false;
+     switch (tournament.getType()) {
+     case CHAMPIONSHIP:
+     ChampionshipRadioButton.setSelected(true);
+     PassSpinner.setValue(2);
+     PassSpinner.setEnabled(false);
+     break;
+     case MANUAL:
+     ManualRadioButton.setSelected(true);
+     PassSpinner.setEnabled(true);
+     break;
+     case LEAGUE_TREE:
+     TreeRadioButton.setSelected(true);
+     PassSpinner.setValue(1);
+     PassSpinner.setEnabled(false);
+     break;
+     }
+     refreshSpinner = true;
+     }*/
 
-    private void updateMode() {
-        try {
-            TournamentType oldMode = tournament.getType();
-            if (ManualRadioButton.isSelected()) {
-                tournament.setType(TournamentType.MANUAL);
-                CleanLinksButton.setVisible(true);
-            } else if (ChampionshipRadioButton.isSelected()) {
-                tournament.setType(TournamentType.CHAMPIONSHIP);
-                CleanLinksButton.setVisible(false);
-            } else if (TreeRadioButton.isSelected()) {
-                tournament.setType(TournamentType.LEAGUE_TREE);
-                CleanLinksButton.setVisible(false);
-            }
+    /*private void updateMode() {
+     try {
+     TournamentType oldMode = tournament.getType();
+     if (ManualRadioButton.isSelected()) {
+     tournament.setType(TournamentType.MANUAL);
+     CleanLinksButton.setVisible(true);
+     } else if (ChampionshipRadioButton.isSelected()) {
+     tournament.setType(TournamentType.CHAMPIONSHIP);
+     CleanLinksButton.setVisible(false);
+     } else if (TreeRadioButton.isSelected()) {
+     tournament.setType(TournamentType.LEAGUE_TREE);
+     CleanLinksButton.setVisible(false);
+     }
 
-            //Mode has changed. Update Levels
-            if (!oldMode.equals(tournament.getType()) && TournamentManagerPool.getManager(tournament).getNumberOfLevels() > 0) {
-                TournamentManagerPool.getManager(tournament).removeGroups(0);
-            }
+     //Mode has changed. Update Levels
+     if (!oldMode.equals(tournament.getType()) && TournamentManagerPool.getManager(tournament).getNumberOfLevels() > 0) {
+     TournamentManagerPool.getManager(tournament).removeGroups(0);
+     }
 
-            updateTournamentType();
+     updateTournamentType();
 
-            if (tournament.getType().equals(TournamentType.SIMPLE)) {
-                AddButton.setVisible(false);
-                DeleteButton.setVisible(false);
-                DeleteAllButton.setVisible(false);
-                DeleteTeamsButton.setVisible(false);
-                AddTeamButton.setVisible(false);
-                AcceptButton.setVisible(false);
-                bbp.clearBlackBoard();
-            } else {
-                AddButton.setVisible(true);
-                DeleteButton.setVisible(true);
-                DeleteAllButton.setVisible(true);
-                DeleteTeamsButton.setVisible(true);
-                AddTeamButton.setVisible(true);
-                AcceptButton.setVisible(true);
-            }
-        } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-        }
+     if (tournament.getType().equals(TournamentType.SIMPLE)) {
+     AddButton.setVisible(false);
+     DeleteButton.setVisible(false);
+     DeleteAllButton.setVisible(false);
+     DeleteTeamsButton.setVisible(false);
+     AddTeamButton.setVisible(false);
+     AcceptButton.setVisible(false);
+     bbp.clearBlackBoard();
+     } else {
+     AddButton.setVisible(true);
+     DeleteButton.setVisible(true);
+     DeleteAllButton.setVisible(true);
+     DeleteTeamsButton.setVisible(true);
+     AddTeamButton.setVisible(true);
+     AcceptButton.setVisible(true);
+     }
+     } catch (NullPointerException npe) {
+     KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+     }
 
-        updateInfo();
-    }
-
+     updateInfo();
+     }*/
     private void updateLevel() {
         LevelComboBox.removeAllItems();
         for (int i = 0; i < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); i++) {
@@ -386,9 +388,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         AcceptButton = new javax.swing.JButton();
         CloseButton = new javax.swing.JButton();
         LoadButton = new javax.swing.JButton();
-        ManualRadioButton = new javax.swing.JRadioButton();
-        TreeRadioButton = new javax.swing.JRadioButton();
-        ChampionshipRadioButton = new javax.swing.JRadioButton();
+        manualCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -455,8 +455,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         PassLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         PassLabel.setText("Pass:");
 
-        PassSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 3, 1));
-        PassSpinner.setEnabled(false);
+        PassSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 1, 2, 1));
         PassSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 PassSpinnerStateChanged(evt);
@@ -617,7 +616,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ButtonPanelLayout.createSequentialGroup()
                 .addComponent(LoadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 319, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
                 .addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CloseButton))
@@ -635,28 +634,10 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
         ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {AcceptButton, CloseButton, LoadButton});
 
-        TreeChampionshipButtonGroup.add(ManualRadioButton);
-        ManualRadioButton.setText("Manual");
-        ManualRadioButton.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ManualRadioButtonItemStateChanged(evt);
-            }
-        });
-
-        TreeChampionshipButtonGroup.add(TreeRadioButton);
-        TreeRadioButton.setSelected(true);
-        TreeRadioButton.setText("Tree");
-        TreeRadioButton.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                TreeRadioButtonItemStateChanged(evt);
-            }
-        });
-
-        TreeChampionshipButtonGroup.add(ChampionshipRadioButton);
-        ChampionshipRadioButton.setText("Championship");
-        ChampionshipRadioButton.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ChampionshipRadioButtonItemStateChanged(evt);
+        manualCheckBox.setText("Manual");
+        manualCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manualCheckBoxActionPerformed(evt);
             }
         });
 
@@ -673,12 +654,8 @@ public class LeagueDesigner extends javax.swing.JFrame {
                         .addComponent(TournamentLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TournamentComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ManualRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(ChampionshipRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TreeRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(manualCheckBox))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -689,9 +666,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TournamentLabel)
                     .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ManualRadioButton)
-                    .addComponent(ChampionshipRadioButton)
-                    .addComponent(TreeRadioButton))
+                    .addComponent(manualCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -726,7 +701,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_AddTeamButtonActionPerformed
 
     private void DeleteTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteTeamsButtonActionPerformed
-        deleteTeamsOfSelectedPanel();
+        removeTeamsOfSelectedPanel();
     }//GEN-LAST:event_DeleteTeamsButtonActionPerformed
 
     private void PassSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PassSpinnerStateChanged
@@ -760,14 +735,17 @@ public class LeagueDesigner extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         try {
-            if (!TournamentManagerPool.getManager(tournament).allGroupsHaveNextLink()) {
-                if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
-                    FightPool.getInstance().remove(tournament);
-                    FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament).getFights(0));
-                    this.dispose();
+            if (tournament.getType().equals(TournamentType.MANUAL)) {
+                ManualChampionship championship = (ManualChampionship) TournamentManagerPool.getManager(tournament);
+                if (!championship.allGroupsHaveNextLink()) {
+                    MessageManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
+                    return;
                 }
-            } else {
-                MessageManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
+            }
+            if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
+                FightPool.getInstance().remove(tournament);
+                FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament).getFights(0));
+                this.dispose();
             }
         } catch (NullPointerException npe) {
         }
@@ -785,7 +763,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
         try {
             FightPool.getInstance().reset();
             TournamentManagerPool.getManager(tournament).removeGroups(0);
-            updateMode();
+            // updateMode();
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
@@ -801,35 +779,12 @@ public class LeagueDesigner extends javax.swing.JFrame {
          */
     }//GEN-LAST:event_TournamentComboBoxFocusGained
 
-    private void ManualRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ManualRadioButtonItemStateChanged
-        if (refreshMode && ManualRadioButton.isSelected()) {
-            updateMode();
-            updateBlackBoard();
-        }
-    }//GEN-LAST:event_ManualRadioButtonItemStateChanged
-
-    private void ChampionshipRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ChampionshipRadioButtonItemStateChanged
-        if (refreshMode && ChampionshipRadioButton.isSelected()) {
-            PassSpinner.setValue(2);
-            updateMode();
-            updateBlackBoard();
-        }
-    }//GEN-LAST:event_ChampionshipRadioButtonItemStateChanged
-
-    private void TreeRadioButtonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_TreeRadioButtonItemStateChanged
-        try {
-            if (refreshMode && TreeRadioButton.isSelected()) {
-                PassSpinner.setValue(1);
-                updateMode();
-                updateBlackBoard();
-            }
-        } catch (NullPointerException npe) {
-        }
-    }//GEN-LAST:event_TreeRadioButtonItemStateChanged
-
     private void CleanLinksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanLinksButtonActionPerformed
         try {
-            TournamentManagerPool.getManager(tournament).removeLinks();
+            if (tournament.getType().equals(TournamentType.MANUAL)) {
+                ManualChampionship championship = (ManualChampionship) TournamentManagerPool.getManager(tournament);
+                championship.removeLinks();
+            }
             updateBlackBoard();
         } catch (NullPointerException npe) {
         }
@@ -857,7 +812,7 @@ public class LeagueDesigner extends javax.swing.JFrame {
             fillTeams();
             updateBlackBoard();
             refreshMode = false;
-            updateTournamentType();
+            //updateTournamentType();
             refreshMode = true;
             //TournamentManagerPool.getManager(tournament).storeDesigner();
         }
@@ -866,13 +821,16 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
+
+    private void manualCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualCheckBoxActionPerformed
+        setTournamentType();
+    }//GEN-LAST:event_manualCheckBoxActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AcceptButton;
     private javax.swing.JButton AddButton;
     private javax.swing.JButton AddTeamButton;
     private javax.swing.JScrollPane BlackBoardScrollPane;
     private javax.swing.JPanel ButtonPanel;
-    private javax.swing.JRadioButton ChampionshipRadioButton;
     private javax.swing.JButton CleanLinksButton;
     private javax.swing.JButton CloseButton;
     private javax.swing.JButton DeleteAllButton;
@@ -883,7 +841,6 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JLabel GroupEditionLabel;
     private javax.swing.JComboBox LevelComboBox;
     private javax.swing.JButton LoadButton;
-    private javax.swing.JRadioButton ManualRadioButton;
     private javax.swing.JLabel PassLabel;
     private javax.swing.JSpinner PassSpinner;
     private javax.swing.JList TeamList;
@@ -892,8 +849,8 @@ public class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.ButtonGroup TreeChampionshipButtonGroup;
     private javax.swing.JLabel TreeEditionLabel;
-    private javax.swing.JRadioButton TreeRadioButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JCheckBox manualCheckBox;
     // End of variables declaration//GEN-END:variables
 }

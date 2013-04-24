@@ -18,6 +18,10 @@ public class TournamentManagerPool {
         }
         return null;
     }
+    
+    public static void removeManager(Tournament tournament){
+        managers.remove(tournament);
+    }
 
     private static ITournamentManager createManager(Tournament tournament) {
         ITournamentManager manager;
@@ -29,9 +33,12 @@ public class TournamentManagerPool {
                 manager = new Championship(tournament);
                 break;
             case MANUAL:
+                manager = new ManualChampionship(tournament);
+                break;
             case SIMPLE:
             default:
                 manager = new SimpleTournamentManager(tournament);
+                break;
         }
         return manager;
     }

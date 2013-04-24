@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.*;
 import java.io.*;
@@ -104,7 +105,10 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     }
 
     public void setType(TournamentType mode) {
-        this.mode = mode;
+        if (!this.mode.equals(mode)) {
+            TournamentManagerPool.removeManager(this);
+            this.mode = mode;
+        }
     }
 
     public String getName() {

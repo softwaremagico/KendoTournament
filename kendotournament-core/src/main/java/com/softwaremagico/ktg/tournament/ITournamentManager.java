@@ -62,12 +62,6 @@ public interface ITournamentManager {
 
     boolean exist(Team team);
 
-    boolean allGroupsHaveNextLink();
-
-    void addLink(TournamentGroup source, TournamentGroup address);
-
-    void removeLinks();
-
     void removeTeams(Integer level);
 
     /**

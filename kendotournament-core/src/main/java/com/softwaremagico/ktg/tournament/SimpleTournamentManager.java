@@ -95,19 +95,6 @@ public class SimpleTournamentManager implements ITournamentManager {
     }
 
     @Override
-    public boolean allGroupsHaveNextLink() {
-        return false;
-    }
-
-    @Override
-    public void addLink(TournamentGroup source, TournamentGroup address) {
-    }
-
-    @Override
-    public void removeLinks() {
-    }
-
-    @Override
     public void removeTeams(Integer level) {
         if (level == 0 && group != null) {
             List<Team> teams = new ArrayList<>();
