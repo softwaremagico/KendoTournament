@@ -137,38 +137,35 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             /*
              * Paint teams group
              */
-            try {
-                for (int level = 0; level < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); level++) {
-                    for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getGroups(level).size(); groupIndex++) {
-                        try {
-                            if (TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex).getTournament().equals(tournament)) {
-                                c.anchor = GridBagConstraints.WEST;
-                                c.gridx = level * 2 + 1 + TITLE_COLUMN;
-                                if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
+            for (int level = 0; level < TournamentManagerPool.getManager(tournament).getNumberOfLevels(); level++) {
+                for (int groupIndex = 0; groupIndex < TournamentManagerPool.getManager(tournament).getGroups(level).size(); groupIndex++) {
+                    try {
+                        if (TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex).getTournament().equals(tournament)) {
+                            c.anchor = GridBagConstraints.WEST;
+                            c.gridx = level * 2 + 1 + TITLE_COLUMN;
+                            if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
+                                c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
+                            } else {
+                                if (level == 0) {
                                     c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
                                 } else {
-                                    if (level == 0) {
-                                        c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
-                                    } else {
-                                        c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
-                                    }
-                                }
-
-                                c.weightx = 0.5;
-                                TournamentGroupBox tournamentGroupBox = createBox(TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex), level);
-                                add(tournamentGroupBox, c);
-                                if (level == 0 && groupIndex == 0 && interactive) {
-                                    tournamentGroupBox.setSelected();
+                                    c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
                                 }
                             }
-                        } catch (NullPointerException npe) {
-                            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+
+                            c.weightx = 0.5;
+                            TournamentGroupBox tournamentGroupBox = createBox(TournamentManagerPool.getManager(tournament).getGroups(level).get(groupIndex), level);
+                            add(tournamentGroupBox, c);
+                            if (level == 0 && groupIndex == 0 && interactive) {
+                                tournamentGroupBox.setSelected();
+                            }
                         }
+                    } catch (NullPointerException npe) {
+                        KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
                     }
                 }
-                selectGroup(lastSelectedGroupIndex);
-            } catch (ClassCastException e) {
             }
+            selectGroup(lastSelectedGroupIndex);
         }
     }
 
@@ -308,6 +305,11 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 grpBox.setUnselected();
             }
             grpsBox.get(0).get(index).setSelected();
+            selectedGroupIndex = index;
+        } else {
+            if (grpsBox.size() > 0) {
+                selectedGroupIndex = 0;
+            }
         }
     }
 

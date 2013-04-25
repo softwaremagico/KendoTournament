@@ -173,8 +173,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     }
     
     private void addTeamToSelectedPanel(Team t) {
-        bbp.getSelectedBox().getTournamentGroup().addTeam(t);
-        updateInfo();
+        if (TournamentManagerPool.getManager(tournament, getDefinedType()).getGroups().size() > 0) {
+            bbp.getSelectedBox().getTournamentGroup().addTeam(t);
+            updateInfo();
+        }
     }
     
     private void removeSelectedPanel() {
@@ -188,8 +190,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     
     private void removeTeamsOfSelectedPanel() {
         TournamentGroupBox groupBox = bbp.getSelectedBox();
-        groupBox.removeTeams();
-        updateInfo();
+        if (groupBox != null) {
+            groupBox.removeTeams();
+            updateInfo();
+        }
     }
     
     private Team getTeamByName(String name) {
