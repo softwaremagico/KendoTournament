@@ -493,7 +493,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
                 setTournamentType();
-                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).createRandomFights(0);
+                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem(), getDefinedType()).createRandomFights(0);
                 fillFights();
                 try {
                     FightsList.setSelectedIndex(0);
@@ -567,7 +567,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
                 setTournamentType();
-                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem()).createSortedFights(0);
+                fights = TournamentManagerPool.getManager((Tournament) TournamentComboBox.getSelectedItem(), getDefinedType()).createSortedFights(0);
                 fightsModel.removeAllElements();
 
                 fillFights();

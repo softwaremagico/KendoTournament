@@ -5,27 +5,56 @@ import java.util.HashMap;
 
 public class TournamentManagerPool {
 
-    private static HashMap<Tournament, ITournamentManager> managers = new HashMap<>();
+    private static HashMap<Tournament, HashMap<TournamentType, ITournamentManager>> managers = new HashMap<>();
 
-    public static ITournamentManager getManager(Tournament tournament) {
+    /**
+     * Get the manager of a tournament for a specific type. If it has other
+     * tournament type, it will create a new manager.
+     *
+     * @param tournament
+     * @param types
+     * @return
+     */
+    public static ITournamentManager getManager(Tournament tournament, TournamentType type) {
         if (tournament != null) {
-            ITournamentManager manager = managers.get(tournament);
+            HashMap<TournamentType, ITournamentManager> managersOfTournament = getManagers(tournament);
+            ITournamentManager manager = managersOfTournament.get(type);
             if (manager == null) {
-                manager = createManager(tournament);
-                managers.put(tournament, manager);
+                manager = createManager(tournament, type);
+                managersOfTournament.put(type, manager);
             }
             return manager;
         }
         return null;
     }
-    
-    public static void removeManager(Tournament tournament){
-        managers.remove(tournament);
+
+    private static HashMap<TournamentType, ITournamentManager> getManagers(Tournament tournament) {
+        if (tournament != null) {
+            HashMap<TournamentType, ITournamentManager> managersOfTournament = managers.get(tournament);
+            if (managersOfTournament == null) {
+                managersOfTournament = new HashMap<>();
+                managers.put(tournament, managersOfTournament);
+            }
+            return managersOfTournament;
+        }
+        return null;
     }
 
-    private static ITournamentManager createManager(Tournament tournament) {
+    public static ITournamentManager getManager(Tournament tournament) {
+        return getManager(tournament, tournament.getType());
+    }
+
+    private static void removeManager(Tournament tournament, TournamentType type) {
+        managers.get(tournament).remove(type);
+    }
+
+    public static void removeManager(Tournament tournament) {
+        removeManager(tournament, tournament.getType());
+    }
+
+    private static ITournamentManager createManager(Tournament tournament, TournamentType type) {
         ITournamentManager manager;
-        switch (tournament.getType()) {
+        switch (type) {
             case LOOP:
                 manager = new LoopTournamentManager(tournament);
                 break;
