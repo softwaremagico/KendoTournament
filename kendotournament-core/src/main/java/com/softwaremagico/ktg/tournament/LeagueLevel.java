@@ -207,6 +207,11 @@ public abstract class LeagueLevel {
 
         updateArenaOfGroups();
 
+        //If only one group. It is laslevel
+        if (tournamentGroups.size() < 2) {
+            nextLevel = null;
+        }
+
         if (nextLevel != null) {
             nextLevel.updateGroupsSize();
         }
@@ -219,10 +224,11 @@ public abstract class LeagueLevel {
     }
 
     /**
-     * Return a new nextLevel if has been created. 
+     * Return a new nextLevel if has been created.
+     *
      * @param group
      * @param index
-     * @return 
+     * @return
      */
     protected LeagueLevel addGroup(TournamentGroup group, Integer index) {
         tournamentGroups.add(index, group);
@@ -234,12 +240,12 @@ public abstract class LeagueLevel {
         if (nextLevel != null) {
             nextLevel.updateGroupsSize();
         }
-        
+
         return nextLevel;
     }
 
     /**
-     * 
+     *
      * @return true if next Level must be deleted.
      */
     protected boolean removeGroup() {

@@ -201,13 +201,13 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     private void paintLinks(Graphics g) {
         Integer destination;
         try {
-            if (grpsBox.keySet().size() > 1) {
-                for (int i = 0; i < grpsBox.keySet().size() - 1; i++) {
+            if (grpsBox.size() > 1) {
+                for (int i = 0; i < grpsBox.size() - 1; i++) {
                     List<TournamentGroupBox> designedGroupsFromLevel = grpsBox.get(i);
                     List<TournamentGroupBox> designedGroupsToLevel = grpsBox.get(i + 1);
                     for (int j = 0; j < designedGroupsFromLevel.size(); j++) {
                         for (int winners = 0; winners < designedGroupsFromLevel.get(j).getMaxNumberOfWinners(); winners++) {
-                            if (designedGroupsToLevel.size() > 1) {
+                            if (designedGroupsToLevel.size() > 0) {
                                 destination = TournamentManagerPool.getManager(tournament).getLevel(i).getGroupIndexDestinationOfWinner(designedGroupsFromLevel.get(j).getTournamentGroup(), winners);
                             } else { //Final group
                                 destination = null;
