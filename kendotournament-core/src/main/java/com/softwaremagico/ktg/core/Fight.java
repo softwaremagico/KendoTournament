@@ -127,7 +127,10 @@ public class Fight implements Serializable, Comparable<Fight> {
     }
 
     public boolean isOver() {
-        return winner < 2;
+        if (winner != null) {
+            return winner < 2;
+        }
+        return false;
     }
 
     public Integer getWinner() {
@@ -337,7 +340,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         return hits;
     }
 
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -375,7 +377,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         }
         return true;
     }
-
 
     public String show() {
         return "'" + team1.getName() + "' vs '" + team2.getName() + "'";

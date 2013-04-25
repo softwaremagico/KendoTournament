@@ -152,7 +152,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="winnerPassSpinner" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="BlackBoardScrollPane" max="32767" attributes="0"/>
+                      <Component id="BlackBoardScrollPane" pref="297" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -354,8 +354,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="loadButton" min="-2" pref="246" max="-2" attributes="0"/>
-                  <EmptySpace pref="248" max="32767" attributes="0"/>
+                  <EmptySpace pref="494" max="32767" attributes="0"/>
                   <Component id="acceptButton" linkSize="8" min="-2" pref="138" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="closeButton" linkSize="8" min="-2" max="-2" attributes="0"/>
@@ -364,7 +363,6 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="loadButton" linkSize="4" min="-2" pref="36" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="acceptButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="closeButton" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -387,14 +385,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="closeButtonActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="loadButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Load"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loadButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

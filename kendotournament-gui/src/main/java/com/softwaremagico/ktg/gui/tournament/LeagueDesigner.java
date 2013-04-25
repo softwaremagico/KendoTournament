@@ -85,7 +85,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         cleanLinksButton.setText(trans.getTranslatedText("CleanLinks"));
         DeleteLevelLabel.setText(trans.getTranslatedText("DeleteLevelLabel"));
         deleteLevelButton.setText(trans.getTranslatedText("DeleteButton"));
-        loadButton.setText(trans.getTranslatedText("ButtonLoadTournament"));
         TreeEditionLabel.setText(trans.getTranslatedText("TournamentLabel"));
         GroupEditionLabel.setText(trans.getTranslatedText("GroupLabel"));
     }
@@ -286,7 +285,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         ButtonPanel = new javax.swing.JPanel();
         acceptButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
-        loadButton = new javax.swing.JButton();
         manualCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -403,7 +401,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                         .addComponent(PassLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(winnerPassSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(BlackBoardScrollPane))
+                    .addComponent(BlackBoardScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -494,20 +492,12 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             }
         });
 
-        loadButton.setText("Load");
-        loadButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout ButtonPanelLayout = new javax.swing.GroupLayout(ButtonPanel);
         ButtonPanel.setLayout(ButtonPanelLayout);
         ButtonPanelLayout.setHorizontalGroup(
             ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ButtonPanelLayout.createSequentialGroup()
-                .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 248, Short.MAX_VALUE)
+                .addContainerGap(494, Short.MAX_VALUE)
                 .addComponent(acceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(closeButton))
@@ -517,13 +507,12 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
         ButtonPanelLayout.setVerticalGroup(
             ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(loadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(ButtonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(acceptButton)
                 .addComponent(closeButton))
         );
 
-        ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {acceptButton, closeButton, loadButton});
+        ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {acceptButton, closeButton});
 
         manualCheckBox.setText("Manual");
         manualCheckBox.addActionListener(new java.awt.event.ActionListener() {
@@ -626,8 +615,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             }
             if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
                 FightPool.getInstance().remove(tournament);
-                FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament, getDefinedType()).getFights(0));
-                this.dispose();
+                if (FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament, getDefinedType()).createSortedFights(0))) {
+                    MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                    this.dispose();
+                }
             }
         } catch (NullPointerException npe) {
         }
@@ -669,15 +660,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         updateBlackBoard();
         fillTeams();
     }//GEN-LAST:event_deleteLevelButtonActionPerformed
-    
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-        if (MessageManager.questionMessage("questionLoadDesign", "Warning!")) {
-            FightPool.getInstance().reset();
-            //tournament.setType(tournament.getType());
-            updateInfo();
-        }
-    }//GEN-LAST:event_loadButtonActionPerformed
-    
+        
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
@@ -708,7 +691,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox levelComboBox;
-    private javax.swing.JButton loadButton;
     private javax.swing.JCheckBox manualCheckBox;
     private javax.swing.JList teamList;
     private javax.swing.JComboBox tournamentComboBox;

@@ -135,10 +135,11 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
-    public void add(Tournament tournament, List<ElementPool> elements) {
+    public boolean add(Tournament tournament, List<ElementPool> elements) {
         for (ElementPool element : elements) {
             add(tournament, element);
         }
+        return true;
     }
 
     public boolean update(Tournament tournament, ElementPool elementUpdated) {
