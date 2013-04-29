@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
 
@@ -43,7 +44,7 @@ public class FightPanel extends KFrame {
 
     public FightPanel() {
         defineWindow(700, 600);
-        setResizable(false);
+        setResizable(true);
         setElements();
     }
 
@@ -58,23 +59,23 @@ public class FightPanel extends KFrame {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         tournamentDefinitionPanel = new KPanel();
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
+        gridBagConstraints.weighty = 0;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(tournamentDefinitionPanel, gridBagConstraints);
 
         scorePanel = new ScorePanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 4;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 1;
@@ -82,22 +83,25 @@ public class FightPanel extends KFrame {
         getContentPane().add(scorePanel, gridBagConstraints);
 
         buttonPanel = new KPanel();
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
+        gridBagConstraints.weighty = 0;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(buttonPanel, gridBagConstraints);
     }
 
     private void createTournamentPanel() {
+        tournamentDefinitionPanel.setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         KLabel tournamentLabel = new KLabel("TournamentLabel");
+        tournamentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -106,42 +110,44 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(tournamentLabel, gridBagConstraints);
-
+        tournamentDefinitionPanel.add(tournamentLabel, gridBagConstraints);
+        
         tournamentComboBox = new TournamentComboBox(this);
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.weightx = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.weightx = 0.8;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(tournamentDefinitionPanel, gridBagConstraints);
+        tournamentDefinitionPanel.add(tournamentComboBox, gridBagConstraints);
 
         KLabel fightAreaLabel = new KLabel("FightArea");
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 0;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(fightAreaLabel, gridBagConstraints);
-
-        fightAreaComboBox = new FightAreaComboBox(getSelectedTournament());
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        fightAreaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(fightAreaComboBox, gridBagConstraints);
+        tournamentDefinitionPanel.add(fightAreaLabel, gridBagConstraints);
+
+        fightAreaComboBox = new FightAreaComboBox(getSelectedTournament());
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.weightx = 0.2;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        tournamentDefinitionPanel.add(fightAreaComboBox, gridBagConstraints);
     }
 
     @Override

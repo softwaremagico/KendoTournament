@@ -30,13 +30,13 @@ import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;
 import javax.swing.Box;
 
-public class ScorePanel extends KPanel {
+public class ScorePanel extends KPanel  {
 
     private Tournament tournament = null;
     private Integer fightArea = null;
 
     public ScorePanel() {
-        setMinimumSize(new java.awt.Dimension(0, 200));
+        setMinimumSize(new java.awt.Dimension(400, 400));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
     }
 
