@@ -42,7 +42,6 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Integer index;
     private Integer level;
     private Integer maxWinners = 1;
-    private boolean overUpdated = false; //'Over' value has been stored into the database or not. 
 
     public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int order) {
         this.team1 = team1;
@@ -66,28 +65,12 @@ public class Fight implements Serializable, Comparable<Fight> {
         return index;
     }
 
-    public boolean isOverStored() {
-        return overUpdated;
-    }
-
     public Integer getLevel() {
         return level;
     }
 
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    public void setOverStored(boolean overUpdated) {
-        this.overUpdated = overUpdated;
-    }
-
-    public void calculateOverWithDuels() {
-        if (getWinner() == 2) {
-            overUpdated = false;
-        } else {
-            overUpdated = true;
-        }
     }
 
     public Team getTeam1() {
@@ -147,9 +130,6 @@ public class Fight implements Serializable, Comparable<Fight> {
     public void setOver(boolean over) {
         if (over) {
             completeIppons();
-            if (winner == 2) {
-                overUpdated = false;
-            }
             try {
                 Team winnerTeam = winner();
                 if (winnerTeam.getName().equals(team1.getName())) {
@@ -164,7 +144,6 @@ public class Fight implements Serializable, Comparable<Fight> {
             }
         } else {
             winner = 2;
-            overUpdated = false;
         }
     }
 

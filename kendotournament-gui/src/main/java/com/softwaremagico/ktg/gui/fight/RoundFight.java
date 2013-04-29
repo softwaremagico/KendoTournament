@@ -102,24 +102,24 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
-        int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
+        /*int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
         if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.WEST);
-        teamFights.add(tf);
+        teamFights.add(tf);*/
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
+        /*if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.EAST);
-        teamFights.add(tf);
+        teamFights.add(tf);*/
 
         repaint();
         revalidate();
@@ -145,13 +145,13 @@ public class RoundFight extends JPanel {
         revalidate();
     }
 
-    void updateScorePanels() {
+    protected void updateScorePanels() {
         for (int i = 0; i < teamFights.size(); i++) {
             teamFights.get(i).updateScorePanel();
         }
     }
 
-    DrawPanel createDrawPanel(boolean selected) {
+    private DrawPanel createDrawPanel(boolean selected) {
         DrawPanel drawPanel = new DrawPanel(selected);
         return drawPanel;
     }
@@ -226,11 +226,9 @@ public class RoundFight extends JPanel {
             JPopupMenu contextMenu = new JPopupMenu();
             JMenuItem drawMenu = new JMenuItem();
             try {
-
                 drawMenu.setText(trans.getTranslatedText("DrawMenuItem"));
                 drawMenu.addActionListener(new MenuListener(fight));
                 contextMenu.add(drawMenu);
-
 
                 drawMenu = new JMenuItem();
                 drawMenu.setText(trans.getTranslatedText("ClearMenuItem"));
@@ -308,9 +306,7 @@ public class RoundFight extends JPanel {
 
         @Override
         public void paint(Graphics g) {
-
             updateDrawsPanel();
-
         }
     }
 }

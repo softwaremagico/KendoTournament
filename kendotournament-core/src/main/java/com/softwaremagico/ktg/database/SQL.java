@@ -840,7 +840,6 @@ public abstract class SQL extends Database {
                         rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("GroupIndex"));
                 f.setWinner(rs.getInt("Winner"));
                 f.setMaxWinners(rs.getInt("MaxWinners"));
-                f.calculateOverWithDuels();
                 //Set duels of fight:
                 results.add(f);
             }

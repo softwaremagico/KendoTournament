@@ -281,7 +281,6 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
-                fight.setOverStored(false);
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, true);
                 } else {
@@ -308,7 +307,6 @@ public class CompetitorFight extends JPanel {
         try {
             if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
-                fight.setOverStored(false);
                 d.setFaults(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
@@ -331,7 +329,6 @@ public class CompetitorFight extends JPanel {
             if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
                 d = fight.getDuels().get(index);
                 d.resetFaults(true);
-                fight.setOverStored(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
