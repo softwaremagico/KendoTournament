@@ -83,7 +83,7 @@ public class Duel implements Serializable, Comparable<Duel> {
     }
 
     /**
-     * Count the rounds and the punction of each player to know if the duels is
+     * Count the rounds and the score of each player to know if the duels is
      * over or not.
      *
      * @return true if the round is over.
@@ -102,6 +102,14 @@ public class Duel implements Serializable, Comparable<Duel> {
             }
         }
         if (pointA >= POINTS_TO_WIN || pointB >= POINTS_TO_WIN) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isStarted() {
+        if ((getScore(true)) > 0 || (getScore(false)) > 0 || 
+                getFaults(true) || getFaults(false) || isOver()) {
             return true;
         }
         return false;

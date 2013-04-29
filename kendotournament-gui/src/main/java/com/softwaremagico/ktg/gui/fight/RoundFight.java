@@ -28,7 +28,6 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
-import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -38,7 +37,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -102,24 +100,24 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
-        /*int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
+        int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
         if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.WEST);
-        teamFights.add(tf);*/
+        teamFights.add(tf);
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        /*if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
+        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
             tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total);
         } else {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total);
         }
         add(tf, BorderLayout.EAST);
-        teamFights.add(tf);*/
+        teamFights.add(tf);
 
         repaint();
         revalidate();
@@ -269,26 +267,13 @@ public class RoundFight extends JPanel {
         }
 
         private void updateDrawsPanel() {
-            boolean nextStarted;
             for (int i = 0; i < draws.size(); i++) {
+                boolean nextStarted = false;
                 if (i < fight.getDuels().size() - 1) {
-                    nextStarted = (fight.getDuels().get(i + 1).getScore(true) > 0)
-                            || (fight.getDuels().get(i + 1).getScore(false) > 0) || fight.getDuels().get(i + 1).isOver();
-                } else {
-                    nextStarted = false;
+                    nextStarted = fight.getDuels().get(i + 1).isStarted();
                 }
                 updateDrawPanel(draws.get(i), fight.getDuels().get(i).winner(), fight.getWinner(), nextStarted, i);
             }
-        }
-
-        private File getBackground(String image) {
-            File file = new File(image);
-            if (!file.exists()) {
-                file = new File(Path.getImagePath() + image);
-                if (!file.exists()) {
-                }
-            }
-            return file;
         }
 
         private void updateDrawPanel(PanelBackground panel, int winner, int over, boolean nextStarted, int index) {
