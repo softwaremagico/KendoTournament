@@ -23,6 +23,7 @@ package com.softwaremagico.ktg.gui.base.buttons;
  * #L%
  */
 
+import com.softwaremagico.ktg.files.Path;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +39,7 @@ public class CloseButton extends KButton {
         setTranslatedText("CloseButton");
         this.window = window;
         this.setPreferredSize(new Dimension(80, 40));
-        setIcon(new ImageIcon("close.png"));
+        setIcon(new ImageIcon(Path.getIconPath() + "close.png"));
         addActionListener(new CloseListener());
     }
 

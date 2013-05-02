@@ -63,6 +63,10 @@ public class Path {
         return getRootPath() + "images" + File.separator;
     }
 
+    public static String getIconPath() {
+        return getImagePath() + "icons" + File.separator;
+    }
+
     public static String getTranslatorPath() {
         return getRootPath() + "translations" + File.separator;
     }

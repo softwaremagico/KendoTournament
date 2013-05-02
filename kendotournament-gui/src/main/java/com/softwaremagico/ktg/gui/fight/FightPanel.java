@@ -24,41 +24,53 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
+import com.softwaremagico.ktg.gui.base.KCheckBox;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.TournamentComboBox;
+import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
+import com.softwaremagico.ktg.gui.base.buttons.DownButton;
+import com.softwaremagico.ktg.gui.base.buttons.KButton;
+import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
 
+    private final static Integer BUTTON_WIDTH = 200;
+    private final static Integer BUTTON_HEIGHT = 150;
     private KPanel tournamentDefinitionPanel;
     private ScorePanel scorePanel;
-    private KPanel buttonPanel;
+    private KPanel buttonPlacePanel;
     private TournamentComboBox tournamentComboBox;
     private FightAreaComboBox fightAreaComboBox;
+    private KButton nextButton, previousButton;
+    private KCheckBox changeColor, changeTeam;
 
     public FightPanel() {
         defineWindow(700, 600);
         setResizable(true);
         setElements();
+        addResizedEvent();
     }
 
     private void setElements() {
         setLayout(new GridBagLayout());
         setMainPanels();
-        createTournamentPanel();
         updateScorePanel();
     }
 
     private void setMainPanels() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        tournamentDefinitionPanel = new KPanel();
+        tournamentDefinitionPanel = createTournamentPanel();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
@@ -82,8 +94,8 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(scorePanel, gridBagConstraints);
 
-        buttonPanel = new KPanel();
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        buttonPlacePanel = createButtonPanel();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
@@ -91,12 +103,13 @@ public class FightPanel extends KFrame {
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(buttonPanel, gridBagConstraints);
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+        getContentPane().add(buttonPlacePanel, gridBagConstraints);
     }
 
-    private void createTournamentPanel() {
-        tournamentDefinitionPanel.setLayout(new GridBagLayout());
+    private KPanel createTournamentPanel() {
+        KPanel tournamentPanel = new KPanel();
+        tournamentPanel.setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
         KLabel tournamentLabel = new KLabel("TournamentLabel");
@@ -110,8 +123,8 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        tournamentDefinitionPanel.add(tournamentLabel, gridBagConstraints);
-        
+        tournamentPanel.add(tournamentLabel, gridBagConstraints);
+
         tournamentComboBox = new TournamentComboBox(this);
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
@@ -122,7 +135,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 0.8;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        tournamentDefinitionPanel.add(tournamentComboBox, gridBagConstraints);
+        tournamentPanel.add(tournamentComboBox, gridBagConstraints);
 
         KLabel fightAreaLabel = new KLabel("FightArea");
         fightAreaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -135,7 +148,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        tournamentDefinitionPanel.add(fightAreaLabel, gridBagConstraints);
+        tournamentPanel.add(fightAreaLabel, gridBagConstraints);
 
         fightAreaComboBox = new FightAreaComboBox(getSelectedTournament());
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -147,7 +160,110 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 0.2;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        tournamentDefinitionPanel.add(fightAreaComboBox, gridBagConstraints);
+        tournamentPanel.add(fightAreaComboBox, gridBagConstraints);
+
+        return tournamentPanel;
+    }
+
+    private KPanel createButtonPanel() {
+        KPanel buttonPanel = new KPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+
+        previousButton = new PreviousButton();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        buttonPanel.add(previousButton, gridBagConstraints);
+
+        nextButton = new NextButton();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        buttonPanel.add(nextButton, gridBagConstraints);
+
+        KPanel teamOptions = getTeamOptionsPanel();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        buttonPanel.add(teamOptions, gridBagConstraints);
+
+        CloseButton closeButton = new CloseButton(this);
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        buttonPanel.add(closeButton, gridBagConstraints);
+
+        return buttonPanel;
+    }
+
+    private KPanel getTeamOptionsPanel() {
+        KPanel teamOptions = new KPanel();
+        teamOptions.setLayout(new GridBagLayout());
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        changeColor = new KCheckBox("ColourCheckBox");
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        teamOptions.add(changeColor, gridBagConstraints);
+
+        changeColor.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateScorePanel();
+            }
+        });
+
+        changeTeam = new KCheckBox("InverseCheckBox");
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        teamOptions.add(changeTeam, gridBagConstraints);
+
+        changeTeam.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateScorePanel();
+            }
+        });
+
+        return teamOptions;
     }
 
     @Override
@@ -164,7 +280,9 @@ public class FightPanel extends KFrame {
     }
 
     public void updateScorePanel() {
-        scorePanel.updateTournament(tournamentComboBox.getSelectedTournament(), fightAreaComboBox.getSelectedFightArea());
+        if (scorePanel != null) {
+            scorePanel.updateTournament(getSelectedTournament(), getSelectedFightArea(), changeTeam.isSelected(), changeColor.isSelected());
+        }
     }
 
     public void updateSelectedTournament() {
@@ -179,5 +297,56 @@ public class FightPanel extends KFrame {
     @Override
     public void tournamentChanged() {
         updateSelectedTournament();
+    }
+
+    private void addResizedEvent() {
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                updateScorePanel();
+            }
+        });
+    }
+
+    class NextButton extends DownButton {
+
+        protected NextButton() {
+            updateText();
+            updateIcon();
+        }
+
+        protected final void updateIcon() {
+            setIcon(new ImageIcon("highscores.png"));
+            setIcon(new ImageIcon(Path.getIconPath() + "down.png"));
+        }
+
+        protected final void updateText() {
+            setTranslatedText("FinishtButton");
+            setTranslatedText("NextButton");
+        }
+
+        @Override
+        public void acceptAction() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
+
+    class PreviousButton extends UpButton {
+
+        protected PreviousButton() {
+            setTranslatedText("PreviousButton");
+        }
+
+        @Override
+        public void acceptAction() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    }
+
+    class FightCloseButton extends CloseButton {
+
+        protected FightCloseButton(JFrame window) {
+            super(window);
+        }
     }
 }

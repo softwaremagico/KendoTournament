@@ -30,7 +30,7 @@ import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;
 import javax.swing.Box;
 
-public class ScorePanel extends KPanel  {
+public class ScorePanel extends KPanel {
 
     private Tournament tournament = null;
     private Integer fightArea = null;
@@ -40,13 +40,13 @@ public class ScorePanel extends KPanel  {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
     }
 
-    public void updateTournament(Tournament selectedTournament, Integer fightArea) {
+    public void updateTournament(Tournament selectedTournament, Integer fightArea, boolean invertedTeam, boolean invertedColor) {
         this.tournament = selectedTournament;
         this.fightArea = fightArea;
-        fillFightsPanel();
+        fillFightsPanel(invertedTeam, invertedColor);
     }
 
-    private void fillFightsPanel() {
+    private void fillFightsPanel(boolean invertedTeam, boolean invertedColor) {
         removeAll();
         if (tournament != null && FightPool.getInstance().get(tournament).size() > 0) {
             int showedFights = 0;
@@ -56,23 +56,23 @@ public class ScorePanel extends KPanel  {
 
             //Penultimus
             if (numberOfFightsToShow() > 4) {
-                addFightPanel(-2, fightArea);
+                addFightPanel(-2, fightArea, invertedTeam, invertedColor);
                 showedFights++;
             }
             //Previous
             if (numberOfFightsToShow() > 2) {
-                addFightPanel(-1, fightArea);
+                addFightPanel(-1, fightArea, invertedTeam, invertedColor);
                 showedFights++;
             }
             //Current
-            addFightPanel(0, fightArea);
+            addFightPanel(0, fightArea, invertedTeam, invertedColor);
             showedFights++;
 
             //Nexts
             if (numberOfFightsToShow() > 1) {
                 for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
                         showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                    addFightPanel(i, fightArea);
+                    addFightPanel(i, fightArea, invertedTeam, invertedColor);
                     showedFights++;
                 }
             }
@@ -80,7 +80,7 @@ public class ScorePanel extends KPanel  {
             //Add null fightManager to complete the panel.
             while (showedFights < numberOfFightsToShow()) {
                 try {
-                    RoundFight rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
+                    RoundFight rf = new RoundFight(tournament.getTeamSize(), false, 0, 0, invertedColor);
                     add(rf);
                     add(new Box.Filler(minSize, prefSize, maxSize));
                 } catch (NullPointerException npe) {
@@ -92,7 +92,7 @@ public class ScorePanel extends KPanel  {
         revalidate();
     }
 
-    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea) {
+    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor) {
         Dimension minSize = new Dimension(0, 5);
         Dimension prefSize = new Dimension(5, 5);
         Dimension maxSize = new Dimension(5, 5);
@@ -100,9 +100,9 @@ public class ScorePanel extends KPanel  {
         RoundFight rf;
         Fight f = FightPool.getInstance().get(tournament, fightArea, fightRelativeToCurrent);
         if (f != null) {
-            rf = new RoundFight(tournament, f, false, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
+            rf = new RoundFight(tournament, f, false, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
         } else {
-            rf = new RoundFight(tournament.getTeamSize(), false, 0, 0);
+            rf = new RoundFight(tournament.getTeamSize(), false, 0, 0, invertedColor);
         }
         rf.updateScorePanels();
         add(rf);

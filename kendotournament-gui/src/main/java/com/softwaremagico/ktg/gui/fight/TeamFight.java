@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -51,7 +50,7 @@ public class TeamFight extends JPanel {
     private boolean leftJustify, selectedFight, menuActive;
     private Tournament tournament;
 
-    TeamFight(Tournament tournament, RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total) {
+    TeamFight(Tournament tournament, RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total, boolean invertedColor) {
         this.tournament = tournament;
         fight = f;
         roundFight = rf;
@@ -63,19 +62,19 @@ public class TeamFight extends JPanel {
 
         addMouseListener(new MouseAdapters());
         if (t != null) {
-            decoration(left, t.getName().toUpperCase(), fight_number, fight_total);
+            decoration(left, t.getName().toUpperCase(), fight_number, fight_total, invertedColor);
             fill(t, left, selected, menu);
         }
     }
 
-    TeamFight(Tournament tournament, boolean left, int teamSize, int fight_number, int fight_total) {
+    TeamFight(Tournament tournament, boolean left, int teamSize, int fight_number, int fight_total, boolean invertedColor) {
         this.tournament = tournament;
         fight = null;
-        decoration(left, " --- ", fight_number, fight_total);
+        decoration(left, " --- ", fight_number, fight_total, invertedColor);
         fill(left, teamSize);
     }
 
-    private void decoration(boolean left, String titleString, int fight_number, int fight_total) {
+    private void decoration(boolean left, String titleString, int fight_number, int fight_total, boolean invertedColor) {
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         TitledBorder title;
         String number = "";
@@ -93,18 +92,18 @@ public class TeamFight extends JPanel {
         if (left) {
             title.setTitleJustification(TitledBorder.LEFT);
 
-            if (KendoTournamentGenerator.getInstance().isInverseColours()) {
-                title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
-            } else {
+            if (invertedColor) {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
+            } else {
+                title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             }
         } else {
             title.setTitleJustification(TitledBorder.RIGHT);
 
-            if (!KendoTournamentGenerator.getInstance().isInverseColours()) {
-                title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
-            } else {
+            if (!invertedColor) {
                 title.setBorder(BorderFactory.createLineBorder(Color.WHITE, lineBorder));
+            } else {
+                title.setBorder(BorderFactory.createLineBorder(new Color(255, 25, 25), lineBorder));
             }
         }
 

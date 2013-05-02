@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
@@ -52,28 +51,28 @@ public class RoundFight extends JPanel {
     DrawPanel DW = null;
     private Tournament tournament;
 
-    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number, boolean invertedTeam, boolean invertedColor) {
         this.tournament = tournament;
         setLanguage();
         decoration(selected);
         if (f != null) {
-            fillCurrentFightPanel(f, selected, selected, fight_number);
+            fillCurrentFightPanel(f, selected, selected, fight_number, invertedTeam, invertedColor);
         }
     }
 
-    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number) {
+    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, boolean invertedTeam, boolean invertedColor) {
         this.tournament = tournament;
         setLanguage();
         decoration(selected);
         if (f != null) {
-            fillCurrentFightPanel(f, selected, menu, fight_number);
+            fillCurrentFightPanel(f, selected, menu, fight_number, invertedTeam, invertedColor);
         }
     }
 
-    RoundFight(int teamSize, boolean selected, int fight_number, int fight_total) {
+    RoundFight(int teamSize, boolean selected, int fight_number, int fight_total, boolean invertedColor) {
         setLanguage();
         decoration(selected);
-        fillCurrentFightPanel(teamSize, fight_number, fight_total);
+        fillCurrentFightPanel(teamSize, fight_number, fight_total, invertedColor);
     }
 
     /**
@@ -95,26 +94,26 @@ public class RoundFight extends JPanel {
 
     }
 
-    private void fillCurrentFightPanel(Fight f, boolean selected, boolean menu, int fight_number) {
+    private void fillCurrentFightPanel(Fight f, boolean selected, boolean menu, int fight_number, boolean invertedTeam, boolean invertedColor) {
         fight = f;
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
         int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
-        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
-            tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total);
+        if (!invertedTeam) {
+            tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total, invertedColor);
         } else {
-            tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total, invertedColor);
         }
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
 
         DW = createDrawPanel(selected && menu);
         add(DW, BorderLayout.EAST);
-        if (!KendoTournamentGenerator.getInstance().isInverseTeams()) {
-            tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total);
+        if (!invertedTeam) {
+            tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total, invertedColor);
         } else {
-            tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total);
+            tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total, invertedColor);
         }
         add(tf, BorderLayout.EAST);
         teamFights.add(tf);
@@ -123,10 +122,10 @@ public class RoundFight extends JPanel {
         revalidate();
     }
 
-    private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total) {
+    private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total,boolean invertedColor) {
         removeAll();
         teamFights = new ArrayList<>();
-        TeamFight tf = new TeamFight(tournament, true, teamSize, fight_number, fight_total);
+        TeamFight tf = new TeamFight(tournament, true, teamSize, fight_number, fight_total, invertedColor);
         add(tf, BorderLayout.WEST);
         teamFights.add(tf);
 
@@ -135,7 +134,7 @@ public class RoundFight extends JPanel {
         Dimension maxSize = new Dimension(20, 5);
         add(new Box.Filler(minSize, prefSize, maxSize));
 
-        tf = new TeamFight(tournament, false, teamSize, fight_number, fight_total);
+        tf = new TeamFight(tournament, false, teamSize, fight_number, fight_total, invertedColor);
         add(tf, BorderLayout.EAST);
         teamFights.add(tf);
 

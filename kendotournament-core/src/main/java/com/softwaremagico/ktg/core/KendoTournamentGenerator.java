@@ -46,8 +46,6 @@ public class KendoTournamentGenerator {
     private String lastSelectedClub = "";
     private int nameDiplomaPosition = 100;
     private boolean logActivated = true;
-    private boolean inverseColours = false;
-    private boolean inverseTeams = false;
 
     private KendoTournamentGenerator() {
         loadConfig();
@@ -138,22 +136,6 @@ public class KendoTournamentGenerator {
 
     public static boolean isAutosaveOptionSelected() {
         return autosave;
-    }
-
-    public boolean isInverseColours() {
-        return inverseColours;
-    }
-
-    public void setInverseColours(boolean inverseColours) {
-        this.inverseColours = inverseColours;
-    }
-
-    public boolean isInverseTeams() {
-        return inverseTeams;
-    }
-
-    public void setInverseTeams(boolean inverseTeams) {
-        this.inverseTeams = inverseTeams;
     }
 
     /**

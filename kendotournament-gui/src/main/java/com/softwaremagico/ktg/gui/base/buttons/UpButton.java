@@ -23,20 +23,28 @@ package com.softwaremagico.ktg.gui.base.buttons;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import javax.swing.Icon;
-import javax.swing.JButton;
+import com.softwaremagico.ktg.files.Path;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 
-public class KButton extends JButton {
+public abstract class UpButton extends KButton {
 
-    public void setTranslatedText(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        setText(trans.getTranslatedText(tag));
+    public UpButton() {
+        setTranslatedText("UpButton");
+        this.setPreferredSize(new Dimension(80, 40));
+        setIcon(new ImageIcon(Path.getIconPath() + "up.png"));
+        addActionListener(new AcceptListener());
     }
-    
-    //Disable button icons.
-    @Override
-    public void setIcon(Icon defaultIcon){
+
+    public abstract void acceptAction();
+
+    class AcceptListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            acceptAction();
+        }
     }
 }
