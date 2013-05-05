@@ -2075,4 +2075,12 @@
 		<ca>Autoguardar</ca>
 		<it>Autosalvare</it>
 	</AutosaveMenuItem> 
+	<ShowMenuItem>
+		<en>Show</en>
+		<es>Mostrar</es>
+		<nl>Autosave</nl>
+		<de>Autosave</de>
+		<ca>Mostrar</ca>
+		<it>Mostrare</it>
+	</ShowMenuItem> 
 </translator>

@@ -26,9 +26,11 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
-import com.softwaremagico.ktg.gui.base.KCheckBox;
+import com.softwaremagico.ktg.gui.base.KCheckBoxMenuItem;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KLabel;
+import com.softwaremagico.ktg.gui.base.KMenu;
+import com.softwaremagico.ktg.gui.base.KMenuItem;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
@@ -38,21 +40,25 @@ import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
 
-    private final static Integer BUTTON_WIDTH = 200;
-    private final static Integer BUTTON_HEIGHT = 150;
     private KPanel tournamentDefinitionPanel;
     private ScorePanel scorePanel;
     private KPanel buttonPlacePanel;
     private TournamentComboBox tournamentComboBox;
     private FightAreaComboBox fightAreaComboBox;
     private KButton nextButton, previousButton;
-    private KCheckBox changeColor, changeTeam;
+    //private KCheckBox changeColor, changeTeam;
+    private JMenuItem showTreeMenuItem, scoreMenuItem;
+    private KCheckBoxMenuItem changeTeam, changeColor;
 
     public FightPanel() {
         defineWindow(700, 600);
@@ -62,9 +68,88 @@ public class FightPanel extends KFrame {
     }
 
     private void setElements() {
+        // Add Main menu.
+        setJMenuBar(createMenu());
+
         setLayout(new GridBagLayout());
         setMainPanels();
         updateScorePanel();
+    }
+
+    public JMenuBar createMenu() {
+        JMenuBar mainMenu = new JMenuBar();
+        mainMenu.add(createShowMenu());
+        mainMenu.add(createOptionsMenu());
+        mainMenu.add(exitMenu());
+
+
+        return mainMenu;
+    }
+
+    private JMenu exitMenu() {
+        KMenu exitMenu = new KMenu("ExitMenuItem");
+        exitMenu.setMnemonic(KeyEvent.VK_E);
+        exitMenu.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
+
+        KMenuItem exitMenuItem = new KMenuItem("ExitMenuItem");
+        exitMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
+
+        exitMenu.add(exitMenuItem);
+
+        return exitMenu;
+    }
+
+    private JMenu createShowMenu() {
+        KMenu showMenu = new KMenu("ShowMenuItem");
+        showMenu.setMnemonic(KeyEvent.VK_S);
+        showMenu.setIcon(new ImageIcon(Path.getIconPath() + "show.png"));
+
+        showTreeMenuItem = new KMenuItem("TreeButton");
+        showTreeMenuItem.setMnemonic(KeyEvent.VK_T);
+        showTreeMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "tree.png"));
+        showMenu.add(showTreeMenuItem);
+
+        scoreMenuItem = new KMenuItem("PointListMenuItem");
+        scoreMenuItem.setMnemonic(KeyEvent.VK_T);
+        scoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
+        showMenu.add(scoreMenuItem);
+
+
+        return showMenu;
+    }
+
+    private JMenu createOptionsMenu() {
+        KMenu optionsMenu = new KMenu("OptionsMenu");
+        optionsMenu.setMnemonic(KeyEvent.VK_O);
+        optionsMenu.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
+
+        changeColor = new KCheckBoxMenuItem("ColourCheckBox");
+        changeColor.setMnemonic(KeyEvent.VK_C);
+        changeColor.setIcon(new ImageIcon(Path.getIconPath() + "color-invert.png"));
+
+        changeColor.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateScorePanel();
+            }
+        });
+
+        optionsMenu.add(changeColor);
+
+        changeTeam = new KCheckBoxMenuItem("InverseCheckBox");
+        changeTeam.setMnemonic(KeyEvent.VK_T);
+        changeTeam.setIcon(new ImageIcon(Path.getIconPath() + "team-invert.png"));
+
+        changeTeam.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateScorePanel();
+            }
+        });
+
+        optionsMenu.add(changeTeam);
+
+        return optionsMenu;
     }
 
     private void setMainPanels() {
@@ -194,7 +279,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(nextButton, gridBagConstraints);
 
-        KPanel teamOptions = getTeamOptionsPanel();
+        KPanel teamOptions = new KPanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
         gridBagConstraints.gridx = 1;
@@ -219,51 +304,6 @@ public class FightPanel extends KFrame {
         buttonPanel.add(closeButton, gridBagConstraints);
 
         return buttonPanel;
-    }
-
-    private KPanel getTeamOptionsPanel() {
-        KPanel teamOptions = new KPanel();
-        teamOptions.setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        changeColor = new KCheckBox("ColourCheckBox");
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 0;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        teamOptions.add(changeColor, gridBagConstraints);
-
-        changeColor.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateScorePanel();
-            }
-        });
-
-        changeTeam = new KCheckBox("InverseCheckBox");
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 0;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        teamOptions.add(changeTeam, gridBagConstraints);
-
-        changeTeam.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateScorePanel();
-            }
-        });
-
-        return teamOptions;
     }
 
     @Override
