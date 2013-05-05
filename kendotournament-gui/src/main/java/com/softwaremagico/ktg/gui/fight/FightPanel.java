@@ -78,25 +78,31 @@ public class FightPanel extends KFrame {
 
     public JMenuBar createMenu() {
         JMenuBar mainMenu = new JMenuBar();
-        mainMenu.add(createShowMenu());
+        mainMenu.add(windowMenu());
         mainMenu.add(createOptionsMenu());
-        mainMenu.add(exitMenu());
-
+        mainMenu.add(createShowMenu());
 
         return mainMenu;
     }
 
-    private JMenu exitMenu() {
-        KMenu exitMenu = new KMenu("ExitMenuItem");
-        exitMenu.setMnemonic(KeyEvent.VK_E);
-        exitMenu.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
+    private JMenu windowMenu() {
+        KMenu windowMenu = new KMenu("WindowMenuItem");
+        windowMenu.setMnemonic(KeyEvent.VK_E);
+        windowMenu.setIcon(new ImageIcon(Path.getIconPath() + "panel.png"));
 
         KMenuItem exitMenuItem = new KMenuItem("ExitMenuItem");
         exitMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
 
-        exitMenu.add(exitMenuItem);
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispose();
+            }
+        });
 
-        return exitMenu;
+        windowMenu.add(exitMenuItem);
+
+        return windowMenu;
     }
 
     private JMenu createShowMenu() {
@@ -267,18 +273,6 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(previousButton, gridBagConstraints);
 
-        nextButton = new NextButton();
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 0;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        buttonPanel.add(nextButton, gridBagConstraints);
-
         KPanel teamOptions = new KPanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
@@ -291,7 +285,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(teamOptions, gridBagConstraints);
 
-        CloseButton closeButton = new CloseButton(this);
+        nextButton = new NextButton();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
         gridBagConstraints.gridx = 5;
@@ -301,7 +295,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        buttonPanel.add(closeButton, gridBagConstraints);
+        buttonPanel.add(nextButton, gridBagConstraints);
 
         return buttonPanel;
     }

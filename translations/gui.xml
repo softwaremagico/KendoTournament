@@ -2083,4 +2083,12 @@
 		<ca>Mostrar</ca>
 		<it>Mostrare</it>
 	</ShowMenuItem> 
+	<WindowMenuItem>
+		<en>Window</en>
+		<es>Ventana</es>
+		<nl>Window</nl>
+		<de>Window</de>
+		<ca>Finestra</ca>
+		<it>Finestra</it>
+	</WindowMenuItem> 
 </translator>
