@@ -460,7 +460,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                         (Team) (Team1ComboBox.getSelectedItem()),
                         (Team) (Team2ComboBox.getSelectedItem()),
                         FightAreaComboBox.getSelectedIndex(),
-                        0);
+                        0, 0);
                 int ind = FightsList.getSelectedIndex();
                 if (ind >= 0) {
                     fights.add(ind + 1, fight);

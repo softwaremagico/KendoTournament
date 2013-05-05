@@ -37,27 +37,17 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Team team2;
     private Tournament tournament;
     private Integer asignedFightArea;
-    //private List<Duel> duels = null;
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     private Integer index;
     private Integer level;
     private Integer maxWinners = 1;
 
-    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int order) {
+    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int groupIndex) {
         this.team1 = team1;
         this.team2 = team2;
         this.tournament = tournament;
         this.asignedFightArea = asignedArea;
-        this.index = order;
-        this.level = level;
-    }
-
-    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level) {
-        this.team1 = team1;
-        this.team2 = team2;
-        this.tournament = tournament;
-        this.asignedFightArea = asignedArea;
-        this.index = 0;
+        this.index = groupIndex;
         this.level = level;
     }
 

@@ -56,23 +56,23 @@ public class ScorePanel extends KPanel {
 
             //Penultimus
             if (numberOfFightsToShow() > 4) {
-                addFightPanel(-2, fightArea, invertedTeam, invertedColor);
+                addFightPanel(-2, fightArea, invertedTeam, invertedColor, false);
                 showedFights++;
             }
             //Previous
             if (numberOfFightsToShow() > 2) {
-                addFightPanel(-1, fightArea, invertedTeam, invertedColor);
+                addFightPanel(-1, fightArea, invertedTeam, invertedColor, false);
                 showedFights++;
             }
             //Current
-            addFightPanel(0, fightArea, invertedTeam, invertedColor);
+            addFightPanel(0, fightArea, invertedTeam, invertedColor, true);
             showedFights++;
 
             //Nexts
             if (numberOfFightsToShow() > 1) {
                 for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
                         showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                    addFightPanel(i, fightArea, invertedTeam, invertedColor);
+                    addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
                     showedFights++;
                 }
             }
@@ -91,20 +91,26 @@ public class ScorePanel extends KPanel {
         repaint();
         revalidate();
     }
+    
+    private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected){
+        RoundFight rf;
+        Fight f = FightPool.getInstance().get(tournament, fightArea, fightRelativeToCurrent);
+        if (f != null) {
+            rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
+        } else {
+            rf = new RoundFight(tournament.getTeamSize(), selected, 0, 0, invertedColor);
+        }
+        rf.updateScorePanels();
+        return rf;
+    }
 
-    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor) {
+    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
         Dimension minSize = new Dimension(0, 5);
         Dimension prefSize = new Dimension(5, 5);
         Dimension maxSize = new Dimension(5, 5);
 
-        RoundFight rf;
-        Fight f = FightPool.getInstance().get(tournament, fightArea, fightRelativeToCurrent);
-        if (f != null) {
-            rf = new RoundFight(tournament, f, false, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
-        } else {
-            rf = new RoundFight(tournament.getTeamSize(), false, 0, 0, invertedColor);
-        }
-        rf.updateScorePanels();
+        RoundFight rf = createFightPanel(fightRelativeToCurrent, fightArea, invertedTeam, invertedColor, selected);
+        
         add(rf);
         add(new Box.Filler(minSize, prefSize, maxSize));
     }

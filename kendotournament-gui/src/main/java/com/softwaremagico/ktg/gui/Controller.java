@@ -1348,7 +1348,7 @@ public class Controller {
             Fight f;
             f = new Fight(shortFight.getTournament(),
                     shortFight.getTeam1(), shortFight.getTeam2(),
-                    shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()));
+                    shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()), 0);
             try {
                 FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
                 MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);

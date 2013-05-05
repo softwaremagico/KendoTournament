@@ -68,7 +68,7 @@ public class TournamentGroup implements Serializable {
             numberMaxOfWinners = value;
         }
     }
-
+    
     public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
@@ -170,7 +170,7 @@ public class TournamentGroup implements Serializable {
         return fightsG;
     }
 
-    public List<Fight> createFights(boolean random) {
+    public List<Fight> createFights(boolean random, Integer groupIndex) {
         if (getTeams().size() < 2) {
             return null;
         }
@@ -187,9 +187,9 @@ public class TournamentGroup implements Serializable {
                 continue;
             }
             if (fights.size() % 2 == 0) {
-                fight = new Fight(tournament, team1, team2, getFightArea(), getLevel());
+                fight = new Fight(tournament, team1, team2, getFightArea(), getLevel(), groupIndex);
             } else {
-                fight = new Fight(tournament, team2, team1, getFightArea(), getLevel());
+                fight = new Fight(tournament, team2, team1, getFightArea(), getLevel(), groupIndex);
             }
             fights.add(fight);
             remainingFights.removeAdveresary(team1, team2);
@@ -211,7 +211,7 @@ public class TournamentGroup implements Serializable {
         }
         for (Team team : remainingTeams) {
             for (Team adversary : remainingFights.getAdversaries(team)) {
-                Fight fight = new Fight(tournament, team, adversary, getFightArea(), getLevel());
+                Fight fight = new Fight(tournament, team, adversary, getFightArea(), getLevel(), 0);
                 fights.add(fight);
             }
         }

@@ -8,39 +8,39 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Championship implements ITournamentManager {
-    
+
     private Tournament tournament;
     protected LeagueLevel levelZero;
-    
+
     protected Championship(Tournament tournament) {
         this.tournament = tournament;
         levelZero = new LeagueLevelChampionship(tournament, 0, null, null);
     }
-    
+
     @Override
     public List<Fight> getFights(Integer level) {
         return FightPool.getInstance().getFromLevel(tournament, level);
     }
-    
+
     @Override
     public List<Fight> createRandomFights(Integer level) {
         return createFightsOfGroups(level, true);
     }
-    
+
     @Override
     public List<Fight> createSortedFights(Integer level) {
         return createFightsOfGroups(level, false);
     }
-    
+
     private List<Fight> createFightsOfGroups(Integer level, boolean random) {
         List<Fight> fights = new ArrayList<>();
         List<TournamentGroup> groupsOfLevel = getGroups(level);
-        for (TournamentGroup group : groupsOfLevel) {
-            fights.addAll(group.createFights(random));
+        for (int i = 0; i < groupsOfLevel.size(); i++) {
+            fights.addAll(groupsOfLevel.get(i).createFights(random, i));
         }
         return fights;
     }
-    
+
     @Override
     public List<TournamentGroup> getGroups() {
         List<TournamentGroup> allGroups = new ArrayList<>();
@@ -49,12 +49,12 @@ public class Championship implements ITournamentManager {
         }
         return allGroups;
     }
-    
+
     @Override
     public List<TournamentGroup> getGroups(Integer level) {
         return getLevel(level).getGroups();
     }
-    
+
     @Override
     public TournamentGroup getGroup(Fight fight) {
         for (TournamentGroup group : getGroups()) {
@@ -64,27 +64,27 @@ public class Championship implements ITournamentManager {
         }
         return null;
     }
-    
+
     @Override
     public void addGroup(TournamentGroup group) {
         getLevel(0).addGroup(group);
     }
-    
+
     @Override
     public void removeGroup(Integer level, Integer groupIndex) {
         getLevel(level).removeGroup(getGroups(level).get(groupIndex));
     }
-    
+
     @Override
     public void removeGroup(TournamentGroup group) {
         getLevel(group.getLevel()).getGroups().remove(group);
     }
-    
+
     @Override
     public void removeGroups(Integer level) {
         getLevel(level).removeGroups();
     }
-    
+
     @Override
     public LeagueLevel getLevel(Integer levelIndex) {
         LeagueLevel leagueLevel = levelZero;
@@ -94,7 +94,7 @@ public class Championship implements ITournamentManager {
         }
         return leagueLevel;
     }
-    
+
     @Override
     public Integer getNumberOfLevels() {
         Integer total = 1; //Always exist level zero. 
@@ -105,7 +105,7 @@ public class Championship implements ITournamentManager {
         }
         return total;
     }
-    
+
     @Override
     public Integer getLastLevelUsed() {
         for (int i = 0; i < getNumberOfLevels(); i++) {
@@ -115,7 +115,7 @@ public class Championship implements ITournamentManager {
         }
         return 0;
     }
-    
+
     @Override
     public boolean exist(Team team) {
         List<TournamentGroup> groups = getGroups(0);
@@ -126,21 +126,21 @@ public class Championship implements ITournamentManager {
         }
         return false;
     }
-    
+
     @Override
     public void removeTeams(Integer level) {
         getLevel(level).removeTeams();
     }
-    
+
     @Override
     public void setDefaultFightAreas() {
         getLevel(0).updateArenaOfGroups();
     }
-    
+
     @Override
     public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
         tournament.setHowManyTeamsOfGroupPassToTheTree(winners);
-        for(TournamentGroup group : levelZero.getGroups()){
+        for (TournamentGroup group : levelZero.getGroups()) {
             group.setMaxNumberOfWinners(winners);
         }
         if (levelZero.nextLevel != null) {
