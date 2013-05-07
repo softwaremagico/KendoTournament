@@ -36,6 +36,7 @@ public class Undraw implements Comparable<Undraw> {
     private Team winnerTeam;
     private Integer player;
     private Integer level;
+    private Integer points;
 
     public Undraw(Tournament tournament, Integer group, Team winnerTeam, Integer player, Integer level) {
         this.winnerTeam = winnerTeam;
@@ -43,6 +44,7 @@ public class Undraw implements Comparable<Undraw> {
         this.player = player;
         this.group = group;
         this.level = level;
+        points = 1;
     }
 
     public Integer getGroupIndex() {
@@ -51,6 +53,14 @@ public class Undraw implements Comparable<Undraw> {
 
     public void setGroup(Integer group) {
         this.group = group;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     public int getPlayer() {

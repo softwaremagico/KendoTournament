@@ -68,7 +68,7 @@ public class TournamentGroup implements Serializable {
             numberMaxOfWinners = value;
         }
     }
-    
+
     public int getMaxNumberOfWinners() {
         if (level > 0) {
             return 1;
@@ -243,6 +243,22 @@ public class TournamentGroup implements Serializable {
                 }
             }
             return true;
+        }
+        return false;
+    }
+
+    /**
+     * All but the last fight are over. 
+     * @return 
+     */
+    public boolean inTheLastFight() {
+        List<Fight> fights = getFights();
+        if (fights.size() > 0) {
+            if (!fights.get(fights.size() - 1).isOver()) {
+                if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
+                    return true;
+                }
+            }
         }
         return false;
     }

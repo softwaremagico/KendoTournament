@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class Ranking {
@@ -53,6 +54,43 @@ public class Ranking {
             teamScoreRanking = getTeamsScoreRanking(fights);
         }
         return teamScoreRanking;
+    }
+
+    /**
+     * return a hashmap tha classify the teams by position (1st, 2nd, 3rd,...)
+     *
+     * @param maxWinners
+     * @return
+     */
+    private HashMap<Integer, List<Team>> getTeamsByPosition() {
+        HashMap<Integer, List<Team>> teamsByPosition = new HashMap<>();
+        List<ScoreOfTeam> scores = getTeamsScoreRanking();
+
+        Integer position = new Integer(0);
+        for (int i = 0; i < scores.size(); i++) {
+            if (teamsByPosition.get(position) == null) {
+                teamsByPosition.put(position, new ArrayList<Team>());
+            }
+            //Put team in position.
+            teamsByPosition.get(position).add(scores.get(i).getTeam());
+            //Different score with next team.
+            if ((i < scores.size() - 1) && scores.get(i).compareTo(scores.get(i + 1)) != 0) {
+                position++;
+            }
+        }
+
+        return teamsByPosition;
+    }
+    
+    public List<Team> getFirstTeamsWithDrawScore(Integer maxWinners){
+        HashMap<Integer, List<Team>> teamsByPosition = getTeamsByPosition();
+        for(Integer i = 0; i < maxWinners; i++){
+            List<Team> teamsInDraw = teamsByPosition.get(i);
+            if(teamsInDraw.size()>1){
+                return teamsInDraw;
+            }
+        }
+        return null;
     }
 
     public Team getTeam(Integer order) {

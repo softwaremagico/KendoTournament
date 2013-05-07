@@ -38,7 +38,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Tournament tournament;
     private Integer asignedFightArea;
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
-    private Integer index;
+    private Integer groupIndex;
     private Integer level;
     private Integer maxWinners = 1;
 
@@ -47,12 +47,12 @@ public class Fight implements Serializable, Comparable<Fight> {
         this.team2 = team2;
         this.tournament = tournament;
         this.asignedFightArea = asignedArea;
-        this.index = groupIndex;
+        this.groupIndex = groupIndex;
         this.level = level;
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getGroupIndex() {
+        return groupIndex;
     }
 
     public Integer getLevel() {
@@ -315,7 +315,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         hash = 41 * hash + Objects.hashCode(this.team1);
         hash = 41 * hash + Objects.hashCode(this.team2);
         hash = 41 * hash + Objects.hashCode(this.tournament);
-        hash = 41 * hash + Objects.hashCode(this.index);
+        hash = 41 * hash + Objects.hashCode(this.groupIndex);
         hash = 41 * hash + Objects.hashCode(this.level);
         return hash;
     }
@@ -338,7 +338,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         if (!Objects.equals(this.tournament, other.tournament)) {
             return false;
         }
-        if (!Objects.equals(this.index, other.index)) {
+        if (!Objects.equals(this.groupIndex, other.groupIndex)) {
             return false;
         }
         if (!Objects.equals(this.level, other.level)) {
@@ -396,6 +396,6 @@ public class Fight implements Serializable, Comparable<Fight> {
         if (levelCompare != 0) {
             return levelCompare;
         }
-        return index.compareTo(o.index);
+        return groupIndex.compareTo(o.groupIndex);
     }
 }

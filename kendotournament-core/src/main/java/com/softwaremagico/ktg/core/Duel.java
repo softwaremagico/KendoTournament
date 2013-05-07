@@ -414,7 +414,7 @@ public class Duel implements Serializable, Comparable<Duel> {
         if (levelCompare != 0) {
             return levelCompare;
         }
-        Integer indexCompare = getFight().getIndex().compareTo(o.getFight().getIndex());
+        Integer indexCompare = getFight().getGroupIndex().compareTo(o.getFight().getGroupIndex());
         if (indexCompare != 0) {
             return indexCompare;
         }

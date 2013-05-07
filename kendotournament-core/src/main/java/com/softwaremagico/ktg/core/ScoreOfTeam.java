@@ -1,5 +1,6 @@
 package com.softwaremagico.ktg.core;
 
+import com.softwaremagico.ktg.database.UndrawPool;
 import java.util.List;
 
 public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
@@ -10,6 +11,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     private Integer drawFights = null;
     private Integer wonDuels = null;
     private Integer drawDuels = null;
+    private Integer goldenPoint = null;
     private Integer hits = null;
 
     public ScoreOfTeam(Team team, List<Fight> fights) {
@@ -87,6 +89,13 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return hits;
     }
 
+    public int getGoldenPoints() {
+        if (goldenPoint == null) {
+            goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroupIndex(), team);
+        }
+        return goldenPoint;
+    }
+
     @Override
     public int compareTo(ScoreOfTeam o) {
         if (getWonFights() > o.getWonFights()) {
@@ -122,6 +131,15 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         if (getDrawDuels() < o.getDrawDuels()) {
             return 1;
         }
-        return getTeam().compareTo(o.getTeam());
+
+        if (getGoldenPoints() > o.getGoldenPoints()) {
+            return -1;
+        }
+
+        if (getGoldenPoints() < o.getGoldenPoints()) {
+            return 1;
+        }
+
+        return 0;
     }
 }

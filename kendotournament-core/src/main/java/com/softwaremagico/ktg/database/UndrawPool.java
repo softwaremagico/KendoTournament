@@ -67,25 +67,45 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return unsorted;
     }
 
-    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) {
-        List<Team> teams = new ArrayList<>();
+    private List<Undraw> getUndraws(Tournament tournament, Integer level, Integer group) {
+        List<Undraw> undrawsOfGroup = new ArrayList<>();
         List<Undraw> undraws = new ArrayList<>(getMap(tournament).values());
         for (Undraw undraw : undraws) {
             if (undraw.getLevel() == level && undraw.getGroupIndex() == group) {
-                teams.add(undraw.getTeam());
+                undrawsOfGroup.add(undraw);
             }
+        }
+        return undrawsOfGroup;
+    }
+
+    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) {
+        List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
+        List<Team> teams = new ArrayList<>();
+        for (Undraw undraw : undrawsOfGroup) {
+            teams.add(undraw.getTeam());
         }
         return teams;
     }
 
     public Integer getUndrawsWon(Tournament tournament, Integer level, Integer group, Team team) {
         Integer undrawsWon = 0;
-        List<Team> teams = getWinners(tournament, level, group);
-        for (Team undrawTeam : teams) {
-            if (team.equals(undrawTeam)) {
-                undrawsWon++;
+        List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
+        for (Undraw undraw : undrawsOfGroup) {
+            if (team.equals(undraw.getTeam())) {
+                undrawsWon += undraw.getPoints();
             }
         }
         return undrawsWon;
+    }
+
+    public Undraw get(Tournament tournament, Integer level, Integer group, Team team) {
+        List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
+        for (Undraw undraw : undrawsOfGroup) {
+            if (team.equals(undraw.getTeam())) {
+                return undraw;
+            }
+        }
+        return null;
+
     }
 }

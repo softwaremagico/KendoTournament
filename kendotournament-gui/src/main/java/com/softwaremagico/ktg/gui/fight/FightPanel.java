@@ -23,7 +23,13 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
 import com.softwaremagico.ktg.gui.base.KCheckBoxMenuItem;
@@ -33,19 +39,24 @@ import com.softwaremagico.ktg.gui.base.KMenu;
 import com.softwaremagico.ktg.gui.base.KMenuItem;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.TournamentComboBox;
-import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TournamentManagerPool;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
@@ -342,26 +353,134 @@ public class FightPanel extends KFrame {
         });
     }
 
+    /**
+     * If there are more than one team with the max punctuation, ask for a
+     * winner to the user.
+     *
+     * @param winnersOfgroup
+     * @return position in the list of the choosen one.
+     */
+    private int resolvDrawTeams(List<Team> drawTeams, int level, int group) {
+        JFrame frame = null;
+
+        //If it is draw because there is only one team. Then it wins.
+        if (drawTeams.size() == 1) {
+            return 0;
+        }
+
+        //Ask the user who is the real winner.
+        List<String> optionsList = new ArrayList<>();
+        for (int i = 0; i < drawTeams.size(); i++) {
+            optionsList.add(drawTeams.get(i).getName());
+        }
+        Object[] options = optionsList.toArray();
+        int n = JOptionPane.showOptionDialog(frame,
+                LanguagePool.getTranslator("gui.xml").getTranslatedText("DrawText"),
+                LanguagePool.getTranslator("gui.xml").getTranslatedText("DrawTitle"),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        //Add golden point.
+        if (n >= 0) {
+            Undraw undraw = UndrawPool.getInstance().get(getSelectedTournament(), level, group, drawTeams.get(n));
+            undraw.setPoints(undraw.getPoints() + 1);
+            UndrawPool.getInstance().update(getSelectedTournament(), undraw);
+        }
+        return n;
+    }
+
+    private void messagesFinishedGroup(TournamentGroup currentGroup) {
+        //When a group is finished, show different messages with the winner, score, etc.
+        if (currentGroup.areFightsOver()) {
+            //Show score.
+           /* MonitorFightPosition mfp = new MonitorFightPosition(currentGroup, true);
+            mfp.setVisible(true);
+            mfp.setExtendedState(mfp.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+            boolean message;
+
+            //The message of next group will be shown only if there are more levels in the championship.
+            //The last level always only has one group!
+            if (TournamentManagerPool.getManager(getSelectedTournament()).getGroups(currentGroup.getLevel()).size() > 1) {
+                message = true;
+            } else {
+                message = false;
+            }
+
+            //Alert message with the passing teams. 
+            currentGroup.showWinnersOfGroup();*/
+        }
+    }
+
     class NextButton extends DownButton {
 
         protected NextButton() {
-            updateText();
-            updateIcon();
+            updateText(false);
+            updateIcon(false);
         }
 
-        protected final void updateIcon() {
-            setIcon(new ImageIcon("highscores.png"));
-            setIcon(new ImageIcon(Path.getIconPath() + "down.png"));
+        protected final void updateIcon(boolean last) {
+            if (last) {
+                setIcon(new ImageIcon("highscores.png"));
+            } else {
+                setIcon(new ImageIcon(Path.getIconPath() + "down.png"));
+            }
         }
 
-        protected final void updateText() {
-            setTranslatedText("FinishtButton");
-            setTranslatedText("NextButton");
+        protected final void updateText(boolean last) {
+            if (last) {
+                setTranslatedText("FinishtButton");
+            } else {
+                setTranslatedText("NextButton");
+            }
         }
 
         @Override
         public void acceptAction() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            //Finish current fight.
+            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
+            currentFight.setOver(true);
+
+            TournamentGroup group = TournamentManagerPool.getManager(getSelectedTournament()).getGroup(currentFight);
+            //If it was the last fight of group.
+            if (group.areFightsOver()) {
+                boolean moreDrawTeams = true;
+                while (moreDrawTeams) {
+                    //Search for draw scores.
+                    Ranking ranking = new Ranking(group.getFights());
+                    List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
+                    if (teamsInDraw != null) {
+                        //Solve Draw Scores
+                        resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroupIndex());
+                    } else {
+                        //No more draw teams, exit loop.
+                        moreDrawTeams = false;
+                    }
+                }
+                //Show score.
+
+                //If it was the last fight of all groups.
+                if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
+                    //Create new fights.
+                } else {
+                    //If it was the last fight of arena groups.
+                    if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
+                        //wait for other arena fights.
+                    } else {
+                        //Now it was the last one of a group.
+                        if (group.inTheLastFight()) {
+                            updateIcon(true);
+                        } else {
+                            updateIcon(false);
+                        }
+                    }
+                }
+            }
+
+            //Update score panel.
+            updateScorePanel();
         }
     }
 
@@ -374,13 +493,6 @@ public class FightPanel extends KFrame {
         @Override
         public void acceptAction() {
             throw new UnsupportedOperationException("Not supported yet.");
-        }
-    }
-
-    class FightCloseButton extends CloseButton {
-
-        protected FightCloseButton(JFrame window) {
-            super(window);
         }
     }
 }

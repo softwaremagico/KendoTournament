@@ -28,7 +28,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     @Override
     protected String getId(Fight element) {
         return element.getTeam1().getName() + element.getTeam2().getName()
-                + element.getLevel() + element.getIndex() + element.getTournament();
+                + element.getLevel() + element.getGroupIndex() + element.getTournament();
     }
 
     @Override
@@ -120,7 +120,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     public Fight get(Tournament tournament, Integer fightArea, Integer index) {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         for (Fight fight : allFights) {
-            if (fight.getAsignedFightArea() == fightArea && fight.getIndex() == index) {
+            if (fight.getAsignedFightArea() == fightArea && fight.getGroupIndex() == index) {
                 return fight;
             }
         }
@@ -129,7 +129,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) {
         for (Fight fight : getMap(tournament).values()) {
-            if (fight.getIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
+            if (fight.getGroupIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
                     && fight.getLevel() == level) {
                 return fight;
             }
