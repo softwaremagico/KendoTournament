@@ -112,14 +112,22 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     public TournamentType getType() {
         return mode;
     }
+    
+    public boolean isChampionship(){
+        return isChampionship(mode);
+    }
+    
+    public boolean isChampionship(TournamentType mode){
+        return CHAMPIONSHIP_TYPES.contains(mode);
+    }
 
-    public void setType(TournamentType mode) {
-        if (!this.mode.equals(mode)) {
+    public void setType(TournamentType newMode) {
+        if (!this.mode.equals(newMode)) {
             //Groups are mantained between manual and championship modes. 
-            if (!CHAMPIONSHIP_TYPES.contains(mode) || !CHAMPIONSHIP_TYPES.contains(this.mode)) {
+            if (!isChampionship(newMode) || !isChampionship()) {
                 TournamentManagerFactory.removeManager(this);
             }
-            this.mode = mode;
+            this.mode = newMode;
         }
     }
 

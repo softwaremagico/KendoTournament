@@ -81,7 +81,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         removeAll();
         grpsBox = new HashMap<>();
         //Simple tournament is not defined in the blackboard. 
-        if (!Tournament.CHAMPIONSHIP_TYPES.contains(tournament.getType())) {
+        if (!tournament.isChampionship()) {
             return;
         }
         c.gridx = 0;

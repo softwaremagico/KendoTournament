@@ -64,8 +64,8 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         bbp = new BlackBoardPanel(this, true);
         BlackBoardScrollPane.setViewportView(bbp);
         fillTournaments();
-        //Update groups if is already is a championship.
-        if (Tournament.CHAMPIONSHIP_TYPES.contains(getSelectedTournament().getType())) {
+        //Update groups if it already is a championship.
+        if (getSelectedTournament().isChampionship()) {
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
         }
         updateInfo();
