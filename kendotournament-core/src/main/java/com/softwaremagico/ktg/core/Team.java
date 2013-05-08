@@ -143,20 +143,14 @@ public class Team implements Serializable, Comparable<Team> {
     }
 
     public String getShortName() {
-        int length = 21;
+        return getShortName(21);
+    }
+
+    public String getShortName(int length) {
         if (name.length() <= length) {
             return name;
         } else {
             return name.substring(0, length - 3) + ". " + name.substring(name.length() - 2, name.length());
-        }
-    }
-
-    public String getShortName(int xSize) {
-        int length = xSize / 7;
-        if (name.length() <= length) {
-            return name;
-        } else {
-            return name.substring(0, length - 6) + "... " + name.substring(name.length() - 2, name.length());
         }
     }
 

@@ -145,7 +145,7 @@ public class TournamentGroup implements Serializable {
     }
 
     public List<Fight> getFights() {
-        if (fightsOfGroup != null || fightsOfGroup.isEmpty()) {
+        if (fightsOfGroup == null || fightsOfGroup.isEmpty()) {
             fightsOfGroup = getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
         }
         return fightsOfGroup;

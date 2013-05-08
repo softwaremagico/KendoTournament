@@ -30,7 +30,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return null;
     }
 
-    public int getWonFights() {
+    public Integer getWonFights() {
         if (wonFights == null) {
             wonFights = 0;
             for (int j = 0; j < fights.size(); j++) {
@@ -44,7 +44,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return wonFights;
     }
 
-    public int getDrawFights() {
+    public Integer getDrawFights() {
         if (drawFights == null) {
             drawFights = 0;
             for (int j = 0; j < fights.size(); j++) {
@@ -59,7 +59,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return drawFights;
     }
 
-    public int getWonDuels() {
+    public Integer getWonDuels() {
         if (wonDuels == null) {
             wonDuels = 0;
             for (int j = 0; j < fights.size(); j++) {
@@ -69,7 +69,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return wonDuels;
     }
 
-    public int getDrawDuels() {
+    public Integer getDrawDuels() {
         if (drawDuels == null) {
             drawDuels = 0;
             for (int j = 0; j < fights.size(); j++) {
@@ -79,7 +79,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return drawDuels;
     }
 
-    public int getHits() {
+    public Integer getHits() {
         if (hits == null) {
             hits = 0;
             for (int j = 0; j < fights.size(); j++) {
@@ -89,7 +89,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
         return hits;
     }
 
-    public int getGoldenPoints() {
+    public Integer getGoldenPoints() {
         if (goldenPoint == null) {
             goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroupIndex(), team);
         }

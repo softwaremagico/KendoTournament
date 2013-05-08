@@ -52,8 +52,8 @@ public abstract class KFrame extends JFrame {
                 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
                 / 2 - (int) (this.getHeight() / 2));
     }
-    
+
     public abstract void update();
-    
+
     public abstract void tournamentChanged();
 }

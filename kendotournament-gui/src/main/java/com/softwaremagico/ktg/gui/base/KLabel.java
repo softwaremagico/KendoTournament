@@ -25,17 +25,32 @@ package com.softwaremagico.ktg.gui.base;
 
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import java.awt.Font;
 import javax.swing.JLabel;
 
 public class KLabel extends JLabel {
+    
+    public KLabel() {
+        
+    }
 
     public KLabel(String tag) {
         Translator trans = LanguagePool.getTranslator("gui.xml");
         String label = trans.getTranslatedText(tag);
         if (label != null) {
             setText(label);
-        }else{
+        } else {
             setText("** error tag '" + tag + "' **");
         }
+    }
+
+    public void setBoldFont(boolean bold) {
+        Font currentFont = this.getFont();
+        setFont(new Font(currentFont.getName(), currentFont.getStyle() | Font.BOLD, currentFont.getSize()));
+    }
+
+    public void setFontSize(int fontSize) {
+         Font currentFont = this.getFont();
+        setFont(new Font(currentFont.getName(), currentFont.getStyle(), fontSize));
     }
 }

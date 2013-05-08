@@ -72,7 +72,7 @@ public class FightPanel extends KFrame {
     private KCheckBoxMenuItem changeTeam, changeColor;
 
     public FightPanel() {
-        defineWindow(700, 600);
+        defineWindow(750, 600);
         setResizable(true);
         setElements();
         addResizedEvent();
@@ -129,6 +129,12 @@ public class FightPanel extends KFrame {
         scoreMenuItem = new KMenuItem("PointListMenuItem");
         scoreMenuItem.setMnemonic(KeyEvent.VK_T);
         scoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
+        scoreMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openRankingWindow();
+            }
+        });
         showMenu.add(scoreMenuItem);
 
 
@@ -397,21 +403,33 @@ public class FightPanel extends KFrame {
         if (currentGroup.areFightsOver()) {
             //Show score.
            /* MonitorFightPosition mfp = new MonitorFightPosition(currentGroup, true);
-            mfp.setVisible(true);
-            mfp.setExtendedState(mfp.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-            boolean message;
+             mfp.setVisible(true);
+             mfp.setExtendedState(mfp.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+             boolean message;
 
-            //The message of next group will be shown only if there are more levels in the championship.
-            //The last level always only has one group!
-            if (TournamentManagerPool.getManager(getSelectedTournament()).getGroups(currentGroup.getLevel()).size() > 1) {
-                message = true;
-            } else {
-                message = false;
-            }
+             //The message of next group will be shown only if there are more levels in the championship.
+             //The last level always only has one group!
+             if (TournamentManagerPool.getManager(getSelectedTournament()).getGroups(currentGroup.getLevel()).size() > 1) {
+             message = true;
+             } else {
+             message = false;
+             }
 
-            //Alert message with the passing teams. 
-            currentGroup.showWinnersOfGroup();*/
+             //Alert message with the passing teams. 
+             currentGroup.showWinnersOfGroup();*/
         }
+    }
+    
+    private void openRankingWindow(){
+        Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
+        TournamentGroup group = TournamentManagerPool.getManager(getSelectedTournament()).getGroup(currentFight);
+        Ranking ranking = new Ranking(group.getFights());
+        openRankingWindow(ranking);
+    }
+    
+    private void openRankingWindow(Ranking ranking){
+        RankingWindow mp = new RankingWindow(ranking);
+        mp.setVisible(true);
     }
 
     class NextButton extends DownButton {
@@ -447,9 +465,10 @@ public class FightPanel extends KFrame {
             //If it was the last fight of group.
             if (group.areFightsOver()) {
                 boolean moreDrawTeams = true;
+                Ranking ranking = null;
                 while (moreDrawTeams) {
                     //Search for draw scores.
-                    Ranking ranking = new Ranking(group.getFights());
+                    ranking = new Ranking(group.getFights());
                     List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
                     if (teamsInDraw != null) {
                         //Solve Draw Scores
@@ -460,6 +479,7 @@ public class FightPanel extends KFrame {
                     }
                 }
                 //Show score.
+                openRankingWindow(ranking);
 
                 //If it was the last fight of all groups.
                 if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
