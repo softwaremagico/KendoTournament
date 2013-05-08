@@ -35,7 +35,7 @@ import java.util.List;
 
 public class Tournament implements Serializable, Comparable<Tournament> {
 
-    public static final List<TournamentType> LINKS_TYPES = new ArrayList<>();
+    public static final List<TournamentType> CHAMPIONSHIP_TYPES = new ArrayList<>();
     private String name;
     private transient Photo banner;
     private transient Photo diploma;
@@ -49,8 +49,8 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     private String choosedScore = "European";
 
     static {
-        LINKS_TYPES.add(TournamentType.CHAMPIONSHIP);
-        LINKS_TYPES.add(TournamentType.MANUAL);
+        CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
+        CHAMPIONSHIP_TYPES.add(TournamentType.MANUAL);
     }
 
     public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType mode) {
@@ -116,7 +116,7 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     public void setType(TournamentType mode) {
         if (!this.mode.equals(mode)) {
             //Groups are mantained between manual and championship modes. 
-            if (!LINKS_TYPES.contains(mode) || !LINKS_TYPES.contains(this.mode)) {
+            if (!CHAMPIONSHIP_TYPES.contains(mode) || !CHAMPIONSHIP_TYPES.contains(this.mode)) {
                 TournamentManagerFactory.removeManager(this);
             }
             this.mode = mode;
