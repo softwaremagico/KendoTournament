@@ -16,7 +16,16 @@ public class Championship implements ITournamentManager {
         this.tournament = tournament;
         levelZero = new LeagueLevelChampionship(tournament, 0, null, null);
     }
-
+    
+    @Override
+    public void fillGroups(){
+        List<Fight> fights = FightPool.getInstance().get(tournament);     
+        for(Fight fight : fights){
+            LeagueLevel leagueLevel = getLevel(fight.getLevel());
+            leagueLevel.fillGroups(fight);
+        }
+    }
+    
     @Override
     public List<Fight> getFights(Integer level) {
         return FightPool.getInstance().getFromLevel(tournament, level);

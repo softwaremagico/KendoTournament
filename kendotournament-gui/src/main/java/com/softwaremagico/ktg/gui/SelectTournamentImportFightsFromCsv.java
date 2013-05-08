@@ -1,6 +1,6 @@
 package com.softwaremagico.ktg.gui;
 
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
 /*
  * #%L
@@ -34,7 +34,7 @@ public class SelectTournamentImportFightsFromCsv extends SelectTournamentForCsv 
 
     @Override
     public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerPool.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
+        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerFactory.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
     }
 
     @Override

@@ -49,6 +49,15 @@ public abstract class LeagueLevel {
         return tournamentGroups.size();
     }
 
+    protected void fillGroups(Fight fight) {
+        while (fight.getGroupIndex() >= getGroups().size()) {
+            addGroup(new TournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
+        }
+        TournamentGroup group = getGroups().get(fight.getGroupIndex());
+        group.addTeam(fight.getTeam1());
+        group.addTeam(fight.getTeam2());
+    }
+
     protected List<TournamentGroup> getGroups() {
         return tournamentGroups;
     }
@@ -196,7 +205,7 @@ public abstract class LeagueLevel {
      * Update the number of groups according of the size of the previous level.
      */
     protected void updateGroupsSize() {
-        while ((previousLevel != null) && ((float) previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
+        while ((previousLevel != null) && (previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
             addGroup(new TournamentGroup(tournament, level, 0));
         }
 

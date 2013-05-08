@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -87,15 +87,15 @@ public class LeagueEvolution extends javax.swing.JFrame {
         int columns = 1;
         int rows = 1;
         try {
-            columns = horizontalScrollBar.getMaximum() / TournamentManagerPool.getManager(tournament).getNumberOfLevels();
-            rows = verticalScrollBar.getMaximum() / TournamentManagerPool.getManager(tournament).getGroups(0).size();
+            columns = horizontalScrollBar.getMaximum() / TournamentManagerFactory.getManager(tournament).getNumberOfLevels();
+            rows = verticalScrollBar.getMaximum() / TournamentManagerFactory.getManager(tournament).getGroups(0).size();
         } catch (ArithmeticException ae) {
         }
 
-        Integer x = TournamentManagerPool.getManager(tournament).getLastLevelUsed();
+        Integer x = TournamentManagerFactory.getManager(tournament).getLastLevelUsed();
 
         if (x == null) {
-            x = TournamentManagerPool.getManager(tournament).getNumberOfLevels() - 1;
+            x = TournamentManagerFactory.getManager(tournament).getNumberOfLevels() - 1;
         }
 
         int y;

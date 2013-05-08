@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -154,16 +153,9 @@ public class TournamentGroup implements Serializable {
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            for (int j = 0; j < teams.size(); j++) {
-                try {
-                    if ((fights.get(i).getTeam1().getName().equals(teams.get(j).getName())
-                            || fights.get(i).getTeam2().getName().equals(teams.get(j).getName()))
-                            && fights.get(i).getLevel() == level) {
-                        fightsG.add(fights.get(i));
-                        break;
-                    }
-                } catch (NullPointerException npe) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            if (fights.get(i).getLevel() == level) {
+                if (teams.contains(fights.get(i).getTeam1()) || teams.contains(fights.get(i).getTeam2())) {
+                    fightsG.add(fights.get(i));
                 }
             }
         }
@@ -248,8 +240,9 @@ public class TournamentGroup implements Serializable {
     }
 
     /**
-     * All but the last fight are over. 
-     * @return 
+     * All but the last fight are over.
+     *
+     * @return
      */
     public boolean inTheLastFight() {
         List<Fight> fights = getFights();

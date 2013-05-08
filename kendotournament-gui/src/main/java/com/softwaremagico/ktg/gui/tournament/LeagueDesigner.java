@@ -34,7 +34,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -44,16 +44,15 @@ import javax.swing.JOptionPane;
 
 public final class LeagueDesigner extends javax.swing.JFrame {
 
-    //private static List<TournamentType> allowedTypes = new ArrayList<>(){TournamentType.CHAMPIONSHIP, TournamentType.MANUAL};
+    
     private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
     private List<Team> teams;
-    private Tournament tournament;
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private BlackBoardPanel bbp;
     private boolean refreshSpinner = true;
-
+    
     /**
      * Creates new form LeagueDesigner
      */
@@ -65,10 +64,14 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         bbp = new BlackBoardPanel(this, true);
         BlackBoardScrollPane.setViewportView(bbp);
         fillTournaments();
+        //Update groups if is already is a championship.
+        if (Tournament.LINKS_TYPES.contains(getSelectedTournament().getType())) {
+            TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+        }
         updateInfo();
         updateLevel();
     }
-    
+
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.getTranslatedText("titleLeagueDesigner"));
@@ -88,18 +91,24 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         TreeEditionLabel.setText(trans.getTranslatedText("TournamentLabel"));
         GroupEditionLabel.setText(trans.getTranslatedText("GroupLabel"));
     }
-    
-    private void setTournamentType() {
-        ((Tournament) tournamentComboBox.getSelectedItem()).setType(getDefinedType());
+
+    private Tournament getSelectedTournament() {
+        return (Tournament) (tournamentComboBox.getSelectedItem());
     }
-    
+
+    private void setTournamentType() {
+        //FightPool.getInstance().remove(getSelectedTournament());
+        getSelectedTournament().setType(getDefinedType());
+        TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+    }
+
     protected TournamentType getDefinedType() {
         if (manualCheckBox.isSelected()) {
             return TournamentType.MANUAL;
         }
         return TournamentType.CHAMPIONSHIP;
     }
-    
+
     private void fillTournaments() {
         refreshTournament = false;
         tournamentComboBox.removeAllItems();
@@ -114,15 +123,15 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         uptadeTournament();
         refreshTournament = true;
     }
-    
+
     private void uptadeTournament() {
-        tournament = (Tournament) (tournamentComboBox.getSelectedItem());
-        KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournament.getName());
-        manualCheckBox.setSelected(tournament.getType().equals(TournamentType.MANUAL));
+        KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().getName());
+        manualCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.MANUAL));
+        cleanLinksButton.setEnabled(manualCheckBox.isSelected());
         refreshSpinner = false;
-        winnerPassSpinner.setValue(tournament.getHowManyTeamsOfGroupPassToTheTree());
+        winnerPassSpinner.setValue(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
         refreshSpinner = true;
-        teams = TeamPool.getInstance().get(tournament);
+        teams = TeamPool.getInstance().get(getSelectedTournament());
     }
 
     /**
@@ -132,7 +141,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         try {
             teamModel.removeAllElements();
             for (int i = 0; i < teams.size(); i++) {
-                if (!TournamentManagerPool.getManager(tournament, getDefinedType()).exist(teams.get(i))) {
+                if (!TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).exist(teams.get(i))) {
                     teamModel.addElement(teams.get(i).getName());
                 }
             }
@@ -143,7 +152,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
-    
+
     private void updateTeams() {
         int index = teamList.getSelectedIndex();
         fillTeams();
@@ -156,37 +165,37 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void addDesignedPanelToLevelZero() {
         try {
-            if (TournamentManagerPool.getManager(tournament, getDefinedType()).getGroups(0).size() < getNumberOfGroupsOfLeague()) {
+            if (TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getGroups(0).size() < getNumberOfGroupsOfLeague()) {
                 int defaultArena = 0;
-                TournamentGroup group = new TournamentGroup(tournament, 0, defaultArena);
-                TournamentManagerPool.getManager(tournament, getDefinedType()).addGroup(group);
-                TournamentManagerPool.getManager(tournament, getDefinedType()).setDefaultFightAreas();
+                TournamentGroup group = new TournamentGroup(getSelectedTournament(), 0, defaultArena);
+                TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).addGroup(group);
+                TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).setDefaultFightAreas();
                 updateInfo();
             }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
-    
+
     private void addTeamToSelectedPanel(Team t) {
-        if (TournamentManagerPool.getManager(tournament, getDefinedType()).getGroups().size() > 0) {
+        if (TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getGroups().size() > 0) {
             bbp.getSelectedBox().getTournamentGroup().addTeam(t);
             updateInfo();
         }
     }
-    
+
     private void removeSelectedPanel() {
         try {
             TournamentGroupBox groupBox = bbp.getSelectedBox();
-            TournamentManagerPool.getManager(tournament, getDefinedType()).removeGroup(groupBox.getTournamentGroup());
+            TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroup(groupBox.getTournamentGroup());
             updateInfo();
         } catch (NullPointerException npe) {
         }
     }
-    
+
     private void removeTeamsOfSelectedPanel() {
         TournamentGroupBox groupBox = bbp.getSelectedBox();
         if (groupBox != null) {
@@ -194,57 +203,57 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             updateInfo();
         }
     }
-    
+
     private Team getTeamByName(String name) {
         try {
             for (int i = 0; i < teams.size(); i++) {
                 if (teams.get(i).getName().equals(name)) {
                     return teams.get(i);
                 }
-                
+
             }
         } catch (NullPointerException npe) {
         }
         return null;
     }
-    
+
     private Team getSelectedTeam() {
         String name = (String) teamList.getSelectedValue();
         return getTeamByName(name);
     }
-    
+
     private void addTeam() {
         Team t = getSelectedTeam();
         if (t != null) {
             addTeamToSelectedPanel(t);
         }
     }
-    
+
     public int getNumberOfGroupsOfLeague() {
         return teams.size() / 2;
     }
-    
+
     protected void updateInfo() {
         updateTeams();
         updateBlackBoard();
     }
-    
+
     private void updateBlackBoard() {
         try {
-            bbp.update(tournament);
+            bbp.update(getSelectedTournament());
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }
-    
+
     private void updateLevel() {
         levelComboBox.removeAllItems();
-        for (int i = 0; i < TournamentManagerPool.getManager(tournament, getDefinedType()).getNumberOfLevels(); i++) {
-            if (i < TournamentManagerPool.getManager(tournament, getDefinedType()).getNumberOfLevels() - 2) {
-                levelComboBox.addItem(trans.getTranslatedText("Round") + " " + (TournamentManagerPool.getManager(tournament, getDefinedType()).getNumberOfLevels() - i));
-            } else if (i == TournamentManagerPool.getManager(tournament, getDefinedType()).getNumberOfLevels() - 2) {
+        for (int i = 0; i < TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getNumberOfLevels(); i++) {
+            if (i < TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getNumberOfLevels() - 2) {
+                levelComboBox.addItem(trans.getTranslatedText("Round") + " " + (TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getNumberOfLevels() - i));
+            } else if (i == TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getNumberOfLevels() - 2) {
                 levelComboBox.addItem(trans.getTranslatedText("SemiFinalLabel"));
             } else {
                 levelComboBox.addItem(trans.getTranslatedText("FinalLabel"));
@@ -564,110 +573,114 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             updateInfo();
         }
     }//GEN-LAST:event_tournamentComboBoxActionPerformed
-    
+
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         removeSelectedPanel();
     }//GEN-LAST:event_deleteButtonActionPerformed
-    
+
     private void addGroupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGroupButtonActionPerformed
         setTournamentType();
         addDesignedPanelToLevelZero();
     }//GEN-LAST:event_addGroupButtonActionPerformed
-    
+
     private void addTeamButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTeamButtonActionPerformed
         addTeam();
     }//GEN-LAST:event_addTeamButtonActionPerformed
-    
+
     private void deleteTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTeamsButtonActionPerformed
         removeTeamsOfSelectedPanel();
     }//GEN-LAST:event_deleteTeamsButtonActionPerformed
-    
+
     private void winnerPassSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_winnerPassSpinnerStateChanged
         if (refreshSpinner) {
             try {
-                TournamentManagerPool.getManager(tournament, getDefinedType()).setHowManyTeamsOfGroupPassToTheTree((Integer) winnerPassSpinner.getValue());
+                TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).setHowManyTeamsOfGroupPassToTheTree((Integer) winnerPassSpinner.getValue());
+                getSelectedTournament().setHowManyTeamsOfGroupPassToTheTree((Integer) winnerPassSpinner.getValue());
             } catch (NullPointerException npe) {
             }
             updateBlackBoard();
         }
     }//GEN-LAST:event_winnerPassSpinnerStateChanged
-    
+
     private void teamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teamListMouseClicked
-        if (!tournament.getType().equals(TournamentType.SIMPLE)) {
+        if (!getSelectedTournament().getType().equals(TournamentType.SIMPLE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }
         }
     }//GEN-LAST:event_teamListMouseClicked
-    
+
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
 }//GEN-LAST:event_closeButtonActionPerformed
-    
+
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         try {
-            if (tournament.getType().equals(TournamentType.MANUAL)) {
-                CustomChampionship championship = (CustomChampionship) TournamentManagerPool.getManager(tournament, getDefinedType());
+            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                 if (!championship.allGroupsHaveNextLink()) {
                     MessageManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
                     return;
                 }
             }
             if (MessageManager.questionMessage("questionCreateFight", "Warning!")) {
-                FightPool.getInstance().remove(tournament);
-                if (FightPool.getInstance().add(tournament, TournamentManagerPool.getManager(tournament, getDefinedType()).createSortedFights(0))) {
+                FightPool.getInstance().remove(getSelectedTournament());
+                if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
                     MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                    //Update tournament type to database.
+                    TournamentPool.getInstance().update(getSelectedTournament());
                     this.dispose();
                 }
             }
         } catch (NullPointerException npe) {
         }
     }//GEN-LAST:event_acceptButtonActionPerformed
-    
+
     private void deleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteAllButtonActionPerformed
         try {
-            FightPool.getInstance().reset();
-            TournamentManagerPool.getManager(tournament, getDefinedType()).removeGroups(0);
+            FightPool.getInstance().remove(getSelectedTournament());
+            TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroups(0);
             updateBlackBoard();
             fillTeams();
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
     }//GEN-LAST:event_deleteAllButtonActionPerformed
-    
+
     private void cleanLinksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanLinksButtonActionPerformed
         try {
-            if (tournament.getType().equals(TournamentType.MANUAL)) {
-                CustomChampionship championship = (CustomChampionship) TournamentManagerPool.getManager(tournament, getDefinedType());
+            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                 championship.removeLinks();
             }
             updateBlackBoard();
         } catch (NullPointerException npe) {
         }
     }//GEN-LAST:event_cleanLinksButtonActionPerformed
-    
+
     private void deleteLevelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteLevelButtonActionPerformed
         //Select All levels
         if (levelComboBox.getSelectedIndex() == levelComboBox.getItemCount() - 1) {
-            FightPool.getInstance().remove(tournament);
-            TournamentManagerPool.getManager(tournament, getDefinedType()).removeTeams(0);
+            FightPool.getInstance().remove(getSelectedTournament());
+            TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeTeams(0);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            FightPool.getInstance().remove(tournament, levelComboBox.getSelectedIndex());
-            TournamentManagerPool.getManager(tournament, getDefinedType()).removeTeams(levelComboBox.getSelectedIndex() > 0 ? levelComboBox.getSelectedIndex() : 1);
+            FightPool.getInstance().remove(getSelectedTournament(), levelComboBox.getSelectedIndex());
+            TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeTeams(levelComboBox.getSelectedIndex() > 0 ? levelComboBox.getSelectedIndex() : 1);
             MessageManager.translatedMessage(this.getClass().getName(), "fightsDeleted", "MySQL", JOptionPane.INFORMATION_MESSAGE);
         }
         updateBlackBoard();
         fillTeams();
     }//GEN-LAST:event_deleteLevelButtonActionPerformed
-        
+
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-    
+
     private void manualCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualCheckBoxActionPerformed
         setTournamentType();
         updateInfo();
+        cleanLinksButton.setEnabled(manualCheckBox.isSelected());
     }//GEN-LAST:event_manualCheckBoxActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane BlackBoardScrollPane;

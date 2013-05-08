@@ -143,4 +143,13 @@ public class SimpleTournamentManager implements ITournamentManager {
     @Override
     public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
     }
+
+    @Override
+    public void fillGroups() {
+        List<Fight> fights = FightPool.getInstance().get(tournament);     
+        for(Fight fight : fights){
+            group.addTeam(fight.getTeam1());
+            group.addTeam(fight.getTeam2());
+        }
+    }
 }

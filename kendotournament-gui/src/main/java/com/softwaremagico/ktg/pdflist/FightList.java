@@ -27,7 +27,7 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
 /**
  *

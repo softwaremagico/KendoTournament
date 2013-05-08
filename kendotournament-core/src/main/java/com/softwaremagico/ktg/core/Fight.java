@@ -40,7 +40,6 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     private Integer groupIndex;
     private Integer level;
-    private Integer maxWinners = 1;
 
     public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int groupIndex) {
         this.team1 = team1;
@@ -183,14 +182,6 @@ public class Fight implements Serializable, Comparable<Fight> {
             System.out.println(team1.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(true).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(true) + " vs " + team2.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(false).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(false));
         }
         System.out.println("---------------");
-    }
-
-    public void setMaxWinners(int value) {
-        maxWinners = value;
-    }
-
-    public Integer getMaxWinners() {
-        return maxWinners;
     }
 
     private void completeIppons() {

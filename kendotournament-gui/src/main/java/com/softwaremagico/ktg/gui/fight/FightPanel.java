@@ -44,7 +44,7 @@ import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -422,7 +422,7 @@ public class FightPanel extends KFrame {
     
     private void openRankingWindow(){
         Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
-        TournamentGroup group = TournamentManagerPool.getManager(getSelectedTournament()).getGroup(currentFight);
+        TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
         Ranking ranking = new Ranking(group.getFights());
         openRankingWindow(ranking);
     }
@@ -461,7 +461,7 @@ public class FightPanel extends KFrame {
             Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
             currentFight.setOver(true);
 
-            TournamentGroup group = TournamentManagerPool.getManager(getSelectedTournament()).getGroup(currentFight);
+            TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
             //If it was the last fight of group.
             if (group.areFightsOver()) {
                 boolean moreDrawTeams = true;

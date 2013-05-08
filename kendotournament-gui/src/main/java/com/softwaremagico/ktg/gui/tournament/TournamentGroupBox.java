@@ -33,7 +33,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -58,7 +58,7 @@ public class TournamentGroupBox extends Group {
 
     public TournamentGroupBox(TournamentGroup tournamentGroup) {
         this.tournamentGroup = tournamentGroup;
-        this.tournamentManager = TournamentManagerPool.getManager(tournamentGroup.getTournament());
+        this.tournamentManager = TournamentManagerFactory.getManager(tournamentGroup.getTournament());
         setLayout(new GridBagLayout());
         setLanguage();
         updateText();

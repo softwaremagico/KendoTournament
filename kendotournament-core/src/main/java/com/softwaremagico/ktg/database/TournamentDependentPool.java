@@ -176,7 +176,6 @@ public abstract class TournamentDependentPool<ElementPool> {
         List<ElementPool> listToDelete = new ArrayList<>();
         for (ElementPool element : getMap(tournament).values()) {
             listToDelete.add(element);
-
         }
         //Two loops to avoid ConcurrentModificationException.
         for (ElementPool element : listToDelete) {

@@ -23,7 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
 public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
 
@@ -33,7 +33,7 @@ public class SelectTournamentExportFightsToCsv extends SelectTournamentForCsv {
 
     @Override
     public String defaultFileName() {
-        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerPool.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
+        return "Fights_" + returnSelectedTournament().getName() + "_Lvl" + TournamentManagerFactory.getManager(returnSelectedTournament()).getLastLevelUsed() + ".csv";
     }
 
     @Override

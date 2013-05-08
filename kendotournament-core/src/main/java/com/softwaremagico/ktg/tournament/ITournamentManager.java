@@ -39,7 +39,9 @@ public interface ITournamentManager {
     List<Fight> createRandomFights(Integer level);
     
     List<Fight> createSortedFights(Integer level);
-
+    
+    void fillGroups();
+    
     List<TournamentGroup> getGroups();
 
     List<TournamentGroup> getGroups(Integer level);

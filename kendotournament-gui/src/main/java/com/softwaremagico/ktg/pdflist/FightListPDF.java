@@ -37,7 +37,7 @@ import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.util.List;
 
 public class FightListPDF extends ParentList {
@@ -47,7 +47,7 @@ public class FightListPDF extends ParentList {
 
     public FightListPDF(Tournament tournament) {
         this.tournament = tournament;
-        this.tournamentManager = TournamentManagerPool.getManager(tournament);
+        this.tournamentManager = TournamentManagerFactory.getManager(tournament);
         trans = LanguagePool.getTranslator("gui.xml");
     }
 

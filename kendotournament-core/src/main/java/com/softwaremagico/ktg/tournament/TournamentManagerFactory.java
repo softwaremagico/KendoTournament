@@ -1,9 +1,10 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.FightPool;
 import java.util.HashMap;
 
-public class TournamentManagerPool {
+public class TournamentManagerFactory {
 
     private static HashMap<Tournament, HashMap<TournamentType, ITournamentManager>> managers = new HashMap<>();
 
@@ -46,6 +47,7 @@ public class TournamentManagerPool {
 
     private static void removeManager(Tournament tournament, TournamentType type) {
         managers.get(tournament).remove(type);
+        FightPool.getInstance().remove(tournament);
     }
 
     public static void removeManager(Tournament tournament) {

@@ -25,13 +25,17 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import java.awt.*;
-import java.io.*;
+import java.awt.Image;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tournament implements Serializable, Comparable<Tournament> {
 
+    public static final List<TournamentType> LINKS_TYPES = new ArrayList<>();
     private String name;
     private transient Photo banner;
     private transient Photo diploma;
@@ -43,6 +47,11 @@ public class Tournament implements Serializable, Comparable<Tournament> {
     private float scoreForWin = 1;
     private float scoreForDraw = 0;
     private String choosedScore = "European";
+
+    static {
+        LINKS_TYPES.add(TournamentType.CHAMPIONSHIP);
+        LINKS_TYPES.add(TournamentType.MANUAL);
+    }
 
     public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType mode) {
         this.name = name;
@@ -106,7 +115,10 @@ public class Tournament implements Serializable, Comparable<Tournament> {
 
     public void setType(TournamentType mode) {
         if (!this.mode.equals(mode)) {
-            TournamentManagerPool.removeManager(this);
+            //Groups are mantained between manual and championship modes. 
+            if (!LINKS_TYPES.contains(mode) || !LINKS_TYPES.contains(this.mode)) {
+                TournamentManagerFactory.removeManager(this);
+            }
             this.mode = mode;
         }
     }

@@ -40,7 +40,7 @@ import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class ScoreListPDF extends ParentList {
 
     public ScoreListPDF(Tournament tournament) {
         this.tournament = tournament;
-        this.tournamentManager = TournamentManagerPool.getManager(tournament);
+        this.tournamentManager = TournamentManagerFactory.getManager(tournament);
         trans = LanguagePool.getTranslator("gui.xml");
     }
 

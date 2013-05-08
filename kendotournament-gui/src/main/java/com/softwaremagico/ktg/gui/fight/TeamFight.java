@@ -28,7 +28,7 @@ import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.OrderTeam;
-import com.softwaremagico.ktg.tournament.TournamentManagerPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -150,7 +150,7 @@ public class TeamFight extends JPanel {
     private void showTeam() {
         //Are more than one member, and fight is not over, and there is not another fight in this level already done.
         if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
-            if (!TournamentManagerPool.getManager(tournament).getGroup(fight).areFightsStarted()) {
+            if (!TournamentManagerFactory.getManager(tournament).getGroup(fight).areFightsStarted()) {
                 OrderTeam orderTeam;
                 orderTeam = new OrderTeam(fight.getTournament(), fight.getLevel(), this);
                 orderTeam.updateOrderWindow(team);
