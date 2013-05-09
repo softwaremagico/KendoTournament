@@ -1074,5 +1074,14 @@
 		<ca>Existeix un combat repetit al campionat.</ca>
 		<it>Esiste un incontro ripetuto en il campionato.</it>
 	</repeatedFight>
+	<manualChampionshipHelp>
+		<en>Select a source teams group and the address teams group for creating the winners cross.</en>
+		<es>Selecciona un grupo de equipos origen y un grupo destino para generar los cruces entre los ganadores.</es>
+		<nl>Select a source teams group and the address teams group for creating the winners cross.</nl>
+		<de>Select a source teams group and the address teams group for creating the winners cross.</de>
+		<ca>Selecciona un grup de equips d'origen i un grup destí per a generar els encreuaments dels guanyadors.</ca>
+		<it>Seleziona un gruppo di squadre di origine e un gruppo di destino per generare la combinazione dei vincitori.</it>
+	</manualChampionshipHelp>
+	
 </translator>
 

@@ -680,6 +680,9 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void manualCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualCheckBoxActionPerformed
         setTournamentType();
+        if(manualCheckBox.isSelected()){
+            MessageManager.informationMessage(this.getClass().getName(), "manualChampionshipHelp", "Designer");
+        }
         updateInfo();
         cleanLinksButton.setEnabled(manualCheckBox.isSelected());
     }//GEN-LAST:event_manualCheckBoxActionPerformed
