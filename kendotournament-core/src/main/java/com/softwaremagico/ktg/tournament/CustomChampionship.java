@@ -10,14 +10,14 @@ public class CustomChampionship extends Championship {
     }
 
     public boolean allGroupsHaveNextLink() {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return ((LeagueLevelCustom)levelZero).allGroupsHaveManualLink();
     }
 
     public void addLink(TournamentGroup source, TournamentGroup address) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ((LeagueLevelCustom)levelZero).addLink(source, address);
     }
 
-    public void removeLinks() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void removeLinks(TournamentGroup group) {
+        ((LeagueLevelCustom)levelZero).removeLinksSelectedGroup(group);
     }
 }

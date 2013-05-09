@@ -389,7 +389,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             if (tournament.getType().equals(TournamentType.MANUAL)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(tournament);
                 championship.addLink(getSelectedBox().getTournamentGroup(), group.getTournamentGroup());
-                update(tournament);
+                this.revalidate();
+                this.repaint();
             }
         }
     }

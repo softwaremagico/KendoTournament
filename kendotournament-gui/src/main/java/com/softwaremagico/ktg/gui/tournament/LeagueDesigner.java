@@ -44,7 +44,6 @@ import javax.swing.JOptionPane;
 
 public final class LeagueDesigner extends javax.swing.JFrame {
 
-    
     private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
     private List<Team> teams;
@@ -52,7 +51,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private boolean refreshTournament = true;
     private BlackBoardPanel bbp;
     private boolean refreshSpinner = true;
-    
+
     /**
      * Creates new form LeagueDesigner
      */
@@ -651,7 +650,9 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         try {
             if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
-                championship.removeLinks();
+                if (bbp.getSelectedBox() != null) {
+                    championship.removeLinks(bbp.getSelectedBox().getTournamentGroup());
+                }
             }
             updateBlackBoard();
         } catch (NullPointerException npe) {

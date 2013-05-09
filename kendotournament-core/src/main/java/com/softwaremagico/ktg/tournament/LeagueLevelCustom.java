@@ -130,20 +130,20 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     protected void addLink(TournamentGroup source, TournamentGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
-            if (numberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
+            if (getNumberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
             }
-            if (numberOfSourcesOfLink(source) >= source.getTeams().size() - 1) {
+            if (getNumberOfSourcesOfLink(source) >= source.getTeams().size()) {
                 removefirstSourceLink(source);
             }
-            if (numberOfAddressesOfLink(address) >= 2) {
+            if (getNumberOfAddressesOfLink(address) >= 2) {
                 removefirstAddressLink(address);
             }
             links.add(source, address);
         }
     }
 
-    protected int numberOfSourcesOfLink(TournamentGroup from) {
+    protected int getNumberOfSourcesOfLink(TournamentGroup from) {
         int number = 0;
 
         for (int i = 0; i < links.size(); i++) {
@@ -155,7 +155,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     }
 
-    protected int numberOfAddressesOfLink(TournamentGroup to) {
+    protected int getNumberOfAddressesOfLink(TournamentGroup to) {
         int number = 0;
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).address.equals(to)) {
