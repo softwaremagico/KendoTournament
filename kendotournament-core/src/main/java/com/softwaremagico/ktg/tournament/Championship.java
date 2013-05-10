@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Championship implements ITournamentManager {
 
-    private Tournament tournament;
+    protected Tournament tournament;
     protected LeagueLevel levelZero;
 
     protected Championship(Tournament tournament) {

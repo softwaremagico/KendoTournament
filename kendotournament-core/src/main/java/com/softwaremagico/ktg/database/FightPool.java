@@ -32,7 +32,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected HashMap<String, Fight> getFromDatabase(Tournament tournament) {
+    protected HashMap<String, Fight> getElementsFromDatabase(Tournament tournament) {
         DatabaseConnection.getInstance().connect();
         List<Fight> fights = DatabaseConnection.getConnection().getDatabase().getFights(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -44,24 +44,27 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected void storeInDatabase(Tournament tournament, List<Fight> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Fight> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addFights(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addFights(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(Tournament tournament, List<Fight> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Fight> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().removeFights(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeFights(elementsToDelete);
         }
+        return true;
     }
 
     @Override
-    protected void updateDatabase(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);
         }
+        return true;
     }
 
     @Override

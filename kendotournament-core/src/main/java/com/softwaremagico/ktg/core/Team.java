@@ -26,10 +26,9 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class Team implements Serializable, Comparable<Team> {
+public class Team implements Comparable<Team> {
 
     private Tournament tournament;
     private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; //HashMap<Level,HashMap<MemberOrder, Order>>;

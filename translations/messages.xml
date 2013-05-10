@@ -798,7 +798,7 @@
 		<nl>Fout bij het opslaan van de score.</nl>
 		<de>Error when trying to store the score for the breakthrough.</de>
 		<ca>Error mentre s'intentava enmagatzemar el punt per desempatar.</ca>
-		<it>Si è generato un errore mentre si stava salvanso il punto per lo spareggio.</it>
+		<it>Si è generato un errore mentre si stava salvando il punto per lo spareggio.</it>
 	</storeUndrawError>
 	<waitingArena>
 		<en>Wait until all fights are finished. Remain shiaijo </en>
@@ -1082,6 +1082,21 @@
 		<ca>Selecciona un grup de equips d'origen i un grup destí per a generar els encreuaments dels guanyadors.</ca>
 		<it>Seleziona un gruppo di squadre di origine e un gruppo di destino per generare la combinazione dei vincitori.</it>
 	</manualChampionshipHelp>
-	
+	<storeDataError>
+		<en>Error when trying to store some data in the database.</en>
+		<es>Error mientras se intentaba almacenar algunos datos en la base de datos</es>
+		<nl>Error when trying to store tsome data in the database.</nl>
+		<de>Error when trying to store tsome data in the database.</de>
+		<ca>Error mentre s'intentava enmagatzemar dades a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava salvando datti nel database.</it>
+	</storeDataError>
+	<deleteDataError>
+		<en>Error when trying to remove some data in the database.</en>
+		<es>Error mientras se intentaba borrar algunos datos en la base de datos</es>
+		<nl>Error when trying to remove some data in the database.</nl>
+		<de>Error when trying to remove some data in the database.</de>
+		<ca>Error mentre s'intentava esborrar dades a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava cancellando datti nel database.</it>
+	</deleteDataError>
 </translator>
 

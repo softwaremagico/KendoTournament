@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -257,4 +258,22 @@ public abstract class Database {
     protected abstract boolean removeUndraws(List<Undraw> undraws);
 
     protected abstract boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange);
+
+    /**
+     * *******************************************************************
+     *
+     * CUSTOM LINKS
+     *
+     ********************************************************************
+     */
+    /**
+     * Store user defined links.
+     */
+    protected abstract List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament);
+
+    protected abstract boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks);
+
+    protected abstract boolean removeCustomWinnerLinks(List<Tournament> tournaments);
+
+    protected abstract boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks);
 }

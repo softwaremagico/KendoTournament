@@ -28,7 +28,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected HashMap<String, Undraw> getFromDatabase(Tournament tournament) {
+    protected HashMap<String, Undraw> getElementsFromDatabase(Tournament tournament) {
         DatabaseConnection.getInstance().connect();
         List<Undraw> undraws = DatabaseConnection.getConnection().getDatabase().getUndraws(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -40,24 +40,27 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected void storeInDatabase(Tournament tournament, List<Undraw> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Undraw> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
         }
+        return true;
     }
 
     @Override
-    protected void updateDatabase(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
         }
+        return true;
     }
 
     @Override

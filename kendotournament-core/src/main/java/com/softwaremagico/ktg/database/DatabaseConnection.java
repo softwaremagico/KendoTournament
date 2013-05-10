@@ -238,6 +238,9 @@ public class DatabaseConnection {
         if (!TournamentPool.getInstance().updateDatabase()) {
             return false;
         }
+        if (!CustomLinkPool.getInstance().updateDatabase()) {
+            return false;
+        }
         if (!RolePool.getInstance().updateDatabase()) {
             return false;
         }
@@ -267,7 +270,8 @@ public class DatabaseConnection {
                 || TeamPool.getInstance().needsToBeStoredInDatabase()
                 || FightPool.getInstance().needsToBeStoredInDatabase()
                 || DuelPool.getInstance().needsToBeStoredInDatabase()
-                || UndrawPool.getInstance().needsToBeStoredInDatabase();
+                || UndrawPool.getInstance().needsToBeStoredInDatabase()
+                || CustomLinkPool.getInstance().needsToBeStoredInDatabase();
     }
 
     public boolean connect() {

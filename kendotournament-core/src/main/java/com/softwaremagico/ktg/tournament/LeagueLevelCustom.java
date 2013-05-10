@@ -36,6 +36,10 @@ public class LeagueLevelCustom extends LeagueLevel {
         super(tournament, level, nextLevel, previousLevel);
         links = new Links();
     }
+ 
+    public void setLinks(List<CustomWinnerLink> links){
+        this.links.set(links);
+    }
 
     @Override
     protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, Integer winner) {
@@ -43,16 +47,15 @@ public class LeagueLevelCustom extends LeagueLevel {
 
         //Get all sources of Winner
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).address.equals(group)) {
+            if (links.get(i).getAddressGroup().equals(group)) {
                 sources.add(links.get(i));
             }
         }
 
         // Winners in the manual linking are stored by order.
         if (winner < sources.size()) {
-            return sources.get(winner).source;
+            return sources.get(winner).getSourceGroup();
         }
-
         return null;
     }
 
@@ -71,17 +74,20 @@ public class LeagueLevelCustom extends LeagueLevel {
 
         //Get all destination of Winner
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(group)) {
+            if (links.get(i).getSourceGroup().equals(group)) {
                 destinations.add(links.get(i));
             }
         }
 
         // Winners in the manual linking are stored by order.
         if (winner < destinations.size()) {
-            return nextLevel.getIndexOfGroup(destinations.get(winner).address);
+            return destinations.get(winner).getAddress();
         }
-
         return null;
+    }
+
+    public List<CustomWinnerLink> getLinks() {
+        return links.getLinks();
     }
 
     /**
@@ -89,54 +95,90 @@ public class LeagueLevelCustom extends LeagueLevel {
      */
     private class Links implements Serializable {
 
-        private List<Link> links = new ArrayList<>();
+        private List<CustomWinnerLink> links = new ArrayList<>();
 
         Links() {
         }
 
-        void add(TournamentGroup from, TournamentGroup to) {
+        protected void add(TournamentGroup from, TournamentGroup to) {
             if (to.getLevel() == from.getLevel() + 1) {
-                links.add(new Link(from, to));
+                links.add(new CustomWinnerLink(tournament, from, to));
+                setWinnerOrder(from);
             }
         }
 
-        void add(Link link) {
-            links.add(link);
+        /**
+         * Update the order of winners for each link.
+         */
+        private void setWinnerOrder() {
+            for (int i = 0; i < getGroups().size(); i++) {
+                setWinnerOrder(getGroups().get(i));
+            }
         }
 
-        int size() {
+        /**
+         * Update the order of winners of a source group.
+         *
+         * @param from
+         */
+        private void setWinnerOrder(TournamentGroup from) {
+            List<CustomWinnerLink> sourceLinksOfGroup = getSourceLinksOfGroup(from);
+            for (int i = 0; i < sourceLinksOfGroup.size(); i++) {
+                sourceLinksOfGroup.get(i).setWinner(i);
+            }
+        }
+
+        private List<CustomWinnerLink> getSourceLinksOfGroup(TournamentGroup from) {
+            Integer source = getIndexOfGroup(from);
+            return getSourceLinksOfGroup(source);
+        }
+
+        private List<CustomWinnerLink> getSourceLinksOfGroup(Integer source) {
+            List<CustomWinnerLink> sourceLinksOfGroup = new ArrayList<>();
+            for (CustomWinnerLink link : getLinks()) {
+                if (link.getSource().equals(source)) {
+                    sourceLinksOfGroup.add(link);
+                }
+            }
+            return sourceLinksOfGroup;
+        }
+
+        protected void add(CustomWinnerLink link) {
+            links.add(link);
+            setWinnerOrder();
+        }
+
+        protected void set(List<CustomWinnerLink> links) {
+            this.links = links;
+        }
+
+        protected int size() {
             return links.size();
         }
 
-        Link get(int index) {
+        protected CustomWinnerLink get(int index) {
             return links.get(index);
         }
 
-        void remove(int index) {
+        protected void remove(int index) {
             links.remove(index);
+            setWinnerOrder();
         }
 
-        class Link implements Serializable {
-
-            TournamentGroup source;
-            TournamentGroup address;
-
-            Link(TournamentGroup from, TournamentGroup to) {
-                source = from;
-                address = to;
-            }
+        protected List<CustomWinnerLink> getLinks() {
+            return links;
         }
     }
 
     protected void addLink(TournamentGroup source, TournamentGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
-            if (getNumberOfSourcesOfLink(source) >= source.getMaxNumberOfWinners()) {
+            int previousLinksNumber = getNumberOfSourcesOfLink(source);
+            if (previousLinksNumber >= source.getMaxNumberOfWinners()) {
+                removefirstSourceLink(source);
+            } else if (previousLinksNumber >= source.getTeams().size()) {
                 removefirstSourceLink(source);
             }
-            if (getNumberOfSourcesOfLink(source) >= source.getTeams().size()) {
-                removefirstSourceLink(source);
-            }
-            if (getNumberOfAddressesOfLink(address) >= 2) {
+            if (getNumberOfAddressesOfLink(address) > 1) {
                 removefirstAddressLink(address);
             }
             links.add(source, address);
@@ -147,7 +189,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         int number = 0;
 
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(from)) {
+            if (links.get(i).getSourceGroup().equals(from)) {
                 number++;
             }
         }
@@ -158,7 +200,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     protected int getNumberOfAddressesOfLink(TournamentGroup to) {
         int number = 0;
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).address.equals(to)) {
+            if (links.get(i).getAddressGroup().equals(to)) {
                 number++;
             }
         }
@@ -168,7 +210,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     protected void removefirstSourceLink(TournamentGroup from) {
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).source.equals(from)) {
+            if (links.get(i).getSourceGroup().equals(from)) {
                 links.remove(i);
                 break;
             }
@@ -177,7 +219,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     protected void removefirstAddressLink(TournamentGroup to) {
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).address.equals(to)) {
+            if (links.get(i).getAddressGroup().equals(to)) {
                 links.remove(i);
                 break;
             }
@@ -190,7 +232,7 @@ public class LeagueLevelCustom extends LeagueLevel {
                 boolean found = false;
 
                 for (int j = 0; j < links.size(); j++) {
-                    if (links.get(j).source.equals(tournamentGroups.get(i))) {
+                    if (links.get(j).getSourceGroup().equals(tournamentGroups.get(i))) {
                         found = true;
                         break;
                     }
@@ -208,7 +250,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     protected void removeLinksSelectedGroup(TournamentGroup lastSelected) {
         try {
             for (int i = 0; i < links.size(); i++) {
-                if (links.get(i).source.equals(lastSelected)) {
+                if (links.get(i).getSourceGroup().equals(lastSelected)) {
                     links.remove(i);
                     i--;
                 }

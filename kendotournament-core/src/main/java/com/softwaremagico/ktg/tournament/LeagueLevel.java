@@ -32,7 +32,7 @@ import java.util.List;
 public abstract class LeagueLevel {
 
     protected int level;
-    private Tournament tournament;
+    protected Tournament tournament;
     protected List<TournamentGroup> tournamentGroups;
     protected LeagueLevel nextLevel;
     protected LeagueLevel previousLevel;
@@ -58,7 +58,7 @@ public abstract class LeagueLevel {
         group.addTeam(fight.getTeam2());
     }
 
-    protected List<TournamentGroup> getGroups() {
+    public List<TournamentGroup> getGroups() {
         return tournamentGroups;
     }
 
@@ -156,7 +156,7 @@ public abstract class LeagueLevel {
         return usedTeams;
     }
 
-    protected Integer getIndexOfGroup(TournamentGroup group) {
+    public Integer getIndexOfGroup(TournamentGroup group) {
         for (int i = 0; i < tournamentGroups.size(); i++) {
             if (tournamentGroups.get(i).equals(group)) {
                 return i;

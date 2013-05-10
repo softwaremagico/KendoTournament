@@ -28,7 +28,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected HashMap<String, Tournament> getFromDatabase() {
+    protected HashMap<String, Tournament> getElementsFromDatabase() {
         DatabaseConnection.getInstance().connect();
         List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getTournaments();
         DatabaseConnection.getInstance().disconnect();
@@ -40,7 +40,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean storeInDatabase(List<Tournament> elementsToStore) {
+    protected boolean storeElementsInDatabase(List<Tournament> elementsToStore) {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
         }
@@ -48,7 +48,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean removeFromDatabase(List<Tournament> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
             for (Tournament tournament : elementsToDelete) {
                 //Delete fights.
@@ -64,7 +64,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean updateDatabase(HashMap<Tournament, Tournament> elementsToUpdate) {
+    protected boolean updateElements(HashMap<Tournament, Tournament> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
         }

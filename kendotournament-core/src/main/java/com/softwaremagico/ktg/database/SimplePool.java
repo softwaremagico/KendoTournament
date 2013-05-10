@@ -14,17 +14,17 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract String getId(ElementPool element);
 
-    protected abstract HashMap<String, ElementPool> getFromDatabase();
+    protected abstract HashMap<String, ElementPool> getElementsFromDatabase();
 
-    protected abstract boolean storeInDatabase(List<ElementPool> elementsToStore);
+    protected abstract boolean storeElementsInDatabase(List<ElementPool> elementsToStore);
 
-    protected abstract boolean removeFromDatabase(List<ElementPool> elementsToDelete);
+    protected abstract boolean removeElementsFromDatabase(List<ElementPool> elementsToDelete);
 
-    protected abstract boolean updateDatabase(HashMap<ElementPool, ElementPool> elementsToUpdate);
+    protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate);
 
     protected HashMap<String, ElementPool> getMap() {
         if (elements == null) {
-            elements = getFromDatabase();
+            elements = getElementsFromDatabase();
         }
         return elements;
     }
@@ -177,14 +177,14 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean updateDatabase() {
-        if (!removeFromDatabase(new ArrayList(getElementToRemove().values()))) {
+        if (!removeElementsFromDatabase(new ArrayList(getElementToRemove().values()))) {
             return false;
         }
         elementsToDelete = new HashMap<>();
-        storeInDatabase(new ArrayList(getElementToStore().values()));
+        storeElementsInDatabase(new ArrayList(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
-        updateDatabase(getElementToUpdate());
+        updateElements(getElementToUpdate());
         elementsToUpdate = new HashMap<>();
         return true;
     }

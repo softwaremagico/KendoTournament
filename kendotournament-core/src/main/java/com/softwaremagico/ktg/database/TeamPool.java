@@ -29,7 +29,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected HashMap<String, Team> getFromDatabase(Tournament tournament) {
+    protected HashMap<String, Team> getElementsFromDatabase(Tournament tournament) {
         DatabaseConnection.getInstance().connect();
         List<Team> teams = DatabaseConnection.getConnection().getDatabase().getTeams(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -41,24 +41,27 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected void updateDatabase(Tournament tournament, HashMap<Team, Team> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Team, Team> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
+            return DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
         }
+        return true;
     }
 
     @Override
-    protected void storeInDatabase(Tournament tournament, List<Team> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Team> elementsToStore) {
         if (elementsToStore.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
+            return DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
         }
+        return true;
     }
 
     @Override
-    protected void removeFromDatabase(Tournament tournament, List<Team> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Team> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
-            DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
+            return DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
         }
+        return true;
     }
 
     @Override

@@ -16,21 +16,21 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected TournamentDependentPool() {
     }
-
+    
     protected abstract String getId(ElementPool element);
 
-    protected abstract HashMap<String, ElementPool> getFromDatabase(Tournament tournament);
+    protected abstract HashMap<String, ElementPool> getElementsFromDatabase(Tournament tournament);
 
-    protected abstract void storeInDatabase(Tournament tournament, List<ElementPool> elementsToStore);
+    protected abstract boolean storeElementsInDatabase(Tournament tournament, List<ElementPool> elementsToStore);
 
-    protected abstract void removeFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete);
+    protected abstract boolean removeElementsFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete);
 
-    protected abstract void updateDatabase(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate);
+    protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate);
 
     protected HashMap<String, ElementPool> getMap(Tournament tournament) {
         HashMap<String, ElementPool> elementsOfTournament = elements.get(tournament);
         if (elementsOfTournament == null) {
-            elementsOfTournament = getFromDatabase(tournament);
+            elementsOfTournament = getElementsFromDatabase(tournament);
             elements.put(tournament, elementsOfTournament);
         }
         return elementsOfTournament;
@@ -238,16 +238,16 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     private void updateDatabase(Tournament tournament) {
         if (getElementToRemove(tournament).size() > 0) {
-            removeFromDatabase(tournament, new ArrayList(getElementToRemove(tournament).values()));
+            removeElementsFromDatabase(tournament, new ArrayList(getElementToRemove(tournament).values()));
         }
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
         if (getElementToStore(tournament) != null) {
-            storeInDatabase(tournament, new ArrayList(getElementToStore(tournament).values()));
+            storeElementsInDatabase(tournament, new ArrayList(getElementToStore(tournament).values()));
         }
         elementsToStore.put(tournament, new HashMap<String, ElementPool>());
         //Update must be done after store. 
         if (getElementToUpdate(tournament).size() > 0) {
-            updateDatabase(tournament, getElementToUpdate(tournament));
+            updateElements(tournament, getElementToUpdate(tournament));
         }
         elementsToUpdate.put(tournament, new HashMap<ElementPool, ElementPool>());
     }

@@ -27,7 +27,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected HashMap<String, Club> getFromDatabase() {
+    protected HashMap<String, Club> getElementsFromDatabase() {
         DatabaseConnection.getInstance().connect();
         List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
         DatabaseConnection.getInstance().disconnect();
@@ -39,7 +39,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean storeInDatabase(List<Club> elementsToStore) {
+    protected boolean storeElementsInDatabase(List<Club> elementsToStore) {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
         }
@@ -47,7 +47,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean removeFromDatabase(List<Club> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(List<Club> elementsToDelete) {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
         }
@@ -55,7 +55,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean updateDatabase(HashMap<Club, Club> elementsToUpdate) {
+    protected boolean updateElements(HashMap<Club, Club> elementsToUpdate) {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
         }

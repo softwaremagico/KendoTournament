@@ -27,12 +27,14 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.CustomLinkPool;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
+import com.softwaremagico.ktg.tournament.LeagueLevelCustom;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -81,7 +83,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         deleteTeamsButton.setText(trans.getTranslatedText("CleanButton"));
         deleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
         addTeamButton.setText(trans.getTranslatedText("AddTeamButton"));
-        acceptButton.setText(trans.getTranslatedText("GenerateMatchButton"));
+        acceptButton.setText(trans.getTranslatedText("AcceptButton"));
         closeButton.setText(trans.getTranslatedText("CloseButton"));
         manualCheckBox.setText(trans.getTranslatedText("ManualFightsMenuItem"));
         cleanLinksButton.setText(trans.getTranslatedText("CleanLinks"));
@@ -269,7 +271,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TreeChampionshipButtonGroup = new javax.swing.ButtonGroup();
         TournamentLabel = new javax.swing.JLabel();
         tournamentComboBox = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
@@ -628,6 +629,13 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                     MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
                     //Update tournament type to database.
                     TournamentPool.getInstance().update(getSelectedTournament());
+                    //Delete all previous links if exists.
+                    CustomLinkPool.getInstance().remove(getSelectedTournament());
+                    //Update manual links if necesary.
+                    if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                        //Add new links.
+                        CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
+                    }
                     this.dispose();
                 }
             }
@@ -680,8 +688,9 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void manualCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualCheckBoxActionPerformed
         setTournamentType();
-        if(manualCheckBox.isSelected()){
+        if (manualCheckBox.isSelected()) {
             MessageManager.informationMessage(this.getClass().getName(), "manualChampionshipHelp", "Designer");
+        } else {
         }
         updateInfo();
         cleanLinksButton.setEnabled(manualCheckBox.isSelected());
@@ -694,7 +703,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JLabel PassLabel;
     private javax.swing.JScrollPane TeamScrollPane;
     private javax.swing.JLabel TournamentLabel;
-    private javax.swing.ButtonGroup TreeChampionshipButtonGroup;
     private javax.swing.JLabel TreeEditionLabel;
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton addGroupButton;

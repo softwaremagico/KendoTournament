@@ -41,6 +41,8 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.tournament.CustomWinnerLink;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -1191,6 +1193,112 @@ public abstract class SQL extends Database {
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "updateUndraws");
+        return true;
+    }
+
+    /**
+     * *******************************************************************
+     *
+     * CUSTOM LINKS
+     *
+     ********************************************************************
+     */
+    /**
+     * Store user defined links.
+     */
+    @Override
+    protected List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) {
+        KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
+        if (!tournament.getType().equals(TournamentType.MANUAL) || TournamentManagerFactory.getManager(tournament).getNumberOfLevels() < 2) {
+            return null;
+        }
+        String query = "SELECT * FROM customlinks WHERE Tournament='" + tournament.getName() + "' ORDER BY Tournament, SourceGroup, WinnerOrder";
+        KendoLog.finer(SQL.class.getName(), query);
+        List<CustomWinnerLink> results = new ArrayList<>();
+        try (Statement s = connection.createStatement();
+                ResultSet rs = s.executeQuery(query)) {
+            while (rs.next()) {
+                CustomWinnerLink link = new CustomWinnerLink(tournament,
+                        Integer.parseInt(rs.getObject("SourceGroup").toString()),
+                        Integer.parseInt(rs.getObject("AddressGroup").toString()),
+                        Integer.parseInt(rs.getObject("WinnerOrder").toString()));
+                results.add(link);
+            }
+        } catch (SQLException ex) {
+            showSQLError(ex.getErrorCode());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+        } catch (NullPointerException npe) {
+            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+        }
+        KendoLog.exiting(this.getClass().getName(), "getCustomWinnerLinks");
+        return results;
+    }
+
+    @Override
+    protected boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) {
+        KendoLog.entering(this.getClass().getName(), "addCustomWinnerLinks");
+        String query = "";
+        for (CustomWinnerLink link : customWinnerLinks) {
+            try {
+                query += "INSERT INTO customlinks (Tournament, SourceGroup, AddressGroup, WinnerOrder) VALUES ('" + link.getTournament().getName() + "', " + link.getSource() + ", " + link.getAddress() + ", " + link.getWinner() + "); ";
+            } catch (NullPointerException npe) {
+                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            }
+        }
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.executeUpdate();
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "storeDataError", "SQL", "Link");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "addCustomWinnerLinks");
+        return true;
+    }
+
+    @Override
+    protected boolean removeCustomWinnerLinks(List<Tournament> tournaments) {
+        KendoLog.entering(this.getClass().getName(), "removeUndraws");
+        String query = "";
+        for (Tournament tournament : tournaments) {
+            query += "DELETE FROM customlinks WHERE Tournament='" + tournament.getName() + "'; ";
+        }
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate(query);
+        } catch (SQLException ex) {
+            if (!showSQLError(ex.getErrorCode())) {
+                MessageManager.errorMessage(this.getClass().getName(), "deleteDataError", "SQL");
+            }
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            return false;
+        } catch (NullPointerException npe) {
+            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
+            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            return false;
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeUndraws");
+        return true;
+    }
+
+    @Override
+    protected boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) {
+        KendoLog.entering(this.getClass().getName(), "updateUndraws");
+        List<CustomWinnerLink> oldLinks = new ArrayList<>(customWinnerLinks.values());
+        List<CustomWinnerLink> newLinks = new ArrayList<>(customWinnerLinks.keySet());
+        List<Tournament> oldLinksTournaments = new ArrayList<>();
+        //Remove old links
+        for (CustomWinnerLink oldLink : oldLinks) {
+            if (!oldLinksTournaments.contains(oldLink.getTournament())) {
+                oldLinksTournaments.add(oldLink.getTournament());
+            }
+        }
+        removeCustomWinnerLinks(oldLinksTournaments);
+        //Add new ones.
+        addCustomWinnerLinks(newLinks);
         return true;
     }
 
