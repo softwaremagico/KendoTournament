@@ -109,6 +109,5 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
             }
         }
         return null;
-
     }
 }

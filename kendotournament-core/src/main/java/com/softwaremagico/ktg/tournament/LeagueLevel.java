@@ -194,6 +194,24 @@ public abstract class LeagueLevel {
         return arenas.size();
     }
 
+    public void update() {
+        fillTeamsWithWinnersPreviousLevel();
+    }
+
+    /**
+     * Update level with winners of previous level.
+     */
+    private void fillTeamsWithWinnersPreviousLevel() {
+        if (previousLevel != null) {
+            for (int winner = 0; winner < previousLevel.getGroups().get(0).getMaxNumberOfWinners(); winner++) {
+                for (TournamentGroup previousLevelGroup : previousLevel.tournamentGroups) {
+                    TournamentGroup group = previousLevel.getGroupDestinationOfWinner(previousLevelGroup, winner);
+                    group.addTeam(previousLevelGroup.getWinners().get(winner));
+                }
+            }
+        }
+    }
+
     /**
      *********************************************
      *

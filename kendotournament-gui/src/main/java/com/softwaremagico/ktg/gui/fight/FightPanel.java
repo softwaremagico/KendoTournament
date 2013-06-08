@@ -392,6 +392,10 @@ public class FightPanel extends KFrame {
         //Add golden point.
         if (n >= 0) {
             Undraw undraw = UndrawPool.getInstance().get(getSelectedTournament(), level, group, drawTeams.get(n));
+            if (undraw == null) {
+                undraw = new Undraw(getSelectedTournament(), group, drawTeams.get(n), 0, level);
+                UndrawPool.getInstance().add(getSelectedTournament(), undraw);
+            }
             undraw.setPoints(undraw.getPoints() + 1);
             UndrawPool.getInstance().update(getSelectedTournament(), undraw);
         }
@@ -419,15 +423,15 @@ public class FightPanel extends KFrame {
              currentGroup.showWinnersOfGroup();*/
         }
     }
-    
-    private void openRankingWindow(){
+
+    private void openRankingWindow() {
         Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
         TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
         Ranking ranking = new Ranking(group.getFights());
         openRankingWindow(ranking);
     }
-    
-    private void openRankingWindow(Ranking ranking){
+
+    private void openRankingWindow(Ranking ranking) {
         RankingWindow mp = new RankingWindow(ranking);
         mp.setVisible(true);
     }
@@ -457,6 +461,7 @@ public class FightPanel extends KFrame {
 
         @Override
         public void acceptAction() {
+            System.out.println("------ BEGIN ACCEPT -----------");
             //Finish current fight.
             Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
             currentFight.setOver(true);
@@ -483,7 +488,8 @@ public class FightPanel extends KFrame {
 
                 //If it was the last fight of all groups.
                 if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
-                    //Create new fights.
+                    //Create fights of next level.
+                    TournamentManagerFactory.getManager(getSelectedTournament()).createSortedFights(currentFight.getLevel() + 1);
                 } else {
                     //If it was the last fight of arena groups.
                     if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
@@ -501,6 +507,7 @@ public class FightPanel extends KFrame {
 
             //Update score panel.
             updateScorePanel();
+            System.out.println("------ END ACCEPT -----------");
         }
     }
 

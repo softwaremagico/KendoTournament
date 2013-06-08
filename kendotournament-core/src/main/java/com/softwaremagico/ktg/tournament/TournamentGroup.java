@@ -129,7 +129,7 @@ public class TournamentGroup implements Serializable {
 
     public List<Team> getWinners() {
         try {
-            return Ranking.getTeamsRanking(FightPool.getInstance().get(tournament)).subList(0, numberMaxOfWinners);
+            return Ranking.getTeamsRanking(getFights()).subList(0, numberMaxOfWinners);
         } catch (Exception iob) {
         }
 
@@ -372,5 +372,10 @@ public class TournamentGroup implements Serializable {
             }
             return false;
         }
+    }
+    
+    @Override
+    public String toString(){
+        return "Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams; 
     }
 }

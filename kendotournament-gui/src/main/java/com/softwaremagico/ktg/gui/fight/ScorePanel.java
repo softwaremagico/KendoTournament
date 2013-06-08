@@ -98,7 +98,6 @@ public class ScorePanel extends KPanel {
     }
 
     private void updateNewPanelWidht() {
-        System.out.println(this.getWidth());
         for (RoundFight rf : roundFights) {
             rf.updateCompetitorsName(this.getWidth());
         }
@@ -106,7 +105,7 @@ public class ScorePanel extends KPanel {
 
     private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
         RoundFight rf;
-        Fight f = FightPool.getInstance().get(tournament, fightArea, fightRelativeToCurrent);
+        Fight f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
         if (f != null) {
             rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
         } else {

@@ -16,16 +16,16 @@ public class Championship implements ITournamentManager {
         this.tournament = tournament;
         levelZero = new LeagueLevelChampionship(tournament, 0, null, null);
     }
-    
+
     @Override
-    public void fillGroups(){
-        List<Fight> fights = FightPool.getInstance().get(tournament);     
-        for(Fight fight : fights){
+    public void fillGroups() {
+        List<Fight> fights = FightPool.getInstance().get(tournament);
+        for (Fight fight : fights) {
             LeagueLevel leagueLevel = getLevel(fight.getLevel());
             leagueLevel.fillGroups(fight);
         }
     }
-    
+
     @Override
     public List<Fight> getFights(Integer level) {
         return FightPool.getInstance().getFromLevel(tournament, level);
@@ -43,6 +43,7 @@ public class Championship implements ITournamentManager {
 
     private List<Fight> createFightsOfGroups(Integer level, boolean random) {
         List<Fight> fights = new ArrayList<>();
+        getLevel(level).update();
         List<TournamentGroup> groupsOfLevel = getGroups(level);
         for (int i = 0; i < groupsOfLevel.size(); i++) {
             fights.addAll(groupsOfLevel.get(i).createFights(random, i));
@@ -66,6 +67,9 @@ public class Championship implements ITournamentManager {
 
     @Override
     public TournamentGroup getGroup(Fight fight) {
+        if (getGroups().isEmpty()) {
+            fillGroups();
+        }
         for (TournamentGroup group : getGroups()) {
             if (group.isFightOfGroup(fight)) {
                 return group;
