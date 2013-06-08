@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.database.CustomLinkPool;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,8 @@ public class LeagueLevelCustom extends LeagueLevel {
         super(tournament, level, nextLevel, previousLevel);
         links = new Links();
     }
- 
-    public void setLinks(List<CustomWinnerLink> links){
+
+    public void setLinks(List<CustomWinnerLink> links) {
         this.links.set(links);
     }
 
@@ -249,6 +250,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     protected void removeLinksSelectedGroup(TournamentGroup lastSelected) {
         try {
+            CustomLinkPool.getInstance().remove(tournament, getIndexOfGroup(lastSelected));
             for (int i = 0; i < links.size(); i++) {
                 if (links.get(i).getSourceGroup().equals(lastSelected)) {
                     links.remove(i);
@@ -256,6 +258,12 @@ public class LeagueLevelCustom extends LeagueLevel {
                 }
             }
         } catch (NullPointerException npe) {
+        }
+    }
+
+    protected void removeLinks() {
+        for (int i = tournamentGroups.size() - 1; i >= 0; i--) {
+            removeLinksSelectedGroup(tournamentGroups.get(i));
         }
     }
 }

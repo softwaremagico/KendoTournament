@@ -62,9 +62,11 @@ public class TournamentManagerFactory {
                 break;
             case CHAMPIONSHIP:
                 manager = new Championship(tournament);
+                manager.fillGroups();
                 break;
             case MANUAL:
                 manager = new CustomChampionship(tournament);
+                manager.fillGroups();
                 break;
             case SIMPLE:
             default:

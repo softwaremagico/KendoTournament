@@ -42,7 +42,6 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
-import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -1209,7 +1208,7 @@ public abstract class SQL extends Database {
     @Override
     protected List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) {
         KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
-        if (!tournament.getType().equals(TournamentType.MANUAL) || TournamentManagerFactory.getManager(tournament).getNumberOfLevels() < 2) {
+        if (!tournament.getType().equals(TournamentType.MANUAL)) {
             return null;
         }
         String query = "SELECT * FROM customlinks WHERE Tournament='" + tournament.getName() + "' ORDER BY Tournament, SourceGroup, WinnerOrder";

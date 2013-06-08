@@ -66,9 +66,9 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         BlackBoardScrollPane.setViewportView(bbp);
         fillTournaments();
         //Update groups if it already is a championship.
-        if (getSelectedTournament().isChampionship()) {
-            TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
-        }
+        /*if (getSelectedTournament().isChampionship()) {
+         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+         }*/
         updateInfo();
         updateLevel();
     }
@@ -100,7 +100,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private void setTournamentType() {
         //FightPool.getInstance().remove(getSelectedTournament());
         getSelectedTournament().setType(getDefinedType());
-        TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+        //TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
     }
 
     protected TournamentType getDefinedType() {
@@ -190,9 +190,19 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void removeSelectedPanel() {
         try {
-            TournamentGroupBox groupBox = bbp.getSelectedBox();
-            TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroup(groupBox.getTournamentGroup());
-            updateInfo();
+            //Only panel cannot be deleted.
+            System.out.println(TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().size());
+            if (TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().size() > 1) {
+                TournamentGroupBox groupBox = bbp.getSelectedBox();
+                if (groupBox != null) {
+                    if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                        CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
+                        championship.removeLinks();
+                    }
+                    TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroup(groupBox.getTournamentGroup());
+                    updateInfo();
+                }
+            }
         } catch (NullPointerException npe) {
         }
     }
@@ -649,6 +659,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroups(0);
             updateBlackBoard();
             fillTeams();
+            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
+                championship.removeLinks();
+            }
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }

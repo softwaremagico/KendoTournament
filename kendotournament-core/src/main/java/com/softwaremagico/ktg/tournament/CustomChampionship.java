@@ -2,7 +2,6 @@ package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.CustomLinkPool;
-import java.util.List;
 
 public class CustomChampionship extends Championship {
 
@@ -10,7 +9,7 @@ public class CustomChampionship extends Championship {
     public void fillGroups() {
         super.fillGroups();
         ((LeagueLevelCustom) levelZero).setLinks(CustomLinkPool.getInstance().get(tournament));
-        List<CustomWinnerLink> links = CustomLinkPool.getInstance().get(tournament);
+        //List<CustomWinnerLink> links = CustomLinkPool.getInstance().get(tournament);
     }
 
     public CustomChampionship(Tournament tournament) {
@@ -27,6 +26,12 @@ public class CustomChampionship extends Championship {
     }
 
     public void removeLinks(TournamentGroup group) {
+        //Remove links from manager.
         ((LeagueLevelCustom) levelZero).removeLinksSelectedGroup(group);
+    }
+
+    public void removeLinks() {
+        //Remove all links from manager.
+        ((LeagueLevelCustom) levelZero).removeLinks();
     }
 }

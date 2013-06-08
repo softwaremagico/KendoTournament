@@ -71,4 +71,15 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
         Collections.sort(unsorted);
         return unsorted;
     }
+    
+    public void remove(Tournament tournament, Integer source){
+        List<CustomWinnerLink> links = get(tournament);
+        List<CustomWinnerLink> linksToRemove = new ArrayList<>();
+        for(CustomWinnerLink link : links){
+            if(link.getSource() == source){
+                linksToRemove.add(link);
+            }
+        }
+        remove(tournament, linksToRemove);
+    }
 }

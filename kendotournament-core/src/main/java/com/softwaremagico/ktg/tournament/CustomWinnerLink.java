@@ -12,7 +12,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
 
     public CustomWinnerLink(Tournament tournament, TournamentGroup from, TournamentGroup to) {
         this.tournament = tournament;
-        if (isValidTournament(tournament)) {
+        if (isValidTournament(tournament) && from != null && to != null) {
             source = ((CustomChampionship) (TournamentManagerFactory.getManager(tournament))).getLevel(0).getIndexOfGroup(from);
             address = ((CustomChampionship) (TournamentManagerFactory.getManager(tournament))).getLevel(1).getIndexOfGroup(to);
         }
@@ -20,7 +20,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
 
     public CustomWinnerLink(Tournament tournament, Integer from, Integer to, Integer winner) {
         this.tournament = tournament;
-        if (isValidTournament(tournament)) {
+        if (isValidTournament(tournament) && from != null && to != null) {
             source = from;
             address = to;
         }
@@ -47,7 +47,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
     }
 
     public TournamentGroup getSourceGroup() {
-        if (isValidTournament(tournament)) {
+        if (isValidTournament(tournament) && TournamentManagerFactory.getManager(tournament).getNumberOfLevels() > 1) {
             return TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(source);
         }
         return null;
@@ -80,7 +80,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
     }
 
     private boolean isValidTournament(Tournament tournament) {
-        return (tournament.getType().equals(TournamentType.MANUAL) && TournamentManagerFactory.getManager(tournament).getNumberOfLevels() > 1);
+        return (tournament.getType().equals(TournamentType.MANUAL));
     }
 
     public String getId() {
@@ -128,5 +128,10 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
         }
 
         return winner.compareTo(o.winner);
+    }
+    
+    @Override
+    public String toString(){
+        return "source: " + source  + ", address: " + address;
     }
 }

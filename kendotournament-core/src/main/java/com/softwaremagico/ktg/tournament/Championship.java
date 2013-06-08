@@ -67,9 +67,6 @@ public class Championship implements ITournamentManager {
 
     @Override
     public TournamentGroup getGroup(Fight fight) {
-        if (getGroups().isEmpty()) {
-            fillGroups();
-        }
         for (TournamentGroup group : getGroups()) {
             if (group.isFightOfGroup(fight)) {
                 return group;
