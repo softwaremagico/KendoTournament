@@ -28,12 +28,15 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Box;
 
 public class ScorePanel extends KPanel {
 
     private Tournament tournament = null;
     private Integer fightArea = null;
+    private List<RoundFight> roundFights;
 
     public ScorePanel() {
         setMinimumSize(new java.awt.Dimension(400, 400));
@@ -48,6 +51,7 @@ public class ScorePanel extends KPanel {
 
     private void fillFightsPanel(boolean invertedTeam, boolean invertedColor) {
         removeAll();
+        roundFights = new ArrayList<>();
         if (tournament != null && FightPool.getInstance().get(tournament).size() > 0) {
             int showedFights = 0;
             Dimension minSize = new Dimension(0, 5);
@@ -90,9 +94,17 @@ public class ScorePanel extends KPanel {
         }
         repaint();
         revalidate();
+        updateNewPanelWidht();
     }
-    
-    private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected){
+
+    private void updateNewPanelWidht() {
+        System.out.println(this.getWidth());
+        for (RoundFight rf : roundFights) {
+            rf.updateCompetitorsName(this.getWidth());
+        }
+    }
+
+    private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
         RoundFight rf;
         Fight f = FightPool.getInstance().get(tournament, fightArea, fightRelativeToCurrent);
         if (f != null) {
@@ -110,7 +122,7 @@ public class ScorePanel extends KPanel {
         Dimension maxSize = new Dimension(5, 5);
 
         RoundFight rf = createFightPanel(fightRelativeToCurrent, fightArea, invertedTeam, invertedColor, selected);
-        
+        roundFights.add(rf);
         add(rf);
         add(new Box.Filler(minSize, prefSize, maxSize));
     }

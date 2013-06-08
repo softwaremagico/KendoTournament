@@ -72,7 +72,7 @@ public class FightPanel extends KFrame {
     private KCheckBoxMenuItem changeTeam, changeColor;
 
     public FightPanel() {
-        defineWindow(750, 600);
+        defineWindow(750, 500);
         setResizable(true);
         setElements();
         addResizedEvent();

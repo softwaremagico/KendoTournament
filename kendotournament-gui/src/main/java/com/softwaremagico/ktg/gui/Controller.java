@@ -87,7 +87,7 @@ public class Controller {
     private SelectCompetitorForPerformedHits selectPerformedHitsOfCompetitor = null;
     private SelectCompetitorForReceivedHits selectReceivedHitsOfCompetitor = null;
     private SelectCompetitorForWonFights selectWonFightsOfCompetitor = null;
-    private ChooseScoreGUI chooseScore = null;
+    private ChooseScore chooseScore = null;
     private ShortNewFight shortFight = null;
     private LeagueDesigner designer = null;
     private NewSimpleTournament newFight;
@@ -608,7 +608,7 @@ public class Controller {
             } catch (NullPointerException npe) {
             }
             //Tournament championship = DatabaseConnection.getInstance().getDatabase().getTournamentByName(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), false);
-            chooseScore = new ChooseScoreGUI();
+            chooseScore = new ChooseScore();
             chooseScore.setVisible(true);
         }
     }
@@ -1026,7 +1026,7 @@ public class Controller {
                     chooseScore.dispose();
                 } catch (NullPointerException npe) {
                 }
-                chooseScore = new ChooseScoreGUI();
+                chooseScore = new ChooseScore();
                 chooseScore.setVisible(true);
             }
         }

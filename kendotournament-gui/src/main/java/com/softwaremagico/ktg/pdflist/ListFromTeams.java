@@ -27,7 +27,7 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.database.TeamPool;
-import com.softwaremagico.ktg.gui.KendoFrame;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;

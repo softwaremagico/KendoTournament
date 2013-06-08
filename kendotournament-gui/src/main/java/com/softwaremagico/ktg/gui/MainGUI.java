@@ -23,6 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;

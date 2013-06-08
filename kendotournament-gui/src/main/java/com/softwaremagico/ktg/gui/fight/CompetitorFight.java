@@ -36,17 +36,20 @@ import com.softwaremagico.ktg.language.Translator;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/**
- *
- * @author Jorge
- */
 public class CompetitorFight extends JPanel {
 
+    private static final int SCORE_DIMENSION = 50;
+    private static final int FAULTS_DIMENSION = 15;
+    private static final int MARGIN = 5;
     private PanelBackground round1;
     private PanelBackground round2;
     private PanelBackground faults;
@@ -55,23 +58,26 @@ public class CompetitorFight extends JPanel {
     private Fight fight;
     private Translator trans = null;
     private TeamFight teamFight;
+    private GridBagConstraints gridBagConstraints;
 
-    CompetitorFight(TeamFight tf, RegisteredPerson c, Fight f, boolean left, boolean selected, boolean menu) {
+    protected CompetitorFight(TeamFight tf, RegisteredPerson c, Fight f, boolean left, boolean selected, boolean menu) {
         competitor = c;
         fight = f;
         teamFight = tf;
         setLanguage();
         decoration();
+        //Set name length compared with size.
+        int characters = 11;
         try {
             if (left) {
                 try {
-                    fillLeftToRight(c.getSurnameNameIni());
+                    fillLeftToRight(c.getSurnameNameIni(characters));
                 } catch (NullPointerException npe) {
                     fillLeftToRight(" ");
                 }
             } else {
                 try {
-                    fillRightToLeft(c.getSurnameNameIni());
+                    fillRightToLeft(c.getSurnameNameIni(characters));
                 } catch (NullPointerException npe) {
                     fillRightToLeft(" ");
                 }
@@ -84,7 +90,7 @@ public class CompetitorFight extends JPanel {
         }
     }
 
-    CompetitorFight(boolean left) {
+    protected CompetitorFight(boolean left) {
         competitor = null;
         fight = null;
         setLanguage();
@@ -96,6 +102,14 @@ public class CompetitorFight extends JPanel {
         }
     }
 
+    protected void updateCompetitorNameLength(int width) {
+        int characters = ((width - (SCORE_DIMENSION + MARGIN * 2) * 2) - (FAULTS_DIMENSION + MARGIN * 2)) / 28;
+        System.out.println(characters);
+        if (characters > 3 && competitor != null) {
+            nameLabel.setText(competitor.getSurnameNameIni(characters));
+        }
+    }
+
     /**
      * Translate the GUI to the selected language.
      */
@@ -103,84 +117,89 @@ public class CompetitorFight extends JPanel {
         trans = LanguagePool.getTranslator("gui.xml");
     }
 
-    private void fillRightToLeft(String name) {
-        add(Box.createRigidArea(new Dimension(6, 0)));
-
+    private void fill(String name, int point1X, int point2X, int faultX, int nameX, boolean left) {
         round1 = new PanelBackground();
+        round1.setMinimumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
+        round1.setPreferredSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
+        round1.setMaximumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
+        round1.setBorder(BorderFactory.createLineBorder(Color.green));
         round1.setBackground(new Color(255, 255, 255));
-        round1.setMinimumSize(new Dimension(40, 40));
-        round1.setPreferredSize(new Dimension(50, 50));
-        round1.setMaximumSize(new Dimension(60, 60));
-        add(round1, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(6, 0)));
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.gridx = point1X;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+        add(round1, gridBagConstraints);
 
         round2 = new PanelBackground();
+        round2.setMinimumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
+        round2.setPreferredSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
+        round2.setMaximumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
         round2.setBackground(new Color(255, 255, 255));
-        round2.setMinimumSize(new Dimension(40, 40));
-        round2.setPreferredSize(new Dimension(50, 50));
-        round2.setMaximumSize(new Dimension(60, 60));
-        add(round2, BorderLayout.CENTER);
-        add(Box.createRigidArea(new Dimension(10, 0)));
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.gridx = point2X;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+        add(round2, gridBagConstraints);
 
         faults = new PanelBackground();
+        faults.setMinimumSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
+        faults.setPreferredSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
+        faults.setMaximumSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
         faults.setBackground(new Color(255, 255, 255));
-        faults.setMinimumSize(new Dimension(10, 40));
-        faults.setPreferredSize(new Dimension(15, 50));
-        faults.setMaximumSize(new Dimension(20, 60));
-        add(faults, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(6, 0)));
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.gridx = faultX;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+        add(faults, gridBagConstraints);
 
-        add(Box.createHorizontalGlue());
-
+        JPanel namePanel;
+        if (left) {
+            namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        } else {
+            namePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        }
         nameLabel = new JLabel(name);
         nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-        add(Box.createRigidArea(new Dimension(6, 0)));
-        add(nameLabel, BorderLayout.EAST);
+        namePanel.add(nameLabel, BorderLayout.EAST);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        if (left) {
+            gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+        } else {
+            gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+        }
+        gridBagConstraints.gridx = nameX;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
+        add(namePanel, gridBagConstraints);
+    }
 
-        add(Box.createRigidArea(new Dimension(6, 0)));
+    private void fillRightToLeft(String name) {
+        fill(name, 0, 1, 2, 3, false);
     }
 
     private void fillLeftToRight(String name) {
-        nameLabel = new JLabel(name);
-        Font f = nameLabel.getFont();
-        //nameLabel.setFont(f.deriveFont(f.getStyle() ^ Font.BOLD));
-        nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-        add(nameLabel, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(6, 0)));
-
-        add(Box.createHorizontalGlue());
-
-        faults = new PanelBackground();
-        faults.setBackground(new Color(255, 255, 255));
-        faults.setMinimumSize(new Dimension(10, 40));
-        faults.setPreferredSize(new Dimension(15, 50));
-        faults.setMaximumSize(new Dimension(20, 60));
-        add(faults, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(10, 0)));
-
-        round2 = new PanelBackground();
-        round2.setBackground(new Color(255, 255, 255));
-        round2.setMinimumSize(new Dimension(40, 40));
-        round2.setPreferredSize(new Dimension(50, 50));
-        round2.setMaximumSize(new Dimension(50, 60));
-        add(round2, BorderLayout.CENTER);
-        add(Box.createRigidArea(new Dimension(6, 0)));
-
-        round1 = new PanelBackground();
-        round1.setBackground(new Color(255, 255, 255));
-        round1.setMinimumSize(new Dimension(40, 40));
-        round1.setPreferredSize(new Dimension(50, 50));
-        round1.setMaximumSize(new Dimension(50, 60));
-        add(round1, BorderLayout.EAST);
-        add(Box.createRigidArea(new Dimension(6, 0)));
-
+        fill(name, 3, 2, 1, 0, true);
     }
 
     private void decoration() {
-        setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
-        setMinimumSize(new Dimension(50, 50));
-        setPreferredSize(new Dimension(500, 60));
-        setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
+        setLayout(new GridBagLayout());
+        gridBagConstraints = new GridBagConstraints();
     }
 
     private void updateScorePanel(PanelBackground panel, Score hit) {
@@ -199,7 +218,7 @@ public class CompetitorFight extends JPanel {
         panel.repaint();
     }
 
-    void updateScorePanels() {
+    protected void updateScorePanels() {
         Integer player;
         try {
             if (fight != null) {
@@ -298,7 +317,7 @@ public class CompetitorFight extends JPanel {
         } catch (NullPointerException npe) {
             KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
         }
-        teamFight.roundFight.updateScorePanels();
+        teamFight.getRoundFight().updateScorePanels();
     }
 
     private void increaseFault() {
@@ -319,7 +338,7 @@ public class CompetitorFight extends JPanel {
             }
         } catch (NullPointerException npe) {
         }
-        teamFight.roundFight.updateScorePanels();
+        teamFight.getRoundFight().updateScorePanels();
     }
 
     private void resetFault() {

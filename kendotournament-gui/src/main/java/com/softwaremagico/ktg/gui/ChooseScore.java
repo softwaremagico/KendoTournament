@@ -34,7 +34,7 @@ import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.util.List;
 
-public class ChooseScoreGUI extends javax.swing.JFrame {
+public class ChooseScore extends javax.swing.JFrame {
 
     Translator trans = null;
     private boolean refreshing = false;
@@ -42,7 +42,7 @@ public class ChooseScoreGUI extends javax.swing.JFrame {
     /**
      * Creates new form ChooseScoreGUI
      */
-    public ChooseScoreGUI() {
+    public ChooseScore() {
         refreshing = true;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),

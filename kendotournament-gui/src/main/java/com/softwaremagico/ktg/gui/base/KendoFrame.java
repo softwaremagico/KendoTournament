@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui;
+package com.softwaremagico.ktg.gui.base;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -30,10 +30,6 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-/**
- *
- * @author jorge
- */
 public abstract class KendoFrame extends javax.swing.JFrame {
 
     JFileChooser fc;

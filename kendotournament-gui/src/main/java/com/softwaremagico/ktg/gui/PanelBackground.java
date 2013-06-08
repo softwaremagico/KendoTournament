@@ -38,7 +38,7 @@ import javax.swing.JPanel;
 public class PanelBackground extends JPanel {
 
     Image imageBackground = null;
-
+    
     public void setBackground(File file) throws IOException {
         if (file == null) {
             imageBackground = null;

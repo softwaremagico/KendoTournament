@@ -43,9 +43,9 @@ public class TeamFight extends JPanel {
     private List<CompetitorFight> competitorFights = new ArrayList<>();
     private Fight fight;
     private final int lineBorder = 5;
-    RoundFight roundFight = null;
+    private RoundFight roundFight = null;
     private boolean wasDoubleClick = true;
-    Team team;
+    private Team team;
     private Timer timer;
     private boolean leftJustify, selectedFight, menuActive;
     private Tournament tournament;
@@ -72,6 +72,10 @@ public class TeamFight extends JPanel {
         fight = null;
         decoration(left, " --- ", fight_number, fight_total, invertedColor);
         fill(left, teamSize);
+    }
+    
+    public RoundFight getRoundFight(){
+        return roundFight;
     }
 
     private void decoration(boolean left, String titleString, int fight_number, int fight_total, boolean invertedColor) {
@@ -128,6 +132,12 @@ public class TeamFight extends JPanel {
         }
         repaint();
         revalidate();
+    }
+    
+    protected void updateCompetitorsName(int width){
+        for(CompetitorFight cp : competitorFights){
+            cp.updateCompetitorNameLength(width);
+        }
     }
 
     final void fill(boolean left, int teamSize) {

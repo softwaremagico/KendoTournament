@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui;
+package com.softwaremagico.ktg.gui.base;
 /*
  * #%L
  * KendoTournamentGenerator

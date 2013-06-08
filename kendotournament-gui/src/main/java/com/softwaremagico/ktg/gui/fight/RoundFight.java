@@ -81,6 +81,12 @@ public class RoundFight extends JPanel {
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
     }
+    
+    protected void updateCompetitorsName(int width){
+        for(TeamFight tf : teamFights){
+            tf.updateCompetitorsName(width / 2 - 50);
+        }
+    }
 
     private void decoration(boolean selected) {
         setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
