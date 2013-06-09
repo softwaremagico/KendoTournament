@@ -179,8 +179,8 @@ public class LeagueLevelCustom extends LeagueLevel {
             int previousLinksNumber = getNumberOfSourcesOfLink(source);
             if (previousLinksNumber >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
-            } else if (previousLinksNumber >= source.getTeams().size()) {
-                removefirstSourceLink(source);
+            //} else if (previousLinksNumber >= source.getTeams().size()) {
+            //    removefirstSourceLink(source);
             }
             if (getNumberOfAddressesOfLink(address) > 1) {
                 removefirstAddressLink(address);

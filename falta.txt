@@ -1,5 +1,3 @@
 Que las listas se puedan exportar en TXT
-Que cargue los grupos sin pasar por el diseñador (en el panel de combates)
-Al borrar el ultimo grupo del diseñador da excepcion. 
-Al borrar un grupo en el diseñador, no se ajustan los subniveles
+Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
 
