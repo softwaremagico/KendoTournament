@@ -47,8 +47,11 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
     }
 
     public TournamentGroup getSourceGroup() {
-        if (isValidTournament(tournament) && TournamentManagerFactory.getManager(tournament).getNumberOfLevels() > 1) {
-            return TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(source);
+        try {
+            if (isValidTournament(tournament) && TournamentManagerFactory.getManager(tournament).getNumberOfLevels() > 1) {
+                return TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(source);
+            }
+        } catch (IndexOutOfBoundsException iob) {
         }
         return null;
     }
@@ -129,9 +132,9 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
 
         return winner.compareTo(o.winner);
     }
-    
+
     @Override
-    public String toString(){
-        return "source: " + source  + ", address: " + address;
+    public String toString() {
+        return "source: " + source + ", address: " + address;
     }
 }

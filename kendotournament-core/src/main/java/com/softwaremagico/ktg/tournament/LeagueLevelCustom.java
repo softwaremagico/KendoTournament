@@ -75,8 +75,11 @@ public class LeagueLevelCustom extends LeagueLevel {
 
         //Get all destination of Winner
         for (int i = 0; i < links.size(); i++) {
-            if (links.get(i).getSourceGroup().equals(group)) {
-                destinations.add(links.get(i));
+            try {
+                if (links.get(i).getSourceGroup().equals(group)) {
+                    destinations.add(links.get(i));
+                }
+            } catch (NullPointerException npe) {
             }
         }
 
