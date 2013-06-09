@@ -488,12 +488,18 @@ public class FightPanel extends KFrame {
 
                 //If it was the last fight of all groups.
                 if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
-                    //Create fights of next level.
-                    TournamentManagerFactory.getManager(getSelectedTournament()).createSortedFights(currentFight.getLevel() + 1);
+                    //Create fights of next level (if any).
+                    List<Fight> newFights = TournamentManagerFactory.getManager(getSelectedTournament()).createSortedFights(currentFight.getLevel() + 1);
+                    if (newFights.size() > 0) {
+                        //Add new fights and continue. 
+                        FightPool.getInstance().add(getSelectedTournament(), newFights);
+                    } else {
+                        //No more fights, show final winner message.
+                    }
                 } else {
                     //If it was the last fight of arena groups.
                     if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
-                        //wait for other arena fights.
+                        //wait for other arena fights. Show message.
                     } else {
                         //Now it was the last one of a group.
                         if (group.inTheLastFight()) {

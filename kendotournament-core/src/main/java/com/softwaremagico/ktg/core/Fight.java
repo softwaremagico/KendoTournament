@@ -344,7 +344,7 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     @Override
     public String toString() {
-        String text = "'" + team1.getName() + "' vs '" + team2.getName() + "'\n";
+        String text = "Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
         for (Duel d : getDuels()) {
             text += d + "\n";
         }

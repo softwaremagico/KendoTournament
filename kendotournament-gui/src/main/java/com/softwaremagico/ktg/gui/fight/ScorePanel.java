@@ -105,7 +105,11 @@ public class ScorePanel extends KPanel {
 
     private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
         RoundFight rf;
-        Fight f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
+        Fight f = null;
+        try {
+            f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
+        } catch (NullPointerException npe) {
+        }
         if (f != null) {
             rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
         } else {

@@ -62,10 +62,7 @@ public class MessageManager {
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
         }
-        //customMessage(text.trim() + ": " + finalText.trim(), title, option);
-
         KendoLog.finest(className, text);
-
         JFrame frame = null;
         JOptionPane.showMessageDialog(frame,
                 text.trim() + ":\n" + finalText.trim(), title,

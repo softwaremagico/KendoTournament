@@ -121,11 +121,9 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public Fight get(Tournament tournament, Integer fightArea, Integer index) {
-        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
-        for (Fight fight : allFights) {
-            if (fight.getAsignedFightArea() == fightArea && fight.getGroupIndex() == index) {
-                return fight;
-            }
+        List<Fight> arenaFights = get(tournament, fightArea);
+        if(index>=0 && index < arenaFights.size()){
+            return arenaFights.get(index);
         }
         return null;
     }

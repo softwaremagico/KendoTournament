@@ -43,10 +43,13 @@ public class Championship implements ITournamentManager {
 
     private List<Fight> createFightsOfGroups(Integer level, boolean random) {
         List<Fight> fights = new ArrayList<>();
-        getLevel(level).update();
-        List<TournamentGroup> groupsOfLevel = getGroups(level);
-        for (int i = 0; i < groupsOfLevel.size(); i++) {
-            fights.addAll(groupsOfLevel.get(i).createFights(random, i));
+        //Obtain winners of previous level.
+        if (level < getNumberOfLevels()) {
+            getLevel(level).update();
+            List<TournamentGroup> groupsOfLevel = getGroups(level);
+            for (int i = 0; i < groupsOfLevel.size(); i++) {
+                fights.addAll(groupsOfLevel.get(i).createFights(random, i));
+            }
         }
         return fights;
     }
@@ -100,7 +103,11 @@ public class Championship implements ITournamentManager {
         LeagueLevel leagueLevel = levelZero;
         while (levelIndex > 0) {
             levelIndex--;
-            leagueLevel = leagueLevel.nextLevel;
+            try {
+                leagueLevel = leagueLevel.nextLevel;
+            } catch (NullPointerException npe) {
+                return null;
+            }
         }
         return leagueLevel;
     }
