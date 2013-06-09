@@ -163,7 +163,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 }
             }
         }
-        selectGroup(lastSelectedGroupIndex);
+            selectGroup(lastSelectedGroupIndex);
     }
 
     private TournamentGroupBox createBox(TournamentGroup tournamentGroup, Integer level) {
@@ -297,7 +297,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
     }
 
     public void selectGroup(Integer index) {
-        if (index != null && interactive && grpsBox.size() > 0) {
+        if (index != null && interactive && grpsBox.size() > 0 && index < grpsBox.get(0).size()) {
             for (TournamentGroupBox grpBox : grpsBox.get(0)) {
                 grpBox.setUnselected();
             }

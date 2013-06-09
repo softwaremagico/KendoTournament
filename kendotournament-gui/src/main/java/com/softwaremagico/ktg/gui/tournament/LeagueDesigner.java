@@ -190,9 +190,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void removeSelectedPanel() {
         try {
-            //Only panel cannot be deleted.
-            System.out.println(TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().size());
-            if (TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().size() > 1) {
                 TournamentGroupBox groupBox = bbp.getSelectedBox();
                 if (groupBox != null) {
                     if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
@@ -202,7 +199,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                     TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroup(groupBox.getTournamentGroup());
                     updateInfo();
                 }
-            }
         } catch (NullPointerException npe) {
         }
     }

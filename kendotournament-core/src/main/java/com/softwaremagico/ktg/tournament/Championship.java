@@ -87,7 +87,7 @@ public class Championship implements ITournamentManager {
 
     @Override
     public void removeGroup(TournamentGroup group) {
-        getLevel(group.getLevel()).getGroups().remove(group);
+        getLevel(group.getLevel()).removeGroup(group);
     }
 
     @Override
