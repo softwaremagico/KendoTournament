@@ -3,11 +3,13 @@
 	<test name="CipherTestSet" enabled="true" preserve-order="true">
 		<groups>
 			<run>
-				<include name="createData" />
+				<include name="populateDatabase" />
+				<include name="championshipTest" />
 			</run>
 		</groups>
 		<classes>
 			<class name="com.softwaremagico.ktg.database.populateDatabase" />
+			<class name="com.softwaremagico.ktg.database.championshipTest" />
 		</classes>
 	</test>
 </suite>

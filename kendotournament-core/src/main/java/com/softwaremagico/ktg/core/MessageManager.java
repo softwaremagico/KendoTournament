@@ -36,7 +36,7 @@ public class MessageManager {
 
     private static final int LINE = 50;
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
-    private static ImageIcon winnerIcon = new ImageIcon(MessageManager.class.getResource("/cup.png"));
+    private static ImageIcon winnerIcon = null;
 
     /**
      * Show an error message translated to the language stored
@@ -61,6 +61,9 @@ public class MessageManager {
         String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
+        }
+        if (winnerIcon == null) {
+            winnerIcon = new ImageIcon(MessageManager.class.getResource("/cup.png"));
         }
         KendoLog.finest(className, text);
         JFrame frame = null;

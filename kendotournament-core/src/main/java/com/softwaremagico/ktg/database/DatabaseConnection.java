@@ -44,7 +44,6 @@ public class DatabaseConnection {
     private String databaseName = "kendotournament";
     private String server = "localhost";
     private DatabaseEngine databaseEngine = null;
-    private boolean databaseLazyUpdate = false;
     private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
     private Integer stillConnected = 0;
@@ -274,7 +273,7 @@ public class DatabaseConnection {
                 || CustomLinkPool.getInstance().needsToBeStoredInDatabase();
     }
 
-    public boolean connect() {
+    public synchronized boolean connect() {
         boolean connectionSuccess = true;
         if (stillConnected <= 0) {
             connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
