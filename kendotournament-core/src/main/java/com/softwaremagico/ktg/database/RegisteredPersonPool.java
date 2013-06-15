@@ -125,4 +125,21 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         Collections.sort(result);
         return result;
     }
+
+    /**
+     * If a competitor is deleted, must delete the role.
+     *
+     * @param element
+     * @return
+     */
+    @Override
+    public boolean remove(RegisteredPerson element) {
+        RolePool.getInstance().remove(element);
+        return super.remove(element);
+    }
+
+    @Override
+    public void remove(String elementName) {
+        remove(get(elementName));
+    }
 }

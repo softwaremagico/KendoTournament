@@ -98,4 +98,20 @@ public class TournamentPool extends SimplePool<Tournament> {
         }
         return level;
     }
+
+    @Override
+    public void remove(String elementName) {
+        remove(get(elementName));
+
+    }
+
+    @Override
+    public boolean remove(Tournament tournament) {
+        //Fights delete undraws and duels. 
+        FightPool.getInstance().remove(tournament);
+        CustomLinkPool.getInstance().remove(tournament);
+        TeamPool.getInstance().remove(tournament);
+        RolePool.getInstance().remove(tournament);
+        return super.remove(tournament);
+    }
 }

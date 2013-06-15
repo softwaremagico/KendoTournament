@@ -6,6 +6,7 @@ import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.RoleTags;
+import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -216,15 +217,6 @@ public class RolePool extends TournamentDependentPool<Role> {
         return results;
     }
 
-    public void remove(Tournament tournament, RegisteredPerson person) {
-        List<Role> roles = get(tournament);
-        for (Role role : roles) {
-            if (role.getCompetitor().equals(person)) {
-                remove(tournament, role);
-            }
-        }
-    }
-
     public RoleTags getRoleTags() {
         if (roleTags == null) {
             roleTags = KendoTournamentGenerator.getInstance().getAvailableRoles();
@@ -234,5 +226,76 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     public void resetRoleTags() {
         roleTags = null;
+    }
+
+    /**
+     * Removing a role must delete the team.
+     *
+     * @param tournament
+     */
+    @Override
+    public void remove(Tournament tournament) {
+        TeamPool.getInstance().remove(tournament);
+        super.remove(tournament);
+    }
+
+    /**
+     * Removing a role must delete the team.
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, Role element) {
+        Team team = TeamPool.getInstance().get(tournament, element.getCompetitor());
+        TeamPool.getInstance().remove(tournament, team);
+        return super.remove(tournament, element);
+    }
+
+    /**
+     * Removing a role must delete the team.
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, List<Role> elements) {
+        for (Role role : elements) {
+            if (!remove(tournament, role)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Removing a role must delete the team.
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, String elementName) {
+        return remove(tournament, getById(tournament, elementName));
+    }
+
+    public void remove(Tournament tournament, RegisteredPerson person) {
+        List<Role> roles = get(tournament);
+        for (Role role : roles) {
+            if (role.getCompetitor().equals(person)) {
+                remove(tournament, role);
+            }
+        }
+    }
+
+    /**
+     * Remove all roles of a competitor of any tournament.
+     *
+     * @param person
+     */
+    public void remove(RegisteredPerson person) {
+        List<Role> roles = getAll();
+        for (Role role : roles) {
+            if (role.getCompetitor().equals(person)) {
+                remove(role.getTournament(), role);
+            }
+        }
     }
 }

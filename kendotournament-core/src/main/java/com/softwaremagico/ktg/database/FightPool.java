@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Undraw;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,9 +80,40 @@ public class FightPool extends TournamentDependentPool<Fight> {
         //Delete duels.
         List<Duel> duels = DuelPool.getInstance().get(tournament, element);
         DuelPool.getInstance().remove(tournament, duels);
+
+        //Delete undraws where this fights is involved.
+        Undraw undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam1());
+        if(undraw != null){
+            UndrawPool.getInstance().remove(tournament, undraw);
+        }
+        undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam2());       
+                if(undraw != null){
+            UndrawPool.getInstance().remove(tournament, undraw);
+        }
+        
         //Delete fight.
         super.remove(tournament, element);
         return true;
+    }
+
+    @Override
+    public void remove(Tournament tournament) {
+        DuelPool.getInstance().remove(tournament);
+        UndrawPool.getInstance().remove(tournament);
+        super.remove(tournament);
+    }
+
+    @Override
+    public boolean remove(Tournament tournament, List<Fight> elements) {
+        for (Fight element : elements) {
+            remove(tournament, element);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean remove(Tournament tournament, String elementName) {
+        return remove(tournament, get(tournament, elementName));
     }
 
     @Override
@@ -122,7 +154,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     public Fight get(Tournament tournament, Integer fightArea, Integer index) {
         List<Fight> arenaFights = get(tournament, fightArea);
-        if(index>=0 && index < arenaFights.size()){
+        if (index >= 0 && index < arenaFights.size()) {
             return arenaFights.get(index);
         }
         return null;

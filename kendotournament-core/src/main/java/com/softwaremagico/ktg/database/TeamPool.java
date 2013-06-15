@@ -138,4 +138,53 @@ public class TeamPool extends TournamentDependentPool<Team> {
         }
         return competitors;
     }
+
+    /**
+     * Removing a team must delete any fight (if not, tournament is not
+     * consistent).
+     *
+     * @param tournament
+     */
+    @Override
+    public void remove(Tournament tournament) {
+        FightPool.getInstance().remove(tournament);
+        super.remove(tournament);
+    }
+
+    /**
+     * Removing a team must delete any fight (if not, tournament is not
+     * consistent).
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, Team element) {
+        FightPool.getInstance().remove(tournament);
+        return super.remove(tournament, element);
+    }
+
+    /**
+     * Removing a team must delete any fight (if not, tournament is not
+     * consistent).
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, List<Team> elements) {
+        for (Team element : elements) {
+            remove(tournament, element);
+        }
+        return true;
+    }
+
+    /**
+     * Removing a team must delete any fight (if not, tournament is not
+     * consistent).
+     *
+     * @param tournament
+     */
+    @Override
+    public boolean remove(Tournament tournament, String elementName) {
+        return remove(tournament, getById(tournament, elementName));
+    }
 }

@@ -31,7 +31,7 @@ import java.util.HashMap;
 public class Team implements Comparable<Team> {
 
     private Tournament tournament;
-    private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; //HashMap<Level,HashMap<MemberOrder, Order>>;
+    private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; //HashMap<Level,HashMap<Order, Member>>;
     private String name;
     private int group = 0; //for the league
 
@@ -213,5 +213,23 @@ public class Team implements Comparable<Team> {
     @Override
     public int compareTo(Team t) {
         return getName().compareTo(t.getName());
+    }
+
+    /**
+     * Remove a meber of the team
+     *
+     * @return false if the member is not of this team.
+     */
+    public boolean removeMemeber(RegisteredPerson member) {
+        boolean found = false;
+        for (Integer level : membersOrder.keySet()) {
+            for (Integer order : membersOrder.get(level).keySet()) {
+                if (membersOrder.get(level).get(order).equals(member)) {
+                    membersOrder.get(level).remove(order);
+                    found = true;
+                }
+            }
+        }
+        return found;
     }
 }
