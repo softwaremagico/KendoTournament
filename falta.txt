@@ -1,3 +1,6 @@
 Que las listas se puedan exportar en TXT
 Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
+Que muestre el mensaje de winners cuando todos los combates han terminado. 
+Que muestre el mensaje de esperando a la otra fightarea cuadno los combates de un grupo han terminado.
+
 
