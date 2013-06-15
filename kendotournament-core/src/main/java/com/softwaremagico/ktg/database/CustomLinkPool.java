@@ -32,8 +32,10 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
         List<CustomWinnerLink> links = DatabaseConnection.getConnection().getDatabase().getCustomWinnerLinks(tournament);
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, CustomWinnerLink> hashMap = new HashMap<>();
-        for (CustomWinnerLink t : links) {
-            hashMap.put(getId(t), t);
+        if (links != null) {
+            for (CustomWinnerLink t : links) {
+                hashMap.put(getId(t), t);
+            }
         }
         return hashMap;
     }
@@ -71,12 +73,12 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
         Collections.sort(unsorted);
         return unsorted;
     }
-    
-    public void remove(Tournament tournament, Integer source){
+
+    public void remove(Tournament tournament, Integer source) {
         List<CustomWinnerLink> links = get(tournament);
         List<CustomWinnerLink> linksToRemove = new ArrayList<>();
-        for(CustomWinnerLink link : links){
-            if(link.getSource() == source){
+        for (CustomWinnerLink link : links) {
+            if (link.getSource() == source) {
                 linksToRemove.add(link);
             }
         }
