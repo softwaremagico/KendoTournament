@@ -41,7 +41,7 @@ public class SelectTournamentImportParticipantsFromCsv extends SelectTournamentF
          * if(FightPool.getManager(returnSelectedTournament()).importFromCsv(Folder.readFileLines(file,
          * false))){ MessageManager.informationMessage("csvImported", "CSV");
          * return true; } } catch (IOException ex) {
-         * KendoTournamentGenerator.showErrorInformation(ex);
+         * AlertManager.showErrorInformation(ex);
         }
          */
         return false;

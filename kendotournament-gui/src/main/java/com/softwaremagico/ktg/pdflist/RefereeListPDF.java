@@ -33,6 +33,9 @@ import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.gui.AlertManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +56,12 @@ public class RefereeListPDF extends ParentList {
         Paragraph p;
 
         mainTable.addCell(getHeader2(tournament.getName(), 0));
-        List<RegisteredPerson> listReferee = RolePool.getInstance().getPeople(tournament, RoleTag.refereeRole);
+        List<RegisteredPerson> listReferee = new ArrayList<>();
+        try {
+            listReferee = RolePool.getInstance().getPeople(tournament, RoleTag.refereeRole);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
         for (int i = 0; i < listReferee.size(); i++) {
             mainTable.addCell(getCell(listReferee.get(i).getSurnameName() + " (" + listReferee.get(i).getClub() + ")", 0));
         }

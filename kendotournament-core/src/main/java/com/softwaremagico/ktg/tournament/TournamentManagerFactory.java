@@ -1,11 +1,13 @@
 package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class TournamentManagerFactory {
-
+    
     private static HashMap<Tournament, HashMap<TournamentType, ITournamentManager>> managers = new HashMap<>();
 
     /**
@@ -28,7 +30,7 @@ public class TournamentManagerFactory {
         }
         return null;
     }
-
+    
     private static HashMap<TournamentType, ITournamentManager> getManagers(Tournament tournament) {
         if (tournament != null) {
             HashMap<TournamentType, ITournamentManager> managersOfTournament = managers.get(tournament);
@@ -40,20 +42,24 @@ public class TournamentManagerFactory {
         }
         return null;
     }
-
+    
     public static ITournamentManager getManager(Tournament tournament) {
         return getManager(tournament, tournament.getType());
     }
-
+    
     private static void removeManager(Tournament tournament, TournamentType type) {
         managers.get(tournament).remove(type);
-        FightPool.getInstance().remove(tournament);
+        try {
+            FightPool.getInstance().remove(tournament);
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(TournamentManagerFactory.class.getName(), ex);
+        }
     }
-
+    
     public static void removeManager(Tournament tournament) {
         removeManager(tournament, tournament.getType());
     }
-
+    
     private static ITournamentManager createManager(Tournament tournament, TournamentType type) {
         ITournamentManager manager;
         switch (type) {

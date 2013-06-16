@@ -26,8 +26,10 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
@@ -52,45 +54,49 @@ public class ScorePanel extends KPanel {
     private void fillFightsPanel(boolean invertedTeam, boolean invertedColor) {
         removeAll();
         roundFights = new ArrayList<>();
-        if (tournament != null && FightPool.getInstance().get(tournament).size() > 0) {
-            int showedFights = 0;
-            Dimension minSize = new Dimension(0, 5);
-            Dimension prefSize = new Dimension(5, 5);
-            Dimension maxSize = new Dimension(5, 5);
+        try {
+            if (tournament != null && FightPool.getInstance().get(tournament).size() > 0) {
+                int showedFights = 0;
+                Dimension minSize = new Dimension(0, 5);
+                Dimension prefSize = new Dimension(5, 5);
+                Dimension maxSize = new Dimension(5, 5);
 
-            //Penultimus
-            if (numberOfFightsToShow() > 4) {
-                addFightPanel(-2, fightArea, invertedTeam, invertedColor, false);
+                //Penultimus
+                if (numberOfFightsToShow() > 4) {
+                    addFightPanel(-2, fightArea, invertedTeam, invertedColor, false);
+                    showedFights++;
+                }
+                //Previous
+                if (numberOfFightsToShow() > 2) {
+                    addFightPanel(-1, fightArea, invertedTeam, invertedColor, false);
+                    showedFights++;
+                }
+                //Current
+                addFightPanel(0, fightArea, invertedTeam, invertedColor, true);
                 showedFights++;
-            }
-            //Previous
-            if (numberOfFightsToShow() > 2) {
-                addFightPanel(-1, fightArea, invertedTeam, invertedColor, false);
-                showedFights++;
-            }
-            //Current
-            addFightPanel(0, fightArea, invertedTeam, invertedColor, true);
-            showedFights++;
 
-            //Nexts
-            if (numberOfFightsToShow() > 1) {
-                for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
-                        showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                    addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
+                //Nexts
+                if (numberOfFightsToShow() > 1) {
+                    for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
+                            showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
+                        addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
+                        showedFights++;
+                    }
+                }
+
+                //Add null fightManager to complete the panel.
+                while (showedFights < numberOfFightsToShow()) {
+                    try {
+                        RoundFight rf = new RoundFight(tournament.getTeamSize(), false, 0, 0, invertedColor);
+                        add(rf);
+                        add(new Box.Filler(minSize, prefSize, maxSize));
+                    } catch (NullPointerException npe) {
+                    }
                     showedFights++;
                 }
             }
-
-            //Add null fightManager to complete the panel.
-            while (showedFights < numberOfFightsToShow()) {
-                try {
-                    RoundFight rf = new RoundFight(tournament.getTeamSize(), false, 0, 0, invertedColor);
-                    add(rf);
-                    add(new Box.Filler(minSize, prefSize, maxSize));
-                } catch (NullPointerException npe) {
-                }
-                showedFights++;
-            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         repaint();
         revalidate();
@@ -104,18 +110,22 @@ public class ScorePanel extends KPanel {
     }
 
     private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
-        RoundFight rf;
+        RoundFight rf = null;
         Fight f = null;
         try {
-            f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
-        } catch (NullPointerException npe) {
+            try {
+                f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
+            } catch (NullPointerException npe) {
+            }
+            if (f != null) {
+                rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
+            } else {
+                rf = new RoundFight(tournament.getTeamSize(), selected, 0, 0, invertedColor);
+            }
+            rf.updateScorePanels();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
-        if (f != null) {
-            rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
-        } else {
-            rf = new RoundFight(tournament.getTeamSize(), selected, 0, 0, invertedColor);
-        }
-        rf.updateScorePanels();
         return rf;
     }
 

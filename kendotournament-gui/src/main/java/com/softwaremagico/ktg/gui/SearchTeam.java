@@ -26,13 +26,13 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -78,6 +78,8 @@ public final class SearchTeam extends Search<Team> {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -100,26 +102,34 @@ public final class SearchTeam extends Search<Team> {
 
     @Override
     protected void searchButtonActionPerformed(ActionEvent evt) {
-        results = new ArrayList<>();
-        if (NameTextField.getText().length() > 0) {
-            results = TeamPool.getInstance().getById((Tournament) TournamentComboBox.getSelectedItem(), NameTextField.getText().trim());
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
-        }
-        fillResults(results);
-        if (results.size() > 0) {
-            resultList.setSelectedIndex(0);
+        try {
+            results = new ArrayList<>();
+            if (NameTextField.getText().length() > 0) {
+                results = TeamPool.getInstance().getById((Tournament) TournamentComboBox.getSelectedItem(), NameTextField.getText().trim());
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+            }
+            fillResults(results);
+            if (results.size() > 0) {
+                resultList.setSelectedIndex(0);
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 
     @Override
-    protected boolean deleteElement(Team team) {        
-            if (MessageManager.questionMessage("questionDeleteTeam", "Team")) {
+    protected boolean deleteElement(Team team) {
+        if (AlertManager.questionMessage("questionDeleteTeam", "Team")) {
+            try {
                 if (TeamPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), team)) {
-                    MessageManager.informationMessage(this.getClass().getName(), "teamDeleted", "Team");
+                    AlertManager.informationMessage(this.getClass().getName(), "teamDeleted", "Team");
                     return true;
                 }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
+        }
         return false;
     }
 

@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.tools.Tools;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected HashMap<String, RegisteredPerson> getElementsFromDatabase() {
+    protected HashMap<String, RegisteredPerson> getElementsFromDatabase() throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
         DatabaseConnection.getInstance().disconnect();
@@ -39,7 +40,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(List<RegisteredPerson> elementsToStore) {
+    protected boolean storeElementsInDatabase(List<RegisteredPerson> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
         }
@@ -47,7 +48,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(List<RegisteredPerson> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(List<RegisteredPerson> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
         }
@@ -55,7 +56,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected boolean updateElements(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) {
+    protected boolean updateElements(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             PhotoPool.getInstance().updateDatabase();
             return DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
@@ -64,25 +65,25 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     }
 
     @Override
-    protected List<RegisteredPerson> sort() {
+    protected List<RegisteredPerson> sort() throws SQLException {
         List<RegisteredPerson> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    public void updateId(RegisteredPerson oldPerson, String newId) {
+    public void updateId(RegisteredPerson oldPerson, String newId) throws SQLException {
         remove(oldPerson);
         oldPerson.setId(newId);
         add(oldPerson);
     }
 
-    public List<RegisteredPerson> getById(String id) {
+    public List<RegisteredPerson> getById(String id) throws SQLException {
         List<RegisteredPerson> result = search(id);
         Collections.sort(result);
         return result;
     }
 
-    public List<RegisteredPerson> getByName(String name) {
+    public List<RegisteredPerson> getByName(String name) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getName() != null && Tools.isSimilar(element.getName(), name)) {
@@ -93,7 +94,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> getBySurname(String surname) {
+    public List<RegisteredPerson> getBySurname(String surname) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getSurname() != null && Tools.isSimilar(element.getSurname(), surname)) {
@@ -104,7 +105,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> getByClub(String club) {
+    public List<RegisteredPerson> getByClub(String club) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getClub() != null && Tools.isSimilar(element.getClub().getName(), club)) {
@@ -115,7 +116,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> getPeopleWithoutClub() {
+    public List<RegisteredPerson> getPeopleWithoutClub() throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (RegisteredPerson element : getAll()) {
             if (element.getClub() == null) {
@@ -133,13 +134,13 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
      * @return
      */
     @Override
-    public boolean remove(RegisteredPerson element) {
+    public boolean remove(RegisteredPerson element) throws SQLException {
         RolePool.getInstance().remove(element);
         return super.remove(element);
     }
 
     @Override
-    public void remove(String elementName) {
+    public void remove(String elementName) throws SQLException {
         remove(get(elementName));
     }
 }

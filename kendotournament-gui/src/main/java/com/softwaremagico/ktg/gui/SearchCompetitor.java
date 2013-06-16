@@ -25,13 +25,13 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -84,16 +84,20 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
     @Override
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
-        if (IDTextField.getText().length() > 0) {
-            results = RegisteredPersonPool.getInstance().getById(IDTextField.getText().trim());
-        } else if (SurnameTextField.getText().length() > 0) {
-            results = RegisteredPersonPool.getInstance().getBySurname(SurnameTextField.getText().trim());
-        } else if (NameTextField.getText().length() > 0) {
-            results = RegisteredPersonPool.getInstance().getByName(NameTextField.getText().trim());
-        } else if (ClubTextField.getText().length() > 0) {
-            results = RegisteredPersonPool.getInstance().getByClub(ClubTextField.getText().trim());
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+        try {
+            if (IDTextField.getText().length() > 0) {
+                results = RegisteredPersonPool.getInstance().getById(IDTextField.getText().trim());
+            } else if (SurnameTextField.getText().length() > 0) {
+                results = RegisteredPersonPool.getInstance().getBySurname(SurnameTextField.getText().trim());
+            } else if (NameTextField.getText().length() > 0) {
+                results = RegisteredPersonPool.getInstance().getByName(NameTextField.getText().trim());
+            } else if (ClubTextField.getText().length() > 0) {
+                results = RegisteredPersonPool.getInstance().getByClub(ClubTextField.getText().trim());
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         fillResults(results);
         if (results.size() > 0) {
@@ -103,10 +107,14 @@ public final class SearchCompetitor extends Search<RegisteredPerson> {
 
     @Override
     protected boolean deleteElement(RegisteredPerson object) {
-        if (MessageManager.questionMessage("questionDeleteCompetitor", "Competitor")) {
-            if (RegisteredPersonPool.getInstance().remove(object)) {
-                MessageManager.informationMessage(this.getClass().getName(), "competitorDeleted", "Competitor");
-                return true;
+        if (AlertManager.questionMessage("questionDeleteCompetitor", "Competitor")) {
+            try {
+                if (RegisteredPersonPool.getInstance().remove(object)) {
+                    AlertManager.informationMessage(this.getClass().getName(), "competitorDeleted", "Competitor");
+                    return true;
+                }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
         }
         return false;

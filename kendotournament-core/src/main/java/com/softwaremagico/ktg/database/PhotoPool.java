@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Photo;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class PhotoPool {
         return element.getId();
     }
 
-    public Photo get(String competitorId) {
+    public Photo get(String competitorId) throws SQLException {
         Photo photo = elements.get(competitorId);
         if (photo == null) {
             photo = getFromDatabase(competitorId);
@@ -41,14 +42,14 @@ public class PhotoPool {
         photosToStore.add(element);
     }
 
-    protected Photo getFromDatabase(String competitorId) {
+    protected Photo getFromDatabase(String competitorId) throws SQLException{
         DatabaseConnection.getInstance().connect();
         Photo photo = DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
         DatabaseConnection.getInstance().disconnect();
         return photo;
     }
 
-    protected boolean storeInDatabase(List<Photo> photos) {
+    protected boolean storeInDatabase(List<Photo> photos) throws SQLException {
         if (photos.size() > 0) {
             Boolean result = DatabaseConnection.getInstance().getDatabase().setPhotos(photos);
             photosToStore = new ArrayList<>();
@@ -57,7 +58,7 @@ public class PhotoPool {
         return true;
     }
 
-    protected boolean updateDatabase() {
+    protected boolean updateDatabase() throws SQLException {
         if (photosToStore.size() > 0) {
             return storeInDatabase(photosToStore);
         }

@@ -3,6 +3,7 @@ package com.softwaremagico.ktg.database;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected HashMap<String, Undraw> getElementsFromDatabase(Tournament tournament) {
+    protected HashMap<String, Undraw> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Undraw> undraws = DatabaseConnection.getConnection().getDatabase().getUndraws(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -40,7 +41,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Undraw> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Undraw> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
         }
@@ -48,7 +49,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
         }
@@ -56,7 +57,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
         }
@@ -64,13 +65,13 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected List<Undraw> sort(Tournament tournament) {
+    protected List<Undraw> sort(Tournament tournament) throws SQLException {
         List<Undraw> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    private List<Undraw> getUndraws(Tournament tournament, Integer level, Integer group) {
+    private List<Undraw> getUndraws(Tournament tournament, Integer level, Integer group) throws SQLException {
         List<Undraw> undrawsOfGroup = new ArrayList<>();
         List<Undraw> undraws = new ArrayList<>(getMap(tournament).values());
         for (Undraw undraw : undraws) {
@@ -81,7 +82,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return undrawsOfGroup;
     }
 
-    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) {
+    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) throws SQLException {
         List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
         List<Team> teams = new ArrayList<>();
         for (Undraw undraw : undrawsOfGroup) {
@@ -90,7 +91,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return teams;
     }
 
-    public Integer getUndrawsWon(Tournament tournament, Integer level, Integer group, Team team) {
+    public Integer getUndrawsWon(Tournament tournament, Integer level, Integer group, Team team) throws SQLException {
         Integer undrawsWon = 0;
         List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
         for (Undraw undraw : undrawsOfGroup) {
@@ -101,7 +102,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return undrawsWon;
     }
 
-    public Undraw get(Tournament tournament, Integer level, Integer group, Team team) {
+    public Undraw get(Tournament tournament, Integer level, Integer group, Team team) throws SQLException {
         List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
         for (Undraw undraw : undrawsOfGroup) {
             if (team.equals(undraw.getTeam())) {

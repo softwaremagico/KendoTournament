@@ -23,9 +23,11 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.CustomLinkPool;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,8 +181,8 @@ public class LeagueLevelCustom extends LeagueLevel {
             int previousLinksNumber = getNumberOfSourcesOfLink(source);
             if (previousLinksNumber >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
-            //} else if (previousLinksNumber >= source.getTeams().size()) {
-            //    removefirstSourceLink(source);
+                //} else if (previousLinksNumber >= source.getTeams().size()) {
+                //    removefirstSourceLink(source);
             }
             if (getNumberOfAddressesOfLink(address) > 1) {
                 removefirstAddressLink(address);
@@ -261,6 +263,8 @@ public class LeagueLevelCustom extends LeagueLevel {
                 }
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 

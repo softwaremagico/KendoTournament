@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -36,7 +37,7 @@ public class populateDatabase {
     }
 
     @Test(dependsOnMethods = {"connectToDatabase"})
-    public void addClubs() {
+    public void addClubs() throws SQLException {
         for (String clubName : clubs) {
             Club club = new Club(clubName, "España", "Valencia");
             ClubPool.getInstance().add(club);
@@ -45,7 +46,7 @@ public class populateDatabase {
     }
 
     @Test(dependsOnMethods = {"addClubs"})
-    public void addCompetitors() {
+    public void addCompetitors() throws SQLException {
         int dni = 0;
         DecimalFormat myFormatter = new DecimalFormat("########");
         for (String clubName : clubs) {

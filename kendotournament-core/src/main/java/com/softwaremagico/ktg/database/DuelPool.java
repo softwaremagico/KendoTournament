@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Tournament;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
-    protected HashMap<String, Duel> getElementsFromDatabase(Tournament tournament) {
+    protected HashMap<String, Duel> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Duel> duels = DatabaseConnection.getConnection().getDatabase().getDuels(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -43,7 +44,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Duel> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Duel> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addDuels(elementsToStore);
         }
@@ -51,7 +52,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Duel> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Duel> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeDuels(elementsToDelete);
         }
@@ -59,7 +60,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Duel, Duel> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Duel, Duel> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
         }
@@ -67,13 +68,13 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
-    protected List<Duel> sort(Tournament tournament) {
+    protected List<Duel> sort(Tournament tournament) throws SQLException {
         List<Duel> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    public List<Duel> get(Tournament tournament, RegisteredPerson competitor) {
+    public List<Duel> get(Tournament tournament, RegisteredPerson competitor) throws SQLException {
         List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
@@ -85,7 +86,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         return results;
     }
 
-    public List<Duel> get(Tournament tournament, RegisteredPerson competitor, boolean team1) {
+    public List<Duel> get(Tournament tournament, RegisteredPerson competitor, boolean team1) throws SQLException {
         List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
@@ -102,7 +103,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         return results;
     }
 
-    public List<Duel> get(RegisteredPerson competitor, boolean team1) {
+    public List<Duel> get(RegisteredPerson competitor, boolean team1) throws SQLException {
         List<Duel> allDuels = getAll();
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
@@ -119,7 +120,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         return results;
     }
 
-    private List<Duel> createDuels(Tournament tournament, Fight fight) {
+    private List<Duel> createDuels(Tournament tournament, Fight fight) throws SQLException {
         List<Duel> duels = new ArrayList<>();
         try {
             for (int i = 0; i < tournament.getTeamSize(); i++) {
@@ -141,7 +142,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
      * @param fight
      * @return
      */
-    public List<Duel> get(Tournament tournament, Fight fight) {
+    public List<Duel> get(Tournament tournament, Fight fight) throws SQLException {
         if (duelsPerFight == null) {
             duelsPerFight = new HashMap<>();
         }

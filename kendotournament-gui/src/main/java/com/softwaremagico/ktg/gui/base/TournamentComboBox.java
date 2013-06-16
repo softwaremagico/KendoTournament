@@ -26,8 +26,11 @@ package com.softwaremagico.ktg.gui.base;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TournamentComboBox extends KComboBox {
@@ -36,7 +39,12 @@ public class TournamentComboBox extends KComboBox {
     private KFrame parent;
 
     public TournamentComboBox(KFrame parent) {
-        listTournaments = TournamentPool.getInstance().getSorted();
+        try {
+            listTournaments = TournamentPool.getInstance().getSorted();
+        } catch (SQLException ex) {
+            listTournaments = new ArrayList<>();
+            AlertManager.showSqlErrorMessage(ex);
+        }
         this.parent = parent;
         fillTournaments();
         addActionListener(new ComboBoxActionListener());
@@ -56,7 +64,7 @@ public class TournamentComboBox extends KComboBox {
                 KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().toString());
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 

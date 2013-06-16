@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.tools.Tools;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected HashMap<String, Club> getElementsFromDatabase() {
+    protected HashMap<String, Club> getElementsFromDatabase() throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
         DatabaseConnection.getInstance().disconnect();
@@ -39,7 +40,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(List<Club> elementsToStore) {
+    protected boolean storeElementsInDatabase(List<Club> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
         }
@@ -47,7 +48,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(List<Club> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(List<Club> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
         }
@@ -55,7 +56,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected boolean updateElements(HashMap<Club, Club> elementsToUpdate) {
+    protected boolean updateElements(HashMap<Club, Club> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
         }
@@ -63,7 +64,7 @@ public class ClubPool extends SimplePool<Club> {
     }
 
     @Override
-    protected List<Club> sort() {
+    protected List<Club> sort()  throws SQLException {
         List<Club> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
@@ -72,7 +73,7 @@ public class ClubPool extends SimplePool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> getByName(String name) {
+    public List<Club> getByName(String name) throws SQLException {
         List<Club> result = new ArrayList<>();
         for (Club element : getMap().values()) {
             if (Tools.isSimilar(element.getName(), name)) {
@@ -86,7 +87,7 @@ public class ClubPool extends SimplePool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> getByCity(String city) {
+    public List<Club> getByCity(String city) throws SQLException {
         List<Club> result = new ArrayList<>();
         for (Club element : getMap().values()) {
             if (Tools.isSimilar(element.getCity(), city)) {
@@ -100,7 +101,7 @@ public class ClubPool extends SimplePool<Club> {
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<Club> getByCountry(String country) {
+    public List<Club> getByCountry(String country) throws SQLException {
         List<Club> result = new ArrayList<>();
         for (Club element : getMap().values()) {
             if (Tools.isSimilar(element.getCountry(), country)) {

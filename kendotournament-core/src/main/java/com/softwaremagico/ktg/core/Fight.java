@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.database.DuelPool;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -95,7 +96,12 @@ public class Fight implements Serializable, Comparable<Fight> {
     }
 
     public List<Duel> getDuels() {
-        return DuelPool.getInstance().get(tournament, this);
+        try {
+            return DuelPool.getInstance().get(tournament, this);
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
+        return new ArrayList<>();
     }
 
     public boolean isOver() {

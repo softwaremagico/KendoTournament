@@ -27,9 +27,9 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -83,7 +83,7 @@ public class CompetitorFight extends JPanel {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
         if (menu) {
             addAllMenus();
@@ -235,7 +235,7 @@ public class CompetitorFight extends JPanel {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -314,7 +314,7 @@ public class CompetitorFight extends JPanel {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
         teamFight.getRoundFight().updateScorePanels();
     }

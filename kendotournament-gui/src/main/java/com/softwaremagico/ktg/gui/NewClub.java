@@ -26,8 +26,6 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.ClubPool;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
@@ -35,6 +33,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.List;
 
 public class NewClub extends javax.swing.JFrame {
@@ -43,7 +42,7 @@ public class NewClub extends javax.swing.JFrame {
     private Club club;
     private List<RegisteredPerson> competitors;
     private NewCompetitor newCompetitor = null;
-    private boolean updateClubOfCompetitor = false;
+    private boolean updateClubOfCompetitor;
 
     /**
      * Creates new form NewClub
@@ -101,24 +100,32 @@ public class NewClub extends javax.swing.JFrame {
     }
 
     public void FillCompetitorsFromClub(Club club) {
-        competitors = RegisteredPersonPool.getInstance().getByClub(club.getName());
-        RepresentativeComboBox.removeAllItems();
-        RepresentativeComboBox.addItem("");
-        for (int i = 0; i < competitors.size(); i++) {
-            RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
-            if (club.getRepresentativeID() != null && club.getRepresentativeID().equals(competitors.get(i).getId())) {
-                RepresentativeComboBox.setSelectedIndex(i);
+        try {
+            competitors = RegisteredPersonPool.getInstance().getByClub(club.getName());
+            RepresentativeComboBox.removeAllItems();
+            RepresentativeComboBox.addItem("");
+            for (int i = 0; i < competitors.size(); i++) {
+                RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
+                if (club.getRepresentativeID() != null && club.getRepresentativeID().equals(competitors.get(i).getId())) {
+                    RepresentativeComboBox.setSelectedIndex(i);
+                }
             }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         updateClubOfCompetitor = false;
     }
 
     private void FillCompetitors() {
-        competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
-        RepresentativeComboBox.removeAllItems();
-        RepresentativeComboBox.addItem("");
-        for (int i = 0; i < competitors.size(); i++) {
-            RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
+        try {
+            competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
+            RepresentativeComboBox.removeAllItems();
+            RepresentativeComboBox.addItem("");
+            for (int i = 0; i < competitors.size(); i++) {
+                RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         updateClubOfCompetitor = true;
     }
@@ -141,8 +148,8 @@ public class NewClub extends javax.swing.JFrame {
                     club.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(), MailTextField.getText(), PhoneTextField.getText());
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
-                if(ClubPool.getInstance().add(club)){
-                    MessageManager.informationMessage(this.getClass().getName(), "clubStored", "SQL");
+                if (ClubPool.getInstance().add(club)) {
+                    AlertManager.informationMessage(this.getClass().getName(), "clubStored", "SQL");
                 }
                 CleanWindow();
                 if (newCompetitor != null) {
@@ -157,10 +164,12 @@ public class NewClub extends javax.swing.JFrame {
                     this.dispose();
                 }
             } else {
-                MessageManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "SQL");
+                AlertManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "SQL");
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

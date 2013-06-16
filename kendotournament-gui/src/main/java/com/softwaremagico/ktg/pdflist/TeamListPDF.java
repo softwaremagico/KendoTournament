@@ -32,6 +32,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.gui.AlertManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamListPDF extends ParentList {
@@ -73,7 +76,12 @@ public class TeamListPDF extends ParentList {
 
         mainTable.addCell(getEmptyRow());
 
-        List<Team> listTeams = TeamPool.getInstance().get(tournament);
+        List<Team> listTeams = new ArrayList<>();
+        try {
+            listTeams = TeamPool.getInstance().get(tournament);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
         for (int i = 0; i < listTeams.size(); i++) {
 
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));

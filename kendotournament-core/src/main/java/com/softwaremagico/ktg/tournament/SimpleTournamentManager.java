@@ -1,10 +1,12 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,11 @@ public class SimpleTournamentManager implements ITournamentManager {
     @Override
     public List<Fight> getFights(Integer level) {
         if (level == 0) {
-            FightPool.getInstance().get(tournament);
+            try {
+                return FightPool.getInstance().get(tournament);
+            } catch (SQLException ex) {
+                KendoLog.errorMessage(this.getClass().getName(), ex);
+            }
         }
         return null;
     }
@@ -58,7 +64,11 @@ public class SimpleTournamentManager implements ITournamentManager {
 
     public final void addGroup() {
         this.group = new TournamentGroup(tournament, 0, 0);
-        group.addTeams(TeamPool.getInstance().get(tournament));
+        try {
+            group.addTeams(TeamPool.getInstance().get(tournament));
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
     }
 
     @Override
@@ -146,10 +156,14 @@ public class SimpleTournamentManager implements ITournamentManager {
 
     @Override
     public void fillGroups() {
-        List<Fight> fights = FightPool.getInstance().get(tournament);     
-        for(Fight fight : fights){
-            group.addTeam(fight.getTeam1());
-            group.addTeam(fight.getTeam2());
+        try {
+            List<Fight> fights = FightPool.getInstance().get(tournament);
+            for (Fight fight : fights) {
+                group.addTeam(fight.getTeam1());
+                group.addTeam(fight.getTeam2());
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 }

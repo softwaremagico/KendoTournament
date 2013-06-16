@@ -26,10 +26,10 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.database.ClubPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -72,14 +72,18 @@ public final class SearchClub extends Search<Club> {
     @Override
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
-        if (NameTextField.getText().length() > 0) {
-            results = ClubPool.getInstance().getByName(NameTextField.getText());
-        } else if (CountryTextField.getText().length() > 0) {
-            results = ClubPool.getInstance().getByCountry(NameTextField.getText());
-        } else if (CityTextField.getText().length() > 0) {
-            results = ClubPool.getInstance().getByCity(NameTextField.getText());
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+        try {
+            if (NameTextField.getText().length() > 0) {
+                results = ClubPool.getInstance().getByName(NameTextField.getText());
+            } else if (CountryTextField.getText().length() > 0) {
+                results = ClubPool.getInstance().getByCountry(NameTextField.getText());
+            } else if (CityTextField.getText().length() > 0) {
+                results = ClubPool.getInstance().getByCity(NameTextField.getText());
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         fillResults(results);
         if (results.size() > 0) {
@@ -94,10 +98,14 @@ public final class SearchClub extends Search<Club> {
 
     @Override
     protected boolean deleteElement(Club object) {
-        if (MessageManager.questionMessage("questionDeleteClub", "Competitor")) {
-            if (ClubPool.getInstance().remove(object)) {
-                MessageManager.informationMessage(this.getClass().getName(), "clubDeleted", "Club");
-                return true;
+        if (AlertManager.questionMessage("questionDeleteClub", "Competitor")) {
+            try {
+                if (ClubPool.getInstance().remove(object)) {
+                    AlertManager.informationMessage(this.getClass().getName(), "clubDeleted", "Club");
+                    return true;
+                }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
         }
         return false;

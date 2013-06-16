@@ -26,9 +26,7 @@ package com.softwaremagico.ktg.database;
  */
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
-import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
@@ -37,10 +35,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class MySQL extends SQL {
 
@@ -68,12 +62,12 @@ public class MySQL extends SQL {
      * @return true if the connection is ok.
      */
     @Override
-    public boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry) {
+    public boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry) throws CommunicationsException, SQLException {
         boolean error = false;
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
         } catch (Exception e) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "Mysql driver for Java is not installed. Check your configuration.", "Mysql");
+            KendoLog.severe(this.getClass().getName(), "Mysql driver for Java is not installed. Check your configuration.");
             error = true;
         }
 
@@ -89,9 +83,6 @@ public class MySQL extends SQL {
                 installDatabase(password, user, server, database);
                 return connect(password, user, database, server, verbose, false);
             }
-        } catch (CommunicationsException ce) {
-            MessageManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
-            error = true;
         } catch (SQLException ex) {
             //If server not started (but assume that is installed) start it.
             if (ex.getErrorCode() == 0) {
@@ -109,9 +100,7 @@ public class MySQL extends SQL {
                     error = true;
                 }
             } else {
-                //KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                showSQLError(ex.getErrorCode());
-                error = true;
+                throw ex;
             }
         }
         return !error;
@@ -144,7 +133,7 @@ public class MySQL extends SQL {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);
         } catch (IOException ex1) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex1);
+            KendoLog.errorMessage(this.getClass().getName(), ex1);
         }
     }
 
@@ -184,7 +173,7 @@ public class MySQL extends SQL {
             executeScript(Path.returnDatabaseSchemaPath() + File.separator + "kendotournament_empty.sql");
 
         } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 
@@ -210,68 +199,6 @@ public class MySQL extends SQL {
     }
 
     @Override
-    public boolean updateDatabase(String path, boolean verbose) {
-        boolean answer = true;
-        boolean updated = false;
-        if (verbose) {
-            answer = MessageManager.questionMessage("questionUpdateDatabase", "Warning!");
-        }
-        if (answer) {
-            updated = updateDatabaseAction(path);
-            if (updated) {
-                MessageManager.translatedMessage(this.getClass().getName(), "updatedDatabase", "MySQL", KendoTournamentGenerator.getInstance().getVersion(), JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                MessageManager.errorMessage(this.getClass().getName(), "notUpdateDatabase", "MySQL");
-            }
-        }
-        return updated;
-    }
-
-    private boolean updateDatabaseAction(String path) {
-        String query = "";
-        boolean returnValue = true;
-        try {
-            //File myFolder = new File(new Path().returnDatabaseSchemaPath());
-            File myFolder = new File(path);
-            File allMyFolderObjects[] = myFolder.listFiles();
-
-            for (int o = 0; o < allMyFolderObjects.length; o++) {
-                if (allMyFolderObjects[o].isDirectory()) {
-                    return updateDatabaseAction(allMyFolderObjects[o].getPath());
-                } else {
-                    if (!allMyFolderObjects[o].getPath().endsWith("~")) {
-                        List<String> lines = MyFile.inLines(allMyFolderObjects[o].getPath(), false);
-                        for (int i = 0; i < lines.size(); i++) {
-                            if (!lines.get(i).startsWith("--")) {
-                                if (!lines.get(i).endsWith(";")) {
-                                    query += lines.get(i).trim();
-                                } else {
-                                    if (lines.get(i).trim().length() > 0) {
-                                        query += lines.get(i).trim();
-                                        try (PreparedStatement s = connection.prepareStatement(query)) {
-                                            s.executeUpdate();
-                                        }
-                                        query = "";
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            showSQLError(1049);
-            returnValue = false;
-        } catch (SQLException ex) {
-            if (ex.getErrorCode() != 1060) {  //Avoid error a column already exists.
-                Logger.getLogger(MySQL.class.getName()).log(Level.SEVERE, null, ex);
-                returnValue = false;
-            }
-        }
-        return returnValue;
-    }
-
-    @Override
     protected void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException {
         stmt.setBinaryStream(index, input, size);
     }
@@ -294,35 +221,27 @@ public class MySQL extends SQL {
      * @param numberError
      */
     @Override
-    protected boolean showSQLError(int numberError) {
-        System.out.println("Error: " + numberError);
+    public String getSqlErrorMessage(SQLException exception) {
+        int numberError = exception.getErrorCode();
         switch (numberError) {
             case 1045:
-                MessageManager.errorMessage(this.getClass().getName(), "deniedUser", "MySQL");
-                return true;
+                return trans.getTranslatedText("deniedUser");
             case 1049:
-                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "MySQL");
-                return true;
+                return trans.getTranslatedText("noDatabase");
             case 1062:
-                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "MySQL");
-                return true;
+                return trans.getTranslatedText("repeatedCompetitor");
             case 1054:
-                MessageManager.errorMessage(this.getClass().getName(), "unknownColumn", "MySQL");
-                return true;
+                return trans.getTranslatedText("noDatabase");
             case 1146:
-                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "MySQL");
-                return true;
+                return trans.getTranslatedText("corruptedDatabase");
             case 1130:
-                MessageManager.errorMessage(this.getClass().getName(), "noAccessUser", "MySQL");
-                return true;
+                return trans.getTranslatedText("noAccessUser");
             case 1044:
-                MessageManager.errorMessage(this.getClass().getName(), "noUserPrivileges", "MySQL");
-                return true;
+                return trans.getTranslatedText("noUserPrivileges");
             case 0:
-                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "MySQL");
-                return true;
+                return trans.getTranslatedText("noDatabase");
         }
-
-        return false;
+        KendoLog.errorMessage(this.getClass().getName(), exception);
+        return trans.getTranslatedText("unknownDatabaseError");
     }
 }

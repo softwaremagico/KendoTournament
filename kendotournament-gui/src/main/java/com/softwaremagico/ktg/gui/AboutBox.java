@@ -36,10 +36,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author  jorge
- */
 public final class AboutBox extends javax.swing.JFrame {
 
     private PanelBackground logo;

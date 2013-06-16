@@ -24,7 +24,7 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.OrderTeam;
@@ -166,7 +166,7 @@ public class TeamFight extends JPanel {
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             } else {
-                MessageManager.errorMessage(this.getClass().getName(), "waitNewLevel", "Team");
+                AlertManager.errorMessage(this.getClass().getName(), "waitNewLevel", "Team");
             }
         }
     }

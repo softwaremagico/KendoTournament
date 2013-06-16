@@ -29,7 +29,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -68,8 +68,8 @@ public abstract class PdfDocument {
         try {
             bgImage = Image.getInstance(Path.getBackgroundPath());
         } catch (BadElementException | IOException ex) {
-            MessageManager.errorMessage(this.getClass().getName(), "imageNotFound", "Error");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            AlertManager.errorMessage(this.getClass().getName(), "imageNotFound", "Error");
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 
@@ -97,19 +97,19 @@ public abstract class PdfDocument {
         if (!path.endsWith(".pdf")) {
             path += ".pdf";
         }
-        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!")) {
+        if (!MyFile.fileExist(path) || AlertManager.questionMessage("existFile", "Warning!")) {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 TableFooter event = new TableFooter();
                 writer.setPageEvent(event);
                 generatePDF(document, writer);
-                MessageManager.translatedMessage(this.getClass().getName(), fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
+                AlertManager.translatedMessage(this.getClass().getName(), fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                AlertManager.showErrorInformation(this.getClass().getName(), npe);
                 return false;
             } catch (Exception ex) {
-                MessageManager.errorMessage(this.getClass().getName(), fileCreatedBadTag(), "PDF");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                AlertManager.errorMessage(this.getClass().getName(), fileCreatedBadTag(), "PDF");
+                AlertManager.showErrorInformation(this.getClass().getName(), ex);
                 return false;
             }
         }
@@ -324,7 +324,7 @@ public abstract class PdfDocument {
                 }
 
             } catch (IOException | DocumentException e) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
+                AlertManager.showErrorInformation(this.getClass().getName(), e);
             }
         }
     }
@@ -344,7 +344,7 @@ public abstract class PdfDocument {
                     pcbs[PdfPTable.BASECANVAS].addImage(bgImage, rect.getWidth(), 0, 0, -rect.getHeight(), rect.getLeft(), rect.getTop());
                 }
             } catch (Exception e) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
+                AlertManager.showErrorInformation(this.getClass().getName(), e);
             }
         }
     }

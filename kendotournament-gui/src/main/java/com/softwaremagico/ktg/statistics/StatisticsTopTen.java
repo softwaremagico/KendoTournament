@@ -32,9 +32,11 @@ import com.softwaremagico.ktg.core.ScoreOfCompetitor;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -59,27 +61,31 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     public StatisticsTopTen(Tournament tournament) {
         this.tournament = tournament;
-        Ranking ranking;
-        if (tournament == null) {
-            ranking = new Ranking(FightPool.getInstance().getAll());
-            competitorTopTen = ranking.getCompetitorsScoreRanking();
-        } else {
-            ranking = new Ranking(FightPool.getInstance().get(tournament));
-            competitorTopTen = ranking.getCompetitorsScoreRanking();
+        try {
+            Ranking ranking;
+            if (tournament == null) {
+                ranking = new Ranking(FightPool.getInstance().getAll());
+                competitorTopTen = ranking.getCompetitorsScoreRanking();
+            } else {
+                ranking = new Ranking(FightPool.getInstance().get(tournament));
+                competitorTopTen = ranking.getCompetitorsScoreRanking();
+            }
+            transl = LanguagePool.getTranslator("gui.xml");
+            start();
+            NumberSpinner.setVisible(true);
+            NumberLabel.setVisible(true);
+            this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
+            if (tournament != null) {
+                competitors = RolePool.getInstance().getPeople(tournament, RoleTag.competitorsRoles);
+            } else {
+                competitors = RolePool.getInstance().getPeople(RoleTag.competitorsRoles);
+            }
+            fillSelectComboBox();
+            changesAllowed = true;
+            NumberLabel.setText(trans.getTranslatedText("NumberCompetitorsLabel"));
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
-        transl = LanguagePool.getTranslator("gui.xml");
-        start();
-        NumberSpinner.setVisible(true);
-        NumberLabel.setVisible(true);
-        this.setExtendedState(this.getExtendedState() | FightPanel.MAXIMIZED_BOTH);
-        if (tournament != null) {
-            competitors = RolePool.getInstance().getPeople(tournament, RoleTag.competitorsRoles);
-        } else {
-            competitors = RolePool.getInstance().getPeople(RoleTag.competitorsRoles);
-        }
-        fillSelectComboBox();
-        changesAllowed = true;
-        NumberLabel.setText(trans.getTranslatedText("NumberCompetitorsLabel"));
     }
 
     @Override

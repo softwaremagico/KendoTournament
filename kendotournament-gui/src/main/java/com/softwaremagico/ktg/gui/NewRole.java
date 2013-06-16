@@ -25,10 +25,8 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.RoleTag;
@@ -36,10 +34,12 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.database.TournamentPool;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.CompetitorAccreditationCardPDF;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -106,6 +106,8 @@ public class NewRole extends KendoFrame {
             }
             TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         refreshTournament = true;
     }
@@ -120,7 +122,9 @@ public class NewRole extends KendoFrame {
                 CompetitorComboBox.addItem(listParticipants.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         refreshCompetitor = true;
     }
@@ -134,7 +138,7 @@ public class NewRole extends KendoFrame {
                 RoleTagsComboBox.addItem(RolePool.getInstance().getRoleTags().get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -164,13 +168,15 @@ public class NewRole extends KendoFrame {
                 RoleTagsComboBox.setSelectedIndex(0);
             }
         } catch (ArrayIndexOutOfBoundsException aiofb) {
-            MessageManager.errorMessage(this.getClass().getName(), "noTournamentOrCompetitorExist", "MySQL");
+            AlertManager.errorMessage(this.getClass().getName(), "noTournamentOrCompetitorExist", "MySQL");
             try {
                 RoleTagsComboBox.setSelectedItem("");
             } catch (IllegalArgumentException iae) {
             }
         } catch (NullPointerException npe) {
         } catch (IllegalArgumentException iae) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 
@@ -181,6 +187,8 @@ public class NewRole extends KendoFrame {
                 RoleTagsComboBox.setSelectedIndex(0);
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 
@@ -327,11 +335,11 @@ public class NewRole extends KendoFrame {
                 //Update or insert?
                 if (oldRole != null) {
                     if (RolePool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem(), oldRole, newRole)) {
-                        MessageManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                        AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
                     }
                 } else {
                     if (RolePool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), newRole)) {
-                        MessageManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                        AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
                     }
                 }
                 if (close) {
@@ -341,6 +349,8 @@ public class NewRole extends KendoFrame {
                 deleteRole();
             }
         } catch (ArrayIndexOutOfBoundsException aiob) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
@@ -360,7 +370,7 @@ public class NewRole extends KendoFrame {
                 pdf.createFile(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
 }//GEN-LAST:event_PDFButtonActionPerformed
 

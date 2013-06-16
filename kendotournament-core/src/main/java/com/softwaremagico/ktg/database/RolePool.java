@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     @Override
-    protected HashMap<String, Role> getElementsFromDatabase(Tournament tournament) {
+    protected HashMap<String, Role> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Role> roles = DatabaseConnection.getInstance().getDatabase().getRoles(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -50,7 +51,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Role> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Role> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
         }
@@ -58,7 +59,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Role> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Role> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeRoles(tournament, elementsToDelete);
         }
@@ -66,7 +67,7 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Role, Role> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Role, Role> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
         }
@@ -74,13 +75,13 @@ public class RolePool extends TournamentDependentPool<Role> {
     }
 
     @Override
-    protected List<Role> sort(Tournament tournament) {
+    protected List<Role> sort(Tournament tournament) throws SQLException {
         List<Role> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    public Role getRole(Tournament tournament, RegisteredPerson participant) {
+    public Role getRole(Tournament tournament, RegisteredPerson participant) throws SQLException {
         for (Role role : getMap(tournament).values()) {
             if (role.getCompetitor().equals(participant)) {
                 return role;
@@ -89,7 +90,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return null;
     }
 
-    public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament) {
+    public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament) throws SQLException {
         for (Role role : getMap(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
                 role.setAccreditationPrinted(true);
@@ -98,7 +99,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
     }
 
-    public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament, List<RegisteredPerson> participants) {
+    public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament, List<RegisteredPerson> participants) throws SQLException {
         for (RegisteredPerson participant : participants) {
             Role role = getRole(tournament, participant);
             if (role != null && !role.isAccreditationPrinted()) {
@@ -108,7 +109,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
     }
 
-    public List<RegisteredPerson> getRegisteredPeopleInTournamenteWithoutAccreditation(Tournament tournament) {
+    public List<RegisteredPerson> getRegisteredPeopleInTournamenteWithoutAccreditation(Tournament tournament) throws SQLException {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
             if (!role.isAccreditationPrinted()) {
@@ -119,7 +120,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return results;
     }
 
-    public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament) {
+    public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament) throws SQLException {
         for (Role role : getMap(tournament).values()) {
             if (!role.isDiplomaPrinted()) {
                 role.setDiplomaPrinted(true);
@@ -128,7 +129,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
     }
 
-    public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament, List<RoleTag> rolesWithDiploma) {
+    public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament, List<RoleTag> rolesWithDiploma) throws SQLException {
         for (Role role : getMap(tournament).values()) {
             if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
                 role.setDiplomaPrinted(true);
@@ -137,7 +138,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
     }
 
-    public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) {
+    public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma) throws SQLException {
         List<RegisteredPerson> results = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
             if ((rolesWithDiploma == null || rolesWithDiploma.contains(role.getTag())) && !role.isDiplomaPrinted()) {
@@ -148,7 +149,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return results;
     }
 
-    public List<RegisteredPerson> getPeople(Tournament tournament) {
+    public List<RegisteredPerson> getPeople(Tournament tournament) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
             if (role.getCompetitor() != null) {
@@ -159,13 +160,13 @@ public class RolePool extends TournamentDependentPool<Role> {
         return result;
     }
 
-    public List<RegisteredPerson> getPeople(Tournament tournament, String roleTag) {
+    public List<RegisteredPerson> getPeople(Tournament tournament, String roleTag) throws SQLException {
         List<String> roles = new ArrayList<>();
         roles.add(roleTag);
         return getPeople(tournament, roles);
     }
 
-    public List<RegisteredPerson> getPeople(Tournament tournament, List<String> roleTags) {
+    public List<RegisteredPerson> getPeople(Tournament tournament, List<String> roleTags) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : getMap(tournament).values()) {
             if (roleTags.contains(role.getDatabaseTag())) {
@@ -178,7 +179,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return result;
     }
 
-    public List<RegisteredPerson> getPeople(List<String> roleTags) {
+    public List<RegisteredPerson> getPeople(List<String> roleTags) throws SQLException {
         List<RegisteredPerson> result = new ArrayList<>();
         for (Role role : getAll()) {
             if (roleTags.contains(role.getDatabaseTag())) {
@@ -191,7 +192,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         return result;
     }
 
-    public Integer getVolunteerOrder(Tournament tournament, RegisteredPerson person) {
+    public Integer getVolunteerOrder(Tournament tournament, RegisteredPerson person) throws SQLException {
         List<RegisteredPerson> volunteers = getPeople(tournament, RoleTag.volunteerRoles);
         for (int i = 0; i < volunteers.size(); i++) {
             if (volunteers.get(i).equals(person)) {
@@ -201,12 +202,12 @@ public class RolePool extends TournamentDependentPool<Role> {
         return 0;
     }
 
-    public List<RegisteredPerson> getCompetitors(Tournament tournament) {
+    public List<RegisteredPerson> getCompetitors(Tournament tournament) throws SQLException {
         List<RegisteredPerson> competitors = getPeople(tournament, RoleTag.competitorsRoles);
         return competitors;
     }
 
-    public List<RegisteredPerson> getPeople(Tournament tournament, Club club) {
+    public List<RegisteredPerson> getPeople(Tournament tournament, Club club) throws SQLException {
         List<RegisteredPerson> results = new ArrayList<>();
         List<RegisteredPerson> registeredPeople = getPeople(tournament);
         for (RegisteredPerson person : registeredPeople) {
@@ -234,7 +235,7 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @param tournament
      */
     @Override
-    public void remove(Tournament tournament) {
+    public void remove(Tournament tournament) throws SQLException {
         TeamPool.getInstance().remove(tournament);
         super.remove(tournament);
     }
@@ -245,7 +246,7 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, Role element) {
+    public boolean remove(Tournament tournament, Role element) throws SQLException {
         Team team = TeamPool.getInstance().get(tournament, element.getCompetitor());
         TeamPool.getInstance().remove(tournament, team);
         return super.remove(tournament, element);
@@ -257,7 +258,7 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, List<Role> elements) {
+    public boolean remove(Tournament tournament, List<Role> elements) throws SQLException {
         for (Role role : elements) {
             if (!remove(tournament, role)) {
                 return false;
@@ -272,11 +273,11 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, String elementName) {
+    public boolean remove(Tournament tournament, String elementName) throws SQLException {
         return remove(tournament, getById(tournament, elementName));
     }
 
-    public void remove(Tournament tournament, RegisteredPerson person) {
+    public void remove(Tournament tournament, RegisteredPerson person) throws SQLException {
         List<Role> roles = get(tournament);
         for (Role role : roles) {
             if (role.getCompetitor().equals(person)) {
@@ -290,7 +291,7 @@ public class RolePool extends TournamentDependentPool<Role> {
      *
      * @param person
      */
-    public void remove(RegisteredPerson person) {
+    public void remove(RegisteredPerson person) throws SQLException {
         List<Role> roles = getAll();
         for (Role role : roles) {
             if (role.getCompetitor().equals(person)) {

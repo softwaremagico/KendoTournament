@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Team implements Comparable<Team> {
@@ -84,7 +85,7 @@ public class Team implements Comparable<Team> {
         return 0;
     }
 
-    public Integer getMemberOrder(int level, String competitorID) {
+    public Integer getMemberOrder(int level, String competitorID) throws SQLException {
         return getMemberOrder(level, RegisteredPersonPool.getInstance().get(competitorID));
     }
 

@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.database.UndrawPool;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
@@ -91,7 +92,11 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
 
     public Integer getGoldenPoints() {
         if (goldenPoint == null) {
-            goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroupIndex(), team);
+            try {
+                goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroupIndex(), team);
+            } catch (SQLException ex) {
+                KendoLog.errorMessage(this.getClass().getName(), ex);
+            }
         }
         return goldenPoint;
     }

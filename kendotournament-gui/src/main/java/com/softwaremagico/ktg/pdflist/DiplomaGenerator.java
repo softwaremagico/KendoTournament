@@ -25,12 +25,12 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.AlertManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -90,7 +90,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                 }
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 

@@ -31,6 +31,7 @@ import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
 import com.softwaremagico.ktg.gui.base.KCheckBoxMenuItem;
 import com.softwaremagico.ktg.gui.base.KFrame;
@@ -49,6 +50,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -391,13 +393,17 @@ public class FightPanel extends KFrame {
 
         //Add golden point.
         if (n >= 0) {
-            Undraw undraw = UndrawPool.getInstance().get(getSelectedTournament(), level, group, drawTeams.get(n));
-            if (undraw == null) {
-                undraw = new Undraw(getSelectedTournament(), group, drawTeams.get(n), 0, level);
-                UndrawPool.getInstance().add(getSelectedTournament(), undraw);
+            try {
+                Undraw undraw = UndrawPool.getInstance().get(getSelectedTournament(), level, group, drawTeams.get(n));
+                if (undraw == null) {
+                    undraw = new Undraw(getSelectedTournament(), group, drawTeams.get(n), 0, level);
+                    UndrawPool.getInstance().add(getSelectedTournament(), undraw);
+                }
+                undraw.setPoints(undraw.getPoints() + 1);
+                UndrawPool.getInstance().update(getSelectedTournament(), undraw);
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
-            undraw.setPoints(undraw.getPoints() + 1);
-            UndrawPool.getInstance().update(getSelectedTournament(), undraw);
         }
         return n;
     }
@@ -425,10 +431,14 @@ public class FightPanel extends KFrame {
     }
 
     private void openRankingWindow() {
-        Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
-        TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
-        Ranking ranking = new Ranking(group.getFights());
-        openRankingWindow(ranking);
+        try {
+            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
+            TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+            Ranking ranking = new Ranking(group.getFights());
+            openRankingWindow(ranking);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
     }
 
     private void openRankingWindow(Ranking ranking) {
@@ -461,56 +471,59 @@ public class FightPanel extends KFrame {
 
         @Override
         public void acceptAction() {
-            System.out.println("------ BEGIN ACCEPT -----------");
-            //Finish current fight.
-            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
-            currentFight.setOver(true);
+            try {
+                System.out.println("------ BEGIN ACCEPT -----------");
+                //Finish current fight.
+                Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
+                currentFight.setOver(true);
 
-            TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
-            //If it was the last fight of group.
-            if (group.areFightsOver()) {
-                boolean moreDrawTeams = true;
-                Ranking ranking = null;
-                while (moreDrawTeams) {
-                    //Search for draw scores.
-                    ranking = new Ranking(group.getFights());
-                    List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
-                    if (teamsInDraw != null) {
-                        //Solve Draw Scores
-                        resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroupIndex());
-                    } else {
-                        //No more draw teams, exit loop.
-                        moreDrawTeams = false;
-                    }
-                }
-                //Show score.
-                openRankingWindow(ranking);
-
-                //If it was the last fight of all groups.
-                if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
-                    //Create fights of next level (if any).
-                    List<Fight> newFights = TournamentManagerFactory.getManager(getSelectedTournament()).createSortedFights(currentFight.getLevel() + 1);
-                    if (newFights.size() > 0) {
-                        //Add new fights and continue. 
-                        FightPool.getInstance().add(getSelectedTournament(), newFights);
-                    } else {
-                        //No more fights, show final winner message.
-                    }
-                } else {
-                    //If it was the last fight of arena groups.
-                    if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
-                        //wait for other arena fights. Show message.
-                    } else {
-                        //Now it was the last one of a group.
-                        if (group.inTheLastFight()) {
-                            updateIcon(true);
+                TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+                //If it was the last fight of group.
+                if (group.areFightsOver()) {
+                    boolean moreDrawTeams = true;
+                    Ranking ranking = null;
+                    while (moreDrawTeams) {
+                        //Search for draw scores.
+                        ranking = new Ranking(group.getFights());
+                        List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
+                        if (teamsInDraw != null) {
+                            //Solve Draw Scores
+                            resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroupIndex());
                         } else {
-                            updateIcon(false);
+                            //No more draw teams, exit loop.
+                            moreDrawTeams = false;
+                        }
+                    }
+                    //Show score.
+                    openRankingWindow(ranking);
+
+                    //If it was the last fight of all groups.
+                    if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
+                        //Create fights of next level (if any).
+                        List<Fight> newFights = TournamentManagerFactory.getManager(getSelectedTournament()).createSortedFights(currentFight.getLevel() + 1);
+                        if (newFights.size() > 0) {
+                            //Add new fights and continue. 
+                            FightPool.getInstance().add(getSelectedTournament(), newFights);
+                        } else {
+                            //No more fights, show final winner message.
+                        }
+                    } else {
+                        //If it was the last fight of arena groups.
+                        if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
+                            //wait for other arena fights. Show message.
+                        } else {
+                            //Now it was the last one of a group.
+                            if (group.inTheLastFight()) {
+                                updateIcon(true);
+                            } else {
+                                updateIcon(false);
+                            }
                         }
                     }
                 }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
-
             //Update score panel.
             updateScorePanel();
             System.out.println("------ END ACCEPT -----------");

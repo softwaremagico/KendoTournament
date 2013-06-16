@@ -30,11 +30,13 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.gui.AlertManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SummaryPDF extends ParentList {
@@ -137,13 +139,16 @@ public class SummaryPDF extends ParentList {
         boolean first = true;
         int lastLevel = -1;
 
-        List<Fight> fights;
-        if (useOnlyShiaijo < 0) {
-            fights = FightPool.getInstance().get(tournament);
-        } else {
-            fights = FightPool.getInstance().get(tournament, useOnlyShiaijo);
+        List<Fight> fights = new ArrayList<>();
+        try {
+            if (useOnlyShiaijo < 0) {
+                fights = FightPool.getInstance().get(tournament);
+            } else {
+                fights = FightPool.getInstance().get(tournament, useOnlyShiaijo);
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
-
 
         for (int i = 0; i < fights.size(); i++) {
             if ((showAll) || (fights.get(i).isOver() == !showNotFinishedFights)) {
@@ -160,7 +165,7 @@ public class SummaryPDF extends ParentList {
                     cell = new PdfPCell(fightTable(fights.get(i), first));
                 } catch (DocumentException ex) {
                     cell = new PdfPCell();
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                    AlertManager.showErrorInformation(this.getClass().getName(), ex);
                 }
                 cell.setBorderWidth(border);
                 cell.setColspan(getTableWidths().length);

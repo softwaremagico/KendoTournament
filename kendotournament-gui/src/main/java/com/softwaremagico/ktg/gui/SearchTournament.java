@@ -25,11 +25,11 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -71,22 +71,30 @@ public final class SearchTournament extends Search<Tournament> {
     @Override
     protected void searchButtonActionPerformed(ActionEvent evt) {
         results = new ArrayList<>();
-        if (NameTextField.getText().length() > 0) {
-            results = TournamentPool.getInstance().getByName(NameTextField.getText().trim());
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+        try {
+            if (NameTextField.getText().length() > 0) {
+                results = TournamentPool.getInstance().getByName(NameTextField.getText().trim());
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "fillFields", "Search");
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         fillResults(results);
     }
 
     @Override
     protected boolean deleteElement(Tournament tournament) {
-        if (MessageManager.questionMessage("tournamentDeleteQuestion", "Competitor")) {
-            if (TournamentPool.getInstance().remove(tournament)) {
-                MessageManager.informationMessage(this.getClass().getName(), "tournamentDeleted", "Tournament");
-                return true;
+        if (AlertManager.questionMessage("tournamentDeleteQuestion", "Competitor")) {
+            try {
+                if (TournamentPool.getInstance().remove(tournament)) {
+                    AlertManager.informationMessage(this.getClass().getName(), "tournamentDeleted", "Tournament");
+                    return true;
+                }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
         }
-        return TournamentPool.getInstance().remove(tournament);
+        return false;
     }
 }

@@ -595,7 +595,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="284" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="288" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

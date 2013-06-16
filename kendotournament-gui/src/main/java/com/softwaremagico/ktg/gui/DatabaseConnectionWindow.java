@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -33,6 +32,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -69,13 +69,17 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
     }
 
     public void performConnection() {
-        DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
-        if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
-                connectionPanel.getDatabase(), connectionPanel.getServer())) {
-            MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
-        } else {
-            connectionPanel.resetPassword();
+        try {
+            DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
+            if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
+                    connectionPanel.getDatabase(), connectionPanel.getServer())) {
+                AlertManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            } else {
+                connectionPanel.resetPassword();
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

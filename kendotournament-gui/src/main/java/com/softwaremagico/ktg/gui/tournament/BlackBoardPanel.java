@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
@@ -159,7 +160,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                         }
                     }
                 } catch (NullPointerException npe) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                    AlertManager.showErrorInformation(this.getClass().getName(), npe);
                 }
             }
         }
@@ -214,7 +215,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
+            AlertManager.showErrorInformation(this.getClass().getName(), e);
         }
     }
 

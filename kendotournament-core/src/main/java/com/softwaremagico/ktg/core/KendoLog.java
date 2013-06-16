@@ -26,7 +26,12 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Date;
 import java.util.logging.*;
 
@@ -36,6 +41,7 @@ public class KendoLog {
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
     private static final int maxBytes = 50000000;
     private static final int numLogFiles = 10;
+    private static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
     static {
         try {
@@ -45,7 +51,7 @@ public class KendoLog {
             //fh.setFormatter(new SimpleFormatter());
             fh.setFormatter(getCustomFormatter());
         } catch (IOException | SecurityException ex) {
-            MessageManager.basicErrorMessage(KendoLog.class.getName(), "Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage(), "Logger");
+            KendoLog.severe(KendoLog.class.getName(), "Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage());
         }
     }
 
@@ -115,6 +121,10 @@ public class KendoLog {
     public static void severe(String className, String message) {
         severe(className + ": " + message);
     }
+    
+    public static void translatedSevere(String className, String code){
+        severe(className, trans.getTranslatedText(code));
+    }
 
     private static void fine(String message) {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
@@ -156,5 +166,17 @@ public class KendoLog {
         if (KendoTournamentGenerator.getInstance().getLogOption()) {
             debug(className, "RETURN (" + method + ")");
         }
+    }
+
+    public static void errorMessage(String className, Throwable throwable) {
+        String error = getStackTrace(throwable);
+        severe(className, error);
+    }
+
+    private static String getStackTrace(Throwable throwable) {
+        Writer writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
+        throwable.printStackTrace(printWriter);
+        return writer.toString();
     }
 }

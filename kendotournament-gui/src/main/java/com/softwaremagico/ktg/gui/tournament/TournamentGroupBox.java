@@ -29,6 +29,7 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.UndrawPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
@@ -41,6 +42,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
@@ -117,7 +119,12 @@ public class TournamentGroupBox extends Group {
 
         List<Team> teamRanking;
         if (withScore) {
-            teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
+            try {
+                teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
+                teamRanking = tournamentGroup.getTeams();
+            }
         } else {
             teamRanking = tournamentGroup.getTeams();
         }
@@ -167,20 +174,24 @@ public class TournamentGroupBox extends Group {
 
     public Color obtainWinnerColor(int winner, boolean check) {
         int red, green, blue;
-        if ((!check) || (winner < tournamentGroup.getMaxNumberOfWinners() && winner >= 0 && tournamentGroup.areFightsOver(FightPool.getInstance().get(tournamentGroup.getTournament())))) {
-            if (winner == 0) {
-                red = 220;
-                green = 20;
-                blue = 20;
-            } else {
-                red = 0 + (winner) * 37;
-                red = red % 221;
-                green = 0 + (winner) * 144;
-                green = green % 171;
-                blue = 0 + (winner) * 239 - winner * 150;
-                blue = blue % 245;
+        try {
+            if ((!check) || (winner < tournamentGroup.getMaxNumberOfWinners() && winner >= 0 && tournamentGroup.areFightsOver(FightPool.getInstance().get(tournamentGroup.getTournament())))) {
+                if (winner == 0) {
+                    red = 220;
+                    green = 20;
+                    blue = 20;
+                } else {
+                    red = 0 + (winner) * 37;
+                    red = red % 221;
+                    green = 0 + (winner) * 144;
+                    green = green % 171;
+                    blue = 0 + (winner) * 239 - winner * 150;
+                    blue = blue % 245;
+                }
+                return new Color(red, green, blue);
             }
-            return new Color(red, green, blue);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         return new Color(0, 0, 0);
     }
@@ -238,9 +249,13 @@ public class TournamentGroupBox extends Group {
                 //  csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
             }
         }
-        List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournamentGroup.getTournament());
-        for (int i = 0; i < undraws.size(); i++) {
-            csv.addAll(undraws.get(i).exportToCsv());
+        try {
+            List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournamentGroup.getTournament());
+            for (int i = 0; i < undraws.size(); i++) {
+                csv.addAll(undraws.get(i).exportToCsv());
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         return csv;
     }

@@ -26,12 +26,12 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ChooseScore extends javax.swing.JFrame {
@@ -114,14 +114,18 @@ public class ChooseScore extends javax.swing.JFrame {
 
     private void fillTournaments() {
         refreshing = true;
-        List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
         try {
-            for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i));
+            List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
+            try {
+                for (int i = 0; i < listTournaments.size(); i++) {
+                    TournamentComboBox.addItem(listTournaments.get(i));
+                }
+                TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+            } catch (NullPointerException npe) {
+                AlertManager.showErrorInformation(this.getClass().getName(), npe);
             }
-            TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         refreshing = false;
         //fillFightsPanel();
@@ -371,8 +375,12 @@ public class ChooseScore extends javax.swing.JFrame {
         if (!tournament.getChoosedScore().equals(getStyle())
                 || tournament.getScoreForDraw() != getDrawPoints() || tournament.getScoreForWin() != getWinnerPoints()) {
             ((Tournament) (TournamentComboBox.getSelectedItem())).changeScoreOptions(getStyle(), getWinnerPoints(), getDrawPoints());
-            if (TournamentPool.getInstance().update((Tournament) ((Tournament) (TournamentComboBox.getSelectedItem())), (Tournament) (TournamentComboBox.getSelectedItem()))) {
-                MessageManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
+            try {
+                if (TournamentPool.getInstance().update((Tournament) ((Tournament) (TournamentComboBox.getSelectedItem())), (Tournament) (TournamentComboBox.getSelectedItem()))) {
+                    AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
+                }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed

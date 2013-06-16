@@ -1,9 +1,11 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,16 +21,25 @@ public class Championship implements ITournamentManager {
 
     @Override
     public void fillGroups() {
-        List<Fight> fights = FightPool.getInstance().get(tournament);
-        for (Fight fight : fights) {
-            LeagueLevel leagueLevel = getLevel(fight.getLevel());
-            leagueLevel.fillGroups(fight);
+        try {
+            List<Fight> fights = FightPool.getInstance().get(tournament);
+            for (Fight fight : fights) {
+                LeagueLevel leagueLevel = getLevel(fight.getLevel());
+                leagueLevel.fillGroups(fight);
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 
     @Override
     public List<Fight> getFights(Integer level) {
-        return FightPool.getInstance().getFromLevel(tournament, level);
+        try {
+            return FightPool.getInstance().getFromLevel(tournament, level);
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+            return new ArrayList<>();
+        }
     }
 
     @Override

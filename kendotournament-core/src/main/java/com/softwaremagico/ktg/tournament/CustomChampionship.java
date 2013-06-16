@@ -1,15 +1,20 @@
 package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.CustomLinkPool;
+import java.sql.SQLException;
 
 public class CustomChampionship extends Championship {
 
     @Override
     public void fillGroups() {
         super.fillGroups();
-        ((LeagueLevelCustom) levelZero).setLinks(CustomLinkPool.getInstance().get(tournament));
-        //List<CustomWinnerLink> links = CustomLinkPool.getInstance().get(tournament);
+        try {
+            ((LeagueLevelCustom) levelZero).setLinks(CustomLinkPool.getInstance().get(tournament));
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
     }
 
     public CustomChampionship(Tournament tournament) {

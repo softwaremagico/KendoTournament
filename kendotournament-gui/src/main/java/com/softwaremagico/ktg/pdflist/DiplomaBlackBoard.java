@@ -25,8 +25,8 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.AlertManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -65,7 +65,7 @@ public class DiplomaBlackBoard extends JPanel {
             //imagen = imagen.getScaledInstance( (int) ((((double) getPreferredSize().height / srcHeight) * srcWidth)),getPreferredSize().height, Image.SCALE_FAST);
             imagen = imagen.getScaledInstance(d.width, d.height, Image.SCALE_FAST);
         } catch (javax.imageio.IIOException ie) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ie);
+            AlertManager.showErrorInformation(this.getClass().getName(),ie);
         }
     }
 

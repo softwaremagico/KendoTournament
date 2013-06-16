@@ -25,11 +25,11 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.AlertManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -78,14 +78,14 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
                     listTournaments.get(TournamentComboBox.getSelectedIndex()).setAccreditation(photo);
                     TournamentPool.getInstance().update(listTournaments.get(TournamentComboBox.getSelectedIndex()), listTournaments.get(TournamentComboBox.getSelectedIndex()));
                 } catch (FileNotFoundException fnf) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), fnf);
+                    AlertManager.showErrorInformation(this.getClass().getName(), fnf);
                 }
                 TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(TournamentPool.getInstance().get(TournamentComboBox.getSelectedItem().toString()));
                 pdf.setPrintAll(isCheckBoxSelected());
                 pdf.createFile(file);
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
     }
 

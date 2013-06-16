@@ -32,12 +32,15 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import com.softwaremagico.ktg.tournament.TournamentType;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FightListPDF extends ParentList {
@@ -73,7 +76,12 @@ public class FightListPDF extends ParentList {
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
         for (int i = 0; i < tournament.getFightingAreas(); i++) {
-            List<Fight> fights = FightPool.getInstance().get(tournament, i);
+            List<Fight> fights = new ArrayList<>();
+            try {
+                fights = FightPool.getInstance().get(tournament, i);
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
+            }
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader2("Shiaijo: " + KendoTournamentGenerator.getFightAreaName(i), 0));
@@ -108,7 +116,12 @@ public class FightListPDF extends ParentList {
 
             List<TournamentGroup> groups = tournamentManager.getGroups(l);
 
-            List<Fight> fights = FightPool.getInstance().get(tournament);
+            List<Fight> fights = new ArrayList<>();
+            try {
+                fights = FightPool.getInstance().get(tournament);
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
+            }
             for (int i = 0; i < groups.size(); i++) {
                 mainTable.addCell(getEmptyRow());
                 mainTable.addCell(getHeader2(trans.getTranslatedText("GroupString") + " " + (i + 1) + " (" + trans.getTranslatedText("FightArea") + " " + KendoTournamentGenerator.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));

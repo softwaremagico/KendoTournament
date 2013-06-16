@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.database.PhotoPool;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.Collator;
 import java.util.Locale;
 
@@ -184,7 +185,12 @@ public class RegisteredPerson implements Serializable, Comparable<RegisteredPers
     }
 
     public Photo getPhoto() {
-        return PhotoPool.getInstance().get(getId());
+        try {
+            return PhotoPool.getInstance().get(getId());
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
+        return null;
     }
 
     @Override

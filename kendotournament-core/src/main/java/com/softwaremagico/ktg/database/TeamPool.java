@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected HashMap<String, Team> getElementsFromDatabase(Tournament tournament) {
+    protected HashMap<String, Team> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Team> teams = DatabaseConnection.getConnection().getDatabase().getTeams(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -41,7 +42,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Team, Team> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Team, Team> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
         }
@@ -49,7 +50,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Team> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Team> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addTeams(elementsToStore);
         }
@@ -57,7 +58,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Team> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Team> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeTeams(elementsToDelete);
         }
@@ -65,7 +66,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
     }
 
     @Override
-    protected List<Team> sort(Tournament tournament) {
+    protected List<Team> sort(Tournament tournament) throws SQLException {
         List<Team> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
@@ -77,7 +78,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      * @param level
      */
-    public List<Team> get(Tournament tournament, Integer level) {
+    public List<Team> get(Tournament tournament, Integer level) throws SQLException {
         List<Team> results = new ArrayList<>();
         List<Fight> fights = FightPool.getInstance().getFromLevel(tournament, level);
         //If level is zero and no fights.
@@ -96,7 +97,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         return results;
     }
 
-    public Team get(Tournament tournament, RegisteredPerson competitor) {
+    public Team get(Tournament tournament, RegisteredPerson competitor) throws SQLException {
         for (Team team : getMap(tournament).values()) {
             if (team.isMember(competitor)) {
                 return team;
@@ -105,7 +106,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         return null;
     }
 
-    public void setIndividualTeams(Tournament tournament) {
+    public void setIndividualTeams(Tournament tournament) throws SQLException {
         //Delete old teams of tournament.
         remove(tournament);
 
@@ -120,7 +121,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         tournament.setTeamSize(1);
     }
 
-    public void removeTeamsGroup(Tournament tournament) {
+    public void removeTeamsGroup(Tournament tournament) throws SQLException {
         List<Team> teams = new ArrayList<>(getMap(tournament).values());
         for (Team team : teams) {
             team.setGroup(0);
@@ -128,7 +129,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         }
     }
 
-    public List<RegisteredPerson> getCompetitorsWithoutTeam(Tournament tournament) {
+    public List<RegisteredPerson> getCompetitorsWithoutTeam(Tournament tournament) throws SQLException {
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         List<Team> teams = new ArrayList<>(getMap(tournament).values());
         for (Team team : teams) {
@@ -146,7 +147,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      */
     @Override
-    public void remove(Tournament tournament) {
+    public void remove(Tournament tournament) throws SQLException {
         FightPool.getInstance().remove(tournament);
         super.remove(tournament);
     }
@@ -158,7 +159,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, Team element) {
+    public boolean remove(Tournament tournament, Team element) throws SQLException {
         FightPool.getInstance().remove(tournament);
         return super.remove(tournament, element);
     }
@@ -170,7 +171,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, List<Team> elements) {
+    public boolean remove(Tournament tournament, List<Team> elements) throws SQLException {
         for (Team element : elements) {
             remove(tournament, element);
         }
@@ -184,7 +185,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * @param tournament
      */
     @Override
-    public boolean remove(Tournament tournament, String elementName) {
+    public boolean remove(Tournament tournament, String elementName) throws SQLException {
         return remove(tournament, getById(tournament, elementName));
     }
 }

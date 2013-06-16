@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.gui;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -23,16 +23,20 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class MessageManager {
+public class AlertManager {
 
     private static final int LINE = 50;
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
@@ -63,7 +67,7 @@ public class MessageManager {
             text = text.substring(0, text.length() - 1);
         }
         if (winnerIcon == null) {
-            winnerIcon = new ImageIcon(MessageManager.class.getResource("/cup.png"));
+            winnerIcon = new ImageIcon(AlertManager.class.getResource("/cup.png"));
         }
         KendoLog.finest(className, text);
         JFrame frame = null;
@@ -133,19 +137,19 @@ public class MessageManager {
     }
 
     public static void informationMessage(String className, String code, String title) {
-        MessageManager.translatedMessage(className, code, title, JOptionPane.INFORMATION_MESSAGE);
+        AlertManager.translatedMessage(className, code, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void informationMessage(String className, String code, String title, String finalText) {
-        MessageManager.translatedMessage(className, code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
+        AlertManager.translatedMessage(className, code, title, finalText, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void warningMessage(String className, String code, String title) {
-        MessageManager.translatedMessage(className, code, title, JOptionPane.WARNING_MESSAGE);
+        AlertManager.translatedMessage(className, code, title, JOptionPane.WARNING_MESSAGE);
     }
 
     public static void warningMessage(String className, String code, String title, String finalText) {
-        MessageManager.translatedMessage(className, code, title, finalText, JOptionPane.WARNING_MESSAGE);
+        AlertManager.translatedMessage(className, code, title, finalText, JOptionPane.WARNING_MESSAGE);
     }
 
     public static boolean questionMessage(String code, String title) {
@@ -165,5 +169,20 @@ public class MessageManager {
         PrintWriter printWriter = new PrintWriter(writer);
         throwable.printStackTrace(printWriter);
         return writer.toString();
+    }
+
+    /**
+     * If debug is activated, show information about the error.
+     */
+    public static void showErrorInformation(String className, Exception ex) {
+        if (KendoTournamentGenerator.isDebugOptionSelected()) {
+            errorMessage(className, ex);
+        }
+    }
+
+    public static void showSqlErrorMessage(SQLException exception) {
+        System.out.println(exception.getErrorCode());
+        String errorText = DatabaseConnection.getConnection().getDatabase().getSqlErrorMessage(exception);
+        showGraphicMessage(errorText, "Database error", JOptionPane.ERROR_MESSAGE);
     }
 }

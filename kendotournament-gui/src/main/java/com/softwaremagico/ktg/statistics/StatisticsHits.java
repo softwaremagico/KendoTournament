@@ -28,8 +28,10 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.DuelPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
@@ -50,11 +52,15 @@ public abstract class StatisticsHits extends StatisticsGUI {
      */
     protected void obtainDuels(RegisteredPerson competitor) {
         this.competitor = competitor;
-        if (this.competitor == null) {
-            duels = DuelPool.getInstance().getAll();
-        } else {
-            duelsOfCompetitorWhenIsInTeamRight = DuelPool.getInstance().get(competitor, true);
-            duelsOfCompetitorWhenIsInTeamLeft = DuelPool.getInstance().get(competitor, false);
+        try {
+            if (this.competitor == null) {
+                duels = DuelPool.getInstance().getAll();
+            } else {
+                duelsOfCompetitorWhenIsInTeamRight = DuelPool.getInstance().get(competitor, true);
+                duelsOfCompetitorWhenIsInTeamLeft = DuelPool.getInstance().get(competitor, false);
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

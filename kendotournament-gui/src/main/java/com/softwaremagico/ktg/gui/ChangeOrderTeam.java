@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
@@ -35,6 +34,7 @@ import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -52,13 +52,17 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
      * Creates new form ChangeOrderTeam
      */
     public ChangeOrderTeam() {
-        level = FightPool.getInstance().getLastLevelUsed(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setLanguage();
-        fillTournaments();
-        update();
+        try {
+            level = FightPool.getInstance().getLastLevelUsed(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+            initComponents();
+            setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                    (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+            setLanguage();
+            fillTournaments();
+            update();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
     }
 
     /**
@@ -81,6 +85,8 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -93,8 +99,10 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
             teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
             fillTeams();
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
+            AlertManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
             dispose();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

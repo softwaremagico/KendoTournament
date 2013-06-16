@@ -1,5 +1,6 @@
 package com.softwaremagico.ktg.database;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,15 +15,15 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract String getId(ElementPool element);
 
-    protected abstract HashMap<String, ElementPool> getElementsFromDatabase();
+    protected abstract HashMap<String, ElementPool> getElementsFromDatabase() throws SQLException;
 
-    protected abstract boolean storeElementsInDatabase(List<ElementPool> elementsToStore);
+    protected abstract boolean storeElementsInDatabase(List<ElementPool> elementsToStore)throws SQLException;
 
-    protected abstract boolean removeElementsFromDatabase(List<ElementPool> elementsToDelete);
+    protected abstract boolean removeElementsFromDatabase(List<ElementPool> elementsToDelete)throws SQLException;
 
-    protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate);
+    protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate)throws SQLException;
 
-    protected HashMap<String, ElementPool> getMap() {
+    protected HashMap<String, ElementPool> getMap() throws SQLException {
         if (elements == null) {
             elements = getElementsFromDatabase();
         }
@@ -70,17 +71,17 @@ public abstract class SimplePool<ElementPool> {
         getElementToRemove().put(getId(element), element);
     }
 
-    public ElementPool get(String elementName) {
+    public ElementPool get(String elementName) throws SQLException {
         return (ElementPool) getMap().get(elementName);
     }
 
-    protected List<ElementPool> getAll() {
+    protected List<ElementPool> getAll() throws SQLException {
         List<ElementPool> results = new ArrayList<>();
         results.addAll(getMap().values());
         return results;
     }
 
-    public boolean add(ElementPool element) {
+    public boolean add(ElementPool element) throws SQLException {
         if (!getMap().containsValue(element)) {
             sortedElements = null; //Sorted elements need to be recreated.
             getMap().put(getId(element), element);
@@ -95,7 +96,7 @@ public abstract class SimplePool<ElementPool> {
      *
      * @param elementUpdated
      */
-    public void update(ElementPool elementUpdated) {
+    public void update(ElementPool elementUpdated) throws SQLException {
         update(elementUpdated, elementUpdated);
     }
 
@@ -105,7 +106,7 @@ public abstract class SimplePool<ElementPool> {
      * @param oldElement
      * @param newElement
      */
-    public boolean update(ElementPool oldElement, ElementPool newElement) {
+    public boolean update(ElementPool oldElement, ElementPool newElement) throws SQLException {
         String id = getId(oldElement);
         sortedElements = null;
         if (!id.equals(getId(newElement))) {
@@ -128,7 +129,7 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public boolean remove(ElementPool element) {
+    public boolean remove(ElementPool element)throws SQLException {
         String id = getId(element);
         if (getMap().remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
@@ -146,14 +147,14 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public void remove(String elementName) {
+    public void remove(String elementName)throws SQLException {
         remove(get(elementName));
     }
 
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<ElementPool> search(String string) {
+    public List<ElementPool> search(String string)throws SQLException {
         List<ElementPool> result = new ArrayList<>();
         for (ElementPool element : getMap().values()) {
             if (getId(element).contains(string)) {
@@ -163,9 +164,9 @@ public abstract class SimplePool<ElementPool> {
         return result;
     }
 
-    protected abstract List<ElementPool> sort();
+    protected abstract List<ElementPool> sort() throws SQLException;
 
-    public List<ElementPool> getSorted() {
+    public List<ElementPool> getSorted()throws SQLException {
         if (sortedElements != null) {
             return sortedElements;
         } else if (getMap() != null) {
@@ -176,7 +177,7 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public boolean updateDatabase() {
+    public boolean updateDatabase()throws SQLException {
         if (!removeElementsFromDatabase(new ArrayList(getElementToRemove().values()))) {
             return false;
         }
@@ -189,7 +190,7 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public List<ElementPool> getAll(int fromRow, int numberOfRows) {
+    public List<ElementPool> getAll(int fromRow, int numberOfRows)throws SQLException{
         return getAll().subList(fromRow, fromRow + numberOfRows);
     }
 

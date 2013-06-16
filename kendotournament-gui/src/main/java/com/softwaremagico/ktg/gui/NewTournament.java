@@ -25,23 +25,23 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
 import com.softwaremagico.ktg.tools.Media;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -149,27 +149,31 @@ public class NewTournament extends KendoFrame {
     }
 
     public boolean acceptTournament() {
-        if (NameTextField.getText().length() > 0) {
-            Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
-            if (!defaultBanner) {
-                newTournament.addBanner(banner);
-            }
-            //Store tournament into database
-            if (oldTournament != null) {
-                TournamentPool.getInstance().update(oldTournament, newTournament);
-                //If tournament team size has changed (tournament update), delete old teams of tournament.
-                if (maxCompetitorTeam != null && maxCompetitorTeam != newTournament.getTeamSize()) {
-                    TeamPool.getInstance().remove(oldTournament);
+        try {
+            if (NameTextField.getText().length() > 0) {
+                Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
+                if (!defaultBanner) {
+                    newTournament.addBanner(banner);
                 }
-                MessageManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
+                //Store tournament into database
+                if (oldTournament != null) {
+                    TournamentPool.getInstance().update(oldTournament, newTournament);
+                    //If tournament team size has changed (tournament update), delete old teams of tournament.
+                    if (maxCompetitorTeam != null && maxCompetitorTeam != newTournament.getTeamSize()) {
+                        TeamPool.getInstance().remove(oldTournament);
+                    }
+                    AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
+                } else {
+                    TournamentPool.getInstance().add(newTournament);
+                    AlertManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
+                }
+                KendoTournamentGenerator.getInstance().setLastSelectedTournament(NameTextField.getText());
+                return true;
             } else {
-                TournamentPool.getInstance().add(newTournament);
-                MessageManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
+                AlertManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
             }
-            KendoTournamentGenerator.getInstance().setLastSelectedTournament(NameTextField.getText());
-            return true;
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         return false;
     }
@@ -401,10 +405,10 @@ public class NewTournament extends KendoFrame {
                     pdf.createFile(file);
                 }
             } catch (Exception ex) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                AlertManager.showErrorInformation(this.getClass().getName(), ex);
             }
         } else {
-            MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
+            AlertManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 

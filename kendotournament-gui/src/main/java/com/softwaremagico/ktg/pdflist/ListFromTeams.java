@@ -27,11 +27,13 @@ package com.softwaremagico.ktg.pdflist;
 
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +71,8 @@ public abstract class ListFromTeams extends KendoFrame {
                 TeamComboBox.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).getTournament().getName() + ")");
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

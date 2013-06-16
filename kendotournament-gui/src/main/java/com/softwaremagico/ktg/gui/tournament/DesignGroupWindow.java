@@ -24,7 +24,7 @@ package com.softwaremagico.ktg.gui.tournament;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.gui.NewTeam;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -326,7 +326,7 @@ public class DesignGroupWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_FightAreaComboBoxActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        if (MessageManager.questionMessage("questionRemoveTeam", "Warning!")) {
+        if (AlertManager.questionMessage("questionRemoveTeam", "Warning!")) {
             int index = GroupList.getSelectedIndex();
             tournamentGroup.getTeams().remove(index);
             fillGroupArea();

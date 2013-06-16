@@ -27,6 +27,7 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.database.RolePool;
 import java.io.Serializable;
+import java.sql.SQLException;
 
 /**
  * The objective of this class is store the database into a file. For managing
@@ -54,7 +55,11 @@ public class Role implements Serializable, Comparable<Role> {
         this.tournament = tournament;
         this.competitor = competitor;
         this.tag = tag;
-        this.accreditationOrder = RolePool.getInstance().getPeople(tournament).size() + 1;
+        try {
+            this.accreditationOrder = RolePool.getInstance().getPeople(tournament).size() + 1;
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
         this.accreditationPrinted = accreditationPrinted;
         this.diplomaPrinted = diplomaPrinted;
     }

@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -34,6 +33,7 @@ import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,12 +107,12 @@ public class OrderTeam extends NewTeam {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
                 } catch (NullPointerException | IndexOutOfBoundsException npe) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                    AlertManager.showErrorInformation(this.getClass().getName(), npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -124,15 +124,19 @@ public class OrderTeam extends NewTeam {
         }
 
         if (repeatedCompetitor()) {
-            MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
+            AlertManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
         } else {
             //Insert the change into the database.
             for (int i = 0; i < participants.size(); i++) {
                 team.setMember(participants.get(i), i, level);
             }
-            TeamPool.getInstance().update(tournament, team);
-            MessageManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
-            this.dispose();
+            try {
+                TeamPool.getInstance().update(tournament, team);
+                AlertManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
+                this.dispose();
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
+            }
         }
     }
 

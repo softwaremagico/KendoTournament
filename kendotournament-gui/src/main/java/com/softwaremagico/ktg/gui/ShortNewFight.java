@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +61,11 @@ public class ShortNewFight extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        listTeams = TeamPool.getInstance().get(tournament);
+        try {
+            listTeams = TeamPool.getInstance().get(tournament);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();

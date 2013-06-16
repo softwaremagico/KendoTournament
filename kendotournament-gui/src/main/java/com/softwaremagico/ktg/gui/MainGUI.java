@@ -23,11 +23,10 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
@@ -36,6 +35,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -234,7 +234,11 @@ public class MainGUI extends KendoFrame {
                 JOptionPane.YES_NO_CANCEL_OPTION);
         if (confirmed == JOptionPane.YES_OPTION) {
             if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
-                DatabaseConnection.getInstance().updateDatabase();
+                try {
+                    DatabaseConnection.getInstance().updateDatabase();
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
+                }
             }
             System.exit(0);
         } else if (confirmed == JOptionPane.NO_OPTION) {
@@ -785,7 +789,7 @@ public class MainGUI extends KendoFrame {
         DatabaseConnection.getInstance().disconnect();
         DatabaseConnection.getInstance().setPassword("");
         changeMenuIsConnectedToDatabase();
-        MessageManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
+        AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed

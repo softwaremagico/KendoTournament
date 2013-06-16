@@ -5,6 +5,7 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,7 +34,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected HashMap<String, Fight> getElementsFromDatabase(Tournament tournament) {
+    protected HashMap<String, Fight> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Fight> fights = DatabaseConnection.getConnection().getDatabase().getFights(tournament);
         DatabaseConnection.getInstance().disconnect();
@@ -45,7 +46,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Fight> elementsToStore) {
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Fight> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addFights(elementsToStore);
         }
@@ -53,7 +54,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Fight> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Fight> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().removeFights(elementsToDelete);
         }
@@ -61,7 +62,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate) {
+    protected boolean updateElements(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);
         }
@@ -69,42 +70,42 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    protected List<Fight> sort(Tournament tournament) {
+    protected List<Fight> sort(Tournament tournament) throws SQLException {
         List<Fight> unsorted = new ArrayList(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
     @Override
-    public boolean remove(Tournament tournament, Fight element) {
+    public boolean remove(Tournament tournament, Fight element) throws SQLException {
         //Delete duels.
         List<Duel> duels = DuelPool.getInstance().get(tournament, element);
         DuelPool.getInstance().remove(tournament, duels);
 
         //Delete undraws where this fights is involved.
         Undraw undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam1());
-        if(undraw != null){
+        if (undraw != null) {
             UndrawPool.getInstance().remove(tournament, undraw);
         }
-        undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam2());       
-                if(undraw != null){
+        undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam2());
+        if (undraw != null) {
             UndrawPool.getInstance().remove(tournament, undraw);
         }
-        
+
         //Delete fight.
         super.remove(tournament, element);
         return true;
     }
 
     @Override
-    public void remove(Tournament tournament) {
+    public void remove(Tournament tournament) throws SQLException {
         DuelPool.getInstance().remove(tournament);
         UndrawPool.getInstance().remove(tournament);
         super.remove(tournament);
     }
 
     @Override
-    public boolean remove(Tournament tournament, List<Fight> elements) {
+    public boolean remove(Tournament tournament, List<Fight> elements) throws SQLException {
         for (Fight element : elements) {
             remove(tournament, element);
         }
@@ -112,7 +113,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     @Override
-    public boolean remove(Tournament tournament, String elementName) {
+    public boolean remove(Tournament tournament, String elementName) throws SQLException {
         return remove(tournament, get(tournament, elementName));
     }
 
@@ -122,7 +123,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         DuelPool.getInstance().reset();
     }
 
-    public List<Fight> get(Tournament tournament, Integer fightArea) {
+    public List<Fight> get(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfArea = new ArrayList<>();
         for (Fight fight : allFights) {
@@ -134,7 +135,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return fightsOfArea;
     }
 
-    public Fight getFightFromCurrent(Tournament tournament, Integer fightArea, Integer fightIndex) {
+    public Fight getFightFromCurrent(Tournament tournament, Integer fightArea, Integer fightIndex) throws SQLException {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfArea = new ArrayList<>();
         for (Fight fight : allFights) {
@@ -152,7 +153,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    public Fight get(Tournament tournament, Integer fightArea, Integer index) {
+    public Fight get(Tournament tournament, Integer fightArea, Integer index) throws SQLException {
         List<Fight> arenaFights = get(tournament, fightArea);
         if (index >= 0 && index < arenaFights.size()) {
             return arenaFights.get(index);
@@ -160,7 +161,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) {
+    public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
             if (fight.getGroupIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
                     && fight.getLevel() == level) {
@@ -170,12 +171,12 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    public void setAsOver(Tournament tournament, Fight fight, boolean over) {
+    public void setAsOver(Tournament tournament, Fight fight, boolean over) throws SQLException {
         fight.setOver(over);
         update(tournament, fight, fight);
     }
 
-    public void remove(Tournament tournament, Integer minLevel) {
+    public void remove(Tournament tournament, Integer minLevel) throws SQLException {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         for (Fight fight : allFights) {
             if (fight.getLevel() >= minLevel) {
@@ -184,7 +185,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         }
     }
 
-    public Integer getFightIndex(Tournament tournament, Fight fight, Integer fightArea) {
+    public Integer getFightIndex(Tournament tournament, Fight fight, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
         for (Integer i = 0; i < fightsOfArena.size(); i++) {
             if (fightsOfArena.get(i).equals(fight)) {
@@ -201,7 +202,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
      * @param fightArea
      * @return Null if all fights are over.
      */
-    public Fight getCurrentFight(Tournament tournament, Integer fightArea) {
+    public Fight getCurrentFight(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
         if (fightsOfArena == null || fightsOfArena.isEmpty()) {
             return null;
@@ -221,7 +222,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
      * @param fightArea
      * @return Null if all fights are over.
      */
-    public Integer getCurrentFightIndex(Tournament tournament, Integer fightArea) {
+    public Integer getCurrentFightIndex(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
         if (fightsOfArena == null || fightsOfArena.isEmpty()) {
             return null;
@@ -234,7 +235,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    public Integer getLastLevelUsed(Tournament tournament) {
+    public Integer getLastLevelUsed(Tournament tournament) throws SQLException {
         Fight fight = getCurrentFight(tournament, 0);
         if (fight == null) {
             return 0;
@@ -242,7 +243,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return fight.getLevel();
     }
 
-    public Integer getMaxLevel(Tournament tournament) {
+    public Integer getMaxLevel(Tournament tournament) throws SQLException {
         Integer maxLevel = 0;
         List<Fight> fights = get(tournament);
         for (Fight fight : fights) {
@@ -253,7 +254,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return maxLevel;
     }
 
-    public List<Fight> getFromLevel(Tournament tournament, Integer level) {
+    public List<Fight> getFromLevel(Tournament tournament, Integer level) throws SQLException {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfLevel = new ArrayList<>();
         for (Fight fight : allFights) {
@@ -265,7 +266,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return fightsOfLevel;
     }
 
-    public boolean areAllOver(Tournament tournament) {
+    public boolean areAllOver(Tournament tournament) throws SQLException {
         List<Fight> fights = get(tournament);
         for (Fight fight : fights) {
             if (!fight.isOver()) {
@@ -275,7 +276,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return true;
     }
 
-    public boolean areAllOver(Tournament tournament, Integer arena) {
+    public boolean areAllOver(Tournament tournament, Integer arena) throws SQLException {
         List<Fight> fights = get(tournament);
         for (Fight fight : fights) {
             if (!fight.isOver() && fight.getAsignedFightArea().equals(arena)) {

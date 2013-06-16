@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
@@ -36,6 +35,7 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -93,7 +93,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 TournamentComboBox.addItem(listTournaments.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -108,7 +110,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 Team1ComboBox.addItem(listTeams.get(i));
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         refreshTeam1 = true;
     }
@@ -182,6 +186,8 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 fightsModel.removeAllElements();
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 
@@ -490,7 +496,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RandomButtonActionPerformed
         try {
-            if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+            if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
                 setTournamentType();
                 fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(), getDefinedType()).createRandomFights(0);
@@ -501,7 +507,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }//GEN-LAST:event_RandomButtonActionPerformed
 
@@ -521,18 +527,22 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        if (fights != null && fights.size() > 0) {
-            if (!FightPool.existRepeatedFight(fights)) {
-                FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
-                FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
-                TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
-                MessageManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
-                this.dispose();
+        try {
+            if (fights != null && fights.size() > 0) {
+                if (!FightPool.existRepeatedFight(fights)) {
+                    FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
+                    FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
+                    TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
+                    AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                    this.dispose();
+                } else {
+                    AlertManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");
+                }
             } else {
-                MessageManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");
+                AlertManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
             }
-        } else {
-            MessageManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
@@ -557,7 +567,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     }//GEN-LAST:event_DownButtonActionPerformed
 
     private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteAllButtonActionPerformed
-        if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+        if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
             fights = new ArrayList<>();
             fightsModel.removeAllElements();
         }
@@ -565,7 +575,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortedButtonActionPerformed
         try {
-            if (fightsModel.isEmpty() || MessageManager.questionMessage("deleteFights", "Warning!")) {
+            if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
                 setTournamentType();
                 fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(), getDefinedType()).createSortedFights(0);
                 fightsModel.removeAllElements();

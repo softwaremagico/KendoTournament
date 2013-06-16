@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.files;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.MessageManager;
+import com.softwaremagico.ktg.core.KendoLog;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -91,8 +91,8 @@ public class Folder {
 
     }
 
-    public static String readFileAsText(String filename, boolean verbose) throws IOException {
-        return MyFile.inString(filename, verbose).trim();
+    public static String readFileAsText(String filename, boolean verbose) throws FileNotFoundException, IOException {
+        return MyFile.inString(filename).trim();
     }
 
     /**
@@ -127,7 +127,7 @@ public class Folder {
         } catch (FileNotFoundException ex) {
             String text = "Impossible to generate the file:\n\t" + file
                     + "\nCheck the Folder.\n";
-            MessageManager.basicErrorMessage(Folder.class.getName(), text, "Directories");
+            KendoLog.severe(Folder.class.getName(), text);
             return false;
         }
         return true;
@@ -161,7 +161,7 @@ public class Folder {
             String msg = "Impossible to generate file:\n\t" + file
                     + ". \nIs the working directory created properly?\n"
                     + "Check into \"Configuration -> Configurate the Computer\"";
-            MessageManager.basicErrorMessage(Folder.class.getName(), msg, "directories");
+            KendoLog.severe(Folder.class.getName(), msg);
         }
     }
 

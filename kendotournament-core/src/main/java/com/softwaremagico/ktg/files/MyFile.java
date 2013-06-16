@@ -25,11 +25,9 @@ package com.softwaremagico.ktg.files;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.MessageManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,21 +44,14 @@ public class MyFile {
     /**
      * Devuelve las lineas de un fichero leido anteriormente.
      */
-    public static List<String> inLines(String filename, boolean verbose) throws IOException {
+    public static List<String> inLines(String filename, boolean verbose) throws FileNotFoundException, IOException {
         String OS = System.getProperty("os.name");
         if (OS.contains("Windows Vista")) {
-            return readTextFileInLines(filename, "ISO8859_1", verbose);
+            return readTextFileInLines(filename, "ISO8859_1");
         } else if (OS.contains("Windows")) {
-            return readTextFileInLines(filename, "Cp1252", verbose);
+            return readTextFileInLines(filename, "Cp1252");
         }
-        return readTextFileInLines(filename, "UTF8", verbose);
-    }
-
-    /**
-     * Devuelve las lineas de un fichero leido anteriormente.
-     */
-    public static List<String> inLines(String filename, boolean verbose, String mode) throws IOException {
-        return readTextFileInLines(filename, mode, verbose);
+        return readTextFileInLines(filename, "UTF8");
     }
 
     /**
@@ -71,9 +62,9 @@ public class MyFile {
      * @return
      * @throws IOException
      */
-    public static String inString(String filename, boolean verbose) throws IOException {
+    public static String inString(String filename) throws FileNotFoundException, IOException {
         //String OS = System.getProperty("os.name");
-        return readTextFile(filename, "ISO8859_1", verbose);
+        return readTextFile(filename, "ISO8859_1");
         /*
          * if (OS.contains("Windows Vista") || (OS.contains("Windows 7"))) {
          * return ReadTextFile("ISO8859_1", verbose); } else if
@@ -85,7 +76,7 @@ public class MyFile {
     /**
      * Devuelve el fichero leido como una lista de lineas.
      */
-    private static List<String> readTextFileInLines(String filename, String mode, boolean verbose) {
+    private static List<String> readTextFileInLines(String filename, String mode) throws FileNotFoundException {
         List<String> contents = new ArrayList<>();
 
         BufferedReader input = null;
@@ -96,9 +87,7 @@ public class MyFile {
                 contents.add(line);
             }
         } catch (FileNotFoundException ex) {
-            if (verbose) {
-                MessageManager.customMessage(MyFile.class.getName(), "Impossible to read the file: " + filename, "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            throw new FileNotFoundException("Impossible to read the file: " + filename);
         } catch (IOException ex) {
         } finally {
             try {
@@ -115,31 +104,23 @@ public class MyFile {
     /**
      * Devuelve el fichero leido como un unico string.
      */
-    public static String readTextFile(String filename, boolean verbose) {
+    public static String readTextFile(String filename) {
         File file = new File(filename);
-        String text = "";
-        try {
-            try (FileInputStream inputData = new FileInputStream(file)) {
-                byte bt[] = new byte[(int) file.length()];
-                int numBytes = inputData.read(bt);    /*
-                 * If not this line, the file is no readed propetly.
-                 */
-                text = new String(bt);
-            }
-        } catch (IOException ex) {
-            if (verbose) {
-                MessageManager.basicErrorMessage(MyFile.class.getName(), "Error opening the file:" + filename, "File Error");
-            }
+        if (!file.exists()) {
+            return "File not found: " + filename;
         }
+        String text;
+        byte bt[] = new byte[(int) file.length()];
+        text = new String(bt);
         return text;
     }
 
     /**
      * Devuelve el fichero leido como un unico string.
      */
-    private static String readTextFile(String filename, String mode, boolean verbose) {
+    private static String readTextFile(String filename, String mode) throws FileNotFoundException {
         String text = "";
-        List<String> doc = readTextFileInLines(filename, mode, verbose);
+        List<String> doc = readTextFileInLines(filename, mode);
 
         for (int i = 0; i < doc.size(); i++) {
             if (!doc.get(i).startsWith("[") && !doc.get(i).startsWith("]") && !doc.get(i).startsWith("<")) {

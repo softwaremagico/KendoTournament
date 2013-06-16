@@ -57,7 +57,7 @@ public class Main {
         try {
             Controller controller = new Controller(gui);
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(Main.class.getName(), ex);
+            AlertManager.showErrorInformation(Main.class.getName(), ex);
         }
     }
 }

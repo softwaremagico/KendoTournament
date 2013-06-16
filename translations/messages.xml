@@ -1098,5 +1098,13 @@
 		<ca>Error mentre s'intentava esborrar dades a la base de dades.</ca>
 		<it>Si è generato un errore mentre si stava cancellando datti nel database.</it>
 	</deleteDataError>
+	<unknownDatabaseError>
+		<en>An unknown error has occurred when accessing to the database. </en>
+		<es>Ha ocurrido un error desconocido mientras se intentaba acceder a la base de datos.</es>
+		<nl>An unknown error has occurred when accessing to the database.</nl>
+		<de>An unknown error has occurred when accessing to the database.</de>
+		<ca>Ha ocorregut un error desconegut mentres s'intentava accedir a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava accedendo nel database.</it>
+	</unknownDatabaseError>
 </translator>
 

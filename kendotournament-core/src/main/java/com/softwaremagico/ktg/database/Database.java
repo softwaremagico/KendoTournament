@@ -25,9 +25,11 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
@@ -40,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,7 +64,7 @@ public abstract class Database {
      * @param retry do another try if can solve the SQL problem.
      * @return true if the connection is ok.
      */
-    protected abstract boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry);
+    protected abstract boolean connect(String password, String user, String database, String server, boolean verbose, boolean retry) throws CommunicationsException, SQLException;
 
     protected abstract void disconnectDatabase();
 
@@ -97,8 +100,6 @@ public abstract class Database {
 
     abstract boolean isDatabaseInstalledCorrectly();
 
-    public abstract boolean updateDatabase(String path, boolean verbose);
-
     public abstract void clearDatabase();
 
     /**
@@ -119,17 +120,17 @@ public abstract class Database {
      * *
      *
      */
-    protected abstract boolean addRegisteredPeople(List<RegisteredPerson> people);
+    protected abstract boolean addRegisteredPeople(List<RegisteredPerson> people) throws SQLException;
 
-    protected abstract List<RegisteredPerson> getRegisteredPeople();
+    protected abstract List<RegisteredPerson> getRegisteredPeople() throws SQLException;
 
-    protected abstract boolean removeRegisteredPeople(List<RegisteredPerson> people);
+    protected abstract boolean removeRegisteredPeople(List<RegisteredPerson> people) throws SQLException;
 
-    protected abstract boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange);
+    protected abstract boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange) throws SQLException;
 
-    protected abstract Photo getPhoto(String competitorId);
+    protected abstract Photo getPhoto(String competitorId) throws SQLException;
 
-    protected abstract boolean setPhotos(List<Photo> photos);
+    protected abstract boolean setPhotos(List<Photo> photos) throws SQLException;
 
     /**
      * *******************************************************************
@@ -141,13 +142,13 @@ public abstract class Database {
     /**
      * Store a Role into the database.
      */
-    protected abstract boolean addRoles(List<Role> roles);
+    protected abstract boolean addRoles(List<Role> roles) throws SQLException;
 
-    protected abstract List<Role> getRoles(Tournament tournament);
+    protected abstract List<Role> getRoles(Tournament tournament) throws SQLException;
 
-    protected abstract boolean removeRoles(Tournament tournament, List<Role> roles);
+    protected abstract boolean removeRoles(Tournament tournament, List<Role> roles) throws SQLException;
 
-    protected abstract boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange);
+    protected abstract boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -161,13 +162,13 @@ public abstract class Database {
      *
      * @param club
      */
-    protected abstract boolean addClubs(List<Club> clubs);
+    protected abstract boolean addClubs(List<Club> clubs) throws SQLException;
 
-    protected abstract List<Club> getClubs();
+    protected abstract List<Club> getClubs() throws SQLException;
 
-    protected abstract boolean removeClubs(List<Club> clubs);
+    protected abstract boolean removeClubs(List<Club> clubs) throws SQLException;
 
-    protected abstract boolean updateClubs(HashMap<Club, Club> clubsExchange);
+    protected abstract boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -179,13 +180,13 @@ public abstract class Database {
     /**
      * Store a Tournament list into the database.
      */
-    protected abstract boolean addTournaments(List<Tournament> tournaments);
+    protected abstract boolean addTournaments(List<Tournament> tournaments) throws SQLException;
 
-    protected abstract List<Tournament> getTournaments();
+    protected abstract List<Tournament> getTournaments() throws SQLException;
 
-    protected abstract boolean removeTournaments(List<Tournament> tournaments);
+    protected abstract boolean removeTournaments(List<Tournament> tournaments) throws SQLException;
 
-    protected abstract boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange);
+    protected abstract boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -197,13 +198,13 @@ public abstract class Database {
     /**
      *
      */
-    protected abstract List<Team> getTeams(Tournament tournament);
+    protected abstract List<Team> getTeams(Tournament tournament) throws SQLException;
 
-    protected abstract boolean addTeams(List<Team> teams);
+    protected abstract boolean addTeams(List<Team> teams) throws SQLException;
 
-    protected abstract boolean removeTeams(List<Team> teams);
+    protected abstract boolean removeTeams(List<Team> teams) throws SQLException;
 
-    protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange);
+    protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -215,13 +216,13 @@ public abstract class Database {
     /**
      * Store a fight into the database.
      */
-    protected abstract List<Fight> getFights(Tournament tournament);
+    protected abstract List<Fight> getFights(Tournament tournament) throws SQLException;
 
-    protected abstract boolean addFights(List<Fight> fights);
+    protected abstract boolean addFights(List<Fight> fights) throws SQLException;
 
-    protected abstract boolean removeFights(List<Fight> fights);
+    protected abstract boolean removeFights(List<Fight> fights) throws SQLException;
 
-    protected abstract boolean updateFights(HashMap<Fight, Fight> fightsExchange);
+    protected abstract boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -233,13 +234,13 @@ public abstract class Database {
     /**
      * Store a duel into the database.
      */
-    protected abstract List<Duel> getDuels(Tournament tournament);
+    protected abstract List<Duel> getDuels(Tournament tournament) throws SQLException;
 
-    protected abstract boolean addDuels(List<Duel> duels);
+    protected abstract boolean addDuels(List<Duel> duels) throws SQLException;
 
-    protected abstract boolean removeDuels(List<Duel> duels);
+    protected abstract boolean removeDuels(List<Duel> duels) throws SQLException;
 
-    protected abstract boolean updateDuels(HashMap<Duel, Duel> duelsExchange);
+    protected abstract boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -251,13 +252,13 @@ public abstract class Database {
     /**
      * Store a undraw into the database.
      */
-    protected abstract List<Undraw> getUndraws(Tournament tournament);
+    protected abstract List<Undraw> getUndraws(Tournament tournament) throws SQLException;
 
-    protected abstract boolean addUndraws(List<Undraw> undraws);
+    protected abstract boolean addUndraws(List<Undraw> undraws) throws SQLException;
 
-    protected abstract boolean removeUndraws(List<Undraw> undraws);
+    protected abstract boolean removeUndraws(List<Undraw> undraws) throws SQLException;
 
-    protected abstract boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange);
+    protected abstract boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException;
 
     /**
      * *******************************************************************
@@ -269,11 +270,32 @@ public abstract class Database {
     /**
      * Store user defined links.
      */
-    protected abstract List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament);
+    protected abstract List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException;
 
-    protected abstract boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks);
+    protected abstract boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) throws SQLException;
 
-    protected abstract boolean removeCustomWinnerLinks(List<Tournament> tournaments);
+    protected abstract boolean removeCustomWinnerLinks(List<Tournament> tournaments) throws SQLException;
 
-    protected abstract boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks);
+    protected abstract boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException;
+
+    /**
+     * *******************************************************************
+     *
+     * EXCEPTIONS
+     *
+     ********************************************************************
+     */
+    /**
+     * Process any sql exception.
+     *
+     * @param exception
+     * @throws SQLException
+     */
+    protected void showSqlError(SQLException exception) throws SQLException {
+        KendoLog.severe(this.getClass().getName(), getSqlErrorMessage(exception));
+        KendoLog.errorMessage(this.getClass().getName(), exception);
+        throw new SQLException(exception);
+    }
+
+    public abstract String getSqlErrorMessage(SQLException exception);
 }

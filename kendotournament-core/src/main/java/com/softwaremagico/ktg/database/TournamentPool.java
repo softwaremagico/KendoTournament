@@ -3,6 +3,7 @@ package com.softwaremagico.ktg.database;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tools.Tools;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected HashMap<String, Tournament> getElementsFromDatabase() {
+    protected HashMap<String, Tournament> getElementsFromDatabase() throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getTournaments();
         DatabaseConnection.getInstance().disconnect();
@@ -40,7 +41,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(List<Tournament> elementsToStore) {
+    protected boolean storeElementsInDatabase(List<Tournament> elementsToStore) throws SQLException {
         if (elementsToStore.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
         }
@@ -48,7 +49,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) {
+    protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
             for (Tournament tournament : elementsToDelete) {
                 //Delete fights.
@@ -64,7 +65,7 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean updateElements(HashMap<Tournament, Tournament> elementsToUpdate) {
+    protected boolean updateElements(HashMap<Tournament, Tournament> elementsToUpdate) throws SQLException {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
         }
@@ -72,13 +73,13 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected List<Tournament> sort() {
+    protected List<Tournament> sort() throws SQLException {
         List<Tournament> unsorted = new ArrayList(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    public List<Tournament> getByName(String name) {
+    public List<Tournament> getByName(String name) throws SQLException {
         List<Tournament> result = new ArrayList<>();
         for (Tournament element : getAll()) {
             if (Tools.isSimilar(element.getName(), name)) {
@@ -89,7 +90,7 @@ public class TournamentPool extends SimplePool<Tournament> {
         return result;
     }
 
-    public Integer getLevelTournament(Tournament tournament) {
+    public Integer getLevelTournament(Tournament tournament) throws SQLException {
         int level = -1;
         for (Fight fight : FightPool.getInstance().getMap(tournament).values()) {
             if (fight.getLevel() > level) {
@@ -100,13 +101,13 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    public void remove(String elementName) {
+    public void remove(String elementName) throws SQLException {
         remove(get(elementName));
 
     }
 
     @Override
-    public boolean remove(Tournament tournament) {
+    public boolean remove(Tournament tournament) throws SQLException {
         //Fights delete undraws and duels. 
         FightPool.getInstance().remove(tournament);
         CustomLinkPool.getInstance().remove(tournament);

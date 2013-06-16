@@ -28,8 +28,6 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Duel;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
@@ -43,12 +41,14 @@ import com.softwaremagico.ktg.database.RolePool;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,9 +85,14 @@ public class DiplomaPDF {
         allDiplomas = printAllDiplomas;
         rolesWithDiploma = roles;
         if (statistics) {
-            teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
-            duels = DuelPool.getInstance().getSorted(tournament);
-            competitorTopTen = Ranking.getCompetitorsScoreRanking(FightPool.getInstance().get(tournament));
+            try {
+                teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
+                duels = DuelPool.getInstance().getSorted(tournament);
+                competitorTopTen = Ranking.getCompetitorsScoreRanking(FightPool.getInstance().get(tournament));
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
+                statistics = false;
+            }
         }
     }
 
@@ -100,7 +105,7 @@ public class DiplomaPDF {
             path += ".pdf";
         }
 
-        if (!MyFile.fileExist(path) || MessageManager.questionMessage("existFile", "Warning!")) {
+        if (!MyFile.fileExist(path) || AlertManager.questionMessage("existFile", "Warning!")) {
             TimerPanel tp = new TimerPanel();
             //tp.dispose();
             ThreadDiploma td = new ThreadDiploma(tp, document, path);
@@ -136,16 +141,16 @@ public class DiplomaPDF {
             try {
                 PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(path));
                 generatePDF(document, writer);
-                MessageManager.translatedMessage(this.getClass().getName(), "diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
+                AlertManager.translatedMessage(this.getClass().getName(), "diplomaOK", "PDF", JOptionPane.INFORMATION_MESSAGE);
                 RolePool.getInstance().setRegisteredPeopleInTournamentAsDiplomaPrinted(tournament, rolesWithDiploma);
                 error = false;
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                AlertManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
+                AlertManager.showErrorInformation(this.getClass().getName(), npe);
                 error = true;
             } catch (Exception ex) {
-                MessageManager.errorMessage(this.getClass().getName(), "diplomaBad", "PDF");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                AlertManager.errorMessage(this.getClass().getName(), "diplomaBad", "PDF");
+                AlertManager.showErrorInformation(this.getClass().getName(), ex);
                 error = true;
             }
             timerPanel.dispose();
@@ -244,11 +249,15 @@ public class DiplomaPDF {
                 mainTable.addCell(cell);
 
 
-                List<Duel> duelsTeamRight;
-                List<Duel> duelsTeamLeft;
+                List<Duel> duelsTeamRight = new ArrayList<>();
+                List<Duel> duelsTeamLeft = new ArrayList<>();
 
-                duelsTeamRight = DuelPool.getInstance().get(tournament, competitor, true);
-                duelsTeamLeft = DuelPool.getInstance().get(tournament, competitor, false);
+                try {
+                    duelsTeamRight = DuelPool.getInstance().get(tournament, competitor, true);
+                    duelsTeamLeft = DuelPool.getInstance().get(tournament, competitor, false);
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
+                }
 
                 //Performed hits.
                 image = com.itextpdf.text.Image.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft), transl.getTranslatedText("PerformedHitsStatisticsMenuItem")), null, false);
@@ -423,7 +432,10 @@ public class DiplomaPDF {
                 Team team = TeamPool.getInstance().get(tournament, competitor);
                 centerValue = Ranking.getOrderFromRanking(teamTopTen, team);
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                AlertManager.showErrorInformation(this.getClass().getName(), npe);
+                centerValue = 0;
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
                 centerValue = 0;
             }
             int startValue = centerValue - TOTAL_RANGES / 2;

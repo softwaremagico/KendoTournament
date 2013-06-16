@@ -25,16 +25,15 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.database.ClubPool;
 import com.softwaremagico.ktg.database.PhotoPool;
 import com.softwaremagico.ktg.database.RegisteredPersonPool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
@@ -42,6 +41,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -73,20 +73,24 @@ public class NewCompetitor extends KendoFrame {
         refreshClub = false;
         List<Club> clubs;
         ClubComboBox.removeAllItems();
-        clubs = ClubPool.getInstance().getSorted();
-        if (clubs != null && clubs.size() > 0) {
-            for (int i = 0; i < clubs.size(); i++) {
-                ClubComboBox.addItem(clubs.get(i));
+        try {
+            clubs = ClubPool.getInstance().getSorted();
+            if (clubs != null && clubs.size() > 0) {
+                for (int i = 0; i < clubs.size(); i++) {
+                    ClubComboBox.addItem(clubs.get(i));
+                }
+                ClubComboBox.setSelectedItem(ClubPool.getInstance().get(KendoTournamentGenerator.getInstance().getLastSelectedClub()));
+            } else {
+                NewClub newClub;
+                AlertManager.errorMessage(this.getClass().getName(), "noClubsInserted", "MySQL");
+                newClub = new NewClub();
+                newClub.setVisible(true);
+                newClub.updateClubsInCompetitor(this);
+                newClub.setAlwaysOnTop(true);
+                //this.dispose();
             }
-            ClubComboBox.setSelectedItem(ClubPool.getInstance().get(KendoTournamentGenerator.getInstance().getLastSelectedClub()));
-        } else {
-            NewClub newClub;
-            MessageManager.errorMessage(this.getClass().getName(), "noClubsInserted", "MySQL");
-            newClub = new NewClub();
-            newClub.setVisible(true);
-            newClub.updateClubsInCompetitor(this);
-            newClub.setAlwaysOnTop(true);
-            //this.dispose();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         refreshClub = true;
     }
@@ -185,18 +189,22 @@ public class NewCompetitor extends KendoFrame {
                     } catch (NullPointerException npe) {
                     }
                 }
-                if (oldCompetitor != null) {
-                    RegisteredPersonPool.getInstance().update(oldCompetitor, comp);
-                    MessageManager.informationMessage(this.getClass().getName(), "competitorUpdated", "SQL");
-                } else {
-                    RegisteredPersonPool.getInstance().add(comp);
-                    MessageManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
+                try {
+                    if (oldCompetitor != null) {
+                        RegisteredPersonPool.getInstance().update(oldCompetitor, comp);
+                        AlertManager.informationMessage(this.getClass().getName(), "competitorUpdated", "SQL");
+                    } else {
+                        RegisteredPersonPool.getInstance().add(comp);
+                        AlertManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
+                    }
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
                 }
                 cleanWindow();
                 this.repaint();
                 return comp;
             } else {
-                MessageManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
+                AlertManager.errorMessage(this.getClass().getName(), "noCompetitiorFieldsFilled", "SQL");
             }
         }
         return null;
@@ -206,7 +214,7 @@ public class NewCompetitor extends KendoFrame {
         try {
             Integer dni = Integer.parseInt(IDTextField.getText());
             if (IDTextField.getText().length() == 8 && dni != null) {
-                if (MessageManager.questionMessage("isDNI", "DNI -> NIF")) {
+                if (AlertManager.questionMessage("isDNI", "DNI -> NIF")) {
                     IDTextField.setText(RegisteredPerson.nifFromDni(dni));
                 }
             }

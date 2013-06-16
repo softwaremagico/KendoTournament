@@ -25,14 +25,10 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
-import com.mysql.jdbc.MysqlDataTruncation;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoLog;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
@@ -41,6 +37,8 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.files.MyFile;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.io.*;
@@ -55,6 +53,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class SQL extends Database {
+
+    protected static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
     @Override
     public void clearDatabase() {
@@ -71,8 +71,7 @@ public abstract class SQL extends Database {
                 s.executeUpdate("delete from undraw;");
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 
@@ -91,8 +90,7 @@ public abstract class SQL extends Database {
                                 try {
                                     s.executeUpdate();
                                 } catch (SQLException sql) {
-                                    showSQLError(1049);
-                                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), sql);
+                                    showSqlError(sql);
                                     break;
                                 }
                             }
@@ -101,8 +99,10 @@ public abstract class SQL extends Database {
                     }
                 }
             }
+        } catch (FileNotFoundException fne) {
+            KendoLog.severe(this.getClass().getName(), "Script not found: " + fileName);
         } catch (IOException ex) {
-            showSQLError(1049);
+            KendoLog.severe(this.getClass().getName(), "Script not found: " + fileName);
         } catch (SQLException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,7 +129,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) {
+    protected boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
             try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?);")) {
@@ -142,13 +142,10 @@ public abstract class SQL extends Database {
                 try {
                     stmt.executeUpdate();
                 } catch (OutOfMemoryError ofm) {
-                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
+                    KendoLog.translatedSevere(this.getClass().getName(), "imageTooLarge");
                 }
             } catch (SQLException ex) {
-                if (!showSQLError(ex.getErrorCode())) {
-                    MessageManager.errorMessage(this.getClass().getName(), "storeCompetitorError", "SQL");
-                }
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                showSqlError(ex);
                 return false;
             }
         }
@@ -157,7 +154,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<RegisteredPerson> getRegisteredPeople() {
+    protected List<RegisteredPerson> getRegisteredPeople() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
         List<RegisteredPerson> results = new ArrayList<>();
         try (Statement s = connection.createStatement();
@@ -168,17 +165,17 @@ public abstract class SQL extends Database {
                 results.add(registered);
             }
         } catch (SQLException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getRegisteredPeople");
         return results;
     }
 
     @Override
-    protected boolean removeRegisteredPeople(List<RegisteredPerson> peoples) {
+    protected boolean removeRegisteredPeople(List<RegisteredPerson> peoples) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeRegisteredPeople");
         String query = "";
         for (RegisteredPerson people : peoples) {
@@ -187,22 +184,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteCompetitorError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeRegisteredPeople");
         return true;
     }
 
     @Override
-    protected boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange) {
+    protected boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateRoles");
         List<RegisteredPerson> oldPeople = new ArrayList<>(peopleExchange.values());
         List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
@@ -215,13 +208,11 @@ public abstract class SQL extends Database {
                 stmt.setString(4, newPerson.getClub().getName());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
-                if (!showSQLError(ex.getErrorCode())) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                }
+                showSqlError(ex);
                 return false;
             } catch (NullPointerException npe) {
-                MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                return false;
+                KendoLog.severe(this.getClass().getName(), "Database connection fail");
+                throw new SQLException("Database connection fail.");
             }
         }
         KendoLog.exiting(this.getClass().getName(), "updateRoles");
@@ -229,7 +220,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected Photo getPhoto(String competitorId) {
+    protected Photo getPhoto(String competitorId) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getPhoto");
         String query = "SELECT Photo,PhotoSize FROM competitor WHERE ID='" + competitorId + "'";
         Photo photo = new Photo(competitorId);
@@ -246,17 +237,17 @@ public abstract class SQL extends Database {
                 return photo;
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQL");
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getPhoto");
         return null;
     }
 
     @Override
-    protected boolean setPhotos(List<Photo> photos) {
+    protected boolean setPhotos(List<Photo> photos) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "setPhoto");
         for (Photo photo : photos) {
             try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId() + "'")) {
@@ -265,13 +256,10 @@ public abstract class SQL extends Database {
                 try {
                     stmt.executeUpdate();
                 } catch (OutOfMemoryError ofm) {
-                    MessageManager.errorMessage(this.getClass().getName(), "imageTooLarge", "SQL");
+                    KendoLog.translatedSevere(this.getClass().getName(), "imageTooLarge");
                 }
             } catch (SQLException ex) {
-                if (!showSQLError(ex.getErrorCode())) {
-                    MessageManager.errorMessage(this.getClass().getName(), "storeCompetitorError", "SQL");
-                }
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                showSqlError(ex);
                 return false;
             }
         }
@@ -296,7 +284,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addRoles(List<Role> roles) {
+    protected boolean addRoles(List<Role> roles) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addRoles");
         String query = "";
         //Insert team.
@@ -305,16 +293,13 @@ public abstract class SQL extends Database {
                 RegisteredPerson participant = RegisteredPersonPool.getInstance().get(role.getCompetitor().getId());
                 query += "INSERT INTO role (Role, Tournament, Competitor, ImpressCardOrder, ImpressCardPrinted, DiplomaPrinted) VALUES ('" + role.getDatabaseTag() + "','" + role.getTournament().getName() + "','" + participant.getId() + "', " + role.getAccreditationOrder() + ", " + role.isAccreditationPrinted() + "," + role.isDiplomaPrinted() + "); ";
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                KendoLog.errorMessage(this.getClass().getName(), npe);
             }
         }
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "roleChanged", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addRoles");
@@ -322,7 +307,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<Role> getRoles(Tournament tournament) {
+    protected List<Role> getRoles(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getRoles");
         String query = "SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' ORDER BY Role; ";
         KendoLog.finer(SQL.class.getName(), query);
@@ -336,18 +321,17 @@ public abstract class SQL extends Database {
                 results.add(role);
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getRoles");
         return results;
     }
 
     @Override
-    protected boolean removeRoles(Tournament tournament, List<Role> roles) {
+    protected boolean removeRoles(Tournament tournament, List<Role> roles) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeRoles");
         String query = "";
         for (Role role : roles) {
@@ -356,22 +340,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteRoleError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeRoles");
         return true;
     }
 
     @Override
-    protected boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) {
+    protected boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateRoles");
         List<Role> oldRoles = new ArrayList<>(rolesExchange.values());
         List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
@@ -382,13 +362,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "updateRoles");
         return true;
@@ -407,7 +385,7 @@ public abstract class SQL extends Database {
      * @param club
      */
     @Override
-    protected boolean addClubs(List<Club> clubs) {
+    protected boolean addClubs(List<Club> clubs) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "storeClub");
         String query = "";
         for (Club club : clubs) {
@@ -415,25 +393,19 @@ public abstract class SQL extends Database {
         }
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
-        } catch (MySQLIntegrityConstraintViolationException micve) {
-            MessageManager.errorMessage(this.getClass().getName(), "nameClub", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), micve);
-            return false;
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "storeClub");
         return true;
     }
 
     @Override
-    protected List<Club> getClubs() {
+    protected List<Club> getClubs() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getClubs");
         List<Club> results = new ArrayList<>();
         try (Statement s = connection.createStatement();
@@ -467,18 +439,17 @@ public abstract class SQL extends Database {
                 }
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "MySQL database connection fail", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getClubs");
         return results;
     }
 
     @Override
-    protected boolean removeClubs(List<Club> clubs) {
+    protected boolean removeClubs(List<Club> clubs) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "deleteClubs");
         String query = "";
         for (Club club : clubs) {
@@ -487,21 +458,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteClubError", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "deleteClubError");
         return true;
     }
 
     @Override
-    protected boolean updateClubs(HashMap<Club, Club> clubsExchange) {
+    protected boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateClubs");
         List<Club> oldClubs = new ArrayList<>(clubsExchange.values());
         List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
@@ -513,13 +481,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "updateClubs");
         return true;
@@ -538,7 +504,7 @@ public abstract class SQL extends Database {
      * @param club
      */
     @Override
-    protected boolean addTournaments(List<Tournament> tournaments) {
+    protected boolean addTournaments(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addTournaments");
         for (Tournament tournament : tournaments) {
             try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
@@ -572,19 +538,12 @@ public abstract class SQL extends Database {
                     stmt.setLong(14, 0);
                 }
                 stmt.executeUpdate();
-            } catch (MysqlDataTruncation mdt) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeImageError", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), mdt);
-                return false;
             } catch (SQLException ex) {
-                showSQLError(ex.getErrorCode());
-                MessageManager.errorMessage(this.getClass().getName(), "storeTournamentError", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                showSqlError(ex);
                 return false;
             } catch (NullPointerException npe) {
-                MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-                return false;
+                KendoLog.severe(this.getClass().getName(), "Database connection fail");
+                throw new SQLException("Database connection fail.");
             }
         }
         KendoLog.exiting(this.getClass().getName(), "addTournaments");
@@ -592,7 +551,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<Tournament> getTournaments() {
+    protected List<Tournament> getTournaments() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getTournaments");
         List<Tournament> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
@@ -621,17 +580,17 @@ public abstract class SQL extends Database {
             KendoLog.exiting(this.getClass().getName(), "getTournaments");
             return results;
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getTournaments");
         return null;
     }
 
     @Override
-    protected boolean removeTournaments(List<Tournament> tournaments) {
+    protected boolean removeTournaments(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeTournaments");
         String query = "";
         for (Tournament tournament : tournaments) {
@@ -640,12 +599,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
 
         KendoLog.exiting(this.getClass().getName(), "removeTournaments");
@@ -653,7 +611,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) {
+    protected boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateTournaments");
         List<Tournament> oldTournaments = new ArrayList<>(tournamentsExchange.values());
         List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
@@ -691,13 +649,11 @@ public abstract class SQL extends Database {
                 stmt.setString(14, tournament.getName());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
-                if (!showSQLError(ex.getErrorCode())) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-                }
+                showSqlError(ex);
                 return false;
             } catch (NullPointerException npe) {
-                MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-                return false;
+                KendoLog.severe(this.getClass().getName(), "Database connection fail");
+                throw new SQLException("Database connection fail.");
             }
         }
         KendoLog.exiting(this.getClass().getName(), "updateTournaments");
@@ -715,7 +671,7 @@ public abstract class SQL extends Database {
      *
      */
     @Override
-    protected List<Team> getTeams(Tournament tournament) {
+    protected List<Team> getTeams(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
@@ -735,11 +691,10 @@ public abstract class SQL extends Database {
                         rs.getInt("Position"), rs.getInt("LevelTournament"));
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "searchTeam");
         return new ArrayList<>(teams.values());
@@ -753,7 +708,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addTeams(List<Team> teams) {
+    protected boolean addTeams(List<Team> teams) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addTeams");
         String query = "";
         //Insert team.
@@ -770,10 +725,7 @@ public abstract class SQL extends Database {
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeTeamError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addTeams");
@@ -781,7 +733,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeTeams(List<Team> teams) {
+    protected boolean removeTeams(List<Team> teams) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeTeams");
         String query = "";
         for (Team team : teams) {
@@ -790,22 +742,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteTeamError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeTeams");
         return true;
     }
 
     @Override
-    protected boolean updateTeams(HashMap<Team, Team> teamsExchange) {
+    protected boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateTeams");
         List<Team> oldTeams = new ArrayList<>(teamsExchange.values());
         List<Team> newTeams = new ArrayList<>(teamsExchange.keySet());
@@ -826,7 +774,7 @@ public abstract class SQL extends Database {
      *
      */
     @Override
-    protected List<Fight> getFights(Tournament tournament) {
+    protected List<Fight> getFights(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.entering(this.getClass().getName(), "getFights");
         KendoLog.finer(SQL.class.getName(), query);
@@ -844,35 +792,31 @@ public abstract class SQL extends Database {
                 results.add(f);
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getFights");
         return results;
     }
 
     @Override
-    protected boolean addFights(List<Fight> fights) {
+    protected boolean addFights(List<Fight> fights) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addFights");
         String query = "";
         for (Fight fight : fights) {
             try {
                 query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, Level, GroupIndex) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getGroupIndex() + "); ";
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                KendoLog.errorMessage(this.getClass().getName(), npe);
             }
         }
 
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addFights");
@@ -880,7 +824,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeFights(List<Fight> fights) {
+    protected boolean removeFights(List<Fight> fights) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeFights");
         String query = "";
         for (Fight fight : fights) {
@@ -889,22 +833,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteFightError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeFights");
         return true;
     }
 
     @Override
-    protected boolean updateFights(HashMap<Fight, Fight> fightsExchange) {
+    protected boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateFights");
         List<Fight> oldFights = new ArrayList<>(fightsExchange.values());
         List<Fight> newFights = new ArrayList<>(fightsExchange.keySet());
@@ -917,13 +857,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "updateFights");
         return true;
@@ -940,7 +878,7 @@ public abstract class SQL extends Database {
      * Store a duel into the database.
      */
     @Override
-    protected List<Duel> getDuels(Tournament tournament) {
+    protected List<Duel> getDuels(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM duel WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.entering(this.getClass().getName(), "getDuels");
         KendoLog.finer(SQL.class.getName(), query);
@@ -995,18 +933,17 @@ public abstract class SQL extends Database {
                 results.add(duel);
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getDuels");
         return results;
     }
 
     @Override
-    protected boolean addDuels(List<Duel> duels) {
+    protected boolean addDuels(List<Duel> duels) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addDuels");
         String query = "";
         for (Duel duel : duels) {
@@ -1015,7 +952,7 @@ public abstract class SQL extends Database {
                         + duel.getFight().getGroupIndex() + ", " + duel.getFight().getLevel() + ", " + duel.getOrder() + ", "
                         + duel.getHits(true).get(0).getAbbreviature() + ", " + duel.getHits(true).get(1).getAbbreviature() + ", " + duel.getHits(false).get(0).getAbbreviature() + ", " + duel.getHits(false).get(1).getAbbreviature() + ", " + duel.getFaults(true) + ", " + duel.getFaults(false) + "); ";
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                KendoLog.errorMessage(this.getClass().getName(), npe);
             }
         }
 
@@ -1023,10 +960,7 @@ public abstract class SQL extends Database {
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeFightsError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addDuels");
@@ -1034,7 +968,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeDuels(List<Duel> duels) {
+    protected boolean removeDuels(List<Duel> duels) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeDuels");
         String query = "";
         for (Duel duel : duels) {
@@ -1043,22 +977,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteDuelError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeDuels");
         return true;
     }
 
     @Override
-    protected boolean updateDuels(HashMap<Duel, Duel> duelsExchange) {
+    protected boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateDuels");
         List<Duel> oldDuels = new ArrayList<>(duelsExchange.values());
         List<Duel> newDuels = new ArrayList<>(duelsExchange.keySet());
@@ -1071,13 +1001,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "updateDuels");
         return true;
@@ -1094,7 +1022,7 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    protected List<Undraw> getUndraws(Tournament tournament) {
+    protected List<Undraw> getUndraws(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getUndraws");
         String query = "SELECT * FROM undraw WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.finer(SQL.class.getName(), query);
@@ -1110,35 +1038,31 @@ public abstract class SQL extends Database {
                 results.add(u);
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getUndraws");
         return results;
     }
 
     @Override
-    protected boolean addUndraws(List<Undraw> undraws) {
+    protected boolean addUndraws(List<Undraw> undraws) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addUndraws");
         String query = "";
         for (Undraw undraw : undraws) {
             try {
                 query += "INSERT INTO Undraw (Tournament, Team, Player, Group, Level, Points) VALUES ('" + undraw.getTournament().getName() + "', '" + undraw.getTeam().getName() + "', " + undraw.getPlayer() + ", " + undraw.getGroupIndex() + ", " + undraw.getLevel() + ", " + undraw.getPoints() + "); ";
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                KendoLog.errorMessage(this.getClass().getName(), npe);
             }
         }
 
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeUndrawError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addUndraws");
@@ -1146,7 +1070,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeUndraws(List<Undraw> undraws) {
+    protected boolean removeUndraws(List<Undraw> undraws) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeUndraws");
         String query = "";
         for (Undraw undraw : undraws) {
@@ -1155,22 +1079,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteDuelError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeUndraws");
         return true;
     }
 
     @Override
-    protected boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) {
+    protected boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateUndraws");
         List<Undraw> oldUndraws = new ArrayList<>(undrawsExchange.values());
         List<Undraw> newUndraws = new ArrayList<>(undrawsExchange.keySet());
@@ -1183,13 +1103,11 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
-            }
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "updateUndraws");
         return true;
@@ -1206,7 +1124,7 @@ public abstract class SQL extends Database {
      * Store user defined links.
      */
     @Override
-    protected List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) {
+    protected List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
         if (!tournament.getType().equals(TournamentType.MANUAL)) {
             return null;
@@ -1224,35 +1142,31 @@ public abstract class SQL extends Database {
                 results.add(link);
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
         } catch (NullPointerException npe) {
-            MessageManager.errorMessage(this.getClass().getName(), "noRunningDatabase", "SQL");
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getCustomWinnerLinks");
         return results;
     }
 
     @Override
-    protected boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) {
+    protected boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addCustomWinnerLinks");
         String query = "";
         for (CustomWinnerLink link : customWinnerLinks) {
             try {
                 query += "INSERT INTO customlinks (Tournament, SourceGroup, AddressGroup, WinnerOrder) VALUES ('" + link.getTournament().getName() + "', " + link.getSource() + ", " + link.getAddress() + ", " + link.getWinner() + "); ";
             } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                KendoLog.errorMessage(this.getClass().getName(), npe);
             }
         }
 
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.executeUpdate();
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "storeDataError", "SQL", "Link");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         }
         KendoLog.exiting(this.getClass().getName(), "addCustomWinnerLinks");
@@ -1260,7 +1174,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeCustomWinnerLinks(List<Tournament> tournaments) {
+    protected boolean removeCustomWinnerLinks(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeUndraws");
         String query = "";
         for (Tournament tournament : tournaments) {
@@ -1269,22 +1183,18 @@ public abstract class SQL extends Database {
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
         } catch (SQLException ex) {
-            if (!showSQLError(ex.getErrorCode())) {
-                MessageManager.errorMessage(this.getClass().getName(), "deleteDataError", "SQL");
-            }
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            showSqlError(ex);
             return false;
         } catch (NullPointerException npe) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "noRunningDatabase", this.getClass().getName());
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
-            return false;
+            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "removeUndraws");
         return true;
     }
 
     @Override
-    protected boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) {
+    protected boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateUndraws");
         List<CustomWinnerLink> oldLinks = new ArrayList<>(customWinnerLinks.values());
         List<CustomWinnerLink> newLinks = new ArrayList<>(customWinnerLinks.keySet());
@@ -1301,17 +1211,5 @@ public abstract class SQL extends Database {
         return true;
     }
 
-    /**
-     * *******************************************************************
-     *
-     * EXCEPTIONS
-     *
-     ********************************************************************
-     */
-    /**
-     *
-     * @param numberError
-     * @return
-     */
-    protected abstract boolean showSQLError(int numberError);
+   
 }

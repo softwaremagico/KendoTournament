@@ -25,20 +25,20 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.TeamPool;
 import com.softwaremagico.ktg.database.TournamentPool;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -117,6 +117,8 @@ public class NewTeam extends KendoFrame {
                 TournamentComboBox.addItem(tournaments.get(i));
             }
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
@@ -176,12 +178,12 @@ public class NewTeam extends KendoFrame {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
                 } catch (NullPointerException | IndexOutOfBoundsException npe) {
-                    KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                    AlertManager.showErrorInformation(this.getClass().getName(), npe);
                     competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                 }
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
     }
 
@@ -203,6 +205,8 @@ public class NewTeam extends KendoFrame {
             competitors = TeamPool.getInstance().getCompetitorsWithoutTeam(tournament);
             competitors.add(0, new RegisteredPerson("", "", ""));
         } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 
@@ -286,8 +290,12 @@ public class NewTeam extends KendoFrame {
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (newTeam) {
             if (individualTeams) {
-                TeamPool.getInstance().setIndividualTeams(tournament);
-                this.dispose();
+                try {
+                    TeamPool.getInstance().setIndividualTeams(tournament);
+                    this.dispose();
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
+                }
             } else {
                 if (NameTextField.getText().length() > 0) {
                     List<RegisteredPerson> participants = new ArrayList<>();
@@ -298,30 +306,34 @@ public class NewTeam extends KendoFrame {
                     }
 
                     if (repeatedCompetitor()) {
-                        MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
+                        AlertManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "League");
                     } else if (!checkTeam()) {
-                        MessageManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
+                        AlertManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                     } else {
                         for (int i = 0; i < participants.size(); i++) {
                             team.setMember(participants.get(i), i, LEVEL);
                         }
                         //Insert or update?
-                        if (oldTeam != null) {
-                            if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
-                                MessageManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
-                            }
-                        } else {
-                            if (TeamPool.getInstance().add(tournament, team)) {
-                                MessageManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                        try {
+                            if (oldTeam != null) {
+                                if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
+                                    AlertManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
+                                }
                             } else {
-                                MessageManager.informationMessage(this.getClass().getName(), "repatedTeam", "Team");
+                                if (TeamPool.getInstance().add(tournament, team)) {
+                                    AlertManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                                } else {
+                                    AlertManager.informationMessage(this.getClass().getName(), "repatedTeam", "Team");
+                                }
                             }
+                        } catch (SQLException ex) {
+                            AlertManager.showSqlErrorMessage(ex);
                         }
                         cleanWindow();
                         refreshTournament();
                     }
                 } else {
-                    MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
+                    AlertManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
                 }
             }
             NameTextField.setEnabled(true);
@@ -504,11 +516,11 @@ public class NewTeam extends KendoFrame {
                 }
 
             } catch (Exception ex) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+                AlertManager.showErrorInformation(this.getClass().getName(), ex);
             }
 
         } else {
-            MessageManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
+            AlertManager.errorMessage(this.getClass().getName(), "noTeamFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
 

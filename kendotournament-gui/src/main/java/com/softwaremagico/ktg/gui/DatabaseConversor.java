@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.database.ConvertDatabase;
 import com.softwaremagico.ktg.database.Database;
 import com.softwaremagico.ktg.database.DatabaseConnection;
@@ -55,12 +56,12 @@ public class DatabaseConversor extends javax.swing.JFrame {
         fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
         //fromDatabaseConnectionPanel.resetPassword();
         fromDatabaseConnectionPanel.setSelectedEngine(DatabaseConnection.getInstance().getDatabaseEngine().name());
-        
+
         DestinationPanel.add(toDatabaseConnectionPanel);
         toDatabaseConnectionPanel.setBounds(new Rectangle(DestinationPanel.getSize().width, DestinationPanel.getSize().height));
         toDatabaseConnectionPanel.resetPassword();
         toDatabaseConnectionPanel.setSelectedEngine(DatabaseEngine.getOtherDatabase(DatabaseConnection.getInstance().getDatabaseEngine().name()).name());
-        
+
     }
 
     private void setLanguage() {
@@ -200,16 +201,18 @@ public class DatabaseConversor extends javax.swing.JFrame {
     private void ExportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportButtonActionPerformed
         Database fromDatabase = DatabaseEngine.getDatabaseClass(fromDatabaseConnectionPanel.getSelectedEngine());
         Database toDatabase = DatabaseEngine.getDatabaseClass(toDatabaseConnectionPanel.getSelectedEngine());
-        ConvertDatabase conversor = new ConvertDatabase(fromDatabase, toDatabase,
-                fromDatabaseConnectionPanel.getPassword(), fromDatabaseConnectionPanel.getUser(), fromDatabaseConnectionPanel.getDatabase(), fromDatabaseConnectionPanel.getServer(),
-                toDatabaseConnectionPanel.getPassword(), toDatabaseConnectionPanel.getUser(), toDatabaseConnectionPanel.getDatabase(), toDatabaseConnectionPanel.getServer());
+        ConvertDatabase conversor = new ConvertDatabase(fromDatabase, toDatabase);
+        try {
+            conversor.stablishConnection(fromDatabaseConnectionPanel.getPassword(), fromDatabaseConnectionPanel.getUser(), fromDatabaseConnectionPanel.getDatabase(), fromDatabaseConnectionPanel.getServer(),
+                    toDatabaseConnectionPanel.getPassword(), toDatabaseConnectionPanel.getUser(), toDatabaseConnectionPanel.getDatabase(), toDatabaseConnectionPanel.getServer());
+        } catch (CommunicationsException ex) {
+            AlertManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
+        }
     }//GEN-LAST:event_ExportButtonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CloseButton;
     private javax.swing.JPanel DestinationPanel;

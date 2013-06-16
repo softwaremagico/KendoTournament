@@ -25,19 +25,20 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ConvertDatabase {
@@ -46,15 +47,9 @@ public class ConvertDatabase {
     private Database toDatabase;
     private final static Integer MAX_DATA_BY_STEP = 50;
 
-    public ConvertDatabase(Database fromDatabase, Database toDatabase,
-            String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
-            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) {
+    public ConvertDatabase(Database fromDatabase, Database toDatabase) {
         this.fromDatabase = fromDatabase;
         this.toDatabase = toDatabase;
-        if (stablishConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer,
-                toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer)) {
-            startThread();
-        }
     }
 
     private void startThread() {
@@ -63,12 +58,24 @@ public class ConvertDatabase {
         tc.start();
     }
 
-    private boolean stablishConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
-            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) {
-        if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer, true, false)) {
-            if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer, true, false)) {
-                return true;
+    public void stablishConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
+            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) throws CommunicationsException {
+        if (createConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer,
+                toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer)) {
+            startThread();
+        }
+    }
+
+    private boolean createConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
+            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) throws CommunicationsException {
+        try {
+            if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer, true, false)) {
+                if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer, true, false)) {
+                    return true;
+                }
             }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
         return false;
     }
@@ -130,9 +137,9 @@ public class ConvertDatabase {
                 }
 
                 timerPanel.dispose();
-                MessageManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
+                AlertManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
             } catch (Exception e) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), e);
+                AlertManager.showErrorInformation(this.getClass().getName(), e);
                 timerPanel.dispose();
                 return false;
             }

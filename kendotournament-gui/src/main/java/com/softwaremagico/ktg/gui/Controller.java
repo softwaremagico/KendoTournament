@@ -27,7 +27,6 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -46,8 +45,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -137,7 +136,6 @@ public class Controller {
         main.addRoleMenuItemListener(new NewRoleListener());
         main.addTournamentMenuItemListener(new NewTournamentListener());
         main.addConnectDatabaseMenuItemListener(new NewConnectDatabaseListener());
-        //main.addUpdateDatabaseMenuItemListener(new UpdateDatabaseListener());
         main.addClubMenuItemListener(new NewClubListener());
         main.addTeamMenuItemListener(new NewTeamListener());
         main.addTournamentPanelMenuItemListener(new NewTournamentPanelListener());
@@ -175,9 +173,13 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (MessageManager.questionMessage("questionUpdateDatabase", "SQL")) {
-                DatabaseConnection.getInstance().updateDatabase();
-                MessageManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+            if (AlertManager.questionMessage("questionUpdateDatabase", "SQL")) {
+                try {
+                    DatabaseConnection.getInstance().updateDatabase();
+                    AlertManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
+                }
             }
         }
     }
@@ -204,7 +206,7 @@ public class Controller {
                 } catch (NullPointerException npe) {
                 }
                 aboutGui = new AboutBox();
-                aboutGui.UpdateText(MyFile.inString(Path.getRootPath() + "Readme.txt", true));
+                aboutGui.UpdateText(MyFile.inString(Path.getRootPath() + "Readme.txt"));
                 aboutGui.setVisible(true);
             } catch (IOException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
@@ -224,14 +226,14 @@ public class Controller {
             String filename = Path.getManualPath() + "Guia_" + KendoTournamentGenerator.getInstance().getLanguage().toUpperCase() + ".txt";
             String text = "";
             try {
-                text = MyFile.inString(filename, true);
+                text = MyFile.inString(filename);
             } catch (IOException ex) {
             }
             if (text.length() > 0) {
                 helpWindow.UpdateText(text);
             } else {
                 try {
-                    helpWindow.UpdateText(MyFile.inString(Path.getManualPath() + "Guia_EN.txt", true));
+                    helpWindow.UpdateText(MyFile.inString(Path.getManualPath() + "Guia_EN.txt"));
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -462,14 +464,6 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             connectDatabase(true);
-        }
-    }
-
-    class UpdateDatabaseListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            DatabaseConnection.getInstance().getDatabase().updateDatabase(Path.returnDatabaseSchemaPath() + File.separator + "updates" + File.separator, true);
         }
     }
 
@@ -822,10 +816,14 @@ public class Controller {
                     participantFunction.dispose();
                 } catch (NullPointerException npe) {
                 }
-                if (TournamentPool.getInstance().getSorted().size() > 0) {
-                    participantFunction = new NewRole(true, competitor);
-                    participantFunction.setVisible(true);
-                    //participantFunction.defaultSelect(c);
+                try {
+                    if (TournamentPool.getInstance().getSorted().size() > 0) {
+                        participantFunction = new NewRole(true, competitor);
+                        participantFunction.setVisible(true);
+                        //participantFunction.defaultSelect(c);
+                    }
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
                 }
             }
         }
@@ -1346,17 +1344,20 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             Fight f;
-            f = new Fight(shortFight.getTournament(),
-                    shortFight.getTeam1(), shortFight.getTeam2(),
-                    shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()), 0);
             try {
-                FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
-                MessageManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);
-                tournamentPanel.updateScorePanel();
-            } catch (NullPointerException npe) {
-                KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), npe);
+                f = new Fight(shortFight.getTournament(),
+                        shortFight.getTeam1(), shortFight.getTeam2(),
+                        shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()), 0);
+                try {
+                    FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
+                    AlertManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);
+                    tournamentPanel.updateScorePanel();
+                } catch (NullPointerException npe) {
+                    AlertManager.showErrorInformation(this.getClass().getName(), npe);
+                }
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
-
         }
     }
 }

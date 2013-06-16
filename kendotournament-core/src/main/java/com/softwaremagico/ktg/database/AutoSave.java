@@ -25,39 +25,40 @@ package com.softwaremagico.ktg.database;
 
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class AutoSave {
-    
+
     private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
     private static AutoSave instance = new AutoSave();
     private Timer timer = new Timer("Autosave");
     private Task timerTask;
-    
+
     private AutoSave() {
         timerTask = new Task();
         timer.schedule(timerTask, 0, 60000);
-        
+
     }
-    
+
     public static AutoSave getInstance() {
         return instance;
     }
-    
+
     public void resetTime() {
         timerTask.reset();
     }
-    
+
     public void setAutosavePeriod(Integer minutes) {
         timerTask.setPeriod(minutes);
     }
-    
+
     class Task extends TimerTask {
-        
+
         private int minutes = 0;
         private int save_period = AUTOSAVE_MINUTES_PERIOD;
-        
+
         @Override
         public void run() {
             minutes++;
@@ -65,16 +66,20 @@ public class AutoSave {
                 if (KendoTournamentGenerator.isAutosaveOptionSelected()) {
                     if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
                         KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
-                        DatabaseConnection.getInstance().updateDatabase();
+                        try {
+                            DatabaseConnection.getInstance().updateDatabase();
+                        } catch (SQLException ex) {
+                            KendoLog.errorMessage(this.getClass().getName(), ex);
+                        }
                     }
                 }
             }
         }
-        
+
         public void reset() {
             minutes = 0;
         }
-        
+
         public void setPeriod(Integer newMinutes) {
             if (newMinutes > 0) {
                 save_period = newMinutes;

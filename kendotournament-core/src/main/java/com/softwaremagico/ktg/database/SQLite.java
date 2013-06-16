@@ -25,20 +25,14 @@ package com.softwaremagico.ktg.database;
  * #L%
  */
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.core.KendoLog;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.MessageManager;
 import com.softwaremagico.ktg.files.Path;
 import java.io.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
-/**
- *
- * @author LOCAL\jhortelano
- */
 public class SQLite extends SQL {
 
     public static final String defaultDatabaseName = "kendotournament_empty";
@@ -66,12 +60,12 @@ public class SQLite extends SQL {
      * @return
      */
     @Override
-    public boolean connect(String tmp_password, String tmp_user, String tmp_database, String tmp_server, boolean verbose, boolean retry) {
+    public boolean connect(String tmp_password, String tmp_user, String tmp_database, String tmp_server, boolean verbose, boolean retry) throws CommunicationsException, SQLException {
         boolean error = false;
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (Exception e) {
-            MessageManager.basicErrorMessage(this.getClass().getName(), "Sqlite driver for Java is not installed. Check your configuration.", "SQLite");
+            KendoLog.severe(this.getClass().getName(), "Sqlite driver for Java is not installed. Check your configuration.");
             error = true;
         }
 
@@ -88,14 +82,8 @@ public class SQLite extends SQL {
                 }
             }
         } catch (SQLException ex) {
-            showSQLError(ex.getErrorCode());
+            showSqlError(ex);
             error = true;
-        }
-        if (!error) {
-            if (verbose) {
-                MessageManager.translatedMessage(this.getClass().getName(), "databaseConnected", "SQLite", "SQLite", JOptionPane.INFORMATION_MESSAGE);
-            }
-            KendoLog.info(this.getClass().getName(), "Connected to Database!");
         }
         return !error;
     }
@@ -138,7 +126,7 @@ public class SQLite extends SQL {
         try {
             copyFile(new File(Path.returnDatabaseSchemaPath() + File.separator + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension));
         } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 
@@ -164,7 +152,7 @@ public class SQLite extends SQL {
                 destination.write(buffer, 0, length);
             }
         } catch (Exception e) {
-            KendoTournamentGenerator.showErrorInformation(SQLite.class.getName(), e);
+            KendoLog.errorMessage(SQLite.class.getName(), e);
         } finally {
             if (source != null) {
                 source.close();
@@ -194,11 +182,6 @@ public class SQLite extends SQL {
     }
 
     @Override
-    public boolean updateDatabase(String path, boolean verbose) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     protected void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException {
         try {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -217,7 +200,7 @@ public class SQLite extends SQL {
 
             stmt.setBytes(index, buffer.toByteArray());
         } catch (IOException ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(), ex);
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
 
@@ -240,39 +223,26 @@ public class SQLite extends SQL {
      * @param numberError
      */
     @Override
-    protected boolean showSQLError(int numberError) {
-        System.out.println("Error: " + numberError);
+    public String getSqlErrorMessage(SQLException exception) {
+        int numberError = exception.getErrorCode();
         switch (numberError) {
-            case 1045:
-                MessageManager.errorMessage(this.getClass().getName(), "deniedUser", "SQLite");
-                return true;
-            case 1049:
-                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQLite");
-                return true;
-            case 1062:
-                MessageManager.errorMessage(this.getClass().getName(), "repeatedCompetitor", "SQLite");
-                return true;
-            case 1054:
-                MessageManager.errorMessage(this.getClass().getName(), "unknownColumn", "SQLite");
-                return true;
-            case 1146:
-                MessageManager.errorMessage(this.getClass().getName(), "corruptedDatabase", "SQLite");
-                return true;
-            case 1130:
-                MessageManager.errorMessage(this.getClass().getName(), "noAccessUser", "SQLite");
-                return true;
-            case 1044:
-                MessageManager.errorMessage(this.getClass().getName(), "noUserPrivileges", "SQLite");
-                return true;
-            case 0:
-                MessageManager.errorMessage(this.getClass().getName(), "noDatabase", "SQLite");
-                return true;
+            case 14:
+            case 11:
+            case 10:
+                return trans.getTranslatedText("corruptedDatabase");
+            case 23:
+            case 3:
+                return trans.getTranslatedText("deniedUser");
+            case 8:
+                return trans.getTranslatedText("noUserPrivileges");
+            case 1:
+                return trans.getTranslatedText("noDatabase");
         }
+        KendoLog.errorMessage(this.getClass().getName(), exception);
+        return trans.getTranslatedText("unknownDatabaseError");
 
 //#define SQLITE_OK           0   /* Successful result */
-//#define SQLITE_ERROR        1   /* SQL error or missing database */
 //#define SQLITE_INTERNAL     2   /* An internal logic error in SQLite */
-//#define SQLITE_PERM         3   /* Access permission denied */
 //#define SQLITE_ABORT        4   /* Callback routine requested an abort */
 //#define SQLITE_BUSY         5   /* The database file is locked */
 //#define SQLITE_LOCKED       6   /* A table in the database is locked */
@@ -295,7 +265,5 @@ public class SQLite extends SQL {
 //#define SQLITE_AUTH        23   /* Authorization denied */
 //#define SQLITE_ROW         100  /* sqlite_step() has another row ready */
 //#define SQLITE_DONE        101  /* sqlite_step() has finished executing */
-
-        return false;
     }
 }

@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui.base;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.gui.AlertManager;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -62,7 +63,7 @@ public abstract class KendoFrame extends javax.swing.JFrame {
                 return fc.getSelectedFile().toString();
             }
         } catch (NullPointerException npe) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),npe);
+            AlertManager.showErrorInformation(this.getClass().getName(),npe);
         }
         return "";
     }

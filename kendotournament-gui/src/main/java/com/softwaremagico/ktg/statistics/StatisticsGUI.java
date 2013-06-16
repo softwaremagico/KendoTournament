@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -194,7 +194,7 @@ public abstract class StatisticsGUI extends KendoFrame {
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
             }
         } catch (Exception ex) {
-            KendoTournamentGenerator.showErrorInformation(this.getClass().getName(),ex);
+            AlertManager.showErrorInformation(this.getClass().getName(),ex);
         }
         if (!file.endsWith(".png")) {
             file = file.concat(".png");

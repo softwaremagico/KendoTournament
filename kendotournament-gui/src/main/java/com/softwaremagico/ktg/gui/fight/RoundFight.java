@@ -27,6 +27,7 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -36,6 +37,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
@@ -81,9 +83,9 @@ public class RoundFight extends JPanel {
     public final void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
     }
-    
-    protected void updateCompetitorsName(int width){
-        for(TeamFight tf : teamFights){
+
+    protected void updateCompetitorsName(int width) {
+        for (TeamFight tf : teamFights) {
             tf.updateCompetitorsName(width / 2 - 50);
         }
     }
@@ -105,7 +107,12 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf;
-        int fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
+        int fight_total = 0;
+        try {
+            fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
         if (!invertedTeam) {
             tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total, invertedColor);
         } else {
@@ -128,7 +135,7 @@ public class RoundFight extends JPanel {
         revalidate();
     }
 
-    private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total,boolean invertedColor) {
+    private void fillCurrentFightPanel(int teamSize, int fight_number, int fight_total, boolean invertedColor) {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf = new TeamFight(tournament, true, teamSize, fight_number, fight_total, invertedColor);

@@ -24,11 +24,13 @@ package com.softwaremagico.ktg.tournament;
  */
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -144,8 +146,12 @@ public class TournamentGroup implements Serializable {
     }
 
     public List<Fight> getFights() {
-        if (fightsOfGroup == null || fightsOfGroup.isEmpty()) {
-            fightsOfGroup = getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
+        try {
+            if (fightsOfGroup == null || fightsOfGroup.isEmpty()) {
+                fightsOfGroup = getFightsOfGroup(FightPool.getInstance().getFromLevel(tournament, level));
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
         return fightsOfGroup;
     }
@@ -373,9 +379,9 @@ public class TournamentGroup implements Serializable {
             return false;
         }
     }
-    
+
     @Override
-    public String toString(){
-        return "Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams; 
+    public String toString() {
+        return "Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams;
     }
 }

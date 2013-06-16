@@ -29,8 +29,10 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
@@ -55,27 +57,31 @@ public class StatisticsTeamTopTen extends StatisticsGUI {
 
     public StatisticsTeamTopTen(Tournament tournament) {
         this.tournament = tournament;
-        //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tmp_championship, false);
-        Ranking ranking;
-        if (tournament != null) {
-            ranking = new Ranking(FightPool.getInstance().get(tournament));
-            teams = TeamPool.getInstance().get(tournament);
-        } else {
-            ranking = new Ranking(FightPool.getInstance().getAll());
-            teams = TeamPool.getInstance().getAll();
-        }
-        teamTopTen = ranking.getTeamsScoreRanking();
-        transl = LanguagePool.getTranslator("gui.xml");
-        start();
-        NumberSpinner.setVisible(true);
-        NumberLabel.setVisible(true);
-        this.setExtendedState(this.getExtendedState() | StatisticsTeamTopTen.MAXIMIZED_BOTH);
-
         try {
-            fillSelectComboBox();
-            changesAllowed = true;
-            NumberLabel.setText(trans.getTranslatedText("NumberTeamsLabel"));
-        } catch (NullPointerException npe) {
+            //teamTopTen = DatabaseConnection.getInstance().getDatabase().getTeamsOrderByScore(tmp_championship, false);
+            Ranking ranking;
+            if (tournament != null) {
+                ranking = new Ranking(FightPool.getInstance().get(tournament));
+                teams = TeamPool.getInstance().get(tournament);
+            } else {
+                ranking = new Ranking(FightPool.getInstance().getAll());
+                teams = TeamPool.getInstance().getAll();
+            }
+            teamTopTen = ranking.getTeamsScoreRanking();
+            transl = LanguagePool.getTranslator("gui.xml");
+            start();
+            NumberSpinner.setVisible(true);
+            NumberLabel.setVisible(true);
+            this.setExtendedState(this.getExtendedState() | StatisticsTeamTopTen.MAXIMIZED_BOTH);
+
+            try {
+                fillSelectComboBox();
+                changesAllowed = true;
+                NumberLabel.setText(trans.getTranslatedText("NumberTeamsLabel"));
+            } catch (NullPointerException npe) {
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
     }
 

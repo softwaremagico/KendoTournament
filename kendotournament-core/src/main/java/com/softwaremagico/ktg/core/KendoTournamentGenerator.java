@@ -30,6 +30,7 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,11 @@ public class KendoTournamentGenerator {
     }
 
     public Tournament getLastSelectedTournament() {
-        return TournamentPool.getInstance().get(lastSelectedTournament);
+        try {
+            return TournamentPool.getInstance().get(lastSelectedTournament);
+        } catch (SQLException ex) {
+            return null;
+        }
     }
 
     public String getLastSelectedClub() {
@@ -119,7 +124,7 @@ public class KendoTournamentGenerator {
 
     public String getVersion() {
         String text;
-        text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath(), false);
+        text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath());
         if (text != null && text.length() > 0) {
             return text;
         }
@@ -145,15 +150,6 @@ public class KendoTournamentGenerator {
      *
      ***********************************************
      */
-    /**
-     * If debug is activated, show information about the error.
-     */
-    public static void showErrorInformation(String className, Exception ex) {
-        if (isDebugOptionSelected()) {
-            MessageManager.errorMessage(className, ex);
-        }
-    }
-
     public static boolean isDebugOptionSelected() {
         return debugMode;
     }
@@ -286,7 +282,12 @@ public class KendoTournamentGenerator {
     public String getRegisteredPersonNumber(RegisteredPerson competitor, Role role, Tournament tournament) {
         DecimalFormat myFormatter = new DecimalFormat("00000");
         if (RoleTag.volunteerRoles.contains(role.getTag().getName())) {
-            Integer order = RolePool.getInstance().getVolunteerOrder(tournament, competitor);
+            Integer order;
+            try {
+                order = RolePool.getInstance().getVolunteerOrder(tournament, competitor);
+            } catch (SQLException ex) {
+                order = 0;
+            }
             if (order != null) {
                 return myFormatter.format(order);
             }

@@ -29,8 +29,6 @@ import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Configuration {
 
@@ -65,7 +63,7 @@ public class Configuration {
                 storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
             }
         } catch (IOException ex) {
-            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+            KendoLog.info(Configuration.class.getName(), "Language file not found");
         }
 
     }

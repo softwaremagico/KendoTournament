@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -118,7 +119,7 @@ public class DatabaseConnection {
         DatabaseConnection.connection = connection;
     }
 
-    public boolean testDatabaseConnection(String password, String user, String databaseName, String server) {
+    public boolean testDatabaseConnection(String password, String user, String databaseName, String server) throws SQLException {
         this.password = password;
         this.user = user;
         this.databaseName = databaseName;
@@ -223,7 +224,7 @@ public class DatabaseConnection {
         databaseEngine = DatabaseEngine.getDatabase(engine);
     }
 
-    public boolean updateDatabase() {
+    public boolean updateDatabase() throws SQLException {
         connect();
         if (!ClubPool.getInstance().updateDatabase()) {
             return false;
@@ -273,7 +274,7 @@ public class DatabaseConnection {
                 || CustomLinkPool.getInstance().needsToBeStoredInDatabase();
     }
 
-    public synchronized boolean connect() {
+    public synchronized boolean connect() throws SQLException {
         boolean connectionSuccess = true;
         if (stillConnected <= 0) {
             connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);

@@ -27,8 +27,10 @@ import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.DuelPool;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -48,12 +50,16 @@ public class StatisticsGeneralHits extends StatisticsGUI {
 
     public StatisticsGeneralHits(Tournament tournament) {
         this.tournament = tournament;
-        if (tournament == null) { //null == all.
-            duels = DuelPool.getInstance().getAll();
-        } else {
-            duels = DuelPool.getInstance().get(tournament);
+        try {
+            if (tournament == null) { //null == all.
+                duels = DuelPool.getInstance().getAll();
+            } else {
+                duels = DuelPool.getInstance().get(tournament);
+            }
+            start();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
-        start();
     }
 
     private DefaultPieDataset createDataset() {
