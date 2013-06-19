@@ -181,7 +181,6 @@ public class AlertManager {
     }
 
     public static void showSqlErrorMessage(SQLException exception) {
-        System.out.println(exception.getErrorCode());
         String errorText = DatabaseConnection.getConnection().getDatabase().getSqlErrorMessage(exception);
         showGraphicMessage(errorText, "Database error", JOptionPane.ERROR_MESSAGE);
     }
