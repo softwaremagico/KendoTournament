@@ -189,9 +189,9 @@ public class MySQL extends SQL {
                     count++;
                 }
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | NullPointerException ex) {
             return false;
-        }
+        } 
         if (count > 6) {
             return true;
         }
