@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 
 @Test(groups = {"championshipTest"}, dependsOnGroups = {"populateDatabase"})
-public class championshipTest {
+public class ChampionshipTest {
 
     private static final String tournamentName = "championshipTest";
     private static Tournament tournament = null;
@@ -28,7 +28,7 @@ public class championshipTest {
         for (RegisteredPerson competitor : RegisteredPersonPool.getInstance().getAll()) {
             RolePool.getInstance().add(tournament, new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false, false));
         }
-        Assert.assertTrue(RolePool.getInstance().get(tournament).size() == populateDatabase.clubs.length * populateDatabase.competitors.length);
+        Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length * PopulateDatabase.competitors.length);
     }
 
     @Test(dependsOnMethods = {"addRoles"})

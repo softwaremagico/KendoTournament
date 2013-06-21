@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class SimpleTournamentManager implements ITournamentManager {
 
-    Tournament tournament;
-    TournamentGroup group;
+    private Tournament tournament;
+    protected TournamentGroup group = null;
 
     protected SimpleTournamentManager(Tournament tournament) {
         this.tournament = tournament;
@@ -63,11 +63,13 @@ public class SimpleTournamentManager implements ITournamentManager {
     }
 
     public final void addGroup() {
-        this.group = new TournamentGroup(tournament, 0, 0);
-        try {
-            group.addTeams(TeamPool.getInstance().get(tournament));
-        } catch (SQLException ex) {
-            KendoLog.errorMessage(this.getClass().getName(), ex);
+        if (group == null) {
+            this.group = new TournamentGroup(tournament, 0, 0);
+            try {
+                group.addTeams(TeamPool.getInstance().get(tournament));
+            } catch (SQLException ex) {
+                KendoLog.errorMessage(this.getClass().getName(), ex);
+            }
         }
     }
 

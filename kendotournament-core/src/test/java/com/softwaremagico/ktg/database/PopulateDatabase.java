@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
  * Test of access to database. Needs a user for connecting.
  */
 @Test(groups = {"populateDatabase"})
-public class populateDatabase {
+public class PopulateDatabase {
 
     private static final String DATABASE_NAME = "kendotournament_test";
     private static final String DATABASE_USER = "kendouser";

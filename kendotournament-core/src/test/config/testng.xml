@@ -5,11 +5,13 @@
 			<run>
 				<include name="populateDatabase" />
 				<include name="championshipTest" />
+                                <include name="simpleChampionshipTest" />                                
 			</run>
 		</groups>
 		<classes>
-			<class name="com.softwaremagico.ktg.database.populateDatabase" />
-			<class name="com.softwaremagico.ktg.database.championshipTest" />
+			<class name="com.softwaremagico.ktg.database.PopulateDatabase" />
+			<class name="com.softwaremagico.ktg.database.ChampionshipTest" />
+                        <class name="com.softwaremagico.ktg.database.SimpleChampionshipTest" />                        
 		</classes>
 	</test>
 </suite>
