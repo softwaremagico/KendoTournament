@@ -40,7 +40,7 @@ import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.sql.SQLException;
@@ -90,7 +90,7 @@ public class ScoreListPDF extends ParentList {
             AlertManager.showSqlErrorMessage(ex);
         }
         for (int l = 0; l < tournamentManager.getNumberOfLevels(); l++) {
-            List<TournamentGroup> groups = tournamentManager.getGroups(l);
+            List<TGroup> groups = tournamentManager.getGroups(l);
             boolean printTitle = false;
             for (int i = 0; i < groups.size(); i++) {
                 if (groups.get(i).areFightsOver()) {

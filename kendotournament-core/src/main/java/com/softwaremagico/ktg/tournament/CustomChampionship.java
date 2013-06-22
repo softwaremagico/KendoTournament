@@ -26,11 +26,11 @@ public class CustomChampionship extends Championship {
         return ((LeagueLevelCustom) levelZero).allGroupsHaveManualLink();
     }
 
-    public void addLink(TournamentGroup source, TournamentGroup address) {
+    public void addLink(TGroup source, TGroup address) {
         ((LeagueLevelCustom) levelZero).addLink(source, address);
     }
 
-    public void removeLinks(TournamentGroup group) {
+    public void removeLinks(TGroup group) {
         //Remove links from manager.
         ((LeagueLevelCustom) levelZero).removeLinksSelectedGroup(group);
     }

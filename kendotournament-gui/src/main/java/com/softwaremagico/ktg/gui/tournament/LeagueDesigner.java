@@ -33,9 +33,10 @@ import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.LeagueLevelCustom;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Toolkit;
@@ -178,7 +179,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         try {
             if (TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getGroups(0).size() < getNumberOfGroupsOfLeague()) {
                 int defaultArena = 0;
-                TournamentGroup group = new TournamentGroup(getSelectedTournament(), 0, defaultArena);
+                TGroup group = new TreeTournamentGroup(getSelectedTournament(), 0, defaultArena);
                 TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).addGroup(group);
                 TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).setDefaultFightAreas();
                 updateInfo();

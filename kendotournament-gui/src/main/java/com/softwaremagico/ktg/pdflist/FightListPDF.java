@@ -36,7 +36,7 @@ import com.softwaremagico.ktg.database.FightPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.sql.SQLException;
@@ -114,7 +114,7 @@ public class FightListPDF extends ParentList {
             mainTable.addCell(getEmptyRow());
             mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (l + 1) + ":", 0, Element.ALIGN_LEFT));
 
-            List<TournamentGroup> groups = tournamentManager.getGroups(l);
+            List<TGroup> groups = tournamentManager.getGroups(l);
 
             List<Fight> fights = new ArrayList<>();
             try {

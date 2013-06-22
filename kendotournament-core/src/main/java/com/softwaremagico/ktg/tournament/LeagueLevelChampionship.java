@@ -30,7 +30,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
     protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
         if (level > 0) { //Inner levels always have at least one group.
-            addGroup(new TournamentGroup(tournament, level, 0));
+            addGroup(new TreeTournamentGroup(tournament, level, 0));
         }
     }
 
@@ -56,7 +56,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
     }
 
     @Override
-    public Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
+    public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
         Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
         Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
         if ((size() % 2) == 0) {

@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.gui.NewTeam;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import javax.swing.DefaultListModel;
@@ -38,11 +38,11 @@ public class DesignGroupWindow extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 9161777233520978498L;
     private DefaultListModel<String> groupModel = new DefaultListModel<>();
-    private TournamentGroup tournamentGroup;
+    private TGroup tournamentGroup;
     private Translator trans = null;
     private boolean refresh = true;
 
-    public DesignGroupWindow(TournamentGroup tournamentGroup) {
+    public DesignGroupWindow(TGroup tournamentGroup) {
         this.tournamentGroup = tournamentGroup;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),

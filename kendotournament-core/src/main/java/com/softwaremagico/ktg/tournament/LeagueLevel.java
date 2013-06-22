@@ -33,7 +33,7 @@ public abstract class LeagueLevel {
 
     protected int level;
     protected Tournament tournament;
-    protected List<TournamentGroup> tournamentGroups;
+    protected List<TGroup> tournamentGroups;
     protected LeagueLevel nextLevel;
     protected LeagueLevel previousLevel;
 
@@ -51,21 +51,21 @@ public abstract class LeagueLevel {
 
     protected void fillGroups(Fight fight) {
         while (fight.getGroupIndex() >= getGroups().size()) {
-            addGroup(new TournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
+            addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
         }
-        TournamentGroup group = getGroups().get(fight.getGroupIndex());
+        TGroup group = getGroups().get(fight.getGroupIndex());
         group.addTeam(fight.getTeam1());
         group.addTeam(fight.getTeam2());
     }
 
-    public List<TournamentGroup> getGroups() {
+    public List<TGroup> getGroups() {
         return tournamentGroups;
     }
 
     /**
      * Return the las group of the level.
      */
-    protected TournamentGroup getLastGroupOfLevel() {
+    protected TGroup getLastGroupOfLevel() {
         if (tournamentGroups.size() > 0) {
             return tournamentGroups.get(tournamentGroups.size() - 1);
         } else {
@@ -74,13 +74,13 @@ public abstract class LeagueLevel {
     }
 
     protected void removeTeams() {
-        for (TournamentGroup g : tournamentGroups) {
+        for (TGroup g : tournamentGroups) {
             g.removeTeams();
         }
     }
 
     protected boolean isFightOfLevel(Fight fight) {
-        for (TournamentGroup t : tournamentGroups) {
+        for (TGroup t : tournamentGroups) {
             if (t.isFightOfGroup(fight)) {
                 return true;
             }
@@ -88,8 +88,8 @@ public abstract class LeagueLevel {
         return false;
     }
 
-    protected boolean isGroupOfLevel(TournamentGroup tgroup) {
-        for (TournamentGroup t : tournamentGroups) {
+    protected boolean isGroupOfLevel(TGroup tgroup) {
+        for (TGroup t : tournamentGroups) {
             if (tgroup.equals(t)) {
                 return true;
             }
@@ -98,7 +98,7 @@ public abstract class LeagueLevel {
     }
 
     protected boolean isLevelFinished() {
-        for (TournamentGroup t : tournamentGroups) {
+        for (TGroup t : tournamentGroups) {
             if (!t.areFightsOverOrNull()) {
                 return false;
             }
@@ -139,8 +139,8 @@ public abstract class LeagueLevel {
         }
     }
 
-    protected TournamentGroup getGroupOfFight(Fight fight) {
-        for (TournamentGroup group : tournamentGroups) {
+    protected TGroup getGroupOfFight(Fight fight) {
+        for (TGroup group : tournamentGroups) {
             if (group.getTeams().contains(fight.getTeam1()) && group.getTeams().contains(fight.getTeam2())) {
                 return group;
             }
@@ -150,13 +150,13 @@ public abstract class LeagueLevel {
 
     protected List<Team> getUsedTeams() {
         List<Team> usedTeams = new ArrayList<>();
-        for (TournamentGroup group : tournamentGroups) {
+        for (TGroup group : tournamentGroups) {
             usedTeams.addAll(group.getTeams());
         }
         return usedTeams;
     }
 
-    public Integer getIndexOfGroup(TournamentGroup group) {
+    public Integer getIndexOfGroup(TGroup group) {
         for (int i = 0; i < tournamentGroups.size(); i++) {
             if (tournamentGroups.get(i).equals(group)) {
                 return i;
@@ -165,7 +165,7 @@ public abstract class LeagueLevel {
         return null;
     }
 
-    protected int getGlobalPositionWinner(TournamentGroup group, Integer winner) {
+    protected int getGlobalPositionWinner(TGroup group, Integer winner) {
         int total = 0;
 
         for (int i = 0; i < tournamentGroups.size() && i < getIndexOfGroup(group); i++) {
@@ -204,8 +204,8 @@ public abstract class LeagueLevel {
     private void fillTeamsWithWinnersPreviousLevel() {
         if (previousLevel != null) {
             for (int winner = 0; winner < previousLevel.getGroups().get(0).getMaxNumberOfWinners(); winner++) {
-                for (TournamentGroup previousLevelGroup : previousLevel.tournamentGroups) {
-                    TournamentGroup group = previousLevel.getGroupDestinationOfWinner(previousLevelGroup, winner);
+                for (TGroup previousLevelGroup : previousLevel.tournamentGroups) {
+                    TGroup group = previousLevel.getGroupDestinationOfWinner(previousLevelGroup, winner);
                     group.addTeam(previousLevelGroup.getWinners().get(winner));
                 }
             }
@@ -224,7 +224,7 @@ public abstract class LeagueLevel {
      */
     protected void updateGroupsSize() {
         while ((previousLevel != null) && (previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
-            addGroup(new TournamentGroup(tournament, level, 0));
+            addGroup(new TreeTournamentGroup(tournament, level, 0));
         }
 
         // When we remove two groups in one level, we must remove one in the next one.
@@ -246,7 +246,7 @@ public abstract class LeagueLevel {
 
     protected abstract LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel);
 
-    protected void addGroup(TournamentGroup group) {
+    protected void addGroup(TGroup group) {
         addGroup(group, tournamentGroups.size());
     }
 
@@ -257,7 +257,7 @@ public abstract class LeagueLevel {
      * @param index
      * @return
      */
-    protected LeagueLevel addGroup(TournamentGroup group, Integer index) {
+    protected LeagueLevel addGroup(TGroup group, Integer index) {
         tournamentGroups.add(index, group);
 
         if ((nextLevel == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || tournamentGroups.size() > 1)) {
@@ -289,7 +289,7 @@ public abstract class LeagueLevel {
         return false;
     }
 
-    protected void removeGroup(TournamentGroup group) {
+    protected void removeGroup(TGroup group) {
         if (tournamentGroups.size() > 0) {
             tournamentGroups.remove(group);
             if (nextLevel != null) {
@@ -331,13 +331,13 @@ public abstract class LeagueLevel {
         }
     }
 
-    public abstract Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner);
+    public abstract Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner);
 
-    protected TournamentGroup getGroupDestinationOfWinner(TournamentGroup group, Integer winner) {
+    protected TGroup getGroupDestinationOfWinner(TGroup group, Integer winner) {
         return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));
     }
 
-    protected Integer getGroupIndexSourceOfWinner(TournamentGroup group, Integer winner) {
+    protected Integer getGroupIndexSourceOfWinner(TGroup group, Integer winner) {
         if (level > 0) {
             for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
                 if (previousLevel.getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
@@ -348,14 +348,14 @@ public abstract class LeagueLevel {
         return null;
     }
 
-    protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, Integer winner) {
+    protected TGroup getGroupSourceOfWinner(TGroup group, Integer winner) {
         return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
     }
 
     protected String levelInfo() {
         String info = "Level: " + level + " Groups: ";
 
-        for (TournamentGroup group : tournamentGroups) {
+        for (TGroup group : tournamentGroups) {
             info += group.getTeams().size() + "\t";
         }
         return info;
@@ -372,7 +372,7 @@ public abstract class LeagueLevel {
 
     protected void showTeams() {
         System.out.println("-------------------------------------");
-        for (TournamentGroup group : tournamentGroups) {
+        for (TGroup group : tournamentGroups) {
             for (Team team : group.getTeams()) {
                 System.out.print(team.getName() + " ");
             }

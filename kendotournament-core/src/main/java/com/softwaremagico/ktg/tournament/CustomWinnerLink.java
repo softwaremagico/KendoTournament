@@ -10,7 +10,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
     private Integer address = null;
     private Integer winner = 1;
 
-    public CustomWinnerLink(Tournament tournament, TournamentGroup from, TournamentGroup to) {
+    public CustomWinnerLink(Tournament tournament, TGroup from, TGroup to) {
         this.tournament = tournament;
         if (isValidTournament(tournament) && from != null && to != null) {
             source = ((CustomChampionship) (TournamentManagerFactory.getManager(tournament))).getLevel(0).getIndexOfGroup(from);
@@ -46,7 +46,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
         return null;
     }
 
-    public TournamentGroup getSourceGroup() {
+    public TGroup getSourceGroup() {
         try {
             if (isValidTournament(tournament) && TournamentManagerFactory.getManager(tournament).getNumberOfLevels() > 1) {
                 return TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(source);
@@ -56,7 +56,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
         return null;
     }
 
-    public void setSource(TournamentGroup source) {
+    public void setSource(TGroup source) {
         if (isValidTournament(tournament)) {
             this.source = ((CustomChampionship) (TournamentManagerFactory.getManager(getTournament()))).getLevel(0).getIndexOfGroup(source);
         }
@@ -69,14 +69,14 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
         return null;
     }
 
-    public TournamentGroup getAddressGroup() {
+    public TGroup getAddressGroup() {
         if (isValidTournament(tournament)) {
             return TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(address);
         }
         return null;
     }
 
-    public void setAddress(TournamentGroup address) {
+    public void setAddress(TGroup address) {
         if (isValidTournament(tournament)) {
             this.address = ((CustomChampionship) (TournamentManagerFactory.getManager(getTournament()))).getLevel(1).getIndexOfGroup(address);
         }

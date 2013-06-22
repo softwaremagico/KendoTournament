@@ -57,7 +57,7 @@ public class Championship implements ITournamentManager {
         //Obtain winners of previous level.
         if (level < getNumberOfLevels()) {
             getLevel(level).update();
-            List<TournamentGroup> groupsOfLevel = getGroups(level);
+            List<TGroup> groupsOfLevel = getGroups(level);
             for (int i = 0; i < groupsOfLevel.size(); i++) {
                 fights.addAll(groupsOfLevel.get(i).createFights(random));
             }
@@ -66,8 +66,8 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public List<TournamentGroup> getGroups() {
-        List<TournamentGroup> allGroups = new ArrayList<>();
+    public List<TGroup> getGroups() {
+        List<TGroup> allGroups = new ArrayList<>();
         for (int i = 0; i < getNumberOfLevels(); i++) {
             allGroups.addAll(getLevel(i).getGroups());
         }
@@ -75,13 +75,13 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public List<TournamentGroup> getGroups(Integer level) {
+    public List<TGroup> getGroups(Integer level) {
         return getLevel(level).getGroups();
     }
 
     @Override
-    public TournamentGroup getGroup(Fight fight) {
-        for (TournamentGroup group : getGroups()) {
+    public TGroup getGroup(Fight fight) {
+        for (TGroup group : getGroups()) {
             if (group.isFightOfGroup(fight)) {
                 return group;
             }
@@ -90,7 +90,7 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public void addGroup(TournamentGroup group) {
+    public void addGroup(TGroup group) {
         getLevel(0).addGroup(group);
     }
 
@@ -100,7 +100,7 @@ public class Championship implements ITournamentManager {
     }
 
     @Override
-    public void removeGroup(TournamentGroup group) {
+    public void removeGroup(TGroup group) {
         getLevel(group.getLevel()).removeGroup(group);
     }
 
@@ -146,8 +146,8 @@ public class Championship implements ITournamentManager {
 
     @Override
     public boolean exist(Team team) {
-        List<TournamentGroup> groups = getGroups(0);
-        for (TournamentGroup group : groups) {
+        List<TGroup> groups = getGroups(0);
+        for (TGroup group : groups) {
             if (group.getTeams().contains(team)) {
                 return true;
             }
@@ -168,7 +168,7 @@ public class Championship implements ITournamentManager {
     @Override
     public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
         tournament.setHowManyTeamsOfGroupPassToTheTree(winners);
-        for (TournamentGroup group : levelZero.getGroups()) {
+        for (TGroup group : levelZero.getGroups()) {
             group.setMaxNumberOfWinners(winners);
         }
         if (levelZero.nextLevel != null) {

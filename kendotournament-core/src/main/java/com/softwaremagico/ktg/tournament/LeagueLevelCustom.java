@@ -45,7 +45,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     }
 
     @Override
-    protected TournamentGroup getGroupSourceOfWinner(TournamentGroup group, Integer winner) {
+    protected TGroup getGroupSourceOfWinner(TGroup group, Integer winner) {
         Links sources = new Links();
 
         //Get all sources of Winner
@@ -72,7 +72,7 @@ public class LeagueLevelCustom extends LeagueLevel {
     }
 
     @Override
-    public Integer getGroupIndexDestinationOfWinner(TournamentGroup group, Integer winner) {
+    public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
         Links destinations = new Links();
 
         //Get all destination of Winner
@@ -106,7 +106,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         Links() {
         }
 
-        protected void add(TournamentGroup from, TournamentGroup to) {
+        protected void add(TGroup from, TGroup to) {
             if (to.getLevel() == from.getLevel() + 1) {
                 links.add(new CustomWinnerLink(tournament, from, to));
                 setWinnerOrder(from);
@@ -127,14 +127,14 @@ public class LeagueLevelCustom extends LeagueLevel {
          *
          * @param from
          */
-        private void setWinnerOrder(TournamentGroup from) {
+        private void setWinnerOrder(TGroup from) {
             List<CustomWinnerLink> sourceLinksOfGroup = getSourceLinksOfGroup(from);
             for (int i = 0; i < sourceLinksOfGroup.size(); i++) {
                 sourceLinksOfGroup.get(i).setWinner(i);
             }
         }
 
-        private List<CustomWinnerLink> getSourceLinksOfGroup(TournamentGroup from) {
+        private List<CustomWinnerLink> getSourceLinksOfGroup(TGroup from) {
             Integer source = getIndexOfGroup(from);
             return getSourceLinksOfGroup(source);
         }
@@ -176,7 +176,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
     }
 
-    protected void addLink(TournamentGroup source, TournamentGroup address) {
+    protected void addLink(TGroup source, TGroup address) {
         if (source.getLevel() == address.getLevel() - 1) {
             int previousLinksNumber = getNumberOfSourcesOfLink(source);
             if (previousLinksNumber >= source.getMaxNumberOfWinners()) {
@@ -191,7 +191,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
     }
 
-    protected int getNumberOfSourcesOfLink(TournamentGroup from) {
+    protected int getNumberOfSourcesOfLink(TGroup from) {
         int number = 0;
 
         for (int i = 0; i < links.size(); i++) {
@@ -203,7 +203,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     }
 
-    protected int getNumberOfAddressesOfLink(TournamentGroup to) {
+    protected int getNumberOfAddressesOfLink(TGroup to) {
         int number = 0;
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).getAddressGroup().equals(to)) {
@@ -214,7 +214,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
     }
 
-    protected void removefirstSourceLink(TournamentGroup from) {
+    protected void removefirstSourceLink(TGroup from) {
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).getSourceGroup().equals(from)) {
                 links.remove(i);
@@ -223,7 +223,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
     }
 
-    protected void removefirstAddressLink(TournamentGroup to) {
+    protected void removefirstAddressLink(TGroup to) {
         for (int i = 0; i < links.size(); i++) {
             if (links.get(i).getAddressGroup().equals(to)) {
                 links.remove(i);
@@ -253,7 +253,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
     }
 
-    protected void removeLinksSelectedGroup(TournamentGroup lastSelected) {
+    protected void removeLinksSelectedGroup(TGroup lastSelected) {
         try {
             CustomLinkPool.getInstance().remove(tournament, getIndexOfGroup(lastSelected));
             for (int i = 0; i < links.size(); i++) {

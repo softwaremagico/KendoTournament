@@ -33,7 +33,7 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -49,7 +49,7 @@ import javax.swing.JLabel;
 
 public class TournamentGroupBox extends Group {
 
-    private TournamentGroup tournamentGroup;
+    private TGroup tournamentGroup;
     private ITournamentManager tournamentManager;
     private DesignGroupWindow dgw;
     private boolean selected = false;
@@ -58,7 +58,7 @@ public class TournamentGroupBox extends Group {
     private java.awt.event.MouseAdapter ma;
     private boolean listenerAdded = false;
 
-    public TournamentGroupBox(TournamentGroup tournamentGroup) {
+    public TournamentGroupBox(TGroup tournamentGroup) {
         this.tournamentGroup = tournamentGroup;
         this.tournamentManager = TournamentManagerFactory.getManager(tournamentGroup.getTournament());
         setLayout(new GridBagLayout());
@@ -80,7 +80,7 @@ public class TournamentGroupBox extends Group {
         updateSize();
     }
 
-    public TournamentGroup getTournamentGroup() {
+    public TGroup getTournamentGroup() {
         return tournamentGroup;
     }
 

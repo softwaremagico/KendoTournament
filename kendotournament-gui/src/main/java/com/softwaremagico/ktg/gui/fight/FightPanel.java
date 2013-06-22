@@ -44,7 +44,7 @@ import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -408,7 +408,7 @@ public class FightPanel extends KFrame {
         return n;
     }
 
-    private void messagesFinishedGroup(TournamentGroup currentGroup) {
+    private void messagesFinishedGroup(TGroup currentGroup) {
         //When a group is finished, show different messages with the winner, score, etc.
         if (currentGroup.areFightsOver()) {
             //Show score.
@@ -433,7 +433,7 @@ public class FightPanel extends KFrame {
     private void openRankingWindow() {
         try {
             Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
-            TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+            TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
             Ranking ranking = new Ranking(group.getFights());
             openRankingWindow(ranking);
         } catch (SQLException ex) {
@@ -477,7 +477,7 @@ public class FightPanel extends KFrame {
                 Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(), getSelectedFightArea());
                 currentFight.setOver(true);
 
-                TournamentGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+                TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
                 //If it was the last fight of group.
                 if (group.areFightsOver()) {
                     boolean moreDrawTeams = true;

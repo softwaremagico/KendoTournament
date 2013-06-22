@@ -9,14 +9,14 @@ import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.sql.SQLException;
 import org.junit.After;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test(groups = {"simpleChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
 public class SimpleChampionshipTest {
 
     private static final Integer MEMBERS = 3;
-    private static final Integer FIGHTS = 8;
+    private static final Integer FIGHTS = 15;
     private static final String TOURNAMENT_NAME = "simpleChampionshipTest";
     private static Tournament tournament = null;
 
@@ -66,8 +66,9 @@ public class SimpleChampionshipTest {
     @Test(dependsOnMethods = {"addTeams"})
     public void createFights() throws SQLException {
         ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.SIMPLE);
+        System.out.println(tournamentManager);
         FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(0));
-        System.out.println("Fights ------------------> " + FightPool.getInstance().get(tournament));
+        System.out.println("\n"+ FightPool.getInstance().get(tournament));
         Assert.assertTrue(FightPool.getInstance().get(tournament).size() == FIGHTS);
     }
 

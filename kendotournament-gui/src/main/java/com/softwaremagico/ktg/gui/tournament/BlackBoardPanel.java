@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
-import com.softwaremagico.ktg.tournament.TournamentGroup;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Color;
@@ -119,7 +119,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
         /*
          * Paint information column
          */
-        List<TournamentGroup> grps = TournamentManagerFactory.getManager(tournament).getGroups(0);
+        List<TGroup> grps = TournamentManagerFactory.getManager(tournament).getGroups(0);
         if (grps != null) {
             for (int i = 0; i < grps.size(); i++) {
                 c.gridx = 0;
@@ -167,7 +167,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
             selectGroup(lastSelectedGroupIndex);
     }
 
-    private TournamentGroupBox createBox(TournamentGroup tournamentGroup, Integer level) {
+    private TournamentGroupBox createBox(TGroup tournamentGroup, Integer level) {
         TournamentGroupBox tournamentGroupBox = new TournamentGroupBox(tournamentGroup);
         List<TournamentGroupBox> list = grpsBox.get(level);
         if (list == null) {

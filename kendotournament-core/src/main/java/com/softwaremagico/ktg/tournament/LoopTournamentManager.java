@@ -1,8 +1,9 @@
 package com.softwaremagico.ktg.tournament;
 
-import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
-import java.util.List;
+import com.softwaremagico.ktg.database.TeamPool;
+import java.sql.SQLException;
 
 /**
  * In a ring tournament, one team fights with all other teams consecutively.
@@ -14,18 +15,13 @@ public class LoopTournamentManager extends SimpleTournamentManager {
     }
 
     @Override
-    public List<Fight> createRandomFights(Integer level) {
-        if (group == null || level != 0) {
-            return null;
+    public void addGroup() {
+        TGroup group = new LoopTournamentGroup(getTournament(), 0, 0);
+        try {
+            group.addTeams(TeamPool.getInstance().get(getTournament()));
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
         }
-        return group.createLoopFights(true);
-    }
-
-    @Override
-    public List<Fight> createSortedFights(Integer level) {
-        if (group == null || level != 0) {
-            return null;
-        }
-        return group.createLoopFights(false);
+        addGroup(group);
     }
 }

@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `kendotournament` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `kendotournament`;
--- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: kendotournament
 -- ------------------------------------------------------
--- Server version	5.1.58-1ubuntu1
+-- Server version	5.5.31-0ubuntu0.13.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,30 +25,24 @@ DROP TABLE IF EXISTS `duel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `duel` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Fight` int(10) unsigned NOT NULL COMMENT 'Foreign Key of Fight ID',
-  `OrderPlayer` int(10) unsigned NOT NULL,
+  `Team1` varchar(50) NOT NULL,
+  `Team2` varchar(50) NOT NULL,
+  `Tournament` varchar(50) NOT NULL,
+  `GroupIndex` int(10) unsigned NOT NULL,
+  `Level` int(10) unsigned NOT NULL,
+  `Order` int(10) unsigned NOT NULL,
   `PointPlayer1A` char(1) NOT NULL,
   `PointPlayer1B` char(1) NOT NULL,
   `PointPlayer2A` char(1) NOT NULL,
   `PointPlayer2B` char(1) NOT NULL,
-  `FaultsPlayer1` int(10) unsigned NOT NULL,
-  `FaultsPlayer2` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `duelIndex` (`ID`),
-  KEY `Fight` (`Fight`),
-  CONSTRAINT `Fight` FOREIGN KEY (`Fight`) REFERENCES `fight` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+  `FaultsPlayer1` int(1) unsigned NOT NULL,
+  `FaultsPlayer2` int(1) unsigned NOT NULL,
+  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`,`Order`),
+  KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
+  KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
+  CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `duel`
---
-
-LOCK TABLES `duel` WRITE;
-/*!40000 ALTER TABLE `duel` DISABLE KEYS */;
-/*!40000 ALTER TABLE `duel` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `competitor`
@@ -64,23 +58,27 @@ CREATE TABLE `competitor` (
   `Club` char(25) DEFAULT NULL COMMENT 'Club belonging to',
   `Photo` mediumblob COMMENT 'Photo image',
   `PhotoSize` double NOT NULL DEFAULT '0' COMMENT 'Size of the photo',
-  `ListOrder` int(6) NOT NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE KEY `Order_UNIQUE` (`ListOrder`),
   KEY `ClubBelong` (`Club`),
-  KEY `OrderIndex` (`ListOrder`),
   CONSTRAINT `ClubBelong` FOREIGN KEY (`Club`) REFERENCES `club` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='competitor in the tournament. Each line for each one. ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='competitor in the tournament. Each line for each one. ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `competitor`
+-- Table structure for table `customlinks`
 --
 
-LOCK TABLES `competitor` WRITE;
-/*!40000 ALTER TABLE `competitor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `competitor` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `customlinks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customlinks` (
+  `Tournament` char(50) NOT NULL,
+  `SourceGroup` int(11) NOT NULL,
+  `AddressGroup` int(11) NOT NULL,
+  `WinnerOrder` int(11) NOT NULL,
+  PRIMARY KEY (`Tournament`,`SourceGroup`,`AddressGroup`,`WinnerOrder`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Stores user defined links for custom championships.';
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `club`
@@ -102,15 +100,6 @@ CREATE TABLE `club` (
   KEY `Representative` (`Representative`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='A club where the competitors belong to';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `club`
---
-
-LOCK TABLES `club` WRITE;
-/*!40000 ALTER TABLE `club` DISABLE KEYS */;
-/*!40000 ALTER TABLE `club` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tournament`
@@ -139,15 +128,6 @@ CREATE TABLE `tournament` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tournament`
---
-
-LOCK TABLES `tournament` WRITE;
-/*!40000 ALTER TABLE `tournament` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tournament` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `fight`
 --
 
@@ -157,28 +137,18 @@ DROP TABLE IF EXISTS `fight`;
 CREATE TABLE `fight` (
   `Team1` varchar(50) NOT NULL COMMENT 'One team on the fight',
   `Team2` varchar(50) NOT NULL COMMENT 'Other team on the fight',
-  `Tournament` char(50) NOT NULL,
+  `Tournament` varchar(50) NOT NULL,
+  `GroupIndex` int(10) unsigned NOT NULL,
+  `Level` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
   `FightArea` int(10) unsigned NOT NULL DEFAULT '1',
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Winner` int(11) NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
-  `LeagueLevel` int(11) NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
-  `MaxWinners` int(11) NOT NULL DEFAULT '1' COMMENT 'Number of winners of a group that pass to the next round.',
-  PRIMARY KEY (`ID`),
+  `Winner` int(1) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
+  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
   KEY `TournamentFightIndex` (`Tournament`),
-  KEY `TCL1FightIndex` (`Team1`,`LeagueLevel`,`Tournament`),
-  KEY `Team2Fight` (`Team2`,`LeagueLevel`,`Tournament`),
+  KEY `TCL1FightIndex` (`Team1`,`Level`,`Tournament`),
+  KEY `Team2Fight` (`Team2`,`Level`,`Tournament`),
   CONSTRAINT `TournamentFight` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `fight`
---
-
-LOCK TABLES `fight` WRITE;
-/*!40000 ALTER TABLE `fight` DISABLE KEYS */;
-/*!40000 ALTER TABLE `fight` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `role`
@@ -191,25 +161,16 @@ CREATE TABLE `role` (
   `Tournament` char(50) NOT NULL,
   `Competitor` varchar(12) NOT NULL DEFAULT '0000000Z',
   `Role` varchar(15) NOT NULL,
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ImpressCard` tinyint(1) DEFAULT '0',
-  `Diploma` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`ID`),
+  `ImpressCardOrder` int(10) DEFAULT '0',
+  `ImpressCardPrinted` tinyint(1) DEFAULT '0',
+  `DiplomaPrinted` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`Competitor`,`Tournament`),
   KEY `TournamentRole` (`Tournament`),
   KEY `CompetitorRole` (`Competitor`),
   CONSTRAINT `CompetitorRoleC` FOREIGN KEY (`Competitor`) REFERENCES `competitor` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `TournamentRoleC` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role`
---
-
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `team`
@@ -235,15 +196,6 @@ CREATE TABLE `team` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `team`
---
-
-LOCK TABLES `team` WRITE;
-/*!40000 ALTER TABLE `team` DISABLE KEYS */;
-/*!40000 ALTER TABLE `team` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `undraw`
 --
 
@@ -251,26 +203,18 @@ DROP TABLE IF EXISTS `undraw`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `undraw` (
-  `Championship` char(50) NOT NULL,
-  `UndrawGroup` int(11) NOT NULL,
-  `LevelUndraw` int(11) NOT NULL,
+  `Tournament` char(50) NOT NULL,
+  `Points` int(11) NOT NULL DEFAULT '1',
+  `Level` int(11) NOT NULL,
   `Team` varchar(50) NOT NULL,
   `Player` int(11) NOT NULL,
-  PRIMARY KEY (`Championship`,`UndrawGroup`,`LevelUndraw`,`Team`) USING BTREE,
+  `Group` int(11) NOT NULL,
+  PRIMARY KEY (`Tournament`,`Level`,`Team`,`Group`) USING BTREE,
   KEY `Team` (`Team`),
   CONSTRAINT `TeamDraw` FOREIGN KEY (`Team`) REFERENCES `team` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `TournamentUndraw` FOREIGN KEY (`Championship`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `TournamentUndraw` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `undraw`
---
-
-LOCK TABLES `undraw` WRITE;
-/*!40000 ALTER TABLE `undraw` DISABLE KEYS */;
-/*!40000 ALTER TABLE `undraw` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -281,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-02-20 12:01:51
+-- Dump completed on 2013-06-15 19:32:56

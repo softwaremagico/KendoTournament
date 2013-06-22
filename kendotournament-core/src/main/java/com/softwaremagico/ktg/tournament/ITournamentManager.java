@@ -42,17 +42,17 @@ public interface ITournamentManager {
     
     void fillGroups();
     
-    List<TournamentGroup> getGroups();
+    List<TGroup> getGroups();
 
-    List<TournamentGroup> getGroups(Integer level);
+    List<TGroup> getGroups(Integer level);
 
-    TournamentGroup getGroup(Fight fight);
+    TGroup getGroup(Fight fight);
 
-    void addGroup(TournamentGroup group);
+    void addGroup(TGroup group);
 
     void removeGroup(Integer level, Integer groupIndex);
 
-    void removeGroup(TournamentGroup group);
+    void removeGroup(TGroup group);
 
     void removeGroups(Integer level);
 

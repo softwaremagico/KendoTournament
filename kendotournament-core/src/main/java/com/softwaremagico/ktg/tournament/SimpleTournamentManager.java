@@ -16,11 +16,21 @@ import java.util.List;
 public class SimpleTournamentManager implements ITournamentManager {
 
     private Tournament tournament;
-    protected TournamentGroup group = null;
+    private TGroup group = null;
 
     protected SimpleTournamentManager(Tournament tournament) {
         this.tournament = tournament;
-        addGroup();
+    }
+
+    protected Tournament getTournament() {
+        return tournament;
+    }
+
+    protected TGroup getGroup() {
+        if (group == null) {
+            addGroup();
+        }
+        return group;
     }
 
     @Override
@@ -29,10 +39,10 @@ public class SimpleTournamentManager implements ITournamentManager {
     }
 
     @Override
-    public List<TournamentGroup> getGroups(Integer level) {
+    public List<TGroup> getGroups(Integer level) {
         if (level == 0) {
-            List<TournamentGroup> groups = new ArrayList<>();
-            groups.add(group);
+            List<TGroup> groups = new ArrayList<>();
+            groups.add(getGroup());
             return groups;
         }
         return null;
@@ -51,20 +61,20 @@ public class SimpleTournamentManager implements ITournamentManager {
     }
 
     @Override
-    public List<TournamentGroup> getGroups() {
-        List<TournamentGroup> groups = new ArrayList<>();
-        groups.add(group);
+    public List<TGroup> getGroups() {
+        List<TGroup> groups = new ArrayList<>();
+        groups.add(getGroup());
         return groups;
     }
 
     @Override
-    public void addGroup(TournamentGroup group) {
+    public void addGroup(TGroup group) {
         this.group = group;
     }
 
-    public final void addGroup() {
+    public void addGroup() {
         if (group == null) {
-            this.group = new TournamentGroup(tournament, 0, 0);
+            this.group = new SimpleTournamentGroup(tournament, 0, 0);
             try {
                 group.addTeams(TeamPool.getInstance().get(tournament));
             } catch (SQLException ex) {
@@ -81,8 +91,8 @@ public class SimpleTournamentManager implements ITournamentManager {
     }
 
     @Override
-    public void removeGroup(TournamentGroup group) {
-        if (this.group.equals(group)) {
+    public void removeGroup(TGroup group) {
+        if (this.group != null && this.group.equals(group)) {
             this.group = null;
         }
     }
@@ -123,22 +133,22 @@ public class SimpleTournamentManager implements ITournamentManager {
 
     @Override
     public List<Fight> createRandomFights(Integer level) {
-        if (group == null || level != 0) {
+        if (level != 0) {
             return null;
         }
-        return group.createFights(true);
+        return getGroup().createFights(true);
     }
 
     @Override
     public List<Fight> createSortedFights(Integer level) {
-        if (group == null || level != 0) {
+        if (level != 0) {
             return null;
         }
-        return group.createFights(false);
+        return getGroup().createFights(false);
     }
 
     @Override
-    public TournamentGroup getGroup(Fight fight) {
+    public TGroup getGroup(Fight fight) {
         if (group != null) {
             if (group.isFightOfGroup(fight)) {
                 return group;
@@ -161,8 +171,8 @@ public class SimpleTournamentManager implements ITournamentManager {
         try {
             List<Fight> fights = FightPool.getInstance().get(tournament);
             for (Fight fight : fights) {
-                group.addTeam(fight.getTeam1());
-                group.addTeam(fight.getTeam2());
+                getGroup().addTeam(fight.getTeam1());
+                getGroup().addTeam(fight.getTeam2());
             }
         } catch (SQLException ex) {
             KendoLog.errorMessage(this.getClass().getName(), ex);
