@@ -191,7 +191,7 @@ public class DatabaseConnection {
         }
 
         //The easy way. 
-        if (server.equals("localhost") || server.equals("127.0.0.1") || server.equals(ownIP.getHostAddress())) {
+        if (server.equals("localhost") || server.equals("127.0.0.1") || (ownIP != null && server.equals(ownIP.getHostAddress()))) {
             return true;
         }
         //Read all network interfaces.
@@ -290,10 +290,12 @@ public class DatabaseConnection {
         return connectionSuccess;
     }
 
-    public void disconnect() {
+    public synchronized void disconnect() {
         stillConnected--;
-        timerTask = new Task();
-        timer.schedule(timerTask, 0, 100);
+        if(stillConnected<=0){
+            timerTask = new Task();
+            timer.schedule(timerTask, 0, 100);
+        }
     }
 
     class Task extends TimerTask {
