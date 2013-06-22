@@ -59,7 +59,7 @@ public class Championship implements ITournamentManager {
             getLevel(level).update();
             List<TournamentGroup> groupsOfLevel = getGroups(level);
             for (int i = 0; i < groupsOfLevel.size(); i++) {
-                fights.addAll(groupsOfLevel.get(i).createFights(random, i));
+                fights.addAll(groupsOfLevel.get(i).createFights(random));
             }
         }
         return fights;

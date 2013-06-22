@@ -126,7 +126,7 @@ public class SimpleTournamentManager implements ITournamentManager {
         if (group == null || level != 0) {
             return null;
         }
-        return group.createFights(true, 0);
+        return group.createFights(true);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class SimpleTournamentManager implements ITournamentManager {
         if (group == null || level != 0) {
             return null;
         }
-        return group.createFights(false, 0);
+        return group.createFights(false);
     }
 
     @Override

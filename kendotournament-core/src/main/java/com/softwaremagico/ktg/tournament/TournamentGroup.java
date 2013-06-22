@@ -168,7 +168,7 @@ public class TournamentGroup implements Serializable {
         return fightsG;
     }
 
-    public List<Fight> createFights(boolean random, Integer groupIndex) {
+    public List<Fight> createFights(boolean random) {
         if (getTeams().size() < 2) {
             return null;
         }
@@ -185,9 +185,9 @@ public class TournamentGroup implements Serializable {
                 continue;
             }
             if (fights.size() % 2 == 0) {
-                fight = new Fight(tournament, team1, team2, getFightArea(), getLevel(), groupIndex);
+                fight = new Fight(tournament, team1, team2, getFightArea(), getLevel(), fights.size());
             } else {
-                fight = new Fight(tournament, team2, team1, getFightArea(), getLevel(), groupIndex);
+                fight = new Fight(tournament, team2, team1, getFightArea(), getLevel(), fights.size());
             }
             fights.add(fight);
             remainingFights.removeAdveresary(team1, team2);
