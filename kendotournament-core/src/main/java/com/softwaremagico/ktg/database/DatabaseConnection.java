@@ -38,7 +38,7 @@ import java.util.TimerTask;
 
 public class DatabaseConnection {
 
-    private static Integer ALIVE_CONNECTION = 2; //Database connection keep alive for X tenths of a second 
+    private static Integer ALIVE_CONNECTION = 10; //Database connection keep alive for X tenths of a second 
     private Database database = null;
     private String password = "";
     private String user = "kendouser";
@@ -276,23 +276,31 @@ public class DatabaseConnection {
 
     public synchronized boolean connect() throws SQLException {
         boolean connectionSuccess = true;
-        if (stillConnected <= 0) {
+        System.out.println("Connect: " + stillConnected);
+        try {
+            timerTask.cancel();
+        } catch (NullPointerException npe) {
+        }
+        if (stillConnected == 0) {
+            System.out.println("Start Connection!");
             connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
             stillConnected = 0;
         }
         if (connectionSuccess) {
             stillConnected++;
         }
-        try {
-            timerTask.cancel();
-        } catch (NullPointerException npe) {
-        }
         return connectionSuccess;
     }
 
     public synchronized void disconnect() {
         stillConnected--;
-        if(stillConnected<=0){
+        System.out.println("Disconnect: " + stillConnected);
+        if (stillConnected == 0) {
+            System.out.println("Disconnected!! ------");
+            try {
+                timerTask.cancel();
+            } catch (NullPointerException npe) {
+            }
             timerTask = new Task();
             timer.schedule(timerTask, 0, 100);
         }
@@ -307,6 +315,7 @@ public class DatabaseConnection {
         public void run() {
             times++;
             if (times >= ALIVE_CONNECTION && stillConnected == 0) {
+                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 getDatabase().disconnect();
                 this.cancel();
             }

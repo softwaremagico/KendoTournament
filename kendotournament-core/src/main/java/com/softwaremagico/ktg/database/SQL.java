@@ -430,13 +430,11 @@ public abstract class SQL extends Database {
                     c.storeWeb(rs.getObject("Web").toString());
                 } catch (NullPointerException npe) {
                 }
-                if (c != null) {
-                    try {
-                        c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
-                    } catch (NullPointerException npe) {
-                    }
-                    results.add(c);
+                try {
+                    c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
+                } catch (NullPointerException npe) {
                 }
+                results.add(c);
             }
         } catch (SQLException ex) {
             showSqlError(ex);
@@ -1210,6 +1208,4 @@ public abstract class SQL extends Database {
         addCustomWinnerLinks(newLinks);
         return true;
     }
-
-   
 }
