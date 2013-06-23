@@ -1,7 +1,9 @@
 package com.softwaremagico.ktg.database;
 
+import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
+import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
@@ -16,9 +18,22 @@ import org.testng.annotations.Test;
 public class SimpleChampionshipTest {
 
     private static final Integer MEMBERS = 3;
-    private static final Integer FIGHTS = 15;
+    private static final Integer FIGHT_AREA = 0;
     private static final String TOURNAMENT_NAME = "simpleChampionshipTest";
     private static Tournament tournament = null;
+
+    public static Integer getNumberOfCombats(Integer numberOfTeams) {
+        return factorial(numberOfTeams) / (2 * factorial(numberOfTeams - 2));
+    }
+
+    private static Integer factorial(Integer n) {
+        Integer total = 1;
+        while (n > 1) {
+            total = total * n;
+            n--;
+        }
+        return total;
+    }
 
     @Test
     public void addTournament() throws SQLException {
@@ -54,10 +69,10 @@ public class SimpleChampionshipTest {
             Assert.assertNotNull(member);
             team.setMember(member, teamMember, 0);
             teamMember++;
-            
+
             //Team fill up, create a new team. 
-            if(teamMember>2){
-                team=null;
+            if (teamMember > 2) {
+                team = null;
             }
         }
         Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
@@ -66,10 +81,32 @@ public class SimpleChampionshipTest {
     @Test(dependsOnMethods = {"addTeams"})
     public void createFights() throws SQLException {
         ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.SIMPLE);
-        System.out.println(tournamentManager);
         FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(0));
-        System.out.println("\n"+ FightPool.getInstance().get(tournament));
-        Assert.assertTrue(FightPool.getInstance().get(tournament).size() == FIGHTS);
+        Assert.assertTrue(FightPool.getInstance().get(tournament).size() == getNumberOfCombats(TeamPool.getInstance().get(tournament).size()));
+        //Check than teams are not crossed. 
+        for (int i = 0; i < FightPool.getInstance().get(tournament).size() - 1; i++) {
+            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam1().equals(FightPool.getInstance().get(tournament).get(i+1).getTeam2()));
+            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam2().equals(FightPool.getInstance().get(tournament).get(i+1).getTeam1()));
+        }
+    }
+
+    @Test(dependsOnMethods = {"createFights"})
+    public void testSimpleWinner() throws SQLException {
+        while (!FightPool.getInstance().areAllOver(tournament)) {
+            //First duel
+            FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 0, Score.MEN);
+            FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 1, Score.MEN);
+            FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).setOver(true);
+        }
+        System.out.println("\n" + FightPool.getInstance().get(tournament));
+        Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
+        System.out.println(ranking.getTeamsScoreRanking());
+
+        for (int i = 0; i < ranking.getTeamsScoreRanking().size() - 1; i++) {
+            Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getWonFights() >= ranking.getTeamsScoreRanking().get(i + 1).getWonFights());
+            Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getWonDuels() >= ranking.getTeamsScoreRanking().get(i + 1).getWonDuels());
+            Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getHits() >= ranking.getTeamsScoreRanking().get(i + 1).getHits());
+        }
     }
 
     @After

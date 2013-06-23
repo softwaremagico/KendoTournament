@@ -147,4 +147,9 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
 
         return 0;
     }
+
+    @Override
+    public String toString() {
+        return team.getName() + ": Fights:" + getWonFights() + "/" + getDrawFights() + ", Duels: " + getWonDuels() + "/" + getDrawDuels() + ", hits:" + getHits() + "\n";
+    }
 }

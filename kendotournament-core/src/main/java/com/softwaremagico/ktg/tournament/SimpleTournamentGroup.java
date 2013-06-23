@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleTournamentGroup extends TGroup {
-    
+
     public SimpleTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
-        super(tournament,  level, fightArea);
+        super(tournament, level, fightArea);
     }
-    
+
     @Override
     public List<Fight> createFights(boolean random) {
         if (getTeams().size() < 2) {
@@ -21,7 +21,7 @@ public class SimpleTournamentGroup extends TGroup {
         TeamSelector remainingFights = new TeamSelector(getTeams());
 
         Team team1 = remainingFights.getTeamWithMoreAdversaries(random);
-        Fight fight;
+        Fight fight, lastFight = null;
         while (remainingFights.remainFights()) {
             Team team2 = remainingFights.getNextAdversary(team1, random);
             //Team1 has no more adversaries. Use another one. 
@@ -29,12 +29,18 @@ public class SimpleTournamentGroup extends TGroup {
                 team1 = remainingFights.getTeamWithMoreAdversaries(random);
                 continue;
             }
-            if (fights.size() % 2 == 0) {
+            //Remaingin fights sometimes repeat team. Align them.
+            if (lastFight != null && (lastFight.getTeam1().equals(team2) || lastFight.getTeam2().equals(team1))) {
+                fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), fights.size());
+            } else if (lastFight != null && (lastFight.getTeam1().equals(team1) || lastFight.getTeam2().equals(team2))) {
+                fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), fights.size());
+            } else if (fights.size() % 2 == 0) {
                 fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), fights.size());
             } else {
                 fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), fights.size());
             }
             fights.add(fight);
+            lastFight = fight;
             remainingFights.removeAdveresary(team1, team2);
             team1 = team2;
         }

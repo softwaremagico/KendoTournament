@@ -39,6 +39,7 @@ import java.util.TimerTask;
 public class DatabaseConnection {
 
     private static Integer ALIVE_CONNECTION = 10; //Database connection keep alive for X tenths of a second 
+    private static Integer CONNECTION_TASK_PERIOD = 100;
     private Database database = null;
     private String password = "";
     private String user = "kendouser";
@@ -47,7 +48,7 @@ public class DatabaseConnection {
     private DatabaseEngine databaseEngine = null;
     private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
-    private Integer stillConnected = 0;
+    private static Integer stillConnected = 0;
     private Timer timer = new Timer("Database Connection");
     private Task timerTask;
 
@@ -276,13 +277,11 @@ public class DatabaseConnection {
 
     public synchronized boolean connect() throws SQLException {
         boolean connectionSuccess = true;
-        System.out.println("Connect: " + stillConnected);
         try {
             timerTask.cancel();
         } catch (NullPointerException npe) {
         }
         if (stillConnected == 0) {
-            System.out.println("Start Connection!");
             connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
             stillConnected = 0;
         }
@@ -294,15 +293,13 @@ public class DatabaseConnection {
 
     public synchronized void disconnect() {
         stillConnected--;
-        System.out.println("Disconnect: " + stillConnected);
         if (stillConnected == 0) {
-            System.out.println("Disconnected!! ------");
             try {
                 timerTask.cancel();
             } catch (NullPointerException npe) {
             }
             timerTask = new Task();
-            timer.schedule(timerTask, 0, 100);
+            timer.schedule(timerTask, CONNECTION_TASK_PERIOD, CONNECTION_TASK_PERIOD);
         }
     }
 
@@ -315,7 +312,6 @@ public class DatabaseConnection {
         public void run() {
             times++;
             if (times >= ALIVE_CONNECTION && stillConnected == 0) {
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 getDatabase().disconnect();
                 this.cancel();
             }
