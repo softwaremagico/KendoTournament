@@ -111,4 +111,15 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         }
         return null;
     }
+
+    @Override
+    public boolean add(Tournament tournament, Undraw element) throws SQLException {
+        Undraw undraw = getMap(tournament).get(getId(element));
+        if (undraw != null) {
+            undraw.setPoints(undraw.getPoints() + 1);
+            return true;
+        } else {
+            return super.add(tournament, element);
+        }
+    }
 }

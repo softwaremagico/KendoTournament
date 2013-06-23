@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /*
  * #%L
@@ -108,5 +109,43 @@ public class Undraw implements Comparable<Undraw> {
             return levelCompare;
         }
         return getGroupIndex().compareTo(o.getGroupIndex());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.tournament);
+        hash = 59 * hash + Objects.hashCode(this.group);
+        hash = 59 * hash + Objects.hashCode(this.winnerTeam);
+        hash = 59 * hash + Objects.hashCode(this.player);
+        hash = 59 * hash + Objects.hashCode(this.level);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Undraw other = (Undraw) obj;
+        if (!Objects.equals(this.tournament, other.tournament)) {
+            return false;
+        }
+        if (!Objects.equals(this.group, other.group)) {
+            return false;
+        }
+        if (!Objects.equals(this.winnerTeam, other.winnerTeam)) {
+            return false;
+        }
+        if (!Objects.equals(this.player, other.player)) {
+            return false;
+        }
+        if (!Objects.equals(this.level, other.level)) {
+            return false;
+        }
+        return true;
     }
 }

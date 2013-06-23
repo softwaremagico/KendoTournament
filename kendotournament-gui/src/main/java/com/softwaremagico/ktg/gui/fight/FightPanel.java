@@ -394,13 +394,9 @@ public class FightPanel extends KFrame {
         //Add golden point.
         if (n >= 0) {
             try {
-                Undraw undraw = UndrawPool.getInstance().get(getSelectedTournament(), level, group, drawTeams.get(n));
-                if (undraw == null) {
-                    undraw = new Undraw(getSelectedTournament(), group, drawTeams.get(n), 0, level);
-                    UndrawPool.getInstance().add(getSelectedTournament(), undraw);
-                }
-                undraw.setPoints(undraw.getPoints() + 1);
-                UndrawPool.getInstance().update(getSelectedTournament(), undraw);
+                //UNdraws are added or increased automatically. 
+                Undraw undraw = new Undraw(getSelectedTournament(), group, drawTeams.get(n), 0, level);
+                UndrawPool.getInstance().add(getSelectedTournament(), undraw);
             } catch (SQLException ex) {
                 AlertManager.showSqlErrorMessage(ex);
             }

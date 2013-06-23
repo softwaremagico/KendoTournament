@@ -133,7 +133,6 @@ public class SimpleChampionshipTest {
         }
         Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
 
-        System.out.println(FightPool.getInstance().get(tournament));
         //Team1 is first one because the name. 
         List<Team> drawTeams = ranking.getFirstTeamsWithDrawScore(1);
         Assert.assertTrue(drawTeams.size() == 2);
@@ -160,7 +159,6 @@ public class SimpleChampionshipTest {
      */
     @Test(dependsOnMethods = {"createFights", "testDrawWinner"})
     public void testDrawVariousWinner() throws SQLException {
-        System.out.println("Duels : ---------- " + FightPool.getInstance().get(tournament));
         while (!FightPool.getInstance().areAllOver(tournament)) {
             //First duel
             if (FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam1().equals(TeamPool.getInstance().get(tournament, "Team1")) && FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam2().equals(TeamPool.getInstance().get(tournament, "Team2"))) {
@@ -175,7 +173,6 @@ public class SimpleChampionshipTest {
         Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
 
         //Team1 is first one because the name. 
-        System.out.println(ranking.getTeamsScoreRanking());
         List<Team> drawTeams = ranking.getFirstTeamsWithDrawScore(1);
         Assert.assertTrue(drawTeams.size() == 3);
         Assert.assertTrue(drawTeams.contains(TeamPool.getInstance().get(tournament, "Team1")));
@@ -197,7 +194,7 @@ public class SimpleChampionshipTest {
         Assert.assertTrue(ranking.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team5")));
         Assert.assertTrue(ranking.getTeam(2).equals(TeamPool.getInstance().get(tournament, "Team1")));
 
-
+        System.out.println(ranking.getTeamsScoreRanking());
         DuelPool.getInstance().remove(tournament);
         UndrawPool.getInstance().remove(tournament);
     }
