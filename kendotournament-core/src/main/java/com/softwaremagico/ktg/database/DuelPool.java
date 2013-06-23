@@ -164,4 +164,42 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         }
         return results;
     }
+
+    @Override
+    public void remove(Tournament tournament) throws SQLException {
+        for (Fight fight : FightPool.getInstance().get(tournament)) {
+            fight.setOver(false);
+            duelsPerFight.remove(fight);
+        }
+        super.remove(tournament);
+    }
+
+    @Override
+    public boolean remove(Tournament tournament, Duel element) throws SQLException {
+        element.getFight().setOver(false);
+        duelsPerFight.remove(element.getFight());
+        return super.remove(tournament, element);
+    }
+
+    @Override
+    public boolean remove(Tournament tournament, List<Duel> elements) throws SQLException {
+        for (Duel duel : elements) {
+            duel.getFight().setOver(false);
+            duelsPerFight.remove(duel.getFight());
+        }
+        return super.remove(tournament, elements);
+    }
+
+    @Override
+    public boolean remove(Tournament tournament, String elementName) throws SQLException {
+        get(tournament, elementName).getFight().setOver(false);
+        duelsPerFight.remove(get(tournament, elementName).getFight());
+        return super.remove(tournament, elementName);
+    }
+    
+    @Override
+    public void reset(){
+        duelsPerFight = new HashMap<>();
+        super.reset();
+    }
 }

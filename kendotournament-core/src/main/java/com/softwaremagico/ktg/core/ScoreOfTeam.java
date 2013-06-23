@@ -150,6 +150,10 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
 
     @Override
     public String toString() {
-        return team.getName() + ": Fights:" + getWonFights() + "/" + getDrawFights() + ", Duels: " + getWonDuels() + "/" + getDrawDuels() + ", hits:" + getHits() + "\n";
+        String text = team.getName() + ": Fights:" + getWonFights() + "/" + getDrawFights() + ", Duels: " + getWonDuels() + "/" + getDrawDuels() + ", hits:" + getHits();
+        for (int i = 0; i < getGoldenPoints(); i++) {
+            text += "*";
+        }
+        return text + "\n";
     }
 }

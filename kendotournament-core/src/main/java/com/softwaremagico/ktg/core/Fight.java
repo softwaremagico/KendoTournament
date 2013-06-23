@@ -138,7 +138,7 @@ public class Fight implements Serializable, Comparable<Fight> {
                 winner = 0;
             }
         } else {
-            winner = 2;
+            winner = DEFAULT_WINNER_VALUE;
         }
     }
 
