@@ -6,10 +6,12 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -85,8 +87,8 @@ public class SimpleChampionshipTest {
         Assert.assertTrue(FightPool.getInstance().get(tournament).size() == getNumberOfCombats(TeamPool.getInstance().get(tournament).size()));
         //Check than teams are not crossed. 
         for (int i = 0; i < FightPool.getInstance().get(tournament).size() - 1; i++) {
-            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam1().equals(FightPool.getInstance().get(tournament).get(i+1).getTeam2()));
-            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam2().equals(FightPool.getInstance().get(tournament).get(i+1).getTeam1()));
+            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam1().equals(FightPool.getInstance().get(tournament).get(i + 1).getTeam2()));
+            Assert.assertFalse(FightPool.getInstance().get(tournament).get(i).getTeam2().equals(FightPool.getInstance().get(tournament).get(i + 1).getTeam1()));
         }
     }
 
@@ -98,15 +100,57 @@ public class SimpleChampionshipTest {
             FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 1, Score.MEN);
             FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).setOver(true);
         }
-        System.out.println("\n" + FightPool.getInstance().get(tournament));
+        // System.out.println("\n" + FightPool.getInstance().get(tournament));
         Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
-        System.out.println(ranking.getTeamsScoreRanking());
+        // System.out.println(ranking.getTeamsScoreRanking());
 
         for (int i = 0; i < ranking.getTeamsScoreRanking().size() - 1; i++) {
             Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getWonFights() >= ranking.getTeamsScoreRanking().get(i + 1).getWonFights());
             Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getWonDuels() >= ranking.getTeamsScoreRanking().get(i + 1).getWonDuels());
             Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getHits() >= ranking.getTeamsScoreRanking().get(i + 1).getHits());
         }
+
+        FightPool.getInstance().remove(tournament);
+    }
+
+    /**
+     * Draw team1 and team3.
+     *
+     * @throws SQLException
+     */
+    @Test(dependsOnMethods = {"createFights"})
+    public void testDrawWinner() throws SQLException {
+        Team team1, team3;
+        while (!FightPool.getInstance().areAllOver(tournament)) {
+            //First duel
+            if (FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam1().equals(TeamPool.getInstance().get(tournament, "Team1")) && FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam2().equals(TeamPool.getInstance().get(tournament, "Team2"))) {
+                FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 0, Score.MEN);
+                FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 1, Score.MEN);
+            }
+            if (FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam1().equals(TeamPool.getInstance().get(tournament, "Team3")) && FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getTeam2().equals(TeamPool.getInstance().get(tournament, "Team4"))) {
+                FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 0, Score.MEN);
+                FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 1, Score.MEN);
+            }
+            FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).setOver(true);
+        }
+        Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
+
+        //Team1 is firstone because the name. 
+        List<Team> drawTeams = ranking.getFirstTeamsWithDrawScore(1);
+        Assert.assertTrue(drawTeams.size() == 2);
+        Assert.assertTrue(drawTeams.contains(TeamPool.getInstance().get(tournament, "Team1")));
+        Assert.assertTrue(drawTeams.contains(TeamPool.getInstance().get(tournament, "Team3")));
+        Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team1")));
+        Assert.assertTrue(ranking.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team3")));
+        
+        //Finally wins Team3
+        Undraw undraw = new Undraw(tournament, 0, drawTeams.get(1), 0, 0);
+        UndrawPool.getInstance().add(tournament, undraw);        
+        ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
+        Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team3")));
+        
+        
+        FightPool.getInstance().remove(tournament);
     }
 
     @After
