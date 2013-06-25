@@ -40,7 +40,6 @@ import java.util.List;
  */
 public abstract class TGroup implements Serializable {
 
-    public static final int MAX_TEAMS_PER_GROUP = 8;
     private Tournament tournament;
     private List<Team> teams = new ArrayList<>();
     private Integer numberMaxOfWinners = 1;
@@ -111,10 +110,6 @@ public abstract class TGroup implements Serializable {
         //Can not be repeated.
         if (!teams.contains(team)) {
             teams.add(team);
-            //Delete one, because cannot be more than eight.
-            if (teams.size() > MAX_TEAMS_PER_GROUP) {
-                teams.remove(0);
-            }
         }
     }
 

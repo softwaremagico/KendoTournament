@@ -59,7 +59,11 @@ public class Championship implements ITournamentManager {
             getLevel(level).update();
             List<TGroup> groupsOfLevel = getGroups(level);
             for (int i = 0; i < groupsOfLevel.size(); i++) {
-                fights.addAll(groupsOfLevel.get(i).createFights(random));
+                try {
+                    fights.addAll(groupsOfLevel.get(i).createFights(random));
+                } catch (NullPointerException npe) {
+                    //No teams in group. Add no fights.
+                }
             }
         }
         return fights;

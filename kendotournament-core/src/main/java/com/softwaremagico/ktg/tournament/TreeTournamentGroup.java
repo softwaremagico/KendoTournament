@@ -8,6 +8,8 @@ import java.util.List;
 
 public class TreeTournamentGroup extends TGroup {
 
+    public static final int MAX_TEAMS_PER_GROUP = 8;
+
     public TreeTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
         super(tournament, level, fightArea);
     }
@@ -22,7 +24,7 @@ public class TreeTournamentGroup extends TGroup {
         for (int i = 0; i < getTeams().size(); i++) {
             Fight fight;
             Team team1 = getTeams().get(i);
-            Team team2 = getTeams().get(i + 1 % getTeams().size());
+            Team team2 = getTeams().get((i + 1) % getTeams().size());
 
             if (fights.size() % 2 == 0) {
                 fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), fights.size());
@@ -32,5 +34,17 @@ public class TreeTournamentGroup extends TGroup {
             fights.add(fight);
         }
         return fights;
+    }
+
+    @Override
+    public void addTeam(Team team) {
+        //Can not be repeated.
+        if (!getTeams().contains(team)) {
+            getTeams().add(team);
+            //Delete one, because cannot be more than eight.
+            if (getTeams().size() > MAX_TEAMS_PER_GROUP) {
+                getTeams().remove(0);
+            }
+        }
     }
 }
