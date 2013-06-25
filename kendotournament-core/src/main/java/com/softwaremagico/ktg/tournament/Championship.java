@@ -179,4 +179,9 @@ public class Championship implements ITournamentManager {
             levelZero.nextLevel.updateGroupsSize();
         }
     }
+
+    @Override
+    public int getIndex(Integer level, TGroup group) {
+        return getGroups(level).indexOf(group);
+    }
 }

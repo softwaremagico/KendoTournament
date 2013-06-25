@@ -484,7 +484,7 @@ public class FightPanel extends KFrame {
                         List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
                         if (teamsInDraw != null) {
                             //Solve Draw Scores
-                            resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroupIndex());
+                            resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
                         } else {
                             //No more draw teams, exit loop.
                             moreDrawTeams = false;

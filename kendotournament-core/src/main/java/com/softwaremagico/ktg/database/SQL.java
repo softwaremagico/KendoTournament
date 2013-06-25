@@ -784,7 +784,7 @@ public abstract class SQL extends Database {
                 Fight f = new Fight(tournament,
                         TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
                         TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
-                        rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("GroupIndex"));
+                        rs.getInt("FightArea"), rs.getInt("Level"), rs.getInt("Group"), rs.getInt("GroupIndex"));
                 f.setWinner(rs.getInt("Winner"));
                 //Set duels of fight:
                 results.add(f);
@@ -805,7 +805,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (Fight fight : fights) {
             try {
-                query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, Level, GroupIndex) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getGroupIndex() + "); ";
+                query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, Level, Group, GroupIndex) VALUES ('" + fight.getTeam1().getName() + "','" + fight.getTeam2().getName() + "','" + fight.getTournament().getName() + "'," + fight.getAsignedFightArea() + "," + fight.getWinner() + "," + fight.getLevel() + "," + fight.getGroup() + "," + fight.getGroupIndex() + "); ";
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
@@ -826,7 +826,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeFights");
         String query = "";
         for (Fight fight : fights) {
-            query += "DELETE FROM fight WHERE Tournament='" + fight.getTournament().getName() + "' AND Level=" + fight.getLevel() + " AND Team1='" + fight.getTeam1().getName() + "' AND Team2='" + fight.getTeam2().getName() + "' AND GroupIndex=" + fight.getGroupIndex() + "; ";
+            query += "DELETE FROM fight WHERE Tournament='" + fight.getTournament().getName() + "' AND Level=" + fight.getLevel() + " AND Team1='" + fight.getTeam1().getName() + "' AND Team2='" + fight.getTeam2().getName() + "' AND Group=" + fight.getGroup() + "' AND GroupIndex=" + fight.getGroupIndex() + "; ";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -849,8 +849,8 @@ public abstract class SQL extends Database {
         String query = "";
         for (Fight newFight : newFights) {
             Fight oldFight = fightsExchange.get(newFight);
-            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', FightArea=" + newFight.getAsignedFightArea()
-                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND GroupIndex=" + oldFight.getGroupIndex() + "; ";
+            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', FightArea=" + newFight.getAsignedFightArea() +  ", Group=" + newFight.getGroup() +  ", GroupIndex=" + newFight.getGroupIndex()
+                    + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Group=" + oldFight.getGroup() + "' AND GroupIndex=" + oldFight.getGroupIndex() + "; ";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -888,7 +888,7 @@ public abstract class SQL extends Database {
                 Fight fight = FightPool.getInstance().get(tournament,
                         TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
                         TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
-                        rs.getInt("Level"), rs.getInt("GroupIndex"));
+                        rs.getInt("Level"), rs.getInt("GroupIndex"), rs.getInt("Group"));
                 Duel duel = new Duel(fight, rs.getInt("Order"));
 
                 char c;
@@ -946,8 +946,8 @@ public abstract class SQL extends Database {
         String query = "";
         for (Duel duel : duels) {
             try {
-                query += "INSERT INTO duel (Team1, Team2, Tournament, GroupIndex, Level, Order, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES ('" + duel.getFight().getTeam1().getName() + "', '" + duel.getFight().getTeam2().getName() + "', '" + duel.getFight().getTournament().getName() + "', "
-                        + duel.getFight().getGroupIndex() + ", " + duel.getFight().getLevel() + ", " + duel.getOrder() + ", "
+                query += "INSERT INTO duel (Team1, Team2, Tournament, Group, GroupIndex, Level, Order, PointPlayer1A, PointPlayer1B, PointPlayer2A, PointPlayer2B, FaultsPlayer1, FaultsPlayer2) VALUES ('" + duel.getFight().getTeam1().getName() + "', '" + duel.getFight().getTeam2().getName() + "', '" + duel.getFight().getTournament().getName() + "', "
+                        + duel.getFight().getGroup() + ", " + duel.getFight().getGroupIndex() + ", " + duel.getFight().getLevel() + ", " + duel.getOrder() + ", "
                         + duel.getHits(true).get(0).getAbbreviature() + ", " + duel.getHits(true).get(1).getAbbreviature() + ", " + duel.getHits(false).get(0).getAbbreviature() + ", " + duel.getHits(false).get(1).getAbbreviature() + ", " + duel.getFaults(true) + ", " + duel.getFaults(false) + "); ";
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
@@ -970,7 +970,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "removeDuels");
         String query = "";
         for (Duel duel : duels) {
-            query += "DELETE FROM Duel WHERE Tournament='" + duel.getFight().getTournament().getName() + "' AND Level=" + duel.getFight().getLevel() + " AND Team1='" + duel.getFight().getTeam1().getName() + "' AND Team2='" + duel.getFight().getTeam2().getName() + "' AND GroupIndex=" + duel.getFight().getGroupIndex() + " AND Order=" + duel.getOrder() + "; ";
+            query += "DELETE FROM Duel WHERE Tournament='" + duel.getFight().getTournament().getName() + "' AND Level=" + duel.getFight().getLevel() + " AND Team1='" + duel.getFight().getTeam1().getName() + "' AND Team2='" + duel.getFight().getTeam2().getName() + "' AND Group=" + duel.getFight().getGroup() + "' AND GroupIndex=" + duel.getFight().getGroupIndex() + " AND Order=" + duel.getOrder() + "; ";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);
@@ -993,8 +993,8 @@ public abstract class SQL extends Database {
         String query = "";
         for (Duel newDuel : newDuels) {
             Duel oldDuel = duelsExchange.get(newDuel);
-            query += "UPDATE Duel SET Team1='" + newDuel.getFight().getTeam1() + "', Tournament='" + newDuel.getFight().getTournament() + "' Team2='" + newDuel.getFight().getTeam2() + "', Level=" + newDuel.getFight().getLevel() + ", GroupIndex=" + newDuel.getFight().getGroupIndex() + ", Order=" + newDuel.getOrder() + ", PointPlayer1A='" + newDuel.getHits(true).get(0) + "', PointPlayer1B='" + newDuel.getHits(true).get(1) + "', PointPlayer2A=" + newDuel.getHits(false).get(0) + ", PointPlayer2B=" + newDuel.getHits(false).get(1) + ", FaultsPlayer1=" + newDuel.getFaults(true) + ", FaultsPlayer2=" + newDuel.getFaults(false)
-                    + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='" + oldDuel.getFight().getTournament().getName() + "' AND Level=" + oldDuel.getFight().getLevel() + " AND GroupIndex=" + oldDuel.getFight().getGroupIndex() + " AND Order=" + oldDuel.getOrder() + "; ";
+            query += "UPDATE Duel SET Team1='" + newDuel.getFight().getTeam1() + "', Tournament='" + newDuel.getFight().getTournament() + "' Team2='" + newDuel.getFight().getTeam2() + "', Level=" + newDuel.getFight().getLevel() + ", Group=" + newDuel.getFight().getGroup() + ", GroupIndex=" + newDuel.getFight().getGroupIndex() + ", Order=" + newDuel.getOrder() + ", PointPlayer1A='" + newDuel.getHits(true).get(0) + "', PointPlayer1B='" + newDuel.getHits(true).get(1) + "', PointPlayer2A=" + newDuel.getHits(false).get(0) + ", PointPlayer2B=" + newDuel.getHits(false).get(1) + ", FaultsPlayer1=" + newDuel.getFaults(true) + ", FaultsPlayer2=" + newDuel.getFaults(false)
+                    + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='" + oldDuel.getFight().getTournament().getName() + "' AND Level=" + oldDuel.getFight().getLevel() + " AND Group=" + oldDuel.getFight().getGroup() + " AND GroupIndex=" + oldDuel.getFight().getGroupIndex() + " AND Order=" + oldDuel.getOrder() + "; ";
         }
         try (Statement s = connection.createStatement()) {
             s.executeUpdate(query);

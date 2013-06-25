@@ -148,4 +148,9 @@ public class Undraw implements Comparable<Undraw> {
         }
         return true;
     }
+    
+    @Override
+    public String toString(){
+        return "Undraw winned by " + winnerTeam.getName() + ", level: " + level + ", group:" + group;
+    }
 }

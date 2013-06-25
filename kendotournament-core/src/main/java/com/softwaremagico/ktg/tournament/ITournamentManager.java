@@ -55,6 +55,8 @@ public interface ITournamentManager {
     void removeGroup(TGroup group);
 
     void removeGroups(Integer level);
+    
+    int getIndex(Integer level, TGroup group);
 
     LeagueLevel getLevel(Integer level);
 

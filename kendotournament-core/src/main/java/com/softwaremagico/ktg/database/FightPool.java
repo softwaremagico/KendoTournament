@@ -29,8 +29,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected String getId(Fight element) {
-        return element.getTeam1().getName() + element.getTeam2().getName()
-                + element.getLevel() + element.getGroupIndex() + element.getTournament();
+        return element.hashCode()+"";
     }
 
     @Override
@@ -83,11 +82,11 @@ public class FightPool extends TournamentDependentPool<Fight> {
         DuelPool.getInstance().remove(tournament, duels);
 
         //Delete undraws where this fights is involved.
-        Undraw undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam1());
+        Undraw undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroup(), element.getTeam1());
         if (undraw != null) {
             UndrawPool.getInstance().remove(tournament, undraw);
         }
-        undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroupIndex(), element.getTeam2());
+        undraw = UndrawPool.getInstance().get(tournament, element.getLevel(), element.getGroup(), element.getTeam2());
         if (undraw != null) {
             UndrawPool.getInstance().remove(tournament, undraw);
         }
@@ -161,9 +160,9 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer index) throws SQLException {
+    public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer group, Integer index) throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
-            if (fight.getGroupIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
+            if (fight.getGroup() == group && fight.getGroupIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
                     && fight.getLevel() == level) {
                 return fight;
             }

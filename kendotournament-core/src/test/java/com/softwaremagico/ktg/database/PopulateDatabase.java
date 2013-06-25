@@ -17,7 +17,7 @@ public class PopulateDatabase {
     private static final String DATABASE_USER = "kendouser";
     private static final String DATABASE_PASSWORD = "MenKoteDo";
     private static final String DATABASE_SERVER = "127.0.0.1";
-    protected static final String[] clubs = {"tc1", "tc2", "tc3"};
+    protected static final String[] clubs = {"tc1", "tc2", "tc3", "tc4"};
     protected static final String[] competitors = {"comp1", "comp2", "comp3", "comp4", "comp5", "comp6"};
 
     public DatabaseEngine getDatabaseTested() {

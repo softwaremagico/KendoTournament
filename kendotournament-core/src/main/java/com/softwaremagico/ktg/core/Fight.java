@@ -39,20 +39,26 @@ public class Fight implements Serializable, Comparable<Fight> {
     private Tournament tournament;
     private Integer asignedFightArea;
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
+    private Integer group;
     private Integer groupIndex;
     private Integer level;
 
-    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int groupIndex) {
+    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int group, int groupIndex) {
         this.team1 = team1;
         this.team2 = team2;
         this.tournament = tournament;
         this.asignedFightArea = asignedArea;
+        this.group = group;
         this.groupIndex = groupIndex;
         this.level = level;
     }
 
     public Integer getGroupIndex() {
         return groupIndex;
+    }
+
+    public Integer getGroup() {
+        return group;
     }
 
     public Integer getLevel() {
@@ -313,6 +319,7 @@ public class Fight implements Serializable, Comparable<Fight> {
         hash = 41 * hash + Objects.hashCode(this.team2);
         hash = 41 * hash + Objects.hashCode(this.tournament);
         hash = 41 * hash + Objects.hashCode(this.groupIndex);
+        hash = 41 * hash + Objects.hashCode(this.group);
         hash = 41 * hash + Objects.hashCode(this.level);
         return hash;
     }
@@ -338,6 +345,9 @@ public class Fight implements Serializable, Comparable<Fight> {
         if (!Objects.equals(this.groupIndex, other.groupIndex)) {
             return false;
         }
+        if (!Objects.equals(this.group, other.group)) {
+            return false;
+        }
         if (!Objects.equals(this.level, other.level)) {
             return false;
         }
@@ -350,7 +360,7 @@ public class Fight implements Serializable, Comparable<Fight> {
 
     @Override
     public String toString() {
-        String text = "(" +groupIndex + ") Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
+        String text = "(" + group + "/" + groupIndex + ") Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
         for (Duel d : getDuels()) {
             text += d + "\n";
         }

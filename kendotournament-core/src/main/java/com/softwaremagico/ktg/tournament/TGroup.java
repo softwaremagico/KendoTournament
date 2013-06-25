@@ -161,7 +161,7 @@ public abstract class TGroup implements Serializable {
     }
 
     public abstract List<Fight> createFights(boolean random);
-    
+
     public boolean areFightsOver(List<Fight> allFights) {
         List<Fight> fights = getFightsOfGroup(allFights);
 

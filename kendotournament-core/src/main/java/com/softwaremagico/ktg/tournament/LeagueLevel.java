@@ -50,10 +50,10 @@ public abstract class LeagueLevel {
     }
 
     protected void fillGroups(Fight fight) {
-        while (fight.getGroupIndex() >= getGroups().size()) {
+        while (fight.getGroup() >= getGroups().size()) {
             addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
         }
-        TGroup group = getGroups().get(fight.getGroupIndex());
+        TGroup group = getGroups().get(fight.getGroup());
         group.addTeam(fight.getTeam1());
         group.addTeam(fight.getTeam2());
     }

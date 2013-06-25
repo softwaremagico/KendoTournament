@@ -93,7 +93,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getGoldenPoints() {
         if (goldenPoint == null) {
             try {
-                goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroupIndex(), team);
+                goldenPoint = UndrawPool.getInstance().getUndrawsWon(fights.get(0).getTournament(), fights.get(0).getLevel(), fights.get(0).getGroup(), team);
             } catch (SQLException ex) {
                 KendoLog.errorMessage(this.getClass().getName(), ex);
             }

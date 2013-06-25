@@ -73,7 +73,7 @@ public class SimpleChampionshipTest {
             teamMember++;
 
             //Team fill up, create a new team. 
-            if (teamMember > 2) {
+            if (teamMember >= MEMBERS) {
                 team = null;
             }
         }
@@ -194,7 +194,6 @@ public class SimpleChampionshipTest {
         Assert.assertTrue(ranking.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team5")));
         Assert.assertTrue(ranking.getTeam(2).equals(TeamPool.getInstance().get(tournament, "Team1")));
 
-        System.out.println(ranking.getTeamsScoreRanking());
         DuelPool.getInstance().remove(tournament);
         UndrawPool.getInstance().remove(tournament);
     }

@@ -1347,10 +1347,10 @@ public class Controller {
             try {
                 f = new Fight(shortFight.getTournament(),
                         shortFight.getTeam1(), shortFight.getTeam2(),
-                        shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()), 0);
+                        shortFight.getArena(), FightPool.getInstance().getLastLevelUsed(shortFight.getTournament()), 0, FightPool.getInstance().get(KendoTournamentGenerator.getInstance().getLastSelectedTournament()).size());
                 try {
                     FightPool.getInstance().add(KendoTournamentGenerator.getInstance().getLastSelectedTournament(), f);
-                    AlertManager.translatedMessage(this.getClass().getName(), "addFight", "MySQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);
+                    AlertManager.translatedMessage(this.getClass().getName(), "addFight", "SQL", KendoTournamentGenerator.getInstance().getLanguage(), JOptionPane.INFORMATION_MESSAGE);
                     tournamentPanel.updateScorePanel();
                 } catch (NullPointerException npe) {
                     AlertManager.showErrorInformation(this.getClass().getName(), npe);

@@ -178,4 +178,12 @@ public class SimpleTournamentManager implements ITournamentManager {
             KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
+
+    @Override
+    public int getIndex(Integer level, TGroup group) {
+        if (group.equals(this.group)) {
+            return 0;
+        }
+        return -1;
+    }
 }

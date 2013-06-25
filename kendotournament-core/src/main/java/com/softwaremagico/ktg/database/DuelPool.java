@@ -27,8 +27,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected String getId(Duel element) {
-        return element.getFight().getTeam1().getName() + element.getFight().getTeam2().getName() + element.getOrder()
-                + element.getFight().getLevel() + element.getFight().getGroupIndex() + element.getFight().getTournament();
+        return element.hashCode()+"";
     }
 
     @Override
