@@ -1,19 +1,21 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" verbose="1" name="CoreTestSuite">
-	<test name="CipherTestSet" enabled="true" preserve-order="true">
-		<groups>
-			<run>
-				<include name="populateDatabase" />
-				<include name="championshipTest" />
-                                <include name="customChampionshipTest" />
-                                <include name="simpleChampionshipTest" />                                
-			</run>
-		</groups>
-		<classes>
-			<class name="com.softwaremagico.ktg.database.PopulateDatabase" />
-			<class name="com.softwaremagico.ktg.database.ChampionshipTest" />
-                        <class name="com.softwaremagico.ktg.database.SimpleChampionshipTest" />                        
-                        <class name="com.softwaremagico.ktg.database.CustomChampionshipTest" /> 
-		</classes>
-	</test>
+    <test name="CipherTestSet" enabled="true" preserve-order="true">
+        <groups>
+            <run>
+                <include name="populateDatabase" />
+                <include name="championshipTest" />
+                <include name="customChampionshipTest" />
+                <include name="simpleChampionshipTest" />  
+                <include name="evenGroupsChampionshipTest" />                              
+            </run>
+        </groups>
+        <classes>
+            <class name="com.softwaremagico.ktg.database.PopulateDatabase" />
+            <class name="com.softwaremagico.ktg.database.ChampionshipTest" />
+            <class name="com.softwaremagico.ktg.database.SimpleChampionshipTest" />                        
+            <class name="com.softwaremagico.ktg.database.CustomChampionshipTest" /> 
+            <class name="com.softwaremagico.ktg.database.ChampionshipEvenGroupsTest" /> 
+        </classes>
+    </test>
 </suite>

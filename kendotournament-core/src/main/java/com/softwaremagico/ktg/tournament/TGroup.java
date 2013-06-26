@@ -123,7 +123,14 @@ public abstract class TGroup implements Serializable {
 
     public List<Team> getWinners() {
         try {
-            return Ranking.getTeamsRanking(getFights()).subList(0, numberMaxOfWinners);
+            //If only exists one team in this group, is the winner. 
+            if(getTeams().size()==1){
+                return getTeams();
+            }
+            //If exists fights, the winner is the first of the ranking.
+            if (getFights() != null && getFights().size() > 0) {
+                return Ranking.getTeamsRanking(getFights()).subList(0, numberMaxOfWinners);
+            } 
         } catch (Exception iob) {
         }
 

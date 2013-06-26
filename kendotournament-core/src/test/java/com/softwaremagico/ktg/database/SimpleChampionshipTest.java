@@ -21,6 +21,7 @@ public class SimpleChampionshipTest {
 
     private static final Integer MEMBERS = 3;
     private static final Integer FIGHT_AREA = 0;
+    private static final Integer TEAMS = 6;
     private static final String TOURNAMENT_NAME = "simpleChampionshipTest";
     private static Tournament tournament = null;
 
@@ -57,7 +58,7 @@ public class SimpleChampionshipTest {
         int teamIndex = 0;
         Team team = null;
         int teamMember = 0;
-        while (TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).size() > 0) {
+        while (TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).size() > 0 && TeamPool.getInstance().get(tournament).size() < TEAMS) {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
@@ -77,7 +78,7 @@ public class SimpleChampionshipTest {
                 team = null;
             }
         }
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
+        Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == TEAMS);
     }
 
     @Test(dependsOnMethods = {"addTeams"})

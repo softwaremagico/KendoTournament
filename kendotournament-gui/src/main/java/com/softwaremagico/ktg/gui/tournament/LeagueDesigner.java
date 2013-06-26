@@ -130,7 +130,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     }
 
     private void uptadeTournament() {
-        KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().getName());
+        try {
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().getName());
+        } catch (NullPointerException npe) {
+        }
         manualCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.MANUAL));
         cleanLinksButton.setEnabled(manualCheckBox.isSelected());
         refreshSpinner = false;

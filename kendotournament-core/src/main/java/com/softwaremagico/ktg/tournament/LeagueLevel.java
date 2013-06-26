@@ -223,7 +223,7 @@ public abstract class LeagueLevel {
      * Update the number of groups according of the size of the previous level.
      */
     protected void updateGroupsSize() {
-        while ((previousLevel != null) && (previousLevel.getNumberOfTotalTeamsPassNextRound() / 2 > this.size())) {
+        while ((previousLevel != null) && ((previousLevel.getNumberOfTotalTeamsPassNextRound()+1) / 2 > this.size())) {
             addGroup(new TreeTournamentGroup(tournament, level, 0));
         }
 
@@ -352,35 +352,17 @@ public abstract class LeagueLevel {
         return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
     }
 
-    protected String levelInfo() {
-        String info = "Level: " + level + " Groups: ";
-
+    @Override
+    public String toString() {
+        String text = "-------------------------------------\n";
+        text+="Level: " + level + "\n";
         for (TGroup group : tournamentGroups) {
-            info += group.getTeams().size() + "\t";
+            text += group + "\n";
         }
-        return info;
-    }
-
-    protected void showTree() {
-        System.out.println("-------------------------------------");
-        System.out.println(levelInfo());
+        text += "-------------------------------------\n";
         if (nextLevel != null) {
-            nextLevel.showTree();
+            text += nextLevel;
         }
-        System.out.println("-------------------------------------");
-    }
-
-    protected void showTeams() {
-        System.out.println("-------------------------------------");
-        for (TGroup group : tournamentGroups) {
-            for (Team team : group.getTeams()) {
-                System.out.print(team.getName() + " ");
-            }
-            System.out.println();
-        }
-        if (nextLevel != null) {
-            nextLevel.showTeams();
-        }
-        System.out.println("-------------------------------------");
+        return text;
     }
 }
