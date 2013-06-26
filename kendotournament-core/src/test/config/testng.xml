@@ -5,6 +5,7 @@
 			<run>
 				<include name="populateDatabase" />
 				<include name="championshipTest" />
+                                <include name="customChampionshipTest" />
                                 <include name="simpleChampionshipTest" />                                
 			</run>
 		</groups>
@@ -12,6 +13,7 @@
 			<class name="com.softwaremagico.ktg.database.PopulateDatabase" />
 			<class name="com.softwaremagico.ktg.database.ChampionshipTest" />
                         <class name="com.softwaremagico.ktg.database.SimpleChampionshipTest" />                        
+                        <class name="com.softwaremagico.ktg.database.CustomChampionshipTest" /> 
 		</classes>
 	</test>
 </suite>
