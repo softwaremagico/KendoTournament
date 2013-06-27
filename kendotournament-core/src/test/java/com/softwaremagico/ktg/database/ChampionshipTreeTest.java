@@ -16,7 +16,7 @@ import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test(groups = {"championshipTest"}, dependsOnGroups = {"populateDatabase"})
+@Test(groups = {"championshipTreeTest"}, dependsOnGroups = {"populateDatabase"})
 public class ChampionshipTreeTest {
 
     private static final Integer MEMBERS = 3;
