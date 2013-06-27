@@ -33,7 +33,6 @@ import java.util.Objects;
 public class Fight implements Serializable, Comparable<Fight> {
 
     private static final Integer DEFAULT_WINNER_VALUE = 2;
-    private static final String FIGHT_TAG = "FIGHT";
     private Team team1;
     private Team team2;
     private Tournament tournament;
@@ -365,37 +364,7 @@ public class Fight implements Serializable, Comparable<Fight> {
             text += d + "\n";
         }
         return text;
-    }
-
-    /**
-     * @param order Order starts in 1.
-     * @return
-     */
-    public List<String> exportToCsv(int order) {
-        List<String> csv = new ArrayList<>();
-        csv.add(FIGHT_TAG + ";" + order + ";" + team1.getName() + ";" + team2.getName());
-        for (Duel d : getDuels()) {
-            csv.add(d.exportToCsv());
-        }
-        return csv;
-    }
-
-    /**
-     * @param order Order starts in 1.
-     * @return
-     */
-    public List<String> exportToCsv(int order, int group, int level) {
-        List<String> csv = new ArrayList<>();
-        csv.add(FIGHT_TAG + ";" + order + ";" + group + ";" + level + ";" + team1.getName() + ";" + team2.getName());
-        for (Duel d : getDuels()) {
-            csv.add(d.exportToCsv());
-        }
-        return csv;
-    }
-
-    public static String getTag() {
-        return FIGHT_TAG;
-    }
+    }    
 
     @Override
     public int compareTo(Fight o) {

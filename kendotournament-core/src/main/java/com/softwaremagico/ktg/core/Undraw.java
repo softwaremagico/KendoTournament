@@ -1,7 +1,5 @@
 package com.softwaremagico.ktg.core;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /*
@@ -31,7 +29,6 @@ import java.util.Objects;
  */
 public class Undraw implements Comparable<Undraw> {
 
-    private static final String UNDRAW_TAG = "UNDRAW";
     private Tournament tournament;
     private Integer group;
     private Team winnerTeam;
@@ -86,16 +83,6 @@ public class Undraw implements Comparable<Undraw> {
 
     public void setTeam(Team winnerTeam) {
         this.winnerTeam = winnerTeam;
-    }
-
-    public static String getCsvTag() {
-        return UNDRAW_TAG;
-    }
-
-    public List<String> exportToCsv() {
-        List<String> csv = new ArrayList<>();
-        csv.add(UNDRAW_TAG + ";" + winnerTeam.getName() + ";" + 0 + ";" + level);
-        return csv;
     }
 
     public Integer getLevel() {

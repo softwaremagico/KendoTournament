@@ -23,12 +23,9 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.database.FightPool;
-import com.softwaremagico.ktg.database.UndrawPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -43,7 +40,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JLabel;
 
@@ -236,28 +232,6 @@ public class TournamentGroupBox extends Group {
 
     public Integer getMaxNumberOfWinners() {
         return tournamentGroup.getMaxNumberOfWinners();
-    }
-
-    /**
-     *
-     */
-    public List<String> exportToCsv() {
-        List<String> csv = new ArrayList<>();
-        List<Fight> fights = tournamentGroup.getFights();
-        for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).isOver()) {
-                //  csv.addAll(fights.get(i).exportToCsv(i, TournamentGroupPool.getManager(tournamentGroup.getTournament()).getIndexOfGroup(tournamentGroup), tournamentGroup.getLevel()));
-            }
-        }
-        try {
-            List<Undraw> undraws = UndrawPool.getInstance().getSorted(tournamentGroup.getTournament());
-            for (int i = 0; i < undraws.size(); i++) {
-                csv.addAll(undraws.get(i).exportToCsv());
-            }
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
-        return csv;
     }
 
     /**

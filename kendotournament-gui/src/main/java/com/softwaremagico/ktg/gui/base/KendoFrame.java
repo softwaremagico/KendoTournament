@@ -63,7 +63,7 @@ public abstract class KendoFrame extends javax.swing.JFrame {
                 return fc.getSelectedFile().toString();
             }
         } catch (NullPointerException npe) {
-            AlertManager.showErrorInformation(this.getClass().getName(),npe);
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
         }
         return "";
     }
@@ -116,16 +116,6 @@ public abstract class KendoFrame extends javax.swing.JFrame {
      */
     public String exploreWindowsForKtg(String title, int mode, String file) {
         return exploreWindows(title, mode, file, new KtgFilter());
-    }
-
-    /**
-     * Generate a window to search in the file system.
-     *
-     * @param mode The kind of window.
-     * @see setFileSelectionMode
-     */
-    public String exploreWindowsForCsv(String title, int mode, String file) {
-        return exploreWindows(title, mode, file, new CsvFilter());
     }
 
     protected String exploreWindow(String title, int mode) {
@@ -211,20 +201,6 @@ public abstract class KendoFrame extends javax.swing.JFrame {
         @Override
         public String getDescription() {
             return "Specific file of this program";
-        }
-    }
-    
-        private class CsvFilter extends javax.swing.filechooser.FileFilter {
-
-        @Override
-        public boolean accept(File file) {
-            String filename = file.getName();
-            return file.isDirectory() || filename.endsWith(".csv");
-        }
-
-        @Override
-        public String getDescription() {
-            return "Comma-Separated Values";
         }
     }
 }

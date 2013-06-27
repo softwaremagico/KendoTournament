@@ -35,7 +35,6 @@ public class Duel implements Serializable, Comparable<Duel> {
 
     private Fight fight;
     private Integer order;
-    private static final String DUEL_TAG = "DUEL";
     private final int POINTS_TO_WIN = 2;
     private List<Score> hitsFromCompetitorA = new ArrayList<>(); //M, K, T, D, H, I
     private List<Score> hitsFromCompetitorB = new ArrayList<>(); //M, K, T, D, H, I
@@ -364,33 +363,6 @@ public class Duel implements Serializable, Comparable<Duel> {
             return Score.getScore(field.charAt(0));
         }
         return Score.EMPTY;
-    }
-
-    public String exportToCsv() {
-        String Csv = DUEL_TAG + ";";
-        for (Score s : hitsFromCompetitorA) {
-            Csv += s.getAbbreviature() + ";";
-        }
-        Csv += ((!faultsCompetitorA) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
-
-        for (Score s : hitsFromCompetitorB) {
-            Csv += s.getAbbreviature() + ";";
-        }
-        Csv += ((!faultsCompetitorB) ? Score.EMPTY.getAbbreviature() : Score.FAULT.getAbbreviature()) + ";";
-        return Csv;
-    }
-
-    public void importFromCsv(String csvLine) {
-        //TODO No lee las faltas!!!
-        String[] fields = csvLine.split(";");
-        for (int i = 0; i < POINTS_TO_WIN; i++) {
-            setResultInRound(i, getScoreFromField(fields[i + 1]), true);
-            setResultInRound(i, getScoreFromField(fields[i + 1 + POINTS_TO_WIN]), false);
-        }
-    }
-
-    public static String getCsvTag() {
-        return DUEL_TAG;
     }
 
     @Override
