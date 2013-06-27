@@ -16,14 +16,14 @@ import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test(groups = {"evenGroupsChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
-public class ChampionshipEvenGroupsTest {
+@Test(groups = {"championshipTest"}, dependsOnGroups = {"populateDatabase"})
+public class ChampionshipTreeTest {
 
     private static final Integer MEMBERS = 3;
     private static final Integer FIGHT_AREA = 0;
     private static final Integer TEAMS_PER_GROUP = 4;
-    private static final Integer GROUPS = 3;
-    private static final String tournamentName = "evenChampionshipTest";
+    private static final Integer GROUPS = 2;
+    private static final String tournamentName = "championshipTreeTest";
     private static Tournament tournament = null;
 
     @Test
@@ -69,10 +69,9 @@ public class ChampionshipEvenGroupsTest {
         Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
     }
 
-
     @Test(dependsOnMethods = {"addTeams"})
     public void createTournamentGroups() throws SQLException {
-        tournament.setHowManyTeamsOfGroupPassToTheTree(2);
+        tournament.setHowManyTeamsOfGroupPassToTheTree(1);
         TGroup group;
         for (int g = 0; g < GROUPS; g++) {
             group = new TreeTournamentGroup(tournament, 0, 0);
@@ -82,9 +81,7 @@ public class ChampionshipEvenGroupsTest {
             }
         }
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size() == GROUPS);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().size() == 2);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(3).getGroups().size() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS/2);
         for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
             Assert.assertTrue(groupTest.getTeams().size() == TEAMS_PER_GROUP);
         }
@@ -113,18 +110,10 @@ public class ChampionshipEvenGroupsTest {
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(0);
         Ranking ranking1 = new Ranking(group1.getFights());
         Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));
-        Assert.assertTrue(ranking1.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team02")));
 
         TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(1);
         Ranking ranking2 = new Ranking(group2.getFights());
         Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
-        Assert.assertTrue(ranking2.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team06")));
-
-        TGroup group3 = TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(2);
-        Ranking ranking3 = new Ranking(group3.getFights());
-        Assert.assertTrue(ranking3.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
-        Assert.assertTrue(ranking3.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team10")));
-
     }
 
     @Test(dependsOnMethods = {"solveFirstLevel"})
@@ -134,26 +123,10 @@ public class ChampionshipEvenGroupsTest {
         //Check teams of group.
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
-        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team10")));
-        TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(1);
-        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
-        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
-        TGroup group3 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(2);
-        Assert.assertTrue(group3.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
-        Assert.assertTrue(group3.getTeams().contains(TeamPool.getInstance().get(tournament, "Team06")));
-
-
-        //Add new points. Wins Team1, Team5, Team9.
-        group1.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
-        group1.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
-        group1.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
-        group2.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
-        group2.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
-        group2.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
-        group3.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
-        group3.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
-        group3.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
+        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
         
+        //Add new points. Wins Team1.
+        group1.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
         
         //finish fights.
         for (Fight fight : FightPool.getInstance().get(tournament)) {
@@ -161,57 +134,9 @@ public class ChampionshipEvenGroupsTest {
         }
 
         Ranking ranking1 = new Ranking(group1.getFights());
-        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));
-        Ranking ranking2 = new Ranking(group2.getFights());
-        Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
-        Ranking ranking3 = new Ranking(group3.getFights());
-        Assert.assertTrue(ranking3.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
-
-    }
-
-    @Test(dependsOnMethods = {"solveSecondLevel"})
-    public void solveThirdLevel() throws SQLException {
-        FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
-
-        //Check teams of group.
-        TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
-        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
-        
-        TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1);        
-        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
-        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
-
-        //Add new points. Wins Team9.
-        group2.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
-
-        //finish fights.
-        for (Fight fight : group1.getFights()) {
-            fight.setOver(true);
-        }
-
-        Ranking ranking = new Ranking(group2.getFights());
-        Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
-    }
-    
-    @Test(dependsOnMethods = {"solveThirdLevel"})
-    public void solveFourthLevel() throws SQLException {
-        FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(3));
-
-        //Check teams of group.
-        TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(3).getGroups().get(0);
-        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
-        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
-        
-        //Add new points. Wins Team9.
-        group1.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
-
-        //finish fights.
-        for (Fight fight : group1.getFights()) {
-            fight.setOver(true);
-        }
-
-        Ranking ranking = new Ranking(group1.getFights());
-        Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
+        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));        
+        //Check only three groups in total. 
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getGroups().size()==3);
     }
 
     @After
