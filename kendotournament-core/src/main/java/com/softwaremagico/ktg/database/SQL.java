@@ -136,9 +136,19 @@ public abstract class SQL extends Database {
                 stmt.setString(1, person.getId());
                 stmt.setString(2, person.getName());
                 stmt.setString(3, person.getSurname());
-                stmt.setString(4, person.getClub().getName());
-                storeBinaryStream(stmt, 5, person.getPhoto().getInput(), person.getPhoto().getSize());
-                stmt.setLong(6, person.getPhoto().getSize());
+                String clubName = null;
+                if (person.getClub() != null) {
+                    clubName = person.getClub().getName();
+                }
+                stmt.setString(4, clubName);
+                InputStream photo = null;
+                Integer size = 0;
+                if (person.getPhoto() != null) {
+                    photo = person.getPhoto().getInput();
+                    size = person.getPhoto().getSize();
+                }
+                storeBinaryStream(stmt, 5, photo, size);
+                stmt.setLong(6, size);
                 try {
                     stmt.executeUpdate();
                 } catch (OutOfMemoryError ofm) {
@@ -161,7 +171,10 @@ public abstract class SQL extends Database {
                 ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname;")) {
             while (rs.next()) {
                 RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname").toString());
-                registered.setClub(ClubPool.getInstance().get(rs.getObject("Club").toString()));
+                Object clubName = rs.getObject("Club");
+                if (clubName != null) {
+                    registered.setClub(ClubPool.getInstance().get(clubName.toString()));
+                }
                 results.add(registered);
             }
         } catch (SQLException ex) {
@@ -849,7 +862,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (Fight newFight : newFights) {
             Fight oldFight = fightsExchange.get(newFight);
-            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', FightArea=" + newFight.getAsignedFightArea() +  ", Group=" + newFight.getGroup() +  ", GroupIndex=" + newFight.getGroupIndex()
+            query += "UPDATE Fight SET Team1='" + newFight.getTeam1() + "', Tournament='" + newFight.getTournament() + "' Team2='" + newFight.getTeam2() + "', Winner='" + newFight.getWinner() + "', Level='" + newFight.getLevel() + "', FightArea=" + newFight.getAsignedFightArea() + ", Group=" + newFight.getGroup() + ", GroupIndex=" + newFight.getGroupIndex()
                     + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='" + oldFight.getTournament().getName() + "' AND Level='" + oldFight.getLevel() + "' AND Group=" + oldFight.getGroup() + "' AND GroupIndex=" + oldFight.getGroupIndex() + "; ";
         }
         try (Statement s = connection.createStatement()) {
