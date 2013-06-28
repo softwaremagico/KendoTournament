@@ -265,11 +265,11 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void reset() {
-        sortedElements = new HashMap<>();
-        elements = new HashMap<>();
-        elementsToStore = new HashMap<>();
-        elementsToDelete = new HashMap<>();
-        elementsToUpdate = new HashMap<>();
+        sortedElements = null;
+        elements = null;
+        elementsToStore = null;
+        elementsToDelete = null;
+        elementsToUpdate = null;
     }
 
     public boolean needsToBeStoredInDatabase() {

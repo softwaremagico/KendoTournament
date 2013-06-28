@@ -13,6 +13,7 @@ import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 import com.softwaremagico.ktg.tournament.TGroup;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -168,6 +169,13 @@ public class ChampionshipTest {
 
         Ranking ranking1 = new Ranking(group1.getFights());
         Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));
+    }
+    
+    @Test(dependsOnMethods = {"solveThirdLevel"})
+    public void databaseStore() throws SQLException {
+        List<Fight> fights = FightPool.getInstance().get(tournament);
+        List<Team> teams = TeamPool.getInstance().get(tournament);
+        List<Role> roles = RolePool.getInstance().get(tournament);
     }
 
     @After

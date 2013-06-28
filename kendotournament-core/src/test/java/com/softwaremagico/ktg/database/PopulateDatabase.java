@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.List;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 
@@ -57,5 +58,18 @@ public class PopulateDatabase {
         }
 
         Assert.assertTrue(RegisteredPersonPool.getInstance().getAll().size() == clubs.length * competitors.length);
+    }
+
+    @Test(dependsOnMethods = {"addCompetitors"})
+    public void databaseStore() throws SQLException {
+        List<RegisteredPerson> competitors = RegisteredPersonPool.getInstance().getAll();
+        List<Club> clubs = ClubPool.getInstance().getAll();
+        DatabaseConnection.getInstance().updateDatabase();
+        RegisteredPersonPool.getInstance().reset();
+        ClubPool.getInstance().reset();
+        Assert.assertFalse(RegisteredPersonPool.getInstance().getAll().isEmpty());
+        Assert.assertFalse(ClubPool.getInstance().getAll().isEmpty());
+        Assert.assertTrue(ClubPool.getInstance().getAll().equals(clubs));
+        Assert.assertTrue(RegisteredPersonPool.getInstance().getAll().equals(competitors));
     }
 }

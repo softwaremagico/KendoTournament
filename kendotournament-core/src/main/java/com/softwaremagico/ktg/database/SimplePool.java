@@ -17,11 +17,11 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract HashMap<String, ElementPool> getElementsFromDatabase() throws SQLException;
 
-    protected abstract boolean storeElementsInDatabase(List<ElementPool> elementsToStore)throws SQLException;
+    protected abstract boolean storeElementsInDatabase(List<ElementPool> elementsToStore) throws SQLException;
 
-    protected abstract boolean removeElementsFromDatabase(List<ElementPool> elementsToDelete)throws SQLException;
+    protected abstract boolean removeElementsFromDatabase(List<ElementPool> elementsToDelete) throws SQLException;
 
-    protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate)throws SQLException;
+    protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate) throws SQLException;
 
     protected HashMap<String, ElementPool> getMap() throws SQLException {
         if (elements == null) {
@@ -129,7 +129,7 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public boolean remove(ElementPool element)throws SQLException {
+    public boolean remove(ElementPool element) throws SQLException {
         String id = getId(element);
         if (getMap().remove(id) != null) {
             //Element not stored in the database, therefore not store it. 
@@ -147,14 +147,14 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public void remove(String elementName)throws SQLException {
+    public void remove(String elementName) throws SQLException {
         remove(get(elementName));
     }
 
     /**
      * Obtain all elements that contains the desired string
      */
-    public List<ElementPool> search(String string)throws SQLException {
+    public List<ElementPool> search(String string) throws SQLException {
         List<ElementPool> result = new ArrayList<>();
         for (ElementPool element : getMap().values()) {
             if (getId(element).contains(string)) {
@@ -166,7 +166,7 @@ public abstract class SimplePool<ElementPool> {
 
     protected abstract List<ElementPool> sort() throws SQLException;
 
-    public List<ElementPool> getSorted()throws SQLException {
+    public List<ElementPool> getSorted() throws SQLException {
         if (sortedElements != null) {
             return sortedElements;
         } else if (getMap() != null) {
@@ -177,7 +177,7 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public boolean updateDatabase()throws SQLException {
+    public boolean updateDatabase() throws SQLException {
         if (!removeElementsFromDatabase(new ArrayList(getElementToRemove().values()))) {
             return false;
         }
@@ -190,11 +190,19 @@ public abstract class SimplePool<ElementPool> {
         return true;
     }
 
-    public List<ElementPool> getAll(int fromRow, int numberOfRows)throws SQLException{
+    public List<ElementPool> getAll(int fromRow, int numberOfRows) throws SQLException {
         return getAll().subList(fromRow, fromRow + numberOfRows);
     }
 
     public boolean needsToBeStoredInDatabase() {
         return (elementsToStore.size() > 0 || elementsToDelete.size() > 0 || elementsToUpdate.size() > 0);
+    }
+
+    public void reset() {
+        sortedElements = null;
+        elements = null;
+        elementsToStore = null;
+        elementsToDelete = null;
+        elementsToUpdate = null;
     }
 }
