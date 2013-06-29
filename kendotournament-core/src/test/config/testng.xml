@@ -10,6 +10,7 @@
                 <include name="evenGroupsChampionshipTest" />    
                 <include name="championshipTreeTest" />                
                 <include name="championshipFightAreaTest" />                                          
+                <include name="databaseStore" />  
             </run>
         </groups>
         <classes>
@@ -20,6 +21,7 @@
             <class name="com.softwaremagico.ktg.database.ChampionshipEvenGroupsTest" /> 
             <class name="com.softwaremagico.ktg.database.ChampionshipTreeTest" />
             <class name="com.softwaremagico.ktg.database.ChampionshipFightAreaTest" />
+            <class name="com.softwaremagico.ktg.database.DatabaseStore" />
         </classes>
     </test>
 </suite>

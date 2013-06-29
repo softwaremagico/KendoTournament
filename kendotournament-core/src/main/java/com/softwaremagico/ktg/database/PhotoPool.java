@@ -21,16 +21,16 @@ public class PhotoPool {
         }
         return instance;
     }
-    
-    private HashMap<String, Photo> getElements(){
-        if(elements == null){
+
+    private HashMap<String, Photo> getElements() {
+        if (elements == null) {
             elements = new HashMap<>();
         }
         return elements;
     }
-    
-    private  List<Photo> getPhotosToStore(){
-        if(photosToStore == null){
+
+    private List<Photo> getPhotosToStore() {
+        if (photosToStore == null) {
             photosToStore = new ArrayList<>();
         }
         return photosToStore;
@@ -54,7 +54,7 @@ public class PhotoPool {
         getPhotosToStore().add(element);
     }
 
-    protected Photo getFromDatabase(String competitorId) throws SQLException{
+    protected Photo getFromDatabase(String competitorId) throws SQLException {
         DatabaseConnection.getInstance().connect();
         Photo photo = DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
         DatabaseConnection.getInstance().disconnect();
@@ -70,6 +70,17 @@ public class PhotoPool {
         return true;
     }
 
+    public boolean removeElementsFromDatabase() throws SQLException {
+        return true;
+    }
+
+    public boolean addElementsToDatabase() throws SQLException {
+        if (getPhotosToStore().size() > 0) {
+            return storeInDatabase(getPhotosToStore());
+        }
+        return true;
+    }
+
     protected boolean updateDatabase() throws SQLException {
         if (getPhotosToStore().size() > 0) {
             return storeInDatabase(getPhotosToStore());
@@ -80,8 +91,8 @@ public class PhotoPool {
     public boolean needsToBeStoredInDatabase() {
         return (getPhotosToStore().size() > 0);
     }
-    
-    public void reset(){
+
+    public void reset() {
         elements = null;
         photosToStore = null;
     }

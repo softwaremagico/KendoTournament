@@ -7,12 +7,11 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
-import com.softwaremagico.ktg.tournament.TGroup;
 import java.sql.SQLException;
-import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,14 +22,14 @@ public class ChampionshipEvenGroupsTest {
     private static final Integer FIGHT_AREA = 0;
     private static final Integer TEAMS_PER_GROUP = 4;
     private static final Integer GROUPS = 3;
-    private static final String tournamentName = "evenChampionshipTest";
+    public static final String TOURNAMENT_NAME = "evenChampionshipTest";
     private static Tournament tournament = null;
 
     @Test
     public void addTournament() throws SQLException {
-        tournament = new Tournament(tournamentName, 1, 2, 3, TournamentType.CHAMPIONSHIP);
+        tournament = new Tournament(TOURNAMENT_NAME, 1, 2, 3, TournamentType.CHAMPIONSHIP);
         TournamentPool.getInstance().add(tournament);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().size() == 1);
+        Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
     }
 
     @Test(dependsOnMethods = {"addTournament"})
@@ -50,7 +49,7 @@ public class ChampionshipEvenGroupsTest {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
-                team = new Team("Team" + String.format("%02d",teamIndex), tournament);
+                team = new Team("Team" + String.format("%02d", teamIndex), tournament);
                 teamMember = 0;
                 TeamPool.getInstance().add(tournament, team);
             }
@@ -68,7 +67,6 @@ public class ChampionshipEvenGroupsTest {
         }
         Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
     }
-
 
     @Test(dependsOnMethods = {"addTeams"})
     public void createTournamentGroups() throws SQLException {
@@ -153,8 +151,8 @@ public class ChampionshipEvenGroupsTest {
         group3.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
         group3.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
         group3.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
-        
-        
+
+
         //finish fights.
         for (Fight fight : FightPool.getInstance().get(tournament)) {
             fight.setOver(true);
@@ -176,8 +174,8 @@ public class ChampionshipEvenGroupsTest {
         //Check teams of group.
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
-        
-        TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1);        
+
+        TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1);
         Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
         Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 
@@ -192,7 +190,7 @@ public class ChampionshipEvenGroupsTest {
         Ranking ranking = new Ranking(group2.getFights());
         Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
     }
-    
+
     @Test(dependsOnMethods = {"solveThirdLevel"})
     public void solveFourthLevel() throws SQLException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(3));
@@ -201,7 +199,7 @@ public class ChampionshipEvenGroupsTest {
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(3).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
-        
+
         //Add new points. Wins Team9.
         group1.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
 
@@ -214,16 +212,16 @@ public class ChampionshipEvenGroupsTest {
         Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
     }
 
-    @After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(tournamentName);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }
+    /*@After
+     @Test
+     public void deleteTournament() throws SQLException {
+     TournamentPool.getInstance().remove(tournamentName);
+     Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
+     Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
+     Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
+     Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
+     Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
+     Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
+     Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
+     }*/
 }

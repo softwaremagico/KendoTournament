@@ -151,6 +151,12 @@ public abstract class SimplePool<ElementPool> {
         remove(get(elementName));
     }
 
+    public void remove(List<ElementPool> elements) throws SQLException {
+        for (ElementPool element : elements) {
+            remove(element);
+        }
+    }
+
     /**
      * Obtain all elements that contains the desired string
      */
@@ -177,11 +183,15 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public boolean updateDatabase() throws SQLException {
+    public boolean removeElementsFromDatabase() throws SQLException {
         if (!removeElementsFromDatabase(new ArrayList(getElementToRemove().values()))) {
             return false;
         }
         elementsToDelete = new HashMap<>();
+        return true;
+    }
+
+    public boolean addElementsToDatabase() throws SQLException {
         storeElementsInDatabase(new ArrayList(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 

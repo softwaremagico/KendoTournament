@@ -237,11 +237,15 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
     }
 
-    private void updateDatabase(Tournament tournament) throws SQLException {
+    public boolean removeElementsFromDatabase(Tournament tournament) throws SQLException {
         if (getElementToRemove(tournament).size() > 0) {
             removeElementsFromDatabase(tournament, new ArrayList(getElementToRemove(tournament).values()));
         }
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
+        return true;
+    }
+
+    public boolean addElementsToDatabase(Tournament tournament) throws SQLException {
         if (getElementToStore(tournament) != null) {
             storeElementsInDatabase(tournament, new ArrayList(getElementToStore(tournament).values()));
         }
@@ -251,11 +255,23 @@ public abstract class TournamentDependentPool<ElementPool> {
             updateElements(tournament, getElementToUpdate(tournament));
         }
         elementsToUpdate.put(tournament, new HashMap<ElementPool, ElementPool>());
+        return true;
     }
 
-    public boolean updateDatabase() throws SQLException {
+    public boolean removeElementsFromDatabase() throws SQLException {
         for (Tournament tournament : elements.keySet()) {
-            updateDatabase(tournament);
+            if (!removeElementsFromDatabase(tournament)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean addElementsToDatabase() throws SQLException {
+        for (Tournament tournament : elements.keySet()) {
+            if (!addElementsToDatabase(tournament)) {
+                return false;
+            }
         }
         return true;
     }

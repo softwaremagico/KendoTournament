@@ -227,34 +227,69 @@ public class DatabaseConnection {
 
     public boolean updateDatabase() throws SQLException {
         connect();
-        if (!ClubPool.getInstance().updateDatabase()) {
+
+        //Delete actions.
+        if (!UndrawPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!RegisteredPersonPool.getInstance().updateDatabase()) {
+
+        if (!DuelPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!PhotoPool.getInstance().updateDatabase()) {
+        if (!FightPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!TournamentPool.getInstance().updateDatabase()) {
+        if (!TeamPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!CustomLinkPool.getInstance().updateDatabase()) {
+        if (!RolePool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!RolePool.getInstance().updateDatabase()) {
+        if (!CustomLinkPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!TeamPool.getInstance().updateDatabase()) {
+        if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!FightPool.getInstance().updateDatabase()) {
+        if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!DuelPool.getInstance().updateDatabase()) {
+        if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
             return false;
         }
-        if (!UndrawPool.getInstance().updateDatabase()) {
+        if (!ClubPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+
+        //Add actions
+        if (!ClubPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!PhotoPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!TournamentPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!CustomLinkPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!RolePool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!TeamPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!FightPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!DuelPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!UndrawPool.getInstance().addElementsToDatabase()) {
             return false;
         }
         disconnect();

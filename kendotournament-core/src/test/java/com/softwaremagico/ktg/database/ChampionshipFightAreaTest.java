@@ -7,12 +7,11 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
-import com.softwaremagico.ktg.tournament.TGroup;
 import java.sql.SQLException;
-import org.junit.After;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -22,14 +21,14 @@ public class ChampionshipFightAreaTest {
     private static final Integer MEMBERS = 3;
     private static final Integer TEAMS_PER_GROUP = 4;
     private static final Integer GROUPS = 4;
-    private static final String tournamentName = "fightAreaChampionshipTest";
+    public static final String TOURNAMENT_NAME = "fightAreaChampionshipTest";
     private static Tournament tournament = null;
 
     @Test
     public void addTournament() throws SQLException {
-        tournament = new Tournament(tournamentName, 1, 2, 3, TournamentType.CHAMPIONSHIP);
+        tournament = new Tournament(TOURNAMENT_NAME, 1, 2, 3, TournamentType.CHAMPIONSHIP);
         TournamentPool.getInstance().add(tournament);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().size() == 1);
+        Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
     }
 
     @Test(dependsOnMethods = {"addTournament"})
@@ -283,7 +282,7 @@ public class ChampionshipFightAreaTest {
         Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
     }
 
-    @After
+    /*@After
     @Test
     public void deleteTournament() throws SQLException {
         TournamentPool.getInstance().remove(tournamentName);
@@ -294,5 +293,5 @@ public class ChampionshipFightAreaTest {
         Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
         Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
         Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }
+    }*/
 }

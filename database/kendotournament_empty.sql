@@ -29,7 +29,7 @@ CREATE TABLE `duel` (
   `Team2` varchar(50) NOT NULL,
   `Tournament` varchar(50) NOT NULL,
   `GroupIndex` int(10) unsigned NOT NULL,
-  `Group` int(10) unsigned NOT NULL,
+  `TournamentGroup` int(10) unsigned NOT NULL,
   `Level` int(10) unsigned NOT NULL,
   `Order` int(10) unsigned NOT NULL,
   `PointPlayer1A` char(1) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `duel` (
   PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`,`Order`, `Group`),
   KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
   KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
-  CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `Group`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `Group`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `TournamentGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -140,10 +140,10 @@ CREATE TABLE `fight` (
   `Team2` varchar(50) NOT NULL COMMENT 'Other team on the fight',
   `Tournament` varchar(50) NOT NULL,
   `GroupIndex` int(10) unsigned NOT NULL,
-  `Group` int(10) unsigned NOT NULL,
+  `TournamentGroup` int(10) unsigned NOT NULL,
   `Level` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
   `FightArea` int(10) unsigned NOT NULL DEFAULT '1',
-  `Winner` int(1) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
+  `Winner` int(2) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
   PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`, `Group`),
   KEY `TournamentFightIndex` (`Tournament`),
   KEY `TCL1FightIndex` (`Team1`,`Level`,`Tournament`),
