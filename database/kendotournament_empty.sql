@@ -30,18 +30,18 @@ CREATE TABLE `duel` (
   `Tournament` varchar(50) NOT NULL,
   `GroupIndex` int(10) unsigned NOT NULL,
   `TournamentGroup` int(10) unsigned NOT NULL,
-  `Level` int(10) unsigned NOT NULL,
-  `Order` int(10) unsigned NOT NULL,
+  `TournamentLevel` int(10) unsigned NOT NULL,
+  `MemberOrder` int(10) unsigned NOT NULL,
   `PointPlayer1A` char(1) NOT NULL,
   `PointPlayer1B` char(1) NOT NULL,
   `PointPlayer2A` char(1) NOT NULL,
   `PointPlayer2B` char(1) NOT NULL,
   `FaultsPlayer1` int(1) unsigned NOT NULL,
   `FaultsPlayer2` int(1) unsigned NOT NULL,
-  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`,`Order`, `Group`),
-  KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
-  KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`),
-  CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `Level`, `TournamentGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`,`MemberOrder`, `TournamentGroup`),
+  KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),
+  KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),
+  CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,10 +141,10 @@ CREATE TABLE `fight` (
   `Tournament` varchar(50) NOT NULL,
   `GroupIndex` int(10) unsigned NOT NULL,
   `TournamentGroup` int(10) unsigned NOT NULL,
-  `Level` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
+  `TournamentLevel` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
   `FightArea` int(10) unsigned NOT NULL DEFAULT '1',
   `Winner` int(2) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
-  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`Level`, `Group`),
+  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`, `Group`),
   KEY `TournamentFightIndex` (`Tournament`),
   KEY `TCL1FightIndex` (`Team1`,`Level`,`Tournament`),
   KEY `Team2Fight` (`Team2`,`Level`,`Tournament`),
@@ -207,11 +207,11 @@ DROP TABLE IF EXISTS `undraw`;
 CREATE TABLE `undraw` (
   `Tournament` char(50) NOT NULL,
   `Points` int(11) NOT NULL DEFAULT '1',
-  `Level` int(11) NOT NULL,
+  `TournamentLevel` int(11) NOT NULL,
   `Team` varchar(50) NOT NULL,
   `Player` int(11) NOT NULL,
-  `Group` int(11) NOT NULL,
-  PRIMARY KEY (`Tournament`,`Level`,`Team`,`Group`) USING BTREE,
+  `TournamentGroup` int(11) NOT NULL,
+  PRIMARY KEY (`Tournament`,`TournamentLevel`,`Team`,`TournamentGroup`) USING BTREE,
   KEY `Team` (`Team`),
   CONSTRAINT `TeamDraw` FOREIGN KEY (`Team`) REFERENCES `team` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `TournamentUndraw` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE

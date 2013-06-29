@@ -124,13 +124,13 @@ public abstract class TGroup implements Serializable {
     public List<Team> getWinners() {
         try {
             //If only exists one team in this group, is the winner. 
-            if(getTeams().size()==1){
+            if (getTeams().size() == 1) {
                 return getTeams();
             }
             //If exists fights, the winner is the first of the ranking.
             if (getFights() != null && getFights().size() > 0) {
                 return Ranking.getTeamsRanking(getFights()).subList(0, numberMaxOfWinners);
-            } 
+            }
         } catch (Exception iob) {
         }
 
@@ -249,6 +249,6 @@ public abstract class TGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams;
+        return "(" + tournament + ")Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams + "\n";
     }
 }

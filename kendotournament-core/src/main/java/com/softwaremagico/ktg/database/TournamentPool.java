@@ -51,14 +51,6 @@ public class TournamentPool extends SimplePool<Tournament> {
     @Override
     protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) throws SQLException {
         if (elementsToDelete.size() > 0) {
-            for (Tournament tournament : elementsToDelete) {
-                //Delete fights.
-                FightPool.getInstance().remove(tournament);
-                //Delete teams.
-                TeamPool.getInstance().remove(tournament);
-                //Delete roles.            
-                RolePool.getInstance().remove(tournament);
-            }
             return DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
         }
         return true;
@@ -108,10 +100,8 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     public boolean remove(Tournament tournament) throws SQLException {
-        //Fights delete undraws and duels. 
-        FightPool.getInstance().remove(tournament);
+        //Role deletes fights, teams, undraws and duels. 
         CustomLinkPool.getInstance().remove(tournament);
-        TeamPool.getInstance().remove(tournament);
         RolePool.getInstance().remove(tournament);
         return super.remove(tournament);
     }

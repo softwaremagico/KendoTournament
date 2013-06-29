@@ -235,20 +235,11 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @param tournament
      */
     @Override
-    public void remove(Tournament tournament) throws SQLException {
-        TeamPool.getInstance().remove(tournament);
-        super.remove(tournament);
-    }
-
-    /**
-     * Removing a role must delete the team.
-     *
-     * @param tournament
-     */
-    @Override
     public boolean remove(Tournament tournament, Role element) throws SQLException {
         Team team = TeamPool.getInstance().get(tournament, element.getCompetitor());
-        TeamPool.getInstance().remove(tournament, team);
+        if (team != null) {
+            TeamPool.getInstance().remove(tournament, team);
+        }
         return super.remove(tournament, element);
     }
 
