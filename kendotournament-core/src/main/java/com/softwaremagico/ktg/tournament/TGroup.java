@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.database.FightPool;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,6 +55,7 @@ public abstract class TGroup implements Serializable {
         this.level = level;
         this.fightArea = fightArea;
         this.groupIndex = groupIndex;
+        fightsOfGroup = new ArrayList<>();
         if (level == 0) {
             this.numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
         } else {
@@ -262,9 +264,9 @@ public abstract class TGroup implements Serializable {
         hash = 41 * hash + Objects.hashCode(this.teams);
         hash = 41 * hash + Objects.hashCode(this.level);
         hash = 41 * hash + Objects.hashCode(this.groupIndex);
-        /*hash = 41 * hash + Objects.hashCode(this.fightArea);
+        hash = 41 * hash + Objects.hashCode(this.fightArea);
         hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
-        hash = 41 * hash + Objects.hashCode(this.numberMaxOfWinners);*/
+        hash = 41 * hash + Objects.hashCode(this.numberMaxOfWinners);
         return hash;
     }
 
@@ -289,7 +291,7 @@ public abstract class TGroup implements Serializable {
         if (!Objects.equals(this.level, other.level)) {
             return false;
         }
-        /*if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
+        if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
             return false;
         }
         if (!Objects.equals(this.fightArea, other.fightArea)) {
@@ -297,7 +299,19 @@ public abstract class TGroup implements Serializable {
         }
         if (!Objects.equals(this.fightsOfGroup, other.fightsOfGroup)) {
             return false;
-        }*/
+        }
         return true;
+    }
+
+    /**
+     * Add a fight obtained from database to the group.
+     *
+     * @param fight
+     */
+    public void addFight(Fight fight) {
+        fightsOfGroup.add(fight);
+        addTeam(fight.getTeam1());
+        addTeam(fight.getTeam2());
+        Collections.sort(fightsOfGroup);
     }
 }
