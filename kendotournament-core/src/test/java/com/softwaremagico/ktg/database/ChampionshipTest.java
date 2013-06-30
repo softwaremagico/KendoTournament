@@ -13,7 +13,6 @@ import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 import java.sql.SQLException;
-import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -50,7 +49,7 @@ public class ChampionshipTest {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
-                team = new Team("Team" + String.format("%02d",teamIndex), tournament);
+                team = new Team("Team" + String.format("%02d", teamIndex), tournament);
                 teamMember = 0;
                 TeamPool.getInstance().add(tournament, team);
             }
@@ -168,24 +167,4 @@ public class ChampionshipTest {
         Ranking ranking1 = new Ranking(group1.getFights());
         Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));
     }
-    
-    @Test(dependsOnMethods = {"solveThirdLevel"})
-    public void databaseStore() throws SQLException {
-        List<Fight> fights = FightPool.getInstance().get(tournament);
-        List<Team> teams = TeamPool.getInstance().get(tournament);
-        List<Role> roles = RolePool.getInstance().get(tournament);
-    }
-
-    /*@After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(tournamentName);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }*/
 }

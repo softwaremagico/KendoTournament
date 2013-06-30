@@ -204,7 +204,7 @@ public abstract class LeagueLevel {
     private void fillTeamsWithWinnersPreviousLevel() {
         if (previousLevel != null) {
             for (int winner = 0; winner < previousLevel.getGroups().get(0).getMaxNumberOfWinners(); winner++) {
-                for (TGroup previousLevelGroup : previousLevel.tournamentGroups) {
+                for (TGroup previousLevelGroup : previousLevel.getGroups()) {
                     TGroup group = previousLevel.getGroupDestinationOfWinner(previousLevelGroup, winner);
                     group.addTeam(previousLevelGroup.getWinners().get(winner));
                 }
@@ -223,7 +223,7 @@ public abstract class LeagueLevel {
      * Update the number of groups according of the size of the previous level.
      */
     protected void updateGroupsSize() {
-        while ((previousLevel != null) && ((previousLevel.getNumberOfTotalTeamsPassNextRound()+1) / 2 > this.size())) {
+        while ((previousLevel != null) && ((previousLevel.getNumberOfTotalTeamsPassNextRound() + 1) / 2 > this.size())) {
             addGroup(new TreeTournamentGroup(tournament, level, 0));
         }
 
@@ -334,13 +334,13 @@ public abstract class LeagueLevel {
     public abstract Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner);
 
     protected TGroup getGroupDestinationOfWinner(TGroup group, Integer winner) {
-        return nextLevel.tournamentGroups.get(getGroupIndexDestinationOfWinner(group, winner));
+        return nextLevel.getGroups().get(getGroupIndexDestinationOfWinner(group, winner));
     }
 
     protected Integer getGroupIndexSourceOfWinner(TGroup group, Integer winner) {
         if (level > 0) {
-            for (int groupIndex = 0; groupIndex < previousLevel.tournamentGroups.size(); groupIndex++) {
-                if (previousLevel.getGroupDestinationOfWinner(previousLevel.tournamentGroups.get(groupIndex), winner).equals(group)) {
+            for (int groupIndex = 0; groupIndex < previousLevel.getGroups().size(); groupIndex++) {
+                if (previousLevel.getGroupDestinationOfWinner(previousLevel.getGroups().get(groupIndex), winner).equals(group)) {
                     return groupIndex;
                 }
             }
@@ -349,13 +349,13 @@ public abstract class LeagueLevel {
     }
 
     protected TGroup getGroupSourceOfWinner(TGroup group, Integer winner) {
-        return previousLevel.tournamentGroups.get(getGroupIndexSourceOfWinner(group, winner));
+        return previousLevel.getGroups().get(getGroupIndexSourceOfWinner(group, winner));
     }
 
     @Override
     public String toString() {
         String text = "-------------------------------------\n";
-        text+="Level: " + level + "\n";
+        text += "Level: " + level + "\n";
         for (TGroup group : tournamentGroups) {
             text += group + "\n";
         }

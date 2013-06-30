@@ -164,6 +164,7 @@ public class SimpleTournamentManager implements ITournamentManager {
 
     @Override
     public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
+        //Do nothing. 
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.database.CustomLinkPool;
 import java.sql.SQLException;
+import java.util.List;
 
 public class CustomChampionship extends Championship {
 
@@ -38,5 +39,9 @@ public class CustomChampionship extends Championship {
     public void removeLinks() {
         //Remove all links from manager.
         ((LeagueLevelCustom) levelZero).removeLinks();
+    }
+
+    public List<CustomWinnerLink> getLinks() {
+        return ((LeagueLevelCustom) levelZero).getLinks();
     }
 }

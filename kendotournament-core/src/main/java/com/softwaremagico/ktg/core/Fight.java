@@ -361,7 +361,7 @@ public class Fight implements Serializable, Comparable<Fight> {
     public String toString() {
         String text = "(" + group + "/" + groupIndex + ") Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
         for (Duel d : getDuels()) {
-            text += d + "\n";
+            text += d;
         }
         return text;
     }

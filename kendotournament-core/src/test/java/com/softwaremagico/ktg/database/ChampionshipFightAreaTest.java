@@ -89,20 +89,20 @@ public class ChampionshipFightAreaTest {
         for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
             Assert.assertTrue(groupTest.getTeams().size() == TEAMS_PER_GROUP);
         }
-        
+
         //Test fights area.
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(0).getFightArea()==0);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(1).getFightArea()==0);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(2).getFightArea()==1);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(3).getFightArea()==1);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0).getFightArea()==0);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(1).getFightArea()==0);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(2).getFightArea()==1);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(3).getFightArea()==1);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0).getFightArea()==0);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1).getFightArea()==1);
-                Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(3).getGroups().get(0).getFightArea()==0);
-        
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(0).getFightArea() == 0);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(1).getFightArea() == 0);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(2).getFightArea() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(3).getFightArea() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0).getFightArea() == 0);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(1).getFightArea() == 0);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(2).getFightArea() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(3).getFightArea() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0).getFightArea() == 0);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1).getFightArea() == 1);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(3).getGroups().get(0).getFightArea() == 0);
+
     }
 
     @Test(dependsOnMethods = {"createTournamentGroups"})
@@ -139,24 +139,24 @@ public class ChampionshipFightAreaTest {
         Ranking ranking3 = new Ranking(group3.getFights());
         Assert.assertTrue(ranking3.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
         Assert.assertTrue(ranking3.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team10")));
-        
+
         TGroup group4 = TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(3);
         Ranking ranking4 = new Ranking(group4.getFights());
         Assert.assertTrue(ranking4.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team13")));
         Assert.assertTrue(ranking4.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team14")));
-        
+
         //Check fights areas.
-        for(Fight fight: group1.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group1.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
-        for(Fight fight: group2.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group2.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
-        for(Fight fight: group3.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==1);
+        for (Fight fight : group3.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 1);
         }
-        for(Fight fight: group4.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==1);
+        for (Fight fight : group4.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 1);
         }
 
     }
@@ -180,17 +180,17 @@ public class ChampionshipFightAreaTest {
         Assert.assertTrue(group4.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
 
         //Check fights areas.
-        for(Fight fight: group1.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group1.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
-        for(Fight fight: group2.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group2.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
-        for(Fight fight: group3.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==1);
+        for (Fight fight : group3.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 1);
         }
-        for(Fight fight: group4.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==1);
+        for (Fight fight : group4.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 1);
         }
 
         //Add new points. Wins Team1, Team5, Team9, Team13.
@@ -243,13 +243,13 @@ public class ChampionshipFightAreaTest {
         for (Fight fight : group1.getFights()) {
             fight.setOver(true);
         }
-        
+
         //Check fights areas.
-        for(Fight fight: group1.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group1.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
-        for(Fight fight: group2.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==1);
+        for (Fight fight : group2.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 1);
         }
 
         Ranking ranking = new Ranking(group2.getFights());
@@ -272,26 +272,13 @@ public class ChampionshipFightAreaTest {
         for (Fight fight : group1.getFights()) {
             fight.setOver(true);
         }
-        
+
         //Check fights areas.
-        for(Fight fight: group1.getFights()){
-            Assert.assertTrue(fight.getAsignedFightArea()==0);
+        for (Fight fight : group1.getFights()) {
+            Assert.assertTrue(fight.getAsignedFightArea() == 0);
         }
 
         Ranking ranking = new Ranking(group1.getFights());
         Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
     }
-
-    /*@After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(tournamentName);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }*/
 }

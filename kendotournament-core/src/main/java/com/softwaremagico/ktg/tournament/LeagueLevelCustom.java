@@ -101,14 +101,14 @@ public class LeagueLevelCustom extends LeagueLevel {
      */
     private class Links implements Serializable {
 
-        private List<CustomWinnerLink> links = new ArrayList<>();
+        private List<CustomWinnerLink> customLinks = new ArrayList<>();
 
         Links() {
         }
 
         protected void add(TGroup from, TGroup to) {
             if (to.getLevel() == from.getLevel() + 1) {
-                links.add(new CustomWinnerLink(tournament, from, to));
+                customLinks.add(new CustomWinnerLink(tournament, from, to));
                 setWinnerOrder(from);
             }
         }
@@ -150,29 +150,38 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
 
         protected void add(CustomWinnerLink link) {
-            links.add(link);
+            customLinks.add(link);
             setWinnerOrder();
         }
 
         protected void set(List<CustomWinnerLink> links) {
-            this.links = links;
+            this.customLinks = links;
         }
 
         protected int size() {
-            return links.size();
+            return customLinks.size();
         }
 
         protected CustomWinnerLink get(int index) {
-            return links.get(index);
+            return customLinks.get(index);
         }
 
         protected void remove(int index) {
-            links.remove(index);
+            customLinks.remove(index);
             setWinnerOrder();
         }
 
         protected List<CustomWinnerLink> getLinks() {
-            return links;
+            return customLinks;
+        }
+
+        @Override
+        public String toString() {
+            String text = "";
+            for (CustomWinnerLink link : customLinks) {
+                text += link;
+            }
+            return text;
         }
     }
 

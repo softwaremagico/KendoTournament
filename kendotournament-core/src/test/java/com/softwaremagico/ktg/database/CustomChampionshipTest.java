@@ -50,7 +50,7 @@ public class CustomChampionshipTest {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
-                team = new Team("Team" + String.format("%02d",teamIndex), tournament);
+                team = new Team("Team" + String.format("%02d", teamIndex), tournament);
                 teamMember = 0;
                 TeamPool.getInstance().add(tournament, team);
             }
@@ -69,7 +69,6 @@ public class CustomChampionshipTest {
         Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
     }
 
-
     @Test(dependsOnMethods = {"addTeams"})
     public void createTournamentGroups() throws SQLException {
         tournament.setHowManyTeamsOfGroupPassToTheTree(2);
@@ -86,7 +85,7 @@ public class CustomChampionshipTest {
         ((CustomChampionship) TournamentManagerFactory.getManager(tournament)).addLink(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(0), TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(1));
         ((CustomChampionship) TournamentManagerFactory.getManager(tournament)).addLink(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(1), TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0));
         ((CustomChampionship) TournamentManagerFactory.getManager(tournament)).addLink(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(1), TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(1));
-
+      
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size() == GROUPS);
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS);
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().size() == GROUPS / 2);
@@ -175,17 +174,4 @@ public class CustomChampionshipTest {
         Ranking ranking1 = new Ranking(group1.getFights());
         Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));
     }
-
-    /*@After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(tournamentName);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }*/
 }

@@ -249,6 +249,47 @@ public abstract class TGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "(" + tournament + ")Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams + "\n";
+        return "(" + tournament + ") Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams + "\n";
     }
+
+    /*@Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.tournament);
+        hash = 41 * hash + Objects.hashCode(this.teams);
+        hash = 41 * hash + Objects.hashCode(this.level);
+        hash = 41 * hash + Objects.hashCode(this.fightArea);
+        hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TGroup other = (TGroup) obj;
+        if (!Objects.equals(this.tournament, other.tournament)) {
+            return false;
+        }
+        if (!Objects.equals(this.teams, other.teams)) {
+            return false;
+        }
+        if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
+            return false;
+        }
+        if (!Objects.equals(this.level, other.level)) {
+            return false;
+        }
+        if (!Objects.equals(this.fightArea, other.fightArea)) {
+            return false;
+        }
+        if (!Objects.equals(this.fightsOfGroup, other.fightsOfGroup)) {
+            return false;
+        }
+        return true;
+    }*/
 }

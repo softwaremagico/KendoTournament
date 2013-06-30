@@ -135,6 +135,6 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
 
     @Override
     public String toString() {
-        return "source: " + source + ", address: " + address;
+        return "source: " + source + ", address: " + address + "\n";
     }
 }

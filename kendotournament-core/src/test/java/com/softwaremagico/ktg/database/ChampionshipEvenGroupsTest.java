@@ -211,17 +211,4 @@ public class ChampionshipEvenGroupsTest {
         Ranking ranking = new Ranking(group1.getFights());
         Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team09")));
     }
-
-    /*@After
-     @Test
-     public void deleteTournament() throws SQLException {
-     TournamentPool.getInstance().remove(tournamentName);
-     Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-     Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-     Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-     Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-     Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-     Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-     Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-     }*/
 }

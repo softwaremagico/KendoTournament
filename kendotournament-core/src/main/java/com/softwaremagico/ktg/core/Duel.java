@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -107,8 +108,8 @@ public class Duel implements Serializable, Comparable<Duel> {
     }
 
     public boolean isStarted() {
-        if ((getScore(true)) > 0 || (getScore(false)) > 0 || 
-                getFaults(true) || getFaults(false) || isOver()) {
+        if ((getScore(true)) > 0 || (getScore(false)) > 0
+                || getFaults(true) || getFaults(false) || isOver()) {
             return true;
         }
         return false;
@@ -342,29 +343,6 @@ public class Duel implements Serializable, Comparable<Duel> {
         setResultInRound(1, Score.IPPON, leftPlayer);
     }
 
-    public String showScore() {
-        String score = "";
-        score += "TeamA: ";
-        for (Score s : hitsFromCompetitorA) {
-            score += s.getAbbreviature() + " ";
-        }
-
-        score += "(f:" + faultsCompetitorA + "), ";
-        score += "TeamB: ";
-        for (Score s : hitsFromCompetitorB) {
-            score += s.getAbbreviature() + " ";
-        }
-        score += "(f:" + faultsCompetitorB + ")";
-        return score;
-    }
-
-    private Score getScoreFromField(String field) {
-        if (field.length() == 1) {
-            return Score.getScore(field.charAt(0));
-        }
-        return Score.EMPTY;
-    }
-
     @Override
     public String toString() {
         String text = "Player A  (";
@@ -375,25 +353,43 @@ public class Duel implements Serializable, Comparable<Duel> {
         for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
             text += (hitsFromCompetitorB.get(i).getAbbreviature());
         }
-        text += ")";
+        text += ")\n";
 
         return text;
     }
 
     @Override
     public int compareTo(Duel o) {
-        Integer levelCompare = getFight().getLevel().compareTo(o.getFight().getLevel());
-        if (levelCompare != 0) {
-            return levelCompare;
-        }
-        Integer groupCompare = getFight().getGroup().compareTo(o.getFight().getGroup());
-        if (groupCompare != 0) {
-            return groupCompare;
-        }
-        Integer indexCompare = getFight().getGroupIndex().compareTo(o.getFight().getGroupIndex());
-        if (indexCompare != 0) {
-            return indexCompare;
+        Integer fightCompare = getFight().compareTo(o.getFight());
+        if (fightCompare != 0) {
+            return fightCompare;
         }
         return order.compareTo(o.order);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.fight);
+        hash = 41 * hash + Objects.hashCode(this.order);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Duel other = (Duel) obj;
+        if (!Objects.equals(this.fight, other.fight)) {
+            return false;
+        }
+        if (!Objects.equals(this.order, other.order)) {
+            return false;
+        }
+        return true;
     }
 }

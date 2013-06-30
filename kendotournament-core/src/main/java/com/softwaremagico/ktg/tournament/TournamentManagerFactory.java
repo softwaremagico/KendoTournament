@@ -60,6 +60,10 @@ public class TournamentManagerFactory {
         removeManager(tournament, tournament.getType());
     }
     
+    public static void resetManager(Tournament tournament){
+        managers.get(tournament).remove(tournament.getType());
+    }
+    
     private static ITournamentManager createManager(Tournament tournament, TournamentType type) {
         ITournamentManager manager;
         switch (type) {

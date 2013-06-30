@@ -48,7 +48,7 @@ public class ChampionshipTreeTest {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
-                team = new Team("Team" + String.format("%02d",teamIndex), tournament);
+                team = new Team("Team" + String.format("%02d", teamIndex), tournament);
                 teamMember = 0;
                 TeamPool.getInstance().add(tournament, team);
             }
@@ -79,7 +79,7 @@ public class ChampionshipTreeTest {
             }
         }
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size() == GROUPS);
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS/2);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS / 2);
         for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
             Assert.assertTrue(groupTest.getTeams().size() == TEAMS_PER_GROUP);
         }
@@ -122,31 +122,18 @@ public class ChampionshipTreeTest {
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
-        
+
         //Add new points. Wins Team1.
         group1.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
-        
+
         //finish fights.
         for (Fight fight : FightPool.getInstance().get(tournament)) {
             fight.setOver(true);
         }
 
         Ranking ranking1 = new Ranking(group1.getFights());
-        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));        
+        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));
         //Check only three groups in total. 
-        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getGroups().size()==3);
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getGroups().size() == 3);
     }
-
-    /*@After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(tournamentName);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }*/
 }

@@ -100,9 +100,8 @@ public class SimpleChampionshipTest {
             FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).getDuels().get(0).setHit(true, 1, Score.MEN);
             FightPool.getInstance().getCurrentFight(tournament, FIGHT_AREA).setOver(true);
         }
-        // System.out.println("\n" + FightPool.getInstance().get(tournament));
+
         Ranking ranking = new Ranking(FightPool.getInstance().get(tournament, FIGHT_AREA));
-        // System.out.println(ranking.getTeamsScoreRanking());
 
         for (int i = 0; i < ranking.getTeamsScoreRanking().size() - 1; i++) {
             Assert.assertTrue(ranking.getTeamsScoreRanking().get(i).getWonFights() >= ranking.getTeamsScoreRanking().get(i + 1).getWonFights());
@@ -194,20 +193,8 @@ public class SimpleChampionshipTest {
         Assert.assertTrue(ranking.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team5")));
         Assert.assertTrue(ranking.getTeam(2).equals(TeamPool.getInstance().get(tournament, "Team1")));
 
-        DuelPool.getInstance().remove(tournament);
-        UndrawPool.getInstance().remove(tournament);
+        //Not remove, used for database store testing. 
+        //DuelPool.getInstance().remove(tournament);
+        //UndrawPool.getInstance().remove(tournament);
     }
-
-    /*@After
-    @Test
-    public void deleteTournament() throws SQLException {
-        TournamentPool.getInstance().remove(TOURNAMENT_NAME);
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(RolePool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(CustomLinkPool.getInstance().get(tournament).isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().get(tournament).isEmpty());
-    }*/
 }
