@@ -901,7 +901,7 @@ public abstract class SQL extends Database {
                 Fight fight = FightPool.getInstance().get(tournament,
                         TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
                         TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
-                        rs.getInt("TournamentLevel"), rs.getInt("GroupIndex"), rs.getInt("TournamentGroup"));
+                        rs.getInt("TournamentLevel"), rs.getInt("TournamentGroup"), rs.getInt("GroupIndex"));
                 Duel duel = new Duel(fight, rs.getInt("MemberOrder"));
 
                 char c;
