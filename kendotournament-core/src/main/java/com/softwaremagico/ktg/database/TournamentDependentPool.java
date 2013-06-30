@@ -288,6 +288,14 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToUpdate = null;
     }
 
+    public void reset(Tournament tournament) {
+        sortedElements.remove(tournament);
+        elements.remove(tournament);
+        elementsToStore.remove(tournament);
+        elementsToDelete.remove(tournament);
+        elementsToUpdate.remove(tournament);
+    }
+
     public boolean needsToBeStoredInDatabase() {
         for (Tournament tournament : elementsToStore.keySet()) {
             if (elementsToStore.get(tournament).size() > 0) {
