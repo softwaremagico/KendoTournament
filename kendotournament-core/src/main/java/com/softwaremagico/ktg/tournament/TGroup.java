@@ -262,6 +262,9 @@ public abstract class TGroup implements Serializable {
         hash = 41 * hash + Objects.hashCode(this.teams);
         hash = 41 * hash + Objects.hashCode(this.level);
         hash = 41 * hash + Objects.hashCode(this.groupIndex);
+        /*hash = 41 * hash + Objects.hashCode(this.fightArea);
+        hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
+        hash = 41 * hash + Objects.hashCode(this.numberMaxOfWinners);*/
         return hash;
     }
 
@@ -286,6 +289,15 @@ public abstract class TGroup implements Serializable {
         if (!Objects.equals(this.level, other.level)) {
             return false;
         }
+        /*if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
+            return false;
+        }
+        if (!Objects.equals(this.fightArea, other.fightArea)) {
+            return false;
+        }
+        if (!Objects.equals(this.fightsOfGroup, other.fightsOfGroup)) {
+            return false;
+        }*/
         return true;
     }
 }

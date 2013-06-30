@@ -22,10 +22,25 @@ public class Championship implements ITournamentManager {
     @Override
     public void fillGroups() {
         try {
+            //Read groups from fights.
             List<Fight> fights = FightPool.getInstance().get(tournament);
             for (Fight fight : fights) {
                 LeagueLevel leagueLevel = getLevel(fight.getLevel());
                 leagueLevel.fillGroups(fight);
+            }
+            //Fill teams of groups without fights. (i.e grouo with only one team).
+            LeagueLevel level = levelZero;
+            while (level.nextLevel != null) {
+                level = level.nextLevel;
+                //A level with several groups, has already filled teams and one of them has no teams.
+                if (level.previousLevel.getGroups().size() % 2 == 1 && level.previousLevel.isLevelFinished()) {
+                    //Search a group without teams.
+                    for (TGroup group : level.getGroups()) {
+                        if (group.getTeams().isEmpty()) {
+                            level.update();
+                        }
+                    }
+                }
             }
         } catch (SQLException ex) {
             KendoLog.errorMessage(this.getClass().getName(), ex);

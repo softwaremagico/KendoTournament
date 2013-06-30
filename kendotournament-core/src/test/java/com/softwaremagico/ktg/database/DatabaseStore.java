@@ -52,9 +52,6 @@ public class DatabaseStore {
         Assert.assertTrue(FightPool.getInstance().get(tournament).equals(fights));
         Assert.assertTrue(DuelPool.getInstance().get(tournament).equals(duels));
         Assert.assertTrue(UndrawPool.getInstance().get(tournament).equals(undraws));
-        System.out.println("---------------------------------------------------------");
-        System.out.println(groups);
-        System.out.println(TournamentManagerFactory.getManager(tournament).getGroups());
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getGroups().equals(groups));
     }
 
