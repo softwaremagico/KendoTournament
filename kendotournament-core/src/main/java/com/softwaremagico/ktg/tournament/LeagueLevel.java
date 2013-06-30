@@ -51,7 +51,7 @@ public abstract class LeagueLevel {
 
     protected void fillGroups(Fight fight) {
         while (fight.getGroup() >= getGroups().size()) {
-            addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
+            addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea(), getGroups().size()));
         }
         TGroup group = getGroups().get(fight.getGroup());
         group.addTeam(fight.getTeam1());
@@ -224,7 +224,7 @@ public abstract class LeagueLevel {
      */
     protected void updateGroupsSize() {
         while ((previousLevel != null) && ((previousLevel.getNumberOfTotalTeamsPassNextRound() + 1) / 2 > this.size())) {
-            addGroup(new TreeTournamentGroup(tournament, level, 0));
+            addGroup(new TreeTournamentGroup(tournament, level, 0, getGroups().size()));
         }
 
         // When we remove two groups in one level, we must remove one in the next one.

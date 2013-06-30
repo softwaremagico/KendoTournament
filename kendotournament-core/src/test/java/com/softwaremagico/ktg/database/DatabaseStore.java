@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +26,7 @@ public class DatabaseStore {
         List<Fight> fights = FightPool.getInstance().get(tournament);
         List<Duel> duels = DuelPool.getInstance().get(tournament);
         List<Undraw> undraws = UndrawPool.getInstance().get(tournament);
+        List<TGroup> groups = TournamentManagerFactory.getManager(tournament).getGroups();
 
         //Store data into database.
         DatabaseConnection.getInstance().updateDatabase();
@@ -50,6 +52,10 @@ public class DatabaseStore {
         Assert.assertTrue(FightPool.getInstance().get(tournament).equals(fights));
         Assert.assertTrue(DuelPool.getInstance().get(tournament).equals(duels));
         Assert.assertTrue(UndrawPool.getInstance().get(tournament).equals(undraws));
+        System.out.println("---------------------------------------------------------");
+        System.out.println(groups);
+        System.out.println(TournamentManagerFactory.getManager(tournament).getGroups());
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getGroups().equals(groups));
     }
 
     @Test(dependsOnGroups = {"simpleChampionshipTest"})

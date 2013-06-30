@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Defines a group of teams that fight together in a tournament. A league has
@@ -46,11 +47,13 @@ public abstract class TGroup implements Serializable {
     protected Integer level;
     private Integer fightArea = 0;
     private List<Fight> fightsOfGroup;
+    private Integer groupIndex;
 
-    public TGroup(Tournament tournament, Integer level, Integer fightArea) {
+    public TGroup(Tournament tournament, Integer level, Integer fightArea, Integer groupIndex) {
         this.tournament = tournament;
         this.level = level;
         this.fightArea = fightArea;
+        this.groupIndex = groupIndex;
         if (level == 0) {
             this.numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
         } else {
@@ -249,17 +252,16 @@ public abstract class TGroup implements Serializable {
 
     @Override
     public String toString() {
-        return "(" + tournament + ") Group in level: " + level + ", fight area: " + fightArea + ", teams " + teams + "\n";
+        return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + groupIndex + ", fight area: " + fightArea + ", teams " + teams + "\n";
     }
 
-    /*@Override
+    @Override
     public int hashCode() {
         int hash = 7;
         hash = 41 * hash + Objects.hashCode(this.tournament);
         hash = 41 * hash + Objects.hashCode(this.teams);
         hash = 41 * hash + Objects.hashCode(this.level);
-        hash = 41 * hash + Objects.hashCode(this.fightArea);
-        hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
+        hash = 41 * hash + Objects.hashCode(this.groupIndex);
         return hash;
     }
 
@@ -275,21 +277,15 @@ public abstract class TGroup implements Serializable {
         if (!Objects.equals(this.tournament, other.tournament)) {
             return false;
         }
-        if (!Objects.equals(this.teams, other.teams)) {
+        if (!Objects.equals(this.groupIndex, other.groupIndex)) {
             return false;
         }
-        if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
+        if (!Objects.equals(this.teams, other.teams)) {
             return false;
         }
         if (!Objects.equals(this.level, other.level)) {
             return false;
         }
-        if (!Objects.equals(this.fightArea, other.fightArea)) {
-            return false;
-        }
-        if (!Objects.equals(this.fightsOfGroup, other.fightsOfGroup)) {
-            return false;
-        }
         return true;
-    }*/
+    }
 }

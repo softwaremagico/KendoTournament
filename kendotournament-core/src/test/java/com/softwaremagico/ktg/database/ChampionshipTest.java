@@ -73,7 +73,7 @@ public class ChampionshipTest {
         tournament.setHowManyTeamsOfGroupPassToTheTree(2);
         TGroup group;
         for (int g = 0; g < GROUPS; g++) {
-            group = new TreeTournamentGroup(tournament, 0, 0);
+            group = new TreeTournamentGroup(tournament, 0, 0, g);
             TournamentManagerFactory.getManager(tournament).addGroup(group);
             for (int i = 0; i < TEAMS_PER_GROUP; i++) {
                 group.addTeam(TeamPool.getInstance().get(tournament).get(g * TEAMS_PER_GROUP + i));

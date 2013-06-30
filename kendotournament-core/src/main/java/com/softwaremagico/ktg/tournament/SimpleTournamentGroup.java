@@ -9,7 +9,7 @@ import java.util.List;
 public class SimpleTournamentGroup extends TGroup {
 
     public SimpleTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
-        super(tournament, level, fightArea);
+        super(tournament, level, fightArea, 0);
     }
 
     @Override
