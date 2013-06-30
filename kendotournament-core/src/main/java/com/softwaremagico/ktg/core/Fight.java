@@ -364,13 +364,17 @@ public class Fight implements Serializable, Comparable<Fight> {
             text += d + "\n";
         }
         return text;
-    }    
+    }
 
     @Override
     public int compareTo(Fight o) {
         Integer levelCompare = level.compareTo(o.level);
         if (levelCompare != 0) {
             return levelCompare;
+        }
+        Integer groupCompare = getGroup().compareTo(o.getGroup());
+        if (groupCompare != 0) {
+            return groupCompare;
         }
         return groupIndex.compareTo(o.groupIndex);
     }
