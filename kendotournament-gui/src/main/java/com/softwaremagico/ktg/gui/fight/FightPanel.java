@@ -502,11 +502,13 @@ public class FightPanel extends KFrame {
                             FightPool.getInstance().add(getSelectedTournament(), newFights);
                         } else {
                             //No more fights, show final winner message.
+                            AlertManager.winnerMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!", ranking.getTeamsRanking().get(0).getName());
                         }
                     } else {
                         //If it was the last fight of arena groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                             //wait for other arena fights. Show message.
+                            AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait");
                         } else {
                             //Now it was the last one of a group.
                             if (group.inTheLastFight()) {

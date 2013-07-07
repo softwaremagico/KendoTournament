@@ -61,7 +61,7 @@ public class AlertManager {
         customMessage(className, text + ": " + finalText, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void winnerMessage(String className, String code, String title, String finalText, int option) {
+    public static void winnerMessage(String className, String code, String title, String winnerTeam) {
         String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
@@ -72,7 +72,7 @@ public class AlertManager {
         KendoLog.finest(className, text);
         JFrame frame = null;
         JOptionPane.showMessageDialog(frame,
-                text.trim() + ":\n" + finalText.trim(), title,
+                text.trim() + ":\n" + winnerTeam.trim(), title,
                 JOptionPane.INFORMATION_MESSAGE, winnerIcon);
     }
 
