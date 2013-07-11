@@ -61,6 +61,7 @@ public class ChooseScore extends javax.swing.JFrame {
         CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
         WinLabel.setText(trans.getTranslatedText("WinTag"));
         DrawLabel.setText(trans.getTranslatedText("DrawTag"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
         CloseButton.setText(trans.getTranslatedText("CloseButton"));
         TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
         EuropeanUndrawLabel.setText(trans.getTranslatedText("EuropeanUndrawLabel"));
@@ -372,17 +373,19 @@ public class ChooseScore extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         Tournament tournament = ((Tournament) (TournamentComboBox.getSelectedItem()));
-        if (!tournament.getChoosedScore().equals(getStyle())
-                || tournament.getScoreForDraw() != getDrawPoints() || tournament.getScoreForWin() != getWinnerPoints()) {
-            ((Tournament) (TournamentComboBox.getSelectedItem())).changeScoreOptions(getStyle(), getWinnerPoints(), getDrawPoints());
-            try {
-                if (TournamentPool.getInstance().update((Tournament) ((Tournament) (TournamentComboBox.getSelectedItem())), (Tournament) (TournamentComboBox.getSelectedItem()))) {
-                    AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
-                }
-            } catch (SQLException ex) {
-                AlertManager.showSqlErrorMessage(ex);
+        ((Tournament) (TournamentComboBox.getSelectedItem())).changeScoreOptions(getStyle(), getWinnerPoints(), getDrawPoints());
+        try {
+            if (TournamentPool.getInstance().update(tournament)) {
+                AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "Score");
+                this.dispose();
+            }else{
+                AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
             }
+        } catch (SQLException ex) {
+            AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
+            AlertManager.showSqlErrorMessage(ex);
         }
+
     }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed

@@ -1106,5 +1106,13 @@
 		<ca>Ha ocorregut un error desconegut mentres s'intentava accedir a la base de dades.</ca>
 		<it>Si è generato un errore mentre si stava accedendo nel database.</it>
 	</unknownDatabaseError>
+	<genericError>
+		<en>An unknown error has occurred when trying to do the operation.</en>
+		<es>Ha ocurrido un error desconocido mientras se intentaba hacer la operación.</es>
+		<nl>An unknown error has occurred when trying to do the operation. </nl>
+		<de>An unknown error has occurred when trying to do the operation. </de>
+		<ca>Ha ocorregut un error desconegut mentres s'intentava fer l'operació.</ca>
+		<it>Si è verificato un errore sconosciuto durante il tentativo di fare l'operazione.</it>
+	</genericError>
 </translator>
 

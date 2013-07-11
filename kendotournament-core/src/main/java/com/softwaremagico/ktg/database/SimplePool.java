@@ -96,8 +96,8 @@ public abstract class SimplePool<ElementPool> {
      *
      * @param elementUpdated
      */
-    public void update(ElementPool elementUpdated) throws SQLException {
-        update(elementUpdated, elementUpdated);
+    public boolean update(ElementPool elementUpdated) throws SQLException {
+        return update(elementUpdated, elementUpdated);
     }
 
     /**
