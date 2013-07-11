@@ -1,5 +1,10 @@
 package com.softwaremagico.ktg.database;
 
+import java.sql.SQLException;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
@@ -8,16 +13,10 @@ import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
-import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
-
-import java.sql.SQLException;
-import java.util.List;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 @Test(groups = { "scoreTest" }, dependsOnGroups = { "populateDatabase" })
 public class ScoreTest {
