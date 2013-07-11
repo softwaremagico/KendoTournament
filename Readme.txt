@@ -126,9 +126,12 @@ Jose Vicente Aparicio, for the translation to catalonian.
 Paola Lonetti, for the translation to italian. 
 
 
-Others
+3rd party sources
 -------------------------
 Icons obtained of the Gartoon Gnome Icon Theme (by Zeus Box (Kuswanto)).
+PDFs created by iText pdf library for java (http://itextpdf.com). 
+
+
 
 
 More info
