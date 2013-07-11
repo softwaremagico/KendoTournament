@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.core;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -32,39 +33,39 @@ import java.io.IOException;
 
 public class Configuration {
 
-    /**
-     * **********************************************
-     *
-     * DATABASE
-     *
-     ***********************************************
-     */
-    /**
-     * Stores into a file the language selected.
-     */
-    public static void storeLanguageConfiguration(String language) {
-        Path.getPathConfigInHome();
-        Folder.saveTextInFile(language, Path.getPathLanguageConfigFile());
-    }
+	/**
+	 * **********************************************
+	 * 
+	 * DATABASE
+	 * 
+	 *********************************************** 
+	 */
+	/**
+	 * Stores into a file the language selected.
+	 */
+	public static void storeLanguageConfiguration(String language) {
+		Path.getPathConfigInHome();
+		Folder.saveTextInFile(language, Path.getPathLanguageConfigFile());
+	}
 
-    /**
-     * Restore from a file the language selected.
-     */
-    public static void readLanguageConfiguration() {
-        try {
-            String text = Folder.readFileAsText(Path.getPathLanguageConfigFile(), false);
-            if (text.length() > 1) {
-                KendoTournamentGenerator.getInstance().setLanguage(text);
-            }
-            if (text.startsWith("Error opening the file")) {
-                KendoTournamentGenerator.getInstance().setLanguage("en");
-                File f = new File(Path.getPathLanguageConfigFile());
-                f.createNewFile();
-                storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
-            }
-        } catch (IOException ex) {
-            KendoLog.info(Configuration.class.getName(), "Language file not found");
-        }
+	/**
+	 * Restore from a file the language selected.
+	 */
+	public static void readLanguageConfiguration() {
+		try {
+			String text = Folder.readFileAsText(Path.getPathLanguageConfigFile());
+			if (text.length() > 1) {
+				KendoTournamentGenerator.getInstance().setLanguage(text);
+			}
+			if (text.startsWith("Error opening the file")) {
+				KendoTournamentGenerator.getInstance().setLanguage("en");
+				File f = new File(Path.getPathLanguageConfigFile());
+				f.createNewFile();
+				storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
+			}
+		} catch (IOException ex) {
+			KendoLog.info(Configuration.class.getName(), "Language file not found");
+		}
 
-    }
+	}
 }

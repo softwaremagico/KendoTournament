@@ -44,7 +44,7 @@ public class MyFile {
     /**
      * Devuelve las lineas de un fichero leido anteriormente.
      */
-    public static List<String> inLines(String filename, boolean verbose) throws FileNotFoundException, IOException {
+    public static List<String> inLines(String filename) throws FileNotFoundException, IOException {
         String OS = System.getProperty("os.name");
         if (OS.contains("Windows Vista")) {
             return readTextFileInLines(filename, "ISO8859_1");

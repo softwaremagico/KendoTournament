@@ -86,12 +86,12 @@ public class Folder {
         return files;
     }
 
-    public static List<String> readFileLines(String filename, boolean verbose) throws IOException {
-        return MyFile.inLines(filename, verbose);
+    public static List<String> readFileLines(String filename) throws IOException {
+        return MyFile.inLines(filename);
 
     }
 
-    public static String readFileAsText(String filename, boolean verbose) throws FileNotFoundException, IOException {
+    public static String readFileAsText(String filename) throws FileNotFoundException, IOException {
         return MyFile.inString(filename).trim();
     }
 

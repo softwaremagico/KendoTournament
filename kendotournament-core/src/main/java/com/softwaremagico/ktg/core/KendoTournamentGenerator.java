@@ -197,7 +197,7 @@ public class KendoTournamentGenerator {
         try {
             List<String> tournamentConfigFile;
 
-            tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome(), false);
+            tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome());
 
             for (int i = 0; i < tournamentConfigFile.size(); i++) {
                 if (tournamentConfigFile.get(i).contains(tag)) {
