@@ -45,7 +45,6 @@ public class ConvertDatabase {
 
     private Database fromDatabase;
     private Database toDatabase;
-    private final static Integer MAX_DATA_BY_STEP = 50;
 
     public ConvertDatabase(Database fromDatabase, Database toDatabase) {
         this.fromDatabase = fromDatabase;
