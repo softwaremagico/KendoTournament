@@ -144,7 +144,7 @@ public class DatabaseConnection {
 		try {
 			List<String> connectionData;
 
-			connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome(), false);
+			connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome());
 
 			for (int i = 0; i < connectionData.size(); i++) {
 				if (connectionData.get(i).contains("User:")) {
