@@ -1,0 +1,123 @@
+CREATE TABLE "duel" (
+  "Team1" char(50) NOT NULL,
+  "Team2" char(50) NOT NULL,
+  "Tournament" char(50) NOT NULL,
+  "GroupIndex" integer NOT NULL,
+  "TournamentGroup" integer NOT NULL,
+  "TournamentLevel" integer NOT NULL,  
+  "MemberOrder" integer NOT NULL,
+  "PointPlayer1A" char(1) NOT NULL,
+  "PointPlayer1B" char(1) NOT NULL,
+  "PointPlayer2A" char(1) NOT NULL,
+  "PointPlayer2B" char(1) NOT NULL,
+  "FaultsPlayer1" integer NOT NULL,
+  "FaultsPlayer2" integer NOT NULL,
+  PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),
+  CONSTRAINT "Fight"  FOREIGN KEY ("Team1", "Team2", "Tournament", "GroupIndex", "TournamentLevel", "TournamentGroup") REFERENCES "fight" ("Team1", "Team2", "Tournament", "GroupIndex", "TournamentLevel", "TournamentGroup") ON DELETE NO ACTION ON UPDATE NO ACTION
+)
+
+
+CREATE TABLE "competitor" (
+  "ID" varchar(12) NOT NULL DEFAULT '0000000Z',
+  "Name" char(30) NOT NULL,
+  "Surname" char(50) NOT NULL,
+  "Club" char(25) DEFAULT NULL,
+  "Photo" mediumblob,
+  "PhotoSize" double NOT NULL DEFAULT '0',
+  PRIMARY KEY (ID),
+  CONSTRAINT "ClubBelong" FOREIGN KEY ("Club") REFERENCES "club" ("Name") ON DELETE SET NULL ON UPDATE CASCADE
+)
+
+
+CREATE TABLE "club" (
+  "Name" char(50) NOT NULL,
+  "Country" char(20) NOT NULL,
+  "Representative" char(12) DEFAULT NULL,
+  "Mail" char(50) DEFAULT NULL,
+  "Phone" integer DEFAULT NULL,
+  "City" char(20) DEFAULT NULL,
+  "Web" char(100) DEFAULT NULL,
+  "Address" char(100) DEFAULT NULL,
+  PRIMARY KEY (Name)
+)
+
+
+CREATE TABLE "customlinks" (
+  "Tournament" char(50) NOT NULL,
+  "SourceGroup" integer NOT NULL,
+  "AddressGroup" integer NOT NULL,
+  "WinnerOrder" integer NOT NULL,
+  PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)
+)
+
+
+CREATE TABLE "tournament" (
+  "Name" char(50) NOT NULL,
+  "Banner" mediumblob,
+  "Size" double NOT NULL DEFAULT '0',
+  "FightingAreas" integer NOT NULL DEFAULT '1',
+  "PassingTeams" integer NOT NULL DEFAULT '1',
+  "TeamSize" integer NOT NULL DEFAULT '3',
+  "Type" char(20) NOT NULL DEFAULT 'simple',
+  "ScoreWin" integer NOT NULL DEFAULT '1',
+  "ScoreDraw" integer NOT NULL DEFAULT '0',
+  "ScoreType" char(15) NOT NULL DEFAULT 'Classic',
+  "Diploma" mediumblob,
+  "Accreditation" mediumblob,
+  "DiplomaSize" double NOT NULL DEFAULT '0',
+  "AccreditationSize" double NOT NULL,
+  PRIMARY KEY (Name)
+)
+
+CREATE TABLE "fight" (
+  "Team1" char(50) NOT NULL,
+  "Team2" char(50) NOT NULL,
+  "Tournament" char(50) NOT NULL,
+  "GroupIndex" integer unsigned NOT NULL,
+  "TournamentGroup" integer unsigned NOT NULL,
+  "TournamentLevel" integer unsigned NOT NULL, 
+  "FightArea" integer NOT NULL DEFAULT '1',
+  "Winner" integer NOT NULL DEFAULT '3',
+    PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel, Group),
+  CONSTRAINT "TournamentFight" FOREIGN KEY ("Tournament") REFERENCES "tournament" ("Name") ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+
+CREATE TABLE "role" (
+  "Tournament" char(50) NOT NULL,
+  "Competitor" char(12) NOT NULL DEFAULT '0000000Z',
+  "Role" char(15) NOT NULL,
+  "ImpressCardOrder" integer DEFAULT '0',
+  "ImpressCardPrinted" integer DEFAULT '0',
+  "DiplomaPrinted" integer DEFAULT '0',
+  PRIMARY KEY (Competitor, Tournament),
+  CONSTRAINT "CompetitorRoleC" FOREIGN KEY ("Competitor") REFERENCES "competitor" ("ID") ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT "TournamentRoleC" FOREIGN KEY ("Tournament") REFERENCES "tournament" ("Name") ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+
+CREATE TABLE "team" (
+  "Name" varchar(50) NOT NULL,
+  "Member" varchar(12) DEFAULT NULL,
+  "Position" integer NOT NULL,
+  "LevelTournament" integer NOT NULL DEFAULT '0',
+  "Tournament" char(50) NOT NULL,
+  "LeagueGroup" integer NOT NULL DEFAULT '-1',
+  PRIMARY KEY (Name, Position, LevelTournament, Tournament),
+  CONSTRAINT "Tournament" FOREIGN KEY ("Tournament") REFERENCES "tournament" ("Name") ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+
+CREATE TABLE "undraw" (
+"Tournament" CHAR(50) NOT NULL , 
+"Points" INTEGER NOT NULL  DEFAULT 1, 
+"LevelUndraw" INTEGER NOT NULL , 
+"UndrawGroup" INTEGER NOT NULL , 
+"Team" CHAR(50) NOT NULL , 
+"Player" INTEGER, 
+"TournamentGroup" INTEGER NOT NULL  DEFAULT 0, 
+PRIMARY KEY ("Tournament", "UndrawGroup", "Team", "LevelUndraw"),
+CONSTRAINT "TeamDraw" FOREIGN KEY ("Team") REFERENCES "team" ("Name") ON DELETE CASCADE ON UPDATE CASCADE,
+CONSTRAINT "TournamentUndraw" FOREIGN KEY ("Tournament") REFERENCES "tournament" ("Name") ON DELETE CASCADE ON UPDATE CASCADE
+)
+

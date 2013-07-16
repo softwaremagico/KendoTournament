@@ -144,7 +144,7 @@ CREATE TABLE `fight` (
   `TournamentLevel` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Is a fight of group or tree of the league',
   `FightArea` int(10) unsigned NOT NULL DEFAULT '1',
   `Winner` int(2) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
-  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`, `Group`),
+  PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`, `TournamentGroup`),
   KEY `TournamentFightIndex` (`Tournament`),
   KEY `TCL1FightIndex` (`Team1`,`Level`,`Tournament`),
   KEY `Team2Fight` (`Team2`,`Level`,`Tournament`),
