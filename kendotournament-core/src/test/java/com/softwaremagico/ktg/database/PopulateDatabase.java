@@ -1,12 +1,12 @@
 package com.softwaremagico.ktg.database;
 
-import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
-import java.util.List;
-import org.junit.After;
+
 import org.junit.Assert;
 import org.testng.annotations.Test;
+
+import com.softwaremagico.ktg.core.Club;
+import com.softwaremagico.ktg.core.RegisteredPerson;
 
 /**
  * Test of access to database. Needs a user for connecting.
@@ -22,7 +22,7 @@ public class PopulateDatabase {
     protected static final String[] competitors = {"comp1", "comp2", "comp3", "comp4", "comp5", "comp6"};
 
     public DatabaseEngine getDatabaseTested() {
-        return DatabaseEngine.MySQL;
+        return DatabaseEngine.SQLite;
     }
 
     @Test

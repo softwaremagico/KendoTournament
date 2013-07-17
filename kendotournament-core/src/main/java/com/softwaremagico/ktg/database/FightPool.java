@@ -70,7 +70,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected List<Fight> sort(Tournament tournament) throws SQLException {
-        List<Fight> unsorted = new ArrayList(getMap(tournament).values());
+        List<Fight> unsorted = new ArrayList<>(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }

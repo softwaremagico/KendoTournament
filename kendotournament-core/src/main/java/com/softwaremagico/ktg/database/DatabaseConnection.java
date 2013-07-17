@@ -203,10 +203,10 @@ public class DatabaseConnection {
 		}
 		// Read all network interfaces.
 		try {
-			Enumeration net = NetworkInterface.getNetworkInterfaces();
+			Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
 			while (net.hasMoreElements()) {
 				NetworkInterface ni = (NetworkInterface) net.nextElement();
-				Enumeration addr = ni.getInetAddresses();
+				Enumeration<InetAddress> addr = ni.getInetAddresses();
 				// Get the IP of each interface.
 				while (addr.hasMoreElements()) {
 					java.net.InetAddress inet = (java.net.InetAddress) addr.nextElement();
