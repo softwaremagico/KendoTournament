@@ -128,14 +128,14 @@ public class SQLite extends SQL {
 
     private void createTableClub() throws SQLException {
         String sqlQuery = "CREATE TABLE \"club\" ("
-                + "\"Name\" char(50) NOT NULL,"
-                + "\"Country\" char(20) NOT NULL,"
-                + "\"Representative\" char(12) DEFAULT NULL,"
-                + "\"Mail\" char(50) DEFAULT NULL,"
+                + "\"Name\" varchar(50) NOT NULL,"
+                + "\"Country\" varchar(20) NOT NULL,"
+                + "\"Representative\" varchar(12) DEFAULT NULL,"
+                + "\"Mail\" varchar(50) DEFAULT NULL,"
                 + "\"Phone\" integer DEFAULT NULL,"
-                + "\"City\" char(20) DEFAULT NULL,"
-                + "\"Web\" char(100) DEFAULT NULL,"
-                + "\"Address\" char(100) DEFAULT NULL,"
+                + "\"City\" varchar(20) DEFAULT NULL,"
+                + "\"Web\" varchar(100) DEFAULT NULL,"
+                + "\"Address\" varchar(100) DEFAULT NULL,"
                 + "PRIMARY KEY (Name)"
                 + ")";
         createTable(sqlQuery);
@@ -143,16 +143,16 @@ public class SQLite extends SQL {
 
     private void createTableTournament() throws SQLException {
         String sqlQuery = "CREATE TABLE \"tournament\" ("
-                + "\"Name\" char(50) NOT NULL,"
+                + "\"Name\" varchar(50) NOT NULL,"
                 + "\"Banner\" mediumblob,"
                 + "\"Size\" double NOT NULL DEFAULT '0',"
                 + "\"FightingAreas\" integer NOT NULL DEFAULT '1',"
                 + "\"PassingTeams\" integer NOT NULL DEFAULT '1',"
                 + "\"TeamSize\" integer NOT NULL DEFAULT '3',"
-                + "\"Type\" char(20) NOT NULL DEFAULT 'simple',"
+                + "\"Type\" varchar(20) NOT NULL DEFAULT 'simple',"
                 + "\"ScoreWin\" integer NOT NULL DEFAULT '1',"
                 + "\"ScoreDraw\" integer NOT NULL DEFAULT '0',"
-                + "\"ScoreType\" char(15) NOT NULL DEFAULT 'Classic',"
+                + "\"ScoreType\" varchar(15) NOT NULL DEFAULT 'Classic',"
                 + "\"Diploma\" mediumblob,"
                 + "\"Accreditation\" mediumblob,"
                 + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
@@ -164,10 +164,10 @@ public class SQLite extends SQL {
 
     private void createTableCompetitor() throws SQLException {
         String sqlQuery = "CREATE TABLE \"competitor\" ("
-                + "\"ID\" varchar(12) NOT NULL DEFAULT '0000000Z',"
-                + "\"Name\" char(30) NOT NULL,"
-                + "\"Surname\" char(50) NOT NULL,"
-                + "\"Club\" char(25) DEFAULT NULL,"
+                + "\"ID\" varvarchar(12) NOT NULL DEFAULT '0000000Z',"
+                + "\"Name\" varchar(30) NOT NULL,"
+                + "\"Surname\" varchar(50) NOT NULL,"
+                + "\"Club\" varchar(25) DEFAULT NULL,"
                 + "\"Photo\" mediumblob,"
                 + "\"PhotoSize\" double NOT NULL DEFAULT '0',"
                 + "PRIMARY KEY (ID),"
@@ -178,9 +178,9 @@ public class SQLite extends SQL {
 
     private void createTableRole() throws SQLException {
         String sqlQuery = "CREATE TABLE \"role\" ("
-                + "\"Tournament\" char(50) NOT NULL,"
-                + "\"Competitor\" char(12) NOT NULL DEFAULT '0000000Z',"
-                + "\"Role\" char(15) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"Competitor\" varchar(12) NOT NULL DEFAULT '0000000Z',"
+                + "\"Role\" varchar(15) NOT NULL,"
                 + "\"ImpressCardOrder\" integer DEFAULT '0',"
                 + "\"ImpressCardPrinted\" integer DEFAULT '0',"
                 + "\"DiplomaPrinted\" integer DEFAULT '0',"
@@ -193,11 +193,11 @@ public class SQLite extends SQL {
 
     private void createTableTeam() throws SQLException {
         String sqlQuery = "CREATE TABLE \"team\" ("
-                + "\"Name\" varchar(50) NOT NULL,"
-                + "\"Member\" varchar(12) DEFAULT NULL,"
+                + "\"Name\" varvarchar(50) NOT NULL,"
+                + "\"Member\" varvarchar(12) DEFAULT NULL,"
                 + "\"Position\" integer NOT NULL,"
                 + "\"LevelTournament\" integer NOT NULL DEFAULT '0',"
-                + "\"Tournament\" char(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
                 + "\"LeagueGroup\" integer NOT NULL DEFAULT '-1',"
                 + "PRIMARY KEY (Name, Position, LevelTournament, Tournament),"
                 + "CONSTRAINT \"Tournament\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
@@ -207,9 +207,9 @@ public class SQLite extends SQL {
 
     private void createTableFight() throws SQLException {
         String sqlQuery = "CREATE TABLE \"fight\" ("
-                + "\"Team1\" char(50) NOT NULL,"
-                + "\"Team2\" char(50) NOT NULL,"
-                + "\"Tournament\" char(50) NOT NULL,"
+                + "\"Team1\" varchar(50) NOT NULL,"
+                + "\"Team2\" varchar(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
                 + "\"GroupIndex\" integer unsigned NOT NULL,"
                 + "\"TournamentGroup\" integer unsigned NOT NULL,"
                 + "\"TournamentLevel\" integer unsigned NOT NULL, "
@@ -223,17 +223,17 @@ public class SQLite extends SQL {
 
     private void createTableDuel() throws SQLException {
         String sqlQuery = "CREATE TABLE \"duel\" ("
-                + "\"Team1\" char(50) NOT NULL,"
-                + "\"Team2\" char(50) NOT NULL,"
-                + "\"Tournament\" char(50) NOT NULL,"
+                + "\"Team1\" varchar(50) NOT NULL,"
+                + "\"Team2\" varchar(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
                 + "\"GroupIndex\" integer NOT NULL,"
                 + "\"TournamentGroup\" integer NOT NULL,"
                 + "\"TournamentLevel\" integer NOT NULL,"
                 + "\"MemberOrder\" integer NOT NULL,"
-                + "\"PointPlayer1A\" char(1) NOT NULL,"
-                + "\"PointPlayer1B\" char(1) NOT NULL,"
-                + "\"PointPlayer2A\" char(1) NOT NULL,"
-                + "\"PointPlayer2B\" char(1) NOT NULL,"
+                + "\"PointPlayer1A\" varchar(1) NOT NULL,"
+                + "\"PointPlayer1B\" varchar(1) NOT NULL,"
+                + "\"PointPlayer2A\" varchar(1) NOT NULL,"
+                + "\"PointPlayer2B\" varchar(1) NOT NULL,"
                 + "\"FaultsPlayer1\" integer NOT NULL,"
                 + "\"FaultsPlayer2\" integer NOT NULL,"
                 + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),"
@@ -260,7 +260,7 @@ public class SQLite extends SQL {
 
     private void createTableCustomLink() throws SQLException {
         String sqlQuery = "CREATE TABLE \"customlinks\" ("
-                + "\"Tournament\" char(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
                 + "\"SourceGroup\" integer NOT NULL,"
                 + "\"AddressGroup\" integer NOT NULL,"
                 + "\"WinnerOrder\" integer NOT NULL,"
