@@ -25,29 +25,31 @@ package com.softwaremagico.ktg.language;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Configuration;
-import com.softwaremagico.ktg.core.KendoLog;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.RoleTag;
-import com.softwaremagico.ktg.core.RoleTags;
-import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+
+import com.softwaremagico.ktg.core.Configuration;
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.RoleTags;
+import com.softwaremagico.ktg.files.Path;
 
 public class Translator {
 
@@ -57,7 +59,6 @@ public class Translator {
     private boolean errorShowed = false;
     private boolean retried = false;
     private boolean showedMessage = false;
-    private static HashMap<String, Translator> existingTags = new HashMap<>();
     private static List<Language> languagesList = null;
     private static RoleTags rolesList;
 
