@@ -74,7 +74,11 @@ public class SQLite extends SQL {
             connection = DriverManager.getConnection("jdbc:sqlite:" + Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension);
 
             if (!isDatabaseInstalledCorrectly()) {
-                installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
+                try {
+                    installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
+                } catch (Exception ex) {
+                    KendoLog.severe(this.getClass().getName(), "Database not installed correctly:\n" + ex);
+                }
                 if (retry) {
                     return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
                 } else {
@@ -113,6 +117,158 @@ public class SQLite extends SQL {
      *
      ********************************************************************
      */
+    private void createTable(String query) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            showSqlError(ex);
+        }
+
+    }
+
+    private void createTableClub() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"club\" ("
+                + "\"Name\" varchar(50) NOT NULL,"
+                + "\"Country\" varchar(20) NOT NULL,"
+                + "\"Representative\" varchar(12) DEFAULT NULL,"
+                + "\"Mail\" varchar(50) DEFAULT NULL,"
+                + "\"Phone\" integer DEFAULT NULL,"
+                + "\"City\" varchar(20) DEFAULT NULL,"
+                + "\"Web\" varchar(100) DEFAULT NULL,"
+                + "\"Address\" varchar(100) DEFAULT NULL,"
+                + "PRIMARY KEY (Name)"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableTournament() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"tournament\" ("
+                + "\"Name\" varchar(50) NOT NULL,"
+                + "\"Banner\" mediumblob,"
+                + "\"Size\" double NOT NULL DEFAULT '0',"
+                + "\"FightingAreas\" integer NOT NULL DEFAULT '1',"
+                + "\"PassingTeams\" integer NOT NULL DEFAULT '1',"
+                + "\"TeamSize\" integer NOT NULL DEFAULT '3',"
+                + "\"Type\" varchar(20) NOT NULL DEFAULT 'simple',"
+                + "\"ScoreWin\" integer NOT NULL DEFAULT '1',"
+                + "\"ScoreDraw\" integer NOT NULL DEFAULT '0',"
+                + "\"ScoreType\" varchar(15) NOT NULL DEFAULT 'Classic',"
+                + "\"Diploma\" mediumblob,"
+                + "\"Accreditation\" mediumblob,"
+                + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
+                + "\"AccreditationSize\" double NOT NULL,"
+                + "PRIMARY KEY (Name)"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableCompetitor() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"competitor\" ("
+                + "\"ID\" varvarchar(12) NOT NULL DEFAULT '0000000Z',"
+                + "\"Name\" varchar(30) NOT NULL,"
+                + "\"Surname\" varchar(50) NOT NULL,"
+                + "\"Club\" varchar(25) DEFAULT NULL,"
+                + "\"Photo\" mediumblob,"
+                + "\"PhotoSize\" double NOT NULL DEFAULT '0',"
+                + "PRIMARY KEY (ID),"
+                + "CONSTRAINT \"ClubBelong\" FOREIGN KEY (\"Club\") REFERENCES \"club\" (\"Name\") ON DELETE SET NULL ON UPDATE CASCADE"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableRole() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"role\" ("
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"Competitor\" varchar(12) NOT NULL DEFAULT '0000000Z',"
+                + "\"Role\" varchar(15) NOT NULL,"
+                + "\"ImpressCardOrder\" integer DEFAULT '0',"
+                + "\"ImpressCardPrinted\" integer DEFAULT '0',"
+                + "\"DiplomaPrinted\" integer DEFAULT '0',"
+                + "PRIMARY KEY (Competitor, Tournament),"
+                + "CONSTRAINT \"CompetitorRoleC\" FOREIGN KEY (\"Competitor\") REFERENCES \"competitor\" (\"ID\") ON DELETE CASCADE ON UPDATE CASCADE,"
+                + "CONSTRAINT \"TournamentRoleC\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableTeam() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"team\" ("
+                + "\"Name\" varvarchar(50) NOT NULL,"
+                + "\"Member\" varvarchar(12) DEFAULT NULL,"
+                + "\"Position\" integer NOT NULL,"
+                + "\"LevelTournament\" integer NOT NULL DEFAULT '0',"
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"LeagueGroup\" integer NOT NULL DEFAULT '-1',"
+                + "PRIMARY KEY (Name, Position, LevelTournament, Tournament),"
+                + "CONSTRAINT \"Tournament\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableFight() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"fight\" ("
+                + "\"Team1\" varchar(50) NOT NULL,"
+                + "\"Team2\" varchar(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"GroupIndex\" integer unsigned NOT NULL,"
+                + "\"TournamentGroup\" integer unsigned NOT NULL,"
+                + "\"TournamentLevel\" integer unsigned NOT NULL, "
+                + "\"FightArea\" integer NOT NULL DEFAULT '1',"
+                + "\"Winner\" integer NOT NULL DEFAULT '3',"
+                + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel, Group),"
+                + "CONSTRAINT \"TournamentFight\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableDuel() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"duel\" ("
+                + "\"Team1\" varchar(50) NOT NULL,"
+                + "\"Team2\" varchar(50) NOT NULL,"
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"GroupIndex\" integer NOT NULL,"
+                + "\"TournamentGroup\" integer NOT NULL,"
+                + "\"TournamentLevel\" integer NOT NULL,"
+                + "\"MemberOrder\" integer NOT NULL,"
+                + "\"PointPlayer1A\" varchar(1) NOT NULL,"
+                + "\"PointPlayer1B\" varchar(1) NOT NULL,"
+                + "\"PointPlayer2A\" varchar(1) NOT NULL,"
+                + "\"PointPlayer2B\" varchar(1) NOT NULL,"
+                + "\"FaultsPlayer1\" integer NOT NULL,"
+                + "\"FaultsPlayer2\" integer NOT NULL,"
+                + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),"
+                + "CONSTRAINT \"Fight\"  FOREIGN KEY (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") REFERENCES \"fight\" (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") ON DELETE NO ACTION ON UPDATE NO ACTION"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableUndraw() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"undraw\" ("
+                + "\"Tournament\" CHAR(50) NOT NULL , "
+                + "\"Points\" INTEGER NOT NULL  DEFAULT 1, "
+                + "\"LevelUndraw\" INTEGER NOT NULL , "
+                + "\"UndrawGroup\" INTEGER NOT NULL , "
+                + "\"Team\" CHAR(50) NOT NULL , "
+                + "\"Player\" INTEGER, "
+                + "\"TournamentGroup\" INTEGER NOT NULL  DEFAULT 0, "
+                + "PRIMARY KEY (\"Tournament\", \"UndrawGroup\", \"Team\", \"LevelUndraw\"),"
+                + "CONSTRAINT \"TeamDraw\" FOREIGN KEY (\"Team\") REFERENCES \"team\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE,"
+                + "CONSTRAINT \"TournamentUndraw\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
+                + ")";
+        createTable(sqlQuery);
+    }
+
+    private void createTableCustomLink() throws SQLException {
+        String sqlQuery = "CREATE TABLE \"customlinks\" ("
+                + "\"Tournament\" varchar(50) NOT NULL,"
+                + "\"SourceGroup\" integer NOT NULL,"
+                + "\"AddressGroup\" integer NOT NULL,"
+                + "\"WinnerOrder\" integer NOT NULL,"
+                + "PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)"
+                + ")";
+        createTable(sqlQuery);
+    }
+
     /**
      * If the SQL server has not installed the database, the program install a
      * default one.
@@ -122,45 +278,16 @@ public class SQLite extends SQL {
      * @param tmp_server
      */
     @Override
-    void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) {
-        try {
-            copyFile(new File(Path.returnDatabaseSchemaPath() + File.separator + defaultDatabaseName + "." + defaultSQLiteExtension), new File(Path.getPathDatabaseFolderInHome() + File.separator + tmp_database + "." + defaultSQLiteExtension));
-        } catch (IOException ex) {
-            KendoLog.errorMessage(this.getClass().getName(), ex);
-        }
-    }
-
-    private static void copyFile(File sourceFile, File destFile) throws IOException {
-        if (!destFile.exists()) {
-            destFile.createNewFile();
-            destFile.setExecutable(true);
-            destFile.setWritable(true);
-            destFile.setReadable(true);
-        }
-
-        InputStream source = null;
-        OutputStream destination = null;
-        try {
-            source = new FileInputStream(sourceFile);
-            destination = new FileOutputStream(destFile);
-
-            byte[] buffer = new byte[1024];
-
-            int length;
-            //copy the file content in bytes 
-            while ((length = source.read(buffer)) > 0) {
-                destination.write(buffer, 0, length);
-            }
-        } catch (Exception e) {
-            KendoLog.errorMessage(SQLite.class.getName(), e);
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
-        }
+    public void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database) throws Exception {
+        createTableClub();
+        createTableTournament();
+        createTableCompetitor();
+        createTableRole();
+        createTableTeam();
+        createTableFight();
+        createTableDuel();
+        createTableUndraw();
+        createTableCustomLink();
     }
 
     @Override
