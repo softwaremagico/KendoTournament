@@ -25,7 +25,8 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.RegisteredPersonPool;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 

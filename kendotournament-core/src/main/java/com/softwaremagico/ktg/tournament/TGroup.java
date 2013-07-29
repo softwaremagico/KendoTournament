@@ -28,7 +28,8 @@ import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.persistence.FightPool;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;

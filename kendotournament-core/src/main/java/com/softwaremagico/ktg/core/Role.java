@@ -25,7 +25,8 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.persistence.RolePool;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 

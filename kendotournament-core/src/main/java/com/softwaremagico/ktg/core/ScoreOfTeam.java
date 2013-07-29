@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.core;
 
-import com.softwaremagico.ktg.database.UndrawPool;
+import com.softwaremagico.ktg.persistence.UndrawPool;
+
 import java.sql.SQLException;
 import java.util.List;
 

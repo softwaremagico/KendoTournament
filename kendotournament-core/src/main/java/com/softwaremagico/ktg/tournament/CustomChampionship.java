@@ -2,7 +2,8 @@ package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.CustomLinkPool;
+import com.softwaremagico.ktg.persistence.CustomLinkPool;
+
 import java.sql.SQLException;
 import java.util.List;
 

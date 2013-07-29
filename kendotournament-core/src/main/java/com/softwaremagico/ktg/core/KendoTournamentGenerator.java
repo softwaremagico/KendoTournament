@@ -23,12 +23,13 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.RolePool;
-import com.softwaremagico.ktg.database.TournamentPool;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.RolePool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
