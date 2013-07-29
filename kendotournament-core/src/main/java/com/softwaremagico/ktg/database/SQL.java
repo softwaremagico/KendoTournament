@@ -215,7 +215,6 @@ public abstract class SQL extends Database {
 	protected boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange)
 			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
-		List<RegisteredPerson> oldPeople = new ArrayList<>(peopleExchange.values());
 		List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
 		for (RegisteredPerson newPerson : newPeople) {
 			RegisteredPerson oldPerson = peopleExchange.get(newPerson);
@@ -388,7 +387,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
-		List<Role> oldRoles = new ArrayList<>(rolesExchange.values());
 		List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
 		String query = "";
 		for (Role role : newRoles) {
@@ -511,7 +509,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateClubs");
-		List<Club> oldClubs = new ArrayList<>(clubsExchange.values());
 		List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
 		String query = "";
 		for (Club newClub : newClubs) {
@@ -663,7 +660,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateTournaments");
-		List<Tournament> oldTournaments = new ArrayList<>(tournamentsExchange.values());
 		List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
 		for (Tournament tournament : newTournaments) {
 			Tournament oldTournament = tournamentsExchange.get(tournament);
@@ -932,7 +928,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateFights");
-		List<Fight> oldFights = new ArrayList<>(fightsExchange.values());
 		List<Fight> newFights = new ArrayList<>(fightsExchange.keySet());
 		String query = "";
 		for (Fight newFight : newFights) {
@@ -1107,7 +1102,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateDuels");
-		List<Duel> oldDuels = new ArrayList<>(duelsExchange.values());
 		List<Duel> newDuels = new ArrayList<>(duelsExchange.keySet());
 		String query = "";
 		for (Duel newDuel : newDuels) {
@@ -1232,7 +1226,6 @@ public abstract class SQL extends Database {
 	@Override
 	protected boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateUndraws");
-		List<Undraw> oldUndraws = new ArrayList<>(undrawsExchange.values());
 		List<Undraw> newUndraws = new ArrayList<>(undrawsExchange.keySet());
 		String query = "";
 		for (Undraw newUndraw : newUndraws) {
