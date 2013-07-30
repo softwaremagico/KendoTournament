@@ -1,11 +1,5 @@
 package com.softwaremagico.ktg.persistence;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
@@ -13,16 +7,13 @@ import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
-import com.softwaremagico.ktg.persistence.DuelPool;
-import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-import com.softwaremagico.ktg.persistence.RolePool;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.sql.SQLException;
+import java.util.List;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 @Test(groups = {"simpleChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
 public class SimpleChampionshipTest {

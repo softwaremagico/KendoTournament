@@ -1192,7 +1192,6 @@ public abstract class SQL extends Database {
                         + undraw.getLevel()
                         + ", "
                         + undraw.getPoints() + "); ";
-                System.out.println(query);
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }

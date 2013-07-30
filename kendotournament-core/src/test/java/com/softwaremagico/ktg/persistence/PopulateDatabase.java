@@ -1,16 +1,10 @@
 package com.softwaremagico.ktg.persistence;
 
-import java.sql.SQLException;
-
-import org.junit.Assert;
-import org.testng.annotations.Test;
-
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.persistence.ClubPool;
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
-import com.softwaremagico.ktg.persistence.DatabaseEngine;
-import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
+import java.sql.SQLException;
+import org.junit.Assert;
+import org.testng.annotations.Test;
 
 /**
  * Test of access to database. Needs a user for connecting.
@@ -26,7 +20,7 @@ public class PopulateDatabase {
     protected static final String[] competitors = {"comp1", "comp2", "comp3", "comp4", "comp5", "comp6"};
 
     public DatabaseEngine getDatabaseTested() {
-        return DatabaseEngine.SQLite;
+        return DatabaseEngine.MySQL;
     }
 
     @Test

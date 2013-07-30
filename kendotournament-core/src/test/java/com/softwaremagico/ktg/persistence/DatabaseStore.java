@@ -1,12 +1,5 @@
 package com.softwaremagico.ktg.persistence;
 
-import java.sql.SQLException;
-import java.util.List;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.testng.annotations.Test;
-
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
@@ -15,17 +8,13 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
-import com.softwaremagico.ktg.persistence.ClubPool;
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
-import com.softwaremagico.ktg.persistence.DuelPool;
-import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-import com.softwaremagico.ktg.persistence.RolePool;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import java.sql.SQLException;
+import java.util.List;
+import org.junit.After;
+import org.junit.Assert;
+import org.testng.annotations.Test;
 
 @Test(groups = {"databaseStore"})
 public class DatabaseStore {
