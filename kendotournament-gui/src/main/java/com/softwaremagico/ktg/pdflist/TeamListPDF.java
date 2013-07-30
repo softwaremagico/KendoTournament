@@ -31,7 +31,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import java.sql.SQLException;
 import java.util.ArrayList;

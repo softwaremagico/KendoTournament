@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Rectangle;

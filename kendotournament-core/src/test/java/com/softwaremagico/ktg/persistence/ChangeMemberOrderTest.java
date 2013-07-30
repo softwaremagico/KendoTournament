@@ -1,10 +1,5 @@
 package com.softwaremagico.ktg.persistence;
 
-import java.sql.SQLException;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
@@ -17,6 +12,9 @@ import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import java.sql.SQLException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 @Test(groups = {"changeMemberOrderTest"}, dependsOnGroups = {"populateDatabase"})
 public class ChangeMemberOrderTest {

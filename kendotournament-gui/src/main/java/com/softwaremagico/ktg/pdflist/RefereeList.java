@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.persistence.RolePool;
 
 /**
  *

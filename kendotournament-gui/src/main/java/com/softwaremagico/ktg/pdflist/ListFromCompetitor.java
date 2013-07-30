@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.pdflist;
  */
 
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.database.RegisteredPersonPool;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;

@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.database.DatabaseConnection;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;

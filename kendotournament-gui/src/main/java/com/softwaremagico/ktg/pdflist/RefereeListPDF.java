@@ -32,7 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import java.sql.SQLException;
 import java.util.ArrayList;

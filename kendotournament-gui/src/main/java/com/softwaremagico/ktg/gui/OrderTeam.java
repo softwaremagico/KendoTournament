@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.TeamPool;
+import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

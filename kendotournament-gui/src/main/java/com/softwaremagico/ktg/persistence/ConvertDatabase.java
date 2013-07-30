@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.database;
+package com.softwaremagico.ktg.persistence;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -38,6 +38,7 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TimerPanel;
+import com.softwaremagico.ktg.persistence.Database;
 import java.sql.SQLException;
 import java.util.List;
 

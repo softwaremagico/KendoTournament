@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.Club;
-import com.softwaremagico.ktg.database.ClubPool;
+import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;

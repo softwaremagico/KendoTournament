@@ -31,7 +31,7 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.RolePool;
+import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.database.FightPool;
+import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import java.awt.Dimension;

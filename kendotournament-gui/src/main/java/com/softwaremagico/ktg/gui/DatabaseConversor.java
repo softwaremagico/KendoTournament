@@ -26,12 +26,12 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-import com.softwaremagico.ktg.database.ConvertDatabase;
-import com.softwaremagico.ktg.database.Database;
-import com.softwaremagico.ktg.database.DatabaseConnection;
-import com.softwaremagico.ktg.database.DatabaseEngine;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.ConvertDatabase;
+import com.softwaremagico.ktg.persistence.Database;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.DatabaseEngine;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 

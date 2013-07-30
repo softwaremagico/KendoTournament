@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.database.AutoSave;
+import com.softwaremagico.ktg.persistence.AutoSave;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;

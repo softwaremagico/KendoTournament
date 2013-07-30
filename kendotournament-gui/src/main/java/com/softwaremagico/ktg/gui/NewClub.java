@@ -27,8 +27,8 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.database.ClubPool;
-import com.softwaremagico.ktg.database.RegisteredPersonPool;
+import com.softwaremagico.ktg.persistence.ClubPool;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;

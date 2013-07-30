@@ -28,10 +28,6 @@ import com.softwaremagico.ktg.core.Tournament;
  * #L%
  */
 
-/**
- *
- * @author Jorge
- */
 public class TeamRanking {
 
     public String name;
