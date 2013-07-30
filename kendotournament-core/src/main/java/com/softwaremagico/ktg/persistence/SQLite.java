@@ -238,11 +238,10 @@ public class SQLite extends SQL {
 				+ "\"Tournament\" CHAR(50) NOT NULL , "
 				+ "\"Points\" INTEGER NOT NULL  DEFAULT 1, "
 				+ "\"TournamentLevel\" INTEGER NOT NULL , "
-				+ "\"UndrawGroup\" INTEGER NOT NULL , "
 				+ "\"Team\" CHAR(50) NOT NULL , "
 				+ "\"Player\" INTEGER, "
 				+ "\"TournamentGroup\" INTEGER NOT NULL  DEFAULT 0, "
-				+ "PRIMARY KEY (\"Tournament\", \"UndrawGroup\", \"Team\", \"LevelUndraw\"),"
+				+ "PRIMARY KEY (\"Tournament\", \"TournamentLevel\", \"Team\", \"TournamentGroup\"),"
 				+ "CONSTRAINT \"TeamDraw\" FOREIGN KEY (\"Team\") REFERENCES \"team\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE,"
 				+ "CONSTRAINT \"TournamentUndraw\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
 				+ ")";
