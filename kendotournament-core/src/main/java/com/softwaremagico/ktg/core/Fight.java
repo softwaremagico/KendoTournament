@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.persistence.DuelPool;
-
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;

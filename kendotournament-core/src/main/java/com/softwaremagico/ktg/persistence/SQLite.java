@@ -126,7 +126,6 @@ public class SQLite extends SQL {
 		try (Statement st = connection.createStatement()) {
 			st.executeUpdate(query);
 		} catch (SQLException ex) {
-			ex.printStackTrace();
 			showSqlError(ex);
 		}
 
@@ -143,10 +142,10 @@ public class SQLite extends SQL {
 
 	private void createTableTournament() throws SQLException {
 		String sqlQuery = "CREATE TABLE \"tournament\" (" + "\"Name\" varchar(50) NOT NULL," + "\"Banner\" mediumblob,"
-				+ "\"Size\" double NOT NULL DEFAULT '0'," + "\"FightingAreas\" integer NOT NULL DEFAULT '1',"
-				+ "\"PassingTeams\" integer NOT NULL DEFAULT '1'," + "\"TeamSize\" integer NOT NULL DEFAULT '3',"
+				+ "\"Size\" double NOT NULL DEFAULT 0," + "\"FightingAreas\" integer NOT NULL DEFAULT '1',"
+				+ "\"PassingTeams\" integer NOT NULL DEFAULT 1," + "\"TeamSize\" integer NOT NULL DEFAULT '3',"
 				+ "\"Type\" varchar(20) NOT NULL DEFAULT 'simple'," + "\"ScoreWin\" integer NOT NULL DEFAULT '1',"
-				+ "\"ScoreDraw\" integer NOT NULL DEFAULT '0',"
+				+ "\"ScoreDraw\" integer NOT NULL DEFAULT 0,"
 				+ "\"ScoreType\" varchar(15) NOT NULL DEFAULT 'Classic'," + "\"Diploma\" mediumblob,"
 				+ "\"Accreditation\" mediumblob," + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
 				+ "\"AccreditationSize\" double NOT NULL," + "PRIMARY KEY (Name)" + ")";
@@ -160,7 +159,7 @@ public class SQLite extends SQL {
 				+ "\"Surname\" varchar(50) NOT NULL,"
 				+ "\"Club\" varchar(25) DEFAULT NULL,"
 				+ "\"Photo\" mediumblob,"
-				+ "\"PhotoSize\" double NOT NULL DEFAULT '0',"
+				+ "\"PhotoSize\" double NOT NULL DEFAULT 0,"
 				+ "PRIMARY KEY (ID),"
 				+ "CONSTRAINT \"ClubBelong\" FOREIGN KEY (\"Club\") REFERENCES \"club\" (\"Name\") ON DELETE SET NULL ON UPDATE CASCADE"
 				+ ")";
@@ -172,9 +171,9 @@ public class SQLite extends SQL {
 				+ "\"Tournament\" varchar(50) NOT NULL,"
 				+ "\"Competitor\" varchar(12) NOT NULL DEFAULT '0000000Z',"
 				+ "\"Role\" varchar(15) NOT NULL,"
-				+ "\"ImpressCardOrder\" integer DEFAULT '0',"
-				+ "\"ImpressCardPrinted\" integer DEFAULT '0',"
-				+ "\"DiplomaPrinted\" integer DEFAULT '0',"
+				+ "\"ImpressCardOrder\" integer DEFAULT 0,"
+				+ "\"ImpressCardPrinted\" integer DEFAULT 0,"
+				+ "\"DiplomaPrinted\" integer DEFAULT 0,"
 				+ "PRIMARY KEY (Competitor, Tournament),"
 				+ "CONSTRAINT \"CompetitorRoleC\" FOREIGN KEY (\"Competitor\") REFERENCES \"competitor\" (\"ID\") ON DELETE CASCADE ON UPDATE CASCADE,"
 				+ "CONSTRAINT \"TournamentRoleC\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
@@ -187,9 +186,9 @@ public class SQLite extends SQL {
 				+ "\"Name\" varchar(50) NOT NULL,"
 				+ "\"Member\" varchar(12) DEFAULT NULL,"
 				+ "\"Position\" integer NOT NULL,"
-				+ "\"LevelTournament\" integer NOT NULL DEFAULT '0',"
+				+ "\"LevelTournament\" integer NOT NULL DEFAULT 0,"
 				+ "\"Tournament\" varchar(50) NOT NULL,"
-				+ "\"LeagueGroup\" integer NOT NULL DEFAULT '-1',"
+				+ "\"LeagueGroup\" integer NOT NULL DEFAULT -1,"
 				+ "PRIMARY KEY (Name, Position, LevelTournament, Tournament),"
 				+ "CONSTRAINT \"Tournament\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
 				+ ")";
@@ -203,9 +202,9 @@ public class SQLite extends SQL {
 				+ "\"Tournament\" varchar(50) NOT NULL,"
 				+ "\"GroupIndex\" integer unsigned NOT NULL,"
 				+ "\"TournamentGroup\" integer unsigned NOT NULL,"
-				+ "\"TournamentLevel\" integer unsigned NOT NULL, "
-				+ "\"FightArea\" integer NOT NULL DEFAULT '1',"
-				+ "\"Winner\" integer NOT NULL DEFAULT '3',"
+				+ "\"TournamentLevel\" integer unsigned NOT NULL DEFAULT 0, "
+				+ "\"FightArea\" integer NOT NULL DEFAULT 1,"
+				+ "\"Winner\" integer NOT NULL DEFAULT 3,"
 				+ "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel, TournamentGroup),"
 				+ "CONSTRAINT \"TournamentFight\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
 				+ ")";

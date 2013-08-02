@@ -1028,6 +1028,7 @@ public abstract class SQL extends Database {
             showSqlError(ex);
         } catch (NullPointerException npe) {
             KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            npe.printStackTrace();
             throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getDuels");

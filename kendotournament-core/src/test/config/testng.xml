@@ -5,13 +5,13 @@
             <run>
                 <include name="populateDatabase" />
                 <include name="championshipTest" />
-                <include name="customChampionshipTest" />
-                <include name="simpleChampionshipTest" />  
-                <include name="evenGroupsChampionshipTest" />    
-                <include name="championshipTreeTest" />                
-                <include name="championshipFightAreaTest" />                                          
+                <exclude name="customChampionshipTest" />
+                <exclude name="simpleChampionshipTest" />  
+                <exclude name="evenGroupsChampionshipTest" />    
+                <exclude name="championshipTreeTest" />                
+                <exclude name="championshipFightAreaTest" />                                          
                 <include name="databaseStore" />
-                <include name="scoreTest" />
+                <exclude name="scoreTest" />
                 <include name="changeMemberOrderTest" />  
             </run>
         </groups>
