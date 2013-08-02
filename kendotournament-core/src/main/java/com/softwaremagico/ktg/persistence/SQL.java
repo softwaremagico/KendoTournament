@@ -860,10 +860,12 @@ public abstract class SQL extends Database {
                 f.setWinner(rs.getInt("Winner"));
                 // Set duels of fight:
                 results.add(f);
+                System.out.println(f);
             }
         } catch (SQLException ex) {
             showSqlError(ex);
         } catch (NullPointerException npe) {
+            npe.printStackTrace();
             KendoLog.severe(this.getClass().getName(), "Database connection fail");
             throw new SQLException("Database connection fail.");
         }
@@ -1028,7 +1030,6 @@ public abstract class SQL extends Database {
             showSqlError(ex);
         } catch (NullPointerException npe) {
             KendoLog.severe(this.getClass().getName(), "Database connection fail");
-            npe.printStackTrace();
             throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "getDuels");
