@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 public class SQLite extends SQL {
 
-    private static final Integer MAX_ELEMENTS_IN_QUERY = 10;
+    private static final Integer MAX_ELEMENTS_IN_QUERY = 1;
     public static final String defaultDatabaseName = "kendotournament_empty";
     public static final String defaultSQLiteExtension = "sqlite";
 
