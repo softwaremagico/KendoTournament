@@ -38,6 +38,7 @@ import java.sql.SQLException;
 
 public class MySQL extends SQL {
 
+    private static final Integer MAX_ELEMENTS_IN_QUERY = 10;
     public int port = 3306;
 
     public MySQL() {
@@ -142,6 +143,11 @@ public class MySQL extends SQL {
         return false;
     }
 
+    @Override
+    protected int getMaxElementsInQuery() {
+        return MAX_ELEMENTS_IN_QUERY;
+    }
+
     /**
      * *******************************************************************
      *
@@ -191,7 +197,7 @@ public class MySQL extends SQL {
             }
         } catch (SQLException | NullPointerException ex) {
             return false;
-        } 
+        }
         if (count > 6) {
             return true;
         }

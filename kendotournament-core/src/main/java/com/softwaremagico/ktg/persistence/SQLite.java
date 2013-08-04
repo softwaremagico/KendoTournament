@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 
 public class SQLite extends SQL {
 
+    private static final Integer MAX_ELEMENTS_IN_QUERY = 10;
     public static final String defaultDatabaseName = "kendotournament_empty";
     public static final String defaultSQLiteExtension = "sqlite";
 
@@ -111,6 +112,11 @@ public class SQLite extends SQL {
     @Override
     public boolean onlyLocalConnection() {
         return true;
+    }
+
+    @Override
+    protected int getMaxElementsInQuery() {
+        return MAX_ELEMENTS_IN_QUERY;
     }
 
     /**

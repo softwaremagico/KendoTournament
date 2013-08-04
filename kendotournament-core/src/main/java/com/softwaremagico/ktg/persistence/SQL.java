@@ -54,7 +54,6 @@ import java.util.logging.Logger;
 
 public abstract class SQL extends Database {
 
-    private static final Integer MAX_TRANSACTIONS = 5;
     protected static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
     @Override
@@ -120,6 +119,8 @@ public abstract class SQL extends Database {
         }
         return value.toString();
     }
+    
+    protected abstract int getMaxElementsInQuery();
 
     /**
      * *******************************************************************
@@ -204,7 +205,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < people.size(); i++) {
             query += "DELETE FROM competitor WHERE ID='" + people.get(i).getId() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == people.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == people.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -335,7 +336,7 @@ public abstract class SQL extends Database {
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
-            if (i % MAX_TRANSACTIONS == 0 || i == roles.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == roles.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -383,7 +384,7 @@ public abstract class SQL extends Database {
         for (int i = 0; i < roles.size(); i++) {
             query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='"
                     + roles.get(i).getCompetitor() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == roles.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == roles.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -410,7 +411,7 @@ public abstract class SQL extends Database {
                     + newRoles.get(i).getAccreditationOrder() + ", ImpressCardPrinted=" + newRoles.get(i).isAccreditationPrinted()
                     + ", DiplomaPrinted=" + newRoles.get(i).isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName()
                     + "' AND Competitor='" + newRoles.get(i).getCompetitor().getId() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == newRoles.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == newRoles.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -448,7 +449,7 @@ public abstract class SQL extends Database {
                     + clubs.get(i).getName() + "','" + clubs.get(i).getCountry() + "','" + clubs.get(i).getCity() + "','" + clubs.get(i).getAddress()
                     + "','" + clubs.get(i).getWeb() + "','" + clubs.get(i).getMail() + "'," + clubs.get(i).getPhone() + ",'"
                     + clubs.get(i).getRepresentativeID() + "'); ";
-            if (i % MAX_TRANSACTIONS == 0 || i == clubs.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == clubs.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -514,7 +515,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < clubs.size(); i++) {
             query += "DELETE FROM club WHERE Name='" + clubs.get(i).getName() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == clubs.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == clubs.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -542,7 +543,7 @@ public abstract class SQL extends Database {
                     + newClubs.get(i).getCity() + "', Address='" + newClubs.get(i).getAddress() + "', Web='" + newClubs.get(i).getWeb()
                     + "', Mail='" + newClubs.get(i).getMail() + "', Phone='" + newClubs.get(i).getPhone() + "', Representative='"
                     + newClubs.get(i).getRepresentativeID() + "' WHERE Name='" + oldClub.getName() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == newClubs.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == newClubs.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -670,7 +671,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < tournaments.size(); i++) {
             query += "DELETE FROM tournament WHERE Name='" + tournaments.get(i).getName() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == tournaments.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == tournaments.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -833,7 +834,7 @@ public abstract class SQL extends Database {
         for (int i = 0; i < teams.size(); i++) {
             query += "DELETE FROM team WHERE Name='" + teams.get(i).getName() + "' AND Tournament='"
                     + teams.get(i).getTournament().getName() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == teams.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == teams.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -923,7 +924,7 @@ public abstract class SQL extends Database {
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
-            if (i % MAX_TRANSACTIONS == 0 || i == fights.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == fights.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -946,7 +947,7 @@ public abstract class SQL extends Database {
                     + "' AND TournamentLevel=" + fights.get(i).getLevel() + " AND Team1='" + fights.get(i).getTeam1().getName()
                     + "' AND Team2='" + fights.get(i).getTeam2().getName() + "' AND TournamentGroup=" + fights.get(i).getGroup()
                     + " AND GroupIndex=" + fights.get(i).getGroupIndex() + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == fights.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == fights.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -978,7 +979,7 @@ public abstract class SQL extends Database {
                     + oldFight.getTournament().getName() + "' AND TournamentLevel=" + oldFight.getLevel()
                     + " AND TournamentGroup=" + oldFight.getGroup() + " AND GroupIndex=" + oldFight.getGroupIndex()
                     + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == newFights.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == newFights.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -1104,7 +1105,7 @@ public abstract class SQL extends Database {
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
-            if (i % MAX_TRANSACTIONS == 0 || i == duels.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -1128,7 +1129,7 @@ public abstract class SQL extends Database {
                     + duels.get(i).getFight().getTeam1().getName() + "' AND Team2='" + duels.get(i).getFight().getTeam2().getName()
                     + "' AND TournamentGroup=" + duels.get(i).getFight().getGroup() + " AND GroupIndex="
                     + duels.get(i).getFight().getGroupIndex() + " AND MemberOrder=" + duels.get(i).getOrder() + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == duels.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -1166,7 +1167,7 @@ public abstract class SQL extends Database {
                     + oldDuel.getFight().getLevel() + " AND TournamentGroup=" + oldDuel.getFight().getGroup()
                     + " AND GroupIndex=" + oldDuel.getFight().getGroupIndex() + " AND MemberOrder="
                     + oldDuel.getOrder() + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == newDuels.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == newDuels.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -1238,7 +1239,7 @@ public abstract class SQL extends Database {
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
-            if (i % MAX_TRANSACTIONS == 0 || i == undraws.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == undraws.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -1260,7 +1261,7 @@ public abstract class SQL extends Database {
             query += "DELETE FROM undraw WHERE Tournament='" + undraws.get(i).getTournament().getName()
                     + "' AND TournamentLevel=" + undraws.get(i).getLevel() + " AND Team='" + undraws.get(i).getTeam().getName()
                     + "' AND TournamentGroup=" + undraws.get(i).getGroupIndex() + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == undraws.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == undraws.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -1290,7 +1291,7 @@ public abstract class SQL extends Database {
                     + ", Points=" + newUndraws.get(i).getPoints() + " WHERE Team='" + oldUndraw.getTeam().getName()
                     + "' AND Tournament='" + oldUndraw.getTournament().getName() + "' AND TournamentLevel="
                     + oldUndraw.getLevel() + " AND TournamentGroup=" + oldUndraw.getGroupIndex() + "; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == newUndraws.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == newUndraws.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
@@ -1357,7 +1358,7 @@ public abstract class SQL extends Database {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
 
-            if (i % MAX_TRANSACTIONS == 0 || i == customWinnerLinks.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == customWinnerLinks.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
                 } catch (SQLException ex) {
@@ -1377,7 +1378,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < tournaments.size(); i++) {
             query += "DELETE FROM customlinks WHERE Tournament='" + tournaments.get(i).getName() + "'; ";
-            if (i % MAX_TRANSACTIONS == 0 || i == tournaments.size() - 1) {
+            if (i % getMaxElementsInQuery() == 0 || i == tournaments.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
                 } catch (SQLException ex) {
