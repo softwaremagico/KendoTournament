@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `kendotournament` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `kendotournament_test` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `kendotournament`;
 -- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
 --
@@ -39,8 +39,7 @@ CREATE TABLE `duel` (
   `FaultsPlayer1` int(1) unsigned NOT NULL,
   `FaultsPlayer2` int(1) unsigned NOT NULL,
   PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`,`MemberOrder`, `TournamentGroup`),
-  KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),
-  KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),
+  KEY `fight_FK_2` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),
   CONSTRAINT `fight_FK` FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -146,8 +145,8 @@ CREATE TABLE `fight` (
   `Winner` int(2) unsigned NOT NULL DEFAULT '3' COMMENT '-1-> Winner left team, 1-> Winner right team, 0-> Draw Game, 3-> Not finished',
   PRIMARY KEY (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`, `TournamentGroup`),
   KEY `TournamentFightIndex` (`Tournament`),
-  KEY `TCL1FightIndex` (`Team1`,`Level`,`Tournament`),
-  KEY `Team2Fight` (`Team2`,`Level`,`Tournament`),
+  KEY `TCL1FightIndex` (`Team1`,`TournamentLevel`,`Tournament`),
+  KEY `Team2Fight` (`Team2`,`TournamentLevel`,`Tournament`),
   CONSTRAINT `TournamentFight` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -130,7 +130,7 @@ public class Role implements Serializable, Comparable<Role> {
 
     @Override
     public String toString() {
-        return RolePool.getInstance().getRoleTags().getTranslation(getDatabaseTag());
+        return competitor.getSurnameName() + "(" + RolePool.getInstance().getRoleTags().getTranslation(getDatabaseTag()) + ")";
     }
 
     @Override

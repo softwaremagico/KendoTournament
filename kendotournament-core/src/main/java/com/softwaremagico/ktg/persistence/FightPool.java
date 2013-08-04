@@ -162,7 +162,6 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer group, Integer index) throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
-            System.out.println(fight);
             if (fight.getGroup() == group && fight.getGroupIndex() == index && fight.getTournament().equals(tournament) && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2)
                     && fight.getLevel() == level) {
                 return fight;
