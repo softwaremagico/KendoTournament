@@ -117,8 +117,7 @@ public abstract class Database {
      ********************************************************************
      */
     /**
-     * *
-     *
+     * Add people to the database.
      */
     protected abstract boolean addRegisteredPeople(List<RegisteredPerson> people) throws SQLException;
 

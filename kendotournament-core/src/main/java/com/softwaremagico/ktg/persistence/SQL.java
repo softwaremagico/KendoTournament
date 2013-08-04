@@ -138,7 +138,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) throws SQLException {
+    protected synchronized boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
             try (PreparedStatement stmt = connection
@@ -174,7 +174,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<RegisteredPerson> getRegisteredPeople() throws SQLException {
+    protected synchronized List<RegisteredPerson> getRegisteredPeople() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
         List<RegisteredPerson> results = new ArrayList<>();
         try (Statement s = connection.createStatement();
@@ -199,7 +199,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeRegisteredPeople(List<RegisteredPerson> people) throws SQLException {
+    protected synchronized boolean removeRegisteredPeople(List<RegisteredPerson> people) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeRegisteredPeople");
         String query = "";
         for (int i = 0; i < people.size(); i++) {
@@ -222,7 +222,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange)
+    protected synchronized boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange)
             throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateRoles");
         List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
@@ -249,7 +249,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected Photo getPhoto(String competitorId) throws SQLException {
+    protected synchronized Photo getPhoto(String competitorId) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getPhoto");
         String query = "SELECT Photo,PhotoSize FROM competitor WHERE ID='" + competitorId + "'";
         Photo photo = new Photo(competitorId);
@@ -275,7 +275,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean setPhotos(List<Photo> photos) throws SQLException {
+    protected synchronized boolean setPhotos(List<Photo> photos) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "setPhoto");
         for (Photo photo : photos) {
             try (PreparedStatement stmt = connection
@@ -313,7 +313,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addRoles(List<Role> roles) throws SQLException {
+    protected synchronized boolean addRoles(List<Role> roles) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addRoles");
         String query = "";
         // Insert team.
@@ -350,7 +350,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<Role> getRoles(Tournament tournament) throws SQLException {
+    protected synchronized List<Role> getRoles(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getRoles");
         String query = "SELECT * FROM role WHERE Tournament='" + tournament.getName() + "' ORDER BY Role; ";
         KendoLog.finer(SQL.class.getName(), query);
@@ -377,7 +377,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeRoles(Tournament tournament, List<Role> roles) throws SQLException {
+    protected synchronized boolean removeRoles(Tournament tournament, List<Role> roles) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeRoles");
         String query = "";
         for (int i = 0; i < roles.size(); i++) {
@@ -401,7 +401,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) throws SQLException {
+    protected synchronized boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateRoles");
         List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
         String query = "";
@@ -440,7 +440,7 @@ public abstract class SQL extends Database {
      * @param club
      */
     @Override
-    protected boolean addClubs(List<Club> clubs) throws SQLException {
+    protected synchronized boolean addClubs(List<Club> clubs) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "storeClub");
         String query = "";
         for (int i = 0; i < clubs.size(); i++) {
@@ -466,7 +466,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<Club> getClubs() throws SQLException {
+    protected synchronized List<Club> getClubs() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getClubs");
         List<Club> results = new ArrayList<>();
         try (Statement s = connection.createStatement();
@@ -509,7 +509,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeClubs(List<Club> clubs) throws SQLException {
+    protected synchronized boolean removeClubs(List<Club> clubs) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "deleteClubs");
         String query = "";
         for (int i = 0; i < clubs.size(); i++) {
@@ -532,7 +532,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException {
+    protected synchronized boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateClubs");
         List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
         String query = "";
@@ -572,7 +572,7 @@ public abstract class SQL extends Database {
      * @param club
      */
     @Override
-    protected boolean addTournaments(List<Tournament> tournaments) throws SQLException {
+    protected synchronized boolean addTournaments(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addTournaments");
         for (Tournament tournament : tournaments) {
             try (PreparedStatement stmt = connection
@@ -623,7 +623,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected List<Tournament> getTournaments() throws SQLException {
+    protected synchronized List<Tournament> getTournaments() throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getTournaments");
         List<Tournament> results = new ArrayList<>();
         KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
@@ -665,7 +665,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeTournaments(List<Tournament> tournaments) throws SQLException {
+    protected synchronized boolean removeTournaments(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeTournaments");
         String query = "";
         for (int i = 0; i < tournaments.size(); i++) {
@@ -688,7 +688,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) throws SQLException {
+    protected synchronized boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateTournaments");
         List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
         for (Tournament tournament : newTournaments) {
@@ -752,7 +752,7 @@ public abstract class SQL extends Database {
      *
      */
     @Override
-    protected List<Team> getTeams(Tournament tournament) throws SQLException {
+    protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
@@ -789,7 +789,7 @@ public abstract class SQL extends Database {
      * @return
      */
     @Override
-    protected boolean addTeams(List<Team> teams) throws SQLException {
+    protected synchronized boolean addTeams(List<Team> teams) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addTeams");
         String query = "";
         // Insert team.
@@ -808,7 +808,7 @@ public abstract class SQL extends Database {
                                 + ","
                                 + teams.get(i).getGroup()
                                 + ","
-                                + level + "); ";
+                                + level + ");\n";
                     } catch (NullPointerException npe) { // The team has one
                         // competitor less...
                     }
@@ -827,7 +827,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeTeams(List<Team> teams) throws SQLException {
+    protected synchronized boolean removeTeams(List<Team> teams) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeTeams");
         String query = "";
         for (int i = 0; i < teams.size(); i++) {
@@ -851,7 +851,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException {
+    protected synchronized boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateTeams");
         List<Team> oldTeams = new ArrayList<>(teamsExchange.values());
         List<Team> newTeams = new ArrayList<>(teamsExchange.keySet());
@@ -872,7 +872,7 @@ public abstract class SQL extends Database {
      *
      */
     @Override
-    protected List<Fight> getFights(Tournament tournament) throws SQLException {
+    protected synchronized List<Fight> getFights(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM fight WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.entering(this.getClass().getName(), "getFights");
         KendoLog.finer(SQL.class.getName(), query);
@@ -899,7 +899,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean addFights(List<Fight> fights) throws SQLException {
+    protected synchronized boolean addFights(List<Fight> fights) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addFights");
         String query = "";
         for (int i = 0; i < fights.size(); i++) {
@@ -938,7 +938,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeFights(List<Fight> fights) throws SQLException {
+    protected synchronized boolean removeFights(List<Fight> fights) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeFights");
         String query = "";
         for (int i = 0; i < fights.size(); i++) {
@@ -964,7 +964,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException {
+    protected synchronized boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateFights");
         List<Fight> newFights = new ArrayList<>(fightsExchange.keySet());
         String query = "";
@@ -1006,7 +1006,7 @@ public abstract class SQL extends Database {
      * Store a duel into the database.
      */
     @Override
-    protected List<Duel> getDuels(Tournament tournament) throws SQLException {
+    protected synchronized List<Duel> getDuels(Tournament tournament) throws SQLException {
         String query = "SELECT * FROM duel WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.entering(this.getClass().getName(), "getDuels");
         KendoLog.finer(SQL.class.getName(), query);
@@ -1070,7 +1070,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean addDuels(List<Duel> duels) throws SQLException {
+    protected synchronized boolean addDuels(List<Duel> duels) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addDuels");
         String query = "";
         for (int i = 0; i < duels.size(); i++) {
@@ -1119,7 +1119,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeDuels(List<Duel> duels) throws SQLException {
+    protected synchronized boolean removeDuels(List<Duel> duels) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeDuels");
         String query = "";
         for (int i = 0; i < duels.size(); i++) {
@@ -1146,7 +1146,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException {
+    protected synchronized boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateDuels");
         List<Duel> newDuels = new ArrayList<>(duelsExchange.keySet());
         String query = "";
@@ -1194,7 +1194,7 @@ public abstract class SQL extends Database {
      * Store a undraw into the database.
      */
     @Override
-    protected List<Undraw> getUndraws(Tournament tournament) throws SQLException {
+    protected synchronized List<Undraw> getUndraws(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getUndraws");
         String query = "SELECT * FROM undraw WHERE Tournament='" + tournament.getName() + "'";
         KendoLog.finer(SQL.class.getName(), query);
@@ -1218,7 +1218,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean addUndraws(List<Undraw> undraws) throws SQLException {
+    protected synchronized boolean addUndraws(List<Undraw> undraws) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addUndraws");
         String query = "";
         for (int i = 0; i < undraws.size(); i++) {
@@ -1253,7 +1253,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeUndraws(List<Undraw> undraws) throws SQLException {
+    protected synchronized boolean removeUndraws(List<Undraw> undraws) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeUndraws");
         String query = "";
         for (int i = 0; i < undraws.size(); i++) {
@@ -1278,7 +1278,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException {
+    protected synchronized boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateUndraws");
         List<Undraw> newUndraws = new ArrayList<>(undrawsExchange.keySet());
         String query = "";
@@ -1318,7 +1318,7 @@ public abstract class SQL extends Database {
      * Store user defined links.
      */
     @Override
-    protected List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
+    protected synchronized List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
         if (!tournament.getType().equals(TournamentType.MANUAL)) {
             return null;
@@ -1345,7 +1345,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) throws SQLException {
+    protected synchronized boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "addCustomWinnerLinks");
         String query = "";
         for (int i = 0; i < customWinnerLinks.size(); i++) {
@@ -1372,7 +1372,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean removeCustomWinnerLinks(List<Tournament> tournaments) throws SQLException {
+    protected synchronized boolean removeCustomWinnerLinks(List<Tournament> tournaments) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "removeUndraws");
         String query = "";
         for (int i = 0; i < tournaments.size(); i++) {
@@ -1395,7 +1395,7 @@ public abstract class SQL extends Database {
     }
 
     @Override
-    protected boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks)
+    protected synchronized boolean updateCustomWinnerLinks(HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks)
             throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateUndraws");
         List<CustomWinnerLink> oldLinks = new ArrayList<>(customWinnerLinks.values());
