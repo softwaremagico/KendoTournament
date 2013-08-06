@@ -29,7 +29,6 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -125,11 +124,15 @@ public class KendoTournamentGenerator {
 
     public String getVersion() {
         String text;
-        text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath());
-        if (text != null && text.length() > 0) {
-            return text;
+        try {
+            text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath());
+            if (text != null && text.length() > 0) {
+                return text;
+            }
+            return MyFile.readTextFromJar("/version.txt");
+        } catch (NullPointerException npe) {
+            return "";
         }
-        return MyFile.readTextFromJar("/version.txt");
     }
 
     public String getLanguage() {

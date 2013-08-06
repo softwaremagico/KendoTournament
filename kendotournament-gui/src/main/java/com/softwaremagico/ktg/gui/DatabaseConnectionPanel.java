@@ -25,13 +25,13 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
-import com.softwaremagico.ktg.persistence.DatabaseEngine;
-import com.softwaremagico.ktg.persistence.SQLite;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.DatabaseEngine;
+import com.softwaremagico.ktg.persistence.SQLite;
 import java.awt.event.KeyListener;
 import java.util.List;
 
