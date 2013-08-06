@@ -290,16 +290,10 @@
             <artifactId>swing-layout</artifactId>
             <version>1.0.3</version>
         </dependency>
-
         <dependency>
             <groupId>jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.0.13</version>
-        </dependency>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>AbsoluteLayout</artifactId>
-            <version>SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

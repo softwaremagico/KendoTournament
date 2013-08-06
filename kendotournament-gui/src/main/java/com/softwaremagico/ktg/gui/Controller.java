@@ -101,6 +101,10 @@ public class Controller {
         main = tmp_gui;
         AddMainMenuListeners();
         main.setVisible(true);
+        performConnection();
+    }
+
+    private void performConnection() {
         //SQLite connects automatically.
         if (DatabaseConnection.getInstance().getDatabaseEngine().equals(DatabaseEngine.SQLite)) {
             try {

@@ -4,15 +4,15 @@
         <groups>
             <run>
                 <include name="populateDatabase" />
-                <exclude name="championshipTest" />
-                <exclude name="customChampionshipTest" />
+                <include name="championshipTest" />
+                <include name="customChampionshipTest" />
                 <include name="simpleChampionshipTest" />  
-                <exclude name="evenGroupsChampionshipTest" />    
-                <exclude name="championshipTreeTest" />                
-                <exclude name="championshipFightAreaTest" />                                          
+                <include name="evenGroupsChampionshipTest" />    
+                <include name="championshipTreeTest" />                
+                <include name="championshipFightAreaTest" />                                          
                 <include name="databaseStore" />
-                <exclude name="scoreTest" />
-                <exclude name="changeMemberOrderTest" />  
+                <include name="scoreTest" />
+                <include name="changeMemberOrderTest" />  
             </run>
         </groups>
         <classes>
