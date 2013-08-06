@@ -5,7 +5,6 @@ import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.persistence.FightPool;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

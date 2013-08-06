@@ -46,7 +46,7 @@ public class DatabaseStore {
         Assert.assertFalse(DuelPool.getInstance().get(tournament).isEmpty());
         Assert.assertFalse(TournamentManagerFactory.getManager(tournament).getGroups().isEmpty());
 
-        //Compare data.
+        //Compare data.       
         Assert.assertTrue(RolePool.getInstance().get(tournament).equals(roles));
         Assert.assertTrue(TeamPool.getInstance().get(tournament).equals(teams));
         Assert.assertTrue(FightPool.getInstance().get(tournament).equals(fights));
@@ -85,7 +85,6 @@ public class DatabaseStore {
         checkTournament(TournamentPool.getInstance().get(ChampionshipEvenGroupsTest.TOURNAMENT_NAME));
     }
 
-    @After
     @Test(dependsOnMethods = {"championshipEvenGroupsTest", "championshipFightAreaTest", "championshipTreeTest", "customChampionshipTest", "championshipTest", "simpleChampionshipTest"})
     public void checkBasicStore() throws SQLException {
         List<RegisteredPerson> competitorsCheck = RegisteredPersonPool.getInstance().sort();
@@ -101,7 +100,7 @@ public class DatabaseStore {
     }
 
     @After
-    @Test(dependsOnMethods = {"checkBasicStore"})
+    @Test(alwaysRun=true)
     public void clearDatabase() throws SQLException {
         //Delete Tournament Information.
         TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
@@ -113,7 +112,7 @@ public class DatabaseStore {
         //Update database.
         DatabaseConnection.getInstance().updateDatabase();
 
-        //Check all data are deleted
+        //Check that all data are deleted
         Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
         Assert.assertTrue(RegisteredPersonPool.getInstance().getAll().isEmpty());
         Assert.assertTrue(ClubPool.getInstance().getAll().isEmpty());

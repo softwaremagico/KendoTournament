@@ -39,7 +39,7 @@ public class SimpleChampionshipTest {
 
     @Test
     public void addTournament() throws SQLException {
-        tournament = new Tournament(TOURNAMENT_NAME, 1, 2, MEMBERS, TournamentType.CHAMPIONSHIP);
+        tournament = new Tournament(TOURNAMENT_NAME, 1, 2, MEMBERS, TournamentType.SIMPLE);
         TournamentPool.getInstance().add(tournament);
         Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
     }

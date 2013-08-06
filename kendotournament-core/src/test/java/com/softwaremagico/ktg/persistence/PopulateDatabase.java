@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Test of access to database. Needs a user for connecting.
+ * Access test to the database. MySQL needs a user for connecting.
  */
 @Test(groups = {"populateDatabase"})
 public class PopulateDatabase {
@@ -31,8 +31,6 @@ public class PopulateDatabase {
         DatabaseConnection.getInstance().setServer(DATABASE_SERVER);
         DatabaseConnection.getInstance().setUser(DATABASE_USER);
         DatabaseConnection.getInstance().setDatabaseName(DATABASE_NAME);
-        /*Assert.assertTrue(DatabaseConnection.getInstance().testDatabaseConnection(DATABASE_PASSWORD, DATABASE_USER,
-         DATABASE_NAME, DATABASE_SERVER));*/
     }
 
     @Test(dependsOnMethods = {"connectToDatabase"})

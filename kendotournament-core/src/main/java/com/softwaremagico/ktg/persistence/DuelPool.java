@@ -27,7 +27,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected String getId(Duel element) {
-        return element.hashCode()+"";
+        return element.hashCode() + "";
     }
 
     @Override
@@ -168,7 +168,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     public void remove(Tournament tournament) throws SQLException {
         for (Fight fight : FightPool.getInstance().get(tournament)) {
             fight.setOver(false);
-            duelsPerFight.remove(fight);
+            if (duelsPerFight != null) {
+                duelsPerFight.remove(fight);
+            }
         }
         super.remove(tournament);
     }
@@ -176,7 +178,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     @Override
     public boolean remove(Tournament tournament, Duel element) throws SQLException {
         element.getFight().setOver(false);
-        duelsPerFight.remove(element.getFight());
+        if (duelsPerFight != null) {
+            duelsPerFight.remove(element.getFight());
+        }
         return super.remove(tournament, element);
     }
 
@@ -184,7 +188,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     public boolean remove(Tournament tournament, List<Duel> elements) throws SQLException {
         for (Duel duel : elements) {
             duel.getFight().setOver(false);
-            duelsPerFight.remove(duel.getFight());
+            if (duelsPerFight != null) {
+                duelsPerFight.remove(duel.getFight());
+            }
         }
         return super.remove(tournament, elements);
     }
@@ -192,12 +198,14 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     @Override
     public boolean remove(Tournament tournament, String elementName) throws SQLException {
         get(tournament, elementName).getFight().setOver(false);
-        duelsPerFight.remove(get(tournament, elementName).getFight());
+        if (duelsPerFight != null) {
+            duelsPerFight.remove(get(tournament, elementName).getFight());
+        }
         return super.remove(tournament, elementName);
     }
-    
+
     @Override
-    public void reset(){
+    public void reset() {
         duelsPerFight = new HashMap<>();
         super.reset();
     }
