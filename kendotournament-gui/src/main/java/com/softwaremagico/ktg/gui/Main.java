@@ -23,13 +23,14 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Configuration;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.persistence.AutoSave;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+
+import com.softwaremagico.ktg.core.Configuration;
+import com.softwaremagico.ktg.persistence.AutoSave;
 
 public class Main {
 
@@ -53,9 +54,9 @@ public class Main {
         Configuration.readLanguageConfiguration();
 
         MainGUI gui = new MainGUI();
-        AutoSave autoSave = AutoSave.getInstance();
+        AutoSave.getInstance();
         try {
-            Controller controller = new Controller(gui);
+            new Controller(gui);
         } catch (Exception ex) {
             AlertManager.showErrorInformation(Main.class.getName(), ex);
         }

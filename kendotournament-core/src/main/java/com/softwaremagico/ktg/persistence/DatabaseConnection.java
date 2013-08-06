@@ -222,7 +222,7 @@ public class DatabaseConnection {
 
 	public DatabaseEngine getDatabaseEngine() {
 		if (databaseEngine == null) {
-			return DatabaseEngine.getDatabase("MySQL");
+			return DatabaseEngine.getDatabase("SQLite");
 		}
 		return databaseEngine;
 	}
