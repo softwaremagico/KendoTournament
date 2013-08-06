@@ -34,13 +34,14 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class KendoTournamentGenerator {
 
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
     private static boolean autosave = true;
-    private String language = "en";
+    private String language = null;
     private String explorationFolder = null;
     private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     private String lastSelectedTournament = "";
@@ -136,6 +137,13 @@ public class KendoTournamentGenerator {
     }
 
     public String getLanguage() {
+        if (language == null) {
+            if (Locale.getDefault().toString().contains("es_")) {
+                language = "es";
+            } else {
+                language = "en";
+            }
+        }
         return language;
     }
 
