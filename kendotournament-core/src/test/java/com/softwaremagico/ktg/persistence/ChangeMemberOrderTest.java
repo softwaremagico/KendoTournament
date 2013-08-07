@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -41,7 +42,7 @@ public class ChangeMemberOrderTest {
     }
 
     @Test(dependsOnMethods = {"addRoles"})
-    public void addTeams() throws SQLException {
+    public void addTeams() throws SQLException, TeamMemberOrderException {
         int teamIndex = 0;
         Team team = null;
         int teamMember = 0;
@@ -120,6 +121,10 @@ public class ChangeMemberOrderTest {
 
     @Test(dependsOnMethods = {"solveFirstLevel"})
     public void solveSecondLevel() throws SQLException {
+    	//Change member order.
+    	//TeamPool.getInstance().get(tournament, "Team01").set;
+    	
+    	
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
 
         //Check teams of group.

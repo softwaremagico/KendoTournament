@@ -36,6 +36,7 @@ import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -750,10 +751,11 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
+     * @throws TeamMemberOrderException 
      *
      */
     @Override
-    protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException {
+    protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException, TeamMemberOrderException {
         String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);

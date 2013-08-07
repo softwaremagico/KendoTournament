@@ -7,6 +7,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -40,7 +41,7 @@ public class ChampionshipTreeTest {
     }
 
     @Test(dependsOnMethods = {"addRoles"})
-    public void addTeams() throws SQLException {
+    public void addTeams() throws SQLException, TeamMemberOrderException {
         int teamIndex = 0;
         Team team = null;
         int teamMember = 0;

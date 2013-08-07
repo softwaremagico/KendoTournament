@@ -7,6 +7,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -19,7 +20,6 @@ import org.testng.annotations.Test;
 public class ChampionshipEvenGroupsTest {
 
     private static final Integer MEMBERS = 3;
-    private static final Integer FIGHT_AREA = 0;
     private static final Integer TEAMS_PER_GROUP = 4;
     private static final Integer GROUPS = 3;
     public static final String TOURNAMENT_NAME = "evenChampionshipTest";
@@ -41,7 +41,7 @@ public class ChampionshipEvenGroupsTest {
     }
 
     @Test(dependsOnMethods = {"addRoles"})
-    public void addTeams() throws SQLException {
+    public void addTeams() throws SQLException, TeamMemberOrderException {
         int teamIndex = 0;
         Team team = null;
         int teamMember = 0;

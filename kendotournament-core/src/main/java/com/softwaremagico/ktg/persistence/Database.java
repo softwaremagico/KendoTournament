@@ -36,6 +36,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -195,9 +196,10 @@ public abstract class Database {
      ********************************************************************
      */
     /**
+     * @throws TeamMemberOrderException 
      *
      */
-    protected abstract List<Team> getTeams(Tournament tournament) throws SQLException;
+    protected abstract List<Team> getTeams(Tournament tournament) throws SQLException, TeamMemberOrderException;
 
     protected abstract boolean addTeams(List<Team> teams) throws SQLException;
 
