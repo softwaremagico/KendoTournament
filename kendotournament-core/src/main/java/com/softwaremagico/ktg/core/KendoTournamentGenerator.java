@@ -190,7 +190,7 @@ public class KendoTournamentGenerator {
      * Return the roles defined into a XML file.
      */
     public RoleTags getAvailableRoles() {
-        return Translator.getAvailableRoles(language);
+        return Translator.getAvailableRoles(getLanguage());
     }
 
     public String getDefaultDirectory() {

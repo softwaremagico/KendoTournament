@@ -8,31 +8,31 @@ import java.util.Collections;
 import java.util.List;
 
 public class LoopTournamentGroup extends TGroup {
-    
-    public LoopTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
-        super(tournament,  level, fightArea, 0);
-    }
-    
-    @Override
-    public List<Fight> createFights(boolean random) {
-        if (getTeams().size() < 2) {
-            return null;
-        }
-        List<Fight> fights = new ArrayList<>();
-        TeamSelector remainingFights = new TeamSelector(getTeams());
 
-        List<Team> remainingTeams = remainingFights.getTeams();
-        if (random) {
-            Collections.shuffle(remainingTeams);
-        }
-        for (Team team : remainingTeams) {
-            for (Team adversary : remainingFights.getAdversaries(team)) {
-                Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), 0, fights.size());
-                fights.add(fight);
-            }
-        }
+	public LoopTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
+		super(tournament, level, fightArea, 0);
+	}
 
-        return fights;
-    }
-    
+	@Override
+	public List<Fight> createFights(boolean random) {
+		if (getTeams().size() < 2) {
+			return null;
+		}
+		List<Fight> fights = new ArrayList<>();
+		TeamSelector remainingFights = new TeamSelector(getTeams());
+
+		List<Team> remainingTeams = remainingFights.getTeams();
+		if (random) {
+			Collections.shuffle(remainingTeams);
+		}
+		for (Team team : remainingTeams) {
+			for (Team adversary : remainingFights.getAdversaries(team)) {
+				Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), 0, fights.size());
+				fights.add(fight);
+			}
+		}
+
+		return fights;
+	}
+
 }

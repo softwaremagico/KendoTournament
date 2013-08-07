@@ -101,8 +101,8 @@ public class LeagueLevelCustom extends LeagueLevel {
      * Stores the arrows of the designer.
      */
     private class Links implements Serializable {
-
-        private List<CustomWinnerLink> customLinks = new ArrayList<>();
+		private static final long serialVersionUID = -5598140979350514701L;
+		private List<CustomWinnerLink> customLinks = new ArrayList<>();
 
         Links() {
         }

@@ -239,7 +239,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public boolean removeElementsFromDatabase(Tournament tournament) throws SQLException {
         if (getElementToRemove(tournament).size() > 0) {
-            removeElementsFromDatabase(tournament, new ArrayList(getElementToRemove(tournament).values()));
+            removeElementsFromDatabase(tournament, new ArrayList<ElementPool>(getElementToRemove(tournament).values()));
         }
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
         return true;
@@ -247,7 +247,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public boolean addElementsToDatabase(Tournament tournament) throws SQLException {
         if (getElementToStore(tournament) != null) {
-            storeElementsInDatabase(tournament, new ArrayList(getElementToStore(tournament).values()));
+            storeElementsInDatabase(tournament, new ArrayList<ElementPool>(getElementToStore(tournament).values()));
         }
         elementsToStore.put(tournament, new HashMap<String, ElementPool>());
         //Update must be done after store. 

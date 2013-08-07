@@ -78,8 +78,8 @@ public class Team implements Comparable<Team> {
 	 * @param order2
 	 * @throws TeamMemberOrderException
 	 */
-	private void exchangeMembersOrder(Integer order1, Integer order2, int level) throws TeamMemberOrderException {
-		if (order1 == null || order2 == null) {
+	public void exchangeMembersOrder(Integer order1, Integer order2, int level) throws TeamMemberOrderException {
+		if (order1 == null || order2 == null || level < 0) {
 			throw new TeamMemberOrderException("Team member order cannot be exchanged due to order null value used.");
 		}
 

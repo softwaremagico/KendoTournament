@@ -68,7 +68,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected List<Duel> sort(Tournament tournament) throws SQLException {
-        List<Duel> unsorted = new ArrayList(getMap(tournament).values());
+        List<Duel> unsorted = new ArrayList<Duel>(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }

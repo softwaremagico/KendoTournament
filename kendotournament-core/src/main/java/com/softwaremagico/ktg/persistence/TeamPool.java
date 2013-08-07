@@ -77,7 +77,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
 	@Override
 	protected List<Team> sort(Tournament tournament) throws SQLException {
-		List<Team> unsorted = new ArrayList(getMap(tournament).values());
+		List<Team> unsorted = new ArrayList<Team>(getMap(tournament).values());
 		Collections.sort(unsorted);
 		return unsorted;
 	}

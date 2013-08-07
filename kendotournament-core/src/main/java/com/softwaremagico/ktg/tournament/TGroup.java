@@ -23,6 +23,12 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Ranking;
@@ -30,20 +36,12 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.persistence.FightPool;
 
-import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 /**
  * Defines a group of teams that fight together in a tournament. A league has
  * multiple groups but a simple tournament only has one.
  */
-public abstract class TGroup implements Serializable {
-
-    private Tournament tournament;
+public abstract class TGroup {
+	private Tournament tournament;
     private List<Team> teams = new ArrayList<>();
     private Integer numberMaxOfWinners = 1;
     protected Integer level;

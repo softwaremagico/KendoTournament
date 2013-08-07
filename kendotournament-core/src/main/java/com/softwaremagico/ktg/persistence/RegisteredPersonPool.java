@@ -66,7 +66,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected List<RegisteredPerson> sort() throws SQLException {
-        List<RegisteredPerson> unsorted = new ArrayList(getMap().values());
+        List<RegisteredPerson> unsorted = new ArrayList<RegisteredPerson>(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

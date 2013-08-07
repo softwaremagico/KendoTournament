@@ -65,7 +65,7 @@ public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected List<Club> sort()  throws SQLException {
-        List<Club> unsorted = new ArrayList(getMap().values());
+        List<Club> unsorted = new ArrayList<Club>(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

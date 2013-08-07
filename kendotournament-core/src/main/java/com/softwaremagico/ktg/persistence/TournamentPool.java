@@ -66,7 +66,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected List<Tournament> sort() throws SQLException {
-        List<Tournament> unsorted = new ArrayList(getMap().values());
+        List<Tournament> unsorted = new ArrayList<Tournament>(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

@@ -184,7 +184,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean removeElementsFromDatabase() throws SQLException {
-        if (!removeElementsFromDatabase(new ArrayList(getElementToRemove().values()))) {
+        if (!removeElementsFromDatabase(new ArrayList<ElementPool>(getElementToRemove().values()))) {
             return false;
         }
         elementsToDelete = new HashMap<>();
@@ -192,7 +192,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean addElementsToDatabase() throws SQLException {
-        storeElementsInDatabase(new ArrayList(getElementToStore().values()));
+        storeElementsInDatabase(new ArrayList<ElementPool>(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
         updateElements(getElementToUpdate());

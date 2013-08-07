@@ -76,7 +76,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected List<Role> sort(Tournament tournament) throws SQLException {
-        List<Role> unsorted = new ArrayList(getMap(tournament).values());
+        List<Role> unsorted = new ArrayList<Role>(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
