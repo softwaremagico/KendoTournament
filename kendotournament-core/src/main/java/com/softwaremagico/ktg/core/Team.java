@@ -76,10 +76,11 @@ public class Team implements Comparable<Team> {
 	 * @param order1
 	 * @param order2
 	 * @throws TeamMemberOrderException
+         * @return first member moved.
 	 */
-	public void exchangeMembersOrder(Integer order1, Integer order2, int level) {
+	public RegisteredPerson exchangeMembersOrder(Integer order1, Integer order2, int level) {
 		if (order1 == null || order2 == null || level < 0) {
-			return;
+			return null;
 		}
 
 		RegisteredPerson memberInOrder1 = getMember(order1, level);
@@ -93,6 +94,8 @@ public class Team implements Comparable<Team> {
 
 		levelOrder.put(order2, memberInOrder1);
 		levelOrder.put(order1, memberInOrder2);
+                
+                return memberInOrder1;
 	}
 
 	/**
