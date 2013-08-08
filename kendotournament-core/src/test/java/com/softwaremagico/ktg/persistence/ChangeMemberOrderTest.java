@@ -23,6 +23,7 @@ public class ChangeMemberOrderTest {
 	private static final Integer MEMBERS = 3;
 	private static final Integer TEAMS_PER_GROUP = 4;
 	private static final Integer GROUPS = 2;
+	private static final String COMPETITOR_WITH_SCORE = "00000001";
 	public static final String TOURNAMENT_NAME = "changeMemberOrderChampionshipTest";
 	private static Tournament tournament = null;
 
@@ -101,13 +102,12 @@ public class ChangeMemberOrderTest {
 	}
 
 	@Test(dependsOnMethods = { "createFights" })
-	public void solveFirstLevel() throws SQLException {
+	public void solveFirstLevel() throws SQLException {	
 		// Win first and second team of group.
 		for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
 			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
 			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
 			groupTest.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.KOTE);
-                        System.out.println(groupTest.getFights().get(0));
 		}
 
 		// finish fights.
@@ -126,7 +126,8 @@ public class ChangeMemberOrderTest {
 		Assert.assertTrue(ranking2.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team06")));
                 
                 //Check competitor ranking (Comp1clb1 will do all points, Comp2clb7 will do nothing)
-                System.out.println(ranking1.getCompetitorsScoreRanking());
+                System.out.println(ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE)));
+                //Assert.assertTre(ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE)));
                 //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp1clb1"));
                 //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp2clb7"));
 	}

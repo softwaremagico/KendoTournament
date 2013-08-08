@@ -101,7 +101,7 @@ public class Folder {
      * @param dataList The text to be written
      * @file the path to the file.
      */
-    public static boolean saveListInFile(List dataList, String file) {
+    public static boolean saveListInFile(List<String> dataList, String file) {
         File outputFile;
         byte b[];
         //Se guarda en el filename

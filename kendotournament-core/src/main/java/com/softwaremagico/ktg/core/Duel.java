@@ -23,16 +23,11 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- *
- * @author Jorge
- */
-public class Duel implements Serializable, Comparable<Duel> {
+public class Duel implements Comparable<Duel> {
 
     private Fight fight;
     private Integer order;

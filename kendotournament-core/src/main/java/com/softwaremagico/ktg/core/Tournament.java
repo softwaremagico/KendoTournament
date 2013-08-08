@@ -29,11 +29,10 @@ import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Image;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tournament implements Serializable, Comparable<Tournament> {
+public class Tournament implements Comparable<Tournament> {
 
     public static final List<TournamentType> CHAMPIONSHIP_TYPES = new ArrayList<>();
     private String name;

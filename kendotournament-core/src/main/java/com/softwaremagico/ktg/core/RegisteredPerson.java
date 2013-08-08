@@ -27,12 +27,11 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.persistence.PhotoPool;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.text.Collator;
 import java.util.Locale;
 
-public class RegisteredPerson implements Serializable, Comparable<RegisteredPerson> {
+public class RegisteredPerson implements Comparable<RegisteredPerson> {
 
     private String id;
     private String name;

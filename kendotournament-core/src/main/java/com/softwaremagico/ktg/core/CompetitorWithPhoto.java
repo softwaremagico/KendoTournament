@@ -32,11 +32,7 @@ import java.text.DecimalFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author jorge
- */
-public class CompetitorWithPhoto extends RegisteredPerson implements Serializable {
+public class CompetitorWithPhoto extends RegisteredPerson {
 
     transient public InputStream photoInput;
     public long photoSize;

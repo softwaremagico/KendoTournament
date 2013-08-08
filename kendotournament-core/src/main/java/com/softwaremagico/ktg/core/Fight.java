@@ -24,13 +24,12 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.persistence.DuelPool;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Fight implements Serializable, Comparable<Fight> {
+public class Fight implements Comparable<Fight> {
 
     private static final Integer DEFAULT_WINNER_VALUE = 2;
     private Team team1;

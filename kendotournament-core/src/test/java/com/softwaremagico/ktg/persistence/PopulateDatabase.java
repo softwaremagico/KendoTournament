@@ -3,8 +3,6 @@ package com.softwaremagico.ktg.persistence;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.testng.annotations.Test;

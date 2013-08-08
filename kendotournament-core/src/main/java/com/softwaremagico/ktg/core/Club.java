@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.core;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,158 +26,160 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
-import java.io.Serializable;
+public class Club implements Comparable<Club> {
 
-public class Club implements Serializable, Comparable<Club> {
+	private String name = "";
+	private String country = "";
+	private String city = "";
+	private String address = "";
+	private String representativeID = "";
+	private String email = "";
+	private String phone = null;
+	private String web = "";
 
-    private String name = "";
-    private String country = "";
-    private String city = "";
-    private String address = "";
-    private String representativeID = "";
-    private String email = "";
-    private String phone = null;
-    private String web = "";
+	public Club(String name, String country, String city) {
+		setName(name);
+		setCountry(country);
+		setCity(city);
+	}
 
-    public Club(String name, String country, String city) {
-        setName(name);
-        setCountry(country);
-        setCity(city);
-    }
+	public void setRepresentative(String representative, String email, String phone) {
+		representativeID = representative;
+		this.email = email;
+		this.phone = phone;
+	}
 
-    public void setRepresentative(String representative, String email, String phone) {
-        representativeID = representative;
-        this.email = email;
-        this.phone = phone;
-    }
+	private void setName(String value) {
+		name = "";
+		String[] data = value.split(" ");
+		for (int i = 0; i < data.length; i++) {
+			if ((data[i].length() > 2) && (data[i].substring(1).equals(data[i].substring(1).toLowerCase()))) { // There
+																												// is
+																												// not
+																												// capital
+																												// letters.
+				name += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
+			} else {
+				name += data[i] + " ";
+			}
+		}
+		name = name.trim();
+	}
 
-    private void setName(String value) {
-        name = "";
-        String[] data = value.split(" ");
-        for (int i = 0; i < data.length; i++) {
-            if ((data[i].length() > 2) && (data[i].substring(1).equals(data[i].substring(1).toLowerCase()))) { //There is not capital letters.                  
-                name += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
-            } else {
-                name += data[i] + " ";
-            }
-        }
-        name = name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	private void setCountry(String value) {
+		country = "";
+		String[] data = value.split(" ");
+		for (int i = 0; i < data.length; i++) {
+			if (data[i].length() > 2) {
+				country += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
+			} else {
+				country += data[i] + " ";
+			}
+		}
+		country = country.trim();
+	}
 
-    private void setCountry(String value) {
-        country = "";
-        String[] data = value.split(" ");
-        for (int i = 0; i < data.length; i++) {
-            if (data[i].length() > 2) {
-                country += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
-            } else {
-                country += data[i] + " ";
-            }
-        }
-        country = country.trim();
-    }
+	private void setCity(String value) {
+		city = "";
+		String[] data = value.split(" ");
+		for (int i = 0; i < data.length; i++) {
+			if (data[i].length() > 2) {
+				city += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
+			} else {
+				city += data[i] + " ";
+			}
+		}
+		city = city.trim();
+	}
 
-    private void setCity(String value) {
-        city = "";
-        String[] data = value.split(" ");
-        for (int i = 0; i < data.length; i++) {
-            if (data[i].length() > 2) {
-                city += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
-            } else {
-                city += data[i] + " ";
-            }
-        }
-        city = city.trim();
-    }
+	public void setAddress(String value) {
+		address = "";
+		String[] data = value.split(" ");
+		for (int i = 0; i < data.length; i++) {
+			if (data[i].length() > 2) {
+				address += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
+			} else {
+				address += data[i] + " ";
+			}
+		}
+		address = address.trim();
+	}
 
-    public void setAddress(String value) {
-        address = "";
-        String[] data = value.split(" ");
-        for (int i = 0; i < data.length; i++) {
-            if (data[i].length() > 2) {
-                address += data[i].substring(0, 1).toUpperCase() + data[i].substring(1).toLowerCase() + " ";
-            } else {
-                address += data[i] + " ";
-            }
-        }
-        address = address.trim();
-    }
+	public void setMail(String email) {
+		this.email = email;
+	}
 
-    public void setMail(String email) {
-        this.email = email;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public void setRepresentative(String representative) {
+		this.representativeID = representative;
+	}
 
-    public void setRepresentative(String representative) {
-        this.representativeID = representative;
-    }
+	public void storeWeb(String value) {
+		web = value.trim();
+	}
 
-    public void storeWeb(String value) {
-        web = value.trim();
-    }
+	public String getCountry() {
+		return country;
+	}
 
-    public String getCountry() {
-        return country;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getWeb() {
+		return web;
+	}
 
-    public String getWeb() {
-        return web;
-    }
+	public String getMail() {
+		return email;
+	}
 
-    public String getMail() {
-        return email;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public String getRepresentativeID() {
+		return representativeID;
+	}
 
-    public String getRepresentativeID() {
-        return representativeID;
-    }
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (!(object instanceof Club)) {
+			return false;
+		}
+		Club otherClub = (Club) object;
+		return this.name.equals(otherClub.name) && this.city.equals(otherClub.city);
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Club)) {
-            return false;
-        }
-        Club otherClub = (Club) object;
-        return this.name.equals(otherClub.name) && this.city.equals(otherClub.city);
-    }
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+		hash = 67 * hash + (this.city != null ? this.city.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 67 * hash + (this.city != null ? this.city.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 
-    @Override
-    public String toString() {
-        return this.getName();
-    }
-
-    @Override
-    public int compareTo(Club c) {
-        return (getName() + city).compareTo(c.getName() + c.getCity());
-    }
+	@Override
+	public int compareTo(Club c) {
+		return (getName() + city).compareTo(c.getName() + c.getCity());
+	}
 }

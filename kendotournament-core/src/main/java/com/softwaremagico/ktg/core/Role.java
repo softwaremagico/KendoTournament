@@ -27,14 +27,13 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.persistence.RolePool;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
  * The objective of this class is store the database into a file. For managing
  * the Role used in the GUI, use the RoleTag class.
  */
-public class Role implements Serializable, Comparable<Role> {
+public class Role implements Comparable<Role> {
 
     private Tournament tournament;
     private RegisteredPerson competitor;
