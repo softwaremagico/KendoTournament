@@ -28,7 +28,6 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -60,7 +59,7 @@ public class Team implements Comparable<Team> {
 	 * @param level
 	 * @throws TeamMemberOrderException
 	 */
-	public void setMember(RegisteredPerson member, Integer order, int level) throws TeamMemberOrderException {
+	public void setMember(RegisteredPerson member, Integer order, int level) {
 		if (member.isValid() && level >= 0) {
 			// First level must to put the user.
 			if (level == 0) {
@@ -78,9 +77,9 @@ public class Team implements Comparable<Team> {
 	 * @param order2
 	 * @throws TeamMemberOrderException
 	 */
-	public void exchangeMembersOrder(Integer order1, Integer order2, int level) throws TeamMemberOrderException {
+	public void exchangeMembersOrder(Integer order1, Integer order2, int level) {
 		if (order1 == null || order2 == null || level < 0) {
-			throw new TeamMemberOrderException("Team member order cannot be exchanged due to order null value used.");
+                    return;
 		}
 
 		RegisteredPerson memberInOrder1 = getMember(order1, level);
@@ -105,7 +104,7 @@ public class Team implements Comparable<Team> {
 	 */
 	private HashMap<Integer, RegisteredPerson> copyLastOrder(int level) {
 		HashMap<Integer, RegisteredPerson> levelOrder = getMembersOrder(level);
-		HashMap<Integer, RegisteredPerson> newOrder = new HashMap<Integer, RegisteredPerson>();
+		HashMap<Integer, RegisteredPerson> newOrder = new HashMap<>();
 		for (Integer order : levelOrder.keySet()) {
 			newOrder.put(order, levelOrder.get(order));
 		}

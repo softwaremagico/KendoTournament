@@ -105,8 +105,10 @@ public class ChangeMemberOrderTest {
 		// Win first and second team of group.
 		for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
 			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
+                        groupTest.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
 			groupTest.getFights().get(0).getDuels().get(1).setHit(true, 0, Score.MEN);
 			groupTest.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.KOTE);
+                        System.out.println(groupTest.getFights().get(0));
 		}
 
 		// finish fights.
@@ -123,6 +125,9 @@ public class ChangeMemberOrderTest {
 		Ranking ranking2 = new Ranking(group2.getFights());
 		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(ranking2.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team06")));
+                
+                //Check competitor ranking
+                System.out.println(ranking1.getCompetitorsRanking());
 	}
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })

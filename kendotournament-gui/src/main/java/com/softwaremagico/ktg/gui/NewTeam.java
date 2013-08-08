@@ -29,12 +29,12 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
+import com.softwaremagico.ktg.persistence.TeamPool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -295,7 +295,7 @@ public class NewTeam extends KendoFrame {
                     this.dispose();
                 } catch (SQLException ex) {
                     AlertManager.showSqlErrorMessage(ex);
-                }
+                } 
             } else {
                 if (NameTextField.getText().length() > 0) {
                     List<RegisteredPerson> participants = new ArrayList<>();

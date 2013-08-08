@@ -116,15 +116,12 @@ public class TeamPool extends TournamentDependentPool<Team> {
 		return null;
 	}
 
-	public void setIndividualTeams(Tournament tournament) throws SQLException, TeamMemberOrderException {
+	public void setIndividualTeams(Tournament tournament) throws SQLException {
 		// Delete old teams of tournament.
 		remove(tournament);
 
 		// Create new teams with only one member.
 		List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
-		// MessageManager.translatedMessage(this.getClass().getName(),
-		// "oneTeamPerCompetitor", this.getClass().getName(),
-		// JOptionPane.INFORMATION_MESSAGE);
 		for (RegisteredPerson competitor : competitors) {
 			Team team = new Team(competitor.getSurnameName(), tournament);
 			team.setMember(competitor, 0, 0);
