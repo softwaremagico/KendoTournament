@@ -221,13 +221,13 @@ public class CompetitorFight extends JPanel {
         Integer player;
         try {
             if (fight != null) {
-                if ((player = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
+                if ((player = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
                     Duel d = fight.getDuels().get(player);
                     updateScorePanel(round1, d.getHits(true).get(0));
                     updateScorePanel(round2, d.getHits(true).get(1));
                     updateFaultPanel(faults, d.getFaults(true));
                 }
-                if ((player = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
+                if ((player = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
                     Duel d = fight.getDuels().get(player);
                     updateScorePanel(round1, d.getHits(false).get(0));
                     updateScorePanel(round2, d.getHits(false).get(1));
@@ -297,7 +297,7 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel d;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, true);
@@ -305,7 +305,7 @@ public class CompetitorFight extends JPanel {
                     d.clearResultInRound(round, true);
                 }
             }
-            if ((index = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 if (!point.equals(Score.EMPTY)) {
                     d.setResultInRound(round, point, false);
@@ -323,13 +323,13 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel d;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 d.setFaults(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
-            if ((index = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 d.setFaults(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
@@ -344,13 +344,13 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel d;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 d.resetFaults(true);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
                 updateScorePanels();
             }
-            if ((index = fight.getTeam2().getMemberOrder(fight.getLevel(), competitor)) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
                 d = fight.getDuels().get(index);
                 d.resetFaults(false);
                 //KendoTournamentGenerator.getInstance().fightManager.storeDuel(d, fight, index);
