@@ -105,8 +105,7 @@ public class ChangeMemberOrderTest {
 		// Win first and second team of group.
 		for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
 			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
-                        groupTest.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
-			groupTest.getFights().get(0).getDuels().get(1).setHit(true, 0, Score.MEN);
+			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 1, Score.MEN);
 			groupTest.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.KOTE);
                         System.out.println(groupTest.getFights().get(0));
 		}
@@ -126,15 +125,17 @@ public class ChangeMemberOrderTest {
 		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(ranking2.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team06")));
                 
-                //Check competitor ranking
-                System.out.println(ranking1.getCompetitorsRanking());
+                //Check competitor ranking (Comp1clb1 will do all points, Comp2clb7 will do nothing)
+                System.out.println(ranking1.getCompetitorsScoreRanking());
+                //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp1clb1"));
+                //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp2clb7"));
 	}
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
 	public void solveSecondLevel() throws SQLException, TeamMemberOrderException {
 		// Change member order.
-		TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(0, 1, 1);
-		TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(1, 2, 1);
+		TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(0, 2, 1);
+		TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(0, 2, 1);
 
 		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
 
@@ -147,7 +148,9 @@ public class ChangeMemberOrderTest {
 		Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
 
 		// Add new points. Wins Team1 and Team2.
-		group1.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
+		group1.getFights().get(0).getDuels().get(2).setHit(true, 0, Score.MEN);
+                group1.getFights().get(0).getDuels().get(2).setHit(false, 0, Score.MEN);
+                System.out.println(group1.getFights().get(0));
 		Undraw undraw = new Undraw(tournament, 1, TeamPool.getInstance().get(tournament, "Team02"), 0, 1);
 		UndrawPool.getInstance().add(tournament, undraw);
 
@@ -157,6 +160,7 @@ public class ChangeMemberOrderTest {
 		}
 
 		Ranking ranking1 = new Ranking(group1.getFights());
+                System.out.println(ranking1.getCompetitorsRanking());
 		Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));
 		Ranking ranking2 = new Ranking(group2.getFights());
 		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));

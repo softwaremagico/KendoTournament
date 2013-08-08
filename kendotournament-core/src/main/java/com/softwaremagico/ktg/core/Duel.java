@@ -347,11 +347,11 @@ public class Duel implements Serializable, Comparable<Duel> {
     public String toString() {
         RegisteredPerson memberA = getFight().getTeam1().getMember(order, getFight().getLevel());
         RegisteredPerson memberB = getFight().getTeam2().getMember(order, getFight().getLevel());
-        String text = memberA.getShortSurnameName(10) + " (";
+        String text = memberA.getShortSurname(10) + " (";
         for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
             text += (hitsFromCompetitorA.get(i).getAbbreviature());
         }
-        text += (") " + memberB.getShortSurnameName(10) + " (");
+        text += (") " + memberB.getShortSurname(10) + " (");
         for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
             text += (hitsFromCompetitorB.get(i).getAbbreviature());
         }
