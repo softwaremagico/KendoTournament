@@ -1,10 +1,5 @@
 package com.softwaremagico.ktg.persistence;
 
-import java.sql.SQLException;
-
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
@@ -18,7 +13,13 @@ import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import java.sql.SQLException;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
+/**
+ * Comp1clb1 will do all points, Comp2clb7 do nothing. Both comeptitors will change the order during the test. 
+ */
 @Test(groups = { "changeMemberOrderTest" }, dependsOnGroups = { "populateDatabase" })
 public class ChangeMemberOrderTest {
 
@@ -156,7 +157,7 @@ public class ChangeMemberOrderTest {
 		Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
 
-		// Add new points to Comp1clb1 y other member of Comp2clb7.
+		// Add new points to Comp1clb1 y other member of Comp2clb5.
 		group1.getFights().get(0).getDuels().get(2).setHit(true, 0, Score.MEN);
 		group1.getFights().get(0).getDuels().get(2).setHit(true, 1, Score.KOTE);
 		group2.getFights().get(0).getDuels().get(2).setHit(true, 0, Score.MEN);
@@ -172,7 +173,7 @@ public class ChangeMemberOrderTest {
 		Ranking ranking2 = new Ranking(group2.getFights());
 		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 
-		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
+		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
 		// will do nothing)
 		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
 				COMPETITOR_WITH_SCORE));
@@ -192,10 +193,10 @@ public class ChangeMemberOrderTest {
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
 		Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
 		Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
-
+                
 		// Change member order.
 		TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(2, 1, 2);
-		TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(2, 1, 2);
+		TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(0, 1, 2);
 
 		// Add new points to Comp1clb1 y other member of Comp2clb7.
 		group1.getFights().get(0).getDuels().get(1).setHit(true, 0, Score.MEN);
@@ -205,8 +206,6 @@ public class ChangeMemberOrderTest {
 		group1.getFights().get(0).getDuels().get(0).setHit(false, 1, Score.KOTE);
 		group1.getFights().get(0).getDuels().get(2).setHit(false, 0, Score.MEN);
 		group1.getFights().get(0).getDuels().get(2).setHit(false, 1, Score.KOTE);
-		
-		System.out.println(group1.getFights().get(0));
 
 		// finish fights.
 		for (Fight fight : group1.getFights()) {
@@ -216,7 +215,7 @@ public class ChangeMemberOrderTest {
 		Ranking ranking1 = new Ranking(group1.getFights());
 		Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 
-		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
+		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
 		// will do nothing)
 		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
 				COMPETITOR_WITH_SCORE));
