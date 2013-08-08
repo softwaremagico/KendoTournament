@@ -65,7 +65,7 @@ public class Team implements Comparable<Team> {
 			if (level == 0) {
 				membersOrder.get(level).put(order, member);
 			} else {
-				exchangeMembersOrder(getMemberOrder(level, member), order, level);
+				exchangeMembersOrder(getMemberOrder(member, level), order, level);
 			}
 		}
 	}
@@ -79,7 +79,7 @@ public class Team implements Comparable<Team> {
 	 */
 	public void exchangeMembersOrder(Integer order1, Integer order2, int level) {
 		if (order1 == null || order2 == null || level < 0) {
-                    return;
+			return;
 		}
 
 		RegisteredPerson memberInOrder1 = getMember(order1, level);
@@ -147,8 +147,8 @@ public class Team implements Comparable<Team> {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer getMemberOrder(int level, String competitorID) throws SQLException {
-		return getMemberOrder(level, RegisteredPersonPool.getInstance().get(competitorID));
+	public Integer getMemberOrder(String competitorID, int level) throws SQLException {
+		return getMemberOrder(RegisteredPersonPool.getInstance().get(competitorID), level);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class Team implements Comparable<Team> {
 	 * @param competitor
 	 * @return
 	 */
-	public Integer getMemberOrder(int level, RegisteredPerson competitor) {
+	public Integer getMemberOrder(RegisteredPerson competitor, int level) {
 		try {
 			HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
 			for (Integer order : orderInLevel.keySet()) {

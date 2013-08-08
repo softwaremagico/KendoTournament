@@ -1,21 +1,23 @@
 package com.softwaremagico.ktg.persistence;
 
+import java.sql.SQLException;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.core.ScoreOfCompetitor;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
-import java.sql.SQLException;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 @Test(groups = { "changeMemberOrderTest" }, dependsOnGroups = { "populateDatabase" })
 public class ChangeMemberOrderTest {
@@ -24,6 +26,7 @@ public class ChangeMemberOrderTest {
 	private static final Integer TEAMS_PER_GROUP = 4;
 	private static final Integer GROUPS = 2;
 	private static final String COMPETITOR_WITH_SCORE = "00000001";
+	private static final String COMPETITOR_WITHOUT_SCORE = "00000038";
 	public static final String TOURNAMENT_NAME = "changeMemberOrderChampionshipTest";
 	private static Tournament tournament = null;
 
@@ -102,7 +105,7 @@ public class ChangeMemberOrderTest {
 	}
 
 	@Test(dependsOnMethods = { "createFights" })
-	public void solveFirstLevel() throws SQLException {	
+	public void solveFirstLevel() throws SQLException {
 		// Win first and second team of group.
 		for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
 			groupTest.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
@@ -124,12 +127,17 @@ public class ChangeMemberOrderTest {
 		Ranking ranking2 = new Ranking(group2.getFights());
 		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(ranking2.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team06")));
-                
-                //Check competitor ranking (Comp1clb1 will do all points, Comp2clb7 will do nothing)
-                System.out.println(ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE)));
-                //Assert.assertTre(ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE)));
-                //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp1clb1"));
-                //Assert.assertTrue(ranking1.getCompetitorsRanking().get(0).getSurname().equals("Comp2clb7"));
+
+		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
+		// will do nothing)
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITHOUT_SCORE));
+		Assert.assertTrue(scoreCompWinner.getWonDuels() == 1);
+		Assert.assertTrue(scoreCompWinner.getHits() == 2);
+		Assert.assertTrue(scoreCompLooser.getWonDuels() == 0);
+		Assert.assertTrue(scoreCompLooser.getHits() == 0);
 	}
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
@@ -148,12 +156,11 @@ public class ChangeMemberOrderTest {
 		Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
 
-		// Add new points. Wins Team1 and Team2.
+		// Add new points to Comp1clb1 y other member of Comp2clb7.
 		group1.getFights().get(0).getDuels().get(2).setHit(true, 0, Score.MEN);
-                group1.getFights().get(0).getDuels().get(2).setHit(false, 0, Score.MEN);
-                System.out.println(group1.getFights().get(0));
-		Undraw undraw = new Undraw(tournament, 1, TeamPool.getInstance().get(tournament, "Team02"), 0, 1);
-		UndrawPool.getInstance().add(tournament, undraw);
+		group1.getFights().get(0).getDuels().get(2).setHit(true, 1, Score.KOTE);
+		group2.getFights().get(0).getDuels().get(2).setHit(true, 0, Score.MEN);
+		group2.getFights().get(0).getDuels().get(2).setHit(true, 1, Score.KOTE);
 
 		// finish fights.
 		for (Fight fight : FightPool.getInstance().get(tournament)) {
@@ -161,11 +168,20 @@ public class ChangeMemberOrderTest {
 		}
 
 		Ranking ranking1 = new Ranking(group1.getFights());
-                System.out.println(ranking1.getCompetitorsRanking());
 		Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team01")));
 		Ranking ranking2 = new Ranking(group2.getFights());
-		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));
+		Assert.assertTrue(ranking2.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
 
+		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
+		// will do nothing)
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITHOUT_SCORE));
+		Assert.assertTrue(scoreCompWinner.getWonDuels() == 1);
+		Assert.assertTrue(scoreCompWinner.getHits() == 2);
+		Assert.assertTrue(scoreCompLooser.getWonDuels() == 0);
+		Assert.assertTrue(scoreCompLooser.getHits() == 0);
 	}
 
 	@Test(dependsOnMethods = { "solveSecondLevel" })
@@ -175,10 +191,22 @@ public class ChangeMemberOrderTest {
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
 		Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
-		Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team02")));
+		Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 
-		// Add new points. Wins Team2.
+		// Change member order.
+		TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(2, 1, 2);
+		TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(2, 1, 2);
+
+		// Add new points to Comp1clb1 y other member of Comp2clb7.
+		group1.getFights().get(0).getDuels().get(1).setHit(true, 0, Score.MEN);
+		group1.getFights().get(0).getDuels().get(1).setHit(true, 1, Score.KOTE);
+		// Two duels for Team5.
 		group1.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
+		group1.getFights().get(0).getDuels().get(0).setHit(false, 1, Score.KOTE);
+		group1.getFights().get(0).getDuels().get(2).setHit(false, 0, Score.MEN);
+		group1.getFights().get(0).getDuels().get(2).setHit(false, 1, Score.KOTE);
+		
+		System.out.println(group1.getFights().get(0));
 
 		// finish fights.
 		for (Fight fight : group1.getFights()) {
@@ -186,6 +214,30 @@ public class ChangeMemberOrderTest {
 		}
 
 		Ranking ranking1 = new Ranking(group1.getFights());
-		Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team02")));
+		Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team05")));
+
+		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
+		// will do nothing)
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITHOUT_SCORE));
+		Assert.assertTrue(scoreCompWinner.getWonDuels() == 1);
+		Assert.assertTrue(scoreCompWinner.getHits() == 2);
+		Assert.assertTrue(scoreCompLooser.getWonDuels() == 0);
+		Assert.assertTrue(scoreCompLooser.getHits() == 0);
+	}
+
+	@Test(dependsOnMethods = { "solveThirdLevel" })
+	public void finalRanking() throws SQLException {
+		Ranking ranking = new Ranking(FightPool.getInstance().get(tournament));
+		ScoreOfCompetitor scoreCompWinner = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
+				COMPETITOR_WITHOUT_SCORE));
+		Assert.assertTrue(scoreCompWinner.getWonDuels() == 3);
+		Assert.assertTrue(scoreCompWinner.getHits() == 6);
+		Assert.assertTrue(scoreCompLooser.getWonDuels() == 0);
+		Assert.assertTrue(scoreCompLooser.getHits() == 0);
 	}
 }
