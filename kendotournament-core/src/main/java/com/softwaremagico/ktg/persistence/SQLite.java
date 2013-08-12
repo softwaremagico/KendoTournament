@@ -190,10 +190,10 @@ public class SQLite extends SQL {
                 + "\"Name\" varchar(50) NOT NULL,"
                 + "\"Member\" varchar(12) DEFAULT NULL,"
                 + "\"Position\" integer NOT NULL,"
-                + "\"LevelTournament\" integer NOT NULL DEFAULT 0,"
+                + "\"FightOfTournament\" integer NOT NULL DEFAULT 0,"
                 + "\"Tournament\" varchar(50) NOT NULL,"
                 + "\"LeagueGroup\" integer NOT NULL DEFAULT -1,"
-                + "PRIMARY KEY (Name, Position, LevelTournament, Tournament),"
+                + "PRIMARY KEY (Name, Position, FightOfTournament, Tournament),"
                 + "CONSTRAINT \"Tournament\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
                 + ")";
         createTable(sqlQuery);

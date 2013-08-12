@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.persistence.DuelPool;
+import com.softwaremagico.ktg.persistence.FightPool;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class Fight implements Comparable<Fight> {
     private Integer group;
     private Integer groupIndex;
     private Integer level;
+    private Integer index = null;
 
     public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int group, int groupIndex) {
         this.team1 = team1;
@@ -189,31 +191,31 @@ public class Fight implements Comparable<Fight> {
         System.out.println("---------------");
         System.out.println(team1.getName() + " vs " + team2.getName());
         for (int i = 0; i < getDuels().size(); i++) {
-            System.out.println(team1.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(true).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(true) + " vs " + team2.getMember(i, level).getName() + ": " + getDuels().get(i).getHits(false).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(false));
+            System.out.println(team1.getMember(i, getIndex()).getName() + ": " + getDuels().get(i).getHits(true).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(true) + " vs " + team2.getMember(i, getIndex()).getName() + ": " + getDuels().get(i).getHits(false).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(false));
         }
         System.out.println("---------------");
     }
 
     private void completeIppons() {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
-            if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, level) != null) //There is a player
-                    && (!team2.getMember(i, level).getName().equals("")
-                    || !team2.getMember(i, level).getId().equals("")))
-                    && ((team1.getMember(i, level) == null) //Versus no player.
-                    || (team1.getMember(i, level).getName().equals("")
-                    && team1.getMember(i, level).getId().equals("")))) {
+            if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, getIndex()) != null) //There is a player
+                    && (!team2.getMember(i, getIndex()).getName().equals("")
+                    || !team2.getMember(i, getIndex()).getId().equals("")))
+                    && ((team1.getMember(i, getIndex()) == null) //Versus no player.
+                    || (team1.getMember(i, getIndex()).getName().equals("")
+                    && team1.getMember(i, getIndex()).getId().equals("")))) {
                 getDuels().get(i).completeIppons(false);
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
         }
 
         for (int i = 0; i < team2.getNumberOfMembers(level); i++) {
-            if (((i < team1.getNumberOfMembers(level) && team1.getMember(i, level) != null) //There is a player
-                    && (!team1.getMember(i, level).getName().equals("")
-                    || !team1.getMember(i, level).getId().equals("")))
-                    && ((team2.getMember(i, level) == null) //Versus no player.
-                    || (team2.getMember(i, level).getName().equals("")
-                    && team2.getMember(i, level).getId().equals("")))) {
+            if (((i < team1.getNumberOfMembers(level) && team1.getMember(i, getIndex()) != null) //There is a player
+                    && (!team1.getMember(i, getIndex()).getName().equals("")
+                    || !team1.getMember(i, getIndex()).getId().equals("")))
+                    && ((team2.getMember(i, getIndex()) == null) //Versus no player.
+                    || (team2.getMember(i, getIndex()).getName().equals("")
+                    && team2.getMember(i, getIndex()).getId().equals("")))) {
                 getDuels().get(i).completeIppons(true);
                 // DatabaseConnection.getInstance().getDatabase().storeDuel(getDuels().get(i), this, i);
             }
@@ -234,10 +236,10 @@ public class Fight implements Comparable<Fight> {
     public Integer getWonDuels(RegisteredPerson competitor) {
         int winDuels = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            if (team1.getMember(i, level).equals(competitor) && getDuels().get(i).winner() < 0) {
+            if (team1.getMember(i, getIndex()).equals(competitor) && getDuels().get(i).winner() < 0) {
                 winDuels++;
             }
-            if (team2.getMember(i, level).equals(competitor) && getDuels().get(i).winner() > 0) {
+            if (team2.getMember(i, getIndex()).equals(competitor) && getDuels().get(i).winner() > 0) {
                 winDuels++;
             }
         }
@@ -272,7 +274,7 @@ public class Fight implements Comparable<Fight> {
     public Integer getDrawDuels(RegisteredPerson competitor) {
         int drawDuels = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            if ((team1.getMember(i, level).equals(competitor) || team2.getMember(i, level).equals(competitor)) && getDuels().get(i).winner() == 0) {
+            if ((team1.getMember(i, getIndex()).equals(competitor) || team2.getMember(i, getIndex()).equals(competitor)) && getDuels().get(i).winner() == 0) {
                 drawDuels++;
             }
         }
@@ -300,10 +302,10 @@ public class Fight implements Comparable<Fight> {
     public Integer getScore(RegisteredPerson competitor) {
         int hits = 0;
         for (int i = 0; i < getDuels().size(); i++) {
-            if (team1.getMember(i, level).equals(competitor)) {
+            if (team1.getMember(i, getIndex()).equals(competitor)) {
                 hits += getDuels().get(i).getScore(true);
             }
-            if (team2.getMember(i, level).equals(competitor)) {
+            if (team2.getMember(i, getIndex()).equals(competitor)) {
                 hits += getDuels().get(i).getScore(false);
             }
         }
@@ -376,5 +378,20 @@ public class Fight implements Comparable<Fight> {
             return groupCompare;
         }
         return groupIndex.compareTo(o.groupIndex);
+    }
+
+    public Integer getIndex() {
+        if (index == null) {
+            try {
+                Integer fightIndex = FightPool.getInstance().getFightIndex(this);
+                if (fightIndex == null) {
+                    fightIndex = FightPool.getInstance().get(getTournament()).size() - 1;
+                }
+                index = fightIndex;
+            } catch (SQLException ex) {
+                return -1;
+            }
+        }
+        return index;
     }
 }

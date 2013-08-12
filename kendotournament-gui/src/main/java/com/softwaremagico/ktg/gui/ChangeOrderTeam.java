@@ -28,11 +28,11 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -44,9 +44,9 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private Translator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
     private List<Team> teams = new ArrayList<>();
-    DefaultListModel<Team> teamsModel = new DefaultListModel<>();
+    private DefaultListModel<Team> teamsModel = new DefaultListModel<>();
     protected boolean refreshTournament = true;
-    int level = 0;
+    private int level = 0;
 
     /**
      * Creates new form ChangeOrderTeam
@@ -123,11 +123,18 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private void openOrderTeamWindow() {
         Team team = returnSelectedTeam();
         if (team != null) {
-            OrderTeam orderTeam;
-            orderTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), level);
-            orderTeam.updateOrderWindow(team);
-            orderTeam.setVisible(true);
-            orderTeam.toFront();
+            try {
+                OrderTeam orderTeam;
+                Integer fightIndex = FightPool.getInstance().getCurrentFightIndex((Tournament) TournamentComboBox.getSelectedItem());
+                if (fightIndex == null) {
+                    fightIndex = FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem()).size() - 1;
+                }
+                orderTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), fightIndex);
+                orderTeam.updateOrderWindow(team);
+                orderTeam.setVisible(true);
+                orderTeam.toFront();
+            } catch (SQLException ex) {
+            }
         }
     }
 

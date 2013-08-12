@@ -340,8 +340,8 @@ public class Duel implements Comparable<Duel> {
 
     @Override
     public String toString() {
-        RegisteredPerson memberA = getFight().getTeam1().getMember(order, getFight().getLevel());
-        RegisteredPerson memberB = getFight().getTeam2().getMember(order, getFight().getLevel());
+        RegisteredPerson memberA = getFight().getTeam1().getMember(order, getFight().getIndex());
+        RegisteredPerson memberB = getFight().getTeam2().getMember(order, getFight().getIndex());
         String text = memberA.getShortSurname(10) + " (";
         for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
             text += (hitsFromCompetitorA.get(i).getAbbreviature());

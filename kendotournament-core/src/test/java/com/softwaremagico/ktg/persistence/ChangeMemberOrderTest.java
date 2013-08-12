@@ -145,8 +145,12 @@ public class ChangeMemberOrderTest {
     @Test(dependsOnMethods = {"solveFirstLevel"})
     public void solveSecondLevel() throws SQLException, TeamMemberOrderException {
         // Change member order.
-        RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(0, 2, 1);
-        RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(2, 0, 1);
+        Integer fightIndex = FightPool.getInstance().getCurrentFightIndex(tournament);
+        if (fightIndex == null) {
+            fightIndex = FightPool.getInstance().get(tournament).size() - 1;
+        }
+        RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(0, 2, fightIndex);
+        RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(2, 0, fightIndex);
 
         // Ensure that the changed competitors are the desired one. 
         Assert.assertTrue(moved1.getId().equals(COMPETITOR_WITH_SCORE));
@@ -200,8 +204,12 @@ public class ChangeMemberOrderTest {
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 
         // Change member order.
-        RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(2, 1, 2);
-        RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(0, 1, 2);
+        Integer fightIndex = FightPool.getInstance().getCurrentFightIndex(tournament);
+        if (fightIndex == null) {
+            fightIndex = FightPool.getInstance().get(tournament).size() - 1;
+        }
+        RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(2, 1, fightIndex);
+        RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(0, 1, fightIndex);
 
         // Ensure that the changed competitors are the desired one. 
         Assert.assertTrue(moved1.getId().equals(COMPETITOR_WITH_SCORE));

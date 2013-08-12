@@ -34,7 +34,7 @@ import java.util.HashMap;
 public class Team implements Comparable<Team> {
 
 	private Tournament tournament;
-	private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; // HashMap<Level,HashMap<Order,
+	private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; // HashMap<Fight,HashMap<Order,Competitor>>
 																				// Member>>;
 	private String name;
 	private int group = 0; // for the league
@@ -59,13 +59,13 @@ public class Team implements Comparable<Team> {
 	 * @param level
 	 * @throws TeamMemberOrderException
 	 */
-	public void setMember(RegisteredPerson member, Integer order, int level) {
-		if (member.isValid() && level >= 0) {
+	public void setMember(RegisteredPerson member, Integer order, int fightIndex) {
+		if (member.isValid() && fightIndex >= 0) {
 			// First level must to put the user.
-			if (level == 0) {
-				membersOrder.get(level).put(order, member);
+			if (fightIndex == 0) {
+				membersOrder.get(fightIndex).put(order, member);
 			} else {
-				exchangeMembersOrder(getMemberOrder(member, level), order, level);
+				exchangeMembersOrder(getMemberOrder(member, fightIndex), order, fightIndex);
 			}
 		}
 	}
@@ -78,18 +78,18 @@ public class Team implements Comparable<Team> {
 	 * @throws TeamMemberOrderException
          * @return first member moved.
 	 */
-	public RegisteredPerson exchangeMembersOrder(Integer order1, Integer order2, int level) {
-		if (order1 == null || order2 == null || level < 0) {
+	public RegisteredPerson exchangeMembersOrder(Integer order1, Integer order2, int fightIndex) {
+		if (order1 == null || order2 == null || fightIndex < 0) {
 			return null;
 		}
 
-		RegisteredPerson memberInOrder1 = getMember(order1, level);
-		RegisteredPerson memberInOrder2 = getMember(order2, level);
+		RegisteredPerson memberInOrder1 = getMember(order1, fightIndex);
+		RegisteredPerson memberInOrder2 = getMember(order2, fightIndex);
 
-		HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(level);
+		HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(fightIndex);
 		if (levelOrder == null) {
-			levelOrder = copyLastOrder(level);
-			membersOrder.put(level, levelOrder);
+			levelOrder = copyLastOrder(fightIndex);
+			membersOrder.put(fightIndex, levelOrder);
 		}
 
 		levelOrder.put(order2, memberInOrder1);
@@ -105,8 +105,8 @@ public class Team implements Comparable<Team> {
 	 * @param level
 	 * @return
 	 */
-	private HashMap<Integer, RegisteredPerson> copyLastOrder(int level) {
-		HashMap<Integer, RegisteredPerson> levelOrder = getMembersOrder(level);
+	private HashMap<Integer, RegisteredPerson> copyLastOrder(int fightIndex) {
+		HashMap<Integer, RegisteredPerson> levelOrder = getMembersOrder(fightIndex);
 		HashMap<Integer, RegisteredPerson> newOrder = new HashMap<>();
 		for (Integer order : levelOrder.keySet()) {
 			newOrder.put(order, levelOrder.get(order));
@@ -114,9 +114,9 @@ public class Team implements Comparable<Team> {
 		return newOrder;
 	}
 
-	public RegisteredPerson getMember(Integer order, int level) {
+	public RegisteredPerson getMember(Integer order, int fightIndex) {
 		try {
-			return getMembersOrder(level).get(order);
+			return getMembersOrder(fightIndex).get(order);
 		} catch (NullPointerException npe) {
 		}
 		return null;
@@ -134,9 +134,9 @@ public class Team implements Comparable<Team> {
 		this.group = group;
 	}
 
-	public int getNumberOfMembers(int level) {
+	public int getNumberOfMembers(int fightIndex) {
 		try {
-			return getMembersOrder(level).size();
+			return getMembersOrder(fightIndex).size();
 		} catch (NullPointerException npe) {
 		}
 		return 0;

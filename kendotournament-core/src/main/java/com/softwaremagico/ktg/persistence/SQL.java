@@ -772,7 +772,7 @@ public abstract class SQL extends Database {
                 }
                 // For each line obtained from the database, add a member.
                 t.setMember(RegisteredPersonPool.getInstance().get(rs.getObject("Member").toString()),
-                        rs.getInt("Position"), rs.getInt("LevelTournament"));
+                        rs.getInt("Position"), rs.getInt("FightOfTournament"));
             }
         } catch (SQLException ex) {
             showSqlError(ex);
@@ -797,13 +797,13 @@ public abstract class SQL extends Database {
         String query = "";
         // Insert team.
         for (int i = 0; i < teams.size(); i++) {
-            for (Integer level : teams.get(i).getMembersOrder().keySet()) {
-                for (int indexCompetitor = 0; indexCompetitor < teams.get(i).getNumberOfMembers(level); indexCompetitor++) {
+            for (Integer fightIndex : teams.get(i).getMembersOrder().keySet()) {
+                for (int indexCompetitor = 0; indexCompetitor < teams.get(i).getNumberOfMembers(fightIndex); indexCompetitor++) {
                     try {
-                        query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, LevelTournament) VALUES ('"
+                        query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
                                 + teams.get(i).getName()
                                 + "','"
-                                + teams.get(i).getMember(indexCompetitor, level).getId()
+                                + teams.get(i).getMember(indexCompetitor, fightIndex).getId()
                                 + "','"
                                 + teams.get(i).getTournament().getName()
                                 + "',"
@@ -811,7 +811,7 @@ public abstract class SQL extends Database {
                                 + ","
                                 + teams.get(i).getGroup()
                                 + ","
-                                + level + ");\n";
+                                + fightIndex + ");\n";
                     } catch (NullPointerException npe) { // The team has one
                         // competitor less...
                     }

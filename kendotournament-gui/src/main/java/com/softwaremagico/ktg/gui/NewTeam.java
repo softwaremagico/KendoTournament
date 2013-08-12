@@ -46,7 +46,7 @@ import javax.swing.JFileChooser;
 
 public class NewTeam extends KendoFrame {
 
-    private static Integer LEVEL = 0;
+    private static Integer FIGHT = 0;
     protected Translator trans = null;
     protected List<RegisteredPerson> competitors = new ArrayList<>();
     private List<Tournament> tournaments = new ArrayList<>();
@@ -311,7 +311,7 @@ public class NewTeam extends KendoFrame {
                         AlertManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                     } else {
                         for (int i = 0; i < participants.size(); i++) {
-                            team.setMember(participants.get(i), i, LEVEL);
+                            team.setMember(participants.get(i), i, FIGHT);
                         }
                         //Insert or update?
                         try {
@@ -504,7 +504,7 @@ public class NewTeam extends KendoFrame {
             //Team t = TeamPool.getManager(tournaments.get(TournamentComboBox.getSelectedIndex())).getTeam(NameTextField.getText());
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
-                t.setMember(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()), i, LEVEL);
+                t.setMember(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()), i, FIGHT);
             }
 
             try {

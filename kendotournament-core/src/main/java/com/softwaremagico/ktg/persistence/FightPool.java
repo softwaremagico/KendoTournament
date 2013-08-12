@@ -29,7 +29,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected String getId(Fight element) {
-        return element.hashCode()+"";
+        return element.hashCode() + "";
     }
 
     @Override
@@ -232,6 +232,31 @@ public class FightPool extends TournamentDependentPool<Fight> {
             }
         }
         return null;
+    }
+
+    /**
+     * Get the first fight not over.
+     *
+     * @param tournament
+     * @param fightArea
+     * @return Null if all fights are over.
+     */
+    public Integer getCurrentFightIndex(Tournament tournament) throws SQLException {
+        List<Fight> fightsOfTournament = get(tournament);
+        if (fightsOfTournament == null || fightsOfTournament.isEmpty()) {
+            return null;
+        }
+        for (Integer i = 0; i < fightsOfTournament.size(); i++) {
+            if (!fightsOfTournament.get(i).isOver()) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public int getFightIndex(Fight fight) throws SQLException {
+        List<Fight> fightsOfTournament = get(fight.getTournament());
+        return fightsOfTournament.indexOf(fight);
     }
 
     public Integer getLastLevelUsed(Tournament tournament) throws SQLException {

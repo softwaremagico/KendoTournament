@@ -24,9 +24,9 @@ package com.softwaremagico.ktg.gui.fight;
  */
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.OrderTeam;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.*;
@@ -127,7 +127,7 @@ public class TeamFight extends JPanel {
         removeAll();
         competitorFights = new ArrayList<>();
         for (int i = 0; i < t.getNumberOfMembers(fight.getLevel()); i++) {
-            CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.getLevel()), fight, left, selected, menu);
+            CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.getIndex()), fight, left, selected, menu);
             addCompetitorFight(cp);
         }
         repaint();
@@ -162,7 +162,7 @@ public class TeamFight extends JPanel {
         if ((team.numberOfMembers() > 1) && (!fight.isOver())) {
             if (!TournamentManagerFactory.getManager(tournament).getGroup(fight).areFightsStarted()) {
                 OrderTeam orderTeam;
-                orderTeam = new OrderTeam(fight.getTournament(), fight.getLevel(), this);
+                orderTeam = new OrderTeam(fight.getTournament(), fight.getIndex(), this);
                 orderTeam.updateOrderWindow(team);
                 orderTeam.setVisible(true);
             } else {

@@ -90,11 +90,11 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
             if (team1) {
-                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getIndex()).equals(competitor)) {
                     results.add(duel);
                 }
             } else {
-                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getIndex()).equals(competitor)) {
                     results.add(duel);
                 }
             }
@@ -107,11 +107,11 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         List<Duel> results = new ArrayList<>();
         for (Duel duel : allDuels) {
             if (team1) {
-                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                if (duel.getFight().getTeam1().getMember(duel.getOrder(), duel.getFight().getIndex()).equals(competitor)) {
                     results.add(duel);
                 }
             } else {
-                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getLevel()).equals(competitor)) {
+                if (duel.getFight().getTeam2().getMember(duel.getOrder(), duel.getFight().getIndex()).equals(competitor)) {
                     results.add(duel);
                 }
             }

@@ -62,9 +62,9 @@ public class FightListPDF extends ParentList {
         fightTable.addCell(getHeader3(f.getTeam1().getName() + " Vs " + f.getTeam2().getName(), 0));
 
         for (int i = 0; i < f.getTeam1().getNumberOfMembers(f.getLevel()); i++) {
-            fightTable.addCell(getCell(f.getTeam1().getMember(i, f.getLevel()).getSurnameNameIni(), 1, Element.ALIGN_LEFT));
+            fightTable.addCell(getCell(f.getTeam1().getMember(i, f.getIndex()).getSurnameNameIni(), 1, Element.ALIGN_LEFT));
             fightTable.addCell(getEmptyCell());
-            fightTable.addCell(getCell(f.getTeam2().getMember(i, f.getLevel()).getSurnameNameIni(), 1, Element.ALIGN_RIGHT));
+            fightTable.addCell(getCell(f.getTeam2().getMember(i, f.getIndex()).getSurnameNameIni(), 1, Element.ALIGN_RIGHT));
         }
 
         return fightTable;

@@ -39,13 +39,13 @@ import java.util.List;
 
 public class OrderTeam extends NewTeam {
 
-    private int level;
-    Team team = null;
-    TeamFight windowParent = null;
+    private int fightIndex;
+    private Team team = null;
+    private TeamFight windowParent = null;
 
-    public OrderTeam(Tournament tournament, int levelOrder, TeamFight tf) {
+    public OrderTeam(Tournament tournament, int fightIndex, TeamFight tf) {
         this.tournament = tournament;
-        level = levelOrder;
+        this.fightIndex = fightIndex;
         windowParent = tf;
         newTeam = false;
         start();
@@ -64,9 +64,9 @@ public class OrderTeam extends NewTeam {
         });
     }
 
-    public OrderTeam(Tournament tournament, int levelOrder) {
+    public OrderTeam(Tournament tournament, int fightIndex) {
         this.tournament = tournament;
-        level = levelOrder;
+        this.fightIndex = fightIndex;
         newTeam = false;
         start();
         setLanguage2(KendoTournamentGenerator.getInstance().getLanguage());
@@ -101,8 +101,8 @@ public class OrderTeam extends NewTeam {
             TournamentComboBox.setEnabled(false);
             for (int i = 0; i < competitorsPanel.size(); i++) {
                 try {
-                    if (i < t.getNumberOfMembers(level) && t.getMember(i, level) != null && (t.getMember(i, level).getSurname().length() > 0 || t.getMember(i, level).getName().length() > 0)) {
-                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, level).getSurname() + ", " + t.getMember(i, level).getName() + " (" + t.getMember(i, level).getId() + ")");
+                    if (i < t.getNumberOfMembers(fightIndex) && t.getMember(i, fightIndex) != null && (t.getMember(i, fightIndex).getSurname().length() > 0 || t.getMember(i, fightIndex).getName().length() > 0)) {
+                        competitorsPanel.get(i).competitorComboBox.setSelectedItem(t.getMember(i, fightIndex).getSurname() + ", " + t.getMember(i, fightIndex).getName() + " (" + t.getMember(i, fightIndex).getId() + ")");
                     } else {
                         competitorsPanel.get(i).competitorComboBox.setSelectedItem(" ");
                     }
@@ -128,7 +128,7 @@ public class OrderTeam extends NewTeam {
         } else {
             //Insert the change into the database.
             for (int i = 0; i < participants.size(); i++) {
-                team.setMember(participants.get(i), i, level);
+                team.setMember(participants.get(i), i, fightIndex);
             }
             try {
                 TeamPool.getInstance().update(tournament, team);
