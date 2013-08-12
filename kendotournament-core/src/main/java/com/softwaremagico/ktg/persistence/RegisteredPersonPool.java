@@ -22,59 +22,15 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return instance;
     }
 
-    @Override
-    protected String getId(RegisteredPerson element) {
-        return element.getId();
-    }
-
-    @Override
-    protected HashMap<String, RegisteredPerson> getElementsFromDatabase() throws SQLException {
-        DatabaseConnection.getInstance().connect();
-        List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
-        DatabaseConnection.getInstance().disconnect();
-        HashMap<String, RegisteredPerson> hashMap = new HashMap<>();
-        for (RegisteredPerson person : people) {
-            hashMap.put(getId(person), person);
+    public List<RegisteredPerson> getByClub(String club) throws SQLException {
+        List<RegisteredPerson> result = new ArrayList<>();
+        for (RegisteredPerson element : getAll()) {
+            if (element.getClub() != null && Tools.isSimilar(element.getClub().getName(), club)) {
+                result.add(element);
+            }
         }
-        return hashMap;
-    }
-
-    @Override
-    protected boolean storeElementsInDatabase(List<RegisteredPerson> elementsToStore) throws SQLException {
-        if (elementsToStore.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean removeElementsFromDatabase(List<RegisteredPerson> elementsToDelete) throws SQLException {
-        if (elementsToDelete.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean updateElements(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) throws SQLException {
-        if (elementsToUpdate.size() > 0) {
-            PhotoPool.getInstance().updateDatabase();
-            return DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
-        }
-        return true;
-    }
-
-    @Override
-    protected List<RegisteredPerson> sort() throws SQLException {
-        List<RegisteredPerson> unsorted = new ArrayList<RegisteredPerson>(getMap().values());
-        Collections.sort(unsorted);
-        return unsorted;
-    }
-
-    public void updateId(RegisteredPerson oldPerson, String newId) throws SQLException {
-        remove(oldPerson);
-        oldPerson.setId(newId);
-        add(oldPerson);
+        Collections.sort(result);
+        return result;
     }
 
     public List<RegisteredPerson> getById(String id) throws SQLException {
@@ -105,15 +61,21 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
         return result;
     }
 
-    public List<RegisteredPerson> getByClub(String club) throws SQLException {
-        List<RegisteredPerson> result = new ArrayList<>();
-        for (RegisteredPerson element : getAll()) {
-            if (element.getClub() != null && Tools.isSimilar(element.getClub().getName(), club)) {
-                result.add(element);
-            }
+    @Override
+    protected HashMap<String, RegisteredPerson> getElementsFromDatabase() throws SQLException {
+        DatabaseConnection.getInstance().connect();
+        List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
+        DatabaseConnection.getInstance().disconnect();
+        HashMap<String, RegisteredPerson> hashMap = new HashMap<>();
+        for (RegisteredPerson person : people) {
+            hashMap.put(getId(person), person);
         }
-        Collections.sort(result);
-        return result;
+        return hashMap;
+    }
+
+    @Override
+    protected String getId(RegisteredPerson element) {
+        return element.getId();
     }
 
     public List<RegisteredPerson> getPeopleWithoutClub() throws SQLException {
@@ -142,5 +104,43 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
     @Override
     public void remove(String elementName) throws SQLException {
         remove(get(elementName));
+    }
+
+    @Override
+    protected boolean removeElementsFromDatabase(List<RegisteredPerson> elementsToDelete) throws SQLException {
+        if (elementsToDelete.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().removeRegisteredPeople(elementsToDelete);
+        }
+        return true;
+    }
+
+    @Override
+    protected List<RegisteredPerson> sort() throws SQLException {
+        List<RegisteredPerson> unsorted = new ArrayList<RegisteredPerson>(getMap().values());
+        Collections.sort(unsorted);
+        return unsorted;
+    }
+
+    @Override
+    protected boolean storeElementsInDatabase(List<RegisteredPerson> elementsToStore) throws SQLException {
+        if (elementsToStore.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().addRegisteredPeople(elementsToStore);
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean updateElements(HashMap<RegisteredPerson, RegisteredPerson> elementsToUpdate) throws SQLException {
+        if (elementsToUpdate.size() > 0) {
+            PhotoPool.getInstance().updateDatabase();
+            return DatabaseConnection.getConnection().getDatabase().updateRegisteredPeople(elementsToUpdate);
+        }
+        return true;
+    }
+
+    public void updateId(RegisteredPerson oldPerson, String newId) throws SQLException {
+        remove(oldPerson);
+        oldPerson.setId(newId);
+        add(oldPerson);
     }
 }

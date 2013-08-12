@@ -23,11 +23,6 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
     }
 
     @Override
-    protected String getId(CustomWinnerLink element) {
-        return element.getId();
-    }
-
-    @Override
     protected HashMap<String, CustomWinnerLink> getElementsFromDatabase(Tournament tournament) throws SQLException {
         DatabaseConnection.getInstance().connect();
         List<CustomWinnerLink> links = DatabaseConnection.getConnection().getDatabase().getCustomWinnerLinks(tournament);
@@ -42,11 +37,19 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<CustomWinnerLink> elementsToStore) throws SQLException {
-        if (elementsToStore.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().addCustomWinnerLinks(elementsToStore);
+    protected String getId(CustomWinnerLink element) {
+        return element.getId();
+    }
+
+    public void remove(Tournament tournament, Integer source) throws SQLException {
+        List<CustomWinnerLink> links = get(tournament);
+        List<CustomWinnerLink> linksToRemove = new ArrayList<>();
+        for (CustomWinnerLink link : links) {
+            if (link.getSource() == source) {
+                linksToRemove.add(link);
+            }
         }
-        return true;
+        remove(tournament, linksToRemove);
     }
 
     @Override
@@ -61,28 +64,25 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
     }
 
     @Override
-    protected boolean updateElements(Tournament tournament, HashMap<CustomWinnerLink, CustomWinnerLink> elementsToUpdate) throws SQLException {
-        if (elementsToUpdate.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().updateCustomWinnerLinks(elementsToUpdate);
-        }
-        return true;
-    }
-
-    @Override
     protected List<CustomWinnerLink> sort(Tournament tournament) throws SQLException {
         List<CustomWinnerLink> unsorted = new ArrayList<CustomWinnerLink>(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }
 
-    public void remove(Tournament tournament, Integer source) throws SQLException {
-        List<CustomWinnerLink> links = get(tournament);
-        List<CustomWinnerLink> linksToRemove = new ArrayList<>();
-        for (CustomWinnerLink link : links) {
-            if (link.getSource() == source) {
-                linksToRemove.add(link);
-            }
+    @Override
+    protected boolean storeElementsInDatabase(Tournament tournament, List<CustomWinnerLink> elementsToStore) throws SQLException {
+        if (elementsToStore.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().addCustomWinnerLinks(elementsToStore);
         }
-        remove(tournament, linksToRemove);
+        return true;
+    }
+
+    @Override
+    protected boolean updateElements(Tournament tournament, HashMap<CustomWinnerLink, CustomWinnerLink> elementsToUpdate) throws SQLException {
+        if (elementsToUpdate.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().updateCustomWinnerLinks(elementsToUpdate);
+        }
+        return true;
     }
 }

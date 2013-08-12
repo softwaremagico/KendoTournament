@@ -22,68 +22,6 @@ public class ClubPool extends SimplePool<Club> {
         return instance;
     }
 
-    @Override
-    protected String getId(Club element) {
-        return element.getName();
-    }
-
-    @Override
-    protected HashMap<String, Club> getElementsFromDatabase() throws SQLException {
-        DatabaseConnection.getInstance().connect();
-        List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
-        DatabaseConnection.getInstance().disconnect();
-        HashMap<String, Club> hashMap = new HashMap<>();
-        for (Club c : clubs) {
-            hashMap.put(getId(c), c);
-        }
-        return hashMap;
-    }
-
-    @Override
-    protected boolean storeElementsInDatabase(List<Club> elementsToStore) throws SQLException {
-        if (elementsToStore.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean removeElementsFromDatabase(List<Club> elementsToDelete) throws SQLException {
-        if (elementsToDelete.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean updateElements(HashMap<Club, Club> elementsToUpdate) throws SQLException {
-        if (elementsToUpdate.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
-        }
-        return true;
-    }
-
-    @Override
-    protected List<Club> sort()  throws SQLException {
-        List<Club> unsorted = new ArrayList<Club>(getMap().values());
-        Collections.sort(unsorted);
-        return unsorted;
-    }
-
-    /**
-     * Obtain all elements that contains the desired string
-     */
-    public List<Club> getByName(String name) throws SQLException {
-        List<Club> result = new ArrayList<>();
-        for (Club element : getMap().values()) {
-            if (Tools.isSimilar(element.getName(), name)) {
-                result.add(element);
-            }
-        }
-        Collections.sort(result);
-        return result;
-    }
-
     /**
      * Obtain all elements that contains the desired string
      */
@@ -110,5 +48,67 @@ public class ClubPool extends SimplePool<Club> {
         }
         Collections.sort(result);
         return result;
+    }
+
+    /**
+     * Obtain all elements that contains the desired string
+     */
+    public List<Club> getByName(String name) throws SQLException {
+        List<Club> result = new ArrayList<>();
+        for (Club element : getMap().values()) {
+            if (Tools.isSimilar(element.getName(), name)) {
+                result.add(element);
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
+    @Override
+    protected HashMap<String, Club> getElementsFromDatabase() throws SQLException {
+        DatabaseConnection.getInstance().connect();
+        List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
+        DatabaseConnection.getInstance().disconnect();
+        HashMap<String, Club> hashMap = new HashMap<>();
+        for (Club c : clubs) {
+            hashMap.put(getId(c), c);
+        }
+        return hashMap;
+    }
+
+    @Override
+    protected String getId(Club element) {
+        return element.getName();
+    }
+
+    @Override
+    protected boolean removeElementsFromDatabase(List<Club> elementsToDelete) throws SQLException {
+        if (elementsToDelete.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().removeClubs(elementsToDelete);
+        }
+        return true;
+    }
+
+    @Override
+    protected List<Club> sort()  throws SQLException {
+        List<Club> unsorted = new ArrayList<Club>(getMap().values());
+        Collections.sort(unsorted);
+        return unsorted;
+    }
+
+    @Override
+    protected boolean storeElementsInDatabase(List<Club> elementsToStore) throws SQLException {
+        if (elementsToStore.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().addClubs(elementsToStore);
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean updateElements(HashMap<Club, Club> elementsToUpdate) throws SQLException {
+        if (elementsToUpdate.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().updateClubs(elementsToUpdate);
+        }
+        return true;
     }
 }

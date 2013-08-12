@@ -22,22 +22,11 @@ public class PhotoPool {
         return instance;
     }
 
-    private HashMap<String, Photo> getElements() {
-        if (elements == null) {
-            elements = new HashMap<>();
+    public boolean addElementsToDatabase() throws SQLException {
+        if (getPhotosToStore().size() > 0) {
+            return storeInDatabase(getPhotosToStore());
         }
-        return elements;
-    }
-
-    private List<Photo> getPhotosToStore() {
-        if (photosToStore == null) {
-            photosToStore = new ArrayList<>();
-        }
-        return photosToStore;
-    }
-
-    protected String getId(Photo element) {
-        return element.getId();
+        return true;
     }
 
     public Photo get(String competitorId) throws SQLException {
@@ -49,9 +38,11 @@ public class PhotoPool {
         return photo;
     }
 
-    public void set(Photo element) {
-        getElements().put(element.getId(), element);
-        getPhotosToStore().add(element);
+    private HashMap<String, Photo> getElements() {
+        if (elements == null) {
+            elements = new HashMap<>();
+        }
+        return elements;
     }
 
     protected Photo getFromDatabase(String competitorId) throws SQLException {
@@ -59,6 +50,35 @@ public class PhotoPool {
         Photo photo = DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
         DatabaseConnection.getInstance().disconnect();
         return photo;
+    }
+
+    protected String getId(Photo element) {
+        return element.getId();
+    }
+
+    private List<Photo> getPhotosToStore() {
+        if (photosToStore == null) {
+            photosToStore = new ArrayList<>();
+        }
+        return photosToStore;
+    }
+
+    public boolean needsToBeStoredInDatabase() {
+        return (getPhotosToStore().size() > 0);
+    }
+
+    public boolean removeElementsFromDatabase() throws SQLException {
+        return true;
+    }
+
+    public void reset() {
+        elements = null;
+        photosToStore = null;
+    }
+
+    public void set(Photo element) {
+        getElements().put(element.getId(), element);
+        getPhotosToStore().add(element);
     }
 
     protected boolean storeInDatabase(List<Photo> photos) throws SQLException {
@@ -70,30 +90,10 @@ public class PhotoPool {
         return true;
     }
 
-    public boolean removeElementsFromDatabase() throws SQLException {
-        return true;
-    }
-
-    public boolean addElementsToDatabase() throws SQLException {
-        if (getPhotosToStore().size() > 0) {
-            return storeInDatabase(getPhotosToStore());
-        }
-        return true;
-    }
-
     protected boolean updateDatabase() throws SQLException {
         if (getPhotosToStore().size() > 0) {
             return storeInDatabase(getPhotosToStore());
         }
         return true;
-    }
-
-    public boolean needsToBeStoredInDatabase() {
-        return (getPhotosToStore().size() > 0);
-    }
-
-    public void reset() {
-        elements = null;
-        photosToStore = null;
     }
 }

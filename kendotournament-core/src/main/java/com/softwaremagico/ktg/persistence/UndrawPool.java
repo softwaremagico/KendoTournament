@@ -24,8 +24,24 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected String getId(Undraw element) {
-        return element.getTournament().getName() + element.getLevel() + element.getGroupIndex() + element.getTeam();
+    public boolean add(Tournament tournament, Undraw element) throws SQLException {
+        Undraw undraw = getMap(tournament).get(getId(element));
+        if (undraw != null) {
+            undraw.setPoints(undraw.getPoints() + 1);
+            return true;
+        } else {
+            return super.add(tournament, element);
+        }
+    }
+
+    public Undraw get(Tournament tournament, Integer level, Integer group, Team team) throws SQLException {
+        List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
+        for (Undraw undraw : undrawsOfGroup) {
+            if (team.equals(undraw.getTeam())) {
+                return undraw;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -41,34 +57,8 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(Tournament tournament, List<Undraw> elementsToStore) throws SQLException {
-        if (elementsToStore.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean removeElementsFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) throws SQLException {
-        if (elementsToDelete.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) throws SQLException {
-        if (elementsToUpdate.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
-        }
-        return true;
-    }
-
-    @Override
-    protected List<Undraw> sort(Tournament tournament) throws SQLException {
-        List<Undraw> unsorted = new ArrayList<Undraw>(getMap(tournament).values());
-        Collections.sort(unsorted);
-        return unsorted;
+    protected String getId(Undraw element) {
+        return element.getTournament().getName() + element.getLevel() + element.getGroupIndex() + element.getTeam();
     }
 
     private List<Undraw> getUndraws(Tournament tournament, Integer level, Integer group) throws SQLException {
@@ -82,15 +72,6 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return undrawsOfGroup;
     }
 
-    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) throws SQLException {
-        List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
-        List<Team> teams = new ArrayList<>();
-        for (Undraw undraw : undrawsOfGroup) {
-            teams.add(undraw.getTeam());
-        }
-        return teams;
-    }
-
     public Integer getUndrawsWon(Tournament tournament, Integer level, Integer group, Team team) throws SQLException {
         Integer undrawsWon = 0;
         List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
@@ -102,24 +83,43 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
         return undrawsWon;
     }
 
-    public Undraw get(Tournament tournament, Integer level, Integer group, Team team) throws SQLException {
+    public List<Team> getWinners(Tournament tournament, Integer level, Integer group) throws SQLException {
         List<Undraw> undrawsOfGroup = getUndraws(tournament, level, group);
+        List<Team> teams = new ArrayList<>();
         for (Undraw undraw : undrawsOfGroup) {
-            if (team.equals(undraw.getTeam())) {
-                return undraw;
-            }
+            teams.add(undraw.getTeam());
         }
-        return null;
+        return teams;
     }
 
     @Override
-    public boolean add(Tournament tournament, Undraw element) throws SQLException {
-        Undraw undraw = getMap(tournament).get(getId(element));
-        if (undraw != null) {
-            undraw.setPoints(undraw.getPoints() + 1);
-            return true;
-        } else {
-            return super.add(tournament, element);
+    protected boolean removeElementsFromDatabase(Tournament tournament, List<Undraw> elementsToDelete) throws SQLException {
+        if (elementsToDelete.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().removeUndraws(elementsToDelete);
         }
+        return true;
+    }
+
+    @Override
+    protected List<Undraw> sort(Tournament tournament) throws SQLException {
+        List<Undraw> unsorted = new ArrayList<Undraw>(getMap(tournament).values());
+        Collections.sort(unsorted);
+        return unsorted;
+    }
+
+    @Override
+    protected boolean storeElementsInDatabase(Tournament tournament, List<Undraw> elementsToStore) throws SQLException {
+        if (elementsToStore.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().addUndraws(elementsToStore);
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate) throws SQLException {
+        if (elementsToUpdate.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
+        }
+        return true;
     }
 }

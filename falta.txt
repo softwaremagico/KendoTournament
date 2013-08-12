@@ -1,7 +1,7 @@
 Que las listas se puedan exportar en TXT
 Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
 Que muestre el mensaje de winners cuando todos los combates han terminado. 
-Que muestre el mensaje de esperando a la otra fightarea cuadno los combates de un grupo han terminado.
+Que muestre el mensaje de esperando a la otra fightarea cuando los combates de un grupo han terminado.
 Si la base de datos está vacía, se deshabiliten opciones de menú que necesitan que existan datos. 
-
-
+Cuando hay dos ordenadores, que se actualicen los datos (cambios en el orden de los equipos) al acabar el nivel. 
+TeamOrder se tiene que mover al panel de combates. 

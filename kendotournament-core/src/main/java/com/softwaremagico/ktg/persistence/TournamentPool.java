@@ -23,9 +23,15 @@ public class TournamentPool extends SimplePool<Tournament> {
         return instance;
     }
 
-    @Override
-    protected String getId(Tournament element) {
-        return element.getName();
+    public List<Tournament> getByName(String name) throws SQLException {
+        List<Tournament> result = new ArrayList<>();
+        for (Tournament element : getAll()) {
+            if (Tools.isSimilar(element.getName(), name)) {
+                result.add(element);
+            }
+        }
+        Collections.sort(result);
+        return result;
     }
 
     @Override
@@ -41,45 +47,8 @@ public class TournamentPool extends SimplePool<Tournament> {
     }
 
     @Override
-    protected boolean storeElementsInDatabase(List<Tournament> elementsToStore) throws SQLException {
-        if (elementsToStore.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) throws SQLException {
-        if (elementsToDelete.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
-        }
-        return true;
-    }
-
-    @Override
-    protected boolean updateElements(HashMap<Tournament, Tournament> elementsToUpdate) throws SQLException {
-        if (elementsToUpdate.size() > 0) {
-            return DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
-        }
-        return true;
-    }
-
-    @Override
-    protected List<Tournament> sort() throws SQLException {
-        List<Tournament> unsorted = new ArrayList<Tournament>(getMap().values());
-        Collections.sort(unsorted);
-        return unsorted;
-    }
-
-    public List<Tournament> getByName(String name) throws SQLException {
-        List<Tournament> result = new ArrayList<>();
-        for (Tournament element : getAll()) {
-            if (Tools.isSimilar(element.getName(), name)) {
-                result.add(element);
-            }
-        }
-        Collections.sort(result);
-        return result;
+    protected String getId(Tournament element) {
+        return element.getName();
     }
 
     public Integer getLevelTournament(Tournament tournament) throws SQLException {
@@ -104,5 +73,36 @@ public class TournamentPool extends SimplePool<Tournament> {
         CustomLinkPool.getInstance().remove(tournament);
         RolePool.getInstance().remove(tournament);
         return super.remove(tournament);
+    }
+
+    @Override
+    protected boolean removeElementsFromDatabase(List<Tournament> elementsToDelete) throws SQLException {
+        if (elementsToDelete.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().removeTournaments(elementsToDelete);
+        }
+        return true;
+    }
+
+    @Override
+    protected List<Tournament> sort() throws SQLException {
+        List<Tournament> unsorted = new ArrayList<Tournament>(getMap().values());
+        Collections.sort(unsorted);
+        return unsorted;
+    }
+
+    @Override
+    protected boolean storeElementsInDatabase(List<Tournament> elementsToStore) throws SQLException {
+        if (elementsToStore.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().addTournaments(elementsToStore);
+        }
+        return true;
+    }
+
+    @Override
+    protected boolean updateElements(HashMap<Tournament, Tournament> elementsToUpdate) throws SQLException {
+        if (elementsToUpdate.size() > 0) {
+            return DatabaseConnection.getConnection().getDatabase().updateTournaments(elementsToUpdate);
+        }
+        return true;
     }
 }
