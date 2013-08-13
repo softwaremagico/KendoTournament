@@ -38,7 +38,7 @@ import java.util.TimerTask;
 
 public class DatabaseConnection {
 
-    // Database connection keep alive for X tenths of a second
+    // Database connection keep alive for X tenth of a second
     private static Integer CONNECTION_TRIES = 10;
     private static Integer CONNECTION_TASK_PERIOD = 100;
     private Database database = null;
@@ -323,10 +323,10 @@ public class DatabaseConnection {
         if (connectionCounts == 0 && disconnected) {
             try {
                 connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
+                disconnected = false;
             } catch (NullPointerException npe) {
                 connectionSuccess = false;
             }
-            disconnected = false;
         }
         if (connectionSuccess) {
             connectionCounts++;

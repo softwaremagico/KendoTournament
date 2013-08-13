@@ -52,7 +52,7 @@ public class NewClub extends javax.swing.JFrame {
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
-        FillCompetitors();
+        fillCompetitors();
         updateClubOfCompetitor = true;
     }
 
@@ -116,7 +116,7 @@ public class NewClub extends javax.swing.JFrame {
         updateClubOfCompetitor = false;
     }
 
-    private void FillCompetitors() {
+    private void fillCompetitors() {
         try {
             competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
             RepresentativeComboBox.removeAllItems();
@@ -149,7 +149,7 @@ public class NewClub extends javax.swing.JFrame {
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
                 }
                 if (ClubPool.getInstance().add(club)) {
-                    AlertManager.informationMessage(this.getClass().getName(), "clubStored", "SQL");
+                    AlertManager.informationMessage(this.getClass().getName(), "clubStored", "Club");
                 }
                 CleanWindow();
                 if (newCompetitor != null) {
@@ -287,11 +287,6 @@ public class NewClub extends javax.swing.JFrame {
         );
 
         AcceptButton.setText("Accept");
-        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed(evt);
-            }
-        });
 
         CancelButton.setText("Close");
         CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -416,10 +411,6 @@ public class NewClub extends javax.swing.JFrame {
     private void MailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_MailTextFieldKeyReleased
         // UpdateRepresentative();
     }//GEN-LAST:event_MailTextFieldKeyReleased
-
-    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        acceptClub();
-    }//GEN-LAST:event_AcceptButtonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
