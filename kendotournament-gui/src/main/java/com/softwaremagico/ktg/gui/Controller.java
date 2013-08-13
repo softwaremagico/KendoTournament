@@ -172,7 +172,6 @@ public class Controller {
         main.addAccreditionCardMenuItemListener(new AccreditionCardsListener());
         main.addHelpMenuItemListener(new HelpWindowListener());
         main.addScoreMenuItemListener(new ChooseScoreListener());
-        main.addChangeTeamMenuItemListener(new ChangeTeamListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
         main.addSaveMenuItemListener(new SaveListener());
     }
@@ -618,19 +617,6 @@ public class Controller {
         }
     }
 
-    class ChangeTeamListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                changeTeam.dispose();
-            } catch (NullPointerException npe) {
-            }
-            changeTeam = new ChangeOrderTeam();
-            changeTeam.setVisible(true);
-        }
-    }
-
     class DatabaseConversorListener implements ActionListener {
 
         @Override
@@ -988,6 +974,7 @@ public class Controller {
     private void AddFightPanelListeners() {
         // tournamentPanel.addTreeListener(new TreeButtonListener());
         // tournamentPanel.addFightListener(new AddFightToPanelListener());
+        tournamentPanel.addChangeTeamMenuItemListener(new ChangeTeamOrderListener());
     }
 
     class TreeButtonListener implements ActionListener {
@@ -1019,6 +1006,19 @@ public class Controller {
             if (shortFight.filled()) {
                 shortFight.setVisible(true);
             }
+        }
+    }
+
+    class ChangeTeamOrderListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                changeTeam.dispose();
+            } catch (NullPointerException npe) {
+            }
+            changeTeam = new ChangeOrderTeam();
+            changeTeam.setVisible(true);
         }
     }
 

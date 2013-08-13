@@ -24,11 +24,11 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.tools.Media;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -115,7 +115,6 @@ public class MainGUI extends KendoFrame {
         ClubListMenuItem.setText(trans.getTranslatedText("ClubListMenuItem"));
         RefereeListMenuItem.setText(trans.getTranslatedText("RefereeListMenuItem"));
         ScoreMenuItem.setText(trans.getTranslatedText("ScoreMenuItem"));
-        ChangeTeamMenuItem.setText(trans.getTranslatedText("ChangeTeamOrder"));
         LogMenuCheckBox.setText(trans.getTranslatedText("LogOption"));
         DebugMenuCheckBox.setText(trans.getTranslatedText("DebugOption"));
         ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
@@ -196,7 +195,6 @@ public class MainGUI extends KendoFrame {
         SummaryMenuItem.setEnabled(connected);
         RefereeListMenuItem.setEnabled(connected);
         ClubListMenuItem.setEnabled(connected);
-        ChangeTeamMenuItem.setEnabled(connected);
         ConvertDatabaseMenuItem.setEnabled(true);
     }
 
@@ -378,10 +376,6 @@ public class MainGUI extends KendoFrame {
         ScoreMenuItem.addActionListener(al);
     }
 
-    public void addChangeTeamMenuItemListener(ActionListener al) {
-        ChangeTeamMenuItem.addActionListener(al);
-    }
-
     public void addConvertDatabaseMenuItemListener(ActionListener al) {
         ConvertDatabaseMenuItem.addActionListener(al);
     }
@@ -422,7 +416,6 @@ public class MainGUI extends KendoFrame {
         ScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));
         RoleMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"photo.png"));
         TeamMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"team.png"));
-        ChangeTeamMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"changeTeam.png"));
         DefineFightsMenu = new javax.swing.JMenu();
         DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"designer.png"));
         ManualFightsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"manual.png"));
@@ -542,9 +535,6 @@ public class MainGUI extends KendoFrame {
 
         TeamMenuItem.setText("Add Team");
         TournamentMenu.add(TeamMenuItem);
-
-        ChangeTeamMenuItem.setText("Change Team Order");
-        TournamentMenu.add(ChangeTeamMenuItem);
 
         DefineFightsMenu.setText("Define Fights");
 
@@ -694,7 +684,7 @@ public class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -734,7 +724,6 @@ private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GE
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;
     private javax.swing.JCheckBoxMenuItem AutosaveCheckBox;
-    private javax.swing.JMenuItem ChangeTeamMenuItem;
     private javax.swing.JMenuItem ClubListMenuItem;
     private javax.swing.JMenuItem ClubMenuItem;
     private javax.swing.JMenuItem CompetitorMenuItem;

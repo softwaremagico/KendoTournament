@@ -28,8 +28,6 @@ import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
-import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
@@ -44,11 +42,14 @@ import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class FightPanel extends KFrame {
     private KButton nextButton, previousButton;
     //private KCheckBox changeColor, changeTeam;
     private JMenuItem showTreeMenuItem, scoreMenuItem;
-    private KCheckBoxMenuItem changeTeam, changeColor;
+    private KCheckBoxMenuItem changeTeam, changeColor, changeMemberOrder;
 
     public FightPanel() {
         defineWindow(750, 500);
@@ -148,6 +149,12 @@ public class FightPanel extends KFrame {
         optionsMenu.setMnemonic(KeyEvent.VK_O);
         optionsMenu.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
 
+        changeMemberOrder = new KCheckBoxMenuItem("ChangeTeamOrder");
+        changeMemberOrder.setMnemonic(KeyEvent.VK_O);
+        changeMemberOrder.setIcon(new ImageIcon(Path.getIconPath() + "changeTeam.png"));
+
+        optionsMenu.add(changeMemberOrder);
+
         changeColor = new KCheckBoxMenuItem("ColourCheckBox");
         changeColor.setMnemonic(KeyEvent.VK_C);
         changeColor.setIcon(new ImageIcon(Path.getIconPath() + "color-invert.png"));
@@ -175,6 +182,10 @@ public class FightPanel extends KFrame {
         optionsMenu.add(changeTeam);
 
         return optionsMenu;
+    }
+
+    public void addChangeTeamMenuItemListener(ActionListener al) {
+        changeMemberOrder.addActionListener(al);
     }
 
     private void setMainPanels() {

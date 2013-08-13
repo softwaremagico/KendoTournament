@@ -46,23 +46,17 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private List<Team> teams = new ArrayList<>();
     private DefaultListModel<Team> teamsModel = new DefaultListModel<>();
     protected boolean refreshTournament = true;
-    private int level = 0;
 
     /**
      * Creates new form ChangeOrderTeam
      */
     public ChangeOrderTeam() {
-        try {
-            level = FightPool.getInstance().getLastLevelUsed(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-            initComponents();
-            setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                    (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-            setLanguage();
-            fillTournaments();
-            update();
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setLanguage();
+        fillTournaments();
+        update();
     }
 
     /**
@@ -94,7 +88,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
 
     private void update() {
         try {
-            level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
+            int level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
             teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
             fillTeams();
