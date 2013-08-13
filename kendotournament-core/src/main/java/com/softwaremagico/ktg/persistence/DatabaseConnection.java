@@ -321,7 +321,11 @@ public class DatabaseConnection {
         } catch (NullPointerException npe) {
         }
         if (connectionCounts == 0 && disconnected) {
-            connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
+            try {
+                connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
+            } catch (NullPointerException npe) {
+                connectionSuccess = false;
+            }
             disconnected = false;
         }
         if (connectionSuccess) {

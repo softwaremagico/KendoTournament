@@ -24,7 +24,9 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 
     @Override
     protected HashMap<String, CustomWinnerLink> getElementsFromDatabase(Tournament tournament) throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if (!DatabaseConnection.getInstance().connect()) {
+            return null;
+        }
         List<CustomWinnerLink> links = DatabaseConnection.getConnection().getDatabase().getCustomWinnerLinks(tournament);
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, CustomWinnerLink> hashMap = new HashMap<>();

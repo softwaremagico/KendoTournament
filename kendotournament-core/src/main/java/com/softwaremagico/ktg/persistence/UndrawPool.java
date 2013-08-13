@@ -46,7 +46,9 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected HashMap<String, Undraw> getElementsFromDatabase(Tournament tournament) throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if (!DatabaseConnection.getInstance().connect()) {
+            return null;
+        }
         List<Undraw> undraws = DatabaseConnection.getConnection().getDatabase().getUndraws(tournament);
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, Undraw> hashMap = new HashMap<>();
@@ -102,7 +104,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected List<Undraw> sort(Tournament tournament) throws SQLException {
-        List<Undraw> unsorted = new ArrayList<Undraw>(getMap(tournament).values());
+        List<Undraw> unsorted = new ArrayList<>(getMap(tournament).values());
         Collections.sort(unsorted);
         return unsorted;
     }

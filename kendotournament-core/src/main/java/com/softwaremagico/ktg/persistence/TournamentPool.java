@@ -36,7 +36,9 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected HashMap<String, Tournament> getElementsFromDatabase() throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if (!DatabaseConnection.getInstance().connect()) {
+            return null;
+        }
         List<Tournament> tournaments = DatabaseConnection.getInstance().getDatabase().getTournaments();
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, Tournament> hashMap = new HashMap<>();
@@ -85,7 +87,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected List<Tournament> sort() throws SQLException {
-        List<Tournament> unsorted = new ArrayList<Tournament>(getMap().values());
+        List<Tournament> unsorted = new ArrayList<>(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

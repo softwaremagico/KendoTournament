@@ -110,7 +110,7 @@ public class Controller {
             try {
                 if (DatabaseConnection.getInstance().testDatabaseConnection(DatabaseConnection.getInstance().getPassword(), DatabaseConnection.getInstance().getUser(),
                         DatabaseConnection.getInstance().getDatabaseName(), DatabaseConnection.getInstance().getServer())) {
-                    main.changeMenuIsConnectedToDatabase();
+                    main.enableMenuItems();
                 }
             } catch (SQLException ex) {
             }
@@ -649,9 +649,13 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            databaseConnection.performConnection();
-            main.changeMenuIsConnectedToDatabase();
+            connect();
         }
+    }
+
+    private void connect() {
+        databaseConnection.performConnection();
+        main.enableMenuItems();
     }
 
     class PasswordTyped implements KeyListener {
@@ -663,8 +667,7 @@ public class Controller {
             // Allow to connect presing ENTER.
             int ke = evt.getKeyCode();
             if (ke == 10 && key) {
-                databaseConnection.performConnection();
-                main.changeMenuIsConnectedToDatabase();
+                connect();
                 key = false;
             }
         }
@@ -781,6 +784,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             // newClub.acceptClub(); is defined in the window!
             newClub.updateClubsInCompetitor(newCompetitor);
+            main.enableMenuItems();
         }
     }
 

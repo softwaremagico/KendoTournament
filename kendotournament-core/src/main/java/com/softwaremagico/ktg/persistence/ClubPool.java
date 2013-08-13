@@ -66,7 +66,9 @@ public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected HashMap<String, Club> getElementsFromDatabase() throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if(!DatabaseConnection.getInstance().connect()){
+            return null;
+        }
         List<Club> clubs = DatabaseConnection.getConnection().getDatabase().getClubs();
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, Club> hashMap = new HashMap<>();
@@ -91,7 +93,7 @@ public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected List<Club> sort()  throws SQLException {
-        List<Club> unsorted = new ArrayList<Club>(getMap().values());
+        List<Club> unsorted = new ArrayList<>(getMap().values());
         Collections.sort(unsorted);
         return unsorted;
     }

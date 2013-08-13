@@ -46,7 +46,9 @@ public class PhotoPool {
     }
 
     protected Photo getFromDatabase(String competitorId) throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if (!DatabaseConnection.getInstance().connect()) {
+            return null;
+        }
         Photo photo = DatabaseConnection.getInstance().getDatabase().getPhoto(competitorId);
         DatabaseConnection.getInstance().disconnect();
         return photo;

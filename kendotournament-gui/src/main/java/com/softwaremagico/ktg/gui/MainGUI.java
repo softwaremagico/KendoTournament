@@ -28,7 +28,9 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.tools.Media;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -43,7 +45,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
-public class MainGUI extends KendoFrame {
+public final class MainGUI extends KendoFrame {
 
     Translator trans = null;
     private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
@@ -60,7 +62,7 @@ public class MainGUI extends KendoFrame {
         setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
         completeLanguageMenu();
         setPhoto();
-        changeMenuIsConnectedToDatabase();
+        enableMenuItems();
         updateConfig();
         addCloseAction();
     }
@@ -166,36 +168,18 @@ public class MainGUI extends KendoFrame {
         return KendoTournamentGenerator.getInstance().getLanguage();
     }
 
-    public final void changeMenuIsConnectedToDatabase() {
+    public void enableMenuItems() {
         boolean connected = DatabaseConnection.getInstance().isDatabaseConnectionTested();
-        DiplomaMenuItem.setEnabled(connected);
-        SaveMenuItem.setEnabled(connected);
-        TournamentPanelMenuItem.setEnabled(connected);
-        TournamentTopTenMenuItem.setEnabled(connected);
-        PointListMenuItem.setEnabled(connected);
-        FightListMenuItem.setEnabled(connected);
-        TeamListMenuItem.setEnabled(connected);
-        DatabaseConnectMenuItem.setEnabled(!connected);
-        DatabaseDisconnectMenuItem.setEnabled(connected);
-        FightMenuItem.setEnabled(connected);
-        TeamMenuItem.setEnabled(connected);
-        ClubMenuItem.setEnabled(connected);
-        TournamentMenuItem.setEnabled(connected);
-        RoleMenuItem.setEnabled(connected);
-        CompetitorMenuItem.setEnabled(connected);
-        TournamentHitsStatisticsMenuItem.setEnabled(connected);
-        CompetitorStatisticsMenu.setEnabled(connected);
-        TournamentStatisticsMenu.setEnabled(connected);
-        DesignerMenuItem.setEnabled(connected);
-        ManualFightsMenuItem.setEnabled(connected);
-        TeamStatisticsMenu.setEnabled(connected);
-        DefineFightsMenu.setEnabled(connected);
-        AccreditationMenuItem.setEnabled(connected);
-        ScoreMenuItem.setEnabled(connected);
-        SummaryMenuItem.setEnabled(connected);
-        RefereeListMenuItem.setEnabled(connected);
-        ClubListMenuItem.setEnabled(connected);
-        ConvertDatabaseMenuItem.setEnabled(true);
+        InsertMenu.setEnabled(connected);
+
+        boolean competitorCheck = !ClubPool.getInstance().isEmpty() && connected;
+        CompetitorMenuItem.setEnabled(competitorCheck);
+
+        boolean tournamentCheck = !RegisteredPersonPool.getInstance().isEmpty() && competitorCheck;
+        TournamentMenuItem.setEnabled(tournamentCheck);
+        TournamentMenu.setEnabled(tournamentCheck);
+        ListMenu.setEnabled(tournamentCheck);
+        StatisticsMenu.setEnabled(tournamentCheck);
     }
 
     @Override
@@ -693,7 +677,7 @@ public class MainGUI extends KendoFrame {
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
         DatabaseConnection.getInstance().disconnect();
         DatabaseConnection.getInstance().setPassword("");
-        changeMenuIsConnectedToDatabase();
+        enableMenuItems();
         AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL", JOptionPane.INFORMATION_MESSAGE);
 }//GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 

@@ -47,7 +47,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public boolean addElementsToDatabase(Tournament tournament) throws SQLException {
         if (getElementToStore(tournament) != null) {
-            storeElementsInDatabase(tournament, new ArrayList<ElementPool>(getElementToStore(tournament).values()));
+            storeElementsInDatabase(tournament, new ArrayList<>(getElementToStore(tournament).values()));
         }
         elementsToStore.put(tournament, new HashMap<String, ElementPool>());
         //Update must be done after store. 

@@ -118,7 +118,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
     @Override
     protected HashMap<String, Duel> getElementsFromDatabase(Tournament tournament) throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if (!DatabaseConnection.getInstance().connect()) {
+            return null;
+        }
         List<Duel> duels = DatabaseConnection.getConnection().getDatabase().getDuels(tournament);
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, Duel> hashMap = new HashMap<>();

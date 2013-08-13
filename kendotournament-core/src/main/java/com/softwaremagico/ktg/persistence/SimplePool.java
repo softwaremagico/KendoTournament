@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.persistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean addElementsToDatabase() throws SQLException {
-        storeElementsInDatabase(new ArrayList<ElementPool>(getElementToStore().values()));
+        storeElementsInDatabase(new ArrayList<>(getElementToStore().values()));
         elementsToStore = new HashMap<>();
         //Update must be done after store. 
         updateElements(getElementToUpdate());
@@ -58,7 +59,11 @@ public abstract class SimplePool<ElementPool> {
 
     protected List<ElementPool> getAll() throws SQLException {
         List<ElementPool> results = new ArrayList<>();
-        results.addAll(getMap().values());
+        try {
+            Collection<ElementPool> values = getMap().values();
+            results.addAll(values);
+        } catch (NullPointerException npe) {
+        }
         return results;
     }
 
@@ -142,7 +147,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean removeElementsFromDatabase() throws SQLException {
-        if (!removeElementsFromDatabase(new ArrayList<ElementPool>(getElementToRemove().values()))) {
+        if (!removeElementsFromDatabase(new ArrayList<>(getElementToRemove().values()))) {
             return false;
         }
         elementsToDelete = new HashMap<>();
@@ -215,4 +220,12 @@ public abstract class SimplePool<ElementPool> {
     }
 
     protected abstract boolean updateElements(HashMap<ElementPool, ElementPool> elementsToUpdate) throws SQLException;
+
+    public boolean isEmpty() {
+        try {
+            return getAll().isEmpty();
+        } catch (SQLException ex) {
+            return true;
+        }
+    }
 }

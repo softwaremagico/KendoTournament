@@ -63,7 +63,9 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected HashMap<String, RegisteredPerson> getElementsFromDatabase() throws SQLException {
-        DatabaseConnection.getInstance().connect();
+        if(!DatabaseConnection.getInstance().connect()){
+            return null;
+        }
         List<RegisteredPerson> people = DatabaseConnection.getInstance().getDatabase().getRegisteredPeople();
         DatabaseConnection.getInstance().disconnect();
         HashMap<String, RegisteredPerson> hashMap = new HashMap<>();
