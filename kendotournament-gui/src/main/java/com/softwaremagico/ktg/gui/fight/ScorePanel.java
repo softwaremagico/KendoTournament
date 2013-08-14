@@ -25,9 +25,9 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.persistence.FightPool;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,10 +77,14 @@ public class ScorePanel extends KPanel {
 
                 //Nexts
                 if (numberOfFightsToShow() > 1) {
-                    for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
-                            showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                        addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
-                        showedFights++;
+                    try {
+                        for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
+                                showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
+                            addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
+                            showedFights++;
+                        }
+                        //No more fights.
+                    } catch (NullPointerException npe) {
                     }
                 }
 
