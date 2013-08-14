@@ -28,13 +28,13 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
+import com.softwaremagico.ktg.persistence.TeamPool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tools.Media;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Color;
@@ -44,8 +44,12 @@ import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.SwingConstants;
 
 public class NewTournament extends KendoFrame {
 
@@ -64,6 +68,15 @@ public class NewTournament extends KendoFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
         createBanner();
+
+        JComponent editor = NumCompetitorsSpinner.getEditor();
+        JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
+        tf.setHorizontalAlignment(SwingConstants.RIGHT);
+        
+        editor = AreasSpinner.getEditor();
+        tf = ((JSpinner.DefaultEditor) editor).getTextField();
+        tf.setHorizontalAlignment(SwingConstants.RIGHT);
+
         NameTextField.setEditable(true);
     }
 

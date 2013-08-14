@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +132,11 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
             }
         }
     }
+    
+     public void addCloseListener(ActionListener al) {
+        CloseButton.addActionListener(al);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -177,11 +183,6 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         });
 
         CloseButton.setText("Close");
-        CloseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CloseButtonActionPerformed(evt);
-            }
-        });
 
         AvailableTeamLabel.setText("Available Teams:");
 
@@ -251,10 +252,6 @@ private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
 private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
     openOrderTeamWindow();
 }//GEN-LAST:event_SelectButtonActionPerformed
-
-private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
-    this.dispose();
-}//GEN-LAST:event_CloseButtonActionPerformed
 
 private void TeamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TeamListMouseClicked
     if (evt.getClickCount() == 2) {

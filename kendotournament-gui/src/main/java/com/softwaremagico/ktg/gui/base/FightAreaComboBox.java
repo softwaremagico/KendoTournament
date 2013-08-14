@@ -40,11 +40,14 @@ public class FightAreaComboBox extends KComboBox {
     }
 
     private void fillFightingAreas() {
+        Integer fightArea = getSelectedFightArea();
         removeAllItems();
         try {
             for (int i = 0; i < tournament.getFightingAreas(); i++) {
                 addItem(KendoTournamentGenerator.getFightAreaName(i));
             }
+
+            setSelectedIndex(fightArea);
         } catch (NullPointerException npe) {
         }
     }
