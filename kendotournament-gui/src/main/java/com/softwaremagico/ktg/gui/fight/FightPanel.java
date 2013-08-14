@@ -340,7 +340,7 @@ public class FightPanel extends KFrame {
 		return tournamentComboBox.getSelectedTournament();
 	}
 
-	public Integer getSelectedFightArea() {
+	public int getSelectedFightArea() {
 		return fightAreaComboBox.getSelectedFightArea();
 	}
 
