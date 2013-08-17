@@ -187,15 +187,6 @@ public class Fight implements Comparable<Fight> {
         return null;
     }
 
-    public void showDuels() {
-        System.out.println("---------------");
-        System.out.println(team1.getName() + " vs " + team2.getName());
-        for (int i = 0; i < getDuels().size(); i++) {
-            System.out.println(team1.getMember(i, getIndex()).getName() + ": " + getDuels().get(i).getHits(true).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(true).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(true) + " vs " + team2.getMember(i, getIndex()).getName() + ": " + getDuels().get(i).getHits(false).get(0).getAbbreviature() + " " + getDuels().get(i).getHits(false).get(1).getAbbreviature() + " Faults: " + getDuels().get(i).getFaults(false));
-        }
-        System.out.println("---------------");
-    }
-
     private void completeIppons() {
         for (int i = 0; i < team1.getNumberOfMembers(level); i++) {
             if (((i < team2.getNumberOfMembers(level) && team2.getMember(i, getIndex()) != null) //There is a player
@@ -354,13 +345,13 @@ public class Fight implements Comparable<Fight> {
         return true;
     }
 
-    public String show() {
-        return "'" + team1.getName() + "' vs '" + team2.getName() + "'";
-    }
-
     @Override
     public String toString() {
-        String text = "(" + group + "/" + groupIndex + ") Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
+        String text = "(" + group + "/" + groupIndex + ")";
+        if(isOver()){
+            text+=" [F]";
+        }
+        text+= " Tournament: " + tournament + ", Area: " + asignedFightArea + ", Teams: '" + team1.getName() + "' vs '" + team2.getName() + "'\n";
         for (Duel d : getDuels()) {
             text += d;
         }
@@ -384,7 +375,7 @@ public class Fight implements Comparable<Fight> {
         if (index == null) {
             try {
                 Integer fightIndex = FightPool.getInstance().getFightIndex(this);
-                if (fightIndex == null) {
+                if (fightIndex < 0) {
                     fightIndex = FightPool.getInstance().get(getTournament()).size() - 1;
                 }
                 index = fightIndex;
