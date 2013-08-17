@@ -371,7 +371,7 @@ public class Fight implements Comparable<Fight> {
         return groupIndex.compareTo(o.groupIndex);
     }
 
-    public Integer getIndex() {
+    public int getIndex() {
         if (index == null) {
             try {
                 Integer fightIndex = FightPool.getInstance().getFightIndex(this);
