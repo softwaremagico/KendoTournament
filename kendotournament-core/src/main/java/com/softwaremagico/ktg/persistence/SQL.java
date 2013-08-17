@@ -120,7 +120,7 @@ public abstract class SQL extends Database {
         }
         return value.toString();
     }
-    
+
     protected abstract int getMaxElementsInQuery();
 
     /**
@@ -751,7 +751,7 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
-     * @throws TeamMemberOrderException 
+     * @throws TeamMemberOrderException
      *
      */
     @Override
@@ -798,9 +798,9 @@ public abstract class SQL extends Database {
         // Insert team.
         for (int i = 0; i < teams.size(); i++) {
             for (Integer fightIndex : teams.get(i).getMembersOrder().keySet()) {
-                for (int indexCompetitor = 0; indexCompetitor < teams.get(i).getNumberOfMembers(fightIndex); indexCompetitor++) {
+                for (Integer indexCompetitor : teams.get(i).getMembersOrder().get(fightIndex).keySet()) {
                     try {
-                        query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
+                        query = "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
                                 + teams.get(i).getName()
                                 + "','"
                                 + teams.get(i).getMember(indexCompetitor, fightIndex).getId()
@@ -816,14 +816,14 @@ public abstract class SQL extends Database {
                         // competitor less...
                     }
                 }
+                try (PreparedStatement s = connection.prepareStatement(query)) {
+                    s.executeUpdate();
+                    query = "";
+                } catch (SQLException ex) {
+                    showSqlError(ex);
+                    return false;
+                }
             }
-            try (PreparedStatement s = connection.prepareStatement(query)) {
-                s.executeUpdate();
-            } catch (SQLException ex) {
-                showSqlError(ex);
-                return false;
-            }
-            query = "";
         }
         KendoLog.exiting(this.getClass().getName(), "addTeams");
         return true;
