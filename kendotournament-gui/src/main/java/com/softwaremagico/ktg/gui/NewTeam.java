@@ -311,7 +311,7 @@ public class NewTeam extends KendoFrame {
                         AlertManager.errorMessage(this.getClass().getName(), "notEnoughCompetitors", "League");
                     } else {
                         for (int i = 0; i < participants.size(); i++) {
-                            team.setMember(participants.get(i), i, FIGHT);
+                            team.setMember(participants.get(i), i);
                         }
                         //Insert or update?
                         try {
@@ -504,7 +504,7 @@ public class NewTeam extends KendoFrame {
             //Team t = TeamPool.getManager(tournaments.get(TournamentComboBox.getSelectedIndex())).getTeam(NameTextField.getText());
 
             for (int i = 0; i < competitorsPanel.size(); i++) {
-                t.setMember(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()), i, FIGHT);
+                t.setMember(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()), i);
             }
 
             try {

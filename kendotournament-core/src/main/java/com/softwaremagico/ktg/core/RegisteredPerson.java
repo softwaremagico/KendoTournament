@@ -34,8 +34,8 @@ import java.util.Locale;
 public class RegisteredPerson implements Comparable<RegisteredPerson> {
 
     private String id;
-    private String name;
-    private String surname;
+    private String name="";
+    private String surname="";
     private Club club;
 
     public RegisteredPerson(String id, String name, String surname) {

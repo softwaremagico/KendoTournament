@@ -62,7 +62,7 @@ public class ScoreTest {
 			// Add member.
 			RegisteredPerson member = TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).get(0);
 			Assert.assertNotNull(member);
-			team.setMember(member, teamMember, 0);
+			team.setMember(member, teamMember);
 			teamMember++;
 
 			// Team fill up, create a new team.

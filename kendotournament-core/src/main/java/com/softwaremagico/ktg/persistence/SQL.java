@@ -815,14 +815,25 @@ public abstract class SQL extends Database {
                     } catch (NullPointerException npe) { // The team has one
                         // competitor less...
                     }
+                    if (i % getMaxElementsInQuery() == 0) {
+                        try (PreparedStatement s = connection.prepareStatement(query)) {
+                            s.executeUpdate();
+                        } catch (SQLException ex) {
+                            showSqlError(ex);
+                            return false;
+                        }
+                        query = "";
+                    }
                 }
-                try (PreparedStatement s = connection.prepareStatement(query)) {
-                    s.executeUpdate();
-                    query = "";
-                } catch (SQLException ex) {
-                    showSqlError(ex);
-                    return false;
-                }
+            }
+        }
+        //Store last team.
+        if (query.length() > 0) {
+            try (PreparedStatement s = connection.prepareStatement(query)) {
+                s.executeUpdate();
+            } catch (SQLException ex) {
+                showSqlError(ex);
+                return false;
             }
         }
         KendoLog.exiting(this.getClass().getName(), "addTeams");

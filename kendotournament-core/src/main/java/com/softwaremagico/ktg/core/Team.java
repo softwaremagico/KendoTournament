@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import java.sql.SQLException;
@@ -33,290 +32,301 @@ import java.util.HashMap;
 
 public class Team implements Comparable<Team> {
 
-	private Tournament tournament;
-	private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; // HashMap<Fight,HashMap<Order,Competitor>>
-																				// Member>>;
-	private String name;
-	private int group = 0; // for the league
+    private Tournament tournament;
+    private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; // HashMap<Fight,HashMap<Order,Competitor>>
+    // Member>>;
+    private String name;
+    private int group = 0; // for the league
 
-	public Team(String name, Tournament tournament) {
-		setName(name);
-		this.tournament = tournament;
-		initializeMemberOrder();
-	}
+    public Team(String name, Tournament tournament) {
+        setName(name);
+        this.tournament = tournament;
+        initializeMemberOrder();
+    }
 
-	private void initializeMemberOrder() {
-		membersOrder = new HashMap<>();
-		membersOrder.put(0, new HashMap<Integer, RegisteredPerson>());
-	}
+    private void initializeMemberOrder() {
+        membersOrder = new HashMap<>();
+        membersOrder.put(0, new HashMap<Integer, RegisteredPerson>());
+    }
 
-	/**
-	 * Set a member in a team or change the order with current member if level >
-	 * 0
-	 * 
-	 * @param member
-	 * @param order
-	 * @param level
-	 * @throws TeamMemberOrderException
-	 */
-	public void setMember(RegisteredPerson member, Integer order, int fightIndex) {
-		if (member.isValid() && fightIndex >= 0) {
-			// First level must to put the user.
-			if (fightIndex == 0) {
-				membersOrder.get(fightIndex).put(order, member);
-			} else {
-				exchangeMembersOrder(getMemberOrder(member, fightIndex), order, fightIndex);
-			}
-		}
-	}
+    /**
+     * Set a member in a team
+     *
+     * @param member
+     * @param order
+     */
+    public void setMember(RegisteredPerson member, Integer order) {
+        setMember(member, order, 0);
+    }
 
-	/**
-	 * Exchange the position of two members.
-	 * 
-	 * @param order1
-	 * @param order2
-	 * @throws TeamMemberOrderException
-         * @return first member moved.
-	 */
-	public RegisteredPerson exchangeMembersOrder(Integer order1, Integer order2, int fightIndex) {
-		if (order1 == null || order2 == null || fightIndex < 0) {
-			return null;
-		}
+    /**
+     * Set a member in a team or change the order with current member if level >
+     * 0
+     *
+     * @param member
+     * @param order
+     * @param level
+     * @throws TeamMemberOrderException
+     */
+    public void setMember(RegisteredPerson member, Integer order, int fightIndex) {
+        if (member.isValid() && fightIndex >= 0) {
+            // First level must to put the user.
+            if (fightIndex == 0) {
+                membersOrder.get(fightIndex).put(order, member);
+            } else {
+                //Other levels must do an exchange because other members already exist in team.
+                exchangeMembersOrder(getMemberOrder(member, fightIndex), order, fightIndex);
+            }
+        }
+    }
 
-		RegisteredPerson memberInOrder1 = getMember(order1, fightIndex);
-		RegisteredPerson memberInOrder2 = getMember(order2, fightIndex);
+    /**
+     * Exchange the position of two members.
+     *
+     * @param order1
+     * @param order2
+     * @throws TeamMemberOrderException
+     * @return first member moved.
+     */
+    public RegisteredPerson exchangeMembersOrder(Integer order1, Integer order2, int fightIndex) {
+        if (order1 == null || order2 == null || fightIndex < 0) {
+            return null;
+        }
 
-		HashMap<Integer, RegisteredPerson> levelOrder = membersOrder.get(fightIndex);
-		if (levelOrder == null) {
-			levelOrder = copyLastOrder(fightIndex);
-			membersOrder.put(fightIndex, levelOrder);
-		}
+        RegisteredPerson memberInOrder1 = getMember(order1, fightIndex);
+        RegisteredPerson memberInOrder2 = getMember(order2, fightIndex);
 
-		levelOrder.put(order2, memberInOrder1);
-		levelOrder.put(order1, memberInOrder2);
-                
-                return memberInOrder1;
-	}
+        HashMap<Integer, RegisteredPerson> fightOrder = membersOrder.get(fightIndex);
+        if (fightOrder == null) {
+            fightOrder = copyLastOrder(fightIndex);
+            membersOrder.put(fightIndex, fightOrder);
+        }
 
-	/**
-	 * Creates a copy of a the order of the team members using the last order
-	 * defined.
-	 * 
-	 * @param level
-	 * @return
-	 */
-	private HashMap<Integer, RegisteredPerson> copyLastOrder(int fightIndex) {
-		HashMap<Integer, RegisteredPerson> levelOrder = getMembersOrder(fightIndex);
-		HashMap<Integer, RegisteredPerson> newOrder = new HashMap<>();
-		for (Integer order : levelOrder.keySet()) {
-			newOrder.put(order, levelOrder.get(order));
-		}
-		return newOrder;
-	}
+        fightOrder.put(order2, memberInOrder1);
+        fightOrder.put(order1, memberInOrder2);
 
-	public RegisteredPerson getMember(Integer order, int fightIndex) {
-		try {
-			return getMembersOrder(fightIndex).get(order);
-		} catch (NullPointerException npe) {
-		}
-		return null;
-	}
+        return memberInOrder1;
+    }
 
-	public Tournament getTournament() {
-		return tournament;
-	}
+    /**
+     * Creates a copy of a the order of the team members using the last order
+     * defined.
+     *
+     * @param level
+     * @return
+     */
+    private HashMap<Integer, RegisteredPerson> copyLastOrder(int fightIndex) {
+        HashMap<Integer, RegisteredPerson> fightOrder = getMembersOrder(fightIndex);
+        HashMap<Integer, RegisteredPerson> newOrder = new HashMap<>();
+        for (Integer order : fightOrder.keySet()) {
+            newOrder.put(order, fightOrder.get(order));
+        }
+        return newOrder;
+    }
 
-	public Integer getGroup() {
-		return group;
-	}
+    public RegisteredPerson getMember(Integer order, int fightIndex) {
+        try {
+            return getMembersOrder(fightIndex).get(order);
+        } catch (NullPointerException npe) {
+        }
+        return null;
+    }
 
-	public void setGroup(Integer group) {
-		this.group = group;
-	}
+    public Tournament getTournament() {
+        return tournament;
+    }
 
-	public int getNumberOfMembers(int fightIndex) {
-		try {
-			return getMembersOrder(fightIndex).size();
-		} catch (NullPointerException npe) {
-		}
-		return 0;
-	}
+    public Integer getGroup() {
+        return group;
+    }
 
-	/**
-	 * Get the order of a member in a level.
-	 * 
-	 * @param level
-	 * @param competitorID
-	 * @return
-	 * @throws SQLException
-	 */
-	public Integer getMemberOrder(String competitorID, int level) throws SQLException {
-		return getMemberOrder(RegisteredPersonPool.getInstance().get(competitorID), level);
-	}
+    public void setGroup(Integer group) {
+        this.group = group;
+    }
 
-	/**
-	 * Get the order of a member in a level.
-	 * 
-	 * @param level
-	 * @param competitor
-	 * @return
-	 */
-	public Integer getMemberOrder(RegisteredPerson competitor, int level) {
-		try {
-			HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
-			for (Integer order : orderInLevel.keySet()) {
-				if (orderInLevel.get(order).equals(competitor)) {
-					return order;
-				}
-			}
-		} catch (NullPointerException npe) {
-		}
-		return null;
-	}
+    public int getNumberOfMembers(int fightIndex) {
+        try {
+            return getMembersOrder(fightIndex).size();
+        } catch (NullPointerException npe) {
+        }
+        return 0;
+    }
 
-	public HashMap<Integer, HashMap<Integer, RegisteredPerson>> getMembersOrder() {
-		return membersOrder;
-	}
+    /**
+     * Get the order of a member in a level.
+     *
+     * @param level
+     * @param competitorID
+     * @return
+     * @throws SQLException
+     */
+    public Integer getMemberOrder(String competitorID, int level) throws SQLException {
+        return getMemberOrder(RegisteredPersonPool.getInstance().get(competitorID), level);
+    }
 
-	/**
-	 * Get all members order in one level.
-	 * 
-	 * @param level
-	 * @return
-	 */
-	public HashMap<Integer, RegisteredPerson> getMembersOrder(int level) {
-		if (level >= 0) {
-			try {
-				HashMap<Integer, RegisteredPerson> membersInLevel = membersOrder.get(level);
-				if (membersInLevel == null) {
-					return getMembersOrder(level - 1);
-				} else {
-					return membersInLevel;
-				}
-			} catch (Exception e) {
-				if (level >= 0) {
-					return getMembersOrder(level - 1);
-				}
-			}
-		}
-		return null;
-	}
+    /**
+     * Get the order of a member in a level.
+     *
+     * @param level
+     * @param competitor
+     * @return
+     */
+    public Integer getMemberOrder(RegisteredPerson competitor, int level) {
+        try {
+            HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
+            for (Integer order : orderInLevel.keySet()) {
+                if (orderInLevel.get(order).equals(competitor)) {
+                    return order;
+                }
+            }
+        } catch (NullPointerException npe) {
+        }
+        return null;
+    }
 
-	/**
-	 * User previously has change the order of one or more members in a level.
-	 * 
-	 * @param level
-	 * @return
-	 */
-	public boolean areMemberOrderChanges(int level) {
-		try {
-			if (membersOrder.get(level) != null) {
-				return true;
-			}
-		} catch (Exception e) {
-		}
-		return false;
-	}
+    public HashMap<Integer, HashMap<Integer, RegisteredPerson>> getMembersOrder() {
+        return membersOrder;
+    }
 
-	public int levelChangesSize() {
-		return membersOrder.size();
-	}
+    /**
+     * Get all members order in one level.
+     *
+     * @param level
+     * @return
+     */
+    public HashMap<Integer, RegisteredPerson> getMembersOrder(int level) {
+        if (level >= 0) {
+            try {
+                HashMap<Integer, RegisteredPerson> membersInLevel = membersOrder.get(level);
+                if (membersInLevel == null) {
+                    return getMembersOrder(level - 1);
+                } else {
+                    return membersInLevel;
+                }
+            } catch (Exception e) {
+                if (level >= 0) {
+                    return getMembersOrder(level - 1);
+                }
+            }
+        }
+        return null;
+    }
 
-	public void addGroup(int g) {
-		if (g >= 0) {
-			group = g;
-		}
-	}
+    /**
+     * User previously has change the order of one or more members in a level.
+     *
+     * @param level
+     * @return
+     */
+    public boolean areMemberOrderChanges(int level) {
+        try {
+            if (membersOrder.get(level) != null) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
 
-	public String getShortName() {
-		return getShortName(21);
-	}
+    public int levelChangesSize() {
+        return membersOrder.size();
+    }
 
-	public String getShortName(int length) {
-		if (name.length() <= length) {
-			return name;
-		} else {
-			return name.substring(0, length - 3) + ". " + name.substring(name.length() - 2, name.length());
-		}
-	}
+    public void addGroup(int g) {
+        if (g >= 0) {
+            group = g;
+        }
+    }
 
-	public final void setName(String name) {
-		this.name = name.trim().replace(";", ",");
-	}
+    public String getShortName() {
+        return getShortName(21);
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getShortName(int length) {
+        if (name.length() <= length) {
+            return name;
+        } else {
+            return name.substring(0, length - 3) + ". " + name.substring(name.length() - 2, name.length());
+        }
+    }
 
-	public int realMembers() {
-		int counter = 0;
-		if (membersOrder.size() > 0) {
-			for (int i = 0; i < membersOrder.get(0).size(); i++) {
-				if (membersOrder.get(0).get(i) != null) {
-					counter++;
-				}
-			}
-		}
-		return counter;
-	}
+    public final void setName(String name) {
+        this.name = name.trim().replace(";", ",");
+    }
 
-	public int numberOfMembers() {
-		if (membersOrder.size() > 0) {
-			return membersOrder.get(0).size();
-		}
-		return 0;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean isMember(RegisteredPerson member) {
-		return getMembersOrder(0).values().contains(member);
-	}
+    public int realMembers() {
+        int counter = 0;
+        if (membersOrder.size() > 0) {
+            for (int i = 0; i < membersOrder.get(0).size(); i++) {
+                if (membersOrder.get(0).get(i) != null) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    }
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) {
-			return true;
-		}
-		if (!(object instanceof Team)) {
-			return false;
-		}
-		Team otherTeam = (Team) object;
-		return this.name.equals(otherTeam.name) && this.tournament.equals(otherTeam.tournament);
+    public int numberOfMembers() {
+        if (membersOrder.size() > 0) {
+            return membersOrder.get(0).size();
+        }
+        return 0;
+    }
 
-	}
+    public boolean isMember(RegisteredPerson member) {
+        return getMembersOrder(0).values().contains(member);
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 5;
-		hash = 17 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
-		hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
-		return hash;
-	}
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Team)) {
+            return false;
+        }
+        Team otherTeam = (Team) object;
+        return this.name.equals(otherTeam.name) && this.tournament.equals(otherTeam.tournament);
 
-	@Override
-	public String toString() {
-		return this.getName();
-	}
+    }
 
-	@Override
-	public int compareTo(Team t) {
-		return getName().compareTo(t.getName());
-	}
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + (this.tournament != null ? this.tournament.hashCode() : 0);
+        hash = 17 * hash + (this.name != null ? this.name.hashCode() : 0);
+        return hash;
+    }
 
-	/**
-	 * Remove a meber of the team
-	 * 
-	 * @return false if the member is not of this team.
-	 */
-	public boolean removeMemeber(RegisteredPerson member) {
-		boolean found = false;
-		for (Integer level : membersOrder.keySet()) {
-			for (Integer order : membersOrder.get(level).keySet()) {
-				if (membersOrder.get(level).get(order).equals(member)) {
-					membersOrder.get(level).remove(order);
-					found = true;
-				}
-			}
-		}
-		return found;
-	}
+    @Override
+    public String toString() {
+        return this.getName();
+    }
+
+    @Override
+    public int compareTo(Team t) {
+        return getName().compareTo(t.getName());
+    }
+
+    /**
+     * Remove a meber of the team
+     *
+     * @return false if the member is not of this team.
+     */
+    public boolean removeMemeber(RegisteredPerson member) {
+        boolean found = false;
+        for (Integer fightIndex : membersOrder.keySet()) {
+            for (Integer order : membersOrder.get(fightIndex).keySet()) {
+                if (membersOrder.get(fightIndex).get(order).equals(member)) {
+                    membersOrder.get(fightIndex).remove(order);
+                    found = true;
+                }
+            }
+        }
+        return found;
+    }
 }

@@ -170,7 +170,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
         List<RegisteredPerson> competitors = RolePool.getInstance().getCompetitors(tournament);
         for (RegisteredPerson competitor : competitors) {
             Team team = new Team(competitor.getSurnameName(), tournament);
-            team.setMember(competitor, 0, 0);
+            team.setMember(competitor, 0);
             add(tournament, team);
         }
         tournament.setTeamSize(1);
