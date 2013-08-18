@@ -47,13 +47,13 @@ public abstract class TGroup {
     protected Integer level;
     private Integer fightArea = 0;
     private List<Fight> fightsOfGroup;
-    private Integer groupIndex;
+    private int index;
 
-    public TGroup(Tournament tournament, Integer level, Integer fightArea, Integer groupIndex) {
+    public TGroup(Tournament tournament, Integer level, Integer fightArea, int index) {
         this.tournament = tournament;
         this.level = level;
         this.fightArea = fightArea;
-        this.groupIndex = groupIndex;
+        this.index = index;
         fightsOfGroup = new ArrayList<>();
         if (level == 0) {
             this.numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
@@ -162,10 +162,8 @@ public abstract class TGroup {
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).getLevel() == level) {
-                if (teams.contains(fights.get(i).getTeam1()) || teams.contains(fights.get(i).getTeam2())) {
+            if (fights.get(i).getGroup()== index) {
                     fightsG.add(fights.get(i));
-                }
             }
         }
         return fightsG;
@@ -253,7 +251,7 @@ public abstract class TGroup {
 
     @Override
     public String toString() {
-        return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + groupIndex + ", fight area: " + fightArea + ", teams " + teams + "\n";
+        return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + index + ", fight area: " + fightArea + ", teams " + teams + "\n";
     }
 
     @Override
@@ -262,7 +260,7 @@ public abstract class TGroup {
         hash = 41 * hash + Objects.hashCode(this.tournament);
         hash = 41 * hash + Objects.hashCode(this.teams);
         hash = 41 * hash + Objects.hashCode(this.level);
-        hash = 41 * hash + Objects.hashCode(this.groupIndex);
+        hash = 41 * hash + Objects.hashCode(this.index);
         hash = 41 * hash + Objects.hashCode(this.fightArea);
         hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
         hash = 41 * hash + Objects.hashCode(this.numberMaxOfWinners);
@@ -281,7 +279,7 @@ public abstract class TGroup {
         if (!Objects.equals(this.tournament, other.tournament)) {
             return false;
         }
-        if (!Objects.equals(this.groupIndex, other.groupIndex)) {
+        if (!Objects.equals(this.index, other.index)) {
             return false;
         }
         if (!Objects.equals(this.teams, other.teams)) {
@@ -312,5 +310,9 @@ public abstract class TGroup {
         addTeam(fight.getTeam1());
         addTeam(fight.getTeam2());
         Collections.sort(fightsOfGroup);
+    }
+    
+    public int getIndex(){
+        return index;
     }
 }

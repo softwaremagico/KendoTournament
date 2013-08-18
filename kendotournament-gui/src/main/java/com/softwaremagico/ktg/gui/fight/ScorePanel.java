@@ -113,7 +113,7 @@ public class ScorePanel extends KPanel {
         }
     }
 
-    private RoundFight createFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
+    private RoundFight createFightPanel(int fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
         RoundFight rf = null;
         Fight f = null;
         try {

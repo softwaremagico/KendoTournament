@@ -27,7 +27,7 @@ public class LoopTournamentGroup extends TGroup {
 		}
 		for (Team team : remainingTeams) {
 			for (Team adversary : remainingFights.getAdversaries(team)) {
-				Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), 0, fights.size());
+				Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), getIndex(), fights.size());
 				fights.add(fight);
 			}
 		}

@@ -94,7 +94,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer group, Integer index)
             throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
-            if (fight.getGroup() == group && fight.getGroupIndex() == index && fight.getTournament().equals(tournament)
+            if (fight.getGroup() == group && fight.getOrderInGroup() == index && fight.getTournament().equals(tournament)
                     && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2) && fight.getLevel() == level) {
                 return fight;
             }
@@ -107,7 +107,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
      *
      * @param tournament
      * @param fightArea
-     * @return Null if all fights are over.
+     * @return Null if no fights exist.
      */
     public Fight getCurrentFight(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
@@ -119,7 +119,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
                 return fightsOfArena.get(i);
             }
         }
-        return null;
+        return fightsOfArena.get(fightsOfArena.size() - 1);
     }
 
     /**
@@ -151,7 +151,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
      *
      * @param tournament
      * @param fightArea
-     * @return Null if all fights are over.
+     * @return last fight if all fights are over or null if no fight exists.
      */
     public Integer getCurrentFightIndex(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
@@ -163,7 +163,8 @@ public class FightPool extends TournamentDependentPool<Fight> {
                 return i;
             }
         }
-        return null;
+        //Get the last one.
+        return fightsOfArena.size() - 1;
     }
 
     @Override

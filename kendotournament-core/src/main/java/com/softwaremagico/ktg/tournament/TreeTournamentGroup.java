@@ -27,9 +27,9 @@ public class TreeTournamentGroup extends TGroup {
             Team team2 = getTeams().get((i + 1) % getTeams().size());
 
             if (fights.size() % 2 == 0) {
-                fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), TournamentManagerFactory.getManager(getTournament()).getIndex(level, this), fights.size());
+                fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), getIndex(), fights.size());
             } else {
-                fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), TournamentManagerFactory.getManager(getTournament()).getIndex(level, this), fights.size());
+                fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
             }
             fights.add(fight);
         }

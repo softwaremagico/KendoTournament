@@ -45,24 +45,24 @@ public class ChampionshipTest {
     public void addTeams() throws SQLException, TeamMemberOrderException {
         int teamIndex = 0;
         Team team = null;
-        int teamMember = 0;
+        int memberOrder = 0;
         while (TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).size() > 0) {
             //Create a new team.
             if (team == null) {
                 teamIndex++;
                 team = new Team("Team" + String.format("%02d", teamIndex), tournament);
-                teamMember = 0;
+                memberOrder = 0;
                 TeamPool.getInstance().add(tournament, team);
             }
 
             //Add member.
             RegisteredPerson member = TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).get(0);
             Assert.assertNotNull(member);
-            team.setMember(member, teamMember, 0);
-            teamMember++;
+            team.setMember(member, memberOrder);
+            memberOrder++;
 
             //Team fill up, create a new team. 
-            if (teamMember >= MEMBERS) {
+            if (memberOrder >= MEMBERS) {
                 team = null;
             }
         }

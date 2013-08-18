@@ -31,13 +31,13 @@ public class SimpleTournamentGroup extends TGroup {
 			}
 			// Remaingin fights sometimes repeat team. Align them.
 			if (lastFight != null && (lastFight.getTeam1().equals(team2) || lastFight.getTeam2().equals(team1))) {
-				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), 0, fights.size());
+				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
 			} else if (lastFight != null && (lastFight.getTeam1().equals(team1) || lastFight.getTeam2().equals(team2))) {
-				fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), 0, fights.size());
+				fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), getIndex(), fights.size());
 			} else if (fights.size() % 2 == 0) {
-				fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), 0, fights.size());
+				fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), getIndex(), fights.size());
 			} else {
-				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), 0, fights.size());
+				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
 			}
 			fights.add(fight);
 			lastFight = fight;

@@ -933,7 +933,7 @@ public abstract class SQL extends Database {
                         + ","
                         + fights.get(i).getGroup()
                         + ","
-                        + fights.get(i).getGroupIndex() + "); ";
+                        + fights.get(i).getOrderInGroup() + "); ";
             } catch (NullPointerException npe) {
                 KendoLog.errorMessage(this.getClass().getName(), npe);
             }
@@ -959,7 +959,7 @@ public abstract class SQL extends Database {
             query += "DELETE FROM fight WHERE Tournament='" + fights.get(i).getTournament().getName()
                     + "' AND TournamentLevel=" + fights.get(i).getLevel() + " AND Team1='" + fights.get(i).getTeam1().getName()
                     + "' AND Team2='" + fights.get(i).getTeam2().getName() + "' AND TournamentGroup=" + fights.get(i).getGroup()
-                    + " AND GroupIndex=" + fights.get(i).getGroupIndex() + "; ";
+                    + " AND GroupIndex=" + fights.get(i).getOrderInGroup() + "; ";
             if (i % getMaxElementsInQuery() == 0 || i == fights.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
@@ -987,10 +987,10 @@ public abstract class SQL extends Database {
             query += "UPDATE Fight SET Team1='" + newFights.get(i).getTeam1() + "', Tournament='" + newFights.get(i).getTournament()
                     + "' Team2='" + newFights.get(i).getTeam2() + "', Winner=" + newFights.get(i).getWinner() + ", TournamentLevel="
                     + newFights.get(i).getLevel() + ", FightArea=" + newFights.get(i).getAsignedFightArea() + ", TournamentGroup="
-                    + newFights.get(i).getGroup() + ", GroupIndex=" + newFights.get(i).getGroupIndex() + " WHERE Team1='"
+                    + newFights.get(i).getGroup() + ", GroupIndex=" + newFights.get(i).getOrderInGroup() + " WHERE Team1='"
                     + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='"
                     + oldFight.getTournament().getName() + "' AND TournamentLevel=" + oldFight.getLevel()
-                    + " AND TournamentGroup=" + oldFight.getGroup() + " AND GroupIndex=" + oldFight.getGroupIndex()
+                    + " AND TournamentGroup=" + oldFight.getGroup() + " AND GroupIndex=" + oldFight.getOrderInGroup()
                     + "; ";
             if (i % getMaxElementsInQuery() == 0 || i == newFights.size() - 1) {
                 try (Statement s = connection.createStatement()) {
@@ -1098,7 +1098,7 @@ public abstract class SQL extends Database {
                         + "', "
                         + duels.get(i).getFight().getGroup()
                         + ", "
-                        + duels.get(i).getFight().getGroupIndex()
+                        + duels.get(i).getFight().getOrderInGroup()
                         + ", "
                         + duels.get(i).getFight().getLevel()
                         + ", "
@@ -1141,7 +1141,7 @@ public abstract class SQL extends Database {
                     + "' AND TournamentLevel=" + duels.get(i).getFight().getLevel() + " AND Team1='"
                     + duels.get(i).getFight().getTeam1().getName() + "' AND Team2='" + duels.get(i).getFight().getTeam2().getName()
                     + "' AND TournamentGroup=" + duels.get(i).getFight().getGroup() + " AND GroupIndex="
-                    + duels.get(i).getFight().getGroupIndex() + " AND MemberOrder=" + duels.get(i).getOrder() + "; ";
+                    + duels.get(i).getFight().getOrderInGroup() + " AND MemberOrder=" + duels.get(i).getOrder() + "; ";
             if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
                 try (Statement s = connection.createStatement()) {
                     s.executeUpdate(query);
@@ -1169,7 +1169,7 @@ public abstract class SQL extends Database {
             query += "UPDATE duel SET Team1='" + newDuels.get(i).getFight().getTeam1() + "', Tournament='"
                     + newDuels.get(i).getFight().getTournament() + "' Team2='" + newDuels.get(i).getFight().getTeam2()
                     + "', TournamentLevel=" + newDuels.get(i).getFight().getLevel() + ", TournamentGroup="
-                    + newDuels.get(i).getFight().getGroup() + ", GroupIndex=" + newDuels.get(i).getFight().getGroupIndex()
+                    + newDuels.get(i).getFight().getGroup() + ", GroupIndex=" + newDuels.get(i).getFight().getOrderInGroup()
                     + ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0)
                     + "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1) + "', PointPlayer2A="
                     + newDuels.get(i).getHits(false).get(0) + ", PointPlayer2B=" + newDuels.get(i).getHits(false).get(1)
@@ -1178,7 +1178,7 @@ public abstract class SQL extends Database {
                     + oldDuel.getFight().getTeam2() + "' AND Tournament='"
                     + oldDuel.getFight().getTournament().getName() + "' AND TournamentLevel="
                     + oldDuel.getFight().getLevel() + " AND TournamentGroup=" + oldDuel.getFight().getGroup()
-                    + " AND GroupIndex=" + oldDuel.getFight().getGroupIndex() + " AND MemberOrder="
+                    + " AND GroupIndex=" + oldDuel.getFight().getOrderInGroup() + " AND MemberOrder="
                     + oldDuel.getOrder() + "; ";
             if (i % getMaxElementsInQuery() == 0 || i == newDuels.size() - 1) {
                 try (Statement s = connection.createStatement()) {

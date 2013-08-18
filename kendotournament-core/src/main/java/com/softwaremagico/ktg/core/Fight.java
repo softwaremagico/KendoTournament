@@ -39,22 +39,26 @@ public class Fight implements Comparable<Fight> {
     private Integer asignedFightArea;
     private Integer winner;   //-1-> Winner team1, 1-> Winner team2, 0-> Draw Game, 2-> Not finished
     private Integer group;
-    private Integer groupIndex;
+    private Integer orderInGroup;
     private Integer level;
     private Integer index = null;
 
-    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int group, int groupIndex) {
+    public Fight(Tournament tournament, Team team1, Team team2, int asignedArea, int level, int group, int orderInGroup) {
         this.team1 = team1;
         this.team2 = team2;
         this.tournament = tournament;
         this.asignedFightArea = asignedArea;
         this.group = group;
-        this.groupIndex = groupIndex;
+        this.orderInGroup = orderInGroup;
         this.level = level;
     }
 
-    public Integer getGroupIndex() {
-        return groupIndex;
+    /**
+     * Get index of this fight compared to the group. 
+     * @return 
+     */
+    public Integer getOrderInGroup() {
+        return orderInGroup;
     }
 
     public Integer getGroup() {
@@ -309,7 +313,7 @@ public class Fight implements Comparable<Fight> {
         hash = 41 * hash + Objects.hashCode(this.team1);
         hash = 41 * hash + Objects.hashCode(this.team2);
         hash = 41 * hash + Objects.hashCode(this.tournament);
-        hash = 41 * hash + Objects.hashCode(this.groupIndex);
+        hash = 41 * hash + Objects.hashCode(this.orderInGroup);
         hash = 41 * hash + Objects.hashCode(this.group);
         hash = 41 * hash + Objects.hashCode(this.level);
         return hash;
@@ -333,7 +337,7 @@ public class Fight implements Comparable<Fight> {
         if (!Objects.equals(this.tournament, other.tournament)) {
             return false;
         }
-        if (!Objects.equals(this.groupIndex, other.groupIndex)) {
+        if (!Objects.equals(this.orderInGroup, other.orderInGroup)) {
             return false;
         }
         if (!Objects.equals(this.group, other.group)) {
@@ -347,7 +351,7 @@ public class Fight implements Comparable<Fight> {
 
     @Override
     public String toString() {
-        String text = "(" + group + "/" + groupIndex + ")";
+        String text = "(" + group + "/" + orderInGroup + ")";
         if(isOver()){
             text+=" [F]";
         }
@@ -368,9 +372,13 @@ public class Fight implements Comparable<Fight> {
         if (groupCompare != 0) {
             return groupCompare;
         }
-        return groupIndex.compareTo(o.groupIndex);
+        return orderInGroup.compareTo(o.orderInGroup);
     }
 
+    /**
+     * Gets the index of this fight compared to all fights of championship.
+     * @return 
+     */
     public int getIndex() {
         if (index == null) {
             try {
