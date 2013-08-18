@@ -49,6 +49,7 @@ public class DatabaseStore {
         //Compare data.       
         Assert.assertTrue(RolePool.getInstance().get(tournament).equals(roles));
         Assert.assertTrue(TeamPool.getInstance().get(tournament).equals(teams));
+        Assert.assertTrue(TeamPool.getInstance().get(tournament).get(0).getNumberOfMembers(0) == tournament.getTeamSize());
         Assert.assertTrue(FightPool.getInstance().get(tournament).equals(fights));
         Assert.assertTrue(DuelPool.getInstance().get(tournament).equals(duels));
         Assert.assertTrue(UndrawPool.getInstance().get(tournament).equals(undraws));
@@ -100,26 +101,26 @@ public class DatabaseStore {
     }
 
     @After
-    @Test(alwaysRun=true)
+    @Test(alwaysRun = true)
     public void clearDatabase() throws SQLException {
         //Delete Tournament Information.
         TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
 
-        //Delete elements from database.
-        RegisteredPersonPool.getInstance().remove(RegisteredPersonPool.getInstance().getAll());
-        ClubPool.getInstance().remove(ClubPool.getInstance().getAll());
+         //Delete elements from database.
+         RegisteredPersonPool.getInstance().remove(RegisteredPersonPool.getInstance().getAll());
+         ClubPool.getInstance().remove(ClubPool.getInstance().getAll());
 
-        //Update database.
-        DatabaseConnection.getInstance().updateDatabase();
+         //Update database.
+         DatabaseConnection.getInstance().updateDatabase();
 
-        //Check that all data are deleted
-        Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(RegisteredPersonPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(ClubPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(RolePool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(TeamPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(FightPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(DuelPool.getInstance().getAll().isEmpty());
-        Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty());
+         //Check that all data are deleted
+         Assert.assertTrue(TournamentPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(RegisteredPersonPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(ClubPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(RolePool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(TeamPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(FightPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(DuelPool.getInstance().getAll().isEmpty());
+         Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty()); 
     }
 }

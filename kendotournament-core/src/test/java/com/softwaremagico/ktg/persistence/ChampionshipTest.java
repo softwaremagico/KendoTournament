@@ -152,6 +152,8 @@ public class ChampionshipTest {
     public void solveThirdLevel() throws SQLException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
 
+        Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().size() == 1);
+
         //Check teams of group.
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));

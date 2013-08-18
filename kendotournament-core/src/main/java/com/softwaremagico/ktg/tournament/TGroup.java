@@ -41,7 +41,8 @@ import com.softwaremagico.ktg.persistence.FightPool;
  * multiple groups but a simple tournament only has one.
  */
 public abstract class TGroup {
-	private Tournament tournament;
+
+    private Tournament tournament;
     private List<Team> teams = new ArrayList<>();
     private Integer numberMaxOfWinners = 1;
     protected Integer level;
@@ -162,8 +163,8 @@ public abstract class TGroup {
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).getGroup()== index) {
-                    fightsG.add(fights.get(i));
+            if (fights.get(i).getGroup() == index && fights.get(i).getLevel() == level) {
+                fightsG.add(fights.get(i));
             }
         }
         return fightsG;
@@ -311,8 +312,12 @@ public abstract class TGroup {
         addTeam(fight.getTeam2());
         Collections.sort(fightsOfGroup);
     }
-    
-    public int getIndex(){
+
+    /**
+     * Gets the index of the group in the tournament. The index is relative to
+     * all groups independent of the level.
+     */
+    public int getIndex() {
         return index;
     }
 }
