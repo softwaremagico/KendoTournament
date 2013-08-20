@@ -39,13 +39,13 @@ public class KendoLog {
 
     private static final Logger logger = Logger.getLogger("KendoLog");
     private static final Level logLevel = Level.ALL; //INFO, OFF, ALL, ... 
-    private static final int maxBytes = 50000000;
-    private static final int numLogFiles = 10;
+    private static final int MAX_BYTES = 50000000;
+    private static final int NUMBER_MAX_OF_FILES = 10;
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
     static {
         try {
-            FileHandler fh = new FileHandler(Path.getLogFile(), maxBytes, numLogFiles, true);
+            FileHandler fh = new FileHandler(Path.getLogFile(), MAX_BYTES, NUMBER_MAX_OF_FILES, true);
             logger.addHandler(fh);
             logger.setLevel(logLevel);
             //fh.setFormatter(new SimpleFormatter());
