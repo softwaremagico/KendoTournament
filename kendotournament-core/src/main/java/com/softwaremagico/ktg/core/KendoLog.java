@@ -58,7 +58,7 @@ public class KendoLog {
     /**
      * Defines our own formatter.
      */
-    public static Formatter getCustomFormatter() {
+    private static Formatter getCustomFormatter() {
         return new Formatter() {
             //StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
             @Override
