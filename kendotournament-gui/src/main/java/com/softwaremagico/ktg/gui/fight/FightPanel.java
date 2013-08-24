@@ -54,6 +54,8 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -554,7 +556,21 @@ public class FightPanel extends KFrame {
 
         @Override
         public void acceptAction() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            try {
+                Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+                        getSelectedFightArea());
+                if (currentFight != null) {
+                    currentFight.setOver(false);
+                    Fight previousFight = FightPool.getInstance().get(getSelectedTournament(), getSelectedFightArea(), FightPool.getInstance().getCurrentFightIndex(getSelectedTournament(), getSelectedFightArea()) - 1);
+                    if (previousFight != null) {
+                        previousFight.setOver(false);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FightPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            // Update score panel.
+            updateScorePanel();
         }
     }
 }
