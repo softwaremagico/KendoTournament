@@ -78,9 +78,10 @@ public class ScorePanel extends KPanel {
                 //Nexts
                 if (numberOfFightsToShow() > 1) {
                     try {
-                        for (int i = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + 1;
+                        int currentFightIndex = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea);
+                        for (int i = currentFightIndex + 1;
                                 showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                            addFightPanel(i, fightArea, invertedTeam, invertedColor, false);
+                            addFightPanel(i - currentFightIndex, fightArea, invertedTeam, invertedColor, false);
                             showedFights++;
                         }
                         //No more fights.
