@@ -35,20 +35,43 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 public class RankingWindow extends KFrame {
 
+    private Timer timer = null;
+    private final int AUTO_CLOSE_SECONDS = 30;
     private Ranking ranking;
     private static int MIN_ROWS = 6;
 
-    public RankingWindow(Ranking ranking) {
+    public RankingWindow(Ranking ranking, boolean autoclose) {
         this.ranking = ranking;
         defineWindow(750, 400);
         setResizable(true);
         setElements();
         addResizedEvent();
+
+        if (autoclose) {
+            if (timer == null) {
+                startTimer();
+            }
+
+            //Ensure that timer is closed. 
+            this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    close();
+                }
+            });
+        }
+
+
     }
 
     private void setElements() {
@@ -165,13 +188,12 @@ public class RankingWindow extends KFrame {
 
     @Override
     public void update() {
-       
     }
 
     @Override
     public void tournamentChanged() {
     }
-    
+
     private void addResizedEvent() {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -180,5 +202,25 @@ public class RankingWindow extends KFrame {
                 revalidate();
             }
         });
+    }
+
+    private void startTimer() {
+        timer = new Timer(AUTO_CLOSE_SECONDS * 1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                dispose();
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    private void close() {
+        try {
+            timer.stop();
+            timer = null;
+        } catch (NullPointerException npe) {
+        }
+        this.dispose();
     }
 }

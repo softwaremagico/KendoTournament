@@ -443,14 +443,14 @@ public class FightPanel extends KFrame {
                     getSelectedFightArea());
             TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
             Ranking ranking = new Ranking(group.getFights());
-            openRankingWindow(ranking);
+            openRankingWindow(ranking, false);
         } catch (SQLException ex) {
             AlertManager.showSqlErrorMessage(ex);
         }
     }
 
-    private void openRankingWindow(Ranking ranking) {
-        RankingWindow mp = new RankingWindow(ranking);
+    private void openRankingWindow(Ranking ranking, boolean autoclose) {
+        RankingWindow mp = new RankingWindow(ranking, autoclose);
         mp.setVisible(true);
     }
 
@@ -507,7 +507,7 @@ public class FightPanel extends KFrame {
                             ranking = new Ranking(group.getFights());
                         }
                         // Show score.
-                        openRankingWindow(ranking);
+                        openRankingWindow(ranking, true);
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
