@@ -522,7 +522,7 @@ public class FightPanel extends KFrame {
                                 FightPool.getInstance().add(getSelectedTournament(), newFights);
                             } else {
                                 // No more fights, show final winner message.
-                                AlertManager.winnerMessage(this.getClass().getName(), "winnerOfgroup", "!!!!!!", ranking
+                                AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished", "!!!!!!", ranking
                                         .getTeamsRanking().get(0).getName());
                             }
                         } else {
