@@ -102,7 +102,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public List<ElementPool> getAll() throws SQLException {
         List<ElementPool> results = new ArrayList<>();
-        for (Tournament tournament : elements.keySet()) {
+        for (Tournament tournament : TournamentPool.getInstance().getAll()) {
             results.addAll(getMap(tournament).values());
         }
         return results;

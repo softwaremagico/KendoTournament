@@ -30,7 +30,7 @@ import com.softwaremagico.ktg.pdflist.ListFromCompetitor;
 public class SelectCompetitorForReceivedHits extends ListFromCompetitor {
 
     public SelectCompetitorForReceivedHits() {
-        Start(true);
+        start(true);
         this.setTitle(trans.getTranslatedText("titleHitStatistics"));
     }
 

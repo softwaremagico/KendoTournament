@@ -31,7 +31,7 @@ public class SelectCompetitorForPerformedHits extends ListFromCompetitor {
 
     public SelectCompetitorForPerformedHits() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        Start(true);
+        start(true);
         this.setTitle(trans.getTranslatedText("titleHitStatistics"));
     }
 

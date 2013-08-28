@@ -30,7 +30,7 @@ import com.softwaremagico.ktg.pdflist.ListFromCompetitor;
 public class SelectCompetitorForWonFights extends ListFromCompetitor {
 
     public SelectCompetitorForWonFights() {
-        Start(true);
+        start(true);
         this.setTitle(trans.getTranslatedText("titleWonStatistics"));
     }
 

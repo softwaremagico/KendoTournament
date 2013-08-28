@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -37,274 +38,308 @@ import java.util.List;
 
 public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
-    public Translator trans = null;
-    public List<Tournament> listTournaments = new ArrayList<>();
-    public boolean voidTournament;  //Add "All tournaments" option.
-    private boolean refreshTournament = true;
+	public Translator trans = null;
+	public List<Tournament> listTournaments = new ArrayList<>();
+	public boolean voidTournament; // Add "All tournaments" option.
+	private boolean refreshTournament = true;
 
-    public void createGui(boolean tmp_voidTournament) {
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLanguage();
-        voidTournament = tmp_voidTournament;
-        fillTournaments();
-        updateArena();
-        CheckBox.setVisible(false);
-        ArenaComboBox.setEnabled(false);
-    }
+	public void createGui(boolean tmp_voidTournament) {
+		initComponents();
+		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setLanguage();
+		voidTournament = tmp_voidTournament;
+		fillTournaments();
+		updateArena();
+		CheckBox.setVisible(false);
+		ArenaComboBox.setEnabled(false);
+	}
 
-    public void setLanguage() {
-        trans = LanguagePool.getTranslator("gui.xml");
-        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
-        ArenaLabel.setText(trans.getTranslatedText("FightArea"));
-        CancelButton.setText(trans.getTranslatedText("CancelButton"));
-        GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
-    }
+	public void setLanguage() {
+		trans = LanguagePool.getTranslator("gui.xml");
+		TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+		ArenaLabel.setText(trans.getTranslatedText("FightArea"));
+		CancelButton.setText(trans.getTranslatedText("CancelButton"));
+		GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
+	}
 
-    private void fillTournaments() {
-        refreshTournament = false;
-        try {
-            listTournaments = TournamentPool.getInstance().getSorted();
-            if (voidTournament) {
-                TournamentComboBox.addItem(null);
-            }
-            for (int i = 0; i < listTournaments.size(); i++) {
-                TournamentComboBox.addItem(listTournaments.get(i));
-            }
-            TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-        } catch (NullPointerException npe) {
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
-        refreshTournament = true;
-    }
+	private void fillTournaments() {
+		refreshTournament = false;
+		try {
+			listTournaments = TournamentPool.getInstance().getSorted();
+			if (voidTournament) {
+				TournamentComboBox.addItem(trans.getTranslatedText("All"));
+			}
+			for (int i = 0; i < listTournaments.size(); i++) {
+				TournamentComboBox.addItem(listTournaments.get(i));
+			}
+			Tournament tournament = KendoTournamentGenerator.getInstance().getLastSelectedTournament();
+			if (tournament != null) {
+				TournamentComboBox.setSelectedItem(tournament);
+			} else if (TournamentComboBox.getItemCount() > 0) {
+				TournamentComboBox.setSelectedIndex(0);
+			}
+		} catch (NullPointerException npe) {
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+		}
+		refreshTournament = true;
+	}
 
-    public String returnSelectedTournamentName() {
-        if (voidTournament && TournamentComboBox.getSelectedIndex() == 0) {
-            return null;
-        }
-        return TournamentComboBox.getSelectedItem().toString();
-    }
+	public String returnSelectedTournamentName() {
+		if (voidTournament && TournamentComboBox.getSelectedIndex() == 0) {
+			return null;
+		}
+		return TournamentComboBox.getSelectedItem().toString();
+	}
 
-    public Tournament returnSelectedTournament() {
-        if (voidTournament) {
-            if (TournamentComboBox.getSelectedIndex() > 0) {
-                return listTournaments.get(TournamentComboBox.getSelectedIndex() - 1); // -1 to avoid "all".
-            } else {
-                return null;
-            }
-        } else {
-            return listTournaments.get(TournamentComboBox.getSelectedIndex());
-        }
+	public Tournament returnSelectedTournament() {
+		if (voidTournament) {
+			if (TournamentComboBox.getSelectedIndex() > 0) {
+				return listTournaments.get(TournamentComboBox.getSelectedIndex() - 1); // -1
+																						// to
+																						// avoid
+																						// "all".
+			} else {
+				return null;
+			}
+		} else {
+			return listTournaments.get(TournamentComboBox.getSelectedIndex());
+		}
 
-    }
+	}
 
-    private int returnSelectedTournamentOfList() {
-        if (voidTournament) {
-            if (TournamentComboBox.getSelectedIndex() == 0) {
-                return -1;
-            } else {
-                return TournamentComboBox.getSelectedIndex() - 1;
-            }
-        } else {
-            return TournamentComboBox.getSelectedIndex();
-        }
-    }
+	private int returnSelectedTournamentOfList() {
+		if (voidTournament) {
+			if (TournamentComboBox.getSelectedIndex() == 0) {
+				return -1;
+			} else {
+				return TournamentComboBox.getSelectedIndex() - 1;
+			}
+		} else {
+			return TournamentComboBox.getSelectedIndex();
+		}
+	}
 
-    private void updateArena() {
-        ArenaComboBox.removeAllItems();
-        try {
-            int selectedTourn = returnSelectedTournamentOfList();
-            if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
-                ArenaComboBox.addItem(trans.getTranslatedText("All"));
-            }
+	private void updateArena() {
+		ArenaComboBox.removeAllItems();
+		try {
+			int selectedTourn = returnSelectedTournamentOfList();
+			if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
+				ArenaComboBox.addItem(trans.getTranslatedText("All"));
+			}
 
-            if (selectedTourn >= 0) {
-                for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
-                    ArenaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
-                }
-            }
-        } catch (NullPointerException | IndexOutOfBoundsException npe) {
-            AlertManager.showErrorInformation(this.getClass().getName(), npe);
-        }
-    }
+			if (selectedTourn >= 0) {
+				for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
+					ArenaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
+				}
+			}
+		} catch (NullPointerException | IndexOutOfBoundsException npe) {
+			AlertManager.showErrorInformation(this.getClass().getName(), npe);
+		}
+	}
 
-    public int returnSelectedArena() {
-        return (ArenaComboBox.getSelectedIndex() - 1);
-    }
+	public int returnSelectedArena() {
+		return (ArenaComboBox.getSelectedIndex() - 1);
+	}
 
-    /**
-     * **********************************************
+	/**
+	 * **********************************************
+	 * 
+	 * CHECKBOX
+	 * 
+	 *********************************************** 
+	 */
+	/**
      *
-     * CHECKBOX
-     *
-     ***********************************************
      */
-    /**
-     *
-     */
-    private void checkBoxClicked() {
-    }
+	private void checkBoxClicked() {
+	}
 
-    private void comboBoxAction() {
-    }
+	private void comboBoxAction() {
+	}
 
-    public boolean isCheckBoxSelected() {
-        return CheckBox.isSelected();
-    }
+	public boolean isCheckBoxSelected() {
+		return CheckBox.isSelected();
+	}
 
-    public void changeCheckBoxText(String text) {
-        CheckBox.setText(text);
-    }
+	public void changeCheckBoxText(String text) {
+		CheckBox.setText(text);
+	}
 
-    /**
-     * **********************************************
-     *
-     * LISTENERS
-     *
-     ***********************************************
-     */
-    /**
-     * Add the same action listener to all langugaes of the menu.
-     *
-     * @param al
-     */
-    public void addGenerateButtonListener(ActionListener al) {
-        GenerateButton.addActionListener(al);
-    }
+	/**
+	 * **********************************************
+	 * 
+	 * LISTENERS
+	 * 
+	 *********************************************** 
+	 */
+	/**
+	 * Add the same action listener to all langugaes of the menu.
+	 * 
+	 * @param al
+	 */
+	public void addGenerateButtonListener(ActionListener al) {
+		GenerateButton.addActionListener(al);
+	}
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed"
+	// desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        TournamentComboBox = new javax.swing.JComboBox();
-        TournamentLabel = new javax.swing.JLabel();
-        CancelButton = new javax.swing.JButton();
-        GenerateButton = new javax.swing.JButton();
-        CheckBox = new javax.swing.JCheckBox();
-        ArenaLabel = new javax.swing.JLabel();
-        ArenaComboBox = new javax.swing.JComboBox();
+		TournamentComboBox = new javax.swing.JComboBox();
+		TournamentLabel = new javax.swing.JLabel();
+		CancelButton = new javax.swing.JButton();
+		GenerateButton = new javax.swing.JButton();
+		CheckBox = new javax.swing.JCheckBox();
+		ArenaLabel = new javax.swing.JLabel();
+		ArenaComboBox = new javax.swing.JComboBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setResizable(false);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowOpened(java.awt.event.WindowEvent evt) {
+				formWindowOpened(evt);
+			}
+		});
 
-        TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TournamentComboBoxActionPerformed(evt);
-            }
-        });
+		TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				TournamentComboBoxActionPerformed(evt);
+			}
+		});
 
-        TournamentLabel.setText("Tournament");
+		TournamentLabel.setText("Tournament");
 
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
+		CancelButton.setText("Cancel");
+		CancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CancelButtonActionPerformed(evt);
+			}
+		});
 
-        GenerateButton.setText("Generate List");
+		GenerateButton.setText("Generate List");
 
-        CheckBox.setText("CheckBox");
-        CheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckBoxActionPerformed(evt);
-            }
-        });
+		CheckBox.setText("CheckBox");
+		CheckBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CheckBoxActionPerformed(evt);
+			}
+		});
 
-        ArenaLabel.setText("Arena:");
+		ArenaLabel.setText("Arena:");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(CheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(TournamentLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(TournamentComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(ArenaLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ArenaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(CancelButton))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(CheckBox,
+																		javax.swing.GroupLayout.DEFAULT_SIZE, 215,
+																		Short.MAX_VALUE)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(GenerateButton,
+																		javax.swing.GroupLayout.PREFERRED_SIZE, 140,
+																		javax.swing.GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(TournamentLabel)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(TournamentComboBox, 0,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)))
+								.addGap(4, 4, 4)
+								.addGroup(
+										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+												.addGroup(
+														javax.swing.GroupLayout.Alignment.LEADING,
+														layout.createSequentialGroup()
+																.addGap(6, 6, 6)
+																.addComponent(ArenaLabel)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(ArenaComboBox, 0,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)).addComponent(CancelButton))
+								.addContainerGap()));
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, GenerateButton});
+		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+				new java.awt.Component[] { CancelButton, GenerateButton });
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TournamentLabel)
-                    .addComponent(ArenaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ArenaLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelButton)
-                    .addComponent(CheckBox)
-                    .addComponent(GenerateButton))
-                .addContainerGap())
-        );
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(TournamentComboBox,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(TournamentLabel)
+												.addComponent(ArenaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(ArenaLabel))
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+										javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(
+										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(CancelButton).addComponent(CheckBox)
+												.addComponent(GenerateButton)).addContainerGap()));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_CancelButtonActionPerformed
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-    private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
-        if (refreshTournament) {
-            try {
-                KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            } catch (NullPointerException npe) {
-                //No problem "All tournaments selected".
-            }
-            comboBoxAction();
-            if (ArenaComboBox.isEnabled()) {
-                updateArena();
-            }
-        }
-    }//GEN-LAST:event_TournamentComboBoxActionPerformed
+	private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
+		this.dispose();
+	}// GEN-LAST:event_CancelButtonActionPerformed
 
-    private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckBoxActionPerformed
-        checkBoxClicked();
-    }//GEN-LAST:event_CheckBoxActionPerformed
+	private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
+		if (refreshTournament) {
+			try {
+				KendoTournamentGenerator.getInstance().setLastSelectedTournament(
+						TournamentComboBox.getSelectedItem().toString());
+			} catch (NullPointerException npe) {
+				// No problem "All tournaments selected".
+			}
+			comboBoxAction();
+			if (ArenaComboBox.isEnabled()) {
+				updateArena();
+			}
+		}
+	}// GEN-LAST:event_TournamentComboBoxActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.toFront();
-    }//GEN-LAST:event_formWindowOpened
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JComboBox ArenaComboBox;
-    protected javax.swing.JLabel ArenaLabel;
-    private javax.swing.JButton CancelButton;
-    public javax.swing.JCheckBox CheckBox;
-    protected javax.swing.JButton GenerateButton;
-    protected javax.swing.JComboBox TournamentComboBox;
-    private javax.swing.JLabel TournamentLabel;
-    // End of variables declaration//GEN-END:variables
+	private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CheckBoxActionPerformed
+		checkBoxClicked();
+	}// GEN-LAST:event_CheckBoxActionPerformed
+
+	private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
+		this.toFront();
+	}// GEN-LAST:event_formWindowOpened
+		// Variables declaration - do not modify//GEN-BEGIN:variables
+
+	protected javax.swing.JComboBox ArenaComboBox;
+	protected javax.swing.JLabel ArenaLabel;
+	private javax.swing.JButton CancelButton;
+	public javax.swing.JCheckBox CheckBox;
+	protected javax.swing.JButton GenerateButton;
+	protected javax.swing.JComboBox TournamentComboBox;
+	private javax.swing.JLabel TournamentLabel;
+	// End of variables declaration//GEN-END:variables
 }
