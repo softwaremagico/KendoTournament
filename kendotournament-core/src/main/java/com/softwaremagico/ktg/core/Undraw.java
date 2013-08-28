@@ -30,27 +30,27 @@ import java.util.Objects;
 public class Undraw implements Comparable<Undraw> {
 
     private Tournament tournament;
-    private Integer group;
+    private Integer groupIndex;
     private Team winnerTeam;
     private Integer player;
     private Integer level;
     private Integer points;
 
-    public Undraw(Tournament tournament, Integer group, Team winnerTeam, Integer player, Integer level) {
+    public Undraw(Tournament tournament, Integer groupIndex, Team winnerTeam, Integer player, Integer level) {
         this.winnerTeam = winnerTeam;
         this.tournament = tournament;
         this.player = player;
-        this.group = group;
+        this.groupIndex = groupIndex;
         this.level = level;
-        points = 1;
+        setPoints(1);
     }
 
     public Integer getGroupIndex() {
-        return group;
+        return groupIndex;
     }
 
-    public void setGroup(Integer group) {
-        this.group = group;
+    public void setGroupIndex(Integer group) {
+        this.groupIndex = group;
     }
 
     public Integer getPoints() {
@@ -102,7 +102,7 @@ public class Undraw implements Comparable<Undraw> {
     public int hashCode() {
         int hash = 3;
         hash = 59 * hash + Objects.hashCode(this.tournament);
-        hash = 59 * hash + Objects.hashCode(this.group);
+        hash = 59 * hash + Objects.hashCode(this.groupIndex);
         hash = 59 * hash + Objects.hashCode(this.winnerTeam);
         hash = 59 * hash + Objects.hashCode(this.player);
         hash = 59 * hash + Objects.hashCode(this.level);
@@ -121,7 +121,7 @@ public class Undraw implements Comparable<Undraw> {
         if (!Objects.equals(this.tournament, other.tournament)) {
             return false;
         }
-        if (!Objects.equals(this.group, other.group)) {
+        if (!Objects.equals(this.groupIndex, other.groupIndex)) {
             return false;
         }
         if (!Objects.equals(this.winnerTeam, other.winnerTeam)) {
@@ -138,6 +138,6 @@ public class Undraw implements Comparable<Undraw> {
     
     @Override
     public String toString(){
-        return "Undraw winned by " + winnerTeam.getName() + ", level: " + level + ", group:" + group;
+        return "Undraw winned by " + winnerTeam.getName() + ", level: " + getLevel() + ", group:" + getGroupIndex() + ", points:" + points;
     }
 }

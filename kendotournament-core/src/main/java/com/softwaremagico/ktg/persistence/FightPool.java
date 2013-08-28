@@ -95,7 +95,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
             throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
             if (fight.getGroup() == group && fight.getOrderInGroup() == index && fight.getTournament().equals(tournament)
-                    && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2) && fight.getLevel() == level) {
+                    && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2) && fight.getLevel().equals(level)) {
                 return fight;
             }
         }

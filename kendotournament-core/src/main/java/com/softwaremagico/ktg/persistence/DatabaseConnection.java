@@ -49,7 +49,7 @@ public class DatabaseConnection {
     private DatabaseEngine databaseEngine = DatabaseEngine.SQLite;
     private boolean databaseConnectionTested = false;
     private static DatabaseConnection connection = null;
-    private static Integer connectionCounts = 0;
+    private static int connectionCounts = 0;
     private Timer timer = new Timer("Database Connection");
     private Task timerTask;
     private boolean disconnected = true;

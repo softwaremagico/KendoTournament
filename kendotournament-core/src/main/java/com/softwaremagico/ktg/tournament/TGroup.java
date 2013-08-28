@@ -143,7 +143,7 @@ public abstract class TGroup {
     }
 
     public boolean isFightOfGroup(Fight f) {
-        if (isTeamOfGroup(f.getTeam1()) && isTeamOfGroup(f.getTeam2()) && level == f.getLevel()) {
+        if (isTeamOfGroup(f.getTeam1()) && isTeamOfGroup(f.getTeam2()) && level.equals(f.getLevel())) {
             return true;
         }
         return false;
@@ -163,7 +163,7 @@ public abstract class TGroup {
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).getGroup() == index && fights.get(i).getLevel() == level) {
+            if (fights.get(i).getGroup() == index && fights.get(i).getLevel().equals(level)) {
                 fightsG.add(fights.get(i));
             }
         }
