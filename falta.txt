@@ -3,3 +3,5 @@ Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos
 Que muestre el mensaje de winners cuando todos los combates han terminado. 
 Que muestre el mensaje de esperando a la otra fightarea cuando los combates de un grupo han terminado.
 Cuando hay dos ordenadores, que se actualicen los datos (cambios en el orden de los equipos) al acabar el nivel. 
+Las listas en PDF no funcionan. 
+El arbol en el panel de combates no funciona. 
