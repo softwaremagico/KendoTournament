@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleTournamentGroup extends TGroup {
-	
+
 	public SimpleTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
 		super(tournament, level, fightArea, 0);
 	}
@@ -29,7 +29,7 @@ public class SimpleTournamentGroup extends TGroup {
 				team1 = remainingFights.getTeamWithMoreAdversaries(random);
 				continue;
 			}
-			// Remaingin fights sometimes repeat team. Align them.
+			// Remaining fights sometimes repeat team. Align them.
 			if (lastFight != null && (lastFight.getTeam1().equals(team2) || lastFight.getTeam2().equals(team1))) {
 				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
 			} else if (lastFight != null && (lastFight.getTeam1().equals(team1) || lastFight.getTeam2().equals(team2))) {

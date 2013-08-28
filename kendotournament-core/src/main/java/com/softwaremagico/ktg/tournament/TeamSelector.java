@@ -14,7 +14,7 @@ class TeamSelector {
 
     protected TeamSelector(List<Team> teams) {
         this.teams = teams;
-        Collections.sort(teams);
+        Collections.sort(this.teams);
         combination = getAdversaries();
     }
 
