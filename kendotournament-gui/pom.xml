@@ -20,8 +20,6 @@
         <windows.releasedir>../install_windows</windows.releasedir>
         <windows.origin>../windows-basic-files</windows.origin>
         <winexe>KendoTournamentGenerator.exe</winexe>
-        <license.licenseName>gnugpl</license.licenseName>
-        <license.licenseResolver>file://${basedir}/src/license</license.licenseResolver>
         <plugin.exec.version>1.2.1</plugin.exec.version>
         <application.mainclass>com.softwaremagico.ktg.gui.Main</application.mainclass>
     </properties>
@@ -86,9 +84,11 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.2</version>
+                <version>1.5</version>
                 <configuration>
                     <inceptionYear>2008</inceptionYear>
+                    <licenseName>gnugpl</licenseName>
+        			<licenseResolver>${project.baseUri}/src/license</licenseResolver>
                     <excludes>
                         <exclude>**/licenses.properties</exclude>
                     </excludes>
