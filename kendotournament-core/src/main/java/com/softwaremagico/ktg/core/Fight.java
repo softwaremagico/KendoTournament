@@ -31,6 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A fight is a combat between two teams. It is composed by different duels
+ * between the members of both teams and it will be winned by the team that wins
+ * more duels.
+ */
 public class Fight implements Comparable<Fight> {
 
 	private static final Integer DEFAULT_WINNER_VALUE = 2;
@@ -56,7 +61,7 @@ public class Fight implements Comparable<Fight> {
 	}
 
 	/**
-	 * Get index of this fight compared to the group.
+	 * Get index of this fight compared to the championship group.
 	 * 
 	 * @return
 	 */
@@ -64,6 +69,11 @@ public class Fight implements Comparable<Fight> {
 		return orderInGroup;
 	}
 
+	/**
+	 * Get the championship group in which this fight is included.
+	 * 
+	 * @return
+	 */
 	public Integer getGroup() {
 		return group;
 	}

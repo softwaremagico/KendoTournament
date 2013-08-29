@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.pdflist;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,36 +26,32 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
 
-/**
- *
- * @author Jorge
- */
 public class SummaryList extends ListFromTournamentCreatePDF {
 
-    public SummaryList() {
-        super();
-        this.setTitle(trans.getTranslatedText("titleSummary"));
-        ArenaComboBox.setEnabled(true);
-    }
+	public SummaryList() {
+		super();
+		this.setTitle(trans.getTranslatedText("titleSummary"));
+		ArenaComboBox.setEnabled(true);
+	}
 
-    @Override
-    public String defaultFileName() {
-        String shiaijo = "";
-        if (returnSelectedArena() >= 0) {
-            shiaijo = "_" + KendoTournamentGenerator.getInstance().getFightAreaName(returnSelectedArena());
-        }
-        try {
-            return TournamentComboBox.getSelectedItem().toString() + "_Summary" + shiaijo;
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+	@Override
+	public String defaultFileName() {
+		String shiaijo = "";
+		if (returnSelectedArena() >= 0) {
+			shiaijo = "_" + Tournament.getFightAreaName(returnSelectedArena());
+		}
+		try {
+			return TournamentComboBox.getSelectedItem().toString() + "_Summary" + shiaijo;
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
 
-    @Override
-    protected ParentList getPdfGenerator() {
-        return new SummaryPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), returnSelectedArena());
-    }
+	@Override
+	protected ParentList getPdfGenerator() {
+		return new SummaryPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), returnSelectedArena());
+	}
 
 }

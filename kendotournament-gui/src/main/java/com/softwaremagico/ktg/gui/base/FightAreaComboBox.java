@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.base;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,51 +24,50 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 
 public class FightAreaComboBox extends KComboBox {
 
-    private Tournament tournament;
+	private Tournament tournament;
 
-    public FightAreaComboBox(Tournament tournament) {
-        update(tournament);
-    }
+	public FightAreaComboBox(Tournament tournament) {
+		update(tournament);
+	}
 
-    public final void update(Tournament tournament) {
-        this.tournament = tournament;
-        fillFightingAreas();
-    }
+	public final void update(Tournament tournament) {
+		this.tournament = tournament;
+		fillFightingAreas();
+	}
 
-    private void fillFightingAreas() {
-        int fightArea = getSelectedFightArea();
-        removeAllItems();
-        try {
-            for (int i = 0; i < tournament.getFightingAreas(); i++) {
-                addItem(KendoTournamentGenerator.getFightAreaName(i));
-            }
-            if (fightArea >= 0) {
-                setSelectedIndex(fightArea);
-            } else if (getItemCount() > 0) {
-                setSelectedIndex(0);
-            }
-        } catch (NullPointerException npe) {
-        }
-    }
+	private void fillFightingAreas() {
+		int fightArea = getSelectedFightArea();
+		removeAllItems();
+		try {
+			for (int i = 0; i < tournament.getFightingAreas(); i++) {
+				addItem(Tournament.getFightAreaName(i));
+			}
+			if (fightArea >= 0) {
+				setSelectedIndex(fightArea);
+			} else if (getItemCount() > 0) {
+				setSelectedIndex(0);
+			}
+		} catch (NullPointerException npe) {
+		}
+	}
 
-    public int getSelectedFightArea() {
-        try {
-            return getSelectedIndex();
-        } catch (NullPointerException npe) {
-            return -1;
-        }
-    }
+	public int getSelectedFightArea() {
+		try {
+			return getSelectedIndex();
+		} catch (NullPointerException npe) {
+			return -1;
+		}
+	}
 
-    public String getSelectedFightAreaName() {
-        try {
-            return KendoTournamentGenerator.getFightAreaName(getSelectedFightArea());
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+	public String getSelectedFightAreaName() {
+		try {
+			return Tournament.getFightAreaName(getSelectedFightArea());
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
 }

@@ -31,6 +31,9 @@ import com.softwaremagico.ktg.files.Path;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Stores the user configuration in a file.
+ */
 public class Configuration {
 
 	/**

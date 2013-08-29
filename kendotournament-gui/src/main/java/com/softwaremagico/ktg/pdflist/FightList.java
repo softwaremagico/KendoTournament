@@ -25,9 +25,7 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
 /**
  *
@@ -44,7 +42,7 @@ public class FightList extends ListFromTournamentCreatePDF {
     public String defaultFileName() {
         String shiaijo = "";
         if (returnSelectedArena() >= 0) {
-            shiaijo = "_" + KendoTournamentGenerator.getFightAreaName(returnSelectedArena());
+			shiaijo = "_" + Tournament.getFightAreaName(returnSelectedArena());
         }
         try {
             return TournamentComboBox.getSelectedItem().toString() + "_FightList" + shiaijo;

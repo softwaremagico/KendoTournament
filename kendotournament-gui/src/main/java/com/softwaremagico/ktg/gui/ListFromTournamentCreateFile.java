@@ -24,17 +24,18 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.gui.base.KendoFrame;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 
 public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
@@ -132,7 +133,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
 			if (selectedTourn >= 0) {
 				for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
-					ArenaComboBox.addItem(KendoTournamentGenerator.getFightAreaName(i));
+					ArenaComboBox.addItem(Tournament.getFightAreaName(i));
 				}
 			}
 		} catch (NullPointerException | IndexOutOfBoundsException npe) {

@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.pdflist;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,37 +26,34 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
 
-/**
- *
- * @author jorge
- */
 public class EmptyFightsList extends ListFromTournamentCreatePDF {
-    
-     public EmptyFightsList() {
-        super();
-        this.setTitle(trans.getTranslatedText("titleSummary"));
-        ArenaComboBox.setEnabled(true);
-        CheckBox.setVisible(true);
-        changeCheckBoxText(trans.getTranslatedText("ShowEndFights"));
-    }
 
-    @Override
-    public String defaultFileName() {
-        String shiaijo = "";
-        if (returnSelectedArena() >= 0) {
-            shiaijo = "_" + KendoTournamentGenerator.getInstance().getFightAreaName(returnSelectedArena());
-        }
-        try {
-            return TournamentComboBox.getSelectedItem().toString() + "_FightsCard" + shiaijo;
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+	public EmptyFightsList() {
+		super();
+		this.setTitle(trans.getTranslatedText("titleSummary"));
+		ArenaComboBox.setEnabled(true);
+		CheckBox.setVisible(true);
+		changeCheckBoxText(trans.getTranslatedText("ShowEndFights"));
+	}
 
-    @Override
-    protected ParentList getPdfGenerator() {
-        return new EmptyFightsListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), returnSelectedArena(), isCheckBoxSelected());
-    }
+	@Override
+	public String defaultFileName() {
+		String shiaijo = "";
+		if (returnSelectedArena() >= 0) {
+			shiaijo = "_" + Tournament.getFightAreaName(returnSelectedArena());
+		}
+		try {
+			return TournamentComboBox.getSelectedItem().toString() + "_FightsCard" + shiaijo;
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
+
+	@Override
+	protected ParentList getPdfGenerator() {
+		return new EmptyFightsListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()),
+				returnSelectedArena(), isCheckBoxSelected());
+	}
 }
