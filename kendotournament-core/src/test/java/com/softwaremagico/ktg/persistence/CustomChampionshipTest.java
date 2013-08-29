@@ -29,7 +29,7 @@ public class CustomChampionshipTest {
 
 	@Test
 	public void addTournament() throws SQLException {
-		tournament = new Tournament(TOURNAMENT_NAME, 1, 2, 3, TournamentType.MANUAL);
+		tournament = new Tournament(TOURNAMENT_NAME, 1, 2, 3, TournamentType.CUSTOM_CHAMPIONSHIP);
 		TournamentPool.getInstance().add(tournament);
 		Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
 	}

@@ -83,7 +83,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
     }
 
     private boolean isValidTournament(Tournament tournament) {
-        return (tournament.getType().equals(TournamentType.MANUAL));
+        return (tournament.getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP));
     }
 
     public String getId() {

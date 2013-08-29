@@ -387,7 +387,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
         } else if (group.getTournamentGroup().getLevel() == 1 && group.getTournamentGroup().getTeams().isEmpty()) {
             //Clicking in the second level is only useful for defining links and the tournament has not started. 
-            if (tournament.getType().equals(TournamentType.MANUAL)) {
+            if (tournament.getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(tournament);
                 championship.addLink(getSelectedBox().getTournamentGroup(), group.getTournamentGroup());
                 this.revalidate();

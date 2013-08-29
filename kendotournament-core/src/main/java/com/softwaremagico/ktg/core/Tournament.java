@@ -49,7 +49,7 @@ public class Tournament implements Comparable<Tournament> {
 
     static {
         CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
-        CHAMPIONSHIP_TYPES.add(TournamentType.MANUAL);
+        CHAMPIONSHIP_TYPES.add(TournamentType.CUSTOM_CHAMPIONSHIP);
     }
 
     public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType mode) {

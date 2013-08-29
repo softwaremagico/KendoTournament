@@ -74,7 +74,7 @@ public class TournamentManagerFactory {
                 manager = new Championship(tournament);
                 manager.fillGroups();
                 break;
-            case MANUAL:
+            case CUSTOM_CHAMPIONSHIP:
                 manager = new CustomChampionship(tournament);
                 manager.fillGroups();
                 break;

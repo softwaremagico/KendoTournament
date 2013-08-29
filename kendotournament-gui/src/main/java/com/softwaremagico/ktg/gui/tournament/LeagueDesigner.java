@@ -107,7 +107,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     protected TournamentType getDefinedType() {
         if (manualCheckBox.isSelected()) {
-            return TournamentType.MANUAL;
+            return TournamentType.CUSTOM_CHAMPIONSHIP;
         }
         return TournamentType.CHAMPIONSHIP;
     }
@@ -134,7 +134,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().getName());
         } catch (NullPointerException npe) {
         }
-        manualCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.MANUAL));
+        manualCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP));
         cleanLinksButton.setEnabled(manualCheckBox.isSelected());
         refreshSpinner = false;
         winnerPassSpinner.setValue(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
@@ -203,7 +203,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         try {
             TournamentGroupBox groupBox = bbp.getSelectedBox();
             if (groupBox != null) {
-                if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                     CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                     championship.removeLinks();
                 }
@@ -633,7 +633,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         try {
-            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+            if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                 if (!championship.allGroupsHaveNextLink()) {
                     AlertManager.errorMessage(this.getClass().getName(), "noLinkFinished", "Error");
@@ -649,7 +649,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                     //Delete all previous links if exists.
                     CustomLinkPool.getInstance().remove(getSelectedTournament());
                     //Update manual links if necesary.
-                    if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+                    if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                         //Add new links.
                         CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
                     }
@@ -668,7 +668,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroups(0);
             updateBlackBoard();
             fillTeams();
-            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+            if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                 championship.removeLinks();
             }
@@ -681,7 +681,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
     private void cleanLinksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleanLinksButtonActionPerformed
         try {
-            if (getSelectedTournament().getType().equals(TournamentType.MANUAL)) {
+            if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                 CustomChampionship championship = (CustomChampionship) TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType());
                 if (bbp.getSelectedBox() != null) {
                     championship.removeLinks(bbp.getSelectedBox().getTournamentGroup());

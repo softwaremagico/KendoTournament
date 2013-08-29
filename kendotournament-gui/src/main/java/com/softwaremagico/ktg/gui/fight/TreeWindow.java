@@ -1,10 +1,10 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.gui.fight;
 
 /*
  * #%L
- * KendoTournamentGenerator
+ * Kendo Tournament Generator GUI
  * %%
- * Copyright (C) 2008 - 2012 Softwaremagico
+ * Copyright (C) 2008 - 2013 Softwaremagico
  * %%
  * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
  * <softwaremagico@gmail.com> C/Quart 89, 3. Valencia CP:46008 (Spain).
@@ -24,34 +24,27 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
-public enum TournamentType {
 
-	CHAMPIONSHIP("championship"),
+import com.softwaremagico.ktg.gui.base.KFrame;
 
-	LEAGUE_TREE("tree"),
+public class TreeWindow extends KFrame {
 
-	SIMPLE("simple"),
-
-	LOOP("loop"),
-
-	CUSTOM_CHAMPIONSHIP("manual");
-
-	private String sqlName;
-
-	TournamentType(String sqlName) {
-		this.sqlName = sqlName;
+	public TreeWindow() {
+		defineWindow(750, 400);
+		setResizable(true);
+		setElements();
 	}
 
-	public String getSqlName() {
-		return sqlName;
+	private void setElements() {
+
 	}
 
-	public static TournamentType getType(String value) {
-		for (TournamentType types : TournamentType.values()) {
-			if (types.sqlName.equals(value)) {
-				return types;
-			}
-		}
-		return null;
+	@Override
+	public void update() {
+	}
+
+	@Override
+	public void tournamentChanged() {
+
 	}
 }

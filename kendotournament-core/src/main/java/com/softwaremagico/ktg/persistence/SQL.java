@@ -1334,7 +1334,7 @@ public abstract class SQL extends Database {
     @Override
     protected synchronized List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
-        if (!tournament.getType().equals(TournamentType.MANUAL)) {
+        if (!tournament.getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
             return null;
         }
         String query = "SELECT * FROM customlinks WHERE Tournament='" + tournament.getName()
