@@ -448,7 +448,7 @@ public class FightPanel extends KFrame {
 	}
 
 	private void openTreeWindow() {
-		TreeWindow tw = new TreeWindow();
+		TreeWindow tw = new TreeWindow(getSelectedTournament());
 		tw.setVisible(true);
 	}
 

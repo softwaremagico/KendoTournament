@@ -24,23 +24,40 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import javax.swing.JScrollPane;
 
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KFrame;
+import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
 
 public class TreeWindow extends KFrame {
+	private BlackBoardPanel bbp;
+	private JScrollPane BlackBoardScrollPane;
+	private Tournament tournament;
 
-	public TreeWindow() {
+	public TreeWindow(Tournament tournament) {
+		this.tournament = tournament;
 		defineWindow(750, 400);
 		setResizable(true);
 		setElements();
 	}
 
 	private void setElements() {
-
+		bbp = new BlackBoardPanel(null, true);
+		BlackBoardScrollPane.setViewportView(bbp);
+		BlackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 	}
 
 	@Override
 	public void update() {
+		try {
+			bbp.update(tournament);
+			BlackBoardScrollPane.revalidate();
+			BlackBoardScrollPane.repaint();
+		} catch (NullPointerException npe) {
+			AlertManager.showErrorInformation(this.getClass().getName(), npe);
+		}
 	}
 
 	@Override
