@@ -24,11 +24,17 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JScrollPane;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KFrame;
+import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
 
 public class TreeWindow extends KFrame {
@@ -45,8 +51,38 @@ public class TreeWindow extends KFrame {
 
 	private void setElements() {
 		bbp = new BlackBoardPanel(null, true);
+		BlackBoardScrollPane = new JScrollPane();
 		BlackBoardScrollPane.setViewportView(bbp);
 		BlackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+
+		getContentPane().removeAll();
+		setLayout(new GridBagLayout());
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridheight = 1;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 1;
+		getContentPane().add(BlackBoardScrollPane, gridBagConstraints);
+
+		KPanel buttonPanel = new KPanel();
+		CloseButton closeButton = new CloseButton(this);
+		buttonPanel.add(closeButton);
+
+		gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+		gridBagConstraints.fill = GridBagConstraints.NONE;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 0;
+		gridBagConstraints.weighty = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		getContentPane().add(buttonPanel, gridBagConstraints);
 	}
 
 	@Override
