@@ -175,7 +175,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 	}
 
 	private TournamentGroupBox createBox(TGroup tournamentGroup, Integer level) {
-		TournamentGroupBox tournamentGroupBox = new TournamentGroupBox(tournamentGroup);
+		TournamentGroupBox tournamentGroupBox = new TournamentGroupBox(tournamentGroup, interactive);
 		List<TournamentGroupBox> list = grpsBox.get(level);
 		if (list == null) {
 			list = new ArrayList<>();

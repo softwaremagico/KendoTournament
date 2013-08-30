@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.fight;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,12 +26,9 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Ranking;
-import com.softwaremagico.ktg.core.ScoreOfTeam;
-import com.softwaremagico.ktg.gui.base.KFrame;
-import com.softwaremagico.ktg.gui.base.KLabel;
-import com.softwaremagico.ktg.gui.base.KPanel;
-import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -40,187 +38,206 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.ScoreOfTeam;
+import com.softwaremagico.ktg.gui.base.KFrame;
+import com.softwaremagico.ktg.gui.base.KLabel;
+import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
+
 public class RankingWindow extends KFrame {
 
-    private Timer timer = null;
-    private final int AUTO_CLOSE_SECONDS = 30;
-    private Ranking ranking;
-    private static int MIN_ROWS = 6;
+	private final static String FONT = "Arial";
+	private final static int AUTO_CLOSE_SECONDS = 30;
+	private final static int MIN_ROWS = 6;
+	private Timer timer = null;
+	private Ranking ranking;
 
-    public RankingWindow(Ranking ranking, boolean autoclose) {
-        this.ranking = ranking;
-        defineWindow(750, 400);
-        setResizable(true);
-        setElements();
-        addResizedEvent();
+	public RankingWindow(Ranking ranking, boolean autoclose) {
+		this.ranking = ranking;
+		defineWindow(800, 400);
+		setResizable(true);
+		setElements();
+		addResizedEvent();
 
-        if (autoclose) {
-            if (timer == null) {
-                startTimer();
-            }
+		if (autoclose) {
+			if (timer == null) {
+				startTimer();
+			}
 
-            //Ensure that timer is closed. 
-            this.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    close();
-                }
-            });
-        }
+			// Ensure that timer is closed.
+			this.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					close();
+				}
+			});
+		}
 
+	}
 
-    }
+	private void setElements() {
+		getContentPane().removeAll();
+		setLayout(new GridBagLayout());
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		KPanel rankingPanel = createRankingPanel();
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridheight = 1;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 1;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		getContentPane().add(rankingPanel, gridBagConstraints);
 
-    private void setElements() {
-        getContentPane().removeAll();
-        setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        KPanel rankingPanel = createRankingPanel();
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(rankingPanel, gridBagConstraints);
+		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.setMinimumSize(new Dimension(200, 50));
+		CloseButton closeButton = new CloseButton(this);
+		buttonPanel.add(closeButton);
 
-        KPanel buttonPanel = new KPanel();
-        CloseButton closeButton = new CloseButton(this);
-        buttonPanel.add(closeButton);
+		gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+		gridBagConstraints.fill = GridBagConstraints.NONE;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 0;
+		gridBagConstraints.weighty = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		getContentPane().add(buttonPanel, gridBagConstraints);
+	}
 
-        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 0;
-        gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(buttonPanel, gridBagConstraints);
-    }
+	private KPanel createRankingPanel() {
+		KPanel rankingPanel = new KPanel();
+		GridLayout experimentLayout = new GridLayout(0, 4);
+		rankingPanel.setLayout(experimentLayout);
+		setTitle(rankingPanel, getFontSize() + 4);
+		setTeams(rankingPanel, getFontSize());
+		return rankingPanel;
+	}
 
-    private KPanel createRankingPanel() {
-        KPanel rankingPanel = new KPanel();
-        GridLayout experimentLayout = new GridLayout(0, 4);
-        rankingPanel.setLayout(experimentLayout);
-        setTitle(rankingPanel, getFontSize() + 2);
-        setTeams(rankingPanel, getFontSize());
-        return rankingPanel;
-    }
+	private void setTitle(KPanel rankingPanel, int titleFontSize) {
+		KLabel teamLabel = new KLabel("TeamTopTenMenuItem");
+		teamLabel.setBoldFont(true);
+		teamLabel.setFont(new Font(FONT, Font.BOLD, titleFontSize));
+		// teamLabel.setFontSize(titleFontSize);
+		teamLabel.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(teamLabel);
 
-    private void setTitle(KPanel rankingPanel, int titleFontSize) {
-        KLabel teamLabel = new KLabel("TeamTopTenMenuItem");
-        teamLabel.setBoldFont(true);
-        teamLabel.setFontSize(titleFontSize);
-        teamLabel.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(teamLabel);
+		KLabel wonMatch = new KLabel("WonMatchs");
+		wonMatch.setBoldFont(true);
+		wonMatch.setFont(new Font(FONT, Font.BOLD, titleFontSize));
+		// wonMatch.setFontSize(titleFontSize);
+		wonMatch.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(wonMatch);
 
+		KLabel wonFights = new KLabel("WonFights");
+		wonFights.setBoldFont(true);
+		wonFights.setFont(new Font(FONT, Font.BOLD, titleFontSize));
+		// wonFights.setFontSize(titleFontSize);
+		wonFights.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(wonFights);
 
-        KLabel wonMatch = new KLabel("WonMatchs");
-        wonMatch.setBoldFont(true);
-        wonMatch.setFontSize(titleFontSize);
-        wonMatch.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(wonMatch);
+		KLabel hits = new KLabel("PerformedHitStatistics");
+		hits.setBoldFont(true);
+		hits.setFont(new Font(FONT, Font.BOLD, titleFontSize));
+		// hits.setFontSize(titleFontSize);
+		hits.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(hits);
+	}
 
-        KLabel wonFights = new KLabel("WonFights");
-        wonFights.setBoldFont(true);
-        wonFights.setFontSize(titleFontSize);
-        wonFights.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(wonFights);
+	private void setTeams(KPanel rankingPanel, int teamsFontSize) {
+		List<ScoreOfTeam> scores = ranking.getTeamsScoreRanking();
+		int rows = 0;
+		for (ScoreOfTeam score : scores) {
+			addTeamLine(rankingPanel, teamsFontSize, score.getTeam().getShortName(15), score.getWonFights() + "/"
+					+ score.getDrawFights(), score.getWonDuels() + "/" + score.getDrawDuels(), score.getHits()
+					.toString());
+			rows++;
+		}
+		while (rows < MIN_ROWS) {
+			addTeamLine(rankingPanel, teamsFontSize, "", "", "", "");
+			rows++;
+		}
+	}
 
-        KLabel hits = new KLabel("PerformedHitStatistics");
-        hits.setBoldFont(true);
-        hits.setFontSize(titleFontSize);
-        hits.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(hits);
-    }
+	private void addTeamLine(KPanel rankingPanel, int teamsFontSize, String teamName, String fightsScore,
+			String duelsScore, String hits) {
+		KLabel teamLabel = new KLabel();
+		teamLabel.setText(teamName);
+		teamLabel.setFont(new Font(FONT, Font.PLAIN, teamsFontSize));
+		// teamLabel.setFontSize(teamsFontSize);
+		teamLabel.setHorizontalAlignment(JLabel.LEFT);
+		rankingPanel.add(teamLabel);
 
-    private void setTeams(KPanel rankingPanel, int teamsFontSize) {
-        List<ScoreOfTeam> scores = ranking.getTeamsScoreRanking();
-        int rows = 0;
-        for (ScoreOfTeam score : scores) {
-            addTeamLine(rankingPanel, teamsFontSize, score.getTeam().getShortName(15), score.getWonFights() + "/" + score.getDrawFights(), score.getWonDuels() + "/" + score.getDrawDuels(), score.getHits().toString());
-            rows++;
-        }
-        while (rows < MIN_ROWS) {
-            addTeamLine(rankingPanel, teamsFontSize, "", "", "", "");
-            rows++;
-        }
-    }
+		KLabel fightLabel = new KLabel();
+		fightLabel.setText(fightsScore);
+		fightLabel.setFont(new Font(FONT, Font.PLAIN, teamsFontSize));
+		// fightLabel.setFontSize(teamsFontSize);
+		fightLabel.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(fightLabel);
 
-    private void addTeamLine(KPanel rankingPanel, int teamsFontSize, String teamName, String fightsScore, String duelsScore, String hits) {
-        KLabel teamLabel = new KLabel();
-        teamLabel.setText(teamName);
-        teamLabel.setFontSize(teamsFontSize);
-        teamLabel.setHorizontalAlignment(JLabel.LEFT);
-        rankingPanel.add(teamLabel);
+		KLabel duelLabel = new KLabel();
+		duelLabel.setText(duelsScore);
+		duelLabel.setFont(new Font(FONT, Font.PLAIN, teamsFontSize));
+		// duelLabel.setFontSize(teamsFontSize);
+		duelLabel.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(duelLabel);
 
-        KLabel fightLabel = new KLabel();
-        fightLabel.setText(fightsScore);
-        fightLabel.setFontSize(teamsFontSize);
-        fightLabel.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(fightLabel);
+		KLabel hitLabel = new KLabel();
+		hitLabel.setText(hits);
+		hitLabel.setFont(new Font(FONT, Font.PLAIN, teamsFontSize));
+		// hitLabel.setFontSize(teamsFontSize);
+		hitLabel.setHorizontalAlignment(JLabel.CENTER);
+		rankingPanel.add(hitLabel);
+	}
 
-        KLabel duelLabel = new KLabel();
-        duelLabel.setText(duelsScore);
-        duelLabel.setFontSize(teamsFontSize);
-        duelLabel.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(duelLabel);
+	private int getFontSize() {
+		return this.getWidth() / 50;
+	}
 
-        KLabel hitLabel = new KLabel();
-        hitLabel.setText(hits);
-        hitLabel.setFontSize(teamsFontSize);
-        hitLabel.setHorizontalAlignment(JLabel.CENTER);
-        rankingPanel.add(hitLabel);
-    }
+	@Override
+	public void update() {
+	}
 
-    private int getFontSize() {
-        return this.getWidth() / 40;
-    }
+	@Override
+	public void tournamentChanged() {
+	}
 
-    @Override
-    public void update() {
-    }
+	private void addResizedEvent() {
+		addComponentListener(new java.awt.event.ComponentAdapter() {
+			@Override
+			public void componentResized(java.awt.event.ComponentEvent evt) {
+				setElements();
+				revalidate();
+			}
+		});
+	}
 
-    @Override
-    public void tournamentChanged() {
-    }
+	private void startTimer() {
+		timer = new Timer(AUTO_CLOSE_SECONDS * 1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				dispose();
+			}
+		});
+		timer.setRepeats(false);
+		timer.start();
+	}
 
-    private void addResizedEvent() {
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            @Override
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                setElements();
-                revalidate();
-            }
-        });
-    }
-
-    private void startTimer() {
-        timer = new Timer(AUTO_CLOSE_SECONDS * 1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                dispose();
-            }
-        });
-        timer.setRepeats(false);
-        timer.start();
-    }
-
-    private void close() {
-        try {
-            timer.stop();
-            timer = null;
-        } catch (NullPointerException npe) {
-        }
-        this.dispose();
-    }
+	private void close() {
+		try {
+			timer.stop();
+			timer = null;
+		} catch (NullPointerException npe) {
+		}
+		this.dispose();
+	}
 }

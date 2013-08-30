@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.base;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,8 +24,17 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
+import java.awt.LayoutManager;
+
 import javax.swing.JPanel;
 
 public class KPanel extends JPanel {
 
+	public KPanel() {
+
+	}
+
+	public KPanel(LayoutManager layout) {
+		super(layout);
+	}
 }

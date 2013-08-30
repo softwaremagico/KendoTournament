@@ -24,6 +24,8 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -47,10 +49,11 @@ public class TreeWindow extends KFrame {
 		defineWindow(750, 400);
 		setResizable(true);
 		setElements();
+		update();
 	}
 
 	private void setElements() {
-		bbp = new BlackBoardPanel(null, true);
+		bbp = new BlackBoardPanel(null, false);
 		BlackBoardScrollPane = new JScrollPane();
 		BlackBoardScrollPane.setViewportView(bbp);
 		BlackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -68,7 +71,8 @@ public class TreeWindow extends KFrame {
 		gridBagConstraints.weighty = 1;
 		getContentPane().add(BlackBoardScrollPane, gridBagConstraints);
 
-		KPanel buttonPanel = new KPanel();
+		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.setMinimumSize(new Dimension(200, 50));
 		CloseButton closeButton = new CloseButton(this);
 		buttonPanel.add(closeButton);
 

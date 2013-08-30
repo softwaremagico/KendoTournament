@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.tournament;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -45,245 +46,258 @@ import javax.swing.JLabel;
 
 public class TournamentGroupBox extends Group {
 
-    private TGroup tournamentGroup;
-    private ITournamentManager tournamentManager;
-    private DesignGroupWindow dgw;
-    private boolean selected = false;
-    private Translator trans = null;
-    private boolean color = true;
-    private java.awt.event.MouseAdapter ma;
-    private boolean listenerAdded = false;
+	private TGroup tournamentGroup;
+	private ITournamentManager tournamentManager;
+	private DesignGroupWindow dgw;
+	private boolean selected = false;
+	private Translator trans = null;
+	private boolean color = true;
+	private java.awt.event.MouseAdapter ma;
+	private boolean listenerAdded = false;
+	private boolean selectable = false;
 
-    public TournamentGroupBox(TGroup tournamentGroup) {
-        this.tournamentGroup = tournamentGroup;
-        this.tournamentManager = TournamentManagerFactory.getManager(tournamentGroup.getTournament());
-        setLayout(new GridBagLayout());
-        setLanguage();
-        updateText();
-        updateSize();
-        setBackground(new Color(230, 230, 230));
-        setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
-        removeAll();
-        label.setHorizontalTextPosition(JLabel.LEFT);
-        label.setForeground(Color.BLACK);
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.LINE_START;
-        add(label, c);
-    }
+	public TournamentGroupBox(TGroup tournamentGroup, boolean selectable) {
+		this.tournamentGroup = tournamentGroup;
+		this.tournamentManager = TournamentManagerFactory.getManager(tournamentGroup.getTournament());
+		this.selectable = selectable;
+		setLayout(new GridBagLayout());
+		setLanguage();
+		updateText();
+		updateSize();
+		setBackground(new Color(230, 230, 230));
+		setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+		removeAll();
+		label.setHorizontalTextPosition(JLabel.LEFT);
+		label.setForeground(Color.BLACK);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.LINE_START;
+		add(label, c);
+	}
 
-    public void update() {
-        updateText();
-        updateSize();
-    }
+	public void update() {
+		updateText();
+		updateSize();
+	}
 
-    public TGroup getTournamentGroup() {
-        return tournamentGroup;
-    }
+	public TGroup getTournamentGroup() {
+		return tournamentGroup;
+	}
 
-    void onlyShow() {
-        this.setToolTipText("");
-    }
+	void onlyShow() {
+		this.setToolTipText("");
+	}
 
-    void enhance(boolean yes) {
-        if (yes) {
-            label.setFont(new Font("Tahoma", Font.BOLD, 12));
-        } else {
-            label.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        }
-    }
+	void enhance(boolean yes) {
+		if (yes) {
+			label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		} else {
+			label.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		}
+	}
 
-    private void setLanguage() {
-        trans = LanguagePool.getTranslator("gui.xml");
-        if (tournamentGroup.getLevel() == 0) {
-            this.setToolTipText(trans.getTranslatedText("ToolTipEditable"));
-        } else {
-            this.setToolTipText(trans.getTranslatedText("ToolTipNotEditable"));
-        }
-    }
+	private void setLanguage() {
+		trans = LanguagePool.getTranslator("gui.xml");
+		if (tournamentGroup.getLevel() == 0 && selectable) {
+			this.setToolTipText(trans.getTranslatedText("ToolTipEditable"));
+		} else {
+			this.setToolTipText(trans.getTranslatedText("ToolTipNotEditable"));
+		}
+	}
 
-    final void updateSize() {
-        //xSize = 110 * Math.max(2, teams.size());
-        xSize = 200;
-        ySize = 50 + 12 * Math.max(2, tournamentGroup.getTeams().size());
-        setPreferredSize(new Dimension(xSize, ySize));
-        setMaximumSize(new Dimension(xSize, ySize));
-        setMinimumSize(new Dimension(0, 0));
-    }
+	final void updateSize() {
+		// xSize = 110 * Math.max(2, teams.size());
+		xSize = 200;
+		ySize = 50 + 12 * Math.max(2, tournamentGroup.getTeams().size());
+		setPreferredSize(new Dimension(xSize, ySize));
+		setMaximumSize(new Dimension(xSize, ySize));
+		setMinimumSize(new Dimension(0, 0));
+	}
 
-    private String getText(boolean withScore) {
-        String text = "<html>";
+	private String getText(boolean withScore) {
+		String text = "<html>";
 
-        List<Team> teamRanking;
-        if (withScore) {
-            try {
-                teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
-            } catch (SQLException ex) {
-                AlertManager.showSqlErrorMessage(ex);
-                teamRanking = tournamentGroup.getTeams();
-            }
-        } else {
-            teamRanking = tournamentGroup.getTeams();
-        }
-        if (teamRanking.isEmpty()) {
-            text += "<b>" + getDefaultLabel() + "</b>";
-        } else {
-            for (int i = 0; i < teamRanking.size(); i++) {
-                Color c = obtainWinnerColor(i, true);
+		List<Team> teamRanking;
+		if (withScore) {
+			try {
+				teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
+			} catch (SQLException ex) {
+				AlertManager.showSqlErrorMessage(ex);
+				teamRanking = tournamentGroup.getTeams();
+			}
+		} else {
+			teamRanking = tournamentGroup.getTeams();
+		}
+		if (teamRanking.isEmpty()) {
+			text += "<b>" + getDefaultLabel() + "</b>";
+		} else {
+			for (int i = 0; i < teamRanking.size(); i++) {
+				Color c = obtainWinnerColor(i, true);
 
-                if (color) {
-                    //text += "<b><font size=\"+1\" color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
-                    text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
-                }
-                text += teamRanking.get(i).getShortName();
-                if (color) {
-                    text += "</b></font>";
-                }
-                if (i < teamRanking.size() - 1) {
-                    text += "<br>";
-                }
-            }
-        }
-        text += "</html>";
-        return text;
-    }
+				if (color) {
+					// text += "<b><font size=\"+1\" color=\"#" +
+					// Integer.toHexString(c.getRed()) +
+					// Integer.toHexString(c.getGreen()) +
+					// Integer.toHexString(c.getBlue()) + "\">";
+					text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen())
+							+ Integer.toHexString(c.getBlue()) + "\">";
+				}
+				text += teamRanking.get(i).getShortName();
+				if (color) {
+					text += "</b></font>";
+				}
+				if (i < teamRanking.size() - 1) {
+					text += "<br>";
+				}
+			}
+		}
+		text += "</html>";
+		return text;
+	}
 
-    public final void updateText() {
-        label.setText(getText(false));
-    }
+	public final void updateText() {
+		label.setText(getText(false));
+	}
 
-    public final void updateTextOrderByScore() {
-        label.setText(getText(true));
-    }
+	public final void updateTextOrderByScore() {
+		label.setText(getText(true));
+	}
 
-    public String getDefaultLabel() {
-        //Select label
-        String s;
-        if (tournamentGroup.getLevel() < tournamentManager.getNumberOfLevels() - 2) {
-            s = trans.getTranslatedText("Round") + " " + (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
-        } else if (tournamentGroup.getLevel() == tournamentManager.getNumberOfLevels() - 2) {
-            s = trans.getTranslatedText("SemiFinalLabel");
-        } else {
-            s = trans.getTranslatedText("FinalLabel");
-        }
-        return s;
-    }
+	public String getDefaultLabel() {
+		// Select label
+		String s;
+		if (tournamentGroup.getLevel() < tournamentManager.getNumberOfLevels() - 2) {
+			s = trans.getTranslatedText("Round") + " "
+					+ (tournamentManager.getNumberOfLevels() - tournamentGroup.getLevel());
+		} else if (tournamentGroup.getLevel() == tournamentManager.getNumberOfLevels() - 2) {
+			s = trans.getTranslatedText("SemiFinalLabel");
+		} else {
+			s = trans.getTranslatedText("FinalLabel");
+		}
+		return s;
+	}
 
-    public Color obtainWinnerColor(int winner, boolean check) {
-        int red, green, blue;
-        try {
-            if ((!check) || (winner < tournamentGroup.getMaxNumberOfWinners() && winner >= 0 && tournamentGroup.areFightsOver(FightPool.getInstance().get(tournamentGroup.getTournament())))) {
-                if (winner == 0) {
-                    red = 220;
-                    green = 20;
-                    blue = 20;
-                } else {
-                    red = 0 + (winner) * 37;
-                    red = red % 221;
-                    green = 0 + (winner) * 144;
-                    green = green % 171;
-                    blue = 0 + (winner) * 239 - winner * 150;
-                    blue = blue % 245;
-                }
-                return new Color(red, green, blue);
-            }
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
-        return new Color(0, 0, 0);
-    }
+	public Color obtainWinnerColor(int winner, boolean check) {
+		int red, green, blue;
+		try {
+			if ((!check)
+					|| (winner < tournamentGroup.getMaxNumberOfWinners() && winner >= 0 && tournamentGroup
+							.areFightsOver(FightPool.getInstance().get(tournamentGroup.getTournament())))) {
+				if (winner == 0) {
+					red = 220;
+					green = 20;
+					blue = 20;
+				} else {
+					red = 0 + (winner) * 37;
+					red = red % 221;
+					green = 0 + (winner) * 144;
+					green = green % 171;
+					blue = 0 + (winner) * 239 - winner * 150;
+					blue = blue % 245;
+				}
+				return new Color(red, green, blue);
+			}
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+		}
+		return new Color(0, 0, 0);
+	}
 
-    public void setSelected() {
-        if (tournamentGroup.getLevel() == 0) {
-            selected = true;
-            setBackground(new Color(200, 200, 200));
-            setBorder(javax.swing.BorderFactory.createLoweredBevelBorder());
-        }
-    }
+	public void setSelected() {
+		if (tournamentGroup.getLevel() == 0) {
+			selected = true;
+			setBackground(new Color(200, 200, 200));
+			if (selectable) {
+				setBorder(javax.swing.BorderFactory.createLoweredBevelBorder());
+			} else {
+				setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+			}
+		}
+	}
 
-    public void setUnselected() {
-        selected = false;
-        setBackground(new Color(230, 230, 230));
-        if (tournamentGroup.getLevel() == 0) {
-            setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
-        } else {
-            setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
-        }
-    }
+	public void setUnselected() {
+		selected = false;
+		setBackground(new Color(230, 230, 230));
+		if (tournamentGroup.getLevel() == 0 && selectable) {
+			setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
+		} else {
+			setBorder(javax.swing.BorderFactory.createLineBorder(Color.BLACK));
+		}
+	}
 
-    public boolean isSelected() {
-        return selected;
-    }
+	public boolean isSelected() {
+		return selected;
+	}
 
-    public void activateColor(boolean value) {
-        color = value;
-    }
+	public void activateColor(boolean value) {
+		color = value;
+	}
 
-    public void openDesignGroupWindow(LeagueDesigner jf) {
-        dgw = new DesignGroupWindow(tournamentGroup);
-        addDesignGroupListeners(jf);
-        dgw.setVisible(true);
-    }
+	public void openDesignGroupWindow(LeagueDesigner jf) {
+		dgw = new DesignGroupWindow(tournamentGroup);
+		addDesignGroupListeners(jf);
+		dgw.setVisible(true);
+	}
 
-    public void removeTeams() {
-        tournamentGroup.removeTeams();
-        label.setText(getText(false));
-        updateSize();
-    }
+	public void removeTeams() {
+		tournamentGroup.removeTeams();
+		label.setText(getText(false));
+		updateSize();
+	}
 
-    public Integer getMaxNumberOfWinners() {
-        return tournamentGroup.getMaxNumberOfWinners();
-    }
+	public Integer getMaxNumberOfWinners() {
+		return tournamentGroup.getMaxNumberOfWinners();
+	}
 
-    /**
-     * **********************************************
-     *
-     * LISTENERS
-     *
-     ***********************************************
-     */
-    /**
-     * Add Listeners
-     *
-     * @param al
-     */
-    public void addMouseClickListener(java.awt.event.MouseAdapter e) {
-        ma = e;
-        addMouseListener(ma);
-        listenerAdded = true;
-    }
+	/**
+	 * **********************************************
+	 * 
+	 * LISTENERS
+	 * 
+	 *********************************************** 
+	 */
+	/**
+	 * Add Listeners
+	 * 
+	 * @param al
+	 */
+	public void addMouseClickListener(java.awt.event.MouseAdapter e) {
+		ma = e;
+		addMouseListener(ma);
+		listenerAdded = true;
+	}
 
-    public void removeMouseClickListener() {
-        removeMouseListener(ma);
-        listenerAdded = false;
-    }
+	public void removeMouseClickListener() {
+		removeMouseListener(ma);
+		listenerAdded = false;
+	}
 
-    /**
-     * *******************************************************************
-     *
-     * DESIGN GROUP WINDOW LISTENERS
-     *
-     ********************************************************************
-     */
-    /**
-     * Add all listeners to GUI.
-     */
-    private void addDesignGroupListeners(LeagueDesigner jf) {
-        dgw.addWindowCloseListener(new closeWindows(jf));
-    }
+	/**
+	 * *******************************************************************
+	 * 
+	 * DESIGN GROUP WINDOW LISTENERS
+	 * 
+	 ******************************************************************** 
+	 */
+	/**
+	 * Add all listeners to GUI.
+	 */
+	private void addDesignGroupListeners(LeagueDesigner jf) {
+		dgw.addWindowCloseListener(new closeWindows(jf));
+	}
 
-    class closeWindows extends WindowAdapter {
+	class closeWindows extends WindowAdapter {
 
-        private LeagueDesigner leagueDesigner;
+		private LeagueDesigner leagueDesigner;
 
-        closeWindows(LeagueDesigner jf) {
-            leagueDesigner = jf;
-        }
+		closeWindows(LeagueDesigner jf) {
+			leagueDesigner = jf;
+		}
 
-        @Override
-        public void windowClosed(WindowEvent evt) {
-            update();
-            leagueDesigner.updateInfo();
-            leagueDesigner.repaint();
-        }
-    }
+		@Override
+		public void windowClosed(WindowEvent evt) {
+			update();
+			leagueDesigner.updateInfo();
+			leagueDesigner.repaint();
+		}
+	}
 }
