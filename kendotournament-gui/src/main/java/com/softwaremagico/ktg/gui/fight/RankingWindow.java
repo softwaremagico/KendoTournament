@@ -39,7 +39,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 import com.softwaremagico.ktg.core.Ranking;
@@ -56,6 +58,7 @@ public class RankingWindow extends KFrame {
 	private final static int MIN_ROWS = 6;
 	private Timer timer = null;
 	private Ranking ranking;
+	private JScrollPane rankingScrollPane;
 
 	public RankingWindow(Ranking ranking, boolean autoclose) {
 		this.ranking = ranking;
@@ -84,7 +87,7 @@ public class RankingWindow extends KFrame {
 		getContentPane().removeAll();
 		setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		KPanel rankingPanel = createRankingPanel();
+		rankingScrollPane = createRankingPanel();
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
@@ -94,7 +97,7 @@ public class RankingWindow extends KFrame {
 		gridBagConstraints.weightx = 1;
 		gridBagConstraints.weighty = 1;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(rankingPanel, gridBagConstraints);
+		getContentPane().add(rankingScrollPane, gridBagConstraints);
 
 		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.setMinimumSize(new Dimension(200, 50));
@@ -114,13 +117,16 @@ public class RankingWindow extends KFrame {
 		getContentPane().add(buttonPanel, gridBagConstraints);
 	}
 
-	private KPanel createRankingPanel() {
+	private JScrollPane createRankingPanel() {
 		KPanel rankingPanel = new KPanel();
 		GridLayout experimentLayout = new GridLayout(0, 4);
 		rankingPanel.setLayout(experimentLayout);
 		setTitle(rankingPanel, getFontSize() + 4);
 		setTeams(rankingPanel, getFontSize());
-		return rankingPanel;
+		JScrollPane rankingScrollPane = new JScrollPane();
+		rankingScrollPane.setViewportView(rankingPanel);
+		rankingScrollPane.setBorder(BorderFactory.createEmptyBorder());
+		return rankingScrollPane;
 	}
 
 	private void setTitle(KPanel rankingPanel, int titleFontSize) {

@@ -41,7 +41,7 @@ import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
 
 public class TreeWindow extends KFrame {
 	private BlackBoardPanel bbp;
-	private JScrollPane BlackBoardScrollPane;
+	private JScrollPane blackBoardScrollPane;
 	private Tournament tournament;
 
 	public TreeWindow(Tournament tournament) {
@@ -54,9 +54,9 @@ public class TreeWindow extends KFrame {
 
 	private void setElements() {
 		bbp = new BlackBoardPanel(null, false);
-		BlackBoardScrollPane = new JScrollPane();
-		BlackBoardScrollPane.setViewportView(bbp);
-		BlackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+		blackBoardScrollPane = new JScrollPane();
+		blackBoardScrollPane.setViewportView(bbp);
+		blackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
 		getContentPane().removeAll();
 		setLayout(new GridBagLayout());
@@ -69,7 +69,7 @@ public class TreeWindow extends KFrame {
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 1;
 		gridBagConstraints.weighty = 1;
-		getContentPane().add(BlackBoardScrollPane, gridBagConstraints);
+		getContentPane().add(blackBoardScrollPane, gridBagConstraints);
 
 		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.setMinimumSize(new Dimension(200, 50));
@@ -93,8 +93,8 @@ public class TreeWindow extends KFrame {
 	public void update() {
 		try {
 			bbp.update(tournament);
-			BlackBoardScrollPane.revalidate();
-			BlackBoardScrollPane.repaint();
+			blackBoardScrollPane.revalidate();
+			blackBoardScrollPane.repaint();
 		} catch (NullPointerException npe) {
 			AlertManager.showErrorInformation(this.getClass().getName(), npe);
 		}

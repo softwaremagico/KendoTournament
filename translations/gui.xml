@@ -776,14 +776,6 @@
 		<ca>Llista d'equips</ca>
 		<it>Lista delle squadre</it>
 	</TeamListMenuItem>
-	<PointListMenuItem>
-		<en>Score list</en>
-		<es>Lista de puntuaciones</es>
-		<nl>Scorelijst</nl>
-		<de>Ergebnisliste</de>
-		<ca>Llista de puntuacions</ca>
-		<it>Lista dei punteggi</it>
-	</PointListMenuItem>
 	<DiplomaMenuItem>
 		<en>Diplomas</en>
 		<es>Diplomas</es>
@@ -2091,4 +2083,20 @@
 		<ca>Finestra</ca>
 		<it>Finestra</it>
 	</WindowMenuItem> 
+	<PointListMenuItemGlobal>
+		<en>Score list (global)</en>
+		<es>Lista de puntuaciones (global)</es>
+		<nl>Scorelijst (global)</nl>
+		<de>Ergebnisliste (global)</de>
+		<ca>Llista de puntuacions (global)</ca>
+		<it>Lista dei punteggi (globale)</it>
+	</PointListMenuItemGlobal>
+	<PointListMenuItemGroup>
+		<en>Score list (group)</en>
+		<es>Lista de puntuaciones (grupo)</es>
+		<nl>Scorelijst (group)</nl>
+		<de>Ergebnisliste (group)</de>
+		<ca>Llista de puntuacions (grup)</ca>
+		<it>Lista dei punteggi (gruppo)</it>
+	</PointListMenuItemGroup>
 </translator>

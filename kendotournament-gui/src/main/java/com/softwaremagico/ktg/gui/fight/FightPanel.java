@@ -75,7 +75,7 @@ public class FightPanel extends KFrame {
 	private TournamentComboBox tournamentComboBox;
 	private FightAreaComboBox fightAreaComboBox;
 	private KButton nextButton, previousButton;
-	private JMenuItem showTreeMenuItem, scoreMenuItem;
+	private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem;
 	private KCheckBoxMenuItem changeTeam, changeColor, changeMemberOrder;
 
 	public FightPanel() {
@@ -166,16 +166,39 @@ public class FightPanel extends KFrame {
 		});
 		showMenu.add(showTreeMenuItem);
 
-		scoreMenuItem = new KMenuItem("PointListMenuItem");
-		scoreMenuItem.setMnemonic(KeyEvent.VK_T);
-		scoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
-		scoreMenuItem.addActionListener(new java.awt.event.ActionListener() {
+		groupScoreMenuItem = new KMenuItem("PointListMenuItemGroup");
+		groupScoreMenuItem.setMnemonic(KeyEvent.VK_P);
+		groupScoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
+		groupScoreMenuItem.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				openRankingWindow();
+				try {
+					Fight currentFight;
+					currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+							getSelectedFightArea());
+					TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+					openRankingWindow(group.getFights());
+				} catch (SQLException e) {
+					AlertManager.showSqlErrorMessage(e);
+				}
 			}
 		});
-		showMenu.add(scoreMenuItem);
+		showMenu.add(groupScoreMenuItem);
+
+		globalScoreMenuItem = new KMenuItem("PointListMenuItemGlobal");
+		globalScoreMenuItem.setMnemonic(KeyEvent.VK_G);
+		globalScoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
+		globalScoreMenuItem.addActionListener(new java.awt.event.ActionListener() {
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					openRankingWindow(FightPool.getInstance().get(getSelectedTournament()));
+				} catch (SQLException e) {
+					AlertManager.showSqlErrorMessage(e);
+				}
+			}
+		});
+		showMenu.add(globalScoreMenuItem);
 
 		return showMenu;
 	}
@@ -430,16 +453,9 @@ public class FightPanel extends KFrame {
 		return n;
 	}
 
-	private void openRankingWindow() {
-		try {
-			Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
-					getSelectedFightArea());
-			TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
-			Ranking ranking = new Ranking(group.getFights());
-			openRankingWindow(ranking, false);
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
+	private void openRankingWindow(List<Fight> fights) {
+		Ranking ranking = new Ranking(fights);
+		openRankingWindow(ranking, false);
 	}
 
 	private void openRankingWindow(Ranking ranking, boolean autoclose) {
