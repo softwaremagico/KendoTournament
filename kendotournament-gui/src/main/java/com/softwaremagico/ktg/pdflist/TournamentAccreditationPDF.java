@@ -31,17 +31,13 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.RolePool;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class TournamentAccreditationPDF {
 
     Tournament tournament;

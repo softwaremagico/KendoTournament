@@ -5,3 +5,4 @@ Que muestre el mensaje de esperando a la otra fightarea cuando los combates de u
 Cuando hay dos ordenadores, que se actualicen los datos (cambios en el orden de los equipos) al acabar el nivel. 
 Las listas en PDF no funcionan. 
 El arbol en el panel de combates no funciona. 
+¿Guardar el árbol en PNG?

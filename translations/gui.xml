@@ -408,6 +408,14 @@
 		<ca>Guardar</ca>
 		<it>Salvare</it>
 	</SaveButton>
+	<SaveImageButton>
+		<en>Save as PNG</en>
+		<es>Guardar como PNG</es>
+		<nl>Opslaan (PNG)</nl>
+		<de>Speichern (PNG)</de>
+		<ca>Guardar com PNG</ca>
+		<it>Salvare come PNG</it>
+	</SaveImageButton>
 	<Clean>
 		<en>Clean</en>
 		<es>Borrar</es>

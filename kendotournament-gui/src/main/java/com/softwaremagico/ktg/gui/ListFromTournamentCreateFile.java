@@ -24,24 +24,23 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.TournamentPool;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
-	public Translator trans = null;
-	public List<Tournament> listTournaments = new ArrayList<>();
-	public boolean voidTournament; // Add "All tournaments" option.
+	protected Translator trans = null;
+	protected List<Tournament> listTournaments = new ArrayList<>();
+	protected boolean voidTournament; // Add "All tournaments" option.
 	private boolean refreshTournament = true;
 
 	public void createGui(boolean tmp_voidTournament) {

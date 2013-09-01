@@ -25,8 +25,8 @@ package com.softwaremagico.ktg.gui.base;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;

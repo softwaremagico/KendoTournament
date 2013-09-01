@@ -31,7 +31,10 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-public abstract class KendoFrame extends javax.swing.JFrame {
+/**
+ * Includes functionality for save file in different formats (png, pdf, ...).
+ */
+public abstract class KendoFrame extends KFrame {
 
     JFileChooser fc;
 
@@ -202,5 +205,15 @@ public abstract class KendoFrame extends javax.swing.JFrame {
         public String getDescription() {
             return "Specific file of this program";
         }
+    }
+
+    @Override
+    public void tournamentChanged() {
+        //Nothing.
+    }
+
+    @Override
+    public void update() {
+        //Nothing.
     }
 }

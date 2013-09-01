@@ -25,11 +25,6 @@ package com.softwaremagico.ktg.pdflist;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -53,172 +48,175 @@ import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreListPDF extends ParentList {
 
-	private Tournament tournament;
-	private ITournamentManager tournamentManager;
-	List<ScoreOfTeam> teamTopTen;
+    private Tournament tournament;
+    private ITournamentManager tournamentManager;
+    private List<ScoreOfTeam> teamTopTen;
 
-	public ScoreListPDF(Tournament tournament) {
-		this.tournament = tournament;
-		this.tournamentManager = TournamentManagerFactory.getManager(tournament);
-		trans = LanguagePool.getTranslator("gui.xml");
-	}
+    public ScoreListPDF(Tournament tournament) {
+        this.tournament = tournament;
+        this.tournamentManager = TournamentManagerFactory.getManager(tournament);
+        trans = LanguagePool.getTranslator("gui.xml");
+    }
 
-	private PdfPTable simpleTable(PdfPTable mainTable) {
-		try {
-			teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-			teamTopTen = new ArrayList<>();
-		}
+    private PdfPTable simpleTable(PdfPTable mainTable) {
+        try {
+            teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+            teamTopTen = new ArrayList<>();
+        }
 
-		mainTable.addCell(getCell(trans.getTranslatedText("Team"), 0, Element.ALIGN_CENTER));
-		mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 0, Element.ALIGN_CENTER));
-		mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 0, Element.ALIGN_CENTER));
-		mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("Team"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 0, Element.ALIGN_CENTER));
+        mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 0, Element.ALIGN_CENTER));
 
-		for (int i = 0; i < teamTopTen.size(); i++) {
-			mainTable.addCell(getCell(teamTopTen.get(i).getTeam().getShortName(), 1));
-			mainTable.addCell(getCell(teamTopTen.get(i).getWonFights() + "/" + teamTopTen.get(i).getDrawFights(), 1,
-					Element.ALIGN_CENTER));
-			mainTable.addCell(getCell(teamTopTen.get(i).getWonDuels() + "/" + teamTopTen.get(i).getDrawDuels(), 1,
-					Element.ALIGN_CENTER));
-			mainTable.addCell(getCell("" + teamTopTen.get(i).getHits(), 1, Element.ALIGN_CENTER));
-		}
-		return mainTable;
-	}
+        for (int i = 0; i < teamTopTen.size(); i++) {
+            mainTable.addCell(getCell(teamTopTen.get(i).getTeam().getShortName(), 1));
+            mainTable.addCell(getCell(teamTopTen.get(i).getWonFights() + "/" + teamTopTen.get(i).getDrawFights(), 1,
+                    Element.ALIGN_CENTER));
+            mainTable.addCell(getCell(teamTopTen.get(i).getWonDuels() + "/" + teamTopTen.get(i).getDrawDuels(), 1,
+                    Element.ALIGN_CENTER));
+            mainTable.addCell(getCell("" + teamTopTen.get(i).getHits(), 1, Element.ALIGN_CENTER));
+        }
+        return mainTable;
+    }
 
-	private PdfPTable championshipTable(PdfPTable mainTable) {
-		List<Fight> fights = new ArrayList<>();
-		try {
-			fights = FightPool.getInstance().get(tournament);
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		for (int l = 0; l < tournamentManager.getNumberOfLevels(); l++) {
-			List<TGroup> groups = tournamentManager.getGroups(l);
-			boolean printTitle = false;
-			for (int i = 0; i < groups.size(); i++) {
-				if (groups.get(i).areFightsOver()) {
-					printTitle = true;
-					break;
-				}
-			}
+    private PdfPTable championshipTable(PdfPTable mainTable) {
+        List<Fight> fights = new ArrayList<>();
+        try {
+            fights = FightPool.getInstance().get(tournament);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        for (int l = 0; l < tournamentManager.getNumberOfLevels(); l++) {
+            List<TGroup> groups = tournamentManager.getGroups(l);
+            boolean printTitle = false;
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).areFightsOver()) {
+                    printTitle = true;
+                    break;
+                }
+            }
 
-			if (printTitle) {
-				mainTable.addCell(getEmptyRow());
-				mainTable.addCell(getEmptyRow());
-				mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (l + 1) + ":", 0,
-						Element.ALIGN_LEFT));
+            if (printTitle) {
+                mainTable.addCell(getEmptyRow());
+                mainTable.addCell(getEmptyRow());
+                mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (l + 1) + ":", 0,
+                        Element.ALIGN_LEFT));
 
-				for (int i = 0; i < groups.size(); i++) {
-					if (groups.get(i).areFightsOver()) {
-						mainTable.addCell(getEmptyRow());
-						String head = trans.getTranslatedText("GroupString") + " " + (i + 1);
-						if (tournament.getFightingAreas() > 1) {
-							head += " (" + trans.getTranslatedText("FightArea") + " "
-									+ Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")";
-						}
+                for (int i = 0; i < groups.size(); i++) {
+                    if (groups.get(i).areFightsOver()) {
+                        mainTable.addCell(getEmptyRow());
+                        String head = trans.getTranslatedText("GroupString") + " " + (i + 1);
+                        if (tournament.getFightingAreas() > 1) {
+                            head += " (" + trans.getTranslatedText("FightArea") + " "
+                                    + Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")";
+                        }
 
-						mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));
-						mainTable.addCell(getCell(trans.getTranslatedText("Team"), 1, Element.ALIGN_CENTER));
-						mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 1, Element.ALIGN_CENTER));
-						mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 1, Element.ALIGN_CENTER));
-						mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getHeader2(head, 0, Element.ALIGN_LEFT));
+                        mainTable.addCell(getCell(trans.getTranslatedText("Team"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("fightsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("duelsWon"), 1, Element.ALIGN_CENTER));
+                        mainTable.addCell(getCell(trans.getTranslatedText("histsWon"), 1, Element.ALIGN_CENTER));
 
-						List<Team> winnersUndraw = new ArrayList<>();
-						try {
-							winnersUndraw = UndrawPool.getInstance()
-									.getWinners(tournament, groups.get(i).getLevel(), i);
-						} catch (SQLException ex) {
-							AlertManager.showSqlErrorMessage(ex);
-						}
+                        List<Team> winnersUndraw = new ArrayList<>();
+                        try {
+                            winnersUndraw = UndrawPool.getInstance()
+                                    .getWinners(tournament, groups.get(i).getLevel(), i);
+                        } catch (SQLException ex) {
+                            AlertManager.showSqlErrorMessage(ex);
+                        }
 
-						for (int j = 0; j < groups.get(i).getTeams().size(); j++) {
-							/*
-							 * Header of the teams
-							 */
-							Ranking ranking = new Ranking(fights);
-							ScoreOfTeam scoreOfTeam = ranking.getScoreOfTeam(j);
+                        for (int j = 0; j < groups.get(i).getTeams().size(); j++) {
+                            /*
+                             * Header of the teams
+                             */
+                            Ranking ranking = new Ranking(fights);
+                            ScoreOfTeam scoreOfTeam = ranking.getScoreOfTeam(j);
 
-							mainTable.addCell(getCell(scoreOfTeam.getTeam().getName(), 0, Element.ALIGN_LEFT));
-							mainTable.addCell(getCell(scoreOfTeam.getWonFights() + "/" + scoreOfTeam.getDrawFights(),
-									0, Element.ALIGN_CENTER));
-							mainTable.addCell(getCell(scoreOfTeam.getWonDuels() + "/" + scoreOfTeam.getDrawDuels(), 0,
-									Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(scoreOfTeam.getTeam().getName(), 0, Element.ALIGN_LEFT));
+                            mainTable.addCell(getCell(scoreOfTeam.getWonFights() + "/" + scoreOfTeam.getDrawFights(),
+                                    0, Element.ALIGN_CENTER));
+                            mainTable.addCell(getCell(scoreOfTeam.getWonDuels() + "/" + scoreOfTeam.getDrawDuels(), 0,
+                                    Element.ALIGN_CENTER));
 
-							String score = scoreOfTeam.getHits() + "";
-							if (winnersUndraw != null) {
-								if (winnersUndraw.contains(scoreOfTeam.getTeam())) {
-									score += "*";
-								}
-							}
-							mainTable.addCell(getCell(score, 0, Element.ALIGN_CENTER));
-						}
-					}
-				}
-			}
-		}
+                            String score = scoreOfTeam.getHits() + "";
+                            if (winnersUndraw != null) {
+                                if (winnersUndraw.contains(scoreOfTeam.getTeam())) {
+                                    score += "*";
+                                }
+                            }
+                            mainTable.addCell(getCell(score, 0, Element.ALIGN_CENTER));
+                        }
+                    }
+                }
+            }
+        }
 
-		return mainTable;
-	}
+        return mainTable;
+    }
 
-	@Override
-	public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
-			String font, int fontSize) {
-		if (tournament.getType().equals(TournamentType.SIMPLE)) {
-			simpleTable(mainTable);
-		} else {
-			championshipTable(mainTable);
-		}
-	}
+    @Override
+    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
+            String font, int fontSize) {
+        if (tournament.getType().equals(TournamentType.SIMPLE)) {
+            simpleTable(mainTable);
+        } else {
+            championshipTable(mainTable);
+        }
+    }
 
-	@Override
-	public float[] getTableWidths() {
-		float[] widths = { 0.40f, 0.20f, 0.20f, 0.20f };
-		return widths;
-	}
+    @Override
+    public float[] getTableWidths() {
+        float[] widths = {0.40f, 0.20f, 0.20f, 0.20f};
+        return widths;
+    }
 
-	@Override
-	public void setTablePropierties(PdfPTable mainTable) {
-		mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-	}
+    @Override
+    public void setTablePropierties(PdfPTable mainTable) {
+        mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+    }
 
-	@Override
-	public void createHeaderRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
-			String font, int fontSize) {
-		PdfPCell cell;
-		Paragraph p;
+    @Override
+    public void createHeaderRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
+            String font, int fontSize) {
+        PdfPCell cell;
+        Paragraph p;
 
-		p = new Paragraph(tournament.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
-		cell = new PdfPCell(p);
-		cell.setColspan(getTableWidths().length);
-		cell.setBorderWidth(headerBorder);
-		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-		// cell.setBackgroundColor(new Color(255, 255, 255));
-		mainTable.addCell(cell);
-	}
+        p = new Paragraph(tournament.getName(), FontFactory.getFont(font, fontSize + 15, Font.BOLD));
+        cell = new PdfPCell(p);
+        cell.setColspan(getTableWidths().length);
+        cell.setBorderWidth(headerBorder);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        // cell.setBackgroundColor(new Color(255, 255, 255));
+        mainTable.addCell(cell);
+    }
 
-	@Override
-	public void createFooterRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
-			String font, int fontSize) {
-		mainTable.addCell(getEmptyRow());
-	}
+    @Override
+    public void createFooterRow(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
+            String font, int fontSize) {
+        mainTable.addCell(getEmptyRow());
+    }
 
-	@Override
-	protected Rectangle getPageSize() {
-		return PageSize.A4;
-	}
+    @Override
+    protected Rectangle getPageSize() {
+        return PageSize.A4;
+    }
 
-	@Override
-	protected String fileCreatedOkTag() {
-		return "scoreListOK";
-	}
+    @Override
+    protected String fileCreatedOkTag() {
+        return "scoreListOK";
+    }
 
-	@Override
-	protected String fileCreatedBadTag() {
-		return "scoreListBad";
-	}
+    @Override
+    protected String fileCreatedBadTag() {
+        return "scoreListBad";
+    }
 }
