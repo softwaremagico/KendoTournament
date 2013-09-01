@@ -76,7 +76,7 @@ public class TournamentComboBox extends KComboBox {
         }
     }
 
-    private void TournamentComboBoxActionPerformed(ActionEvent evt) {
+    private void tournamentComboBoxActionPerformed(ActionEvent evt) {
         parent.tournamentChanged();
     }
 
@@ -84,7 +84,16 @@ public class TournamentComboBox extends KComboBox {
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            TournamentComboBoxActionPerformed(evt);
+            tournamentComboBoxActionPerformed(evt);
+        }
+    }
+
+    @Override
+    public void setSelectedItem(Object object) {
+        if (object instanceof Tournament) {
+            Tournament tournament = (Tournament) object;
+            super.setSelectedItem(tournament);
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournament.getName());
         }
     }
 }

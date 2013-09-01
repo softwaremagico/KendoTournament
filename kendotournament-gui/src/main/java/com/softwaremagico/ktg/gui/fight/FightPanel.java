@@ -23,26 +23,8 @@ package com.softwaremagico.ktg.gui.fight;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -66,6 +48,24 @@ import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
 
@@ -91,6 +91,7 @@ public class FightPanel extends KFrame {
 
 		setLayout(new GridBagLayout());
 		setMainPanels();
+                tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
 		updateSelectedTournament();
 	}
 
@@ -315,6 +316,14 @@ public class FightPanel extends KFrame {
 		gridBagConstraints.weighty = 1;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		tournamentPanel.add(fightAreaComboBox, gridBagConstraints);
+                fightAreaComboBox.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateSelectedFightArea();
+                }
+                    
+                });
 
 		return tournamentPanel;
 	}
