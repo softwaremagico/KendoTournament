@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
@@ -38,159 +37,158 @@ import java.util.List;
 
 public abstract class ListFromTournamentCreateFile extends KendoFrame {
 
-	protected Translator trans = null;
-	protected List<Tournament> listTournaments = new ArrayList<>();
-	protected boolean voidTournament; // Add "All tournaments" option.
-	private boolean refreshTournament = true;
+    protected Translator trans = null;
+    protected List<Tournament> listTournaments = new ArrayList<>();
+    protected boolean voidTournament; // Add "All tournaments" option.
+    protected boolean refreshTournament = true;
 
-	public void createGui(boolean tmp_voidTournament) {
-		initComponents();
-		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setLanguage();
-		voidTournament = tmp_voidTournament;
-		fillTournaments();
-		updateArena();
-		CheckBox.setVisible(false);
-		ArenaComboBox.setEnabled(false);
-	}
+    public void createGui(boolean voidTournament) {
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLanguage();
+        this.voidTournament = voidTournament;
+        fillTournaments();
+        updateArena();
+        CheckBox.setVisible(false);
+        ArenaComboBox.setEnabled(false);
+    }
 
-	public void setLanguage() {
-		trans = LanguagePool.getTranslator("gui.xml");
-		TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
-		ArenaLabel.setText(trans.getTranslatedText("FightArea"));
-		CancelButton.setText(trans.getTranslatedText("CancelButton"));
-		GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
-	}
+    private void setLanguage() {
+        trans = LanguagePool.getTranslator("gui.xml");
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        ArenaLabel.setText(trans.getTranslatedText("FightArea"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
+    }
 
-	private void fillTournaments() {
-		refreshTournament = false;
-		try {
-			listTournaments = TournamentPool.getInstance().getSorted();
-			if (voidTournament) {
-				TournamentComboBox.addItem(trans.getTranslatedText("All"));
-			}
-			for (int i = 0; i < listTournaments.size(); i++) {
-				TournamentComboBox.addItem(listTournaments.get(i));
-			}
-			Tournament tournament = KendoTournamentGenerator.getInstance().getLastSelectedTournament();
-			if (tournament != null) {
-				TournamentComboBox.setSelectedItem(tournament);
-			} else if (TournamentComboBox.getItemCount() > 0) {
-				TournamentComboBox.setSelectedIndex(0);
-			}
-		} catch (NullPointerException npe) {
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		refreshTournament = true;
-	}
+    protected void fillTournaments() {
+        refreshTournament = false;
+        try {
+            listTournaments = TournamentPool.getInstance().getSorted();
+            if (voidTournament) {
+                TournamentComboBox.addItem(trans.getTranslatedText("All"));
+            }
+            for (int i = 0; i < listTournaments.size(); i++) {
+                TournamentComboBox.addItem(listTournaments.get(i));
+            }
+            Tournament tournament = KendoTournamentGenerator.getInstance().getLastSelectedTournament();
+            if (tournament != null) {
+                TournamentComboBox.setSelectedItem(tournament);
+            } else if (TournamentComboBox.getItemCount() > 0) {
+                TournamentComboBox.setSelectedIndex(0);
+            }
+        } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        refreshTournament = true;
+    }
 
-	public String returnSelectedTournamentName() {
-		if (voidTournament && TournamentComboBox.getSelectedIndex() == 0) {
-			return null;
-		}
-		return TournamentComboBox.getSelectedItem().toString();
-	}
+    public String getSelectedTournamentName() {
+        if (voidTournament && TournamentComboBox.getSelectedIndex() == 0) {
+            return null;
+        }
+        return TournamentComboBox.getSelectedItem().toString();
+    }
 
-	public Tournament returnSelectedTournament() {
-		if (voidTournament) {
-			if (TournamentComboBox.getSelectedIndex() > 0) {
-				return listTournaments.get(TournamentComboBox.getSelectedIndex() - 1); // -1
-																						// to
-																						// avoid
-																						// "all".
-			} else {
-				return null;
-			}
-		} else {
-			return listTournaments.get(TournamentComboBox.getSelectedIndex());
-		}
+    public Tournament getSelectedTournament() {
+        if (voidTournament) {
+            if (TournamentComboBox.getSelectedIndex() > 0) {
+                //return listTournaments.get(TournamentComboBox.getSelectedIndex() - 1); // -1																	// avoid
+                return (Tournament) TournamentComboBox.getSelectedItem();
+                // "all".
+            } else {
+                return null;
+            }
+        } else {
+             return (Tournament) TournamentComboBox.getSelectedItem();
+        }
 
-	}
+    }
 
-	private int returnSelectedTournamentOfList() {
-		if (voidTournament) {
-			if (TournamentComboBox.getSelectedIndex() == 0) {
-				return -1;
-			} else {
-				return TournamentComboBox.getSelectedIndex() - 1;
-			}
-		} else {
-			return TournamentComboBox.getSelectedIndex();
-		}
-	}
+    private int getSelectedTournamentOfList() {
+        if (voidTournament) {
+            if (TournamentComboBox.getSelectedIndex() == 0) {
+                return -1;
+            } else {
+                return TournamentComboBox.getSelectedIndex() - 1;
+            }
+        } else {
+            return TournamentComboBox.getSelectedIndex();
+        }
+    }
 
-	private void updateArena() {
-		ArenaComboBox.removeAllItems();
-		try {
-			int selectedTourn = returnSelectedTournamentOfList();
-			if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
-				ArenaComboBox.addItem(trans.getTranslatedText("All"));
-			}
+    private void updateArena() {
+        ArenaComboBox.removeAllItems();
+        try {
+            int selectedTourn = getSelectedTournamentOfList();
+            if (selectedTourn >= 0 && listTournaments.get(selectedTourn).getFightingAreas() > 1) {
+                ArenaComboBox.addItem(trans.getTranslatedText("All"));
+            }
 
-			if (selectedTourn >= 0) {
-				for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
-					ArenaComboBox.addItem(Tournament.getFightAreaName(i));
-				}
-			}
-		} catch (NullPointerException | IndexOutOfBoundsException npe) {
-			AlertManager.showErrorInformation(this.getClass().getName(), npe);
-		}
-	}
+            if (selectedTourn >= 0) {
+                for (int i = 0; i < listTournaments.get(selectedTourn).getFightingAreas(); i++) {
+                    ArenaComboBox.addItem(Tournament.getFightAreaName(i));
+                }
+            }
+        } catch (NullPointerException | IndexOutOfBoundsException npe) {
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        }
+    }
 
-	public int returnSelectedArena() {
-		return (ArenaComboBox.getSelectedIndex() - 1);
-	}
+    public int getSelectedArena() {
+        return (ArenaComboBox.getSelectedIndex() - 1);
+    }
 
-	/**
-	 * **********************************************
-	 * 
-	 * CHECKBOX
-	 * 
-	 *********************************************** 
-	 */
-	/**
+    /**
+     * **********************************************
+     *
+     * CHECKBOX
+     *
+     ***********************************************
+     */
+    /**
      *
      */
-	private void checkBoxClicked() {
-	}
+    private void checkBoxClicked() {
+    }
 
-	private void comboBoxAction() {
-	}
+    private void comboBoxAction() {
+    }
 
-	public boolean isCheckBoxSelected() {
-		return CheckBox.isSelected();
-	}
+    public boolean isCheckBoxSelected() {
+        return CheckBox.isSelected();
+    }
 
-	public void changeCheckBoxText(String text) {
-		CheckBox.setText(text);
-	}
+    public void changeCheckBoxText(String text) {
+        CheckBox.setText(text);
+    }
 
-	/**
-	 * **********************************************
-	 * 
-	 * LISTENERS
-	 * 
-	 *********************************************** 
-	 */
-	/**
-	 * Add the same action listener to all langugaes of the menu.
-	 * 
-	 * @param al
-	 */
-	public void addGenerateButtonListener(ActionListener al) {
-		GenerateButton.addActionListener(al);
-	}
+    /**
+     * **********************************************
+     *
+     * LISTENERS
+     *
+     ***********************************************
+     */
+    /**
+     * Add the same action listener to all langugaes of the menu.
+     *
+     * @param al
+     */
+    public void addGenerateButtonListener(ActionListener al) {
+        GenerateButton.addActionListener(al);
+    }
 
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed"
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
@@ -306,32 +304,32 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
-		this.dispose();
-	}// GEN-LAST:event_CancelButtonActionPerformed
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
+        this.dispose();
+    }// GEN-LAST:event_CancelButtonActionPerformed
 
-	private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
-		if (refreshTournament) {
-			try {
-				KendoTournamentGenerator.getInstance().setLastSelectedTournament(
-						TournamentComboBox.getSelectedItem().toString());
-			} catch (NullPointerException npe) {
-				// No problem "All tournaments selected".
-			}
-			comboBoxAction();
-			if (ArenaComboBox.isEnabled()) {
-				updateArena();
-			}
-		}
-	}// GEN-LAST:event_TournamentComboBoxActionPerformed
+    private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
+        if (refreshTournament) {
+            try {
+                KendoTournamentGenerator.getInstance().setLastSelectedTournament(
+                        TournamentComboBox.getSelectedItem().toString());
+            } catch (NullPointerException npe) {
+                // No problem "All tournaments selected".
+            }
+            comboBoxAction();
+            if (ArenaComboBox.isEnabled()) {
+                updateArena();
+            }
+        }
+    }// GEN-LAST:event_TournamentComboBoxActionPerformed
 
-	private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CheckBoxActionPerformed
-		checkBoxClicked();
-	}// GEN-LAST:event_CheckBoxActionPerformed
+    private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CheckBoxActionPerformed
+        checkBoxClicked();
+    }// GEN-LAST:event_CheckBoxActionPerformed
 
-	private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
-		this.toFront();
-	}// GEN-LAST:event_formWindowOpened
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
+        this.toFront();
+    }// GEN-LAST:event_formWindowOpened
 		// Variables declaration - do not modify//GEN-BEGIN:variables
 
 	protected javax.swing.JComboBox ArenaComboBox;

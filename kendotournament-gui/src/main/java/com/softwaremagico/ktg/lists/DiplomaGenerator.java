@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,9 +28,9 @@ package com.softwaremagico.ktg.pdflist;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;

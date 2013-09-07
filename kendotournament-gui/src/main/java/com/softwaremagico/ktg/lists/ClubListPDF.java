@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -32,18 +32,14 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.ClubPool;
-import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.ClubPool;
+import com.softwaremagico.ktg.persistence.RolePool;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class ClubListPDF extends ParentList {
 
     private Tournament tournament;

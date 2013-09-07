@@ -43,7 +43,7 @@ public class KLabel extends JLabel {
             setText("** error tag '" + tag + "' **");
         }
     }
-
+    
     public void setBoldFont(boolean bold) {
         Font currentFont = this.getFont();
         setFont(new Font(currentFont.getName(), currentFont.getStyle() | Font.BOLD, currentFont.getSize()));

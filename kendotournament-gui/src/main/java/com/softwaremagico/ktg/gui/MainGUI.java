@@ -124,6 +124,7 @@ public final class MainGUI extends KendoFrame {
 		ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
 		FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
 		AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
+                TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
 	}
 
 	private void setPhoto() {
@@ -382,6 +383,10 @@ public final class MainGUI extends KendoFrame {
 	public void addSaveMenuItemListener(ActionListener al) {
 		SaveMenuItem.addActionListener(al);
 	}
+        
+        public void addTreeOptionMenuItemListener(ActionListener al) {
+		TournamentTreeMenuItem.addActionListener(al);
+	}
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -390,305 +395,306 @@ public final class MainGUI extends KendoFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
-
-		LanguageButtonGroup = new javax.swing.ButtonGroup();
-		MainPhotoPanel = new javax.swing.JPanel();
-		MainMenuBar = new javax.swing.JMenuBar();
-		ProgramMenu = new javax.swing.JMenu();
-		DatabaseMenu = new javax.swing.JMenu();
-		DatabaseMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "book.png"));
-		DatabaseConnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "connect.png"));
-		DatabaseDisconnectMenuItem = new javax.swing.JMenuItem(
-				new ImageIcon(Path.returnIconFolder() + "disconnect.png"));
-		ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()
-				+ "convertDatabase.png"));
-		SaveMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "save.png"));
-		ExitMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "exit.png"));
-		InsertMenu = new javax.swing.JMenu();
-		ClubMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "club.png"));
-		CompetitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "user.png"));
-		TournamentMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "highscores.png"));
-		TournamentMenu = new javax.swing.JMenu();
-		ScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "score.png"));
-		RoleMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "photo.png"));
-		TeamMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "team.png"));
-		DefineFightsMenu = new javax.swing.JMenu();
-		DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "designer.png"));
-		ManualFightsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "manual.png"));
-		FightMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "keyboard.png"));
-		RingMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "ring.png"));
-		DesignerMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "project.png"));
-		TournamentPanelMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "panel.png"));
-		ListMenu = new javax.swing.JMenu();
-		AccreditationMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "acreditation.png"));
-		ClubListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		TeamListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		RefereeListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		FightListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "xpdf.png"));
-		DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "diploma.png"));
-		StatisticsMenu = new javax.swing.JMenu();
-		TournamentStatisticsMenu = new javax.swing.JMenu();
-		TournamentStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "statistics.png"));
-		TournamentHitsStatisticsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()
-				+ "chart.png"));
-		TournamentTopTenMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "bars.png"));
-		TeamStatisticsMenu = new javax.swing.JMenu();
-		TeamStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "statistics.png"));
-		TeamTopTenMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "bars.png"));
-		CompetitorStatisticsMenu = new javax.swing.JMenu();
-		CompetitorStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "statistics.png"));
-		WonLostMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "bars.png"));
-		PerformedHitsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "chart.png"));
-		ReceivedHitsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "chart.png"));
-		OptionsMenu = new javax.swing.JMenu();
-		LanguageMenu = new javax.swing.JMenu();
-		LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder() + "language.png"));
-		AutosaveCheckBox = new javax.swing.JCheckBoxMenuItem();
-		AutosaveCheckBox.setIcon(new ImageIcon(Path.returnIconFolder() + "session-save.png"));
-		LogMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
-		LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder() + "log.png"));
-		DebugMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
-		DebugMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder() + "debug.png"));
-		HelpMenu = new javax.swing.JMenu();
-		HelpMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "help.png"));
-		AboutMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder() + "info.png"));
-
-		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-		setTitle("Kendo Tournament Administration Tool");
-		setName("mainGui"); // NOI18N
-		setResizable(false);
-		addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosed(java.awt.event.WindowEvent evt) {
-				WindowClose(evt);
-			}
-		});
-
-		MainPhotoPanel.setBorder(null);
-		MainPhotoPanel.setForeground(new java.awt.Color(5, 0, 0));
-		MainPhotoPanel.setOpaque(false);
-		MainPhotoPanel.setLayout(new java.awt.BorderLayout());
-
-		MainMenuBar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-
-		ProgramMenu.setText("Program");
-
-		DatabaseMenu.setText("Database");
-
-		DatabaseConnectMenuItem.setText("Connect");
-		DatabaseMenu.add(DatabaseConnectMenuItem);
-
-		DatabaseDisconnectMenuItem.setText("Disconnect");
-		DatabaseDisconnectMenuItem.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DatabaseDisconnectMenuItemActionPerformed(evt);
-			}
-		});
-		DatabaseMenu.add(DatabaseDisconnectMenuItem);
-
-		ConvertDatabaseMenuItem.setText("Convert database");
-		DatabaseMenu.add(ConvertDatabaseMenuItem);
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        LanguageButtonGroup = new javax.swing.ButtonGroup();
+        MainPhotoPanel = new javax.swing.JPanel();
+        MainMenuBar = new javax.swing.JMenuBar();
+        ProgramMenu = new javax.swing.JMenu();
+        DatabaseMenu = new javax.swing.JMenu();
+        DatabaseMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"book.png"));
+        DatabaseConnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"connect.png"));
+        DatabaseDisconnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"disconnect.png"));
+        ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"convertDatabase.png"));
+        SaveMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"save.png"));
+        ExitMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"exit.png"));
+        InsertMenu = new javax.swing.JMenu();
+        ClubMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"club.png"));
+        CompetitorMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"user.png"));
+        TournamentMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"highscores.png"));
+        TournamentMenu = new javax.swing.JMenu();
+        ScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"score.png"));
+        RoleMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"photo.png"));
+        TeamMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"team.png"));
+        DefineFightsMenu = new javax.swing.JMenu();
+        DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"designer.png"));
+        ManualFightsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"manual.png"));
+        FightMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"keyboard.png"));
+        RingMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"ring.png"));
+        DesignerMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
+        TournamentPanelMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"panel.png"));
+        ListMenu = new javax.swing.JMenu();
+        AccreditationMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"acreditation.png"));
+        ClubListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        TeamListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        RefereeListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        FightListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
+        DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
+        StatisticsMenu = new javax.swing.JMenu();
+        TournamentStatisticsMenu = new javax.swing.JMenu();
+        TournamentStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"statistics.png"));
+        TournamentHitsStatisticsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"chart.png"));
+        TournamentTopTenMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"bars.png"));
+        TeamStatisticsMenu = new javax.swing.JMenu();
+        TeamStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"statistics.png"));
+        TeamTopTenMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"bars.png"));
+        CompetitorStatisticsMenu = new javax.swing.JMenu();
+        CompetitorStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"statistics.png"));
+        WonLostMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"bars.png"));
+        PerformedHitsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"chart.png"));
+        ReceivedHitsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"chart.png"));
+        OptionsMenu = new javax.swing.JMenu();
+        LanguageMenu = new javax.swing.JMenu();
+        LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"language.png"));
+        AutosaveCheckBox = new javax.swing.JCheckBoxMenuItem();
+        AutosaveCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
+        LogMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
+        LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"log.png"));
+        DebugMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
+        DebugMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"debug.png"));
+        HelpMenu = new javax.swing.JMenu();
+        HelpMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"help.png"));
+        AboutMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"info.png"));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Kendo Tournament Administration Tool");
+        setName("mainGui"); // NOI18N
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                WindowClose(evt);
+            }
+        });
+
+        MainPhotoPanel.setBorder(null);
+        MainPhotoPanel.setForeground(new java.awt.Color(5, 0, 0));
+        MainPhotoPanel.setOpaque(false);
+        MainPhotoPanel.setLayout(new java.awt.BorderLayout());
+
+        MainMenuBar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        ProgramMenu.setText("Program");
+
+        DatabaseMenu.setText("Database");
+
+        DatabaseConnectMenuItem.setText("Connect");
+        DatabaseMenu.add(DatabaseConnectMenuItem);
+
+        DatabaseDisconnectMenuItem.setText("Disconnect");
+        DatabaseDisconnectMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DatabaseDisconnectMenuItemActionPerformed(evt);
+            }
+        });
+        DatabaseMenu.add(DatabaseDisconnectMenuItem);
+
+        ConvertDatabaseMenuItem.setText("Convert database");
+        DatabaseMenu.add(ConvertDatabaseMenuItem);
+
+        ProgramMenu.add(DatabaseMenu);
 
-		ProgramMenu.add(DatabaseMenu);
+        SaveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        SaveMenuItem.setText("Save");
+        ProgramMenu.add(SaveMenuItem);
 
-		SaveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
-				java.awt.event.InputEvent.CTRL_MASK));
-		SaveMenuItem.setText("Save");
-		ProgramMenu.add(SaveMenuItem);
+        ExitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        ExitMenuItem.setText("Exit");
+        ExitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitMenuItemActionPerformed(evt);
+            }
+        });
+        ProgramMenu.add(ExitMenuItem);
 
-		ExitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q,
-				java.awt.event.InputEvent.CTRL_MASK));
-		ExitMenuItem.setText("Exit");
-		ExitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				ExitMenuItemActionPerformed(evt);
-			}
-		});
-		ProgramMenu.add(ExitMenuItem);
+        MainMenuBar.add(ProgramMenu);
 
-		MainMenuBar.add(ProgramMenu);
+        InsertMenu.setText("Insert");
 
-		InsertMenu.setText("Insert");
+        ClubMenuItem.setText("Add Club");
+        InsertMenu.add(ClubMenuItem);
 
-		ClubMenuItem.setText("Add Club");
-		InsertMenu.add(ClubMenuItem);
+        CompetitorMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        CompetitorMenuItem.setText("Add Competitor");
+        InsertMenu.add(CompetitorMenuItem);
 
-		CompetitorMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C,
-				java.awt.event.InputEvent.CTRL_MASK));
-		CompetitorMenuItem.setText("Add Competitor");
-		InsertMenu.add(CompetitorMenuItem);
+        TournamentMenuItem.setText("Add Tournament");
+        InsertMenu.add(TournamentMenuItem);
 
-		TournamentMenuItem.setText("Add Tournament");
-		InsertMenu.add(TournamentMenuItem);
+        MainMenuBar.add(InsertMenu);
 
-		MainMenuBar.add(InsertMenu);
+        TournamentMenu.setText("Tournament");
 
-		TournamentMenu.setText("Tournament");
+        ScoreMenuItem.setText("Score");
+        TournamentMenu.add(ScoreMenuItem);
 
-		ScoreMenuItem.setText("Score");
-		TournamentMenu.add(ScoreMenuItem);
+        RoleMenuItem.setText("Define competitor's role");
+        TournamentMenu.add(RoleMenuItem);
 
-		RoleMenuItem.setText("Define competitor's role");
-		TournamentMenu.add(RoleMenuItem);
+        TeamMenuItem.setText("Add Team");
+        TournamentMenu.add(TeamMenuItem);
 
-		TeamMenuItem.setText("Add Team");
-		TournamentMenu.add(TeamMenuItem);
+        DefineFightsMenu.setText("Define Fights");
 
-		DefineFightsMenu.setText("Define Fights");
+        ManualFightsMenuItem.setText("Manual");
+        DefineFightsMenu.add(ManualFightsMenuItem);
 
-		ManualFightsMenuItem.setText("Manual");
-		DefineFightsMenu.add(ManualFightsMenuItem);
+        FightMenuItem.setText("Add Fight");
+        DefineFightsMenu.add(FightMenuItem);
 
-		FightMenuItem.setText("Add Fight");
-		DefineFightsMenu.add(FightMenuItem);
+        RingMenuItem.setText("Ring Tournament");
+        DefineFightsMenu.add(RingMenuItem);
 
-		RingMenuItem.setText("Ring Tournament");
-		DefineFightsMenu.add(RingMenuItem);
+        DesignerMenuItem.setText("Designer");
+        DefineFightsMenu.add(DesignerMenuItem);
 
-		DesignerMenuItem.setText("Designer");
-		DefineFightsMenu.add(DesignerMenuItem);
+        TournamentMenu.add(DefineFightsMenu);
 
-		TournamentMenu.add(DefineFightsMenu);
+        TournamentPanelMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
+        TournamentPanelMenuItem.setText("Tournament Panel");
+        TournamentMenu.add(TournamentPanelMenuItem);
 
-		TournamentPanelMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P,
-				java.awt.event.InputEvent.CTRL_MASK));
-		TournamentPanelMenuItem.setText("Tournament Panel");
-		TournamentMenu.add(TournamentPanelMenuItem);
+        MainMenuBar.add(TournamentMenu);
 
-		MainMenuBar.add(TournamentMenu);
+        ListMenu.setText("Lists");
 
-		ListMenu.setText("Lists");
+        AccreditationMenuItem.setText("Accreditation Cards");
+        ListMenu.add(AccreditationMenuItem);
 
-		AccreditationMenuItem.setText("Accreditation Cards");
-		ListMenu.add(AccreditationMenuItem);
+        ClubListMenuItem.setText("List of Clubs");
+        ListMenu.add(ClubListMenuItem);
 
-		ClubListMenuItem.setText("List of Clubs");
-		ListMenu.add(ClubListMenuItem);
+        TeamListMenuItem.setText("List of Teams");
+        ListMenu.add(TeamListMenuItem);
 
-		TeamListMenuItem.setText("List of Teams");
-		ListMenu.add(TeamListMenuItem);
+        RefereeListMenuItem.setText("List of Referees");
+        ListMenu.add(RefereeListMenuItem);
 
-		RefereeListMenuItem.setText("List of Referees");
-		ListMenu.add(RefereeListMenuItem);
+        FightListMenuItem.setText("List of Fights");
+        ListMenu.add(FightListMenuItem);
 
-		FightListMenuItem.setText("List of Fights");
-		ListMenu.add(FightListMenuItem);
+        PointListMenuItem.setText("List of Points");
+        ListMenu.add(PointListMenuItem);
 
-		PointListMenuItem.setText("List of Points");
-		ListMenu.add(PointListMenuItem);
+        FightsCardMenuItem.setText("FightsCard");
+        ListMenu.add(FightsCardMenuItem);
 
-		FightsCardMenuItem.setText("FightsCard");
-		ListMenu.add(FightsCardMenuItem);
+        SummaryMenuItem.setText("Fights Summary");
+        ListMenu.add(SummaryMenuItem);
 
-		SummaryMenuItem.setText("Fights Summary");
-		ListMenu.add(SummaryMenuItem);
+        TournamentTreeMenuItem.setText("TournamentTree");
+        ListMenu.add(TournamentTreeMenuItem);
 
-		DiplomaMenuItem.setText("Diploma");
-		ListMenu.add(DiplomaMenuItem);
+        DiplomaMenuItem.setText("Diploma");
+        ListMenu.add(DiplomaMenuItem);
 
-		MainMenuBar.add(ListMenu);
+        MainMenuBar.add(ListMenu);
 
-		StatisticsMenu.setText("Statistics");
+        StatisticsMenu.setText("Statistics");
 
-		TournamentStatisticsMenu.setText("By tournament");
+        TournamentStatisticsMenu.setText("By tournament");
 
-		TournamentHitsStatisticsMenuItem.setText("Hits");
-		TournamentStatisticsMenu.add(TournamentHitsStatisticsMenuItem);
+        TournamentHitsStatisticsMenuItem.setText("Hits");
+        TournamentStatisticsMenu.add(TournamentHitsStatisticsMenuItem);
 
-		TournamentTopTenMenuItem.setText("Top Ten");
-		TournamentStatisticsMenu.add(TournamentTopTenMenuItem);
+        TournamentTopTenMenuItem.setText("Top Ten");
+        TournamentStatisticsMenu.add(TournamentTopTenMenuItem);
 
-		StatisticsMenu.add(TournamentStatisticsMenu);
+        StatisticsMenu.add(TournamentStatisticsMenu);
 
-		TeamStatisticsMenu.setText("By team");
+        TeamStatisticsMenu.setText("By team");
 
-		TeamTopTenMenuItem.setText("Top Ten");
-		TeamStatisticsMenu.add(TeamTopTenMenuItem);
+        TeamTopTenMenuItem.setText("Top Ten");
+        TeamStatisticsMenu.add(TeamTopTenMenuItem);
 
-		StatisticsMenu.add(TeamStatisticsMenu);
+        StatisticsMenu.add(TeamStatisticsMenu);
 
-		CompetitorStatisticsMenu.setText("By competitor");
+        CompetitorStatisticsMenu.setText("By competitor");
 
-		WonLostMenuItem.setText("Fights Won");
-		CompetitorStatisticsMenu.add(WonLostMenuItem);
+        WonLostMenuItem.setText("Fights Won");
+        CompetitorStatisticsMenu.add(WonLostMenuItem);
 
-		PerformedHitsMenuItem.setText("Performed Hits");
-		CompetitorStatisticsMenu.add(PerformedHitsMenuItem);
+        PerformedHitsMenuItem.setText("Performed Hits");
+        CompetitorStatisticsMenu.add(PerformedHitsMenuItem);
 
-		ReceivedHitsMenuItem.setText("Received Hits");
-		CompetitorStatisticsMenu.add(ReceivedHitsMenuItem);
+        ReceivedHitsMenuItem.setText("Received Hits");
+        CompetitorStatisticsMenu.add(ReceivedHitsMenuItem);
 
-		StatisticsMenu.add(CompetitorStatisticsMenu);
+        StatisticsMenu.add(CompetitorStatisticsMenu);
 
-		MainMenuBar.add(StatisticsMenu);
+        MainMenuBar.add(StatisticsMenu);
 
-		OptionsMenu.setText("Options");
+        OptionsMenu.setText("Options");
 
-		LanguageMenu.setText("Language");
-		OptionsMenu.add(LanguageMenu);
+        LanguageMenu.setText("Language");
+        OptionsMenu.add(LanguageMenu);
 
-		AutosaveCheckBox.setSelected(true);
-		AutosaveCheckBox.setText("Autosave");
-		AutosaveCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				AutosaveCheckBoxStateChanged(evt);
-			}
-		});
-		OptionsMenu.add(AutosaveCheckBox);
+        AutosaveCheckBox.setSelected(true);
+        AutosaveCheckBox.setText("Autosave");
+        AutosaveCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                AutosaveCheckBoxStateChanged(evt);
+            }
+        });
+        OptionsMenu.add(AutosaveCheckBox);
 
-		LogMenuCheckBox.setSelected(true);
-		LogMenuCheckBox.setText("Log");
-		LogMenuCheckBox.addItemListener(new java.awt.event.ItemListener() {
-			public void itemStateChanged(java.awt.event.ItemEvent evt) {
-				LogMenuCheckBoxItemStateChanged(evt);
-			}
-		});
-		OptionsMenu.add(LogMenuCheckBox);
+        LogMenuCheckBox.setSelected(true);
+        LogMenuCheckBox.setText("Log");
+        LogMenuCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                LogMenuCheckBoxItemStateChanged(evt);
+            }
+        });
+        OptionsMenu.add(LogMenuCheckBox);
 
-		DebugMenuCheckBox.setSelected(true);
-		DebugMenuCheckBox.setText("Debug");
-		DebugMenuCheckBox.addItemListener(new java.awt.event.ItemListener() {
-			public void itemStateChanged(java.awt.event.ItemEvent evt) {
-				DebugMenuCheckBoxItemStateChanged(evt);
-			}
-		});
-		OptionsMenu.add(DebugMenuCheckBox);
+        DebugMenuCheckBox.setSelected(true);
+        DebugMenuCheckBox.setText("Debug");
+        DebugMenuCheckBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                DebugMenuCheckBoxItemStateChanged(evt);
+            }
+        });
+        OptionsMenu.add(DebugMenuCheckBox);
 
-		MainMenuBar.add(OptionsMenu);
+        MainMenuBar.add(OptionsMenu);
 
-		HelpMenu.setText("Help");
+        HelpMenu.setText("Help");
 
-		HelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H,
-				java.awt.event.InputEvent.CTRL_MASK));
-		HelpMenuItem.setText("Help");
-		HelpMenu.add(HelpMenuItem);
+        HelpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        HelpMenuItem.setText("Help");
+        HelpMenu.add(HelpMenuItem);
 
-		AboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A,
-				java.awt.event.InputEvent.CTRL_MASK));
-		AboutMenuItem.setText("About...");
-		HelpMenu.add(AboutMenuItem);
+        AboutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        AboutMenuItem.setText("About...");
+        HelpMenu.add(AboutMenuItem);
 
-		MainMenuBar.add(HelpMenu);
+        MainMenuBar.add(HelpMenu);
 
-		setJMenuBar(MainMenuBar);
+        setJMenuBar(MainMenuBar);
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup().addContainerGap()
-						.addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
-						.addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup().addContainerGap()
-						.addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
-						.addContainerGap()));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
 	private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
 		DatabaseConnection.getInstance().disconnect();
@@ -721,59 +727,59 @@ public final class MainGUI extends KendoFrame {
 	private void WindowClose(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_WindowClose
 		close();
 	}// GEN-LAST:event_WindowClose
-		// Variables declaration - do not modify//GEN-BEGIN:variables
-
-	private javax.swing.JMenuItem AboutMenuItem;
-	private javax.swing.JMenuItem AccreditationMenuItem;
-	private javax.swing.JCheckBoxMenuItem AutosaveCheckBox;
-	private javax.swing.JMenuItem ClubListMenuItem;
-	private javax.swing.JMenuItem ClubMenuItem;
-	private javax.swing.JMenuItem CompetitorMenuItem;
-	private javax.swing.JMenu CompetitorStatisticsMenu;
-	private javax.swing.JMenuItem ConvertDatabaseMenuItem;
-	private javax.swing.JMenuItem DatabaseConnectMenuItem;
-	private javax.swing.JMenuItem DatabaseDisconnectMenuItem;
-	private javax.swing.JMenu DatabaseMenu;
-	private javax.swing.JCheckBoxMenuItem DebugMenuCheckBox;
-	private javax.swing.JMenu DefineFightsMenu;
-	private javax.swing.JMenuItem DesignerMenuItem;
-	private javax.swing.JMenuItem DiplomaMenuItem;
-	private javax.swing.JMenuItem ExitMenuItem;
-	private javax.swing.JMenuItem FightListMenuItem;
-	private javax.swing.JMenuItem FightMenuItem;
-	private javax.swing.JMenuItem FightsCardMenuItem;
-	private javax.swing.JMenu HelpMenu;
-	private javax.swing.JMenuItem HelpMenuItem;
-	private javax.swing.JMenu InsertMenu;
-	private javax.swing.ButtonGroup LanguageButtonGroup;
-	private javax.swing.JMenu LanguageMenu;
-	private javax.swing.JMenu ListMenu;
-	private javax.swing.JCheckBoxMenuItem LogMenuCheckBox;
-	private javax.swing.JMenuBar MainMenuBar;
-	private javax.swing.JPanel MainPhotoPanel;
-	private javax.swing.JMenuItem ManualFightsMenuItem;
-	private javax.swing.JMenu OptionsMenu;
-	private javax.swing.JMenuItem PerformedHitsMenuItem;
-	private javax.swing.JMenuItem PointListMenuItem;
-	private javax.swing.JMenu ProgramMenu;
-	private javax.swing.JMenuItem ReceivedHitsMenuItem;
-	private javax.swing.JMenuItem RefereeListMenuItem;
-	private javax.swing.JMenuItem RingMenuItem;
-	private javax.swing.JMenuItem RoleMenuItem;
-	private javax.swing.JMenuItem SaveMenuItem;
-	private javax.swing.JMenuItem ScoreMenuItem;
-	private javax.swing.JMenu StatisticsMenu;
-	private javax.swing.JMenuItem SummaryMenuItem;
-	private javax.swing.JMenuItem TeamListMenuItem;
-	private javax.swing.JMenuItem TeamMenuItem;
-	private javax.swing.JMenu TeamStatisticsMenu;
-	private javax.swing.JMenuItem TeamTopTenMenuItem;
-	private javax.swing.JMenuItem TournamentHitsStatisticsMenuItem;
-	private javax.swing.JMenu TournamentMenu;
-	private javax.swing.JMenuItem TournamentMenuItem;
-	private javax.swing.JMenuItem TournamentPanelMenuItem;
-	private javax.swing.JMenu TournamentStatisticsMenu;
-	private javax.swing.JMenuItem TournamentTopTenMenuItem;
-	private javax.swing.JMenuItem WonLostMenuItem;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AboutMenuItem;
+    private javax.swing.JMenuItem AccreditationMenuItem;
+    private javax.swing.JCheckBoxMenuItem AutosaveCheckBox;
+    private javax.swing.JMenuItem ClubListMenuItem;
+    private javax.swing.JMenuItem ClubMenuItem;
+    private javax.swing.JMenuItem CompetitorMenuItem;
+    private javax.swing.JMenu CompetitorStatisticsMenu;
+    private javax.swing.JMenuItem ConvertDatabaseMenuItem;
+    private javax.swing.JMenuItem DatabaseConnectMenuItem;
+    private javax.swing.JMenuItem DatabaseDisconnectMenuItem;
+    private javax.swing.JMenu DatabaseMenu;
+    private javax.swing.JCheckBoxMenuItem DebugMenuCheckBox;
+    private javax.swing.JMenu DefineFightsMenu;
+    private javax.swing.JMenuItem DesignerMenuItem;
+    private javax.swing.JMenuItem DiplomaMenuItem;
+    private javax.swing.JMenuItem ExitMenuItem;
+    private javax.swing.JMenuItem FightListMenuItem;
+    private javax.swing.JMenuItem FightMenuItem;
+    private javax.swing.JMenuItem FightsCardMenuItem;
+    private javax.swing.JMenu HelpMenu;
+    private javax.swing.JMenuItem HelpMenuItem;
+    private javax.swing.JMenu InsertMenu;
+    private javax.swing.ButtonGroup LanguageButtonGroup;
+    private javax.swing.JMenu LanguageMenu;
+    private javax.swing.JMenu ListMenu;
+    private javax.swing.JCheckBoxMenuItem LogMenuCheckBox;
+    private javax.swing.JMenuBar MainMenuBar;
+    private javax.swing.JPanel MainPhotoPanel;
+    private javax.swing.JMenuItem ManualFightsMenuItem;
+    private javax.swing.JMenu OptionsMenu;
+    private javax.swing.JMenuItem PerformedHitsMenuItem;
+    private javax.swing.JMenuItem PointListMenuItem;
+    private javax.swing.JMenu ProgramMenu;
+    private javax.swing.JMenuItem ReceivedHitsMenuItem;
+    private javax.swing.JMenuItem RefereeListMenuItem;
+    private javax.swing.JMenuItem RingMenuItem;
+    private javax.swing.JMenuItem RoleMenuItem;
+    private javax.swing.JMenuItem SaveMenuItem;
+    private javax.swing.JMenuItem ScoreMenuItem;
+    private javax.swing.JMenu StatisticsMenu;
+    private javax.swing.JMenuItem SummaryMenuItem;
+    private javax.swing.JMenuItem TeamListMenuItem;
+    private javax.swing.JMenuItem TeamMenuItem;
+    private javax.swing.JMenu TeamStatisticsMenu;
+    private javax.swing.JMenuItem TeamTopTenMenuItem;
+    private javax.swing.JMenuItem TournamentHitsStatisticsMenuItem;
+    private javax.swing.JMenu TournamentMenu;
+    private javax.swing.JMenuItem TournamentMenuItem;
+    private javax.swing.JMenuItem TournamentPanelMenuItem;
+    private javax.swing.JMenu TournamentStatisticsMenu;
+    private javax.swing.JMenuItem TournamentTopTenMenuItem;
+    private javax.swing.JMenuItem TournamentTreeMenuItem;
+    private javax.swing.JMenuItem WonLostMenuItem;
+    // End of variables declaration//GEN-END:variables
 }

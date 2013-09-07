@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.pdflist.ListFromCompetitor;
+import com.softwaremagico.ktg.lists.ListFromCompetitor;
 
 public class SelectCompetitorForReceivedHits extends ListFromCompetitor {
 

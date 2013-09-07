@@ -1,4 +1,5 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,28 +26,32 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-/**
- *
- * @author Jorge
- */
-public class ClubList extends ListFromTournamentCreatePDF {
+import com.softwaremagico.ktg.core.Tournament;
 
-    public ClubList() {
-        super();
-        this.setTitle(trans.getTranslatedText("titleSummary"));
-    }
+public class SummaryList extends ListFromTournamentCreatePDF {
 
-    @Override
-    public String defaultFileName() {
-        try {
-            return TournamentComboBox.getSelectedItem().toString() + "_ClubList";
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+	public SummaryList() {
+		super();
+		this.setTitle(trans.getTranslatedText("titleSummary"));
+		ArenaComboBox.setEnabled(true);
+	}
 
-    @Override
-    protected ParentList getPdfGenerator() {
-        return new ClubListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
-    }
+	@Override
+	public String defaultFileName() {
+		String shiaijo = "";
+		if (getSelectedArena() >= 0) {
+			shiaijo = "_" + Tournament.getFightAreaName(getSelectedArena());
+		}
+		try {
+			return TournamentComboBox.getSelectedItem().toString() + "_Summary" + shiaijo;
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
+
+	@Override
+	protected ParentList getPdfGenerator() {
+		return new SummaryPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()), getSelectedArena());
+	}
+
 }

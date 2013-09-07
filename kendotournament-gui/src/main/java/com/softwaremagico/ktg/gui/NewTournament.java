@@ -32,7 +32,7 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.TournamentAccreditationPDF;
+import com.softwaremagico.ktg.lists.TournamentAccreditationPDF;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tools.Media;

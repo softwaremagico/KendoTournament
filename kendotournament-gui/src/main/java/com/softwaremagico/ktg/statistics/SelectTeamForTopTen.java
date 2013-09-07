@@ -25,7 +25,7 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.pdflist.ListFromTeams;
+import com.softwaremagico.ktg.lists.ListFromTeams;
 
 /**
  *

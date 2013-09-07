@@ -37,7 +37,7 @@ import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.CompetitorAccreditationCardPDF;
+import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;

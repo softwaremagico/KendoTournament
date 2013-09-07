@@ -37,7 +37,7 @@ import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.TimerPanel;
+import com.softwaremagico.ktg.lists.TimerPanel;
 import com.softwaremagico.ktg.persistence.Database;
 import java.sql.SQLException;
 import java.util.List;

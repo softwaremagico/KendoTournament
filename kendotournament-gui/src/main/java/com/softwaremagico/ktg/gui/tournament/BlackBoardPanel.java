@@ -40,17 +40,19 @@ import javax.swing.Timer;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.awt.Font;
 
 public class BlackBoardPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = -6193257530262904629L;
-	private GridBagConstraints c = new GridBagConstraints();
+	private GridBagConstraints gridBagConstraints = new GridBagConstraints();
 	private Tournament tournament;
 	private static int TITLE_COLUMN = 1;
 	private static int TITLE_ROW = 2;
@@ -88,24 +90,25 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 		if (!tournament.isChampionship()) {
 			return;
 		}
-		c.gridx = 0;
-		c.gridy = 1;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
 
-		GridBagConstraints lc = new GridBagConstraints();
+		GridBagConstraints titleGridBagConstraints = new GridBagConstraints();
 
-		Separator sp = new Separator(tournament.getName());
-		sp.updateFont("sansserif", 44);
-		lc.gridwidth = GridBagConstraints.REMAINDER;
-		add(sp, lc);
+                KLabel title = new KLabel();
+                title.setText(tournament.getName());
+                title.setFont(new Font("sansserif", Font.PLAIN, 24));
+		titleGridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+		add(title, titleGridBagConstraints);
 
-		add(new Separator(), c);
+		add(new Separator(), gridBagConstraints);
 
 		/*
 		 * Paint information row
 		 */
 		for (int i = 0; i < TournamentManagerFactory.getManager(tournament).getNumberOfLevels(); i++) {
-			c.gridx = (i + 1) * 2;
-			c.gridy = 1;
+			gridBagConstraints.gridx = (i + 1) * 2;
+			gridBagConstraints.gridy = 1;
 
 			Separator s;
 			if (i < TournamentManagerFactory.getManager(tournament).getNumberOfLevels() - 2) {
@@ -117,7 +120,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 				s = new Separator(trans.getTranslatedText("FinalLabel"));
 			}
 			s.updateFont("sansserif", 24);
-			add(s, c);
+			add(s, gridBagConstraints);
 		}
 
 		/*
@@ -126,14 +129,14 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 		List<TGroup> grps = TournamentManagerFactory.getManager(tournament).getGroups(0);
 		if (grps != null) {
 			for (int i = 0; i < grps.size(); i++) {
-				c.gridx = 0;
-				c.gridy = i + 2;
+				gridBagConstraints.gridx = 0;
+				gridBagConstraints.gridy = i + 2;
 
 				Separator s = new Separator(trans.getTranslatedText("GroupString") + " " + (i + 1) + "<br>"
 						+ trans.getTranslatedText("ArenaString") + " "
 						+ Tournament.getFightAreaName(grps.get(i).getFightArea()));
 				s.updateFont("sansserif", 24);
-				add(s, c);
+				add(s, gridBagConstraints);
 			}
 		}
 
@@ -146,22 +149,22 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 				try {
 					if (TournamentManagerFactory.getManager(tournament).getGroups(level).get(groupIndex)
 							.getTournament().equals(tournament)) {
-						c.anchor = GridBagConstraints.WEST;
-						c.gridx = level * 2 + 1 + TITLE_COLUMN;
+						gridBagConstraints.anchor = GridBagConstraints.WEST;
+						gridBagConstraints.gridx = level * 2 + 1 + TITLE_COLUMN;
 						if (tournament.getHowManyTeamsOfGroupPassToTheTree() < 2) {
-							c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
+							gridBagConstraints.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
 						} else {
 							if (level == 0) {
-								c.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
+								gridBagConstraints.gridy = groupIndex * (int) (Math.pow(2, level)) + TITLE_ROW;
 							} else {
-								c.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
+								gridBagConstraints.gridy = groupIndex * (int) (Math.pow(2, level - 1)) + TITLE_ROW;
 							}
 						}
 
-						c.weightx = 0.5;
+						gridBagConstraints.weightx = 0.5;
 						TournamentGroupBox tournamentGroupBox = createBox(
 								TournamentManagerFactory.getManager(tournament).getGroups(level).get(groupIndex), level);
-						add(tournamentGroupBox, c);
+						add(tournamentGroupBox, gridBagConstraints);
 						if (level == 0 && groupIndex == 0 && interactive) {
 							tournamentGroupBox.setSelected();
 						}
@@ -194,9 +197,9 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 
 	private void paintSpaces() {
 		for (int i = 1; i < TournamentManagerFactory.getManager(tournament).getNumberOfLevels(); i++) {
-			c.gridx = i * 2 + TITLE_COLUMN;
-			c.gridy = 0;
-			add(new Separator(), c);
+			gridBagConstraints.gridx = i * 2 + TITLE_COLUMN;
+			gridBagConstraints.gridy = 0;
+			add(new Separator(), gridBagConstraints);
 		}
 	}
 

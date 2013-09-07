@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator

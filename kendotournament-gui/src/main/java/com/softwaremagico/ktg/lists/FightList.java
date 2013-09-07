@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,18 +25,24 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.Tournament;
 
-public class PointList extends ListFromTournamentCreatePDF {
 
-    public PointList() {
+public class FightList extends ListFromTournamentCreatePDF {
+
+    public FightList() {
         super();
-        this.setTitle(trans.getTranslatedText("titleListPoints"));
+        this.setTitle(trans.getTranslatedText("titleListFights"));
     }
 
     @Override
     public String defaultFileName() {
+        String shiaijo = "";
+        if (getSelectedArena() >= 0) {
+			shiaijo = "_" + Tournament.getFightAreaName(getSelectedArena());
+        }
         try {
-            return TournamentComboBox.getSelectedItem().toString() + "_PointsList";
+            return TournamentComboBox.getSelectedItem().toString() + "_FightList" + shiaijo;
         } catch (NullPointerException npe) {
             return null;
         }
@@ -44,6 +50,7 @@ public class PointList extends ListFromTournamentCreatePDF {
 
     @Override
     protected ParentList getPdfGenerator() {
-        return new ScoreListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
+        Tournament tournament = listTournaments.get(TournamentComboBox.getSelectedIndex());
+        return new FightListPDF(tournament);
     }
 }

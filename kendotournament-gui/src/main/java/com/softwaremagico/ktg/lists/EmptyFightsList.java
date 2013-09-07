@@ -1,4 +1,5 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,28 +26,34 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
 
-public class EmptyFightsListPDF extends SummaryPDF {
+public class EmptyFightsList extends ListFromTournamentCreatePDF {
 
-    EmptyFightsListPDF(Tournament championship, int shiaijo, boolean showAll) {
-        super(championship, shiaijo);
-        this.showAll = showAll;
-    }
+	public EmptyFightsList() {
+		super();
+		this.setTitle(trans.getTranslatedText("titleSummary"));
+		ArenaComboBox.setEnabled(true);
+		CheckBox.setVisible(true);
+		changeCheckBoxText(trans.getTranslatedText("ShowEndFights"));
+	}
 
-    @Override
-    protected String getDrawFight(Fight f, int duel) {
-        return "";
-    }
+	@Override
+	public String defaultFileName() {
+		String shiaijo = "";
+		if (getSelectedArena() >= 0) {
+			shiaijo = "_" + Tournament.getFightAreaName(getSelectedArena());
+		}
+		try {
+			return TournamentComboBox.getSelectedItem().toString() + "_FightsCard" + shiaijo;
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
 
-    @Override
-    protected String getFaults(Fight f, int duel, boolean leftTeam) {
-        return "";
-    }
-
-    @Override
-    protected String getScore(Fight f, int duel, int score, boolean leftTeam) {
-        return "";
-    }
+	@Override
+	protected ParentList getPdfGenerator() {
+		return new EmptyFightsListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()),
+				getSelectedArena(), isCheckBoxSelected());
+	}
 }

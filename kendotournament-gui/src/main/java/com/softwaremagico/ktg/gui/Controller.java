@@ -35,7 +35,16 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
 import com.softwaremagico.ktg.gui.tournament.LeagueEvolution;
-import com.softwaremagico.ktg.pdflist.*;
+import com.softwaremagico.ktg.lists.AccreditionCards;
+import com.softwaremagico.ktg.lists.ClubList;
+import com.softwaremagico.ktg.lists.DiplomaEditor;
+import com.softwaremagico.ktg.lists.EmptyFightsList;
+import com.softwaremagico.ktg.lists.FightList;
+import com.softwaremagico.ktg.lists.ListFromTournamentTree;
+import com.softwaremagico.ktg.lists.PointList;
+import com.softwaremagico.ktg.lists.RefereeList;
+import com.softwaremagico.ktg.lists.SummaryList;
+import com.softwaremagico.ktg.lists.TeamList;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.DatabaseEngine;
 import com.softwaremagico.ktg.persistence.FightPool;
@@ -98,6 +107,7 @@ public class Controller {
     private SelectTournament selectTournament = null;
     private ChangeOrderTeam changeTeam = null;
     private DatabaseConversor databaseConversor = null;
+    private ListFromTournamentTree listFromTournamentTree = null;
 
     public Controller(MainGUI tmp_gui) {
         main = tmp_gui;
@@ -178,6 +188,20 @@ public class Controller {
         main.addScoreMenuItemListener(new ChooseScoreListener());
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
         main.addSaveMenuItemListener(new SaveListener());
+        main.addTreeOptionMenuItemListener(new TournamentTreeListener());
+    }
+    
+    class TournamentTreeListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+             try {
+                listFromTournamentTree.dispose();
+            } catch (NullPointerException npe) {
+            }
+            listFromTournamentTree = new ListFromTournamentTree();
+            listFromTournamentTree.setVisible(true);
+        }
     }
 
     class SaveListener implements ActionListener {
@@ -1086,7 +1110,7 @@ public class Controller {
                 statisticsHits.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsHits = new StatisticsGeneralHits(selectTournament.returnSelectedTournament());
+            statisticsHits = new StatisticsGeneralHits(selectTournament.getSelectedTournament());
             statisticsHits.setVisible(true);
             selectTournament.dispose();
         }
@@ -1114,7 +1138,7 @@ public class Controller {
                 statisticsTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTopTen = new StatisticsTopTen(selectTournament.returnSelectedTournament());
+            statisticsTopTen = new StatisticsTopTen(selectTournament.getSelectedTournament());
             statisticsTopTen.setVisible(true);
             selectTournament.dispose();
         }
@@ -1142,7 +1166,7 @@ public class Controller {
                 statisticsTeamTopTen.dispose();
             } catch (NullPointerException npe) {
             }
-            statisticsTeamTopTen = new StatisticsTeamTopTen(selectTournament.returnSelectedTournament());
+            statisticsTeamTopTen = new StatisticsTeamTopTen(selectTournament.getSelectedTournament());
             statisticsTeamTopTen.setVisible(true);
             selectTournament.dispose();
         }

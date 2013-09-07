@@ -267,6 +267,14 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
               </AuxValues>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="TournamentTreeMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="TournamentTree"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;tree.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="DiplomaMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Diploma"/>
@@ -484,7 +492,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="296" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="300" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

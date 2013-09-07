@@ -1768,6 +1768,14 @@
 		<ca>Canviar un nou equip.</ca>
 		<it>Cambiare una nuova squadra</it>
 	</TitleOrderTeam>
+	<PointListMenuItem>
+		<en>Score list</en>
+		<es>Lista de puntuaciones</es>
+		<nl>Scorelijst</nl>
+		<de>Ergebnisliste</de>
+		<ca>Llista de puntuacions</ca>
+		<it>Lista dei punteggi</it>
+	</PointListMenuItem>	
 	
 	
 	<!--///////////////////////////////TRADUCIR//////////////////////////////////-->
@@ -2090,7 +2098,7 @@
 		<de>Window</de>
 		<ca>Finestra</ca>
 		<it>Finestra</it>
-	</WindowMenuItem> 
+	</WindowMenuItem>
 	<PointListMenuItemGlobal>
 		<en>Score list (global)</en>
 		<es>Lista de puntuaciones (global)</es>

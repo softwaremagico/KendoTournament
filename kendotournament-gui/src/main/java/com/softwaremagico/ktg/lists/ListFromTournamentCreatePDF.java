@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -37,7 +37,7 @@ import javax.swing.JFileChooser;
 
 public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCreateFile {
     
-    ListFromTournamentCreatePDF(){
+    public ListFromTournamentCreatePDF(){
         createGui(false);
         addGenerateListeners();
     }

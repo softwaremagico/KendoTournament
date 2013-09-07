@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.pdflist;
+package com.softwaremagico.ktg.lists;
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,21 +25,20 @@ package com.softwaremagico.ktg.pdflist;
  * #L%
  */
 
-/**
- *
- * @author Jorge
- */
-public class TeamList extends ListFromTournamentCreatePDF {
+import com.softwaremagico.ktg.persistence.RolePool;
 
-    public TeamList() {
+
+public class RefereeList extends ListFromTournamentCreatePDF {
+
+    public RefereeList() {
         super();
-        this.setTitle(trans.getTranslatedText("titleListTeams"));
+        this.setTitle(trans.getTranslatedText("titleListReferee"));
     }
 
     @Override
     public String defaultFileName() {
         try {
-            return TournamentComboBox.getSelectedItem().toString() + "_TeamList";
+            return TournamentComboBox.getSelectedItem().toString() + "_" + RolePool.getInstance().getRoleTags().getRole("Referee").name;
         } catch (NullPointerException npe) {
             return null;
         }
@@ -47,6 +46,6 @@ public class TeamList extends ListFromTournamentCreatePDF {
 
     @Override
     protected ParentList getPdfGenerator() {
-        return new TeamListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
+        return new RefereeListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
     }
 }

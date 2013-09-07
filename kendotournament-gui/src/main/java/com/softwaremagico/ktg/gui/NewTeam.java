@@ -32,7 +32,7 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.pdflist.TeamAccreditationCardPDF;
+import com.softwaremagico.ktg.lists.TeamAccreditationCardPDF;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.awt.BorderLayout;
