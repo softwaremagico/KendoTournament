@@ -10,7 +10,7 @@
                 <include name="evenGroupsChampionshipTest" />    
                 <include name="championshipTreeTest" />                
                 <include name="championshipFightAreaTest" />                                          
-                <include name="databaseStore" />
+                <exclude name="databaseStore" />
                 <include name="scoreTest" />
                 <include name="changeMemberOrderTest" />  
             </run>

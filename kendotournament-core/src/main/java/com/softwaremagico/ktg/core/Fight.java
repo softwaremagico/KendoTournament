@@ -377,6 +377,7 @@ public class Fight implements Comparable<Fight> {
 	@Override
 	public String toString() {
 		String text = "(" + group + "/" + orderInGroup + ")";
+                try{
 		if (isOver()) {
 			text += " [F]";
 		}
@@ -385,6 +386,9 @@ public class Fight implements Comparable<Fight> {
 		for (Duel d : getDuels()) {
 			text += d;
 		}
+                }catch(Exception e){
+                    KendoLog.errorMessage(this.getClass().getName(), e);
+                }
 		return text;
 	}
 

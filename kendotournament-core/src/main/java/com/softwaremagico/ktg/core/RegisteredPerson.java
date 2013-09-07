@@ -27,7 +27,6 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.persistence.PhotoPool;
-
 import java.sql.SQLException;
 import java.text.Collator;
 import java.util.Locale;

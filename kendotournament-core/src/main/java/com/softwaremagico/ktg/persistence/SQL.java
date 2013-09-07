@@ -756,7 +756,7 @@ public abstract class SQL extends Database {
      */
     @Override
     protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException, TeamMemberOrderException {
-        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name; ";
+        String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name, FightOfTournament, Position; ";
         KendoLog.entering(this.getClass().getName(), "searchTeam");
         KendoLog.finer(SQL.class.getName(), query);
 
@@ -777,7 +777,7 @@ public abstract class SQL extends Database {
         } catch (SQLException ex) {
             showSqlError(ex);
         } catch (NullPointerException npe) {
-            KendoLog.severe(this.getClass().getName(), "Database connection fail");
+            KendoLog.errorMessage(this.getClass().getName(), npe);
             throw new SQLException("Database connection fail.");
         }
         KendoLog.exiting(this.getClass().getName(), "searchTeam");

@@ -31,10 +31,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
 
-/**
- *
- * @author Jorge
- */
 public abstract class ParentList extends PdfDocument {
 
     protected int footerBorder = 0;

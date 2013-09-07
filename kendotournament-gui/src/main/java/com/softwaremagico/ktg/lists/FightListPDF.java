@@ -26,10 +26,6 @@ package com.softwaremagico.ktg.lists;
  * #L%
  */
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -49,6 +45,9 @@ import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FightListPDF extends ParentList {
 

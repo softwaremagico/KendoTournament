@@ -32,20 +32,15 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.persistence.RolePool;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author jorge
- */
 public class RefereeListPDF extends ParentList {
 
     private Tournament tournament;
-    private final int border = 0;
 
     public RefereeListPDF(Tournament tmp_championship) {
         tournament = tmp_championship;
@@ -53,8 +48,6 @@ public class RefereeListPDF extends ParentList {
 
     @Override
     public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
-        Paragraph p;
-
         mainTable.addCell(getHeader2(tournament.getName(), 0));
         List<RegisteredPerson> listReferee = new ArrayList<>();
         try {

@@ -191,21 +191,21 @@ public class Team implements Comparable<Team> {
     /**
      * Get all members order in one level.
      *
-     * @param level
+     * @param fightIndex
      * @return
      */
-    public HashMap<Integer, RegisteredPerson> getMembersOrder(int level) {
-        if (level >= 0) {
+    public HashMap<Integer, RegisteredPerson> getMembersOrder(int fightIndex) {
+        if (fightIndex >= 0) {
             try {
-                HashMap<Integer, RegisteredPerson> membersInLevel = membersOrder.get(level);
+                HashMap<Integer, RegisteredPerson> membersInLevel = membersOrder.get(fightIndex);
                 if (membersInLevel == null) {
-                    return getMembersOrder(level - 1);
+                    return getMembersOrder(fightIndex - 1);
                 } else {
                     return membersInLevel;
                 }
             } catch (Exception e) {
-                if (level >= 0) {
-                    return getMembersOrder(level - 1);
+                if (fightIndex >= 0) {
+                    return getMembersOrder(fightIndex - 1);
                 }
             }
         }
