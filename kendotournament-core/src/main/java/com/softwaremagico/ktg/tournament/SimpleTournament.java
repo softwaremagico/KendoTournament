@@ -13,12 +13,12 @@ import java.util.List;
 /**
  * A simple tournament is a tournament with only one group.
  */
-public class SimpleTournamentManager implements ITournamentManager {
+public class SimpleTournament implements ITournamentManager {
 
     private Tournament tournament;
     private TGroup group = null;
 
-    protected SimpleTournamentManager(Tournament tournament) {
+    protected SimpleTournament(Tournament tournament) {
         this.tournament = tournament;
     }
 
@@ -186,5 +186,19 @@ public class SimpleTournamentManager implements ITournamentManager {
             return 0;
         }
         return -1;
+    }
+
+    @Override
+    public boolean inTheLastFight() {
+        try {
+            List<Fight> fights = FightPool.getInstance().get(tournament);
+            if (fights.size() > 0) {
+                if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
+                    return true;
+                }
+            }
+        } catch (SQLException ex) {
+        }
+        return false;
     }
 }

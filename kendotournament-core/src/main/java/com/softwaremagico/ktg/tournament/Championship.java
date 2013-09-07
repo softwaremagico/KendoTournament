@@ -199,4 +199,31 @@ public class Championship implements ITournamentManager {
     public int getIndex(Integer level, TGroup group) {
         return getGroups(level).indexOf(group);
     }
+
+    @Override
+    public boolean inTheLastFight() {
+        if (!getGroups().isEmpty()) {
+            if (getGroups().size() > 1) {
+                //With more than one group If penultimus group is over, then we are in last group that only can have one fight.
+                List<Fight> fightsLastGroup = getGroups().get(getGroups().size() - 1).getFights();
+                if (fightsLastGroup.size() > 0) {
+                    if (getGroups().get(getGroups().size() - 2).areFightsOver()) {
+                        return true;
+                    }
+                } else {
+                    //With one group is the same that a Simple Tournament.
+                    try {
+                        List<Fight> fights = FightPool.getInstance().get(tournament);
+                        if (fights.size() > 0) {
+                            if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
+                                return true;
+                            }
+                        }
+                    } catch (SQLException ex) {
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

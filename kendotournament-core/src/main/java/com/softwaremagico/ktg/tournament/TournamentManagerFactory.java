@@ -80,7 +80,7 @@ public class TournamentManagerFactory {
                 break;
             case SIMPLE:
             default:
-                manager = new SimpleTournamentManager(tournament);
+                manager = new SimpleTournament(tournament);
                 break;
         }
         return manager;

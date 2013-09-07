@@ -478,12 +478,14 @@ public class FightPanel extends KFrame {
 
     private void updateNextButton() {
         // Now it was the last one of a group.
-        if (FightPool.getInstance().inTheLastFight(getSelectedTournament())) {
-            nextButton.updateIcon(true);
-            nextButton.updateText(true);
-        } else {
-            nextButton.updateIcon(false);
-            nextButton.updateText(false);
+        if (TournamentManagerFactory.getManager(getSelectedTournament()) != null) {
+            if (TournamentManagerFactory.getManager(getSelectedTournament()).inTheLastFight()) {
+                nextButton.updateIcon(true);
+                nextButton.updateText(true);
+            } else {
+                nextButton.updateIcon(false);
+                nextButton.updateText(false);
+            }
         }
     }
 

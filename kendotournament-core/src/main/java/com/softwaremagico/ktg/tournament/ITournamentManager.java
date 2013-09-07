@@ -74,4 +74,10 @@ public interface ITournamentManager {
     void setDefaultFightAreas();
     
     void setHowManyTeamsOfGroupPassToTheTree(Integer winners);
+    
+    /**
+     * We are in the final fight of the tournament. 
+     * @return 
+     */
+    boolean inTheLastFight();
 }

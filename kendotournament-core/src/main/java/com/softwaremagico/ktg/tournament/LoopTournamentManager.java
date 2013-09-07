@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * In a ring tournament, one team fights with all other teams consecutively.
  */
-public class LoopTournamentManager extends SimpleTournamentManager {
+public class LoopTournamentManager extends SimpleTournament {
 
     protected LoopTournamentManager(Tournament tournament) {
         super(tournament);

@@ -2,4 +2,4 @@ Que las listas se puedan exportar en TXT
 Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
 Que muestre el mensaje de esperando a la otra fightarea cuando los combates de un grupo han terminado.
 Cuando hay dos ordenadores, que se actualicen los datos (cambios en el orden de los equipos) al acabar el nivel. 
-
+Next button falla cuando el campeonato es completamente nuevo, al acabar el primer nivel no pasa al segundo nivel. 
