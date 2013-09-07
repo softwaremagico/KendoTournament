@@ -53,8 +53,8 @@ public abstract class SimplePool<ElementPool> {
         }
     }
 
-    public ElementPool get(String elementName) throws SQLException {
-        return (ElementPool) getMap().get(elementName);
+    public ElementPool get(String elementId) throws SQLException {
+        return (ElementPool) getMap().get(elementId);
     }
 
     protected List<ElementPool> getAll() throws SQLException {

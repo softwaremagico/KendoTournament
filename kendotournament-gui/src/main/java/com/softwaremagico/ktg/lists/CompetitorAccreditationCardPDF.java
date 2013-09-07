@@ -31,8 +31,8 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.persistence.RolePool;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -120,7 +120,15 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         table2.addCell(this.getEmptyCell(1));
 
-        p = new Paragraph(competitor.getClub().getName(), FontFactory.getFont(font, fontSize - 2));
+
+        String clubName;
+        if(competitor.getClub()!=null){
+            clubName = competitor.getClub().getName();
+        }else{
+            clubName = "";
+        }
+
+        p = new Paragraph(clubName, FontFactory.getFont(font, fontSize - 2));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);
@@ -213,7 +221,6 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
     private PdfPTable mainTable(float width, float height, String font, int fontSize) throws IOException, BadElementException {
         PdfPCell cell;
-        Paragraph p;
         float[] widths = {1};
         PdfPTable mainTable = new PdfPTable(widths);
         mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
