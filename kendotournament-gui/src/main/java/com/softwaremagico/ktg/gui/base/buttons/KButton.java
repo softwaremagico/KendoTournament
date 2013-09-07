@@ -38,5 +38,8 @@ public class KButton extends JButton {
     //Disable button icons.
     @Override
     public void setIcon(Icon defaultIcon){
+        if(this instanceof DownButton || this instanceof UpButton){
+            super.setIcon(defaultIcon);
+        }
     }
 }
