@@ -37,7 +37,7 @@ public abstract class ParentList extends PdfDocument {
     protected int headerBorder = 0;
 
     @Override
-    protected void createPagePDF(Document document, PdfWriter writer, String font) throws Exception {
+    protected void createPagePDF(Document document, PdfWriter writer, String font) throws EmptyPdfBodyException, Exception {
         //addBackGroundImage(document, Path.returnBackgroundPath(), writer);
         PdfPTable mainTable = createMainTable(document, document.getPageSize().getWidth(), document.getPageSize().getHeight(), writer, font, fontSize);
         mainTable.setWidthPercentage(100);
@@ -68,7 +68,7 @@ public abstract class ParentList extends PdfDocument {
      * @param font
      * @param fontSize
      */
-    public abstract void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize);
+    public abstract void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) throws EmptyPdfBodyException;
 
     /**
      * Creates the footer of the document.
@@ -198,11 +198,12 @@ public abstract class ParentList extends PdfDocument {
      * @param font
      * @param fontSize
      * @return
+     * @throws EmptyPdfBodyException
      * @throws IOException
      * @throws BadElementException
      * @throws Exception
      */
-    private PdfPTable createMainTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws IOException, BadElementException, Exception {
+    private PdfPTable createMainTable(Document document, float width, float height, PdfWriter writer, String font, int fontSize) throws EmptyPdfBodyException, IOException, BadElementException, Exception {
         PdfPCell cellHeader, cellFooter;
         Paragraph p;
         PdfPTable mainTable = new PdfPTable(getTableWidths());

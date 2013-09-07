@@ -62,13 +62,13 @@ public class ClubListPDF extends ParentList {
     }
 
     @Override
-    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
+    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) throws EmptyPdfBodyException {
         int cellNumber = 0;
         boolean firstClub = true;
+        boolean added = false;
 
         try {
             List<Club> clubs = ClubPool.getInstance().getSorted();
-
             for (int i = 0; i < clubs.size(); i++) {
                 List<RegisteredPerson> competitors = RolePool.getInstance().getPeople(tournament, clubs.get(i));
 
@@ -99,7 +99,11 @@ public class ClubListPDF extends ParentList {
                     mainTable.addCell(getCell(RolePool.getInstance().getRoleTags().getTranslation(RolePool.getInstance().getRole(tournament, competitors.get(j)).getDatabaseTag()), 1, 1, color));
 
                     cellNumber++;
+                    added = true;
                 }
+            }
+            if (!added) {
+                throw new EmptyPdfBodyException("No clubs in this championship");
             }
         } catch (SQLException ex) {
             AlertManager.showSqlErrorMessage(ex);

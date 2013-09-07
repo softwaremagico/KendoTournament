@@ -133,10 +133,10 @@ public class SummaryPDF extends ParentList {
     }
 
     @Override
-    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
+    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) throws EmptyPdfBodyException {
         PdfPCell cell;
-
         boolean first = true;
+        boolean added = false;
         int lastLevel = -1;
 
         List<Fight> fights = new ArrayList<>();
@@ -173,7 +173,11 @@ public class SummaryPDF extends ParentList {
                 mainTable.addCell(cell);
 
                 first = false;
+                added = true;
             }
+        }
+        if (!added) {
+            throw new EmptyPdfBodyException("No fights selected");
         }
     }
 

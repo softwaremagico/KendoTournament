@@ -1114,5 +1114,13 @@
 		<ca>Ha ocorregut un error desconegut mentres s'intentava fer l'operació.</ca>
 		<it>Si è verificato un errore sconosciuto durante il tentativo di fare l'operazione.</it>
 	</genericError>
+	<emptyPdfError>
+		<en>The generated document is empty. Please, review the selected options.</en>
+		<es>El documento generado está vacío. Por favor, revisa las opciones seleccionadas.</es>
+		<nl>The generated document is empty. Please, review the selected options.</nl>
+		<de>The generated document is empty. Please, review the selected options.</de>
+		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
+		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
+	</emptyPdfError>
 </translator>
 

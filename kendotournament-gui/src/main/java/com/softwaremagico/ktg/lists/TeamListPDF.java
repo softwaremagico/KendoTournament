@@ -31,8 +31,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.persistence.TeamPool;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class TeamListPDF extends ParentList {
     }
 
     @Override
-    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) {
+    public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer, String font, int fontSize) throws EmptyPdfBodyException {
         PdfPCell cell;
         Paragraph p;
 
@@ -82,8 +82,12 @@ public class TeamListPDF extends ParentList {
         } catch (SQLException ex) {
             AlertManager.showSqlErrorMessage(ex);
         }
-        for (int i = 0; i < listTeams.size(); i++) {
 
+        if (!listTeams.isEmpty()) {
+            throw new EmptyPdfBodyException("No existing teams");
+        }
+
+        for (int i = 0; i < listTeams.size(); i++) {
             cell = new PdfPCell(teamTable(listTeams.get(i), font, fontSize));
             cell.setColspan(1);
             mainTable.addCell(cell);

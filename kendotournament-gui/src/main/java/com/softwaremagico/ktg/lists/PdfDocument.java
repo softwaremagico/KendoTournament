@@ -82,7 +82,7 @@ public abstract class PdfDocument {
         return document;
     }
 
-    protected void generatePDF(Document document, PdfWriter writer) throws Exception {
+    protected void generatePDF(Document document, PdfWriter writer) throws EmptyPdfBodyException, Exception {
         documentData(document);
         document.open();
         startBackgroundImage();
@@ -105,6 +105,9 @@ public abstract class PdfDocument {
                 AlertManager.translatedMessage(this.getClass().getName(), fileCreatedOkTag(), "PDF", JOptionPane.INFORMATION_MESSAGE);
             } catch (NullPointerException npe) {
                 AlertManager.showErrorInformation(this.getClass().getName(), npe);
+                return false;
+            } catch(EmptyPdfBodyException epbe){
+                AlertManager.errorMessage(this.getClass().getName(), "emptyPdfError", "PDF");
                 return false;
             } catch (Exception ex) {
                 AlertManager.errorMessage(this.getClass().getName(), fileCreatedBadTag(), "PDF");
