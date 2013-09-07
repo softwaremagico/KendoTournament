@@ -33,7 +33,9 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JFileChooser;
 
@@ -89,7 +91,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
                     this.dispose();
                 }
             }
-        } catch (Exception ex) {
+        } catch (FileNotFoundException | SQLException ex) {
             AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
     }
