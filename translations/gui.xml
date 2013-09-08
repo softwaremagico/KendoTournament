@@ -368,14 +368,14 @@
 		<ca>Partit següent</ca>
 		<it>Incontro successivo</it>
 	</NextButton>
-	<FinishtButton>
+	<FinishButton>
 		<en>Finish Match</en>
 		<es>Concluir Partido</es>
 		<nl>Einde wedstrijd</nl>
 		<de>Kampfende</de>
 		<ca>Concloure el partit</ca>
-		<it>Fine incontro</it>
-	</FinishtButton>
+		<it>Finire incontro</it>
+	</FinishButton>
 	<DeleteFigthtButton>
 		<en>Delete Match</en>
 		<es>Borrar Partido</es>
@@ -2115,4 +2115,12 @@
 		<ca>Llista de puntuacions (grup)</ca>
 		<it>Lista dei punteggi (gruppo)</it>
 	</PointListMenuItemGroup>
+	<FinishGroupButton>
+		<en>Finish Champsionship</en>
+		<es>Finalizar Campeonato</es>
+		<nl>Finish Champsionship</nl>
+		<de>Finish Champsionship</de>
+		<ca>Concloure Campionat</ca>
+		<it>Finire Campionato</it>
+	</FinishGroupButton>
 </translator>

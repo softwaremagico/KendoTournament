@@ -23,14 +23,6 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-import java.awt.Toolkit;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
@@ -42,186 +34,191 @@ import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 public class NewSimpleTournament extends javax.swing.JFrame {
 
-	Translator trans = null;
-	DefaultListModel<String> fightsModel = new DefaultListModel<>();
-	List<Team> listTeams = new ArrayList<>();
-	List<Fight> fights = new ArrayList<>();
-	private boolean refreshTournament = true;
-	private boolean refreshTeam1 = true;
+    Translator trans = null;
+    DefaultListModel<String> fightsModel = new DefaultListModel<>();
+    List<Team> listTeams = new ArrayList<>();
+    List<Fight> fights = new ArrayList<>();
+    private boolean refreshTournament = true;
+    private boolean refreshTeam1 = true;
 
-	/**
-	 * Creates new form NewSimpleTournament
-	 */
-	public NewSimpleTournament() {
-		initComponents();
-		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-		setLanguage();
-		fillTournaments();
-		RefreshTournament();
-		fillTeam1ComboBox();
-		fillTeam2ComboBox();
-		fillFightingAreas();
-	}
+    /**
+     * Creates new form NewSimpleTournament
+     */
+    public NewSimpleTournament() {
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setLanguage();
+        fillTournaments();
+        RefreshTournament();
+        fillTeam1ComboBox();
+        fillTeam2ComboBox();
+        fillFightingAreas();
+    }
 
-	/**
-	 * Translate the GUI to the selected language.
-	 */
-	private void setLanguage() {
-		trans = LanguagePool.getTranslator("gui.xml");
-		this.setTitle(trans.getTranslatedText("titleNewFight"));
-		TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
-		Team1Label.setText(trans.getTranslatedText("Team1Label"));
-		Team2Label.setText(trans.getTranslatedText("Team2Label"));
-		AddButton.setText(trans.getTranslatedText("AddButton"));
-		AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
-		DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
-		RandomButton.setText(trans.getTranslatedText("RandomButton"));
-		FightAreaLabel.setText(trans.getTranslatedText("FightArea"));
-		UpButton.setText(trans.getTranslatedText("UpButton"));
-		DownButton.setText(trans.getTranslatedText("DownButton"));
-		DeleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
-		SortedButton.setText(trans.getTranslatedText("SortedButton"));
-	}
+    /**
+     * Translate the GUI to the selected language.
+     */
+    private void setLanguage() {
+        trans = LanguagePool.getTranslator("gui.xml");
+        this.setTitle(trans.getTranslatedText("titleNewFight"));
+        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+        Team1Label.setText(trans.getTranslatedText("Team1Label"));
+        Team2Label.setText(trans.getTranslatedText("Team2Label"));
+        AddButton.setText(trans.getTranslatedText("AddButton"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
+        RandomButton.setText(trans.getTranslatedText("RandomButton"));
+        FightAreaLabel.setText(trans.getTranslatedText("FightArea"));
+        UpButton.setText(trans.getTranslatedText("UpButton"));
+        DownButton.setText(trans.getTranslatedText("DownButton"));
+        DeleteAllButton.setText(trans.getTranslatedText("CleanAllButton"));
+        SortedButton.setText(trans.getTranslatedText("SortedButton"));
+    }
 
-	private void fillTournaments() {
-		refreshTournament = false;
-		try {
-			TournamentComboBox.removeAllItems();
-			List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
-			for (int i = 0; i < listTournaments.size(); i++) {
-				TournamentComboBox.addItem(listTournaments.get(i));
-			}
-		} catch (NullPointerException npe) {
-			AlertManager.showErrorInformation(this.getClass().getName(), npe);
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-		refreshTournament = true;
-	}
+    private void fillTournaments() {
+        refreshTournament = false;
+        try {
+            TournamentComboBox.removeAllItems();
+            List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
+            for (int i = 0; i < listTournaments.size(); i++) {
+                TournamentComboBox.addItem(listTournaments.get(i));
+            }
+        } catch (NullPointerException npe) {
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+        refreshTournament = true;
+    }
 
-	private void fillTeam1ComboBox() {
-		refreshTeam1 = false;
-		try {
-			Team1ComboBox.removeAllItems();
-			listTeams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
-			for (int i = 0; i < listTeams.size(); i++) {
-				Team1ComboBox.addItem(listTeams.get(i));
-			}
-		} catch (NullPointerException npe) {
-			AlertManager.showErrorInformation(this.getClass().getName(), npe);
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		refreshTeam1 = true;
-	}
+    private void fillTeam1ComboBox() {
+        refreshTeam1 = false;
+        try {
+            Team1ComboBox.removeAllItems();
+            listTeams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
+            for (int i = 0; i < listTeams.size(); i++) {
+                Team1ComboBox.addItem(listTeams.get(i));
+            }
+        } catch (NullPointerException npe) {
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        refreshTeam1 = true;
+    }
 
-	private void fillTeam2ComboBox() {
-		Team selected = null;
-		try {
-			selected = (Team) Team2ComboBox.getSelectedItem();
-		} catch (NullPointerException npe) {
-		}
-		Team2ComboBox.removeAllItems();
-		try {
-			for (int i = 0; i < listTeams.size(); i++) {
-				if (!listTeams.get(i).getName().equals(Team1ComboBox.getSelectedItem().toString())) {
-					Team2ComboBox.addItem(listTeams.get(i));
-				}
-			}
-			if (selected != null) {
-				Team2ComboBox.setSelectedItem(selected);
-			}
-		} catch (NullPointerException npe) {
-			// npe.printStackTrace();
-		}
-	}
+    private void fillTeam2ComboBox() {
+        Team selected = null;
+        try {
+            selected = (Team) Team2ComboBox.getSelectedItem();
+        } catch (NullPointerException npe) {
+        }
+        Team2ComboBox.removeAllItems();
+        try {
+            for (int i = 0; i < listTeams.size(); i++) {
+                if (!listTeams.get(i).getName().equals(Team1ComboBox.getSelectedItem().toString())) {
+                    Team2ComboBox.addItem(listTeams.get(i));
+                }
+            }
+            if (selected != null) {
+                Team2ComboBox.setSelectedItem(selected);
+            }
+        } catch (NullPointerException npe) {
+            // npe.printStackTrace();
+        }
+    }
 
-	private void fillFightingAreas() {
-		try {
-			FightAreaComboBox.removeAllItems();
-			Tournament tournament = (Tournament) TournamentComboBox.getSelectedItem();
-			for (int i = 0; i < tournament.getFightingAreas(); i++) {
-				FightAreaComboBox.addItem(Tournament.getFightAreaName(i));
-			}
-		} catch (NullPointerException npe) {
-		}
-	}
+    private void fillFightingAreas() {
+        try {
+            FightAreaComboBox.removeAllItems();
+            Tournament tournament = (Tournament) TournamentComboBox.getSelectedItem();
+            for (int i = 0; i < tournament.getFightingAreas(); i++) {
+                FightAreaComboBox.addItem(Tournament.getFightAreaName(i));
+            }
+        } catch (NullPointerException npe) {
+        }
+    }
 
-	private void UpFight(int index) {
-		if (index >= 0 && index < fights.size()) {
-			Fight f = fights.get(index);
-			fights.remove(index);
-			if (index > 0) {
-				index--;
-			}
-			fights.add(index, f);
-		}
-	}
+    private void UpFight(int index) {
+        if (index >= 0 && index < fights.size()) {
+            Fight f = fights.get(index);
+            fights.remove(index);
+            if (index > 0) {
+                index--;
+            }
+            fights.add(index, f);
+        }
+    }
 
-	private void DownFight(int index) {
-		if (index >= 0 && index < fights.size()) {
-			Fight f = fights.get(index);
-			fights.remove(index);
-			if (index < fights.size()) {
-				index++;
-			}
-			fights.add(index, f);
-		}
-	}
+    private void DownFight(int index) {
+        if (index >= 0 && index < fights.size()) {
+            Fight f = fights.get(index);
+            fights.remove(index);
+            if (index < fights.size()) {
+                index++;
+            }
+            fights.add(index, f);
+        }
+    }
 
-	private void RefreshTournament() {
-		try {
-			if (TournamentComboBox.getItemCount() > 0) {
-				fights = FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
-				fillTeam1ComboBox();
-				fillTeam2ComboBox();
-				fillFightingAreas();
-				fillFights();
-			} else {
-				Team1ComboBox.removeAllItems();
-				Team2ComboBox.removeAllItems();
-				FightAreaComboBox.removeAllItems();
-				fightsModel.removeAllElements();
-			}
-		} catch (NullPointerException npe) {
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-	}
+    private void RefreshTournament() {
+        try {
+            if (TournamentComboBox.getItemCount() > 0) {
+                fights = FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
+                fillTeam1ComboBox();
+                fillTeam2ComboBox();
+                fillFightingAreas();
+                fillFights();
+            } else {
+                Team1ComboBox.removeAllItems();
+                Team2ComboBox.removeAllItems();
+                FightAreaComboBox.removeAllItems();
+                fightsModel.removeAllElements();
+            }
+        } catch (NullPointerException npe) {
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+    }
 
-	/**
-	 * Fill the list with the results obtained
-	 */
-	public void fillFights() {
-		fightsModel.removeAllElements();
-		if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(getDefinedType())) {
-			for (int i = 0; i < fights.size(); i++) {
-				String text = fights.get(i).getTeam1().getName() + " - " + fights.get(i).getTeam2().getName();
-				if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
-					text += "  (" + trans.getTranslatedText("FightArea") + " "
-							+ Tournament.getFightAreaName(fights.get(i).getAsignedFightArea()) + ")";
+    /**
+     * Fill the list with the results obtained
+     */
+    public void fillFights() {
+        fightsModel.removeAllElements();
+        if (((Tournament) TournamentComboBox.getSelectedItem()).getType().equals(getDefinedType())) {
+            for (int i = 0; i < fights.size(); i++) {
+                String text = fights.get(i).getTeam1().getName() + " - " + fights.get(i).getTeam2().getName();
+                if (((Tournament) TournamentComboBox.getSelectedItem()).getFightingAreas() > 1) {
+                    text += "  (" + trans.getTranslatedText("FightArea") + " "
+                            + Tournament.getFightAreaName(fights.get(i).getAsignedFightArea()) + ")";
 
-				}
-				fightsModel.addElement(text);
-			}
-		}
-	}
+                }
+                fightsModel.addElement(text);
+            }
+        }
+    }
 
-	private void setTournamentType() {
-		((Tournament) TournamentComboBox.getSelectedItem()).setType(getDefinedType());
-	}
+    private void setTournamentType() {
+        ((Tournament) TournamentComboBox.getSelectedItem()).setType(getDefinedType());
+    }
 
-	protected TournamentType getDefinedType() {
-		return TournamentType.SIMPLE;
-	}
+    protected TournamentType getDefinedType() {
+        return TournamentType.SIMPLE;
+    }
 
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed"
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
@@ -527,148 +524,151 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void Team1ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Team1ComboBoxActionPerformed
-		if (refreshTeam1) {
-			fillTeam2ComboBox();
-		}
-	}// GEN-LAST:event_Team1ComboBoxActionPerformed
+    private void Team1ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Team1ComboBoxActionPerformed
+        if (refreshTeam1) {
+            fillTeam2ComboBox();
+        }
+    }// GEN-LAST:event_Team1ComboBoxActionPerformed
 
-	private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AddButtonActionPerformed
-		try {
-			setTournamentType();
-			if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
-				// Fight fight = new
-				// Fight(DatabaseConnection.getInstance().getDatabase().getTeamByName(Team1ComboBox.getSelectedItem().toString(),
-				// (Tournament) TournamentComboBox.getSelectedItem(), true),
-				Fight fight = new Fight((Tournament) TournamentComboBox.getSelectedItem(),
-						(Team) (Team1ComboBox.getSelectedItem()), (Team) (Team2ComboBox.getSelectedItem()),
-						FightAreaComboBox.getSelectedIndex(), 0, 0, fights.size());
-				int ind = FightsList.getSelectedIndex();
-				if (ind >= 0) {
-					fights.add(ind + 1, fight);
-				} else {
-					fights.add(fight);
-				}
+    private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AddButtonActionPerformed
+        try {
+            setTournamentType();
+            if (Team1ComboBox.getSelectedItem() != null && Team2ComboBox.getSelectedItem() != null) {
+                // Fight fight = new
+                // Fight(DatabaseConnection.getInstance().getDatabase().getTeamByName(Team1ComboBox.getSelectedItem().toString(),
+                // (Tournament) TournamentComboBox.getSelectedItem(), true),
+                Fight fight = new Fight((Tournament) TournamentComboBox.getSelectedItem(),
+                        (Team) (Team1ComboBox.getSelectedItem()), (Team) (Team2ComboBox.getSelectedItem()),
+                        FightAreaComboBox.getSelectedIndex(), 0, 0, fights.size());
+                int ind = FightsList.getSelectedIndex();
+                if (ind >= 0) {
+                    fights.add(ind + 1, fight);
+                } else {
+                    fights.add(fight);
+                }
 
-				fillFights();
-				if (fights.size() > 0) {
-					if (ind >= 0) {
-						FightsList.setSelectedIndex(ind + 1);
-					} else {
-						FightsList.setSelectedIndex(fightsModel.getSize() - 1);
-					}
-				}
-			}
-		} catch (NullPointerException npe) {
-		}
-	}// GEN-LAST:event_AddButtonActionPerformed
+                fillFights();
+                if (fights.size() > 0) {
+                    if (ind >= 0) {
+                        FightsList.setSelectedIndex(ind + 1);
+                    } else {
+                        FightsList.setSelectedIndex(fightsModel.getSize() - 1);
+                    }
+                }
+            }
+        } catch (NullPointerException npe) {
+        }
+    }// GEN-LAST:event_AddButtonActionPerformed
 
-	private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
-		if (refreshTournament) {
-			RefreshTournament();
-			KendoTournamentGenerator.getInstance().setLastSelectedTournament(
-					TournamentComboBox.getSelectedItem().toString());
-		}
-	}// GEN-LAST:event_TournamentComboBoxActionPerformed
+    private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
+        if (refreshTournament) {
+            RefreshTournament();
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(
+                    TournamentComboBox.getSelectedItem().toString());
+        }
+    }// GEN-LAST:event_TournamentComboBoxActionPerformed
 
-	private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RandomButtonActionPerformed
-		try {
-			if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
-				fightsModel.removeAllElements();
-				setTournamentType();
-				fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-						getDefinedType()).createRandomFights(0);
-				fillFights();
-				try {
-					FightsList.setSelectedIndex(0);
-				} catch (ArrayIndexOutOfBoundsException aiob) {
-				}
-			}
-		} catch (NullPointerException npe) {
-			AlertManager.showErrorInformation(this.getClass().getName(), npe);
-		}
-	}// GEN-LAST:event_RandomButtonActionPerformed
+    private void RandomButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RandomButtonActionPerformed
+        try {
+            if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
+                fightsModel.removeAllElements();
+                setTournamentType();
+                fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
+                        getDefinedType()).createRandomFights(0);
+                fillFights();
+                try {
+                    FightsList.setSelectedIndex(0);
+                } catch (ArrayIndexOutOfBoundsException aiob) {
+                }
+            }
+        } catch (NullPointerException npe) {
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        }
+    }// GEN-LAST:event_RandomButtonActionPerformed
 
-	private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DeleteButtonActionPerformed
-		try {
-			int ind = FightsList.getSelectedIndex();
-			fights.remove(ind);
-			// fillFights();
-			fightsModel.remove(ind);
-			if (ind < fightsModel.getSize()) {
-				FightsList.setSelectedIndex(ind);
-			} else {
-				FightsList.setSelectedIndex(fightsModel.getSize() - 1);
-			}
-		} catch (ArrayIndexOutOfBoundsException aiob) {
-		}
-	}// GEN-LAST:event_DeleteButtonActionPerformed
+    private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DeleteButtonActionPerformed
+        try {
+            int ind = FightsList.getSelectedIndex();
+            fights.remove(ind);
+            // fillFights();
+            fightsModel.remove(ind);
+            if (ind < fightsModel.getSize()) {
+                FightsList.setSelectedIndex(ind);
+            } else {
+                FightsList.setSelectedIndex(fightsModel.getSize() - 1);
+            }
+        } catch (ArrayIndexOutOfBoundsException aiob) {
+        }
+    }// GEN-LAST:event_DeleteButtonActionPerformed
 
-	private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AcceptButtonActionPerformed
-		try {
-			if (fights != null && fights.size() > 0) {
-				if (!FightPool.existRepeatedFight(fights)) {
-					FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
-					FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
-					TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
-					AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
-					this.dispose();
-				} else {
-					AlertManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");
-				}
-			} else {
-				AlertManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
-			}
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-	}// GEN-LAST:event_AcceptButtonActionPerformed
+    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AcceptButtonActionPerformed
+        try {
+            if ((Tournament) TournamentComboBox.getSelectedItem() != null && fights != null && fights.size() > 0) {
+                if (!FightPool.existRepeatedFight(fights)) {
+                    FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
+                    //Delete old group fights if any.
+                    TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem()).removeFights();
+                    //Create new fights
+                    FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
+                    TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
+                    AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                    this.dispose();
+                } else {
+                    AlertManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");
+                }
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "noFight", "New Fight");
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+    }// GEN-LAST:event_AcceptButtonActionPerformed
 
-	private void UpButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_UpButtonActionPerformed
-		int index = FightsList.getSelectedIndex();
-		UpFight(index);
-		fillFights();
-		if (index > 0) {
-			index--;
-		}
-		FightsList.setSelectedIndex(index);
-	}// GEN-LAST:event_UpButtonActionPerformed
+    private void UpButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_UpButtonActionPerformed
+        int index = FightsList.getSelectedIndex();
+        UpFight(index);
+        fillFights();
+        if (index > 0) {
+            index--;
+        }
+        FightsList.setSelectedIndex(index);
+    }// GEN-LAST:event_UpButtonActionPerformed
 
-	private void DownButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DownButtonActionPerformed
-		int index = FightsList.getSelectedIndex();
-		DownFight(index);
-		fillFights();
-		if (index < fights.size() - 1) {
-			index++;
-		}
-		FightsList.setSelectedIndex(index);
-	}// GEN-LAST:event_DownButtonActionPerformed
+    private void DownButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DownButtonActionPerformed
+        int index = FightsList.getSelectedIndex();
+        DownFight(index);
+        fillFights();
+        if (index < fights.size() - 1) {
+            index++;
+        }
+        FightsList.setSelectedIndex(index);
+    }// GEN-LAST:event_DownButtonActionPerformed
 
-	private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DeleteAllButtonActionPerformed
-		if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
-			fights = new ArrayList<>();
-			fightsModel.removeAllElements();
-		}
-	}// GEN-LAST:event_DeleteAllButtonActionPerformed
+    private void DeleteAllButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DeleteAllButtonActionPerformed
+        if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
+            fights = new ArrayList<>();
+            fightsModel.removeAllElements();
+        }
+    }// GEN-LAST:event_DeleteAllButtonActionPerformed
 
-	private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SortedButtonActionPerformed
-		try {
-			if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
-				setTournamentType();
-				fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-						getDefinedType()).createSortedFights(0);
-				fightsModel.removeAllElements();
+    private void SortedButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_SortedButtonActionPerformed
+        try {
+            if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
+                setTournamentType();
+                fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
+                        getDefinedType()).createSortedFights(0);
+                fightsModel.removeAllElements();
 
-				fillFights();
+                fillFights();
 
-				try {
-					FightsList.setSelectedIndex(0);
-				} catch (ArrayIndexOutOfBoundsException aiob) {
-				}
-			}
-		} catch (NullPointerException npe) {
-		}
-	}// GEN-LAST:event_SortedButtonActionPerformed
+                try {
+                    FightsList.setSelectedIndex(0);
+                } catch (ArrayIndexOutOfBoundsException aiob) {
+                }
+            }
+        } catch (NullPointerException npe) {
+        }
+    }// GEN-LAST:event_SortedButtonActionPerformed
 		// Variables declaration - do not modify//GEN-BEGIN:variables
 
 	private javax.swing.JButton AcceptButton;

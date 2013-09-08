@@ -101,7 +101,7 @@ public class Controller {
     private ChooseScore chooseScore = null;
     private ShortNewFight shortFight = null;
     private LeagueDesigner designer = null;
-    private NewSimpleTournament newFight;
+    private NewSimpleTournament newSimpleTournament;
     private NewLoopTournament newRing;
     private LeagueEvolution leagueEvolution = null;
     private SelectTournament selectTournament = null;
@@ -596,11 +596,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                newFight.dispose();
+                newSimpleTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            newFight = new NewSimpleTournament();
-            newFight.setVisible(true);
+            newSimpleTournament = new NewSimpleTournament();
+            newSimpleTournament.setVisible(true);
             // AddNewTeamListeners();
 
         }

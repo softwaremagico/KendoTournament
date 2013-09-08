@@ -506,7 +506,7 @@ public class FightPanel extends KFrame {
 
         protected final void updateText(boolean last) {
             if (last) {
-                setTranslatedText("FinishtButton");
+                setTranslatedText("FinishGroupButton");
             } else {
                 setTranslatedText("NextButton");
             }

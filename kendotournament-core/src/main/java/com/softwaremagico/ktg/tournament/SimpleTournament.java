@@ -201,4 +201,11 @@ public class SimpleTournament implements ITournamentManager {
         }
         return false;
     }
+
+    @Override
+    public void removeFights() {
+        if (group != null) {
+            group.removeFights();
+        }
+    }
 }

@@ -80,4 +80,9 @@ public interface ITournamentManager {
      * @return 
      */
     boolean inTheLastFight();
+    
+    /**
+     * Remove all fights of all groups.
+     */
+    void removeFights();
 }

@@ -26,13 +26,13 @@ package com.softwaremagico.ktg.gui.tournament;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.LeagueLevelCustom;
 import com.softwaremagico.ktg.tournament.TGroup;
@@ -641,7 +641,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                 }
             }
             if (AlertManager.questionMessage("questionCreateFight", "Warning!")) {
+                //Delete fights.
                 FightPool.getInstance().remove(getSelectedTournament());
+                //Delete fights in groups
+                TournamentManagerFactory.getManager(getSelectedTournament()).removeFights();
                 if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
                     AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
                     //Update tournament type to database.

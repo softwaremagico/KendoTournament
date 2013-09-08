@@ -210,20 +210,27 @@ public class Championship implements ITournamentManager {
                     if (getGroups().get(getGroups().size() - 2).areFightsOver()) {
                         return true;
                     }
-                } else {
-                    //With one group is the same that a Simple Tournament.
-                    try {
-                        List<Fight> fights = FightPool.getInstance().get(tournament);
-                        if (fights.size() > 0) {
-                            if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
-                                return true;
-                            }
+                }
+            } else {
+                //With one group is the same that a Simple Tournament.
+                try {
+                    List<Fight> fights = FightPool.getInstance().get(tournament);
+                    if (fights.size() > 0) {
+                        if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
+                            return true;
                         }
-                    } catch (SQLException ex) {
                     }
+                } catch (SQLException ex) {
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public void removeFights() {
+        for (TGroup group : getGroups()) {
+            group.removeFights();
+        }
     }
 }
