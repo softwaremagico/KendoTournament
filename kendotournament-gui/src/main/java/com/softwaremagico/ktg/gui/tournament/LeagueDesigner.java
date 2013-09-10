@@ -647,6 +647,8 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                 TournamentManagerFactory.getManager(getSelectedTournament()).removeFights();
                 //Remove teams of level greater than zero. 
                 TournamentManagerFactory.getManager(getSelectedTournament()).removeTeams(1); 
+                // Remove old scores
+                
                 if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
                     AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
                     //Update tournament type to database.

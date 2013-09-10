@@ -113,17 +113,12 @@ public class TournamentGroupBox extends Group {
 		setMinimumSize(new Dimension(0, 0));
 	}
 
-	private String getText(boolean withScore) {
+	private String getText(boolean withRanking) {
 		String text = "<html>";
 
 		List<Team> teamRanking;
-		if (withScore) {
-			try {
-				teamRanking = Ranking.getTeamsRanking(FightPool.getInstance().get(tournamentGroup.getTournament()));
-			} catch (SQLException ex) {
-				AlertManager.showSqlErrorMessage(ex);
-				teamRanking = tournamentGroup.getTeams();
-			}
+		if (withRanking) {
+			teamRanking = Ranking.getTeamsRanking(tournamentGroup.getFights());
 		} else {
 			teamRanking = tournamentGroup.getTeams();
 		}
@@ -132,12 +127,7 @@ public class TournamentGroupBox extends Group {
 		} else {
 			for (int i = 0; i < teamRanking.size(); i++) {
 				Color c = obtainWinnerColor(i, true);
-
 				if (color) {
-					// text += "<b><font size=\"+1\" color=\"#" +
-					// Integer.toHexString(c.getRed()) +
-					// Integer.toHexString(c.getGreen()) +
-					// Integer.toHexString(c.getBlue()) + "\">";
 					text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen())
 							+ Integer.toHexString(c.getBlue()) + "\">";
 				}
@@ -155,7 +145,11 @@ public class TournamentGroupBox extends Group {
 	}
 
 	public final void updateText() {
-		label.setText(getText(false));
+		if (!tournamentGroup.areFightsStarted()) {
+			label.setText(getText(false));
+		} else {
+			label.setText(getText(true));
+		}
 	}
 
 	public final void updateTextOrderByScore() {
