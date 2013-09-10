@@ -67,6 +67,8 @@ public interface ITournamentManager {
     boolean exist(Team team);
 
     void removeTeams(Integer level);
+    
+    void removeTeams();
 
     /**
      * Divide groups into fight areas.
