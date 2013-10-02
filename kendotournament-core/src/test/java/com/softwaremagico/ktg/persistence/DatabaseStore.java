@@ -104,7 +104,7 @@ public class DatabaseStore {
     @Test(alwaysRun = true)
     public void clearDatabase() throws SQLException {
         //Delete Tournament Information.
-        TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
+        /*TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
 
          //Delete elements from database.
          RegisteredPersonPool.getInstance().remove(RegisteredPersonPool.getInstance().getAll());
@@ -121,6 +121,6 @@ public class DatabaseStore {
          Assert.assertTrue(TeamPool.getInstance().getAll().isEmpty());
          Assert.assertTrue(FightPool.getInstance().getAll().isEmpty());
          Assert.assertTrue(DuelPool.getInstance().getAll().isEmpty());
-         Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty()); 
+         Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty()); */
     }
 }
