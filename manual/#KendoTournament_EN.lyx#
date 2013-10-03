@@ -5,7 +5,7 @@
 \textclass book
 \use_default_options true
 \maintain_unincluded_children false
-\language spanish
+\language british
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -90,6 +90,10 @@ v1.0.0
 
 \begin_layout Author
 Jorge Hortelano Otero
+\begin_inset Newline newline
+\end_inset
+
+Xavi García Martínez
 \end_layout
 
 \begin_layout Standard
@@ -102,22 +106,22 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter
-Uso básico
+Basic mode
 \end_layout
 
 \begin_layout Standard
-El 
+The 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-uso básico
+basic mode
 \end_layout
 
 \end_inset
 
-uso básico de la aplicación permite administrar campeonatos de kendo en
- los que únicamente existe un único 
+basic mode of the application allows the user to manage kendo leagues using
+ only one 
 \begin_inset Index idx
 status open
 
@@ -128,8 +132,8 @@ shiaijo
 \end_inset
 
 shiaijo.
- Un único computador gestiona cada uno de los pasos del campeonato, simplificand
-o el uso y la instalación de la aplicación.
+ Only one computer is used for the league managment, simplifing the use
+ and installation of the application.
  
 \end_layout
 
@@ -138,12 +142,12 @@ o el uso y la instalación de la aplicación.
 status open
 
 \begin_layout Plain Layout
-instalación
+installation
 \end_layout
 
 \end_inset
 
-Instalación
+Installation
 \end_layout
 
 \begin_layout Subsection
@@ -151,26 +155,26 @@ Instalación
 status open
 
 \begin_layout Plain Layout
-requisitos
+requirements
 \end_layout
 
 \end_inset
 
-Requisitos
+Requirements
 \end_layout
 
 \begin_layout Standard
-La aplicación Kendo Tournament Manager (KTM) es 
+Kendo Tournament Manager Application (KTM) is 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-compatibilidad
+compatibility
 \end_layout
 
 \end_inset
 
-compatible con la plataforma 
+compatible with all 
 \begin_inset Index idx
 status open
 
@@ -180,7 +184,7 @@ Windows
 
 \end_inset
 
-Windows (2000, XP, Vista, Windows 7 y Windows 8) y con las versiones 
+Windows platforms (2000, XP, Vista, Windows 7 y Windows 8) and with 
 \begin_inset Index idx
 status open
 
@@ -191,13 +195,13 @@ Linux
 \end_inset
 
 Linux Debian, Ubuntu, CentOS y Fedora.
- Es posible que también sea compatible con otras versiones o sistemas operativos
-, si bien nunca ha sido testeado.
+ It is also possible that can run successfully in other operative systems
+ but has not been tested yet.
  
 \end_layout
 
 \begin_layout Standard
-La aplicación ha sido desarrollada en 
+The application has been developed in 
 \begin_inset Index idx
 status open
 
@@ -207,12 +211,10 @@ Java
 
 \end_inset
 
-Java y necesita la versión 7 de la máquina virtual.
- Esta versión ya está casi disponible por defecto en la mayoría de los sistemas
- operativos citados anteriormente, si bien se aconseja fervientemente que
- se utilice la versión oficial proporcionada por Oracle.
- Esta MV puede ser descargada gratuitamente de la página oficial sin coste
- alguno para el usuario en 
+Java and needs at least the versión 7 of Java Virtual Macine.
+ This version is almost available by default in any operative system, but
+ it is recommended to use the official verson of Java distributed by Oracle.
+ It can be downloaded from 
 \begin_inset Flex URL
 status collapsed
 
@@ -227,13 +229,9 @@ http://www.java.com/es/download/
 \end_layout
 
 \begin_layout Standard
-Para el uso básico del sistema, los datos son almacenados usando el servidor
- de bases de datos 
-\emph on
-SQLite
-\emph default
-, que ya está incluido como librería dentro del KTM, por lo que no requiere
- de ninguna instalación adicional.
+For the basic mode of the application, all data is stored in a SQLite database,
+ that is already included in the application.
+ Therefore any aditional software is not needed.
  
 \end_layout
 
@@ -242,62 +240,54 @@ SQLite
 status open
 
 \begin_layout Plain Layout
-instalación
+installation
 \end_layout
 
 \end_inset
 
-Instalación de la aplicación
+Installation
 \end_layout
 
 \begin_layout Standard
-Para los usuarios de 
+For 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-instalación en Windows
+Windows
 \end_layout
 
 \end_inset
 
-Windows, la aplicación se distribuye como el típico conjunto de ventanas
- de instalador.
- No resulta muy flexible, ya que el usuario no puede cambiar apenas las
- opciones.
- Sin embargo, esto facilita enormemente la instalación ya que el usuario
- se limitará a aceptar todo lo que aparezca por pantalla.
+Windows users, the application is distributed as the common Windows Installer.
+ It is not very flexible, because the user cannot change many options.
+ Nevertheless, this makes easier the installation because the user will
+ accept everything that will appear in the screen.
  
 \end_layout
 
 \begin_layout Standard
-Para los usuarios de 
+For 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-instalación en Linux
+Linux
 \end_layout
 
 \end_inset
 
-Linux (Debian/Ubuntu), la aplicación se distribuye como un paquete DEB.
- Por tanto el comando 
-\emph on
-dpkg -i fichero.deb
-\emph default
- debería bastar siempre que se ejecute como administrador.
- Para los usuarios de otras distribuciones que no dispongan de 
-\emph on
-dpkg
-\emph default
-, aconsejo que se descarguen el paquete SRC y lo compilen con un compilador
- en java.
+Linux users (Debian/Ubuntu), the application is distributed as a DEB package.
+ Therefore a dpkg –i package.deb should be enough.
+ For users of other distributions which do not have dpkg, I advise to download
+ the SRC package and compile it in a java compilator.
+ 
 \end_layout
 
 \begin_layout Standard
-En todos los casos que se use un instalador, se generará un enlace simbólico
- que te permitirá arrancar la aplicación.
+In all cases in which an installer is used, a shortcut will be generated
+ in order to execute the application.
+ 
 \end_layout
 
 \begin_layout Section
@@ -305,32 +295,68 @@ En todos los casos que se use un instalador, se generará un enlace simbólico
 status open
 
 \begin_layout Plain Layout
-utilización
+use
 \end_layout
 
 \end_inset
 
-Utilización de la aplicación
+Using the application
 \end_layout
 
 \begin_layout Standard
-Podemos decir que el programa está dividido lógicamente en cuatro partes.
+The programa is divided logically in four parts.
+ 
 \end_layout
 
 \begin_layout Enumerate
+New entries or 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-inserción
+data
 \end_layout
 
 \end_inset
 
-Inserción o registro de datos.
- Previamente a la liga, se deberá de insertar en la base de datos los participan
-tes, clubes, equipos y otros datos necesarios.
- Todo lo que no se haya incluido, obviamente no existirá para el programa.
+data register.
+ Before the league, you should put in the database all the participants,
+ clubs, teams and other necessary data.
+ Everything not included will not exist for the program.
+ 
+\end_layout
+
+\begin_layout Enumerate
+League 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+design
+\end_layout
+
+\end_inset
+
+design.
+ First matches, league structure and other details should be decided beforehand.
+ 
+\end_layout
+
+\begin_layout Enumerate
+League 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scoreboard
+\end_layout
+
+\end_inset
+
+scoreboard.
+ A screen would be filled out with the different scores obtained in the
+ league.
+ The results will generate the different matches.
  
 \end_layout
 
@@ -339,133 +365,83 @@ tes, clubes, equipos y otros datos necesarios.
 status open
 
 \begin_layout Plain Layout
-diseño
+charts
 \end_layout
 
 \end_inset
 
-Diseño de la liga.
- Se tendrá que decidir los combates iniciales, la estructura de la liga
- y otros detalles.
- Ejemplos de liga son torneos (todos los equipos contra todos), ligas en
- árbol con eliminatorias, etc.
- 
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-panel
-\end_layout
-
-\end_inset
-
-Panel de liga.
- Permitirá hacer el seguimiento de los combates, actualizar las puntuaciones,
- faltas, etc.
-\end_layout
-
-\begin_layout Enumerate
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-gráficas
-\end_layout
-
-\end_inset
-
-Gráficas.
- Una vez terminado un campeonato, se permite extraer un conjunto de estadísticas
- y listas de la liga.
- De aquí se pueden extraer el ranking, un listado de resultados y muchas
- cosas más.
+Charts.
+ A set of statistics and league lists.
+ For here you can extract the ranking, a list of results and much more.
  
 \end_layout
 
 \begin_layout Section
-Inserción de la información
+Inserting information
 \end_layout
 
 \begin_layout Standard
-Aquí se incluyen el almacenar toda la información necesaria para el desarrollo
- de la liga: competidores, equipos, clubes hasta la propia liga.
- Estas ventanas tienen un uso semejante, por lo que este capítulo engloba
- a todas ellas.
+This includes how to store the information needed for the progress of the
+ league: competitores, teams and clubs up to the league.
+ Those boxes have a similar use and that is why this chapter includes all
+ these features.
+\end_layout
+
+\begin_layout Subsection
+Saving information
+\end_layout
+
+\begin_layout Standard
+From versión 1.0, any change is not saved 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+save
+\end_layout
+
+\end_inset
+
+automatically into the database.
+ User must explicity do this operation or activate the autosave option of
+ the application.
+ 
+\end_layout
+
+\begin_layout Standard
+If there are still some unsaved data, the application will remember the
+ user to store it, or data will be lost.
+ Then, user must choose the 
+\emph on
+Save
+\emph default
+ option in the 
+\emph on
+Program
+\emph default
+ menu.
  
 \end_layout
 
 \begin_layout Subsection
-Almacenamiento de la información
-\end_layout
-
-\begin_layout Standard
-A diferencia de versiones anteriores, desde la versión 1.0, los cambios introduci
-dos no son 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-guardar
+insert
 \end_layout
 
 \end_inset
 
-actualizados directamente en la base de datos, sino que deben ser guardados
- explícitamente por el usuario.
- 
+General Information
 \end_layout
 
 \begin_layout Standard
-Esto significa que antes de salir del programa, deberán ser guardados o
- se perderán.
- Para ello, existe la función 
-\emph on
-Guardar
-\emph default
- dentro de 
-\emph on
-Programa
-\emph default
- en el menú principal.
- Si no se guardan, el programa recordará al usuario que existen cambios
- sin guardar cuando este quiera cerrar el programa.
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-insertar
-\end_layout
-
-\end_inset
-
-Datos generales
-\end_layout
-
-\begin_layout Standard
-Existen ciertos elementos que no deberían cambiar de una liga a otra.
- Por ello se deben de insertar una vez y no más.
- Entre estos ejemplos están los competidores: la información de los competidores
- (nombre, numero de identificación, etc.) nunca cambiará, por lo que bastará
- almacenarla una única vez.
- Otro ejemplo de datos generales, son los clubes.
- En general, un 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-club
-\end_layout
-
-\end_inset
-
-club únicamente se insertará una vez, independientemente de los torneos
- en los que participe.
+There are certain parts that should not change from one league to another.
+ This is why they must be only included only one time.
+ An example includes competitors: information about competitors (name, ID
+ number, etc.) would never change, that is why only they only must be included
+ in the database once.
  
 \end_layout
 
@@ -480,7 +456,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/InsertarCompetidor.png
+	filename Images_EN/InsertarCompetidor.png
 	width 80col%
 
 \end_inset
@@ -506,42 +482,38 @@ Inserción de datos de un competidor.
 \end_layout
 
 \begin_layout Subsection
-Información particular para cada 
+Specific information for each 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-liga
+league
 \end_layout
 
 \end_inset
 
-liga
+league
 \end_layout
 
 \begin_layout Standard
-Hay algunos datos que son utilizados exclusivamente dentro de una liga,
- y pueden darse o no darse en otros.
- Por ejemplo, los 
+There is some data that is exclusively used for a league, and may appeared
+ or not in others.
+ For example, the 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-equipo
+team
 \end_layout
 
 \end_inset
 
-equipos.
- Un equipo solamente es válido para una liga, ya que aunque el nombre se
- puede repetir en los distintas ligas, los integrantes del mismo pueden
- variar.
- Por ello hay que definirlos de nuevo para cada una de las ligas.
- Otro ejemplo es la selección de que competidores participan en una liga
- en concreto y sus roles.
- Ya que con el paso de los años, los competidores pueden retirarse o desaparecer
- en versiones sucesivas de la misma liga.
- 
+teams: A team is only valid for a league, because the name of the team may
+ appear in different leagues, but the order of its competitors may vary.
+ This is why they must be created again for each of the leagues.
+ Another example is the choice of competitors who will take part in a league
+ and their roles, because with the pass of time, some of the competitors
+ may retire or disappear in other versions of the same league.
 \end_layout
 
 \begin_layout Subsubsection
@@ -549,23 +521,21 @@ Roles
 \end_layout
 
 \begin_layout Standard
-El 
+The 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-rol
+role
 \end_layout
 
 \end_inset
 
-rol es el papel que un participante tiene en la liga.
- En la inserción de competidores, guardamos la información de cada competidor
- (nombre, DNI, etc.
- ), pero esto no significa que este competidor participe en la liga.
- Para que participe en la liga, debe tener algún rol asignado: árbitro,
- competidor, voluntario, etc.
- Hasta ahora, tenemos los siguientes roles creados:
+role of a participant is what he does into the league.
+ When inserting a new competitor, we store basic information such as the
+ name or ID number, but it does not means that the participant fights is
+ in a team of the league.
+ There are different roles available into the league:
 \end_layout
 
 \begin_layout Description
@@ -573,15 +543,14 @@ rol es el papel que un participante tiene en la liga.
 status open
 
 \begin_layout Plain Layout
-competidor
+competitor
 \end_layout
 
 \end_inset
 
-Competidor: un competidor es aquel que formará parte de un equipo.
- Por tanto, combatirá en el campeonato para lograr la máxima puntuación.
- Solamente los competidores pueden formar parte de un equipo.
- Los competidores además reciben un diploma de reconocimiento.
+Competitor: a competitor is who will be a member of a team.
+ Therefore, he will fights in the league to achieve the victory.
+ Only competitors can be a member of a team.
  
 \end_layout
 
@@ -590,13 +559,13 @@ Competidor: un competidor es aquel que formará parte de un equipo.
 status open
 
 \begin_layout Plain Layout
-árbitro
+referee
 \end_layout
 
 \end_inset
 
-Árbitro: como su nombre indica, arbitrará los combates.
- No participará en ninguno de ellos y no recibe diploma.
+Referee: the person who controls the fights development.
+ 
 \end_layout
 
 \begin_layout Description
@@ -604,12 +573,12 @@ status open
 status open
 
 \begin_layout Plain Layout
-organizador
+organizer
 \end_layout
 
 \end_inset
 
-Organizador: es la autoridad del evento.
+Organizer: es la autoridad del evento.
  Sabe como funciona, controla la logística y muy probablemente controlará
  este programa.
  Recibe diploma de agradecimiento.
@@ -691,7 +660,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/roles.png
+	filename Images_EN/roles.png
 	width 50col%
 
 \end_inset
@@ -708,10 +677,6 @@ Inserción de un rol.
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -762,7 +727,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/BotonBuscar.png
+	filename Images_EN/BotonBuscar.png
 	lyxscale 60
 	width 80col%
 
@@ -836,7 +801,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/Buscador.png
+	filename Images_EN/Buscador.png
 	lyxscale 60
 	width 40col%
 
@@ -1064,7 +1029,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/acreditacion.png
+	filename Images_EN/acreditacion.png
 	height 60col%
 
 \end_inset
@@ -1226,7 +1191,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/ScoreChooser.png
+	filename Images_EN/ScoreChooser.png
 	width 60col%
 
 \end_inset
@@ -1312,7 +1277,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/LigaSimple.png
+	filename Images_EN/LigaSimple.png
 	width 60col%
 
 \end_inset
@@ -1481,7 +1446,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/Diseñador.png
+	filename Images_EN/Diseñador.png
 	lyxscale 70
 	width 80col%
 
@@ -1885,7 +1850,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/FightPanel.png
+	filename Images_EN/FightPanel.png
 	lyxscale 50
 	width 80col%
 
@@ -2600,7 +2565,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/NombreDiploma.png
+	filename Images_EN/NombreDiploma.png
 	lyxscale 50
 	width 60col%
 
@@ -2755,7 +2720,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/PercentageOfPerformedHits.png
+	filename Images_EN/PercentageOfPerformedHits.png
 	width 80col%
 
 \end_inset
@@ -3443,7 +3408,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/ConvertDB.png
+	filename Images_EN/ConvertDB.png
 	width 60col%
 
 \end_inset
@@ -3516,7 +3481,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/Distribucion Open.png
+	filename Images_EN/Distribucion Open.png
 	lyxscale 50
 	width 90col%
 
@@ -3974,7 +3939,7 @@ status collapsed
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename Images_ES/diploma_areas.png
+	filename Images_EN/diploma_areas.png
 	lyxscale 20
 	width 60col%
 

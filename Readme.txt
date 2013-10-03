@@ -1,7 +1,7 @@
 Introduction:
 -----------
 
-Kendo Tournament Generator is a powerful tool developed for manage the kendo tournaments. Designed for the Kendo Club of the University of Valencia Kendo UV, it is a flexible and useful tool for different kinds of championships.
+Kendo Tournament Manager is a powerful tool developed for manage the kendo tournaments. Designed for the Kendo Club of the University of Valencia Kendo UV, it is a flexible and useful tool for different kinds of championships.
 
 
 

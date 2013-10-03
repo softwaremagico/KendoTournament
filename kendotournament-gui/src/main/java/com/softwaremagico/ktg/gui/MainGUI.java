@@ -462,7 +462,7 @@ public final class MainGUI extends KendoFrame {
         AboutMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"info.png"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Kendo Tournament Administration Tool");
+        setTitle("Kendo Tournament Manager");
         setName("mainGui"); // NOI18N
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -689,7 +689,7 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
