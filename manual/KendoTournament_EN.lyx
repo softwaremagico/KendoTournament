@@ -89,11 +89,7 @@ v1.0.0
 \end_layout
 
 \begin_layout Author
-Jorge Hortelano Otero
-\begin_inset Newline newline
-\end_inset
-
-Xavi García Martínez
+Xavi Martínez
 \end_layout
 
 \begin_layout Standard
@@ -132,7 +128,7 @@ shiaijo
 \end_inset
 
 shiaijo.
- Only one computer is used for the league managment, simplifing the use
+ Only one computer is used for the league management, simplifying the use
  and installation of the application.
  
 \end_layout
@@ -211,9 +207,9 @@ Java
 
 \end_inset
 
-Java and needs at least the versión 7 of Java Virtual Macine.
+Java and needs at least the version 7 of Java Virtual Machine.
  This version is almost available by default in any operative system, but
- it is recommended to use the official verson of Java distributed by Oracle.
+ it is recommended to use the official version of Java distributed by Oracle.
  It can be downloaded from 
 \begin_inset Flex URL
 status collapsed
@@ -231,7 +227,7 @@ http://www.java.com/es/download/
 \begin_layout Standard
 For the basic mode of the application, all data is stored in a SQLite database,
  that is already included in the application.
- Therefore any aditional software is not needed.
+ Therefore any additional software is not needed.
  
 \end_layout
 
@@ -280,7 +276,7 @@ Linux
 Linux users (Debian/Ubuntu), the application is distributed as a DEB package.
  Therefore a dpkg –i package.deb should be enough.
  For users of other distributions which do not have dpkg, I advise to download
- the SRC package and compile it in a java compilator.
+ the SRC package and compile it in a Java compilator.
  
 \end_layout
 
@@ -304,7 +300,7 @@ Using the application
 \end_layout
 
 \begin_layout Standard
-The programa is divided logically in four parts.
+The program is divided logically in four parts.
  
 \end_layout
 
@@ -382,7 +378,7 @@ Inserting information
 
 \begin_layout Standard
 This includes how to store the information needed for the progress of the
- league: competitores, teams and clubs up to the league.
+ league: competitors, teams and clubs up to the league.
  Those boxes have a similar use and that is why this chapter includes all
  these features.
 \end_layout
@@ -392,7 +388,7 @@ Saving information
 \end_layout
 
 \begin_layout Standard
-From versión 1.0, any change is not saved 
+From version 1.0, any change is not saved 
 \begin_inset Index idx
 status open
 
@@ -403,7 +399,7 @@ save
 \end_inset
 
 automatically into the database.
- User must explicity do this operation or activate the autosave option of
+ User must explicit do this operation or activate the auto-save option of
  the application.
  
 \end_layout
@@ -446,11 +442,49 @@ There are certain parts that should not change from one league to another.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Wrap figure
-lines 0
-placement o
-overhang 0col%
-width "50col%"
+
+\lang spanish
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\lang spanish
+\begin_inset Graphics
+	filename Images_EN/generalInfo.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Adding general information into the database.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
 status collapsed
 
 \begin_layout Plain Layout
@@ -508,12 +542,52 @@ team
 
 \end_inset
 
-teams: A team is only valid for a league, because the name of the team may
+teams: a team is only valid for a league, because the name of the team may
  appear in different leagues, but the order of its competitors may vary.
  This is why they must be created again for each of the leagues.
  Another example is the choice of competitors who will take part in a league
  and their roles, because with the pass of time, some of the competitors
  may retire or disappear in other versions of the same league.
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+
+\lang spanish
+\begin_inset Graphics
+	filename Images_EN/InfoLiga.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Specific information options for each league.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection
@@ -594,7 +668,7 @@ volunteer
 \end_inset
 
 Volunteer: help to the organizer.
- Has a more basic knowledgment of the league, but still is important for
+ Has a more basic knowledgement of the league, but still is important for
  the league development.
  
 \end_layout
@@ -633,7 +707,7 @@ seminar: can access to kendo lessons but cannot be in the competition.
 \end_layout
 
 \begin_layout Description
-Others: other roles can be added to fit the league requeriments.
+Others: other roles can be added to fit the league requirements.
  
 \end_layout
 
@@ -658,7 +732,7 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Inserción de un rol.
+Adding a role.
 \end_layout
 
 \end_inset
@@ -812,7 +886,7 @@ Competitors search.
 
 \begin_layout Standard
 The lower part of the window is the result list (B), which will present
- a list of the competitors who fulfill the pattern once the search has begun.
+ a list of the competitors who fulfil the pattern once the search has begun.
  Selecting one of them and click on the Select button will allow us to go
  back to the data entry window with all the fields of the chosen competitor,
  where we can modify them.
@@ -1195,7 +1269,7 @@ league, simple
 
 \begin_layout Standard
 User can define any combination between different teams, or can use the
- preexistent options to define all fights.
+ pre-existent options to define all fights.
  
 \end_layout
 
@@ -1326,7 +1400,7 @@ designer
 
 \end_inset
 
-designer is a graphican interface that tries to make easier for the user
+designer is a graphical interface that tries to make easier for the user
  the creation of a league.
  It is specially designed to understand what you are doing in any moment,
  when a championship is being created.
@@ -1368,7 +1442,7 @@ name "fig:Diseñador-de-ligas."
 
 \end_inset
 
-Diseñador de ligas.
+Championship designer.
 \end_layout
 
 \end_inset
@@ -1415,7 +1489,7 @@ arrow
 
 \end_inset
 
-arrow for each team will appear in the desiger.
+arrow for each team will appear in the designer.
  Red arrows are for first team and green ones for the second team.
  
 \end_layout
@@ -1484,7 +1558,7 @@ shiaijo, the number of winners that will pass to the next round (if we are
 status open
 
 \begin_layout Plain Layout
-arrows
+arrow
 \end_layout
 
 \end_inset
@@ -1565,7 +1639,7 @@ Add
 \begin_inset space ~
 \end_inset
 
-Teams: add the chosen team to the selected group if it is still posible
+Teams: add the chosen team to the selected group if it is still possible
  (if it is not full) 
 \end_layout
 
@@ -1911,7 +1985,7 @@ Draw menu
 
 \begin_layout Standard
 If you select with the right button of the screen the empty space between
- the two teams, a small menú will appear in order to allow you to choose
+ the two teams, a small menu will appear in order to allow you to choose
  a draw for that match.
  This option will draw a big cross between the two teams, so the user and
  audience will understand easily that the match was a draw.
@@ -1964,7 +2038,7 @@ Match: Ends the current match and it becomes the previous match.
  program will generate automatically the next round.
  Therefore, remember always to finish all matches before changing the shiaijo.
  If you see that the program does not generate the matches of the next round,
- it is posible that you forgot to finish a combat from any other shiaijo.
+ it is possible that you forgot to finish a combat from any other shiaijo.
  Also, when all matches of a group had finished, the program will show briefly
  the scoring of all teams that have taken part in that group.
  
@@ -2019,7 +2093,7 @@ teams: it is hard to predict where a computer is in relation to the match.
 status open
 
 \begin_layout Plain Layout
-colors
+colours
 \end_layout
 
 \end_inset
@@ -2040,9 +2114,9 @@ the
 \begin_inset space ~
 \end_inset
 
-colors: similar to the previous option, allows to exchange the color of
+colours: similar to the previous option, allows to exchange the colour of
  the teams.
- It has no effect to the matchs, but allows the user to follow up the match.
+ It has no effect to the matches, but allows the user to follow up the match.
  
 \end_layout
 
@@ -2091,7 +2165,7 @@ a
 \end_inset
 
 team: it is possible to change the team's member order.
- The changes will have effect in the nexts matches, therefore, only passing
+ The changes will have effect in the next matches, therefore, only passing
  teams are allowed to change its member order.
  
 \end_layout
@@ -2381,7 +2455,7 @@ name "fig:Nombre-Diploma"
 
 \end_inset
 
-Chossing the position of the names for the diploma.
+Choosing the position of the names for the diploma.
 \end_layout
 
 \end_inset
@@ -2451,32 +2525,26 @@ You can generate different graphics for checking easily how the league has
 \end_layout
 
 \begin_layout Description
-Porcentaje
-\begin_inset space ~
-\end_inset
-
-de
-\begin_inset space ~
-\end_inset
-
-
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-golpes
+hit
 \end_layout
 
 \end_inset
 
-golpes: estas gráficas representan cual es el porcentaje de puntos.
- Es decir, que porcentaje de Mems, Kotes y demás se han producido o recibido.
- Pueden resultar útiles para un jugador para conocer sus puntos fuertes
- y débiles.
- Por ejemplo, observar si todos los golpes recibidos son de un tipo, puede
- indicar al jugador que tiene una vulnerabilidad en su guardia y deja al
- descubierto una parte de su cuerpo al atacante.
- 
+Hit
+\begin_inset space ~
+\end_inset
+
+percentage: Those graphics represent which is the score percentage.
+ That is, which percentage of Mens, Kotes and other hits are given or received.
+ It can also be useful for a player to check his or her strong and weak
+ points.
+ For examples, if all the hits are given in a specific zone can show if
+ the competitor has a weakness in his or her guard and has an uncovered
+ zone in a part of the body of that competitor.
 \end_layout
 
 \begin_layout Description
@@ -2484,18 +2552,18 @@ golpes: estas gráficas representan cual es el porcentaje de puntos.
 status open
 
 \begin_layout Plain Layout
-clasificación
+Ranking
 \end_layout
 
 \end_inset
 
-Clasificación: aquí se representa por orden de puntuación los distintos
- competidores o equipos.
- Se muestra separadamente las victorias y los puntos obtenidos.
- En caso de empate, se resuelve por orden alfabético.
- Hay que señalar que en el caso de incluir todos los campeonatos, los competidor
-es que hayan participado en más campeonatos muy probablemente tendrán más
- puntos.
+Ranking: This is represented in a list in order of the competitors or teams
+ score.
+ It is shown separately the victories and points obtained.
+ In case of a draw, it is shown in alphabetical order.
+ If all the championships are shown, the competitors who had taken part
+ in most championships will probably have more points.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2519,7 +2587,7 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Porcentaje de golpes realizados por un jugador.
+Percentage of hits given by a player.
 \end_layout
 
 \end_inset
@@ -2534,12 +2602,6 @@ Porcentaje de golpes realizados por un jugador.
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-Invito al usuario a explorar las distintas gráficas disponibles para que
- experimente su utilidad.
- 
 \end_layout
 
 \begin_layout Section
@@ -2547,90 +2609,40 @@ Invito al usuario a explorar las distintas gráficas disponibles para que
 status open
 
 \begin_layout Plain Layout
-opciones
+options
 \end_layout
 
 \end_inset
 
-Opciones
+Options
 \end_layout
 
 \begin_layout Standard
-Por último, el programa permite configurar algunas opciones para el manejo
- del mismo:
-\end_layout
-
-\begin_layout Description
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-idioma
-\end_layout
-
-\end_inset
-
-Idioma: permite seleccionar el idioma en el que se visualizará la aplicación.
-\end_layout
-
-\begin_layout Description
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-autoguardado
-\end_layout
-
-\end_inset
-
-Autoguardado: si se selecciona esta opción, la base de datos se almacenará
- de forma automática cada veinte minutos.
- Evitando perder datos si ocurriera algún problema.
+Lastly, the program allows the user to configure some options for its use:
  
 \end_layout
 
 \begin_layout Description
-Registro
-\begin_inset space ~
-\end_inset
-
-de
-\begin_inset space ~
-\end_inset
-
-actividades: permite activar el registro del 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-log
-\end_layout
-
-\end_inset
-
-log del programa, de forma que en un fichero de texto quedan escritas todas
- las acciones que se han ido realizando.
- De esta forma se puede hacer un seguimiento del uso del programa.
+Language: you can select the language in which the program will be displayed.
+ 
 \end_layout
 
 \begin_layout Description
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-debug
+Log: you can create a register with the program’s log.
+ This way, a text file with all the actions that has been done with the
+ program will be stored and you can have a monitoring of this program.
+ 
 \end_layout
 
-\end_inset
-
-Debug: permite visualizar los errores de la aplicación si todavía existen.
- Esto permite obtener más información cuando una acción no se puede realizar
- con éxito debido a algún error de configuración o de implementación.
- Por ejemplo, cuando no se puede conectar a la base de datos.
+\begin_layout Description
+Debug: you can see any errors of the program if there is any.
+ This allows the user to have more information if any action could not be
+ done due to a configuration or introduction error.
+ For example, if the program cannot connect to the database.
  
 \emph on
-Nota: para entender estos errores, se necesita ciertos conocimientos de
- programación en Java.
+Note: to understand those errors, you may have some knowledge with Java
+ programming.
  
 \end_layout
 
@@ -2639,70 +2651,76 @@ Nota: para entender estos errores, se necesita ciertos conocimientos de
 status open
 
 \begin_layout Plain Layout
-guía rápida
+summary
 \end_layout
 
 \end_inset
 
-Guía rápida
+Summary
 \end_layout
 
 \begin_layout Standard
-Para una guía de referencia rápida, repito los pasos principales que hay
- que seguir para utilizar la aplicación correctamente.
+For a quick reference guide, I repeat the main steps to make the program
+ work correctly:
 \end_layout
 
 \begin_layout Enumerate
-Conectarse a la base de datos con la ventana de conexión que aparece al
- iniciar el programa.
-\end_layout
-
-\begin_layout Enumerate
-Añadir todos los clubes invitados a la liga.
- Los representantes se añadirán más tarde.
-\end_layout
-
-\begin_layout Enumerate
-Añadir todos los participantes.
-\end_layout
-
-\begin_layout Enumerate
-Una vez existen los participantes, ya se pueden incluir los representantes
- de los clubes.
-\end_layout
-
-\begin_layout Enumerate
-Añadir una nueva liga.
-\end_layout
-
-\begin_layout Enumerate
-Definir los roles de los participantes.
- Solamente los participantes que tenga un rol designado estarán incluidos
- dentro de dicha liga a la hora, por ejemplo, de formar equipos.
+Connect to the database with the connection window when you execute the
+ program.
  
 \end_layout
 
 \begin_layout Enumerate
-Crear los distintos equipos y sus componentes.
+Add all the clubs to the league.
+ The representative will be added later.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Definir el estilo de la liga y con ello los combates entre equipos.
+Add all the competitors.
+ 
 \end_layout
 
 \begin_layout Enumerate
-Utilizar el marcador para ir añadiendo los resultados de los distintos enfrentam
-ientos.
- Este panel puede ser utilizado en un proyector como información para el
- público asistente a la liga.
+Once the competitors are in the database, you can add the representative
+ to the clubs.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Add a new league.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Define the role of the competitors.
+ Only the competitors who have an appointed role will be included in a league
+ when the teams are created.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Create the different teams and add their members.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Choose which league you need and the matches between the teams.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Use the scoreboard for adding the results of the different matches.
+ This window can be used with a projector for the audience and competitors.
+ 
 \end_layout
 
 \begin_layout Standard
-Los pasos 1, 2, 3 y 4 solamente tienen que hacerse una única vez ya que
- son comunes a las distintas ligas.
- Es decir, solamente habrá que añadir la información de los participantes
- una única vez, pudiendo reusarse para ligas futuras.
- Los pasos 5, 6, 7, 8, y 9 hay que repetirlos para cada liga distinta.
+Steps 1, 2, 3 and 4 will be done only once because they are common to different
+ leagues.
+ That is, you only need to fill the information about competitors only once
+ and you can use that information again for future leagues.
+ Steps 5, 6, 7, 8 and 9 must be repeated for each league.
  
 \end_layout
 
@@ -2711,48 +2729,36 @@ Los pasos 1, 2, 3 y 4 solamente tienen que hacerse una única vez ya que
 status open
 
 \begin_layout Plain Layout
-uso avanzado
+advanced use
 \end_layout
 
 \end_inset
 
-Uso avanzado
+Advanced use
 \end_layout
 
 \begin_layout Standard
-El uso avanzado de la aplicación permite utilizar distintos computadores
- para gestionar un mismo campeonato.
- Por tanto, pueden existir distintos ordenadores ejecutando el programa,
- accediendo a la base de datos a la vez.
- Esto permite poder colocar un ordenador en cada uno de los shiaijos de
- forma que la persona que lo maneje se tenga que centrar solamente en su
- zona de combate y olvidarse de las demás.
- Para ello, simplemente hay que instalar la base de datos 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-MySQL
-\end_layout
-
-\end_inset
-
-MySQL en un único ordenador, y conectar los demás equipos a este mediante
- una red (aconsejablemente Wi-Fi).
- Al arrancar el KTM en cada uno de los ordenadores habrá que indicar en
- la ventana de conexión a la base de datos, la IP del ordenador que contiene
- la base de datos.
- La IP, que es la dirección de red, se puede mirar en las propiedades de
- red de dicha máquina.
+With the advanced use of the application, multiple users can use different
+ computers to manage one championship.
+ Therefore, can work together different computers running this application
+ sharing the same database.
+ This allows to use one computer per shiaijo.
  
 \end_layout
 
 \begin_layout Standard
-Una vez conectado cada uno de los equipos, en el 
-\emph on
-Marcador del Campeonato
-\emph default
- se podrá seleccionar el 
+For advanced use, only a MySQL database must be installed in one computer
+ (called central computer).
+ Other computers will connect to this computer to access data.
+ A network must be used for the connection (usually a Wireless network).
+ When running any KTM on each computer, the user must set the connection
+ to the correct database using the central computer IP.
+ 
+\end_layout
+
+\begin_layout Standard
+When the connection is established, in the Scoreboard any user can choose
+ a different 
 \begin_inset Index idx
 status open
 
@@ -2762,17 +2768,14 @@ shiaijo
 
 \end_inset
 
-shiaijo correspondiente, sin necesidad de ir cambiando entre ellos.
+shiaijo.
  
 \end_layout
 
 \begin_layout Standard
-Utilizar una única base de datos impide la fragmentación de información,
- evitando problemas en las fases más avanzadas del campeonato, cuando equipos
- de distintos shiaijos se enfrenten entre ellos; así como permitiendo que
- las estadísticas de los participantes sean completas.
- Por tanto una liga solamente debe tener una sola base de datos instalada
- en cualquiera de las máquinas utilizadas.
+Using this mode, prevent data fragmentation in multiple database, and therefore,
+ one computer can obtain the new matches of next phases.
+ 
 \end_layout
 
 \begin_layout Section
@@ -2780,42 +2783,21 @@ Utilizar una única base de datos impide la fragmentación de información,
 status open
 
 \begin_layout Plain Layout
-requisitos
+requirements
 \end_layout
 
 \end_inset
 
-Requisitos
+Requirements
 \end_layout
 
 \begin_layout Standard
-Para utilizar la aplicación en el modo avanzado, es necesario utilizar la
- base de datos MySQL.
- MySQL es un servidor de bases de datos utilizado por nuestra aplicación.
- Será necesario instalarla siempre que se desee utilizar este motor de bases
- de datos y no la alternativa 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-SQLite
-\end_layout
-
-\end_inset
-
-SQLite.
- Al igual que la maquina virtual de 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Java
-\end_layout
-
-\end_inset
-
-Java, es completamente gratuito (exceptuando la asistencia técnica).
- Puede ser descargado aquí: 
+As commented before, the requirement for using the application in advanced
+ mode, is to install a MySQL database.
+ This is a database server used by our application.
+ Same as the Java virtual machine, this one is completely free too (except
+ the technical assistance).
+ Can be downloaded here: 
 \begin_inset Flex URL
 status collapsed
 
@@ -2826,10 +2808,9 @@ http://dev.mysql.com/downloads/mysql/5.1.html
 
 \end_inset
 
- La versión mínima utilizada en nuestro caso es la 5.1, por lo que cualquier
- versión igual o superior debería bastar.
- También aconsejo descargarse algunas aplicaciones de mantenimiento del
- servidor: 
+ The version used in our program is 5.1, so the same version or any subsequent
+ must be enough to work.
+ I advise to download some server maintenance application: 
 \begin_inset Flex URL
 status collapsed
 
@@ -2840,20 +2821,20 @@ http://dev.mysql.com/downloads/gui-tools/5.0.html
 
 \end_inset
 
- Con estas aplicaciones podrás crear backups de tus bases de datos y evitar
- pérdidas de datos por fallos en los discos, aunque no son esenciales para
- el uso del KTM.
- Esta aplicación solo es necesaria instalarla en el ordenador que vaya albergar
- los datos cuando se quieran usar múltiples equipos.
+ With these applications you can make backups of your databases and avoid
+ data loses, but they are not essential for the use of the KTM.
+ These applications just need to be installed in a PC, the one who is going
+ to save the data.
+ Consult chapter 3 for more information.
  
 \end_layout
 
 \begin_layout Subsection
-Instalación de la base de datos
+Installation of the database
 \end_layout
 
 \begin_layout Standard
-El servidor de bases de datos de 
+Installing a 
 \begin_inset Index idx
 status open
 
@@ -2863,34 +2844,8 @@ MySQL
 
 \end_inset
 
-MySQL tienen un entorno gráfico para su instalación en Windows, o vienen
- en paquetes de repositorio en 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Linux
-\end_layout
-
-\end_inset
-
-Linux.
- Por tanto no voy a explicar lo que hay que hacer para su instalación (básicamen
-te decir 
-\begin_inset Quotes eld
-\end_inset
-
-sí
-\begin_inset Quotes erd
-\end_inset
-
- a todo).
- Solamente voy a indicar algunos detalles sobre MySQL para aquellos que
- son inexpertos en el tema.
-\end_layout
-
-\begin_layout Standard
-Cuando se instale la base de datos MySQL en 
+MySQL database is very easy.
+ In 
 \begin_inset Index idx
 status open
 
@@ -2900,42 +2855,43 @@ Windows
 
 \end_inset
 
-Windows, se realizarán varias preguntas al usuario.
- De ellas, la respuesta por defecto suele ser acertada (para cualquier duda,
- consultar 
-\begin_inset Flex URL
-status collapsed
+Windows there is a Graphical User Interface for this scope, and in 
+\begin_inset Index idx
+status open
 
 \begin_layout Plain Layout
-
-http://dev.mysql.com/doc/refman/5.0/es/
+Linux
 \end_layout
 
 \end_inset
 
-).
- Sin embargo, aconsejo tener en cuenta estas tres cosas al arrancar el asistente
- de configuración:
+Linux, the server can be found at the repository.
+ 
+\end_layout
+
+\begin_layout Standard
+Once installed, some questions will be asked to the user.
+ You can choose the default option in almost all of them.
+ Some advices are:
 \end_layout
 
 \begin_layout Enumerate
-Ventana de dialogo del tipo de servidor.
- En nuestro caso, escogeremos la opción 
+Choosing the kind of server.
+ I recommend to use the 
 \begin_inset Quotes eld
 \end_inset
 
-Developer machine (Ordenador de desarrollo)
+Developer machine
 \begin_inset Quotes erd
 \end_inset
 
- ya que es la que menos consumo utilizará.
- Esta opción es suficiente para nuestras necesidades.
+ option.
  
 \end_layout
 
 \begin_layout Enumerate
-La ventana de diálogo del conjunto de caracteres.
- Aconsejo el uso de 
+Database charset.
+ I recommend to use 
 \begin_inset Index idx
 status open
 
@@ -2945,72 +2901,134 @@ UTF-8
 
 \end_inset
 
-UTF-8, aunque no es fundamental.
+UTF-8, but it depends on the user language.
 \end_layout
 
 \begin_layout Enumerate
-La ventana de diálogo de las opciones de seguridad.
- Desmarcaremos la opción de solo acceso local, ya que así podremos trabajar
- con varios equipos dentro de la liga.
- Además, habrá que recordar la contraseña indicada, ya que será necesaria
- al ejecutar nuestro programa.
- 
-\emph on
-Nota: por simplicidad, en este manual accederemos a nuestra base de datos
- con el usuario root, ya que evita la generación de cuentas de usuario nuevas.
- Si es usted un usuario avanzado o teme por la seguridad de su sistema,
- le aconsejo que acceda con otro usuario.
- KTM le preguntará el nombre de usuario y su contraseña cuando quiera acceder
- a la base de datos, por lo que no tendrá ningún problema.
- Recuerde si hace esto, dar permisos al nuevo usuario tanto local como remotamen
-te para la base de datos específica del KTM.
-\end_layout
-
-\begin_layout Standard
-Teniendo en cuenta las opciones descritas anteriormente, debería de funcionar
- todo correctamente.
- 
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-instalación
-\end_layout
-
-\end_inset
-
-Instalación de la base de datos
-\end_layout
-
-\begin_layout Standard
-A partir de la versión 0.9 del programa, la base de datos se instala automáticame
-nte en el servidor 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-MySQL
-\end_layout
-
-\end_inset
-
-MySQL si esta no ha sido ya instalada previamente.
- De todas formas, si existiera algún problema, siempre se puede instalar
- manualmente.
- Para ello, utiliza el programa MySQL Admin y el fichero incluido en la
- carpeta 
+Uncheck 
 \begin_inset Quotes eld
 \end_inset
 
-database
+only local access
 \begin_inset Quotes erd
 \end_inset
 
-.
- Instalarlo como si fuera un backup con la opción que el MySQL Admin presenta.
+ in the security options.
+ Remember that we need that several computers use this database.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Remember the user password.
+ Will be asked for connecting to the database.
+ Later you can create new users for each computer (more secure) or share
+ the same user and password (less secure).
+\end_layout
+
+\begin_layout Standard
+With this recommendations, all will be works correctly.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+installation
+\end_layout
+
+\end_inset
+
+Installation of the database
+\end_layout
+
+\begin_layout Standard
+From the version 0.9 of the program, the database is installed automatically
+ in the MySQL server if this one is not installed yet.
+ Anyway, if any problem appears, you could also install it manually.
+ For this, use the program MySQL Admin and the file included in the “database”
+ folder.
+ Install it as it is a backup with the option MySQL Admin allows to.
+\end_layout
+
+\begin_layout Section
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+connection
+\end_layout
+
+\end_inset
+
+Connection to the database
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+requirements
+\end_layout
+
+\end_inset
+
+Requirements
+\end_layout
+
+\begin_layout Standard
+Now I assume that all computers are connected together using a network.
+ This network (wireless probably) must be robust.
+ If you are using a wireless network, avoid the use an Ad hoc network and
+ use an access point to ensure some quality.
+ 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+connection
+\end_layout
+
+\end_inset
+
+Connection
+\end_layout
+
+\begin_layout Standard
+For accessing to other machine's database, you must choose the option 
+\emph on
+Program
+\emph default
+, 
+\emph on
+Database
+\emph default
+ in the applications menu.
+ First of all, we need to disconnect from the SQLite database, that is the
+ default one.
+ And later, perform a new connection.
+ 
+\end_layout
+
+\begin_layout Standard
+When creating a new connection, the program asks you for the data in order
+ to connect to the database server (MySQL).
+ This data are username, password, computer and database.
+ The username and password are root and the one specified previously in
+ the installation, or the one by default if it has been changed.
+ 
+\end_layout
+
+\begin_layout Standard
+The computer will be localhost if the server is in the same computer (the
+ typical situation in most of the cases), or the network address of the
+ computer which contains the data.
+ The database will be 'kendotournament' which is what identifies our database
+ in relation to the other programs that may be using it.
  
 \end_layout
 
@@ -3019,178 +3037,39 @@ database
 status open
 
 \begin_layout Plain Layout
-conexión
+exporting data
 \end_layout
 
 \end_inset
 
-Conexión a la base de datos
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-requisitos
-\end_layout
-
-\end_inset
-
-Requisitos
+Exporting data from basic mode to advanced one
 \end_layout
 
 \begin_layout Standard
-Esta parte presupone que los equipos están conectados entre ellos a una
- red.
- Esta red, preferentemente 
+If you have been working in the basic mode and need to switch to the advanced
+ mode, and want to avoid to reinsert all data again in the new database,
+ exists an option in 
 \emph on
-wireless
-\emph default
-, se asume que es robusta y que no sufre caídas.
- En el caso de una red 
-\emph on
-wireless
-\emph default
-, se recomienda utilizar un punto de acceso de calidad para asegurarse que
- la red funciona adecuadamente y no sufre cortes que dificulten la continuidad
- de la liga.
- 
-\end_layout
-
-\begin_layout Subsection
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-conexión
-\end_layout
-
-\end_inset
-
-Conexión
-\end_layout
-
-\begin_layout Standard
-Para conectarse a otra máquina, se debe escoger la opció del menú 
-\emph on
-Programa
+Program
 \emph default
 , 
 \emph on
-Base de Datos
-\emph default
-.
- Debemos primero desconectar la base de datos actual (
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-SQLite
-\end_layout
-
-\end_inset
-
-SQLite por defecto) con la opción adecuado y a continuación, realizar una
- nueva conexión.
- 
-\end_layout
-
-\begin_layout Standard
-Una vez pulsemos la opción de conexión, lo primero que pide el programa
- son los datos para conectarse al servidor de bases de datos (
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-MySQL
-\end_layout
-
-\end_inset
-
-MySQL o SQLite).
- Estos datos son el usuario, contraseña, máquina y base de datos:
-\end_layout
-
-\begin_layout Standard
-El usuario y contraseña es necesario cuando se use MySQL.
- Será el indicado durante la instalación o el que se haya creado después.
- En el caso de SQLite no se utiliza usuario ni contraseña.
- 
-\end_layout
-
-\begin_layout Standard
-La máquina será únicamente necesaria para el uso con MySQL.
- El valor puede ser 
-\emph on
-localhost
-\emph default
- si el servidor está albergado en la misma máquina (lo normal en la mayoría
- de los casos), o la dirección de red de la máquina que lo contenga en otros
- casos.
- SQLite solamente se puede conectar localmente a la base de datos, por lo
- que este campo aparece desactivado.
- 
-\end_layout
-
-\begin_layout Standard
-Para la base de datos se recomienda dejar el nombre por defecto 
-\emph on
-'kendotournament'
-\emph default
-, así evitamos que se confunda con otras bases de datos del sistema y evitamos
- configurar que los scripts de creación de la base de datos.
- 
-\end_layout
-
-\begin_layout Standard
-Lógicamente, para que distintos equipos trabajen en conjunto, todos ellos
- deberán utilizar la misma base de datos en la misma máquina.
- Esto significa que todos deberán compartir la base de datos MySQL existente
- en una única máquina.
- 
-\end_layout
-
-\begin_layout Section
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-migración de modo básico a avanzado
-\end_layout
-
-\end_inset
-
-Migrar del modo básico al modo avanzado o viceversa
-\end_layout
-
-\begin_layout Standard
-Si ya has estado trabajando en el modo básico y necesitas cambiar al modo
- avanzado sin tener que volver a introducir todos los participantes y clubes
- ya insertados, existe la opción dentro de 
-\emph on
-Programa
+Database
 \emph default
 , 
 \emph on
-Base de Datos
-\emph default
-, 
-\emph on
-Convertir a...
+Convert to...
 
 \emph default
- Te permitirá migrar todos los datos de una base de datos a otra.
- De esta forma, puedes copiar todos los datos de SQLite a MySQL y continuar
- usando la nueva base de datos sin problemas.
- 
+ that export all data from one database to the other one.
+ Therefore you can use all data in the new database as before.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -3207,15 +3086,11 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Convertir de SQLite a MySQL.
+Exporting from SQLite to MySQL.
 \end_layout
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -3225,37 +3100,26 @@ Convertir de SQLite a MySQL.
 \end_layout
 
 \begin_layout Standard
-La opción, también es válida como 
+You also can use this option to create some 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-copia de seguridad
+backups
 \end_layout
 
 \end_inset
 
-copia
-\begin_inset space ~
-\end_inset
-
-de
-\begin_inset space ~
-\end_inset
-
-seguridad, ya que permite duplicar las bases de datos.
- 
+backups.
 \end_layout
 
 \begin_layout Section
-Ejemplo real: VIII Open de Kendo de la Universidad de Valencia.
- 
+Real case: 8th Open of Kendo of the Universidad de Valencia
 \end_layout
 
 \begin_layout Standard
-Como resulta todo más fácil de entender con un ejemplo, aquí adjunto un
- esquema del torneo que se celebró en la ciudad de Valencia en febrero de
- 2011.
+Everything is easier to understand with an example, so here it is a diagram
+ of the championship made in the city of Valencia in February 2011.
  
 \end_layout
 
@@ -3263,7 +3127,7 @@ Como resulta todo más fácil de entender con un ejemplo, aquí adjunto un
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -3281,7 +3145,7 @@ status collapsed
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Esquema del VIII Open de Kendo de la UV.
+Diagram of the 8th Open of kendo of the UV.
 \end_layout
 
 \end_inset
@@ -3289,92 +3153,77 @@ Esquema del VIII Open de Kendo de la UV.
 
 \end_layout
 
-\begin_layout Plain Layout
-
-\end_layout
-
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-Como se puede observar en el esquema, el campeonato constaba de dos torneos
- diferenciados por sexos: el masculino y el femenino.
- Debido a la mayor participación de hombres en el campeonato, se dedicaron
- dos shiaijos al torneo masculino.
+As you can see in the diagram, the championship consisted of two different
+ tournaments distinguished by genre: male and female.
+ Due to the participation, mostly of male competitors, on the championships,
+ two shiaijos were dedicated to the male tournament.
  
 \end_layout
 
 \begin_layout Standard
-Para la gestión de este campeonato, se utilizaron cuatro equipos portátiles.
- Uno de ellos en la mesa de coordinación, que albergaba la base de datos
- y tenía una impresora para imprimir todo aquello que fuera necesario como
- las acreditaciones o la composición de los equipos.
- Los otros tres equipos estaban cada uno en una mesa de control de los shiaijos.
- Estos tres equipos, se encargaban de introducir la puntuación de cada uno
- de los combates según estos se iban realizando.
+Four laptops were used for managing this championship.
+ One of those was in the coordination table, which was the host for the
+ database and had a printer to print everything needed such as accreditations
+ or the teams’ arrangements.
+ The other three laptops were in each of the tables in each of the shiaijos.
+ Those three laptops were in charge of taking account of the score in each
+ of the matches.
  
 \end_layout
 
 \begin_layout Standard
-Los equipos se conectaban entre ellos por una red inalámbrica 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Wi-Fi
-\end_layout
-
-\end_inset
-
-Wi-Fi, evitando así la presencia de cables innecesarios.
- Para ello usamos un router Wi-Fi convencional.
+Those laptops were connected among them with a wireless network, avoiding
+ more wires around the place.
+ For this, we used a common Wi-Fi router.
+ Having four monitors to show the results was the first idea.
  
 \end_layout
 
 \begin_layout Standard
-La idea original, era tener cuatro pantallas para mostrar los resultados.
- Tres pantallas en cada uno de los shiaijos, que mostraran los resultados
- del combate actual a los árbitros y/o al público, y otra pantalla que mostrará
- la evolución del árbol de la liga al público o las puntuaciones de cada
- uno de todos los shiaijos.
- Para mostrar estas pantallas, debían de haber, u otros cuatro equipos en
- modo monitor, o simplemente conectarlos a los equipos que ya habían y que
- mostraran lo que se estaba haciendo actualmente.
+Three monitors in each of the shiaijos, showing the results of the current
+ match to the referee and/or audience, and another monitor showing the current
+ state of the league to the audience or the score of each of the shiaijos.
+ In order to show those screens, there should be, at least, other four computers
+ in monitor mode, or just connect them to the other laptops because they
+ will show what is currently doing each of the computers.
  
 \end_layout
 
 \begin_layout Standard
-Al arrancar el KTM en los cuatro equipos, el de coordinación, que como he
- comentado antes, es el que tiene la base de datos instalada, indica los
- datos siguientes: 
+When you execute KTM in each of the computers, the one of the coordination
+ table will be the one with the database installed, so you must introduce
+ this information: 
 \end_layout
 
 \begin_layout Standard
-Servidor: localhost, usuario: kendo, contraseña: *******.
+Server: localhost, user: kendo, password: *******.
  
 \end_layout
 
 \begin_layout Standard
-Los otros tres equipos indican los datos de forma similar, salvo que el
- Servidor es la IP del ordenador de coordinación.
+The other three computers will have the same information, unless the server
+ is the IP of the coordination computer.
  
 \end_layout
 
 \begin_layout Standard
 
 \emph on
-Nota: Un detalle muy importante en estos casos, especialmente si los portátiles
- están trabajando únicamente con las baterías, es evitar que el ordenador
- de coordinación se suspenda (stand by).
- Si este se suspende, la conexión Wi-Fi se cortará y por tanto, los otros
- tres equipos dejarán de tener acceso a la base de datos del programa, causando
- errores de acceso al servidor.
- Otro motivo para que aparezca el error de conexión, suele ser que los portátile
-s se conecten automáticamente a alguna otra red Wi-Fi al alcance.
- Vigilad estos dos detalles para evitaros problemas indeseados.
- 
+Note: A very important detail in those situations, specially if each of
+ the laptops are working with just the battery, is avoiding that the coordinatio
+n computers get in standby mode.
+ If the computer gets in this mode, the Wi-Fi network will shut off, and
+ therefore, the other three computers will not have access of the database,
+ causing server access errors.
+ Another reason that this connection error shows may be caused if a laptop
+ auto-connects to another wireless network.
+ Check this out carefully to avoid any undesired problem 
 \end_layout
 
 \begin_layout Chapter
@@ -3382,86 +3231,90 @@ s se conecten automáticamente a alguna otra red Wi-Fi al alcance.
 status open
 
 \begin_layout Plain Layout
-personalización
+customization
 \end_layout
 
 \end_inset
 
-Personalización de la aplicación
+Customization of the application
 \end_layout
 
 \begin_layout Standard
-Esta aplicación está distribuida como software libre y puede ser utilizada
- por cualquier club de kendo sin coste alguna.
- Además si tenéis tiempo y ganas tenéis libertad de personalizar la aplicación
- a vuestro gusto.
- Principalmente lo que se puede cambiar es el aspecto y texto.
+This application is distributed as free software and can be used by any
+ kendo club without any cost.
+ Also, if you have spare time you have total freedom to customize the applicatio
+n to your liking.
+ Specially, you can change the look and the text.
 \end_layout
 
 \begin_layout Section
-Cambio de 
+Changing 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-imágenes
+images
 \end_layout
 
 \end_inset
 
-imágenes
+images
 \end_layout
 
 \begin_layout Standard
-Todas las imágenes se pueden cambiar.
- No es nada más fácil que ir a la carpeta 
-\emph on
-images
-\emph default
- del programa y cambiar el contenido respetando el nombre del fichero.
- De esta forma el programa cargará vuestras imágenes en vez de las originales.
- La imagen del diploma contenida en la carpeta 
-\emph on
+All images can be changed.
+ You only have to go the images folder of the program and change the contents
+ but you must respect the name of the file.
+ This way, the program will load your images instead of the originals.
+ The image of the 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
 diploma
-\emph default
- debería cambiarse todos los años, cambiando el texto, la fecha y el nombre
- del torneo.
- También sería aconsejable cambiar el contenido de la carpeta 
-\emph on
-background
-\emph default
- cada año, para poder diferenciar las acreditaciones de un año a otro.
- No se puede cambiar la posición de las letras ni de las fotos de la acreditació
-n, por lo que se debe respetar la estructura de la imagen.
+\end_layout
+
+\end_inset
+
+diploma in the diploma folder should be changed all years, changing text,
+ date and name of the tournament at least.
+ 
+\end_layout
+
+\begin_layout Standard
+Also, you will probably prefer to change the content of the background folder
+ each year, because it is possible that someone uses an accreditation of
+ other year.
+ It is not easy to change the position of the letters or the pictures, so
+ it is advisable that you use a design that does not seem conflicting with
+ the rest of the design where the information is displayed.
+ Some of the images are used as a background for some of the lists generated
+ by the program.
  
 \end_layout
 
 \begin_layout Section
-Añadir un 
+Adding a 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-idioma
+language
 \end_layout
 
 \end_inset
 
-idioma
+language
 \end_layout
 
 \begin_layout Standard
-El programa está preparado para que fácilmente se puedan añadir idiomas
- o corregir los que ya hay.
- Tiene una carpeta llamada 
-\emph on
-translations
-\emph default
- que contiene toda la información que se muestra en el programa.
- No está encriptado ni compilado, sino que es un texto simple que se puede
- editar.
- En concreto está en XML, pero no te preocupes si desconoces lo que es,
- ya que es muy sencillo de cambiar.
+This program is ready for adding new languages or corrections for the ones
+ that are already on the program.
+ It has a folder called translations that contains all the information shown
+ in the program.
+ It is not encrypted or compiled, is just a simple text that you can modify.
+ It is in XML format, but do not worry if you do not know what it is, because
+ it is very easy to change.
  
 \end_layout
 
@@ -3469,7 +3322,7 @@ translations
 \begin_inset Float algorithm
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
@@ -3501,7 +3354,7 @@ name "alg:Fichero-languages.xml"
 
 \end_inset
 
-Fichero languages.xml
+File languages.xml
 \end_layout
 
 \end_inset
@@ -3515,50 +3368,25 @@ Fichero languages.xml
 \end_layout
 
 \begin_layout Standard
-Lo primero es añadir el idioma.
- Para ello se debe editar el fichero incluido en la carpeta 
-\emph on
-translations
-\emph default
- llamado 
-\emph on
-languages.xml
-\emph default
-.
- El Algoritmo 
+The first thing to do is add the language.
+ For this, you should modify the file included in the translations folder
+ called languages.xml.
+ The algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:Fichero-languages.xml"
 
 \end_inset
 
- muestra su contenido inicial.
- Básicamente lo que se debe hacer es añadir una línea nueva debajo de la
- que contiene la palabra 
-\begin_inset Quotes eld
-\end_inset
-
-Español
-\begin_inset Quotes erd
-\end_inset
-
- de la misma forma y ANTES de la que contiene el código 
-\emph on
-</translator>
-\emph default
-.
- Cambiando el nombre por el idioma que queremos que se muestre en el programa
- y el contenido de 
-\begin_inset Quotes eld
-\end_inset
-
-abbrev
-\begin_inset Quotes erd
-\end_inset
-
- por un código que lo relacione.
- Este código será el que se use en los otros ficheros para buscar los idiomas.
- Por ejemplo, para añadir el italiano deberíamos poner: 
+ shows its initial value.
+ Basically, what you must do is add a new line under the one containing
+ the word “Español” the same way and BEFORE the one that contains the code
+ </translator>.
+ Changing the name of the language that we want the program show and the
+ content of “abbrev” with a code that connect with it.
+ This code will be the one we use on the files for searching the languages.
+ For example, if we want to add Italian to the program we should write:
+ 
 \end_layout
 
 \begin_layout Quotation
@@ -3566,20 +3394,12 @@ abbrev
 \end_layout
 
 \begin_layout Standard
-Recuerda en poner el idioma en su propia lengua para que el usuario lo entienda
- y lo encuentre.
- 
-\end_layout
-
-\begin_layout Standard
-Ahora habrá que cambiar todos los otros ficheros incluidos en la carpeta
- 
-\emph on
-translations
-\emph default
- y cambiar su contenido.
- Por ejemplo en el fichero newClub.xml vemos entre otras cosas, lo mostrado
- en el Algoritmo 
+Remember to write the language in the proper language in order for the user
+ to understand it and find it.
+ Now you must change all the other files in the folder translations and
+ modify its content.
+ For example, in the file gui.xml we can see, what has been shown in the
+ algorithm 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "alg:newClub.xml"
@@ -3587,7 +3407,7 @@ reference "alg:newClub.xml"
 \end_inset
 
 .
- Aunque solo muestra un párrafo, habrá que hacer lo mismo en todos ellos.
+ Even only a paragraph is shown, you should do the same with all them.
  
 \end_layout
 
@@ -3623,7 +3443,7 @@ name "alg:newClub.xml"
 
 \end_inset
 
-Parte del Fichero newClub.xml
+Extracted from gui.xml
 \end_layout
 
 \end_inset
@@ -3641,12 +3461,8 @@ Parte del Fichero newClub.xml
 \end_layout
 
 \begin_layout Standard
-Siguiendo el ejemplo del italiano, deberíamos añadir lo siguiente antes
- de 
-\emph on
-'</AcceptButton>' 
-\emph default
-que es lo que marca el final del párrafo.
+Following the Italian example, we should add the following BEFORE the </AcceptBu
+tton> because it is what indicates the end of the paragraph.
 \end_layout
 
 \begin_layout Standard
@@ -3654,27 +3470,16 @@ que es lo que marca el final del párrafo.
 \end_layout
 
 \begin_layout Standard
-En donde 
-\emph on
-it
-\emph default
- es la abreviatura que hemos puesto en el fichero 
-\emph on
-languages.xml
-\emph default
- De esta forma el programa encuentra el texto adecuado para el idioma selecciona
-do.
- Es algo de trabajo pero muy sencillo de realizar.
+Where 'it' is the abbreviation we marked on the file languages.xml This way,
+ the program finds the suitable text for the selected language.
+ It takes some time but is easy to do.
  
 \end_layout
 
 \begin_layout Standard
-Por supuesto, después de todas las traducciones si queréis compartir vuestro
- trabajo con otras personas solamente me tenéis que enviar la carpeta 
-\emph on
-translations
-\emph default
- comprimida con vuestro contenido a 
+Of course, after all the translations if you want to share your work with
+ other people you only need to send me the folder translations compressed
+ with your contents to 
 \begin_inset Flex URL
 status collapsed
 
@@ -3686,13 +3491,13 @@ softwaremagico@gmail.com
 \end_inset
 
 .
- Yo lo incluiré en la próxima versión del programa y además os incluiré
- en los créditos del programa agradeciendo vuestro trabajo.
+ I will include it in the next version of the program and also, you will
+ be in the credits of the program thanking you for your work.
  
 \end_layout
 
 \begin_layout Section
-Cambiar el diseño de los 
+Changing the design of the 
 \begin_inset Index idx
 status open
 
@@ -3702,26 +3507,21 @@ diploma
 
 \end_inset
 
-diplomas
+diploma
 \end_layout
 
 \begin_layout Standard
-Para generar un diploma nuevo cada año, bastará cambiar el fichero que se
- encuentra en la carpeta 
-\emph on
-diploma
-\emph default
-, manteniendo su nombre y terminación.
- El programa seleccionará esta nueva imagen como fondo para los futuros
- diplomas generados.
- 
+To generate a new diploma each year, you only need to modify the file that
+ you can find in the folder diploma keeping its name and ending.
+ The program will select this new image as a background for the next generated
+ diploma.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -3745,7 +3545,7 @@ name "fig:Distribución-diploma"
 
 \end_inset
 
-Distribución de un diploma.
+Distribution of a diploma.
 \end_layout
 
 \end_inset
@@ -3763,25 +3563,18 @@ Distribución de un diploma.
 \end_layout
 
 \begin_layout Standard
-En la figura 
+In figure 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "fig:Distribución-diploma"
 
 \end_inset
 
- se puede ver la distribución típica de un diploma, en el que existen dos
- áreas de fondo, una que incluirá el título del torneo, y otra en donde
- saldría en letra más pequeña los datos importantes del mismo.
- El tamaño de las áreas puede ser cambiado ya que la aplicación permite
- variar la posición del nombre.
- 
-\end_layout
-
-\begin_layout Standard
-Recuerda que al menos debes dejar un espacio horizontal para poder colocar
- el nombre del competidor que recibe el diploma.
- 
+ you can see the common distribution of a diploma, in which exists two different
+ background areas, one that includes the name of the tournament and another
+ one with a smaller font with the most important information of the diploma.
+ The size of the areas could also be modified because the program can change
+ the position of the name.
 \end_layout
 
 \begin_layout Section
@@ -3789,39 +3582,31 @@ Recuerda que al menos debes dejar un espacio horizontal para poder colocar
 status open
 
 \begin_layout Plain Layout
-licencia
+licences
 \end_layout
 
 \end_inset
 
-Licencias
+Licences and extra
 \end_layout
 
 \begin_layout Standard
-En la ventana 
-\begin_inset Quotes eld
-\end_inset
-
-Acerca de...
-\begin_inset Quotes erd
-\end_inset
-
- se incluye entre otras cosas la licencia, los agradecimientos y otras cosas
- importantes.
- Os animo a que personalicéis el programa para vuestro club, e incluso lo
- mejoréis.
- La licencia del programa es GNU y así lo permite.
- Mantened el nombre del autor y el de todos aquellos que han colaborado
- en él e incluiros vosotros mismos si el cambio es sustancial.
- Si no tenéis capacidad técnica para hacer cambios, podéis escribirme indicando
- que cosas faltan o se pueden mejorar.
- Incluiré toda la información que me deis en nuevas versiones futuras, como
- ya llevo haciendo desde hace algunas versiones gracias a los e-mails de
- distintos usuarios.
+In the window “About…” is included among them, the licence of the program,
+ gratitudes and another important things.
+ I encourage all of you to customize the program for your club and even
+ to modify it to make it better.
+ The licence of the program is GNU and all this is allowed.
+ Just maintain the name of the author (© Jorge Hortelano Otero) and the
+ name of all the other people that has collaborated and even your own name
+ if the change is meaningful.
+ If you do not have technical ability to modify it, you can write me to
+ point out everything that the program lacks or any errors.
+ I will include all the information in future versions, as I am actually
+ doing thanks to the e-mails of many users.
 \end_layout
 
 \begin_layout Chapter
-Preguntas Frecuentes
+FAQs
 \end_layout
 
 \begin_layout Section
@@ -3829,24 +3614,23 @@ Preguntas Frecuentes
 status open
 
 \begin_layout Plain Layout
-ejecución
+execution
 \end_layout
 
 \end_inset
 
-Ejecución
+Execution
 \end_layout
 
 \begin_layout Subsection
-Cuando hago click en el acceso directo al programa, este no hace nada.
- ¿Qué puede ser?
+When I make click in the link of the program, this does nothing.
+ What is happening? 
 \end_layout
 
 \begin_layout Standard
-Si al hacer click en el enlace del programa, no aparece ventana alguna,
- lo más probable es que la versión de Java que estás utilizando no sea la
- adecuada (versión 6 o superior) o simplemente no tienes instalada la Máquina
- Virtual de 
+If you click on the program link and no window is shown, probably you have
+ an obsolete Java version and you need to update it or you do not have installed
+ the 
 \begin_inset Index idx
 status open
 
@@ -3856,9 +3640,9 @@ Java
 
 \end_inset
 
-Java.
- Para solucionar esto, solamente tienes que instalarlo.
- Es totalmente gratuito y puede ser descargado desde: 
+Java Virtual Machine.
+ You can solve this installing the virtual machine.
+ Is completely free and you can download it from:
 \begin_inset Flex URL
 status collapsed
 
@@ -3875,24 +3659,25 @@ http://www.java.com/es/download/
 \begin_layout Standard
 
 \emph on
-Nota: La máquina Java que trae por defecto Windows no es adecuada para el
- uso de este programa.
+Note: The Java machine that Windows has by default will not work properly
+ with his program.
  
 \end_layout
 
 \begin_layout Subsection
-Al apretar un botón, este no hace nada.
- Además el programa no permite hacer nada más en el futuro y lo tengo que
- reiniciar.
+When I click the button, this does nothing.
+ Furthermore, the program does not allow me to do anything and I have to
+ restart it.
 \end_layout
 
 \begin_layout Standard
-Esto suele ser por que al apretar el botón, ha ocurrido algún error.
- Esto significa que el programa ha fallado por la causa probable de un bug.
- Aunque el programa ha sido ya depurado de forma consciente, siempre pueden
- existir algunos bugs imprevistos.
- Lo mejor que se puede hacer en estos casos es ejecutar el programa desde
- la consola de comandos de Windows o la terminal de 
+This may has happened because when you click the button, an exception has
+ occurred.
+ This means that the program has crashed due to a bug.
+ Although the program has been debugged constantly, there is always place
+ for any unexpected bug.
+ The best you can do in those situations is to execute the program from
+ the Windows’ command console or 
 \begin_inset Index idx
 status open
 
@@ -3902,10 +3687,10 @@ Linux
 
 \end_inset
 
-Linux.
- Así obtendremos más información sobre lo que ha ocurrido.
- Si este error se repite, podéis enviármelo por e-mail para que intente
- solucionarlo y no se repita en futuras versiones.
+Linux’s terminal.
+ This way, you will have more information about what has happened.
+ If this error repeats, you can send it to me by e-mail and I will try to
+ solve it and avoid it will happen in future versions.
  
 \end_layout
 
@@ -3929,58 +3714,48 @@ SQLite
 
 \end_inset
 
-Base de datos.
- 
+Databases
 \end_layout
 
 \begin_layout Subsection
-Tengo problemas generales con la base de datos.
- 
+I have general problems with the database
 \end_layout
 
 \begin_layout Standard
-Este problema resulta algo vago, por lo que indico aquí algunas sugerencias
- para lidiar con el problema.
-\end_layout
-
-\begin_layout Enumerate
-Si ya tenías una versión anterior del programa instalada, también debes
- actualizar la base de datos.
- Para ello, debes seleccionar la opción adecuada dentro del programa.
- Al ir mejorando el programa, también se va aumentando la complejidad de
- la base de datos, ya que sin estas modificaciones no se podrán usar correctamen
-te la nueva funcionalidad de la aplicación.
- Si esto sigue sin solucionarlo, prueba a borrar tu base de datos e instalar
- de nuevo la base de datos vacía del programa.
+This problem is quite vague, but I will throw some suggestions in order
+ to solve this problem.
  
 \end_layout
 
 \begin_layout Enumerate
-Si los portátiles están trabajando únicamente con las baterías, debes también
- evitar que el ordenador de coordinación se suspenda (stand by).
- Si es el caso, la conexión Wi-Fi se cortará y por tanto, cualquier otro
- equipo dejará de tener acceso a la base de datos del programa, causando
- errores de acceso al servidor.
- Otro motivo para que aparezca el error de conexión, suele ser que los portátile
-s se conecten automáticamente a alguna otra red 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-Wi-Fi
-\end_layout
-
-\end_inset
-
-Wi-Fi al alcance.
- Revisad que los equipos están todos encendidos y conectados a la red Wi-Fi
- deseada.
+If you already have a previous version installed, you can also update the
+ database.
+ For doing this, you just need to choose the suitable option in the program.
+ At the same time the program is improving, the complexity of the database
+ is growing, because without those modifications the new functions of the
+ application could not be used.
+ If this does not solve the problem, try to erase the database and installing
+ it again with an empty database of the program.
  
 \end_layout
 
 \begin_layout Enumerate
-Utilizar el programa KTM desde la línea de comandos.
- Esto mostrará más información sobre el problema y será más fácil abordarlo.
+If the laptops are working only with their batteries, you should avoid that
+ the main laptop gets in standby.
+ If that is the case, the wireless network will be shut down and therefore,
+ any other laptop will lose their connection with the database of the program,
+ causing server access errors.
+ This connection error may be caused if any of the laptops auto-connects
+ to another wireless network.
+ Check all the laptops to see if they are on and connected to desired wireless
+ network.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Use KTM program from the command line.
+ This will show more information about the problem and it will be easier
+ to correct it.
  
 \end_layout
 
@@ -3989,113 +3764,92 @@ Utilizar el programa KTM desde la línea de comandos.
 status open
 
 \begin_layout Plain Layout
-importación
+importing
 \end_layout
 
 \end_inset
 
-Importación/
+Importing/
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-exportación
+exporting
 \end_layout
 
 \end_inset
 
-Exportación de la base de datos
+Exporting Databases
 \end_layout
 
 \begin_layout Standard
-Si existen problemas al importar una base de datos de un archivo, esto puede
- ser causado por distintos motivos: 
+If there is any problem importing a database, this can be caused by different
+ causes: 
 \end_layout
 
 \begin_layout Enumerate
-El archivo es de una versión anterior del programa y por tanto la base de
- datos no concuerda.
- En este caso, lo mejor sería instalar el programa gratuito MySQL Workbench
- y comprobar que campos son incoherentes en la nueva, aunque para esto,
- es necesario tener conocimientos de SQL.
-\end_layout
-
-\begin_layout Enumerate
-Ya existen datos en la base de datos que se intenta sobrescribir.
- Si existen problemas, sería importante vaciar la base de datos antes de
- intentar importar una nueva.
- Para ello, se puede usar la misma interfaz gráfica del MySQL Workbench.
+The file is from a previous version of the program and the database does
+ not coincide.
+ In this case, the best thing to do is installing the free program MySQL
+ Workbench and checking what fields are incoherent in the new; although
+ for this, some SQL knowledge is needed.
  
 \end_layout
 
 \begin_layout Enumerate
-A partir de la versión 0.95 del programa, no son compatibles con las bases
- de datos anteriores.
- Por tanto, hay que eliminar y volver a instalar la base de datos.
+There is already data in the database that is trying to overwrite.
+ Is there is any problem, it is important to empty the database before trying
+ to import a new one.
+ For this, MySQL Workbench can be used.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Since the version 0.95 of the program, those are not compatible with former
+ databases.
+ Therefore, you have to uninstall and reinstall the database.
  
 \end_layout
 
 \begin_layout Subsection
-¿Cuáles son las diferencias entre el uso de 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-SQLite
-\end_layout
-
-\end_inset
-
-SQLite y 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-MySQL
-\end_layout
-
-\end_inset
-
-MySQL? ¿Cuál debo usar en mi torneo?
+Which are the differences between SQLite and MySQL? Which should I use in
+ my championship?
 \end_layout
 
 \begin_layout Standard
-En general, MySQL es más potente que SQLite y permite más opciones.
- Si bien la instalación del mismo y el consumo de recursos también es mayor.
- Por tanto, la decisión vendrá determinada por los siguientes factores:
+In general, MySQL is more powerful than SQLite and allows more possibilities.
+ But, the installation is harder and the resources consumption higher.
+ Then the decision will be conditioned by:
 \end_layout
 
 \begin_layout Enumerate
-Si utilizas un ordenador con pocos recursos, antiguo, o simplemente no quieres
- que te enlentezca el resto de aplicaciones corriendo un servidor que usarás
- puntualmente, lo correcto es usar SQLite.
+If you are using an old computer, or you do not want to expend so many resources
+ in the application, use SQLite.
  
 \end_layout
 
 \begin_layout Enumerate
-Si necesitas que varios ordenadores trabajen con la misma base de datos
- para que manejen los distintos shiaijos concurrentemente, entonces debes
- instalar MySQL, ya que es el que te permite aceptar conexiones de otros
- equipos.
+If you need more than one computer in your championship.
+ Use MySQL.
  
 \emph on
-Nota: Recuerda que para el uso de múltiples equipos, únicamente uno de ellos
- debe tener la base de datos instalada.
+Note: Only one computer will need the MySQL server installed on it.
  
 \end_layout
 
 \begin_layout Enumerate
-En el caso de bases de datos con un gran número de registros (varios miles)
- aconsejo utilizar MySQL.
+If you are using several thousands of registers (i.e.
+ professional championship), use MySQL.
  
 \end_layout
 
 \begin_layout Enumerate
-En el caso de que la base de datos se deba mover de un equipo a otro habitualmen
-te, probablemente SQLite sea más cómodo para ello.
- Si bien MySQL tiene herramientas como el MySQL Workbench que facilitan
- esta función.
+If you need to move the database from one computer to another one, SQLite
+ is easier but MySQL also allows to do it with MySQL Workbench tool.
  
+\end_layout
+
+\begin_layout Enumerate
 \begin_inset CommandInset index_print
 LatexCommand printindex
 type "idx"
