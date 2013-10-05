@@ -52,12 +52,14 @@ public class Path {
     }
 
     private static String getRelativePath(String folder) {
-        File f = new File(getRootPath() + folder);
+        File f = new File(getRootPath() + File.separator + folder + File.separator);
         if (f.exists()) {
+            //Installed. Core file is in lib folder. Descent to parent project from child project.
             return f.getPath() + File.separator;
         } else {
-            // Not installed yet. Descent to parent project from child project.
-            return new File(getRootPath()).getParent() + File.separator + folder + File.separator;
+            //Not installed. Core is in maven repository. Use command line folder
+            File file = new File(".." + File.separator + folder + File.separator);
+            return file.getAbsolutePath() + File.separator;
         }
     }
 
