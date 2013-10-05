@@ -127,16 +127,7 @@ public class KendoTournamentGenerator {
 	}
 
 	public String getVersion() {
-		String text;
-		try {
-			text = MyFile.readTextFile(this.getClass().getResource("/version.txt").getPath());
-			if (text != null && text.length() > 0) {
-				return text;
-			}
-			return MyFile.readTextFromJar("/version.txt");
-		} catch (NullPointerException npe) {
-			return "";
-		}
+		return "1.0.0";
 	}
 
 	public String getLanguage() {

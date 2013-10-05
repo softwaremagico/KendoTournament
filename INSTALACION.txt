@@ -2,7 +2,7 @@ Instalación
 
 1.1 Requisitos
 
-He generado la aplicación Kendo Tournament Generator (KTG) de 
+He generado la aplicación Kendo Tournament Manager (KTM) de 
 forma que debería ser compatible con todas las versiones de 
 Windows (al menos a partir de Windows 2000) y con todas las 
 versiones de Linux. Por desgracia el abanico de posibilidades es 
