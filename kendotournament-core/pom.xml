@@ -1,20 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>kendo-tournament-generator-core</artifactId>
+    <artifactId>kendo-tournament-manager-core</artifactId>
     <packaging>jar</packaging>
-    <name>Kendo Tournament Generator Core</name>
+    <name>Kendo Tournament Manager Core</name>
 	
     <parent>
         <groupId>com.softwaremagico</groupId>
-        <artifactId>kendo-tournament-generator</artifactId>
-        <version>0.9.9</version>
+        <artifactId>kendo-tournament-manager</artifactId>
+        <version>1.0.0</version>
     </parent>
     
     <properties>
         <mysql-connector.version>5.1.25</mysql-connector.version>
-        <itext.version>5.4.2</itext.version>
-        
+        <itext.version>5.4.2</itext.version>        
     </properties>
   
     <dependencies>

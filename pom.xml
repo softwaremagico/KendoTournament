@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.softwaremagico</groupId>
-    <artifactId>kendo-tournament-generator</artifactId>
-    <version>0.9.9</version>
+    <artifactId>kendo-tournament-manager</artifactId>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <description>Tool for Kendo Tournaments managing.</description>
-    <name>Kendo Tournament Generator</name>
+    <name>Kendo Tournament Manager</name>
     <url>http://kendotournament.sourceforge.net/</url>
 	
     <organization>

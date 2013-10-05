@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>kendo-tournament-generator-gui</artifactId>
+    <artifactId>kendo-tournament-manager-gui</artifactId>
     <packaging>jar</packaging>
-    <name>Kendo Tournament Generator GUI</name>
+    <name>Kendo Tournament Manager GUI</name>
 	
     <parent>
         <groupId>com.softwaremagico</groupId>
-        <artifactId>kendo-tournament-generator</artifactId>
-        <version>0.9.9</version>
+        <artifactId>kendo-tournament-manager</artifactId>
+        <version>1.0.0</version>
     </parent>
 	
     <properties>
@@ -16,16 +16,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <linux.releasedir>../install_linux</linux.releasedir>
         <linux.origin>../linux-basic-files</linux.origin>
-        <linux.destination-folder>/usr/share/kendo-tournament-generator</linux.destination-folder>
+        <linux.destination-folder>/usr/share/kendo-tournament-manager</linux.destination-folder>
         <windows.releasedir>../install_windows</windows.releasedir>
         <windows.origin>../windows-basic-files</windows.origin>
-        <winexe>KendoTournamentGenerator.exe</winexe>
+        <winexe>KendoTournamentManager.exe</winexe>
         <plugin.exec.version>1.2.1</plugin.exec.version>
         <application.mainclass>com.softwaremagico.ktg.gui.Main</application.mainclass>
     </properties>
     
     <build>
-        <finalName>KendoTournamentGenerator</finalName>
+        <finalName>KendoTournamentManager</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -276,7 +276,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>kendo-tournament-generator-core</artifactId>
+            <artifactId>kendo-tournament-manager-core</artifactId>
             <version>${project.version}</version>
             <type>jar</type>
         </dependency>

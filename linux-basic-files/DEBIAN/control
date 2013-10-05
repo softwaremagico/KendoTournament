@@ -1,4 +1,4 @@
-Package: kendo-tournament-generator
+Package: kendo-tournament-manager
 Version: @version@
 Section: Utility
 Priority: optional
@@ -8,5 +8,5 @@ Recommends: openjdk-7-jre
 Installed-Size: 9.7MiB
 Maintainer: Jorge Hortelano [softwaremagico@gmail.com]
 Replaces: kendotournament
-Provides: kendo-tournament-generator
+Provides: kendo-tournament-manager
 Description: Tool for the management of a championship of kendo. Developed in java.  
