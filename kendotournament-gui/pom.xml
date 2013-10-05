@@ -169,7 +169,7 @@
                                     <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/" overwrite="true" >
-                                    <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
+                                    <fileset dir="./target/" includes="**/KendoTournamentManager.jar" />
                                 </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/lib" overwrite="true" >
                                     <fileset dir="./target/lib" includes="**/*.jar" />
@@ -195,13 +195,13 @@
                                 <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
                                     <fileset dir="../" includes="**/Readme.txt" />
                                 </copy>
-                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator" perm="755"/>
-                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-generator-doc" perm="755"/>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-manager" perm="755"/>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-manager-doc" perm="755"/>
                                         
                                         
                                 <delete dir="${windows.releasedir}" failonerror="false" includeemptydirs="true" />
                                 <copy todir="${windows.releasedir}" overwrite="true" >
-                                    <fileset dir="./target/" includes="**/KendoTournamentGenerator.jar" />
+                                    <fileset dir="./target/" includes="**/KendoTournamentManager.jar" />
                                 </copy>
                                 <copy todir="${windows.releasedir}/lib" overwrite="true" >
                                     <fileset dir="./target/lib" includes="**/*.jar" />
@@ -231,7 +231,7 @@
                                     <fileset dir="${windows.origin}/" includes="**/icon.ico" />
                                 </copy>  
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                    <fileset dir="${windows.origin}/" includes="**/KendoTournamentGenerator.exe" />
+                                    <fileset dir="${windows.origin}/" includes="**/KendoTournamentManager.exe" />
                                 </copy>  
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
                                     <fileset dir="${windows.origin}/" includes="**/InstallScript.iss" />
