@@ -12,8 +12,8 @@ import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.sql.SQLException;
 import java.util.List;
-import org.junit.After;
 import org.junit.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
 
 @Test(groups = {"databaseStore"})
@@ -100,11 +100,11 @@ public class DatabaseStore {
 
     }
 
-    @After
+    @AfterSuite
     @Test(alwaysRun = true)
     public void clearDatabase() throws SQLException {
         //Delete Tournament Information.
-        /*TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
+        TournamentPool.getInstance().remove(TournamentPool.getInstance().getAll());
 
          //Delete elements from database.
          RegisteredPersonPool.getInstance().remove(RegisteredPersonPool.getInstance().getAll());
@@ -121,6 +121,6 @@ public class DatabaseStore {
          Assert.assertTrue(TeamPool.getInstance().getAll().isEmpty());
          Assert.assertTrue(FightPool.getInstance().getAll().isEmpty());
          Assert.assertTrue(DuelPool.getInstance().getAll().isEmpty());
-         Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty()); */
+         Assert.assertTrue(UndrawPool.getInstance().getAll().isEmpty()); 
     }
 }

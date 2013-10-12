@@ -4,7 +4,7 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
 import org.junit.Assert;
-import org.junit.Before;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 /**
@@ -21,7 +21,7 @@ public class PopulateDatabase {
     protected static final String[] competitors = {"comp1", "comp2", "comp3", "comp4", "comp5", "comp6"};
 
     public DatabaseEngine getDatabaseTested() {
-        return DatabaseEngine.SQLite;
+        return DatabaseEngine.MySQL;
     }
 
     /**
@@ -36,7 +36,7 @@ public class PopulateDatabase {
         }
     }
 
-    @Before
+    @BeforeSuite
     @Test
     public void connectToDatabase() {
         DatabaseConnection.getInstance().setDatabase(getDatabaseTested().getDatabaseClass());

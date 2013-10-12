@@ -54,11 +54,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class SQL extends Database {
-
+    public static final Integer DATABASE_NUMBER_TABLES = 9;
+    public static final Integer MAX_ID_LENGTH = 12;
+    public static final Integer MAX_NAME_LENGTH = 50;
+    public static final Integer MAX_COUNTRY_LENGTH = 20;
+    public static final Integer MAX_EMAIL_LENGTH = 50;
+    public static final Integer MAX_PHONE_LENGTH = 20;
+    public static final Integer MAX_CITY_LENGTH = 20;
+    public static final Integer MAX_WEB_LENGTH = 100;
+    public static final Integer MAX_ADDRESS_LENGTH = 100;
+    public static final Integer MAX_TOURNAMENT_TYPE_LENGTH = 20;
+    public static final Integer MAX_SCORE_TYPE_LENGTH = 15;
+    public static final Integer MAX_ROLE_NAME_LENGTH = 15;
+    
+    
+    
     protected static final Translator trans = LanguagePool.getTranslator("messages.xml");
+    
 
     @Override
-    public void clearDatabase() {
+    public synchronized void clearDatabase() {
         KendoLog.fine(SQL.class.getName(), "Clearing database");
         try {
             try (Statement s = connection.createStatement()) {
@@ -73,6 +88,14 @@ public abstract class SQL extends Database {
             }
         } catch (SQLException ex) {
             KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
+    }
+    
+    protected synchronized void createTable(String query) throws SQLException {
+        try (Statement st = connection.createStatement()) {
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            showSqlError(ex);
         }
     }
 
@@ -448,7 +471,7 @@ public abstract class SQL extends Database {
         for (int i = 0; i < clubs.size(); i++) {
             query += "INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('"
                     + clubs.get(i).getName() + "','" + clubs.get(i).getCountry() + "','" + clubs.get(i).getCity() + "','" + clubs.get(i).getAddress()
-                    + "','" + clubs.get(i).getWeb() + "','" + clubs.get(i).getMail() + "'," + clubs.get(i).getPhone() + ",'"
+                    + "','" + clubs.get(i).getWeb() + "','" + clubs.get(i).getMail() + "','" + clubs.get(i).getPhone() + "','"
                     + clubs.get(i).getRepresentativeID() + "'); ";
             if (i % getMaxElementsInQuery() == 0 || i == clubs.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
