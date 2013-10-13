@@ -97,7 +97,7 @@ public abstract class Database {
         }
     }
 
-    abstract void installDatabase(String password, String user, String server, String database) throws Exception;
+    abstract void installDatabase(String database) throws Exception;
 
     abstract boolean isDatabaseInstalledCorrectly();
 

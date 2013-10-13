@@ -69,7 +69,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
     public void performConnection() {
         try {
             DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
-            if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getPassword(), connectionPanel.getUser(),
+            if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getUser(), connectionPanel.getPassword(),
                     connectionPanel.getDatabase(), connectionPanel.getServer())) {
                 AlertManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

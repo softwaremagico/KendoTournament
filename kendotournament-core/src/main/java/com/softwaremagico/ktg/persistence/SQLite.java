@@ -52,16 +52,16 @@ public class SQLite extends SQL {
     /**
      * Connect to the SQLite file.
      *
-     * @param tmp_password
-     * @param tmp_user
-     * @param tmp_database
-     * @param tmp_server //Not used in SQLite.
+     * @param password
+     * @param user
+     * @param database
+     * @param server //Not used in SQLite.
      * @param verbose
      * @param retry
      * @return
      */
     @Override
-    public boolean connect(String tmp_password, String tmp_user, String tmp_database, String tmp_server,
+    public boolean connect(String password, String user, String database, String server,
             boolean verbose, boolean retry) throws CommunicationsException, SQLException {
         boolean error = false;
         try {
@@ -75,16 +75,16 @@ public class SQLite extends SQL {
         try {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:" + Path.getPathDatabaseFolderInHome()
-                    + File.separator + tmp_database + "." + defaultSQLiteExtension);
+                    + File.separator + database + "." + defaultSQLiteExtension);
 
             if (!isDatabaseInstalledCorrectly()) {
                 try {
-                    installDatabase(tmp_password, tmp_user, tmp_server, tmp_database);
+                    installDatabase(database);
                 } catch (Exception ex) {
                     KendoLog.severe(this.getClass().getName(), "Database not installed correctly:\n" + ex);
                 }
                 if (retry) {
-                    return connect(tmp_password, tmp_user, tmp_database, tmp_server, verbose, false);
+                    return connect(password, user, database, server, verbose, false);
                 } else {
                     return false;
                 }
@@ -126,6 +126,27 @@ public class SQLite extends SQL {
      *
      ********************************************************************
      */
+    /**
+     * If the SQL server has not installed the database, the program install a
+     * default one.
+     *
+     * @param tmp_password
+     * @param tmp_user
+     * @param tmp_server
+     */
+    @Override
+    public void installDatabase(String database)
+            throws Exception {
+        createTableTournament();
+        createTableCompetitor();
+        createTableClub();
+        createTableRole();
+        createTableTeam();
+        createTableFight();
+        createTableDuel();
+        createTableUndraw();
+        createTableCustomLink();
+    }
 
     private void createTableClub() throws SQLException {
         String sqlQuery = "CREATE TABLE \"club\" (" + "\"Name\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
@@ -230,10 +251,10 @@ public class SQLite extends SQL {
 
     private void createTableUndraw() throws SQLException {
         String sqlQuery = "CREATE TABLE \"undraw\" ("
-                + "\"Tournament\" varchar("+MAX_NAME_LENGTH+") NOT NULL , "
+                + "\"Tournament\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL , "
                 + "\"Points\" integer NOT NULL  DEFAULT 1, "
                 + "\"TournamentLevel\" integer NOT NULL , "
-                + "\"Team\" varchar("+MAX_NAME_LENGTH+") NOT NULL , "
+                + "\"Team\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL , "
                 + "\"Player\" integer, "
                 + "\"TournamentGroup\" integer NOT NULL  DEFAULT 0, "
                 + "PRIMARY KEY (\"Tournament\", \"TournamentLevel\", \"Team\", \"TournamentGroup\"),"
@@ -244,33 +265,11 @@ public class SQLite extends SQL {
     }
 
     private void createTableCustomLink() throws SQLException {
-        String sqlQuery = "CREATE TABLE \"customlinks\" (" + "\"Tournament\" varchar("+MAX_NAME_LENGTH+") NOT NULL,"
+        String sqlQuery = "CREATE TABLE \"customlinks\" (" + "\"Tournament\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "\"SourceGroup\" integer NOT NULL," + "\"AddressGroup\" integer NOT NULL,"
                 + "\"WinnerOrder\" integer NOT NULL," + "PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)"
                 + ")";
         createTable(sqlQuery);
-    }
-
-    /**
-     * If the SQL server has not installed the database, the program install a
-     * default one.
-     *
-     * @param tmp_password
-     * @param tmp_user
-     * @param tmp_server
-     */
-    @Override
-    public void installDatabase(String tmp_password, String tmp_user, String tmp_server, String tmp_database)
-            throws Exception {
-        createTableClub();
-        createTableTournament();
-        createTableCompetitor();
-        createTableRole();
-        createTableTeam();
-        createTableFight();
-        createTableDuel();
-        createTableUndraw();
-        createTableCustomLink();
     }
 
     @Override

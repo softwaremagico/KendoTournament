@@ -25,7 +25,6 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -41,148 +40,149 @@ import java.util.logging.*;
  */
 public class KendoLog {
 
-	private static final Logger logger = Logger.getLogger("KendoLog");
-	private static final Level logLevel = Level.ALL; // INFO, OFF, ALL, ...
-	private static final int MAX_BYTES = 50000000;
-	private static final int NUMBER_MAX_OF_FILES = 10;
-	private static final Translator trans = LanguagePool.getTranslator("messages.xml");
+    private static final Logger logger = Logger.getLogger("KendoLog");
+    private static final Level logLevel = Level.ALL; // INFO, OFF, ALL, ...
+    private static final int MAX_BYTES = 50000000;
+    private static final int NUMBER_MAX_OF_FILES = 10;
+    private static final Translator trans = LanguagePool.getTranslator("messages.xml");
 
-	static {
-		try {
-			FileHandler fh = new FileHandler(Path.getLogFile(), MAX_BYTES, NUMBER_MAX_OF_FILES, true);
-			logger.addHandler(fh);
-			logger.setLevel(logLevel);
-			// fh.setFormatter(new SimpleFormatter());
-			fh.setFormatter(getCustomFormatter());
-		} catch (IOException | SecurityException ex) {
-			KendoLog.severe(KendoLog.class.getName(),
-					"Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage());
-		}
-	}
+    static {
+        try {
+            FileHandler fh = new FileHandler(Path.getLogFile(), MAX_BYTES, NUMBER_MAX_OF_FILES, true);
+            logger.addHandler(fh);
+            logger.setLevel(logLevel);
+            // fh.setFormatter(new SimpleFormatter());
+            fh.setFormatter(getCustomFormatter());
+        } catch (IOException | SecurityException ex) {
+            KendoLog.severe(KendoLog.class.getName(),
+                    "Logger failed. Probably the log file can not be created. Error Message: " + ex.getMessage());
+        }
+    }
 
-	/**
-	 * Defines our own formatter.
-	 */
-	private static Formatter getCustomFormatter() {
-		return new Formatter() {
-			// StackTraceElement[] stackTraceElements =
-			// Thread.currentThread().getStackTrace();
-			@Override
-			public String format(LogRecord record) {
-				String text = record.getLevel() + " [" + new Date() + "] " + " - " + record.getMessage() + "\n";
-				return text;
-			}
-		};
-	}
+    /**
+     * Defines our own formatter.
+     */
+    private static Formatter getCustomFormatter() {
+        return new Formatter() {
+            // StackTraceElement[] stackTraceElements =
+            // Thread.currentThread().getStackTrace();
+            @Override
+            public String format(LogRecord record) {
+                String text = record.getLevel() + " [" + new Date() + "] " + " - " + record.getMessage() + "\n";
+                return text;
+            }
+        };
+    }
 
-	private KendoLog() {
-	}
+    private KendoLog() {
+    }
 
-	private static void info(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.info(message);
-		}
-	}
+    private static void info(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.info(message);
+        }
+    }
 
-	public static void info(String className, String message) {
-		info(className + ": " + message);
-	}
+    public static void info(String className, String message) {
+        info(className + ": " + message);
+    }
 
-	private static void config(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.config(message);
-		}
-	}
+    private static void config(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.config(message);
+        }
+    }
 
-	public static void config(String className, String message) {
-		config(className + ": " + message);
-	}
+    public static void config(String className, String message) {
+        config(className + ": " + message);
+    }
 
-	private static void warning(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.warning(message);
-		}
-	}
+    private static void warning(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.warning(message);
+        }
+    }
 
-	public static void warning(String className, String message) {
-		warning(className + ": " + message);
-	}
+    public static void warning(String className, String message) {
+        warning(className + ": " + message);
+    }
 
-	private static void debug(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.finest(message);
-		}
-	}
+    private static void debug(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finest(message);
+        }
+    }
 
-	public static void debug(String className, String message) {
-		debug(className + ": " + message);
-	}
+    public static void debug(String className, String message) {
+        debug(className + ": " + message);
+    }
 
-	private static void severe(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.severe(message);
-		}
-	}
+    private static void severe(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.severe(message);
+        }
+    }
 
-	public static void severe(String className, String message) {
-		severe(className + ": " + message);
-	}
+    public static void severe(String className, String message) {
+        severe(className + ": " + message);
+    }
 
-	public static void translatedSevere(String className, String code) {
-		severe(className, trans.getTranslatedText(code));
-	}
+    public static void translatedSevere(String className, String code) {
+        severe(className, trans.getTranslatedText(code));
+    }
 
-	private static void fine(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.fine(message);
-		}
-	}
+    private static void fine(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.fine(message);
+        }
+    }
 
-	public static void fine(String className, String message) {
-		fine(className + ": " + message);
-	}
+    public static void fine(String className, String message) {
+        fine(className + ": " + message);
+    }
 
-	private static void finer(String message) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.finer(message);
-		}
-	}
+    private static void finer(String message) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finer(message);
+        }
+    }
 
-	public static void finer(String className, String message) {
-		finer(className + ": " + message);
-	}
+    public static void finer(String className, String message) {
+        finer(className + ": " + message);
+    }
 
-	private static void finest(String messsage) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			logger.finest(messsage);
-		}
-	}
+    private static void finest(String messsage) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            logger.finest(messsage);
+        }
+    }
 
-	public static void finest(String className, String message) {
-		finest(className + ": " + message);
-	}
+    public static void finest(String className, String message) {
+        finest(className + ": " + message);
+    }
 
-	public static void entering(String className, String method) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			debug(className, "ENTRY (" + method + ")");
-		}
-	}
+    public static void entering(String className, String method) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            debug(className, "ENTRY (" + method + ")");
+        }
+    }
 
-	public static void exiting(String className, String method) {
-		if (KendoTournamentGenerator.getInstance().getLogOption()) {
-			debug(className, "RETURN (" + method + ")");
-		}
-	}
+    public static void exiting(String className, String method) {
+        if (KendoTournamentGenerator.getInstance().getLogOption()) {
+            debug(className, "RETURN (" + method + ")");
+        }
+    }
 
-	public static void errorMessage(String className, Throwable throwable) {
-		String error = getStackTrace(throwable);
-		severe(className, error);
-	}
+    public static void errorMessage(String className, Throwable throwable) {
+       throwable.printStackTrace();
+        String error = getStackTrace(throwable);
+        severe(className, error);
+    }
 
-	private static String getStackTrace(Throwable throwable) {
-		Writer writer = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(writer);
-		throwable.printStackTrace(printWriter);
-		return writer.toString();
-	}
+    private static String getStackTrace(Throwable throwable) {
+        Writer writer = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(writer);
+        throwable.printStackTrace(printWriter);
+        return writer.toString();
+    }
 }

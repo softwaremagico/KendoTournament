@@ -122,10 +122,10 @@ public class DatabaseConnection {
         DatabaseConnection.connection = connection;
     }
 
-    public boolean testDatabaseConnection(String password, String user, String databaseName, String server)
+    public boolean testDatabaseConnection(String user, String password, String databaseName, String server)
             throws SQLException {
-        this.password = password;
         this.user = user;
+        this.password = password;
         this.databaseName = databaseName;
         this.server = server;
         this.database = databaseEngine.getDatabaseClass();

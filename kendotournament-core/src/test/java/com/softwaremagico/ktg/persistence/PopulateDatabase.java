@@ -3,8 +3,10 @@ package com.softwaremagico.ktg.persistence;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Assert;
-import org.testng.annotations.BeforeSuite;
+import org.junit.Before;
 import org.testng.annotations.Test;
 
 /**
@@ -36,7 +38,7 @@ public class PopulateDatabase {
         }
     }
 
-    @BeforeSuite
+    @Before
     @Test
     public void connectToDatabase() {
         DatabaseConnection.getInstance().setDatabase(getDatabaseTested().getDatabaseClass());
@@ -45,6 +47,12 @@ public class PopulateDatabase {
         DatabaseConnection.getInstance().setServer(DATABASE_SERVER);
         DatabaseConnection.getInstance().setUser(DATABASE_USER);
         DatabaseConnection.getInstance().setDatabaseName(DATABASE_NAME);
+        //Create database if not exists.
+        try {
+            DatabaseConnection.getInstance().testDatabaseConnection(DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_SERVER);
+        } catch (SQLException ex) {
+            Logger.getLogger(PopulateDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetDatabase();
     }
 

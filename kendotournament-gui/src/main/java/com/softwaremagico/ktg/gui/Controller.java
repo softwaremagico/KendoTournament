@@ -121,7 +121,7 @@ public class Controller {
         if (DatabaseConnection.getInstance().getDatabaseEngine().equals(DatabaseEngine.SQLite)) {
             try {
                 if (DatabaseConnection.getInstance().testDatabaseConnection(
-                        DatabaseConnection.getInstance().getPassword(), DatabaseConnection.getInstance().getUser(),
+                        DatabaseConnection.getInstance().getUser(), DatabaseConnection.getInstance().getPassword(),
                         DatabaseConnection.getInstance().getDatabaseName(),
                         DatabaseConnection.getInstance().getServer())) {
                     main.enableMenuItems();
