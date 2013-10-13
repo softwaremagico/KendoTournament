@@ -258,7 +258,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public boolean removeElementsFromDatabase(Tournament tournament) throws SQLException {
         if (getElementToRemove(tournament).size() > 0) {
-            removeElementsFromDatabase(tournament, new ArrayList<ElementPool>(getElementToRemove(tournament).values()));
+            removeElementsFromDatabase(tournament, new ArrayList<>(getElementToRemove(tournament).values()));
         }
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
         return true;

@@ -266,6 +266,9 @@ public class DatabaseConnection {
         }
 
         // Add actions
+        if (!TournamentPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
         if (!ClubPool.getInstance().addElementsToDatabase()) {
             return false;
         }
@@ -273,12 +276,6 @@ public class DatabaseConnection {
             return false;
         }
         if (!PhotoPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!TournamentPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!CustomLinkPool.getInstance().addElementsToDatabase()) {
             return false;
         }
         if (!RolePool.getInstance().addElementsToDatabase()) {
@@ -294,6 +291,9 @@ public class DatabaseConnection {
             return false;
         }
         if (!UndrawPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!CustomLinkPool.getInstance().addElementsToDatabase()) {
             return false;
         }
         disconnect();

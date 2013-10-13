@@ -60,12 +60,12 @@ public class Team implements Comparable<Team> {
     }
 
     /**
-     * Set a member in a team or change the order with current member if level >
+     * Set a member in a team or change the order with current member if fightIndex >
      * 0
      *
      * @param member
      * @param order
-     * @param level
+     * @param fightIndex
      * @throws TeamMemberOrderException
      */
     public void setMember(RegisteredPerson member, Integer order, int fightIndex) {

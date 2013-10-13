@@ -823,7 +823,7 @@ public abstract class SQL extends Database {
             for (Integer fightIndex : teams.get(i).getMembersOrder().keySet()) {
                 for (Integer indexCompetitor : teams.get(i).getMembersOrder().get(fightIndex).keySet()) {
                     try {
-                        query = "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
+                        query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
                                 + teams.get(i).getName()
                                 + "','"
                                 + teams.get(i).getMember(indexCompetitor, fightIndex).getId()
