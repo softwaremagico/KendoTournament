@@ -84,7 +84,6 @@ public class MySQL extends SQL {
 
             // connection = dataSource.getConnection();
             if (!isDatabaseInstalledCorrectly()) {
-                System.out.println("Installing database...");
                 if (retry) {
                     //Close connection for entering in to the recursivity. 
                     installDatabase(database);
@@ -181,8 +180,8 @@ public class MySQL extends SQL {
             }
 
             createTableTournament();
-            createTableCompetitor();
             createTableClub();
+            createTableCompetitor();
             createTableRole();
             createTableTeam();
             createTableFight();
@@ -196,7 +195,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableClub() throws SQLException {
-        String sqlQuery = "CREATE TABLE `club` (" + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `club` (" + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Country` varchar(" + MAX_COUNTRY_LENGTH + ") NOT NULL," + "`Representative` varchar(" + MAX_ID_LENGTH + ") DEFAULT NULL,"
                 + "`Mail` varchar(" + MAX_EMAIL_LENGTH + ") DEFAULT NULL," + "`Phone` varchar(" + MAX_PHONE_LENGTH + ") DEFAULT NULL,"
                 + "`City` varchar(" + MAX_CITY_LENGTH + ") DEFAULT NULL," + "`Web` varchar(" + MAX_WEB_LENGTH + ") DEFAULT NULL,"
@@ -205,7 +204,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableTournament() throws SQLException {
-        String sqlQuery = "CREATE TABLE `tournament` (" + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL," + "`Banner` mediumblob,"
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `tournament` (" + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL," + "`Banner` mediumblob,"
                 + "`Size` double NOT NULL DEFAULT 0," + "`FightingAreas` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT '1',"
                 + "`PassingTeams` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT 1," + "`TeamSize` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT '3',"
                 + "`Type` varchar(" + MAX_TOURNAMENT_TYPE_LENGTH + ") NOT NULL DEFAULT 'simple'," + "`ScoreWin` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT '1',"
@@ -217,7 +216,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableCompetitor() throws SQLException {
-        String sqlQuery = "CREATE TABLE `competitor` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `competitor` ("
                 + "`ID` varchar(" + MAX_ID_LENGTH + ") NOT NULL DEFAULT '0000000Z',"
                 + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Surname` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
@@ -232,7 +231,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableRole() throws SQLException {
-        String sqlQuery = "CREATE TABLE `role` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `role` ("
                 + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Competitor` varchar(" + MAX_ID_LENGTH + ") NOT NULL DEFAULT '0000000Z',"
                 + "`Role` varchar(" + MAX_ROLE_NAME_LENGTH + ") NOT NULL,"
@@ -249,7 +248,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableTeam() throws SQLException {
-        String sqlQuery = "CREATE TABLE `team` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `team` ("
                 + "`Name` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Member` varchar(" + MAX_ID_LENGTH + ") DEFAULT NULL,"
                 + "`Position` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
@@ -267,7 +266,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableFight() throws SQLException {
-        String sqlQuery = "CREATE TABLE `fight` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `fight` ("
                 + "`Team1` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Team2` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
@@ -286,14 +285,14 @@ public class MySQL extends SQL {
     }
 
     private void createTableDuel() throws SQLException {
-        String sqlQuery = "CREATE TABLE `duel` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `duel` ("
                 + "`Team1` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Team2` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
-                + "`GroupIndex` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
-                + "`TournamentGroup` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
-                + "`TournamentLevel` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
-                + "`MemberOrder` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
+                + "`GroupIndex` int(" + MYSQL_MAX_INT_LENGTH + ") unsigned NOT NULL,"
+                + "`TournamentGroup` int(" + MYSQL_MAX_INT_LENGTH + ") unsigned NOT NULL,"
+                + "`TournamentLevel` int(" + MYSQL_MAX_INT_LENGTH + ") unsigned NOT NULL,"
+                + "`MemberOrder` int(" + MYSQL_MAX_INT_LENGTH + ") unsigned NOT NULL,"
                 + "`PointPlayer1A` char(1) NOT NULL,"
                 + "`PointPlayer1B` char(1) NOT NULL,"
                 + "`PointPlayer2A` char(1) NOT NULL,"
@@ -301,16 +300,14 @@ public class MySQL extends SQL {
                 + "`FaultsPlayer1` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
                 + "`FaultsPlayer2` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
                 + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),"
-                + "KEY `fk_duel_1` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),"
-                + "KEY `fight_FK` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`),"
                 + "KEY `Fight_K` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`,`TournamentGroup`),  "
-                + "CONSTRAINT `Fight`  FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) ON DELETE NO ACTION ON UPDATE NO ACTION"
+                + "CONSTRAINT `DuelOfFight`  FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
         createTable(sqlQuery);
     }
 
     private void createTableUndraw() throws SQLException {
-        String sqlQuery = "CREATE TABLE `undraw` ("
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `undraw` ("
                 + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL , "
                 + "`Points` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL  DEFAULT 1, "
                 + "`TournamentLevel` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL , "
@@ -326,7 +323,7 @@ public class MySQL extends SQL {
     }
 
     private void createTableCustomLink() throws SQLException {
-        String sqlQuery = "CREATE TABLE `customlinks` (" + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
+        String sqlQuery = "CREATE TABLE IF NOT EXISTS `customlinks` (" + "`Tournament` varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "`SourceGroup` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL," + "`AddressGroup` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
                 + "`WinnerOrder` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL," + "PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)"
                 + ") " + MYSQL_TABLE_DEFINITION;
@@ -351,7 +348,7 @@ public class MySQL extends SQL {
             KendoLog.errorMessage("MySQL", ex);
             return false;
         }
-        if (count > 0) {
+        if (count > DATABASE_NUMBER_TABLES) {
             return true;
         }
         return false;

@@ -92,7 +92,6 @@ public abstract class SQL extends Database {
     }
     
     protected synchronized void createTable(String query) throws SQLException {
-        System.out.println(query);
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(query);
         } catch (SQLException ex) {

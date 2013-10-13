@@ -138,8 +138,8 @@ public class SQLite extends SQL {
     public void installDatabase(String database)
             throws Exception {
         createTableTournament();
-        createTableCompetitor();
         createTableClub();
+        createTableCompetitor();
         createTableRole();
         createTableTeam();
         createTableFight();
@@ -233,10 +233,10 @@ public class SQLite extends SQL {
                 + "\"Team1\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "\"Team2\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
                 + "\"Tournament\" varchar(" + MAX_NAME_LENGTH + ") NOT NULL,"
-                + "\"GroupIndex\" integer NOT NULL,"
-                + "\"TournamentGroup\" integer NOT NULL,"
-                + "\"TournamentLevel\" integer NOT NULL,"
-                + "\"MemberOrder\" integer NOT NULL,"
+                + "\"GroupIndex\" integer unsigned NOT NULL,"
+                + "\"TournamentGroup\" integer unsigned NOT NULL,"
+                + "\"TournamentLevel\" integer unsigned NOT NULL,"
+                + "\"MemberOrder\" integer unsigned NOT NULL,"
                 + "\"PointPlayer1A\" char(1) NOT NULL,"
                 + "\"PointPlayer1B\" char(1) NOT NULL,"
                 + "\"PointPlayer2A\" char(1) NOT NULL,"
@@ -244,7 +244,7 @@ public class SQLite extends SQL {
                 + "\"FaultsPlayer1\" integer NOT NULL,"
                 + "\"FaultsPlayer2\" integer NOT NULL,"
                 + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),"
-                + "CONSTRAINT \"Fight\"  FOREIGN KEY (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") REFERENCES \"fight\" (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") ON DELETE NO ACTION ON UPDATE NO ACTION"
+                + "CONSTRAINT \"DuelOfFight\"  FOREIGN KEY (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") REFERENCES \"fight\" (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") ON DELETE NO ACTION ON UPDATE NO ACTION"
                 + ")";
         createTable(sqlQuery);
     }
