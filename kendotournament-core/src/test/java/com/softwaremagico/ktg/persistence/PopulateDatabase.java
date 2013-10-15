@@ -23,7 +23,7 @@ public class PopulateDatabase {
     protected static final String[] competitors = {"comp1", "comp2", "comp3", "comp4", "comp5", "comp6"};
 
     public DatabaseEngine getDatabaseTested() {
-        return DatabaseEngine.MySQL;
+        return DatabaseEngine.SQLite;
     }
 
     /**

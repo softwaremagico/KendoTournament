@@ -26,6 +26,8 @@ package com.softwaremagico.ktg.files;
  * #L%
  */
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 public class Path {
 
@@ -46,7 +48,12 @@ public class Path {
             String path = Path.class.getProtectionDomain().getCodeSource().getLocation().getPath();
             File libPath = new File(path);
             File parent = libPath.getParentFile().getParentFile();
-            rootPath = parent.getAbsolutePath() + File.separator;
+            try {
+            	//Convert '%20' into space. 
+				rootPath = URLDecoder.decode(parent.getAbsolutePath() + File.separator, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				rootPath = parent.getAbsolutePath() + File.separator;
+			}
         }
         return rootPath;
     }
