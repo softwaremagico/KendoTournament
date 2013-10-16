@@ -204,7 +204,7 @@ public class FightPanel extends KFrame {
 
         return showMenu;
     }
-
+    
     private JMenu createOptionsMenu() {
         KMenu optionsMenu = new KMenu("OptionsMenu");
         optionsMenu.setMnemonic(KeyEvent.VK_O);
@@ -399,8 +399,11 @@ public class FightPanel extends KFrame {
                 || getSelectedTournament().getType().equals(TournamentType.LEAGUE_TREE)
                 || getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
             showTreeMenuItem.setEnabled(true);
+            //Disable group score panel if not useful. 
+            groupScoreMenuItem.setEnabled(true);
         } else {
             showTreeMenuItem.setEnabled(false);
+            groupScoreMenuItem.setEnabled(false);
         }
     }
 
