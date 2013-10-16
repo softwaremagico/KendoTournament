@@ -1,0 +1,1 @@
+java -Xms128M -Djava.net.preferIPv4Stack=true -jar "/usr/share/kendo-tournament-manager/KendoTournamentManager.jar"
