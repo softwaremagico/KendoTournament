@@ -49,11 +49,11 @@ public class Path {
             File libPath = new File(path);
             File parent = libPath.getParentFile().getParentFile();
             try {
-            	//Convert '%20' into space. 
-				rootPath = URLDecoder.decode(parent.getAbsolutePath() + File.separator, "utf-8");
-			} catch (UnsupportedEncodingException e) {
-				rootPath = parent.getAbsolutePath() + File.separator;
-			}
+                //Convert '%20' into space. 
+                rootPath = URLDecoder.decode(parent.getAbsolutePath() + File.separator, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                rootPath = parent.getAbsolutePath() + File.separator;
+            }
         }
         return rootPath;
     }

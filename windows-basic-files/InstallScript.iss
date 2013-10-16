@@ -24,7 +24,7 @@ DefaultGroupName=SoftwareMagico\KendoTournament
 AllowNoIcons=yes
 LicenseFile=.\gnu.txt
 InfoAfterFile=.\Readme.txt
-OutputBaseFilename=KendoTournamentGenerator
+OutputBaseFilename=KendoTournamentManager
 SetupIconFile=.\icon.ico
 Compression=lzma
 SolidCompression=yes
@@ -43,8 +43,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: ".\KendoTournamentGenerator.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: ".\KendoTournamentGenerator.jar"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\KendoTournamentManager.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: ".\KendoTournamentManager.jar"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\gnu.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\translations\*"; DestDir: "{app}\translations"; Flags: ignoreversion recursesubdirs createallsubdirs
