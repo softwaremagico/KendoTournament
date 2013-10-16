@@ -74,6 +74,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
                 AlertManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {
+                AlertManager.translatedMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.ERROR_MESSAGE);
                 connectionPanel.resetPassword();
             }
         } catch (SQLException ex) {

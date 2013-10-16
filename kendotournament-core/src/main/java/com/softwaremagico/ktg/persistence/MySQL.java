@@ -348,7 +348,7 @@ public class MySQL extends SQL {
             KendoLog.errorMessage("MySQL", ex);
             return false;
         }
-        if (count > DATABASE_NUMBER_TABLES) {
+        if (count == DATABASE_NUMBER_TABLES) {
             return true;
         }
         return false;
