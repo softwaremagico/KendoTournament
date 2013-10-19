@@ -112,7 +112,7 @@ public class MySQL extends SQL {
                     error = true;
                 }
             } else {
-                showSqlError(ex);
+                throw ex;
             }
         }
         return !error;
@@ -141,7 +141,6 @@ public class MySQL extends SQL {
     }
 
     private void executeCommand(String[] commands) {
-        showCommand(commands);
         try {
             Process child = Runtime.getRuntime().exec(commands);
             showCommandOutput(child);

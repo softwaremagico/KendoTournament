@@ -628,13 +628,12 @@ public abstract class SQL extends Database {
                 } else {
                     storeBinaryStream(stmt, 13, null, 0);
                     stmt.setLong(14, 0);
-                }
-                stmt.executeUpdate();
+                } 
+               stmt.executeUpdate();
             } catch (SQLException ex) {
                 showSqlError(ex);
                 return false;
             } catch (NullPointerException npe) {
-                npe.printStackTrace();
                 KendoLog.severe(this.getClass().getName(), "Database connection fail");
                 throw new SQLException("Database connection fail.");
             }

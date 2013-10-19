@@ -49,7 +49,7 @@ import java.util.List;
 
 public abstract class Database {
 
-    Connection connection = null;
+    protected Connection connection = null;
 
     public Database() {
     }
@@ -74,13 +74,6 @@ public abstract class Database {
     }
 
     abstract void startDatabase();
-
-    void showCommand(String[] commands) {
-        for (int i = 0; i < commands.length; i++) {
-            System.out.print(commands[i] + " ");
-        }
-        System.out.println();
-    }
 
     void showCommandOutput(Process child) throws IOException {
         try (InputStream in = child.getInputStream()) {

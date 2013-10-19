@@ -29,18 +29,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public enum DatabaseEngine {
 
-    MySQL(true, new MySQL()),
-    SQLite(false, new SQLite());
+    MySQL(true),
+    SQLite(false);
     private final boolean networkConnection;
-    private Database database = null;
     private static final List<DatabaseEngine> availableDatabase = new ArrayList<>();
 
-    DatabaseEngine(boolean network, Database db) {
+    DatabaseEngine(boolean network) {
         this.networkConnection = network;
-        this.database = db;
     }
 
     public boolean getHasNetworkConnection() {
@@ -70,11 +67,17 @@ public enum DatabaseEngine {
     }
 
     public Database getDatabaseClass() {
-        return database;
+        switch (this) {
+            case MySQL:
+                return new MySQL();
+            case SQLite:
+                return new SQLite();
+        }
+        return null;
     }
 
     public static Database getDatabaseClass(String database) {
-        return getDatabase(database).database;
+        return getDatabase(database).getDatabaseClass();
     }
 
     static {

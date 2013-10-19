@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
+import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
@@ -99,7 +100,7 @@ public class ConvertDatabase {
                 timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"), 0, 1);
                 List<Tournament> tournaments = fromDatabase.getTournaments();
                 toDatabase.addTournaments(tournaments);
-
+                
                 Integer total = 3 + tournaments.size() * 5;
                 Integer current = 0;
 
@@ -135,7 +136,7 @@ public class ConvertDatabase {
 
                 timerPanel.dispose();
                 AlertManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
-            } catch (Exception e) {
+            } catch (SQLException | TeamMemberOrderException e) {
                 AlertManager.showErrorInformation(this.getClass().getName(), e);
                 timerPanel.dispose();
                 return false;
