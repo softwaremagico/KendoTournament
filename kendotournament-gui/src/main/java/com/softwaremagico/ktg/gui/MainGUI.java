@@ -124,6 +124,7 @@ public final class MainGUI extends KendoFrame {
         FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
         AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
         TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
+        CompetitorsGlobalScoreMenuItem.setText(trans.getTranslatedText("PointListMenuItem"));
     }
 
     private void setPhoto() {
@@ -387,6 +388,10 @@ public final class MainGUI extends KendoFrame {
         TournamentTreeMenuItem.addActionListener(al);
     }
 
+    public void addCompetitorsGlobalScoreMenuItemListener(ActionListener al) {
+        CompetitorsGlobalScoreMenuItem.addActionListener(al);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -433,6 +438,7 @@ public final class MainGUI extends KendoFrame {
         FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
+        CompetitorsGlobalScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
         StatisticsMenu = new javax.swing.JMenu();
         TournamentStatisticsMenu = new javax.swing.JMenu();
@@ -588,6 +594,9 @@ public final class MainGUI extends KendoFrame {
         TournamentTreeMenuItem.setText("TournamentTree");
         ListMenu.add(TournamentTreeMenuItem);
 
+        CompetitorsGlobalScoreMenuItem.setText("CompetitorsGlobalScore");
+        ListMenu.add(CompetitorsGlobalScoreMenuItem);
+
         DiplomaMenuItem.setText("Diploma");
         ListMenu.add(DiplomaMenuItem);
 
@@ -688,7 +697,7 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -736,6 +745,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem ClubMenuItem;
     private javax.swing.JMenuItem CompetitorMenuItem;
     private javax.swing.JMenu CompetitorStatisticsMenu;
+    private javax.swing.JMenuItem CompetitorsGlobalScoreMenuItem;
     private javax.swing.JMenuItem ConvertDatabaseMenuItem;
     private javax.swing.JMenuItem DatabaseConnectMenuItem;
     private javax.swing.JMenuItem DatabaseDisconnectMenuItem;

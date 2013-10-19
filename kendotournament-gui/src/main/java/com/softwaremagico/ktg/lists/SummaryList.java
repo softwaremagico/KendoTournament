@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.Tournament;
 public class SummaryList extends ListFromTournamentCreatePDF {
 
 	public SummaryList() {
-		super();
+		super(false);
 		this.setTitle(trans.getTranslatedText("titleSummary"));
 		ArenaComboBox.setEnabled(true);
 	}

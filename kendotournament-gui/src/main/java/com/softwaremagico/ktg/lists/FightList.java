@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.Tournament;
 public class FightList extends ListFromTournamentCreatePDF {
 
     public FightList() {
-        super();
+        super(false);
         this.setTitle(trans.getTranslatedText("titleListFights"));
     }
 

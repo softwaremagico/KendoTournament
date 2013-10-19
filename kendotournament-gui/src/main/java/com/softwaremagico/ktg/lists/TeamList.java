@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.lists;
 public class TeamList extends ListFromTournamentCreatePDF {
 
     public TeamList() {
-        super();
+        super(false);
         this.setTitle(trans.getTranslatedText("titleListTeams"));
     }
 

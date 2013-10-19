@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.core.Tournament;
 public class EmptyFightsList extends ListFromTournamentCreatePDF {
 
 	public EmptyFightsList() {
-		super();
+		super(false);
 		this.setTitle(trans.getTranslatedText("titleSummary"));
 		ArenaComboBox.setEnabled(true);
 		CheckBox.setVisible(true);

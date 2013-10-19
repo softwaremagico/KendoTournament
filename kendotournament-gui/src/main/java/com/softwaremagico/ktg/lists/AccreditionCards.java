@@ -40,7 +40,7 @@ public class AccreditionCards extends ListFromTournamentCreatePDF {
     private Integer size;
 
     public AccreditionCards() {
-        super();
+        super(false);
         this.setTitle(trans.getTranslatedText("titleAccreditionCard"));
         CheckBox.setVisible(true);
         changeCheckBoxText(trans.getTranslatedText("PrintAll"));

@@ -43,6 +43,7 @@ import com.softwaremagico.ktg.lists.FightList;
 import com.softwaremagico.ktg.lists.ListFromTournamentTree;
 import com.softwaremagico.ktg.lists.PointList;
 import com.softwaremagico.ktg.lists.RefereeList;
+import com.softwaremagico.ktg.lists.SelectTournamentForCompetitorPointList;
 import com.softwaremagico.ktg.lists.SummaryList;
 import com.softwaremagico.ktg.lists.TeamList;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
@@ -108,6 +109,7 @@ public class Controller {
     private ChangeOrderTeam changeTeam = null;
     private DatabaseConversor databaseConversor = null;
     private ListFromTournamentTree listFromTournamentTree = null;
+    private SelectTournamentForCompetitorPointList competitorsScoreList = null;
 
     public Controller(MainGUI tmp_gui) {
         main = tmp_gui;
@@ -189,13 +191,14 @@ public class Controller {
         main.addConvertDatabaseMenuItemListener(new DatabaseConversorListener());
         main.addSaveMenuItemListener(new SaveListener());
         main.addTreeOptionMenuItemListener(new TournamentTreeListener());
+        main.addCompetitorsGlobalScoreMenuItemListener(new NewCompetitorsScoreListListener());
     }
-    
+
     class TournamentTreeListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-             try {
+            try {
                 listFromTournamentTree.dispose();
             } catch (NullPointerException npe) {
             }
@@ -468,6 +471,19 @@ public class Controller {
             }
             fightsCard = new EmptyFightsList();
             fightsCard.setVisible(true);
+        }
+    }
+
+    class NewCompetitorsScoreListListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                competitorsScoreList.dispose();
+            } catch (NullPointerException npe) {
+            }
+            competitorsScoreList = new SelectTournamentForCompetitorPointList();
+            competitorsScoreList.setVisible(true);
         }
     }
 
@@ -1084,7 +1100,7 @@ public class Controller {
                 //Update GUI.
                 fightPanel.update();
             } catch (NullPointerException npe) {
-            }            
+            }
         }
     }
 

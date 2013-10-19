@@ -46,7 +46,7 @@ public class DiplomaGenerator extends ListFromTournamentCreatePDF {
     private List<RoleTag> selectedRoles = null;
 
     public DiplomaGenerator(float nposition, boolean printStatistics, List<RoleTag> roles) {
-        super();
+        super(false);
         this.nameposition = nposition;
         this.statistics = printStatistics;
         this.selectedRoles = roles;

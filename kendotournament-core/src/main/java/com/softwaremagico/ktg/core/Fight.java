@@ -117,7 +117,7 @@ public class Fight implements Comparable<Fight> {
     public void setAsignedFightArea(int asignedFightArea) {
         this.asignedFightArea = asignedFightArea;
     }
-
+    
     public List<Duel> getDuels() {
         try {
             return DuelPool.getInstance().get(tournament, this);
@@ -246,6 +246,22 @@ public class Fight implements Comparable<Fight> {
         }
         return 0;
     }
+    
+    public Integer getDuels(RegisteredPerson competitor) {
+        int duels = 0;
+        if (competitor != null) {
+            for (int i = 0; i < getDuels().size(); i++) {
+                if (team1.getMember(i, getIndex()) != null && team1.getMember(i, getIndex()).equals(competitor)) {
+                    duels++;
+                }
+                if (team2.getMember(i, getIndex()) != null && team2.getMember(i, getIndex()).equals(competitor)) {
+                    duels++;
+                }
+            }
+        }
+        return duels;
+    }
+
 
     public Integer getWonDuels(RegisteredPerson competitor) {
         int winDuels = 0;

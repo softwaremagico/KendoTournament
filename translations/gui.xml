@@ -2123,4 +2123,12 @@
 		<ca>Concloure Campionat</ca>
 		<it>Finire Campionato</it>
 	</FinishGroupButton>
+	<GeneralClassification>
+		<en>General Classification</en>
+		<es>Clasificación General</es>
+		<nl>General Classification</nl>
+		<de>General Classification</de>
+		<ca>Classificació General</ca>
+		<it>Classificazione Generale</it>
+	</GeneralClassification>
 </translator>

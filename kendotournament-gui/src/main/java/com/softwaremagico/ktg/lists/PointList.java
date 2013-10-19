@@ -27,7 +27,7 @@ package com.softwaremagico.ktg.lists;
 public class PointList extends ListFromTournamentCreatePDF {
 
     public PointList() {
-        super();
+        super(false);
         this.setTitle(trans.getTranslatedText("titleListPoints"));
     }
 

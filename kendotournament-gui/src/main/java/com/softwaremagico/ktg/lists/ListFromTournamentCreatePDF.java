@@ -35,8 +35,8 @@ import javax.swing.JFileChooser;
 
 public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCreateFile {
 
-    public ListFromTournamentCreatePDF() {
-        createGui(false);
+    public ListFromTournamentCreatePDF(boolean allowAllTournaments) {
+        createGui(allowAllTournaments);
         addGenerateListeners();
     }
 

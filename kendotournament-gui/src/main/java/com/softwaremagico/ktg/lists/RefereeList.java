@@ -29,7 +29,7 @@ import com.softwaremagico.ktg.persistence.RolePool;
 public class RefereeList extends ListFromTournamentCreatePDF {
 
     public RefereeList() {
-        super();
+        super(false);
         this.setTitle(trans.getTranslatedText("titleListReferee"));
     }
 
