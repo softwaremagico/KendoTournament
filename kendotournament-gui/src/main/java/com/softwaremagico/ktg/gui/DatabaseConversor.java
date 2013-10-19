@@ -38,7 +38,7 @@ import java.awt.Toolkit;
  * @author LOCAL\jhortelano
  */
 public class DatabaseConversor extends javax.swing.JFrame {
-
+    
     private DatabaseConnectionPanel fromDatabaseConnectionPanel = new DatabaseConnectionPanel();
     private DatabaseConnectionPanel toDatabaseConnectionPanel = new DatabaseConnectionPanel();
 
@@ -52,16 +52,19 @@ public class DatabaseConversor extends javax.swing.JFrame {
         setLanguage();
         SourcePanel.add(fromDatabaseConnectionPanel);
         fromDatabaseConnectionPanel.setBounds(new Rectangle(SourcePanel.getSize().width, SourcePanel.getSize().height));
+        if (DatabaseConnection.getInstance().getPassword() != null) {
+            fromDatabaseConnectionPanel.setPassword(DatabaseConnection.getInstance().getPassword());
+        }
         //fromDatabaseConnectionPanel.resetPassword();
         fromDatabaseConnectionPanel.setSelectedEngine(DatabaseConnection.getInstance().getDatabaseEngine().name());
-
+        
         DestinationPanel.add(toDatabaseConnectionPanel);
         toDatabaseConnectionPanel.setBounds(new Rectangle(DestinationPanel.getSize().width, DestinationPanel.getSize().height));
         toDatabaseConnectionPanel.resetPassword();
         toDatabaseConnectionPanel.setSelectedEngine(DatabaseEngine.getOtherDatabase(DatabaseConnection.getInstance().getDatabaseEngine().name()).name());
-
+        
     }
-
+    
     private void setLanguage() {
         Translator trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.getTranslatedText("ConvertDatabase"));
@@ -195,7 +198,7 @@ public class DatabaseConversor extends javax.swing.JFrame {
     private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CloseButtonActionPerformed
-
+    
     private void ExportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExportButtonActionPerformed
         Database fromDatabase = DatabaseEngine.getDatabaseClass(fromDatabaseConnectionPanel.getSelectedEngine());
         Database toDatabase = DatabaseEngine.getDatabaseClass(toDatabaseConnectionPanel.getSelectedEngine());
@@ -207,7 +210,7 @@ public class DatabaseConversor extends javax.swing.JFrame {
             AlertManager.errorMessage(this.getClass().getName(), "databaseConnectionFailure", "MySQL");
         }
     }//GEN-LAST:event_ExportButtonActionPerformed
-
+    
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.toFront();
     }//GEN-LAST:event_formWindowOpened

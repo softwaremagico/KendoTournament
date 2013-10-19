@@ -36,7 +36,6 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.TimerPanel;
-import com.softwaremagico.ktg.persistence.Database;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -67,8 +66,8 @@ public class ConvertDatabase {
     private boolean createConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
             String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) throws CommunicationsException {
         try {
-            if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer, true, false)) {
-                if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer, true, false)) {
+            if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer, true, true)) {
+                if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer, true, true)) {
                     return true;
                 }
             }

@@ -112,7 +112,7 @@ public class MySQL extends SQL {
                     error = true;
                 }
             } else {
-                throw ex;
+                showSqlError(ex);
             }
         }
         return !error;

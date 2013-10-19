@@ -107,6 +107,10 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
         }
         return p;
     }
+    
+    public void setPassword(String password){
+        PasswordField.setText(password);
+    }
 
     public String getUser() {
         return UserTextField.getText();
