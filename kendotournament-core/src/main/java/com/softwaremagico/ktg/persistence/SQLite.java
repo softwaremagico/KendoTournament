@@ -381,4 +381,9 @@ public class SQLite extends SQL {
         // #define SQLITE_ROW 100 /* sqlite_step() has another row ready */
         // #define SQLITE_DONE 101 /* sqlite_step() has finished executing */
     }
+
+    @Override
+    protected String getBoolean(Boolean value) {
+        return value ? 1 + "" : 0 + "";
+    }
 }

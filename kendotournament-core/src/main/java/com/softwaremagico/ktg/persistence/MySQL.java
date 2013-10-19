@@ -401,4 +401,9 @@ public class MySQL extends SQL {
         KendoLog.errorMessage(this.getClass().getName(), exception);
         return trans.getTranslatedText("unknownDatabaseError");
     }
+    
+    @Override
+    protected String getBoolean(Boolean value) {
+        return value.toString();
+    }
 }

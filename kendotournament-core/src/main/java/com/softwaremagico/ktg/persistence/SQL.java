@@ -136,13 +136,8 @@ public abstract class SQL extends Database {
             throws SQLException;
 
     protected abstract InputStream getBinaryStream(ResultSet rs, String column) throws SQLException;
-
-    private String getBoolean(Boolean value) {
-        if (DatabaseConnection.getInstance().getDatabaseEngine().equals(DatabaseEngine.SQLite)) {
-            return value ? 1 + "" : 0 + "";
-        }
-        return value.toString();
-    }
+    
+    protected abstract String getBoolean(Boolean value);
 
     protected abstract int getMaxElementsInQuery();
 
@@ -639,6 +634,7 @@ public abstract class SQL extends Database {
                 showSqlError(ex);
                 return false;
             } catch (NullPointerException npe) {
+                npe.printStackTrace();
                 KendoLog.severe(this.getClass().getName(), "Database connection fail");
                 throw new SQLException("Database connection fail.");
             }

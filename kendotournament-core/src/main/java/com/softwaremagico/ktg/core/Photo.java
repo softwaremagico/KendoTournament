@@ -104,7 +104,7 @@ public class Photo {
 
     public InputStream getInput() {
         try {
-            if (photoInput.markSupported()) {
+            if (photoInput != null && photoInput.markSupported()) {
                 photoInput.reset();
             }
         } catch (IOException ex) {
