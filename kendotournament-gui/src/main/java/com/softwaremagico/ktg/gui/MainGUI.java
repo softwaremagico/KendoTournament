@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
@@ -49,352 +48,352 @@ import javax.swing.JRadioButtonMenuItem;
 
 public final class MainGUI extends KendoFrame {
 
-	Translator trans = null;
-	private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
-	private boolean refresh = true;
+    Translator trans = null;
+    private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
+    private boolean refresh = true;
 
-	/**
-	 * Creates new form MainGUI
-	 */
-	public MainGUI() {
-		initComponents();
-		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-		setLanguage();
-		setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
-		completeLanguageMenu();
-		enableMenuItems();
-		setPhoto();
-		updateConfig();
-		addCloseAction();
-	}
+    /**
+     * Creates new form MainGUI
+     */
+    public MainGUI() {
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setLanguage();
+        setIconImage(new ImageIcon(this.getClass().getResource("/kendo.png")).getImage());
+        completeLanguageMenu();
+        enableMenuItems();
+        setPhoto();
+        updateConfig();
+        addCloseAction();
+    }
 
-	/**
-	 * Translate the GUI to the selected language.
-	 */
-	public final void setLanguage() {
-		trans = LanguagePool.getTranslator("gui.xml");
-		SaveMenuItem.setText(trans.getTranslatedText("SaveMenuItem"));
-		TournamentMenu.setText(trans.getTranslatedText("FileMenu"));
-		LanguageMenu.setText(trans.getTranslatedText("LanguageMenu"));
-		OptionsMenu.setText(trans.getTranslatedText("OptionsMenu"));
-		StatisticsMenu.setText(trans.getTranslatedText("StatisticsMenu"));
-		InsertMenu.setText(trans.getTranslatedText("InsertMenu"));
-		TournamentMenu.setText(trans.getTranslatedText("TournamentMenu"));
-		TournamentPanelMenuItem.setText(trans.getTranslatedText("TournamentPanelMenuItem"));
-		HelpMenu.setText(trans.getTranslatedText("HelpMenu"));
-		AboutMenuItem.setText(trans.getTranslatedText("AboutMenu"));
-		CompetitorMenuItem.setText(trans.getTranslatedText("CompetitorMenuItem"));
-		RoleMenuItem.setText(trans.getTranslatedText("RoleMenuItem"));
-		TournamentMenuItem.setText(trans.getTranslatedText("TournamentMenuItem"));
-		ClubMenuItem.setText(trans.getTranslatedText("ClubMenuItem"));
-		TeamMenuItem.setText(trans.getTranslatedText("TeamMenuItem"));
-		FightMenuItem.setText(trans.getTranslatedText("FightMenuItem"));
-		DatabaseMenu.setText(trans.getTranslatedText("DatabaseMenu"));
-		DatabaseConnectMenuItem.setText(trans.getTranslatedText("DatabaseConnectMenuItem"));
-		DatabaseDisconnectMenuItem.setText(trans.getTranslatedText("DatabaseDisconnectMenuItem"));
-		ListMenu.setText(trans.getTranslatedText("ListMenu"));
-		TeamListMenuItem.setText(trans.getTranslatedText("TeamListMenuItem"));
-		FightListMenuItem.setText(trans.getTranslatedText("FightListMenuItem"));
-		PointListMenuItem.setText(trans.getTranslatedText("PointListMenuItem"));
-		DiplomaMenuItem.setText(trans.getTranslatedText("DiplomaMenuItem"));
-		CompetitorStatisticsMenu.setText(trans.getTranslatedText("CompetitorStatisticsMenu"));
-		PerformedHitsMenuItem.setText(trans.getTranslatedText("PerformedHitsStatisticsMenuItem"));
-		ReceivedHitsMenuItem.setText(trans.getTranslatedText("ReceivedHitsStatisticsMenuItem"));
-		WonLostMenuItem.setText(trans.getTranslatedText("WonLostMenuItem"));
-		TournamentStatisticsMenu.setText(trans.getTranslatedText("TournamentStatisticsMenu"));
-		TeamStatisticsMenu.setText(trans.getTranslatedText("TeamStatisticsMenu"));
-		TournamentTopTenMenuItem.setText(trans.getTranslatedText("TournamentTopTenMenuItem"));
-		TournamentHitsStatisticsMenuItem.setText(trans.getTranslatedText("TournamentHitsStatisticsMenuItem"));
-		DefineFightsMenu.setText(trans.getTranslatedText("DefineFightsMenu"));
-		ProgramMenu.setText(trans.getTranslatedText("ProgramMenu"));
-		ExitMenuItem.setText(trans.getTranslatedText("ExitMenuItem"));
-		ManualFightsMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
-		RingMenuItem.setText(trans.getTranslatedText("RingMenuItem"));
-		DesignerMenuItem.setText(trans.getTranslatedText("DesignerMenuItem"));
-		TeamTopTenMenuItem.setText(trans.getTranslatedText("TeamTopTenMenuItem"));
-		AccreditationMenuItem.setText(trans.getTranslatedText("AccreditationMenuItem"));
-		HelpMenuItem.setText(trans.getTranslatedText("HelpMenuItem"));
-		SummaryMenuItem.setText(trans.getTranslatedText("SummaryMenuItem"));
-		ClubListMenuItem.setText(trans.getTranslatedText("ClubListMenuItem"));
-		RefereeListMenuItem.setText(trans.getTranslatedText("RefereeListMenuItem"));
-		ScoreMenuItem.setText(trans.getTranslatedText("ScoreMenuItem"));
-		LogMenuCheckBox.setText(trans.getTranslatedText("LogOption"));
-		DebugMenuCheckBox.setText(trans.getTranslatedText("DebugOption"));
-		ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
-		FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
-		AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
-                TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
-	}
+    /**
+     * Translate the GUI to the selected language.
+     */
+    public final void setLanguage() {
+        trans = LanguagePool.getTranslator("gui.xml");
+        SaveMenuItem.setText(trans.getTranslatedText("SaveMenuItem"));
+        TournamentMenu.setText(trans.getTranslatedText("FileMenu"));
+        LanguageMenu.setText(trans.getTranslatedText("LanguageMenu"));
+        OptionsMenu.setText(trans.getTranslatedText("OptionsMenu"));
+        StatisticsMenu.setText(trans.getTranslatedText("StatisticsMenu"));
+        InsertMenu.setText(trans.getTranslatedText("InsertMenu"));
+        TournamentMenu.setText(trans.getTranslatedText("TournamentMenu"));
+        TournamentPanelMenuItem.setText(trans.getTranslatedText("TournamentPanelMenuItem"));
+        HelpMenu.setText(trans.getTranslatedText("HelpMenu"));
+        AboutMenuItem.setText(trans.getTranslatedText("AboutMenu"));
+        CompetitorMenuItem.setText(trans.getTranslatedText("CompetitorMenuItem"));
+        RoleMenuItem.setText(trans.getTranslatedText("RoleMenuItem"));
+        TournamentMenuItem.setText(trans.getTranslatedText("TournamentMenuItem"));
+        ClubMenuItem.setText(trans.getTranslatedText("ClubMenuItem"));
+        TeamMenuItem.setText(trans.getTranslatedText("TeamMenuItem"));
+        FightMenuItem.setText(trans.getTranslatedText("FightMenuItem"));
+        DatabaseMenu.setText(trans.getTranslatedText("DatabaseMenu"));
+        DatabaseConnectMenuItem.setText(trans.getTranslatedText("DatabaseConnectMenuItem"));
+        DatabaseDisconnectMenuItem.setText(trans.getTranslatedText("DatabaseDisconnectMenuItem"));
+        ListMenu.setText(trans.getTranslatedText("ListMenu"));
+        TeamListMenuItem.setText(trans.getTranslatedText("TeamListMenuItem"));
+        FightListMenuItem.setText(trans.getTranslatedText("FightListMenuItem"));
+        PointListMenuItem.setText(trans.getTranslatedText("PointListMenuItem"));
+        DiplomaMenuItem.setText(trans.getTranslatedText("DiplomaMenuItem"));
+        CompetitorStatisticsMenu.setText(trans.getTranslatedText("CompetitorStatisticsMenu"));
+        PerformedHitsMenuItem.setText(trans.getTranslatedText("PerformedHitsStatisticsMenuItem"));
+        ReceivedHitsMenuItem.setText(trans.getTranslatedText("ReceivedHitsStatisticsMenuItem"));
+        WonLostMenuItem.setText(trans.getTranslatedText("WonLostMenuItem"));
+        TournamentStatisticsMenu.setText(trans.getTranslatedText("TournamentStatisticsMenu"));
+        TeamStatisticsMenu.setText(trans.getTranslatedText("TeamStatisticsMenu"));
+        TournamentTopTenMenuItem.setText(trans.getTranslatedText("TournamentTopTenMenuItem"));
+        TournamentHitsStatisticsMenuItem.setText(trans.getTranslatedText("TournamentHitsStatisticsMenuItem"));
+        DefineFightsMenu.setText(trans.getTranslatedText("DefineFightsMenu"));
+        ProgramMenu.setText(trans.getTranslatedText("ProgramMenu"));
+        ExitMenuItem.setText(trans.getTranslatedText("ExitMenuItem"));
+        ManualFightsMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
+        RingMenuItem.setText(trans.getTranslatedText("RingMenuItem"));
+        DesignerMenuItem.setText(trans.getTranslatedText("DesignerMenuItem"));
+        TeamTopTenMenuItem.setText(trans.getTranslatedText("TeamTopTenMenuItem"));
+        AccreditationMenuItem.setText(trans.getTranslatedText("AccreditationMenuItem"));
+        HelpMenuItem.setText(trans.getTranslatedText("HelpMenuItem"));
+        SummaryMenuItem.setText(trans.getTranslatedText("SummaryMenuItem"));
+        ClubListMenuItem.setText(trans.getTranslatedText("ClubListMenuItem"));
+        RefereeListMenuItem.setText(trans.getTranslatedText("RefereeListMenuItem"));
+        ScoreMenuItem.setText(trans.getTranslatedText("ScoreMenuItem"));
+        LogMenuCheckBox.setText(trans.getTranslatedText("LogOption"));
+        DebugMenuCheckBox.setText(trans.getTranslatedText("DebugOption"));
+        ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
+        FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
+        AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
+        TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
+    }
 
-	private void setPhoto() {
-		setPhoto(Path.getMainPhoto());
-	}
+    private void setPhoto() {
+        setPhoto(Path.getMainPhoto());
+    }
 
-	private void setPhoto(String path) {
-		setPhoto(Media.getImageFitted(path, MainPhotoPanel));
-	}
+    private void setPhoto(String path) {
+        setPhoto(Media.getImageFitted(path, MainPhotoPanel));
+    }
 
-	private void setPhoto(BufferedImage image) {
-		if (image != null) {
-			JLabel picLabel = new JLabel(new ImageIcon(image));
-			MainPhotoPanel.removeAll();
-			MainPhotoPanel.add(picLabel, 0);
-			MainPhotoPanel.revalidate();
-			MainPhotoPanel.repaint();
-		}
-	}
+    private void setPhoto(BufferedImage image) {
+        if (image != null) {
+            JLabel picLabel = new JLabel(new ImageIcon(image));
+            MainPhotoPanel.removeAll();
+            MainPhotoPanel.add(picLabel, 0);
+            MainPhotoPanel.revalidate();
+            MainPhotoPanel.repaint();
+        }
+    }
 
-	/**
-	 * Generates the Menu items depending on the lenguages available on the XML
-	 * files
-	 */
-	private void completeLanguageMenu() {
-		for (int i = 0; i < Translator.getAvailableLanguages().size(); i++) {
-			javax.swing.JRadioButtonMenuItem MenuItem;
-			MenuItem = new javax.swing.JRadioButtonMenuItem(Translator.getAvailableLanguages().get(i).getName(),
-					new ImageIcon(Path.getImagePath() + Translator.getAvailableLanguages().get(i).getFlag()));
-			if (KendoTournamentGenerator.getInstance().getLanguage()
-					.equals(Translator.getAvailableLanguages().get(i).getAbbreviature())) {
-				MenuItem.setSelected(true);
-			}
-			LanguageMenu.add(MenuItem);
-			LanguageButtonGroup.add(MenuItem);
-			languageList.add(MenuItem);
-		}
-	}
+    /**
+     * Generates the Menu items depending on the lenguages available on the XML
+     * files
+     */
+    private void completeLanguageMenu() {
+        for (int i = 0; i < Translator.getAvailableLanguages().size(); i++) {
+            javax.swing.JRadioButtonMenuItem MenuItem;
+            MenuItem = new javax.swing.JRadioButtonMenuItem(Translator.getAvailableLanguages().get(i).getName(),
+                    new ImageIcon(Path.getImagePath() + Translator.getAvailableLanguages().get(i).getFlag()));
+            if (KendoTournamentGenerator.getInstance().getLanguage()
+                    .equals(Translator.getAvailableLanguages().get(i).getAbbreviature())) {
+                MenuItem.setSelected(true);
+            }
+            LanguageMenu.add(MenuItem);
+            LanguageButtonGroup.add(MenuItem);
+            languageList.add(MenuItem);
+        }
+    }
 
-	public String getSelectedLanguage() {
-		for (int i = 0; i < languageList.size(); i++) {
-			if (languageList.get(i).isSelected()) {
-				return Translator.getAvailableLanguages().get(i).getAbbreviature();
-			}
-		}
-		return KendoTournamentGenerator.getInstance().getLanguage();
-	}
+    public String getSelectedLanguage() {
+        for (int i = 0; i < languageList.size(); i++) {
+            if (languageList.get(i).isSelected()) {
+                return Translator.getAvailableLanguages().get(i).getAbbreviature();
+            }
+        }
+        return KendoTournamentGenerator.getInstance().getLanguage();
+    }
 
-	/**
-	 * It is called from Controller performConnection();
-	 */
-	public void enableMenuItems() {
-		boolean connected;
-		connected = DatabaseConnection.getInstance().isDatabaseConnectionTested();
-		DatabaseConnectMenuItem.setEnabled(!connected);
-		DatabaseDisconnectMenuItem.setEnabled(connected);
-		InsertMenu.setEnabled(connected);
+    /**
+     * It is called from Controller performConnection();
+     */
+    public void enableMenuItems() {
+        boolean connected;
+        connected = DatabaseConnection.getInstance().isDatabaseConnectionTested();
+        DatabaseConnectMenuItem.setEnabled(!connected);
+        DatabaseDisconnectMenuItem.setEnabled(connected);
+        InsertMenu.setEnabled(connected);
 
-		boolean competitorCheck = connected && !ClubPool.getInstance().isEmpty();
-		CompetitorMenuItem.setEnabled(competitorCheck);
+        boolean competitorCheck = connected && !ClubPool.getInstance().isEmpty();
+        CompetitorMenuItem.setEnabled(competitorCheck);
 
-		boolean tournamentCheck = competitorCheck && !RegisteredPersonPool.getInstance().isEmpty();
-		TournamentMenuItem.setEnabled(tournamentCheck);
+        boolean tournamentCheck = competitorCheck && !RegisteredPersonPool.getInstance().isEmpty();
+        TournamentMenuItem.setEnabled(tournamentCheck);
 
-		boolean existTournaments = tournamentCheck && !TournamentPool.getInstance().isEmpty();
-		TournamentMenu.setEnabled(existTournaments);
-		ListMenu.setEnabled(existTournaments);
-		StatisticsMenu.setEnabled(existTournaments);
-	}
+        boolean existTournaments = tournamentCheck && !TournamentPool.getInstance().isEmpty();
+        TournamentMenu.setEnabled(existTournaments);
+        ListMenu.setEnabled(existTournaments);
+        StatisticsMenu.setEnabled(existTournaments);
+    }
 
-	@Override
-	public String defaultFileName() {
-		return "";
-	}
+    @Override
+    public String defaultFileName() {
+        return "";
+    }
 
-	private void updateConfig() {
-		refresh = false;
-		LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
-		DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
-		refresh = true;
-		AutosaveCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
-	}
+    private void updateConfig() {
+        refresh = false;
+        LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
+        DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
+        refresh = true;
+        AutosaveCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
+    }
 
-	private void close() {
-		// No data to store. Exit.
-		if (!DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
-			System.exit(0);
-		}
-		// Data not stored. Ask the user.
-		int confirmed = JOptionPane.showConfirmDialog(null, LanguagePool.getTranslator("messages.xml")
-				.getTranslatedText("saveBeforeExit"), "Exit", JOptionPane.YES_NO_CANCEL_OPTION);
-		if (confirmed == JOptionPane.YES_OPTION) {
-			if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
-				try {
-					DatabaseConnection.getInstance().updateDatabase();
-				} catch (SQLException ex) {
-					AlertManager.showSqlErrorMessage(ex);
-				}
-			}
-			System.exit(0);
-		} else if (confirmed == JOptionPane.NO_OPTION) {
-			System.exit(0);
-		} else {
-			// Do nothing.
-		}
-	}
+    private void close() {
+        // No data to store. Exit.
+        if (!DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
+            System.exit(0);
+        }
+        // Data not stored. Ask the user.
+        int confirmed = JOptionPane.showConfirmDialog(null, LanguagePool.getTranslator("messages.xml")
+                .getTranslatedText("saveBeforeExit"), "Exit", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (confirmed == JOptionPane.YES_OPTION) {
+            if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
+                try {
+                    DatabaseConnection.getInstance().updateDatabase();
+                } catch (SQLException ex) {
+                    AlertManager.showSqlErrorMessage(ex);
+                }
+            }
+            System.exit(0);
+        } else if (confirmed == JOptionPane.NO_OPTION) {
+            System.exit(0);
+        } else {
+            // Do nothing.
+        }
+    }
 
-	private void addCloseAction() {
+    private void addCloseAction() {
 
-		this.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				close();
-			}
-		});
-	}
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                close();
+            }
+        });
+    }
 
-	/**
-	 * **********************************************
-	 * 
-	 * LISTENERS
-	 * 
-	 *********************************************** 
-	 */
-	/**
-	 * Add the same action listener to all langugaes of the menu.
-	 * 
-	 * @param al
-	 */
-	public void addListenerToLanguages(ActionListener al) {
-		for (int i = 0; i < languageList.size(); i++) {
-			languageList.get(i).addActionListener(al);
-		}
-	}
+    /**
+     * **********************************************
+     *
+     * LISTENERS
+     *
+     ***********************************************
+     */
+    /**
+     * Add the same action listener to all langugaes of the menu.
+     *
+     * @param al
+     */
+    public void addListenerToLanguages(ActionListener al) {
+        for (int i = 0; i < languageList.size(); i++) {
+            languageList.get(i).addActionListener(al);
+        }
+    }
 
-	public void addAboutMenuItemListener(ActionListener al) {
-		AboutMenuItem.addActionListener(al);
-	}
+    public void addAboutMenuItemListener(ActionListener al) {
+        AboutMenuItem.addActionListener(al);
+    }
 
-	public void addCompetitorMenuItemListener(ActionListener al) {
-		CompetitorMenuItem.addActionListener(al);
-	}
+    public void addCompetitorMenuItemListener(ActionListener al) {
+        CompetitorMenuItem.addActionListener(al);
+    }
 
-	public void addRoleMenuItemListener(ActionListener al) {
-		RoleMenuItem.addActionListener(al);
-	}
+    public void addRoleMenuItemListener(ActionListener al) {
+        RoleMenuItem.addActionListener(al);
+    }
 
-	public void addTournamentMenuItemListener(ActionListener al) {
-		TournamentMenuItem.addActionListener(al);
-	}
+    public void addTournamentMenuItemListener(ActionListener al) {
+        TournamentMenuItem.addActionListener(al);
+    }
 
-	public void addTournamentPanelMenuItemListener(ActionListener al) {
-		TournamentPanelMenuItem.addActionListener(al);
-	}
+    public void addTournamentPanelMenuItemListener(ActionListener al) {
+        TournamentPanelMenuItem.addActionListener(al);
+    }
 
-	public void addClubMenuItemListener(ActionListener al) {
-		ClubMenuItem.addActionListener(al);
-	}
+    public void addClubMenuItemListener(ActionListener al) {
+        ClubMenuItem.addActionListener(al);
+    }
 
-	public void addTeamMenuItemListener(ActionListener al) {
-		TeamMenuItem.addActionListener(al);
-	}
+    public void addTeamMenuItemListener(ActionListener al) {
+        TeamMenuItem.addActionListener(al);
+    }
 
-	public void addConnectDatabaseMenuItemListener(ActionListener al) {
-		DatabaseConnectMenuItem.addActionListener(al);
-	}
+    public void addConnectDatabaseMenuItemListener(ActionListener al) {
+        DatabaseConnectMenuItem.addActionListener(al);
+    }
 
-	public void addTeamListMenuItemListener(ActionListener al) {
-		TeamListMenuItem.addActionListener(al);
-	}
+    public void addTeamListMenuItemListener(ActionListener al) {
+        TeamListMenuItem.addActionListener(al);
+    }
 
-	public void addRefereeListMenuItemListener(ActionListener al) {
-		RefereeListMenuItem.addActionListener(al);
-	}
+    public void addRefereeListMenuItemListener(ActionListener al) {
+        RefereeListMenuItem.addActionListener(al);
+    }
 
-	public void addFightListMenuItemListener(ActionListener al) {
-		FightListMenuItem.addActionListener(al);
-	}
+    public void addFightListMenuItemListener(ActionListener al) {
+        FightListMenuItem.addActionListener(al);
+    }
 
-	public void addPointListMenuItemListener(ActionListener al) {
-		PointListMenuItem.addActionListener(al);
-	}
+    public void addPointListMenuItemListener(ActionListener al) {
+        PointListMenuItem.addActionListener(al);
+    }
 
-	public void addDiplomaListMenuItemListener(ActionListener al) {
-		DiplomaMenuItem.addActionListener(al);
-	}
+    public void addDiplomaListMenuItemListener(ActionListener al) {
+        DiplomaMenuItem.addActionListener(al);
+    }
 
-	public void addSummaryMenuItemListener(ActionListener al) {
-		SummaryMenuItem.addActionListener(al);
-	}
+    public void addSummaryMenuItemListener(ActionListener al) {
+        SummaryMenuItem.addActionListener(al);
+    }
 
-	public void addClubListMenuItemListener(ActionListener al) {
-		ClubListMenuItem.addActionListener(al);
-	}
+    public void addClubListMenuItemListener(ActionListener al) {
+        ClubListMenuItem.addActionListener(al);
+    }
 
-	public void addHitsStatisticsMenuItemListener(ActionListener al) {
-		TournamentHitsStatisticsMenuItem.addActionListener(al);
-	}
+    public void addHitsStatisticsMenuItemListener(ActionListener al) {
+        TournamentHitsStatisticsMenuItem.addActionListener(al);
+    }
 
-	public void addPerformedHitsStatisticsMenuItemListener(ActionListener al) {
-		PerformedHitsMenuItem.addActionListener(al);
-	}
+    public void addPerformedHitsStatisticsMenuItemListener(ActionListener al) {
+        PerformedHitsMenuItem.addActionListener(al);
+    }
 
-	public void addReceivedHitsStatisticsMenuItemListener(ActionListener al) {
-		ReceivedHitsMenuItem.addActionListener(al);
-	}
+    public void addReceivedHitsStatisticsMenuItemListener(ActionListener al) {
+        ReceivedHitsMenuItem.addActionListener(al);
+    }
 
-	public void addWonFightsStatisticsMenuItemListener(ActionListener al) {
-		WonLostMenuItem.addActionListener(al);
-	}
+    public void addWonFightsStatisticsMenuItemListener(ActionListener al) {
+        WonLostMenuItem.addActionListener(al);
+    }
 
-	public void addTopTenStatisticsMenuItemListener(ActionListener al) {
-		TournamentTopTenMenuItem.addActionListener(al);
-	}
+    public void addTopTenStatisticsMenuItemListener(ActionListener al) {
+        TournamentTopTenMenuItem.addActionListener(al);
+    }
 
-	public void addManualMenuItemListener(ActionListener al) {
-		ManualFightsMenuItem.addActionListener(al);
-	}
+    public void addManualMenuItemListener(ActionListener al) {
+        ManualFightsMenuItem.addActionListener(al);
+    }
 
-	public void addFightMenuItemListener(ActionListener al) {
-		FightMenuItem.addActionListener(al);
-	}
+    public void addFightMenuItemListener(ActionListener al) {
+        FightMenuItem.addActionListener(al);
+    }
 
-	public void addRingMenuItemListener(ActionListener al) {
-		RingMenuItem.addActionListener(al);
-	}
+    public void addRingMenuItemListener(ActionListener al) {
+        RingMenuItem.addActionListener(al);
+    }
 
-	public void addDesignerMenuItemListener(ActionListener al) {
-		DesignerMenuItem.addActionListener(al);
-	}
+    public void addDesignerMenuItemListener(ActionListener al) {
+        DesignerMenuItem.addActionListener(al);
+    }
 
-	public void addTeamTopTenListener(ActionListener al) {
-		TeamTopTenMenuItem.addActionListener(al);
-	}
+    public void addTeamTopTenListener(ActionListener al) {
+        TeamTopTenMenuItem.addActionListener(al);
+    }
 
-	public void addAccreditionCardMenuItemListener(ActionListener al) {
-		AccreditationMenuItem.addActionListener(al);
-	}
+    public void addAccreditionCardMenuItemListener(ActionListener al) {
+        AccreditationMenuItem.addActionListener(al);
+    }
 
-	public void addHelpMenuItemListener(ActionListener al) {
-		HelpMenuItem.addActionListener(al);
-	}
+    public void addHelpMenuItemListener(ActionListener al) {
+        HelpMenuItem.addActionListener(al);
+    }
 
-	public void addScoreMenuItemListener(ActionListener al) {
-		ScoreMenuItem.addActionListener(al);
-	}
+    public void addScoreMenuItemListener(ActionListener al) {
+        ScoreMenuItem.addActionListener(al);
+    }
 
-	public void addConvertDatabaseMenuItemListener(ActionListener al) {
-		ConvertDatabaseMenuItem.addActionListener(al);
-	}
+    public void addConvertDatabaseMenuItemListener(ActionListener al) {
+        ConvertDatabaseMenuItem.addActionListener(al);
+    }
 
-	public void addFightsCardMenuItemListener(ActionListener al) {
-		FightsCardMenuItem.addActionListener(al);
-	}
+    public void addFightsCardMenuItemListener(ActionListener al) {
+        FightsCardMenuItem.addActionListener(al);
+    }
 
-	public void addSaveMenuItemListener(ActionListener al) {
-		SaveMenuItem.addActionListener(al);
-	}
-        
-        public void addTreeOptionMenuItemListener(ActionListener al) {
-		TournamentTreeMenuItem.addActionListener(al);
-	}
+    public void addSaveMenuItemListener(ActionListener al) {
+        SaveMenuItem.addActionListener(al);
+    }
 
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed"
+    public void addTreeOptionMenuItemListener(ActionListener al) {
+        TournamentTreeMenuItem.addActionListener(al);
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -696,37 +695,39 @@ public final class MainGUI extends KendoFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
-		DatabaseConnection.getInstance().disconnect();
-		DatabaseConnection.getInstance().setPassword("");
-		enableMenuItems();
-		AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL",
-				JOptionPane.INFORMATION_MESSAGE);
-	}// GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
+    private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
+        DatabaseConnection.getInstance().disconnect();
+        //Delete memory information.
+        DatabaseConnection.getInstance().resetDatabase();
+        DatabaseConnection.getInstance().setPassword("");
+        enableMenuItems();
+        AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL",
+                JOptionPane.INFORMATION_MESSAGE);
+    }// GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 
-	private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ExitMenuItemActionPerformed
-		close();
-	}// GEN-LAST:event_ExitMenuItemActionPerformed
+    private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ExitMenuItemActionPerformed
+        close();
+    }// GEN-LAST:event_ExitMenuItemActionPerformed
 
-	private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_LogMenuCheckBoxItemStateChanged
-		if (refresh) {
-			KendoTournamentGenerator.getInstance().setLogOption(LogMenuCheckBox.getState());
-		}
-	}// GEN-LAST:event_LogMenuCheckBoxItemStateChanged
+    private void LogMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_LogMenuCheckBoxItemStateChanged
+        if (refresh) {
+            KendoTournamentGenerator.getInstance().setLogOption(LogMenuCheckBox.getState());
+        }
+    }// GEN-LAST:event_LogMenuCheckBoxItemStateChanged
 
-	private void DebugMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_DebugMenuCheckBoxItemStateChanged
-		if (refresh) {
-			KendoTournamentGenerator.getInstance().setDebugOption(DebugMenuCheckBox.getState());
-		}
-	}// GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
+    private void DebugMenuCheckBoxItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_DebugMenuCheckBoxItemStateChanged
+        if (refresh) {
+            KendoTournamentGenerator.getInstance().setDebugOption(DebugMenuCheckBox.getState());
+        }
+    }// GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
 
-	private void AutosaveCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_AutosaveCheckBoxStateChanged
-		KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveCheckBox.getState());
-	}// GEN-LAST:event_AutosaveCheckBoxStateChanged
+    private void AutosaveCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_AutosaveCheckBoxStateChanged
+        KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveCheckBox.getState());
+    }// GEN-LAST:event_AutosaveCheckBoxStateChanged
 
-	private void WindowClose(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_WindowClose
-		close();
-	}// GEN-LAST:event_WindowClose
+    private void WindowClose(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_WindowClose
+        close();
+    }// GEN-LAST:event_WindowClose
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;

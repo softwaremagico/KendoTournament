@@ -104,7 +104,7 @@ public abstract class PdfDocument {
             } catch (NullPointerException npe) {
                 AlertManager.showErrorInformation(this.getClass().getName(), npe);
                 return false;
-            } catch(EmptyPdfBodyException epbe){
+            } catch (EmptyPdfBodyException | IOException epbe) {
                 AlertManager.errorMessage(this.getClass().getName(), "emptyPdfError", "PDF");
                 return false;
             } catch (Exception ex) {

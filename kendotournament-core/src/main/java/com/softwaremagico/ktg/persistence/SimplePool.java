@@ -11,7 +11,7 @@ public abstract class SimplePool<ElementPool> {
     private HashMap<String, ElementPool> elements = null;
     private List<ElementPool> sortedElements = null;
     private HashMap<String, ElementPool> elementsToStore = new HashMap<>();
-    private HashMap<String, ElementPool> elementsToDelete = new HashMap<>();
+    private HashMap<String, ElementPool> elementsToRemove = new HashMap<>();
     private HashMap<ElementPool, ElementPool> elementsToUpdate = new HashMap<>(); //New element replace old one.
 
     public boolean add(ElementPool element) throws SQLException {
@@ -74,10 +74,10 @@ public abstract class SimplePool<ElementPool> {
     protected abstract HashMap<String, ElementPool> getElementsFromDatabase() throws SQLException;
 
     private HashMap<String, ElementPool> getElementToRemove() {
-        if (elementsToDelete == null) {
-            elementsToDelete = new HashMap<>();
+        if (elementsToRemove == null) {
+            elementsToRemove = new HashMap<>();
         }
-        return elementsToDelete;
+        return elementsToRemove;
     }
 
     private HashMap<String, ElementPool> getElementToStore() {
@@ -115,7 +115,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public boolean needsToBeStoredInDatabase() {
-        return (elementsToStore.size() > 0 || elementsToDelete.size() > 0 || elementsToUpdate.size() > 0);
+        return (!getElementToStore().isEmpty() || !getElementToRemove().isEmpty() || !getElementToUpdate().isEmpty());
     }
 
     public boolean remove(ElementPool element) throws SQLException {
@@ -150,7 +150,7 @@ public abstract class SimplePool<ElementPool> {
         if (!removeElementsFromDatabase(new ArrayList<>(getElementToRemove().values()))) {
             return false;
         }
-        elementsToDelete = new HashMap<>();
+        elementsToRemove = new HashMap<>();
         return true;
     }
 
@@ -160,7 +160,7 @@ public abstract class SimplePool<ElementPool> {
         sortedElements = null;
         elements = null;
         elementsToStore = null;
-        elementsToDelete = null;
+        elementsToRemove = null;
         elementsToUpdate = null;
     }
 

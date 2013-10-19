@@ -179,7 +179,9 @@ public class FightPanel extends KFrame {
                     currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
                             getSelectedFightArea());
                     TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
-                    openRankingWindow(group.getFights());
+                    if (group != null) {
+                        openRankingWindow(group.getFights());
+                    }
                 } catch (SQLException e) {
                     AlertManager.showSqlErrorMessage(e);
                 }
@@ -204,7 +206,7 @@ public class FightPanel extends KFrame {
 
         return showMenu;
     }
-    
+
     private JMenu createOptionsMenu() {
         KMenu optionsMenu = new KMenu("OptionsMenu");
         optionsMenu.setMnemonic(KeyEvent.VK_O);

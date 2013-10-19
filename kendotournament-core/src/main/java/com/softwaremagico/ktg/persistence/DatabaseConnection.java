@@ -229,6 +229,19 @@ public class DatabaseConnection {
         databaseEngine = DatabaseEngine.getDatabase(engine);
     }
 
+    public void resetDatabase() {
+        UndrawPool.getInstance().reset();
+        DuelPool.getInstance().reset();
+        FightPool.getInstance().reset();
+        TeamPool.getInstance().reset();
+        RolePool.getInstance().reset();
+        CustomLinkPool.getInstance().reset();
+        TournamentPool.getInstance().reset();
+        PhotoPool.getInstance().reset();
+        RegisteredPersonPool.getInstance().reset();
+        ClubPool.getInstance().reset();
+    }
+
     public boolean updateDatabase() throws SQLException {
         connect();
 

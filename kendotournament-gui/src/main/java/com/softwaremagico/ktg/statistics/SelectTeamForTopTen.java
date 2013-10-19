@@ -25,10 +25,6 @@ package com.softwaremagico.ktg.statistics;
 
 import com.softwaremagico.ktg.lists.ListFromTeams;
 
-/**
- *
- * @author jorge
- */
 public class SelectTeamForTopTen extends ListFromTeams {
 
     public SelectTeamForTopTen() {

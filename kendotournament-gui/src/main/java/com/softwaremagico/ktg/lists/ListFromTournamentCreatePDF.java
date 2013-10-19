@@ -34,8 +34,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 
 public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCreateFile {
-    
-    public ListFromTournamentCreatePDF(){
+
+    public ListFromTournamentCreatePDF() {
         createGui(false);
         addGenerateListeners();
     }
@@ -53,14 +53,14 @@ public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCrea
                 }
             }
         } catch (Exception ex) {
-            AlertManager.showErrorInformation(this.getClass().getName(),ex);
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
         }
     }
-    
-    private void addGenerateListeners(){
+
+    private void addGenerateListeners() {
         GenerateButton.addActionListener(new ButtonListener());
     }
-    
+
     private class ButtonListener implements ActionListener {
 
         @Override

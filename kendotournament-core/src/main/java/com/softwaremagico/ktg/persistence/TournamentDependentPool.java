@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public abstract class TournamentDependentPool<ElementPool> {
-
+    
     private HashMap<Tournament, HashMap<String, ElementPool>> elements = new HashMap<>();
     private HashMap<Tournament, List<ElementPool>> sortedElements = new HashMap<>();
     private HashMap<Tournament, HashMap<String, ElementPool>> elementsToStore = new HashMap<>();
@@ -17,7 +17,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected TournamentDependentPool() {
     }
-
+    
     public boolean add(Tournament tournament, ElementPool element) throws SQLException {
         if (!getMap(tournament).containsValue(element)) {
             sortedElements = new HashMap<>(); //Sorted elements need to be recreated.
@@ -28,14 +28,14 @@ public abstract class TournamentDependentPool<ElementPool> {
             return false;
         }
     }
-
+    
     public boolean add(Tournament tournament, List<ElementPool> elements) throws SQLException {
         for (ElementPool element : elements) {
             add(tournament, element);
         }
         return true;
     }
-
+    
     public boolean addElementsToDatabase() throws SQLException {
         for (Tournament tournament : elements.keySet()) {
             if (!addElementsToDatabase(tournament)) {
@@ -44,7 +44,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return true;
     }
-
+    
     public boolean addElementsToDatabase(Tournament tournament) throws SQLException {
         if (getElementToStore(tournament) != null) {
             storeElementsInDatabase(tournament, new ArrayList<>(getElementToStore(tournament).values()));
@@ -57,13 +57,13 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToUpdate.put(tournament, new HashMap<ElementPool, ElementPool>());
         return true;
     }
-
+    
     private void addElementToRemove(Tournament tournament, ElementPool element) {
         HashMap<String, ElementPool> elementGroup = getElementToRemove(tournament);
         elementGroup.put(getId(element), element);
         elementsToDelete.put(tournament, elementGroup);
     }
-
+    
     private void addElementToStore(Tournament tournament, ElementPool element) {
         HashMap<String, ElementPool> elementGroup = getElementToStore(tournament);
         if (elementGroup == null) {
@@ -72,7 +72,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementGroup.put(getId(element), element);
         elementsToStore.put(tournament, elementGroup);
     }
-
+    
     private void addElementToUpdate(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
         HashMap<ElementPool, ElementPool> elementGroup = getElementToUpdate(tournament);
         if (elementGroup == null) {
@@ -91,15 +91,15 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         elementsToUpdate.put(tournament, elementGroup);
     }
-
+    
     public List<ElementPool> get(Tournament tournament) throws SQLException {
         return getSorted(tournament);
     }
-
+    
     public ElementPool get(Tournament tournament, String elementName) throws SQLException {
         return (ElementPool) getMap(tournament).get(elementName);
     }
-
+    
     public List<ElementPool> getAll() throws SQLException {
         List<ElementPool> results = new ArrayList<>();
         for (Tournament tournament : TournamentPool.getInstance().getAll()) {
@@ -107,7 +107,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return results;
     }
-
+    
     public List<ElementPool> getAll(int fromRow, int numberOfRows) throws SQLException {
         return getAll().subList(fromRow, fromRow + numberOfRows);
     }
@@ -124,9 +124,9 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return result;
     }
-
+    
     protected abstract HashMap<String, ElementPool> getElementsFromDatabase(Tournament tournament) throws SQLException;
-
+    
     private HashMap<String, ElementPool> getElementToRemove(Tournament tournament) {
         HashMap<String, ElementPool> elementsOfTournament = elementsToDelete.get(tournament);
         if (elementsOfTournament == null) {
@@ -135,7 +135,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return elementsOfTournament;
     }
-
+    
     private HashMap<String, ElementPool> getElementToStore(Tournament tournament) {
         HashMap<String, ElementPool> elementsOfTournament = elementsToStore.get(tournament);
         if (elementsOfTournament == null) {
@@ -144,7 +144,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return elementsOfTournament;
     }
-
+    
     private HashMap<ElementPool, ElementPool> getElementToUpdate(Tournament tournament) {
         HashMap<ElementPool, ElementPool> elementsOfTournament = elementsToUpdate.get(tournament);
         if (elementsOfTournament == null) {
@@ -153,9 +153,9 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return elementsOfTournament;
     }
-
+    
     protected abstract String getId(ElementPool element);
-
+    
     protected HashMap<String, ElementPool> getMap(Tournament tournament) throws SQLException {
         HashMap<String, ElementPool> elementsOfTournament = elements.get(tournament);
         if (elementsOfTournament == null) {
@@ -164,7 +164,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return elementsOfTournament;
     }
-
+    
     public List<ElementPool> getSorted(Tournament tournament) throws SQLException {
         List<ElementPool> sorted = getSortedElements(tournament);
         if (!sorted.isEmpty()) {
@@ -177,7 +177,7 @@ public abstract class TournamentDependentPool<ElementPool> {
             return new ArrayList<>();
         }
     }
-
+    
     private List<ElementPool> getSortedElements(Tournament tournament) {
         List<ElementPool> elementsOfTournament = sortedElements.get(tournament);
         if (elementsOfTournament == null) {
@@ -186,29 +186,35 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return elementsOfTournament;
     }
-
+    
     public boolean needsToBeStoredInDatabase() {
-        for (Tournament tournament : elementsToStore.keySet()) {
-            if (elementsToStore.get(tournament).size() > 0) {
-                return true;
+        if (elementsToStore != null) {
+            for (Tournament tournament : elementsToStore.keySet()) {
+                if (elementsToStore.get(tournament).size() > 0) {
+                    return true;
+                }
             }
         }
-
-        for (Tournament tournament : elementsToDelete.keySet()) {
-            if (elementsToDelete.get(tournament).size() > 0) {
-                return true;
+        
+        if (elementsToDelete != null) {
+            for (Tournament tournament : elementsToDelete.keySet()) {
+                if (elementsToDelete.get(tournament).size() > 0) {
+                    return true;
+                }
             }
         }
-
-        for (Tournament tournament : elementsToUpdate.keySet()) {
-            if (elementsToUpdate.get(tournament).size() > 0) {
-                return true;
+        
+        if (elementsToUpdate != null) {
+            for (Tournament tournament : elementsToUpdate.keySet()) {
+                if (elementsToUpdate.get(tournament).size() > 0) {
+                    return true;
+                }
             }
         }
-
+        
         return false;
     }
-
+    
     public void remove(Tournament tournament) throws SQLException {
         List<ElementPool> listToDelete = new ArrayList<>();
         for (ElementPool element : getMap(tournament).values()) {
@@ -219,7 +225,7 @@ public abstract class TournamentDependentPool<ElementPool> {
             remove(tournament, element);
         }
     }
-
+    
     public boolean remove(Tournament tournament, ElementPool element) throws SQLException {
         String id = getId(element);
         if (getMap(tournament).remove(id) != null) {
@@ -235,18 +241,18 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return true;
     }
-
+    
     public boolean remove(Tournament tournament, List<ElementPool> elements) throws SQLException {
         for (ElementPool element : elements) {
             remove(tournament, element);
         }
         return true;
     }
-
+    
     public boolean remove(Tournament tournament, String elementName) throws SQLException {
         return remove(tournament, get(tournament, elementName));
     }
-
+    
     public boolean removeElementsFromDatabase() throws SQLException {
         for (Tournament tournament : elements.keySet()) {
             if (!removeElementsFromDatabase(tournament)) {
@@ -255,7 +261,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return true;
     }
-
+    
     public boolean removeElementsFromDatabase(Tournament tournament) throws SQLException {
         if (getElementToRemove(tournament).size() > 0) {
             removeElementsFromDatabase(tournament, new ArrayList<>(getElementToRemove(tournament).values()));
@@ -263,9 +269,9 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToDelete.put(tournament, new HashMap<String, ElementPool>());
         return true;
     }
-
+    
     protected abstract boolean removeElementsFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete) throws SQLException;
-
+    
     public void reset() {
         sortedElements = null;
         elements = null;
@@ -273,7 +279,7 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToDelete = null;
         elementsToUpdate = null;
     }
-
+    
     public void reset(Tournament tournament) {
         sortedElements.remove(tournament);
         elements.remove(tournament);
@@ -281,15 +287,15 @@ public abstract class TournamentDependentPool<ElementPool> {
         elementsToDelete.remove(tournament);
         elementsToUpdate.remove(tournament);
     }
-
+    
     protected abstract List<ElementPool> sort(Tournament tournament) throws SQLException;
-
+    
     protected abstract boolean storeElementsInDatabase(Tournament tournament, List<ElementPool> elementsToStore) throws SQLException;
-
+    
     public boolean update(Tournament tournament, ElementPool elementUpdated) throws SQLException {
         return update(tournament, elementUpdated, elementUpdated);
     }
-
+    
     public boolean update(Tournament tournament, ElementPool oldElement, ElementPool newElement) throws SQLException {
         String oldId = getId(oldElement);
         String newId = getId(newElement);
@@ -315,6 +321,6 @@ public abstract class TournamentDependentPool<ElementPool> {
         }
         return true;
     }
-
+    
     protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate) throws SQLException;
 }
