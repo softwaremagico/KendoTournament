@@ -152,19 +152,32 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 	}
 
 	/**
-	 * Get an automatic abbreviation of the surname with the initial letter of
-	 * the name.
+	 * Get an automatic abbreviation of the surname with the initial letter or
+	 * complete name.
 	 * 
 	 * @param maxLength
 	 * @return
 	 */
 	public String getSurnameNameIni(int maxLength) {
 		if (surname.length() > 0 || name.length() > 0) {
+			// Short surname.
 			String surnameShort = surname.substring(0, Math.min(maxLength, surname.length())).toUpperCase();
 			if (surname.length() > maxLength) {
 				surnameShort += ".";
 			}
-			return surnameShort + ", " + name.substring(0, 1) + ".";
+			// Short surname
+			if (surnameShort.length() < maxLength) {
+				String nameShort = name.substring(0, Math.min(maxLength - surnameShort.length() + 1, name.length()));
+				// Name cut.
+				if (nameShort.length() < name.length()) {
+					return surnameShort + ", " + nameShort + ".";
+				} else {
+					// Full name.
+					return surnameShort + ", " + nameShort;
+				}
+			} else {
+				return surnameShort + ", " + name.substring(0, 1) + ".";
+			}
 		} else {
 			return " --- --- ";
 		}

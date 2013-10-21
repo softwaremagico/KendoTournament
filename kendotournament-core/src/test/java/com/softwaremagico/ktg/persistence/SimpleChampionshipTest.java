@@ -62,14 +62,16 @@ public class SimpleChampionshipTest {
 		int teamIndex = 0;
 		Team team = null;
 		int teamMember = 0;
+		boolean teamFinished = false;
 		while (TeamPool.getInstance().getCompetitorsWithoutTeam(tournament).size() > 0
-				&& TeamPool.getInstance().get(tournament).size() < TEAMS) {
+				&& (TeamPool.getInstance().get(tournament).size() < TEAMS || !teamFinished)) {
 			// Create a new team.
 			if (team == null) {
 				teamIndex++;
 				team = new Team("Team" + String.format("%02d", teamIndex), tournament);
 				teamMember = 0;
 				TeamPool.getInstance().add(tournament, team);
+				teamFinished = false;
 			}
 
 			// Add member.
@@ -81,6 +83,7 @@ public class SimpleChampionshipTest {
 			// Team fill up, create a new team.
 			if (teamMember >= MEMBERS) {
 				team = null;
+				teamFinished = true;
 			}
 		}
 		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == TEAMS);

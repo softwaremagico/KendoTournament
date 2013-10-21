@@ -58,7 +58,7 @@ public class Ranking {
 	}
 
 	/**
-	 * return a hashmap tha classify the teams by position (1st, 2nd, 3rd,...)
+	 * Return a Hashmap that classify the teams by position (1st, 2nd, 3rd,...)
 	 * 
 	 * @param maxWinners
 	 * @return
