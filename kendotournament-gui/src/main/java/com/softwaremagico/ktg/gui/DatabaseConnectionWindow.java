@@ -33,10 +33,6 @@ import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author jorge
- */
 public class DatabaseConnectionWindow extends javax.swing.JFrame {
 
     private DatabaseConnectionPanel connectionPanel = new DatabaseConnectionPanel();
@@ -70,7 +66,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
         try {
             DatabaseConnection.getInstance().setDatabaseEngine(connectionPanel.getSelectedEngine());
             if (DatabaseConnection.getInstance().testDatabaseConnection(connectionPanel.getUser(), connectionPanel.getPassword(),
-                    connectionPanel.getDatabase(), connectionPanel.getServer())) {
+                    connectionPanel.getDatabase(), connectionPanel.getServer(), true)) {
                 AlertManager.translatedMessage(this.getClass().getName(), "databaseConnected", "MySQL", "MySQL (" + connectionPanel.getServer() + ")", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {

@@ -125,7 +125,8 @@ public class Controller {
                 if (DatabaseConnection.getInstance().testDatabaseConnection(
                         DatabaseConnection.getInstance().getUser(), DatabaseConnection.getInstance().getPassword(),
                         DatabaseConnection.getInstance().getDatabaseName(),
-                        DatabaseConnection.getInstance().getServer())) {
+                        DatabaseConnection.getInstance().getServer(),
+                        true)) {
                     main.enableMenuItems();
                 }
             } catch (SQLException ex) {

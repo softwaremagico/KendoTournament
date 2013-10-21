@@ -126,7 +126,7 @@ public class TeamFight extends JPanel {
     final void fill(Team t, boolean left, boolean selected, boolean menu) {
         removeAll();
         competitorFights = new ArrayList<>();
-        for (int i = 0; i < t.getNumberOfMembers(fight.getLevel()); i++) {
+        for (int i = 0; i < tournament.getTeamSize(); i++) {
             CompetitorFight cp = new CompetitorFight(this, t.getMember(i, fight.getIndex()), fight, left, selected, menu);
             addCompetitorFight(cp);
         }
