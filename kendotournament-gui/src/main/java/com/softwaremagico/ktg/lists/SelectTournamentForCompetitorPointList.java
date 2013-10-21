@@ -1,4 +1,3 @@
-
 package com.softwaremagico.ktg.lists;
 
 /*
@@ -24,18 +23,16 @@ package com.softwaremagico.ktg.lists;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-
 public class SelectTournamentForCompetitorPointList extends ListFromTournamentCreatePDF {
-    
+
     public SelectTournamentForCompetitorPointList() {
         super(true);
-        this.setTitle(trans.getTranslatedText("PointListMenuItem"));
+        this.setTitle(trans.getTranslatedText("GeneralClassification"));
     }
 
     @Override
     protected ParentList getPdfGenerator() {
-      return new CompetitorsScoreList(listTournaments.get(TournamentComboBox.getSelectedIndex()));
+        return new CompetitorsScoreList(getSelectedTournament());
     }
 
     @Override
@@ -46,5 +43,4 @@ public class SelectTournamentForCompetitorPointList extends ListFromTournamentCr
             return null;
         }
     }
-    
 }

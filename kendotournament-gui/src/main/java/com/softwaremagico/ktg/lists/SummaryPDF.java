@@ -28,6 +28,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
@@ -104,7 +105,12 @@ public class SummaryPDF extends ParentList {
 
         for (int i = 0; i < f.getTeam1().getNumberOfMembers(f.getIndex()); i++) {
             //Team 1
-            Table.addCell(getCell(f.getTeam1().getMember(i, f.getIndex()).getSurnameNameIni(), 1, 1, Element.ALIGN_LEFT));
+            RegisteredPerson competitor = f.getTeam1().getMember(i, f.getIndex());
+            String name = "";
+            if (competitor != null) {
+                name = competitor.getSurnameNameIni();
+            }
+            Table.addCell(getCell(name, 1, 1, Element.ALIGN_LEFT));
 
             //Faults
             Table.addCell(getCell(getFaults(f, i, true), 1, 1, Element.ALIGN_CENTER));
@@ -123,7 +129,12 @@ public class SummaryPDF extends ParentList {
             Table.addCell(getCell(getFaults(f, i, false), 1, 1, Element.ALIGN_CENTER));
 
             //Team 2
-            Table.addCell(getCell(f.getTeam2().getMember(i, f.getIndex()).getSurnameNameIni(), 1, 1, Element.ALIGN_RIGHT));
+            competitor = f.getTeam2().getMember(i, f.getIndex());
+            name = "";
+            if (competitor != null) {
+                name = competitor.getSurnameNameIni();
+            }
+            Table.addCell(getCell(name, 1, 1, Element.ALIGN_RIGHT));
         }
         Table.addCell(getEmptyRow());
 

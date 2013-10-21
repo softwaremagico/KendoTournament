@@ -124,7 +124,7 @@ public final class MainGUI extends KendoFrame {
         FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
         AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
         TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
-        CompetitorsGlobalScoreMenuItem.setText(trans.getTranslatedText("PointListMenuItem"));
+        CompetitorsGlobalScoreMenuItem.setText(trans.getTranslatedText("GeneralClassification"));
     }
 
     private void setPhoto() {

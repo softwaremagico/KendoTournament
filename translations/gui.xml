@@ -2124,11 +2124,11 @@
 		<it>Finire Campionato</it>
 	</FinishGroupButton>
 	<GeneralClassification>
-		<en>General Classification</en>
-		<es>Clasificación General</es>
-		<nl>General Classification</nl>
-		<de>General Classification</de>
-		<ca>Classificació General</ca>
-		<it>Classificazione Generale</it>
+		<en>Competitors Classification</en>
+		<es>Clasificación de los Competidores</es>
+		<nl>Competitors Classification</nl>
+		<de>Competitors Classification</de>
+		<ca>Classificació dels competidors</ca>
+		<it>Classificazione dei competitori</it>
 	</GeneralClassification>
 </translator>
