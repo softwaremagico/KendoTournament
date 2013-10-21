@@ -81,7 +81,7 @@ public class TeamListPDF extends ParentList {
             AlertManager.showSqlErrorMessage(ex);
         }
 
-        if (!listTeams.isEmpty()) {
+        if (listTeams.isEmpty()) {
             throw new EmptyPdfBodyException("No existing teams");
         }
 

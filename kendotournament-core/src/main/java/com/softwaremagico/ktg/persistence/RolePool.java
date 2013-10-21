@@ -85,7 +85,7 @@ public class RolePool extends TournamentDependentPool<Role> {
         List<RegisteredPerson> results = new ArrayList<>();
         List<RegisteredPerson> registeredPeople = getPeople(tournament);
         for (RegisteredPerson person : registeredPeople) {
-            if (person.getClub().equals(club)) {
+            if (person != null && person.getClub() != null && person.getClub().equals(club)) {
                 results.add(person);
             }
         }
