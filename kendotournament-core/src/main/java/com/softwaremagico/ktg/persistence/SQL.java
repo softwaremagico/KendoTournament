@@ -1002,8 +1002,8 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < newFights.size(); i++) {
             Fight oldFight = fightsExchange.get(newFights.get(i));
-            query += "UPDATE Fight SET Team1='" + newFights.get(i).getTeam1() + "', Tournament='" + newFights.get(i).getTournament()
-                    + "' Team2='" + newFights.get(i).getTeam2() + "', Winner=" + newFights.get(i).getWinner() + ", TournamentLevel="
+            query += "UPDATE fight SET Team1='" + newFights.get(i).getTeam1() + "', Tournament='" + newFights.get(i).getTournament()
+                    + "', Team2='" + newFights.get(i).getTeam2() + "', Winner=" + newFights.get(i).getWinner() + ", TournamentLevel="
                     + newFights.get(i).getLevel() + ", FightArea=" + newFights.get(i).getAsignedFightArea() + ", TournamentGroup="
                     + newFights.get(i).getGroup() + ", GroupIndex=" + newFights.get(i).getOrderInGroup() + " WHERE Team1='"
                     + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='"
@@ -1185,13 +1185,13 @@ public abstract class SQL extends Database {
         for (int i = 0; i < newDuels.size(); i++) {
             Duel oldDuel = duelsExchange.get(newDuels.get(i));
             query += "UPDATE duel SET Team1='" + newDuels.get(i).getFight().getTeam1() + "', Tournament='"
-                    + newDuels.get(i).getFight().getTournament() + "' Team2='" + newDuels.get(i).getFight().getTeam2()
+                    + newDuels.get(i).getFight().getTournament() + "', Team2='" + newDuels.get(i).getFight().getTeam2()
                     + "', TournamentLevel=" + newDuels.get(i).getFight().getLevel() + ", TournamentGroup="
                     + newDuels.get(i).getFight().getGroup() + ", GroupIndex=" + newDuels.get(i).getFight().getOrderInGroup()
-                    + ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0)
-                    + "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1) + "', PointPlayer2A="
-                    + newDuels.get(i).getHits(false).get(0) + ", PointPlayer2B=" + newDuels.get(i).getHits(false).get(1)
-                    + ", FaultsPlayer1=" + newDuels.get(i).getFaults(true) + ", FaultsPlayer2=" + newDuels.get(i).getFaults(false)
+                    + ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0).getAbbreviature()
+                    + "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1).getAbbreviature() + "', PointPlayer2A='"
+                    + newDuels.get(i).getHits(false).get(0).getAbbreviature() + "', PointPlayer2B='" + newDuels.get(i).getHits(false).get(1).getAbbreviature()
+                    + "', FaultsPlayer1=" + newDuels.get(i).getFaults(true) + ", FaultsPlayer2=" + newDuels.get(i).getFaults(false)
                     + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='"
                     + oldDuel.getFight().getTeam2() + "' AND Tournament='"
                     + oldDuel.getFight().getTournament().getName() + "' AND TournamentLevel="
