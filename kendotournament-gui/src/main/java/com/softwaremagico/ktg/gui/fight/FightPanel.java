@@ -403,11 +403,9 @@ public class FightPanel extends KFrame {
             showTreeMenuItem.setEnabled(true);
             // Disable group score panel if not useful.
             groupScoreMenuItem.setEnabled(true);
-            globalScoreMenuItem.setEnabled(true);
         } else {
             showTreeMenuItem.setEnabled(false);
             groupScoreMenuItem.setEnabled(false);
-            globalScoreMenuItem.setEnabled(false);
         }
     }
 
