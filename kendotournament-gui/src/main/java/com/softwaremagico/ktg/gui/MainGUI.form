@@ -151,14 +151,6 @@
                 <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;designer.png&quot;));"/>
               </AuxValues>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="ManualFightsMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Manual"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;manual.png&quot;));"/>
-                  </AuxValues>
-                </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="FightMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Add Fight"/>
@@ -500,7 +492,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="320" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="324" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>

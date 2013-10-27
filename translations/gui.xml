@@ -530,7 +530,7 @@
 	</DatabaseLabel>
 	<TournamentLabel>
 		<en>League:</en>
-		<es>Campeonato:</es>
+		<es>Liga:</es>
 		<nl>Poule:</nl>
 		<de>Wettbewerb:</de>
 		<ca>Lliga:</ca>
@@ -613,7 +613,7 @@
 		<es>Campeonato</es>
 		<nl>Wedstrijd</nl>
 		<de>Wettbewerb</de>
-		<ca>Lliga</ca>
+		<ca>Campionat</ca>
 		<it>Campionato</it>
 	</TournamentMenu>
 	<TournamentPanelMenuItem>
@@ -898,11 +898,11 @@
 	</DefineFightsMenu>	
 	<FightMenuItem>
 		<en>Simple league</en>
-		<es>Campeonato sencillo</es>
+		<es>Liga sencilla</es>
 		<nl>Eenvoudige poule</nl>
 		<de>Einfachen Wettkampf</de>
 		<ca>Lliga senzilla</ca>
-		<it>Campionato semplice</it>
+		<it>Liga semplice</it>
 	</FightMenuItem>	
 	<LeagueTreeMenuItem>
 		<en>League tree</en>
@@ -954,11 +954,11 @@
 	</DesignerMenuItem>
 	<RingMenuItem>
 		<en>Ring League</en>
-		<es>Campeonato en círculo</es>
+		<es>Liga en círculo</es>
 		<nl>Kring poule</nl>
 		<de>Ring League</de>
 		<ca>Lliga en cercle</ca>
-		<it>Campionato ad anello</it>
+		<it>Liga ad anello</it>
 	</RingMenuItem>
 	<MonitorMenuItem>
 		<en>Monitor</en>
@@ -1400,14 +1400,22 @@
 		<ca>Diversos equips tenen el mateix resultat. Quin deu de passar a la següent ronda?</ca>
 		<it>Varie sqadre hanno lo stesso risultato. Chi deve passare alla ronda successiva?</it>
 	</DrawText>
-	<ChampionshipRadioButton>
-		<en>League</en>
+	<LeagueTag>
+		<en>League:</en>
+		<es>Liga:</es>
+		<nl>Poule:</nl>
+		<de>Wettbewerb:</de>
+		<ca>Lliga:</ca>
+		<it>Liga:</it>
+	</LeagueTag>
+	<ChampionshipLabel>
+		<en>Championship</en>
 		<es>Campeonato</es>
 		<nl>Kampioenschap</nl>
 		<de>Meisterschaft</de>
 		<ca>Campionat</ca>
 		<it>Campionato</it>
-	</ChampionshipRadioButton>
+	</ChampionshipLabel>
 	<TreeRadioButton>
 		<en>Tree</en>
 		<es>Árbol</es>

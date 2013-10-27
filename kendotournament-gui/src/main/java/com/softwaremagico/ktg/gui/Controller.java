@@ -181,7 +181,6 @@ public class Controller {
         main.addReceivedHitsStatisticsMenuItemListener(new NewReceivedHitsStatisticsListener());
         main.addWonFightsStatisticsMenuItemListener(new NewWonFightsStatisticsListener());
         main.addTopTenStatisticsMenuItemListener(new NewTopTenStatisticsListener());
-        main.addManualMenuItemListener(new NewManualFightListener());
         main.addFightMenuItemListener(new NewFightListener());
         main.addRingMenuItemListener(new NewRingListener());
         main.addDesignerMenuItemListener(new DesignerListener());

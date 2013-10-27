@@ -108,9 +108,8 @@ public final class MainGUI extends KendoFrame {
         DefineFightsMenu.setText(trans.getTranslatedText("DefineFightsMenu"));
         ProgramMenu.setText(trans.getTranslatedText("ProgramMenu"));
         ExitMenuItem.setText(trans.getTranslatedText("ExitMenuItem"));
-        ManualFightsMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
         RingMenuItem.setText(trans.getTranslatedText("RingMenuItem"));
-        DesignerMenuItem.setText(trans.getTranslatedText("DesignerMenuItem"));
+        DesignerMenuItem.setText(trans.getTranslatedText("ChampionshipLabel"));
         TeamTopTenMenuItem.setText(trans.getTranslatedText("TeamTopTenMenuItem"));
         AccreditationMenuItem.setText(trans.getTranslatedText("AccreditationMenuItem"));
         HelpMenuItem.setText(trans.getTranslatedText("HelpMenuItem"));
@@ -340,10 +339,6 @@ public final class MainGUI extends KendoFrame {
         TournamentTopTenMenuItem.addActionListener(al);
     }
 
-    public void addManualMenuItemListener(ActionListener al) {
-        ManualFightsMenuItem.addActionListener(al);
-    }
-
     public void addFightMenuItemListener(ActionListener al) {
         FightMenuItem.addActionListener(al);
     }
@@ -423,7 +418,6 @@ public final class MainGUI extends KendoFrame {
         TeamMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"team.png"));
         DefineFightsMenu = new javax.swing.JMenu();
         DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"designer.png"));
-        ManualFightsMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"manual.png"));
         FightMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"keyboard.png"));
         RingMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"ring.png"));
         DesignerMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
@@ -544,9 +538,6 @@ public final class MainGUI extends KendoFrame {
         TournamentMenu.add(TeamMenuItem);
 
         DefineFightsMenu.setText("Define Fights");
-
-        ManualFightsMenuItem.setText("Manual");
-        DefineFightsMenu.add(ManualFightsMenuItem);
 
         FightMenuItem.setText("Add Fight");
         DefineFightsMenu.add(FightMenuItem);
@@ -697,7 +688,7 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -767,7 +758,6 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JCheckBoxMenuItem LogMenuCheckBox;
     private javax.swing.JMenuBar MainMenuBar;
     private javax.swing.JPanel MainPhotoPanel;
-    private javax.swing.JMenuItem ManualFightsMenuItem;
     private javax.swing.JMenu OptionsMenu;
     private javax.swing.JMenuItem PerformedHitsMenuItem;
     private javax.swing.JMenuItem PointListMenuItem;
