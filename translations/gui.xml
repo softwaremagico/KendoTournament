@@ -534,7 +534,7 @@
 		<nl>Poule:</nl>
 		<de>Wettbewerb:</de>
 		<ca>Lliga:</ca>
-		<it>Campionato:</it>
+		<it>Liga:</it>
 	</TournamentLabel>
 	<CompetitorLabel>
 		<en>Competitor:</en>
@@ -1401,12 +1401,12 @@
 		<it>Varie sqadre hanno lo stesso risultato. Chi deve passare alla ronda successiva?</it>
 	</DrawText>
 	<LeagueTag>
-		<en>League:</en>
-		<es>Liga:</es>
-		<nl>Poule:</nl>
-		<de>Wettbewerb:</de>
-		<ca>Lliga:</ca>
-		<it>Liga:</it>
+		<en>League</en>
+		<es>Liga</es>
+		<nl>Poule</nl>
+		<de>Wettbewerb</de>
+		<ca>Lliga</ca>
+		<it>Liga</it>
 	</LeagueTag>
 	<ChampionshipLabel>
 		<en>Championship</en>

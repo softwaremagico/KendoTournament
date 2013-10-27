@@ -88,7 +88,7 @@ public final class MainGUI extends KendoFrame {
         TournamentMenuItem.setText(trans.getTranslatedText("TournamentMenuItem"));
         ClubMenuItem.setText(trans.getTranslatedText("ClubMenuItem"));
         TeamMenuItem.setText(trans.getTranslatedText("TeamMenuItem"));
-        FightMenuItem.setText(trans.getTranslatedText("FightMenuItem"));
+        FightMenuItem.setText(trans.getTranslatedText("LeagueTag"));
         DatabaseMenu.setText(trans.getTranslatedText("DatabaseMenu"));
         DatabaseConnectMenuItem.setText(trans.getTranslatedText("DatabaseConnectMenuItem"));
         DatabaseDisconnectMenuItem.setText(trans.getTranslatedText("DatabaseDisconnectMenuItem"));
