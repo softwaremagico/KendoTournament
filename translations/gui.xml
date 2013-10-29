@@ -1790,7 +1790,7 @@
 	<ExportDatabaseProgressBarTitle>
 		<en>Exporting database.</en>
 		<es>Exportando la base de datos.</es>
-		<nl>Exporting database.</nl>
+		<nl>Exporteren database.</nl>
 		<de>Exporting database.</de>
 		<ca>Exportant la base de dades.</ca>
 		<it>Esportando il database</it>
@@ -1798,7 +1798,7 @@
 	<ImportDatabaseProgressBarTitle>
 		<en>Importing database.</en>
 		<es>Importando la base de datos.</es>
-		<nl>Importing database.</nl>
+		<nl>Importeren database.</nl>
 		<de>Importing database.</de>
 		<ca>Important la base de dades.</ca>
 		<it>Importando il database</it>
@@ -1806,7 +1806,7 @@
 	<DeleteDatabaseProgressBarLabel>
 		<en>Deleting old database:</en>
 		<es>Borrando la antigua base de datos:</es>
-		<nl>Deleting old database:</nl>
+		<nl>Verwijderen oude database:</nl>
 		<de>Deleting old database:</de>
 		<ca>Sborran la base de dades:</ca>
 		<it>Cancellando il  database anteriore:</it>
@@ -1814,7 +1814,7 @@
 	<ExportDatabaseProgressBarLabelClub>
 		<en>Exporting clubs:</en>
 		<es>Exportando los clubs:</es>
-		<nl>Exporting clubs:</nl>
+		<nl>Clubs Exporteren:</nl>
 		<de>Exporting clubs:</de>
 		<ca>Exportant els clubs:</ca>
 		<it>Esportando i club</it>
@@ -1822,7 +1822,7 @@
 	<ImportDatabaseProgressBarLabelClub>
 		<en>Importing clubs:</en>
 		<es>Importando los clubs:</es>
-		<nl>Importing clubs:</nl>
+		<nl>Clubs Importeren:</nl>
 		<de>Importing clubs:</de>
 		<ca>Important els clubs:</ca>
 		<it>Importando i club</it>
@@ -1830,7 +1830,7 @@
 	<ExportDatabaseProgressBarLabelCompetitor>
 		<en>Exporting competitors:</en>
 		<es>Exportando los competidores:</es>
-		<nl>Exporting competitors:</nl>
+		<nl>Deelnemers Exporteren:</nl>
 		<de>Exporting competitors:</de>
 		<ca>Exportant els competidors:</ca>
 		<it>Esportando i competitori</it>
@@ -1838,7 +1838,7 @@
 	<ImportDatabaseProgressBarLabelCompetitor>
 		<en>Importing competitors:</en>
 		<es>Importando los competidores:</es>
-		<nl>Importing competitors:</nl>
+		<nl>Deelnemers Importeren:</nl>
 		<de>Importing competitors:</de>
 		<ca>Important els competidors:</ca>
 		<it>Importando i competitori</it>
@@ -1846,7 +1846,7 @@
 	<ExportDatabaseProgressBarLabelTournament>
 		<en>Exporting leagues:</en>
 		<es>Exportando los campeonatos:</es>
-		<nl>Exporting tournament:</nl>
+		<nl>Toernooi Exporteren:</nl>
 		<de>Exporting tournament:</de>
 		<ca>Exportant els campeonats:</ca>
 		<it>Esportando i campionati</it>
@@ -1854,7 +1854,7 @@
 	<ImportDatabaseProgressBarLabelTournament>
 		<en>Importing leagues:</en>
 		<es>Importando los campeonatos:</es>
-		<nl>Importing tournament:</nl>
+		<nl>Toernooi Importeren:</nl>
 		<de>Importing tournament:</de>
 		<ca>Important els campeonats:</ca>
 		<it>Importando i campionati</it>
@@ -1862,7 +1862,7 @@
 	<ConvertPhotosProgressBarLabel>
 		<en>Converting competitors photos:</en>
 		<es>Convirtiendo las fotos de los competidores:</es>
-		<nl>Converting competitors photos:</nl>
+		<nl>Foto's van deelnemers omzetten:</nl>
 		<de>Converting competitors photos:</de>
 		<ca>Convertint les fotos dels competidors:</ca>
 		<it>Conversione delle foto dei competitori</it>
@@ -1870,7 +1870,7 @@
 	<ConvertBannersProgressBarLabel>
 		<en>Converting tournaments banners:</en>
 		<es>Convirtiendo los banners de los campeonatos:</es>
-		<nl>Converting tournaments banners:</nl>
+		<nl>Toernooibanners omzetten:</nl>
 		<de>Converting tournaments banners:</de>
 		<ca>Convertint els banners dels campionats:</ca>
 		<it>Conversione degli sponsor dei campionati:</it>
@@ -1878,7 +1878,7 @@
 	<ConvertAccreditationsProgressBarLabel>
 		<en>Converting accreditations:</en>
 		<es>Convirtiendo las acreditaciones:</es>
-		<nl>Converting tacreditaciones:</nl>
+		<nl>Acreditaties omzetten:</nl>
 		<de>Converting acreditaciones:</de>
 		<ca>Convertint les accreditacions:</ca>
 		<it>Conversione dei badge:</it>
@@ -1886,7 +1886,7 @@
 	<ConvertDiplomasProgressBarLabel>
 		<en>Converting diplomas:</en>
 		<es>Convirtiendo los diplomas:</es>
-		<nl>Converting diplomas:</nl>
+		<nl>Diploma's omzetten:</nl>
 		<de>Converting diplomas:</de>
 		<ca>Convertint els diplomes:</ca>
 		<it>Conversione dei diploma:</it>
@@ -1894,7 +1894,7 @@
 	<ExportDatabaseProgressBarLabelClub>
 		<en>Exporting clubs:</en>
 		<es>Exportando los clubs:</es>
-		<nl>Exporting clubs:</nl>
+		<nl>Clubs Exporteren:</nl>
 		<de>Exporting clubs:</de>
 		<ca>Exportant els clubs:</ca>
 		<it>Esportando i club:</it>
@@ -1902,7 +1902,7 @@
 	<ExportDatabaseProgressBarLabelTeam>
 		<en>Exporting teams:</en>
 		<es>Exportando los equipos:</es>
-		<nl>Exporting teams:</nl>
+		<nl>Teams Exporteren:</nl>
 		<de>Exporting teams:</de>
 		<ca>Exportant els equips:</ca>
 		<it>Esportando le squadre:</it>
@@ -1910,7 +1910,7 @@
 	<ImportDatabaseProgressBarLabelTeam>
 		<en>Importing teams:</en>
 		<es>Importando los equipos:</es>
-		<nl>Importing teams:</nl>
+		<nl>Teams Importeren:</nl>
 		<de>Importing teams:</de>
 		<ca>Important els equips:</ca>
 		<it>Importando le squadre:</it>
@@ -1918,7 +1918,7 @@
 	<ExportDatabaseProgressBarLabelFight>
 		<en>Exporting fights:</en>
 		<es>Exportando los combates:</es>
-		<nl>Exporting fights:</nl>
+		<nl>Wedstrijden Exporteren:</nl>
 		<de>Exporting fights:</de>
 		<ca>Exportant els combats:</ca>
 		<it>Esportando gli incontri:</it>
@@ -1926,7 +1926,7 @@
 	<ImportDatabaseProgressBarLabelFight>
 		<en>Importing fights:</en>
 		<es>Importando los combates:</es>
-		<nl>Importing fights:</nl>
+		<nl>Wedstrijden Importeren:</nl>
 		<de>Importing fights:</de>
 		<ca>Important els combats:</ca>
 		<it>Importando gli incontri:</it>
@@ -1934,7 +1934,7 @@
 	<ExportDatabaseProgressBarLabelRole>
 		<en>Exporting roles:</en>
 		<es>Exportando los roles:</es>
-		<nl>Exporting roles:</nl>
+		<nl>Rollen Exporteren:</nl>
 		<de>Exporting roles:</de>
 		<ca>Exportant els rols:</ca>
 		<it>Esportando i ruoli:</it>
@@ -1942,7 +1942,7 @@
 	<ImportDatabaseProgressBarLabelRole>
 		<en>Importing roles:</en>
 		<es>Importando los roles:</es>
-		<nl>Importing roles:</nl>
+		<nl>Rollen Importeren:</nl>
 		<de>Importing roles:</de>
 		<ca>Important els rols:</ca>
 		<it>Importando i ruoli:</it>
@@ -1950,7 +1950,7 @@
 	<WriteFile>
 		<en>Writting to a file:</en>
 		<es>Escribiendo el fichero:</es>
-		<nl>Writting to a file:</nl>
+		<nl>Naar bestand schrijven:</nl>
 		<de>Writting to a file:</de>
 		<ca>Exportant l'arxiu:</ca>
 		<it>Scrivendo il file:</it>
@@ -1958,7 +1958,7 @@
 	<ReadFile>
 		<en>Reading the file:</en>
 		<es>Leyendo el fichero:</es>
-		<nl>Reading the file:</nl>
+		<nl>Bestand lezen:</nl>
 		<de>Reading the file:</de>
 		<ca>Llegint l'arxiu:</ca>
 		<it>Leggendo il file:</it>
@@ -1966,7 +1966,7 @@
 	<AvoidRepetitions>
 		<en>Avoid repetitions</en>
 		<es>Evitar repeticiones</es>
-		<nl>Avoid repetitions</nl>
+		<nl>Herhalingen vermijden</nl>
 		<de>Avoid repetitions</de>
 		<ca>Avoid repetitions</ca>
 		<it>Evitare ripetizioni</it>
@@ -1974,7 +1974,7 @@
 	<DatabaseEngineLabel>
 		<en>Engine:</en>
 		<es>Motor:</es>
-		<nl>Engine:</nl>
+		<nl>Motor:</nl>
 		<de>Engine:</de>
 		<ca>Motor:</ca>
 		<it>Engine</it>
@@ -1983,14 +1983,14 @@
 		<en>Print the diplomas of:</en>
 		<es>Imprimir los diplomas de:</es>
 		<nl>Print the diplomas of:</nl>
-		<de>Print the diplomas of:</de>
+		<de>Print diploma's van:</de>
 		<ca>Imprimeix els diplomes de:</ca>
 		<it>Stampando il diploma di:</it>
 	</DiplomaRole>	
 	<ConvertDatabase>
 		<en>Convert database to...</en>
 		<es>Convertir la base de datos a...</es>
-		<nl>Convert database  to...</nl>
+		<nl>Database omzatten naar...</nl>
 		<de>Convert database  to...</de>
 		<ca>Converteix la base de dades a...</ca>
 		<it>Conversione del database a ...</it>
@@ -1998,7 +1998,7 @@
 	<FromDatabaseLabel>
 		<en>Source database:</en>
 		<es>Base de datos origen:</es>
-		<nl>Source database:</nl>
+		<nl>Brond database:</nl>
 		<de>Source database:</de>
 		<ca>Base de dades de origen:</ca>
 		<it>Database origine</it>
@@ -2006,7 +2006,7 @@
 	<ToDatabaseLabel>
 		<en>Address database:</en>
 		<es>Base de datos destino:</es>
-		<nl>Address database:</nl>
+		<nl>Database adres:</nl>
 		<de>Address database:</de>
 		<ca>Base de dades de destí:</ca>
 		<it>Database destino</it>
@@ -2014,7 +2014,7 @@
 		<ConvertButton>
 		<en>Convert</en>
 		<es>Convertir</es>
-		<nl>Convert</nl>
+		<nl>Omzetten</nl>
 		<de>Convert</de>
 		<ca>Convertir</ca>
 		<it>Conversione</it>
@@ -2022,7 +2022,7 @@
 	<WrittingToDisk>
 		<en>Writting to disk...</en>
 		<es>Escribiendo en el disco...</es>
-		<nl>Writting to disk...</nl>
+		<nl>Naar bestand schrijven...</nl>
 		<de>Writting to disk...</de>
 		<ca>Escribint al disc...</ca>
 		<it>Scrivendo nel disco...</it>
@@ -2030,7 +2030,7 @@
 	<FightsCard>
 		<en>Fights card</en>
 		<es>Ficha de combates</es>
-		<nl>Fights card</nl>
+		<nl>Wedstrijdkaart</nl>
 		<de>Fights card</de>
 		<ca>Fitxa de combats</ca>
 		<it>Scheda dell'incontro</it>
@@ -2038,7 +2038,7 @@
 	<ShowEndFights>
 		<en>Add ended fights</en>
 		<es>Incluir combates acabados</es>
-		<nl>Add ended fights</nl>
+		<nl>Beëindigde wedstrijden toevoegen</nl>
 		<de>Add ended fights</de>
 		<ca>Incluoure combats finalitzats</ca>
 		<it>Aggiungere gli incontri conclusi</it>
@@ -2046,7 +2046,7 @@
 	<Page>
 		<en>Page</en>
 		<es>Página</es>
-		<nl>Page</nl>
+		<nl>Pagina</nl>
 		<de>Page</de>
 		<ca>Pàgina</ca>
 		<it>Pagina</it>
@@ -2054,7 +2054,7 @@
 	<Of>
 		<en>of</en>
 		<es>de</es>
-		<nl>of</nl>
+		<nl>van</nl>
 		<de>of</de>
 		<ca>de</ca>
 		<it>di</it>
@@ -2062,7 +2062,7 @@
 	<DataExchange>
 		<en>Import/Export</en>
 		<es>Importar/Exportar</es>
-		<nl>Import/Export</nl>
+		<nl>Importeren/Exporteren</nl>
 		<de>Import/Export</de>
 		<ca>Importar/Exportar</ca>
 		<it>Importare/Esportare</it>
@@ -2070,7 +2070,7 @@
 	<StrictStore>
 		<en>Lazy database update</en>
 		<es>Actualización diferida de datos</es>
-		<nl>Lazy database update</nl>
+		<nl>Trage database update</nl>
 		<de>Lazy database update</de>
 		<ca>Actualització diferida de dades</ca>
 		<it>Aggiornamento differito dei dati</it>
@@ -2078,7 +2078,7 @@
 	<SaveMenuItem>
 		<en>Save</en>
 		<es>Guardar</es>
-		<nl>Save</nl>
+		<nl>Opslaan</nl>
 		<de>Save</de>
 		<ca>Save</ca>
 		<it>Salvare</it>
@@ -2086,7 +2086,7 @@
 	<AutosaveMenuItem>
 		<en>Autosave</en>
 		<es>Autoguardado</es>
-		<nl>Autosave</nl>
+		<nl>Automatisch opslaan</nl>
 		<de>Autosave</de>
 		<ca>Autoguardar</ca>
 		<it>Autosalvare</it>
@@ -2094,7 +2094,7 @@
 	<ShowMenuItem>
 		<en>Show</en>
 		<es>Mostrar</es>
-		<nl>Autosave</nl>
+		<nl>Tonen</nl>
 		<de>Autosave</de>
 		<ca>Mostrar</ca>
 		<it>Mostrare</it>
@@ -2102,7 +2102,7 @@
 	<WindowMenuItem>
 		<en>Window</en>
 		<es>Ventana</es>
-		<nl>Window</nl>
+		<nl>Venster</nl>
 		<de>Window</de>
 		<ca>Finestra</ca>
 		<it>Finestra</it>
@@ -2126,7 +2126,7 @@
 	<FinishGroupButton>
 		<en>Finish Champsionship</en>
 		<es>Finalizar Campeonato</es>
-		<nl>Finish Champsionship</nl>
+		<nl>Sluit Kampioenschap</nl>
 		<de>Finish Champsionship</de>
 		<ca>Concloure Campionat</ca>
 		<it>Finire Campionato</it>
@@ -2134,7 +2134,7 @@
 	<GeneralClassification>
 		<en>Competitors Classification</en>
 		<es>Clasificación de los Competidores</es>
-		<nl>Competitors Classification</nl>
+		<nl>Indeling van deelnemers</nl>
 		<de>Competitors Classification</de>
 		<ca>Classificació dels competidors</ca>
 		<it>Classificazione dei competitori</it>

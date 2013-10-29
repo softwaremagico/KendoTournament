@@ -933,7 +933,7 @@
 	<addFight>
 		<en>The fight has been added correctly.</en>
 		<es>El combate ha sido añadido con éxito.</es>
-		<nl>The fight has been added correctly.</nl>
+		<nl>De wedstrijd is correct toegevoegd.</nl>
 		<de>The fight has been added correctly.</de>
 		<ca>El combat ha sigut inserit correctament.</ca>
 		<it>L'incontro è stato inserito con successo.</it>
@@ -941,7 +941,7 @@
 	<waitNewLevel>
 		<en>The team order can not be changed until all current fights are finished.</en>
 		<es>No se puede cambiar el orden del equipo hasta que se terminen los combates actuales.</es>
-		<nl>The team order can not be changed until all current fights are finished.</nl>
+		<nl>De samenstelling van het team kan niet worden gewijzigd voordat alle wedstrijden zijn beëindigd.</nl>
 		<de>The team order can not be changed until all current fights are finished.</de>
 		<ca>El ordre del equips not pot ser cambiat fins que els combats no finisquen</ca>
 		<it>Non si puó cambiare l'ordine della squadra finché gli incontri attuali non saranno terminati</it>
@@ -949,7 +949,7 @@
 	<existFile>
 		<en>The file already exists. Do you want to overwrite it?</en>
 		<es>El fichero ya existe. ¿Desea sobreescribirlo?</es>
-		<nl>The file already exists. Do you want to overwrite it?</nl>
+		<nl>Het bestand bestaat al. Wil je het overschrijven?</nl>
 		<de>The file already exists. Do you want to overwrite it?</de>
 		<ca>El fitxer ja existix. Desitja sobreescriure'l?</ca>
 		<it>Il file già esiste. Si desidera sovrascriverlo?</it>
@@ -957,7 +957,7 @@
 	<ConversionCompleted>
 		<en>The database has been exported successfully!</en>
 		<es>¡La base de datos ha sido exportada correctamente!</es>
-		<nl>The database has been exported successfully!</nl>
+		<nl>De database is met succes geëxperteerd!</nl>
 		<de>The database has been exported successfully!</de>
 		<ca>La base de dades ha sigut exportada correctament!</ca>
 		<it>Il database è stato esportato correttamente!</it>
@@ -965,7 +965,7 @@
 	<imageNotFound>
 		<en>Background image not found!</en>
 		<es>¡La imagen de fondo no ha sido encontrada!</es>
-		<nl>Background image not found!</nl>
+		<nl>Achtergrondafbeelding niet gevonden!</nl>
 		<de>Background image not found!</de>
 		<ca>La imatge no ha sigut trabada!</ca>
 		<it>La immagine di fondo non è stata incontrata!</it>
@@ -973,7 +973,7 @@
 	<teamsStored>
 		<en>The new teams have been stored into the database.</en>
 		<es>Se ha agregado los nuevos equipos a la base de datos.</es>
-		<nl>The new teams have been stored into the database.</nl>
+		<nl>Nieuwe teams zijn in de database opgeslagen.</nl>
 		<de>The new teams have been stored into the database.</de>
 		<ca>S'ha agregat els nous equips a la base de dades.</ca>
 		<it>I nuovi gruppi sono stati inseriti nel database.</it>
@@ -981,7 +981,7 @@
 	<noTournament>
 		<en>There is not any tournament created.</en>
 		<es>No hay ningún torneo en la base de datos.</es>
-		<nl>There is not any tournament created.</nl>
+		<nl>Er is geen toernooi aangemaakt.</nl>
 		<de>There is not any tournament created.</de>
 		<ca>No hi ha cap torneig en la base de dades.</ca>
 		<it>Non esiste nessun torneo nel database.</it>
@@ -989,7 +989,7 @@
 	<errorTournament>
 		<en>Unexpected error when reading tournament information.</en>
 		<es>Error inesperado al leer el torneo de la base de datos.</es>
-		<nl>Unexpected error when reading tournament information.</nl>
+		<nl>Onverwachte fout bij het lezen van de toernooi informatie.</nl>
 		<de>Unexpected error when reading tournament information.</de>
 		<ca>Error inesperat al llegir el torneig de la base de dades.</ca>
 		<it>Errore inaspettato a leggere la base di dati.</it>
@@ -997,7 +997,7 @@
 	<csvNotImported>
 		<en>Error when importing the CSV file.</en>
 		<es>¡Error mientras se intentaba importar el fichero CSV!</es>
-		<nl>Error when importing the CSV file.</nl>
+		<nl>Fout bij het importeren van het CSV bestand.</nl>
 		<de>Error when importing the CSV file.</de>
 		<ca>Error mentres s'intentava importar el fitxer CSV!</ca>
 		<it>Errore durante il tentativo di importare il file CSV!</it>
@@ -1005,7 +1005,7 @@
 	<disableMonitor>
 		<en>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</en>
 		<es>Esta opción es incompatible con el monitor de puntuaciones. Se ruega no utilizarlo si se selecciona esta opción.</es>
-		<nl>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</nl>
+		<nl>Deze optie is niet te combineren met de score weergaven. Gelieve niet te gebruiken als u die optie selecteert.</nl>
 		<de>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</de>
 		<ca>Esta opció és incompatible amb el monitor de puntuacions. Es prega no utilitzar-ho si es selecciona esta opció.</ca>
 		<it>Questa opzione è incompatibile con il monitor di punteggi. Si prega di non utilizzarlo si seleziona questa opzione.</it>	
@@ -1013,7 +1013,7 @@
 	<tournamentNotOver>
 		<en>Tournament is not over yet!</en>
 		<es>El campeonato no ha terminado todavía!</es>
-		<nl>Tournament is not over yet!</nl>
+		<nl>Het tournooi is nog niet teneinde!</nl>
 		<de>Tournament is not over yet!</de>
 		<ca>El campionat no ha acabat encara!</ca>
 		<it>Il campionato non è ancora finito!</it>		
@@ -1021,7 +1021,7 @@
 	<databaseConnectionFailure>
 		<en>Communications link failure with the database server!</en>
 		<es>Fallo en el enlace de comunicación con el servidor de bases de datos.</es>
-		<nl>Communications link failure with the database server!</nl>
+		<nl>Geen communicatie mogelijk met de databaseserver!</nl>
 		<de>Communications link failure with the database server!</de>
 		<ca>Error en l'enllaç de comunicació amb el servidor de bases de dades.</ca>
 		<it>Errore di communicazione con il server della base di dati.</it>
@@ -1029,7 +1029,7 @@
 	<deleteRoleError>
 		<en>Error when trying to delete a role from the database.</en>
 		<es>Error mientras se intentaba borrar un rol de la base de datos.</es>
-		<nl>Error when trying to delete a role from the database.</nl>
+		<nl>Fout bij het verrwijderen van een rol uit de database.</nl>
 		<de>Error when trying to delete a role from the database.</de>
 		<ca>Error mentre s'intentava esborrar un rol de la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando un ruolo del database</it>
@@ -1037,7 +1037,7 @@
 	<deleteDuelError>
 		<en>Error when trying to remove a duel into the database.</en>
 		<es>Error mientras se intentaba eliminar un duelo en la base de datos.</es>
-		<nl>Error when trying to remove a duel into the database.</nl>
+		<nl>Fout bij het verwijderen van een gevecht uit de database.</nl>
 		<de>Error when trying to remove a duel into the database.</de>
 		<ca>Error mentre s'intentava esborrar un duel a la base de dades.</ca>
 		<it>Si è verificato un errore mentre si stava cancellando un incontro nel database</it>
@@ -1045,7 +1045,7 @@
 	<autosaving>
 		<en>Autosaving...</en>
 		<es>Auto guardando...</es>
-		<nl>Autosaving...</nl>
+		<nl>Automatisch opslaan...</nl>
 		<de>Autosaving...</de>
 		<ca>Auto guardant...</ca>
 		<it>Autosalvare...</it>
@@ -1053,7 +1053,7 @@
 	<saveBeforeExit>
 		<en>There are some unsaved changes. Do you want to save it in the database?</en>
 		<es>Existen cambios sin guardar. ¿Quieres guardar estos cambios en la base de datos?</es>
-		<nl>There are some unsaved changes. Do you want to save it in the database?</nl>
+		<nl>Niet alle gegevens zijn ogeslagen. Wijzigen opslaan in de database?</nl>
 		<de>There are some unsaved changes. Do you want to save it in the database?</de>
 		<ca>Hi ha canvis per guardar. Vols guardar estos canvis a la base de dades?</ca>
 		<it>Ci sono dati modificati non salvati. Vuoi salvare li dati nel database?</it>
@@ -1061,7 +1061,7 @@
 	<repatedTeam>
 		<en>A team with this name already exist.</en>
 		<es>Ya existe un equipo con ese nombre.</es>
-		<nl>A team with this name already exist.</nl>
+		<nl>Naam van het team bestaat al.</nl>
 		<de>A team with this name already exist.</de>
 		<ca>Existeix un equip amb aquest nom.</ca>
 		<it>Esiste un squadra con questo nome.</it>
@@ -1069,7 +1069,7 @@
 	<repeatedFight>
 		<en>There is a repeated fight in the tournament.</en>
 		<es>Existe un combate repetido en el torneo.</es>
-		<nl>There is a repeated fight in the tournament.</nl>
+		<nl>Wedstrijd bestaat al in het toernooi.</nl>
 		<de>There is a repeated fight in the tournament.</de>
 		<ca>Existeix un combat repetit al campionat.</ca>
 		<it>Esiste un incontro ripetuto en il campionato.</it>
@@ -1077,7 +1077,7 @@
 	<manualChampionshipHelp>
 		<en>Select a source teams group and the address teams group for creating the winners cross.</en>
 		<es>Selecciona un grupo de equipos origen y un grupo destino para generar los cruces entre los ganadores.</es>
-		<nl>Select a source teams group and the address teams group for creating the winners cross.</nl>
+		<nl>Selecteer het 1e team uit de groep en het 2e teams uit de groep voor het maken van de winnaars kruistabel.</nl>
 		<de>Select a source teams group and the address teams group for creating the winners cross.</de>
 		<ca>Selecciona un grup de equips d'origen i un grup destí per a generar els encreuaments dels guanyadors.</ca>
 		<it>Seleziona un gruppo di squadre di origine e un gruppo di destino per generare la combinazione dei vincitori.</it>
@@ -1085,7 +1085,7 @@
 	<storeDataError>
 		<en>Error when trying to store some data in the database.</en>
 		<es>Error mientras se intentaba almacenar algunos datos en la base de datos</es>
-		<nl>Error when trying to store tsome data in the database.</nl>
+		<nl>Fout bij het opslaan van gegevens in de database.</nl>
 		<de>Error when trying to store tsome data in the database.</de>
 		<ca>Error mentre s'intentava enmagatzemar dades a la base de dades.</ca>
 		<it>Si è generato un errore mentre si stava salvando datti nel database.</it>
@@ -1093,7 +1093,7 @@
 	<deleteDataError>
 		<en>Error when trying to remove some data in the database.</en>
 		<es>Error mientras se intentaba borrar algunos datos en la base de datos</es>
-		<nl>Error when trying to remove some data in the database.</nl>
+		<nl>Fout bij het verwijderen van gegevens uit de database.</nl>
 		<de>Error when trying to remove some data in the database.</de>
 		<ca>Error mentre s'intentava esborrar dades a la base de dades.</ca>
 		<it>Si è generato un errore mentre si stava cancellando datti nel database.</it>
@@ -1101,7 +1101,7 @@
 	<unknownDatabaseError>
 		<en>An unknown error has occurred when accessing to the database. </en>
 		<es>Ha ocurrido un error desconocido mientras se intentaba acceder a la base de datos.</es>
-		<nl>An unknown error has occurred when accessing to the database.</nl>
+		<nl>Er heeft zich een onbekende fout voorgedaan bij het benaderen van de database.</nl>
 		<de>An unknown error has occurred when accessing to the database.</de>
 		<ca>Ha ocorregut un error desconegut mentres s'intentava accedir a la base de dades.</ca>
 		<it>Si è generato un errore mentre si stava accedendo nel database.</it>
@@ -1109,7 +1109,7 @@
 	<genericError>
 		<en>An unknown error has occurred when trying to do the operation.</en>
 		<es>Ha ocurrido un error desconocido mientras se intentaba hacer la operación.</es>
-		<nl>An unknown error has occurred when trying to do the operation. </nl>
+		<nl>Een onbekende fout heeft zicht bij deze actie voorgedaan.</nl>
 		<de>An unknown error has occurred when trying to do the operation. </de>
 		<ca>Ha ocorregut un error desconegut mentres s'intentava fer l'operació.</ca>
 		<it>Si è verificato un errore sconosciuto durante il tentativo di fare l'operazione.</it>
@@ -1117,7 +1117,7 @@
 	<emptyPdfError>
 		<en>The generated document is empty. Please, review the selected options.</en>
 		<es>El documento generado está vacío. Por favor, revisa las opciones seleccionadas.</es>
-		<nl>The generated document is empty. Please, review the selected options.</nl>
+		<nl>Het aangemaakte document is leeg. ControleeR a.u.b. de geselecteerde opties.</nl>
 		<de>The generated document is empty. Please, review the selected options.</de>
 		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
 		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
