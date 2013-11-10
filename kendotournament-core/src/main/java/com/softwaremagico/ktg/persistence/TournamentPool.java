@@ -66,7 +66,6 @@ public class TournamentPool extends SimplePool<Tournament> {
     @Override
     public void remove(String elementName) throws SQLException {
         remove(get(elementName));
-
     }
 
     @Override
@@ -74,6 +73,7 @@ public class TournamentPool extends SimplePool<Tournament> {
         //Role deletes fights, teams, undraws and duels. 
         CustomLinkPool.getInstance().remove(tournament);
         RolePool.getInstance().remove(tournament);
+        TeamPool.getInstance().remove(tournament);
         return super.remove(tournament);
     }
 

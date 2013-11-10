@@ -100,9 +100,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     }
 
     private void setTournamentType() {
-        //FightPool.getInstance().remove(getSelectedTournament());
         getSelectedTournament().setType(getDefinedType());
-        //TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
     }
 
     protected TournamentType getDefinedType() {

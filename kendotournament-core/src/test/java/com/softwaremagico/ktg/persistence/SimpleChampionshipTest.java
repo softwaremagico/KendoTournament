@@ -230,9 +230,5 @@ public class SimpleChampionshipTest {
 		Assert.assertTrue(ranking.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team03")));
 		Assert.assertTrue(ranking.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team05")));
 		Assert.assertTrue(ranking.getTeam(2).equals(TeamPool.getInstance().get(tournament, "Team01")));
-
-		// Not remove, used for database store testing.
-		// DuelPool.getInstance().remove(tournament);
-		// UndrawPool.getInstance().remove(tournament);
 	}
 }

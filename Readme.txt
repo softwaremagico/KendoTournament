@@ -115,6 +115,9 @@ Version:
 
 0.9.8.1	Log improved.
 
+1.0.0.0	Performance impreved.
+		Tests added. 
+
 
 
 Thanks to
