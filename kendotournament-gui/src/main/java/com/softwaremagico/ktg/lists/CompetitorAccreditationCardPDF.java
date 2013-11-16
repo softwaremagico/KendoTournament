@@ -110,7 +110,7 @@ public class CompetitorAccreditationCardPDF extends PdfDocument {
 
         table2.addCell(this.getEmptyCell(1));
 
-        p = new Paragraph(competitor.getShortSurname().toUpperCase(), FontFactory.getFont(font, fontSize + 6, Font.BOLD));
+        p = new Paragraph(competitor.getShortSurname(7).toUpperCase(), FontFactory.getFont(font, fontSize + 6, Font.BOLD));
         cell = new PdfPCell(p);
         cell.setBorderWidth(border);
         cell.setColspan(1);

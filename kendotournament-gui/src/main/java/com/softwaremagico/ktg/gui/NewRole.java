@@ -74,7 +74,7 @@ public class NewRole extends KendoFrame {
         fillTournaments();
         fillCompetitors();
         fillRoles();
-        
+
         // Add Main menu.
         mainMenu = new RolesMenu();
         setJMenuBar(mainMenu.createMenu(this));
@@ -197,19 +197,25 @@ public class NewRole extends KendoFrame {
         refreshTournament = true;
         CompetitorComboBox.setSelectedItem(competitor);
     }
-    
-    public Tournament getSelectedTournament(){
+
+    public Tournament getSelectedTournament() {
         return (Tournament) TournamentComboBox.getSelectedItem();
     }
-    
+
+    public RegisteredPerson getSelectedCompetitor() {
+        return (RegisteredPerson) CompetitorComboBox.getSelectedItem();
+    }
+
     public void createAccreditations() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                RegisteredPerson person = RegisteredPersonPool.getInstance().get(((RegisteredPerson) CompetitorComboBox.getSelectedItem()).getId());
-                CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF((getSelectedTournament()), person);
-                pdf.createFile(file);
+            if (RolePool.getInstance().getRole(getSelectedTournament(), getSelectedCompetitor()) != null) {
+                if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
+                        JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
+                    RegisteredPerson person = RegisteredPersonPool.getInstance().get(((RegisteredPerson) CompetitorComboBox.getSelectedItem()).getId());
+                    CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF((getSelectedTournament()), person);
+                    pdf.createFile(file);
+                }
             }
         } catch (Exception ex) {
             AlertManager.showErrorInformation(this.getClass().getName(), ex);

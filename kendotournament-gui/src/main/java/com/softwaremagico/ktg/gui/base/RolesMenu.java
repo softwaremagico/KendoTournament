@@ -6,13 +6,9 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 import com.softwaremagico.ktg.gui.NewRole;
 import com.softwaremagico.ktg.persistence.RolePool;
-import com.softwaremagico.ktg.statistics.StatisticsGeneralHits;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -115,10 +111,12 @@ public class RolesMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    if(!getSelectedTournament().equals(parentWindow.getSelectedTournament())){
                     RolePool.getInstance().importRoles(getSelectedTournament(), parentWindow.getSelectedTournament());
                     AlertManager.informationMessage(RolesMenu.class.getName(), "importSuccess", "");
                     parentWindow.dispose();
                     dispose();
+                    }
                 } catch (Exception ex) {
                     AlertManager.errorMessage(RolesMenu.class.getName(), "importFail", "");
                     KendoLog.errorMessage(RolesMenu.class.getName(), ex);

@@ -977,12 +977,6 @@ public class Controller {
                 }
                 participantRole = new NewRole(false);
                 participantRole.setVisible(true);
-                try {
-                    chooseScore.dispose();
-                } catch (NullPointerException npe) {
-                }
-                chooseScore = new ChooseScore();
-                chooseScore.setVisible(true);
                 main.enableMenuItems();
             }
         }
