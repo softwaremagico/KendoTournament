@@ -295,4 +295,21 @@ public class RolePool extends TournamentDependentPool<Role> {
         }
         return true;
     }
+
+    /**
+     * Import roles from one tournament to other. If the destination tournament
+     * already have a designed role for a competitor, it is not changed.
+     *
+     * @param sourceTournament
+     * @param destinationTournament
+     * @throws SQLException
+     */
+    public void importRoles(Tournament sourceTournament, Tournament destinationTournament) throws SQLException {
+        List<Role> sourceRoles = get(sourceTournament);
+        for (Role role : sourceRoles) {
+            if (getRole(destinationTournament, role.getCompetitor()) == null) {
+                add(destinationTournament, role);
+            }
+        }
+    }
 }

@@ -115,8 +115,11 @@ Version:
 
 0.9.8.1	Log improved.
 
-1.0.0.0	Performance impreved.
+1.0.0	Performance impreved.
 		Tests added. 
+		
+1.0.1	Import roles. Roles can be copied from a previous championship.
+		Manual Championship. Fully editable championship. 
 
 
 

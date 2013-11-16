@@ -33,6 +33,7 @@ import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
@@ -42,10 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author jorge
- */
 public class NewRole extends KendoFrame {
 
     private Translator trans = null;
@@ -53,6 +50,7 @@ public class NewRole extends KendoFrame {
     private boolean refreshTournament = true;
     private boolean refreshCompetitor = true;
     private boolean close;
+    private RolesMenu mainMenu;
 
     /**
      * Creates new form NewRole
@@ -76,6 +74,10 @@ public class NewRole extends KendoFrame {
         fillTournaments();
         fillCompetitors();
         fillRoles();
+        
+        // Add Main menu.
+        mainMenu = new RolesMenu();
+        setJMenuBar(mainMenu.createMenu(this));
     }
 
     /**
@@ -87,7 +89,6 @@ public class NewRole extends KendoFrame {
         AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
         CancelButton.setText(trans.getTranslatedText("CloseButton"));
         DeleteButton.setText(trans.getTranslatedText("DeleteButton"));
-        PDFButton.setText(trans.getTranslatedText("AccreditationPDFButton"));
         TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
         CompetitorLabel.setText(trans.getTranslatedText("CompetitorLabel"));
         RoleLabel.setText(trans.getTranslatedText("RoleLabel"));
@@ -155,7 +156,7 @@ public class NewRole extends KendoFrame {
      */
     private void refreshRole() {
         try {
-            Role role = RolePool.getInstance().getRole((Tournament) TournamentComboBox.getSelectedItem(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
+            Role role = RolePool.getInstance().getRole(getSelectedTournament(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
             try {
                 if (role == null) {
                     RoleTagsComboBox.setSelectedIndex(0);
@@ -180,7 +181,7 @@ public class NewRole extends KendoFrame {
 
     private void deleteRole() {
         try {
-            RolePool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
+            RolePool.getInstance().remove(getSelectedTournament(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
             if (RoleTagsComboBox.getItemCount() > 0) {
                 RoleTagsComboBox.setSelectedIndex(0);
             }
@@ -195,6 +196,24 @@ public class NewRole extends KendoFrame {
         TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         refreshTournament = true;
         CompetitorComboBox.setSelectedItem(competitor);
+    }
+    
+    public Tournament getSelectedTournament(){
+        return (Tournament) TournamentComboBox.getSelectedItem();
+    }
+    
+    public void createAccreditations() {
+        try {
+            String file;
+            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
+                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
+                RegisteredPerson person = RegisteredPersonPool.getInstance().get(((RegisteredPerson) CompetitorComboBox.getSelectedItem()).getId());
+                CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF((getSelectedTournament()), person);
+                pdf.createFile(file);
+            }
+        } catch (Exception ex) {
+            AlertManager.showErrorInformation(this.getClass().getName(), ex);
+        }
     }
 
     /**
@@ -214,7 +233,6 @@ public class NewRole extends KendoFrame {
         RoleLabel = new javax.swing.JLabel();
         CancelButton = new javax.swing.JButton();
         AcceptButton = new javax.swing.JButton();
-        PDFButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -252,13 +270,6 @@ public class NewRole extends KendoFrame {
             }
         });
 
-        PDFButton.setText("PDF");
-        PDFButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PDFButtonActionPerformed(evt);
-            }
-        });
-
         DeleteButton.setText("Delete");
         DeleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,9 +287,8 @@ public class NewRole extends KendoFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(CompetitorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(TournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(RoleLabel)
-                    .addComponent(PDFButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(RoleLabel))
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(AcceptButton)
@@ -296,8 +306,8 @@ public class NewRole extends KendoFrame {
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TournamentLabel))
@@ -312,10 +322,9 @@ public class NewRole extends KendoFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CancelButton)
-                    .addComponent(PDFButton)
                     .addComponent(AcceptButton)
                     .addComponent(DeleteButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -328,15 +337,15 @@ public class NewRole extends KendoFrame {
         try {
             int roleIndex = RoleTagsComboBox.getSelectedIndex();
             if (roleIndex > 0) {
-                Role oldRole = RolePool.getInstance().getRole((Tournament) TournamentComboBox.getSelectedItem(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
-                Role newRole = new Role((Tournament) TournamentComboBox.getSelectedItem(), (RegisteredPerson) CompetitorComboBox.getSelectedItem(), (RoleTag) RoleTagsComboBox.getSelectedItem(), false, false);
+                Role oldRole = RolePool.getInstance().getRole(getSelectedTournament(), (RegisteredPerson) CompetitorComboBox.getSelectedItem());
+                Role newRole = new Role(getSelectedTournament(), (RegisteredPerson) CompetitorComboBox.getSelectedItem(), (RoleTag) RoleTagsComboBox.getSelectedItem(), false, false);
                 //Update or insert?
                 if (oldRole != null) {
-                    if (RolePool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem(), oldRole, newRole)) {
+                    if (RolePool.getInstance().update(getSelectedTournament(), oldRole, newRole)) {
                         AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
                     }
                 } else {
-                    if (RolePool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), newRole)) {
+                    if (RolePool.getInstance().add(getSelectedTournament(), newRole)) {
                         AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
                     }
                 }
@@ -358,20 +367,6 @@ public class NewRole extends KendoFrame {
         }
     }//GEN-LAST:event_CompetitorComboBoxActionPerformed
 
-    private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
-        try {
-            String file;
-            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
-                    JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                RegisteredPerson person = RegisteredPersonPool.getInstance().get(((RegisteredPerson) CompetitorComboBox.getSelectedItem()).getId());
-                CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF(((Tournament) TournamentComboBox.getSelectedItem()), person);
-                pdf.createFile(file);
-            }
-        } catch (Exception ex) {
-            AlertManager.showErrorInformation(this.getClass().getName(), ex);
-        }
-}//GEN-LAST:event_PDFButtonActionPerformed
-
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
@@ -388,7 +383,6 @@ public class NewRole extends KendoFrame {
     private javax.swing.JComboBox CompetitorComboBox;
     private javax.swing.JLabel CompetitorLabel;
     private javax.swing.JButton DeleteButton;
-    private javax.swing.JButton PDFButton;
     private javax.swing.JLabel RoleLabel;
     private javax.swing.JComboBox RoleTagsComboBox;
     private javax.swing.JComboBox TournamentComboBox;

@@ -25,10 +25,7 @@ package com.softwaremagico.ktg.gui.fight;
 
 import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 
-/**
- *
- * @author jorge
- */
+
 public class SelectTournamentForMonitor extends ListFromTournamentCreateFile {
 
     public SelectTournamentForMonitor() {

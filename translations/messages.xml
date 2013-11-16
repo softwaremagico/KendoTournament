@@ -1122,5 +1122,24 @@
 		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
 		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
 	</emptyPdfError>
+	
+	<!-- -TRANSLATION -->
+	
+	<importSuccess>
+		<en>Data has been importes successfully.</en>
+		<es>Se han importado con éxito los datos.</es>
+		<nl>Data has been importes successfully.</nl>
+		<de>Data has been importes successfully.</de>
+		<ca>S'han importat amb èxit les dades.</ca>
+		<it>I dati sono stati importati con successo.</it>
+	</importSuccess>
+	<importFail>
+		<en>An error has occurred when trying to import the data.</en>
+		<es>Ha habido un error mientras se intentaban importar los datos.</es>
+		<nl>An error has occurred when trying to import the data.</nl>
+		<de>An error has occurred when trying to import the data.</de>
+		<ca>Hi ha hagut un error mentres s'intentaven importar les dades.</ca>
+		<it>Si è verificato un errore mentre si stava intentando importare i dati.</it>
+	</importFail>
 </translator>
 

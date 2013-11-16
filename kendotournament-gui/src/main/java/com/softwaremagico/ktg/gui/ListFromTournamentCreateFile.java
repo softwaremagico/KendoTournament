@@ -41,6 +41,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     protected List<Tournament> listTournaments = new ArrayList<>();
     protected boolean voidTournament; // Add "All tournaments" option.
     protected boolean refreshTournament = true;
+    private boolean changeLastSelectedTournament = true;
 
     public void createGui(boolean voidTournament) {
         initComponents();
@@ -61,6 +62,10 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
         ArenaLabel.setText(trans.getTranslatedText("FightArea"));
         CancelButton.setText(trans.getTranslatedText("CancelButton"));
         GenerateButton.setText(trans.getTranslatedText("GenerateButton"));
+    }
+
+    public void changeLastSelectedTournament(boolean value) {
+        changeLastSelectedTournament = value;
     }
 
     protected void fillTournaments() {
@@ -103,7 +108,7 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
                 return null;
             }
         } else {
-             return (Tournament) TournamentComboBox.getSelectedItem();
+            return (Tournament) TournamentComboBox.getSelectedItem();
         }
 
     }
@@ -311,8 +316,10 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
             try {
-                KendoTournamentGenerator.getInstance().setLastSelectedTournament(
-                        TournamentComboBox.getSelectedItem().toString());
+                if (changeLastSelectedTournament) {
+                    KendoTournamentGenerator.getInstance().setLastSelectedTournament(
+                            TournamentComboBox.getSelectedItem().toString());
+                }
             } catch (NullPointerException npe) {
                 // No problem "All tournaments selected".
             }
