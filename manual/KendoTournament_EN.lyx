@@ -101,6 +101,42 @@ LatexCommand tableofcontents
 
 \end_layout
 
+\begin_layout Chapter*
+What's new
+\end_layout
+
+\begin_layout Section*
+v1.1.0
+\end_layout
+
+\begin_layout Description
+Roles
+\begin_inset space ~
+\end_inset
+
+Importation: a new option allows the user to copy all roles from another
+ championship, avoiding the task of defining all ot them one by one.
+ More info in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Import-roles"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Manual
+\begin_inset space ~
+\end_inset
+
+Championship: new option for creating a completly custom championship.
+ User can add any fight and therefore, any kind of tournament or league
+ can be represented.
+ 
+\end_layout
+
 \begin_layout Chapter
 Basic mode
 \end_layout
@@ -743,6 +779,36 @@ Adding a role.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The menu of the windows has the next options:
+\end_layout
+
+\begin_layout Description
+Accreditation
+\begin_inset CommandInset label
+LatexCommand label
+name "Accreditations"
+
+\end_inset
+
+: will generate the accreditation of the selected user.
+ 
+\end_layout
+
+\begin_layout Description
+Import
+\begin_inset CommandInset label
+LatexCommand label
+name "Import-roles"
+
+\end_inset
+
+: allows the copy of all roles from other championship.
+ The roles copied will not overwrite any existing role or delete any previous
+ one.
+ 
 \end_layout
 
 \begin_layout Subsection

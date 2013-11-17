@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.0.0
+v1.1.0
 \end_layout
 
 \begin_layout Author
@@ -99,6 +99,48 @@ LatexCommand tableofcontents
 \end_inset
 
 
+\end_layout
+
+\begin_layout Chapter*
+Novedades
+\end_layout
+
+\begin_layout Section*
+v1.1.0
+\end_layout
+
+\begin_layout Description
+Importación
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+roles: una nueva opción en la ventana de roles permite copiar todos los
+ roles de un campeonato anterior, evitando así la tediosa actividad de volver
+ a insertarlos uno a uno.
+ Más información en la sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Importar-roles"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Campeonato
+\begin_inset space ~
+\end_inset
+
+manual: aparece la opción de crear un campeonato controlado por el usuario.
+ Da completa libertad para añadir combates de manera que se puedan representar
+ todos aquellas formas de torneros o ligas que todavía no han sido definidas
+ en la aplicación.
+ 
 \end_layout
 
 \begin_layout Chapter
@@ -758,7 +800,7 @@ Otros: se pueden generar otros roles fácilmente que se adecúen a las necesidad
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -790,6 +832,30 @@ Inserción de un rol.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Un menu superior permite realizar las siguientes opciones:
+\end_layout
+
+\begin_layout Description
+Acreditaciones: permite generar la acreditación del usuario seleccionado
+ en ese momento.
+\end_layout
+
+\begin_layout Description
+Importar
+\begin_inset CommandInset label
+LatexCommand label
+name "Importar-roles"
+
+\end_inset
+
+: permite importar todo el listado de roles de otro campeonato.
+ Copiará únicamente los roles de aquellas personas que todavía no tengan
+ un rol definido en el campeonato actual, es decir, no sobreescribirá los
+ roles definidos y tampoco borrará ninguno.
+ 
 \end_layout
 
 \begin_layout Subsection
