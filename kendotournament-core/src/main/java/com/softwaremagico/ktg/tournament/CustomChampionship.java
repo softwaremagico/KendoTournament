@@ -24,7 +24,7 @@ public class CustomChampionship extends Championship {
     }
 
     public boolean allGroupsHaveNextLink() {
-        return ((LeagueLevelCustom) levelZero).allGroupsHaveManualLink();
+        return ((LeagueLevelCustom) levelZero).allGroupsHaveCustomLink();
     }
 
     public void addLink(TGroup source, TGroup address) {

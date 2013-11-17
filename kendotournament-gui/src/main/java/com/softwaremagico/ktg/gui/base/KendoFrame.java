@@ -206,7 +206,7 @@ public abstract class KendoFrame extends KFrame {
     }
 
     @Override
-    public void tournamentChanged() {
+    public void elementChanged() {
         //Nothing.
     }
 

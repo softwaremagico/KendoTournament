@@ -447,7 +447,7 @@
 		<de>Team hinzufügen</de>
 		<ca>Afegir equip</ca>
 		<it>Aggiungere squadra</it>
-	</AddTeamButton>titleShortFight
+	</AddTeamButton>
 	<GenerateMatchButton>
 		<en>Generate Match</en>
 		<es>Generar Partidos</es>
@@ -937,12 +937,12 @@
 		<it>Campionato</it>
 	</LeagueMenuItem>
 	<ManualFightsMenuItem>
-		<en>Manual</en>
-		<es>Manual</es>
+		<en>Personalized</en>
+		<es>Personalizado</es>
 		<nl>Beschrijving</nl>
 		<de>Handbuch</de>
-		<ca>Manual</ca>
-		<it>Manuale</it>
+		<ca>Personalized</ca>
+		<it>Personalizzato</it>
 	</ManualFightsMenuItem>
 	<DesignerMenuItem>
 		<en>Designer</en>
@@ -2139,4 +2139,12 @@
 		<ca>Classificació dels competidors</ca>
 		<it>Classificazione dei competitori</it>
 	</GeneralClassification>
+	<AddNewFight>
+		<en>Add a new fight:</en>
+		<es>Añadir un nuevo combate:</es>
+		<nl>Add a new fight:</nl>
+		<de>Add a new fight:</de>
+		<ca>Afegir un nou combat:</ca>
+		<it></it>	
+	</AddNewFight>
 </translator>

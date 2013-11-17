@@ -26,12 +26,14 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
 import com.softwaremagico.ktg.gui.tournament.LeagueEvolution;
@@ -52,6 +54,7 @@ import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.statistics.*;
+import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -192,6 +195,7 @@ public class Controller {
         main.addSaveMenuItemListener(new SaveListener());
         main.addTreeOptionMenuItemListener(new TournamentTreeListener());
         main.addCompetitorsGlobalScoreMenuItemListener(new NewCompetitorsScoreListListener());
+        main.addManualMenuItemListener(new NewPersonalizedFightListener());
     }
 
     class TournamentTreeListener implements ActionListener {
@@ -487,17 +491,12 @@ public class Controller {
         }
     }
 
-    class NewManualFightListener implements ActionListener {
+    class NewPersonalizedFightListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                fightPanel.dispose();
-            } catch (NullPointerException npe) {
-            }
-            fightPanel = new FightPanel();
-            fightPanel.setVisible(true);
-            addFightPanelListeners();
+            SelectTournamentPersonalized selectTournament = new SelectTournamentPersonalized("", "AcceptButton");
+            selectTournament.setVisible(true);
         }
     }
 
@@ -1289,6 +1288,59 @@ public class Controller {
                 }
             } catch (SQLException ex) {
                 AlertManager.showSqlErrorMessage(ex);
+            }
+        }
+    }
+
+    class SelectTournamentPersonalized extends ListFromTournamentCreateFile {
+
+        private String title;
+
+        public SelectTournamentPersonalized(String title, String buttonTag) {
+            createGui(false);
+            //Not modified last selected tournament.
+            this.title = title;
+            this.setTitle(title);
+            GenerateButton.setText(trans.getTranslatedText(buttonTag));
+            addGenerateButtonListener(new PersonalizedTournamentListener());
+        }
+
+        @Override
+        public String defaultFileName() {
+            return "";
+        }
+
+        class PersonalizedTournamentListener implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+
+                    if (AlertManager.questionMessage("convertToPersonalized", title)) {
+                        //Remove old information. 
+                        getSelectedTournament().setType(TournamentType.PERSONALIZED);
+                        FightPool.getInstance().remove(getSelectedTournament());
+                        
+                        //Open fight panel.
+                        try {
+                            fightPanel.dispose();
+                        } catch (NullPointerException npe) {
+                        }
+                        fightPanel = new FightPanel();
+                        fightPanel.setVisible(true);
+                        addFightPanelListeners();
+                        
+                        NewPersonalizedFight personalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
+                        personalizedFight.setVisible(true);
+                        
+                        dispose();
+                    } else {
+                        AlertManager.warningMessage(Controller.class.getName(), "canceledAction", title);
+                    }
+                } catch (Exception ex) {
+                    AlertManager.errorMessage(RolesMenu.class.getName(), "importFail", "");
+                    KendoLog.errorMessage(RolesMenu.class.getName(), ex);
+                }
             }
         }
     }

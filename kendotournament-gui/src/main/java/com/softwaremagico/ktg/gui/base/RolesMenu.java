@@ -111,11 +111,11 @@ public class RolesMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if(!getSelectedTournament().equals(parentWindow.getSelectedTournament())){
-                    RolePool.getInstance().importRoles(getSelectedTournament(), parentWindow.getSelectedTournament());
-                    AlertManager.informationMessage(RolesMenu.class.getName(), "importSuccess", "");
-                    parentWindow.dispose();
-                    dispose();
+                    if (!getSelectedTournament().equals(parentWindow.getSelectedTournament())) {
+                        RolePool.getInstance().importRoles(getSelectedTournament(), parentWindow.getSelectedTournament());
+                        AlertManager.informationMessage(RolesMenu.class.getName(), "importSuccess", "");
+                        parentWindow.dispose();
+                        dispose();
                     }
                 } catch (Exception ex) {
                     AlertManager.errorMessage(RolesMenu.class.getName(), "importFail", "");

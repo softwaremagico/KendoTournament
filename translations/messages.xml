@@ -1141,5 +1141,22 @@
 		<ca>Hi ha hagut un error mentres s'intentaven importar les dades.</ca>
 		<it>Si è verificato un errore mentre si stava intentando importare i dati.</it>
 	</importFail>
+	<convertToPersonalized>
+		<en>Do you want to define as personalized the selected tournament?</en>
+		<es>¿Quiere definir como personalizado el torneo seleccionado?</es>
+		<nl>Do you want to define as personalized the selected tournament?</nl>
+		<de>Do you want to define as personalized the selected tournament?</de>
+		<de>Do you want to define as personalized the selected tournament?</de>
+		<ca>Vol definir com a manual el torneig seleccionat?</ca>
+		<it>Si vuole definire come personalizzato il torneo selezionato?</it>
+	</convertToPersonalized>
+	<canceledAction>
+		<en>Action canceled.</en>
+		<es>Acción cancelada.</es>
+		<nl>Action canceled.</nl>
+		<de>Action canceled.</de>
+		<ca>Acció cancel·lada.</ca>
+		<it>Azione annullata.</it>
+	</canceledAction>
 </translator>
 

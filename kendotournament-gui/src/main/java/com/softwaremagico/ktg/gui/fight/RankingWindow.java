@@ -212,7 +212,7 @@ public class RankingWindow extends KFrame {
 	}
 
 	@Override
-	public void tournamentChanged() {
+	public void elementChanged() {
 	}
 
 	private void addResizedEvent() {

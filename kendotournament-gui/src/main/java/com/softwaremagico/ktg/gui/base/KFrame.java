@@ -55,5 +55,5 @@ public abstract class KFrame extends JFrame {
 
     public abstract void update();
 
-    public abstract void tournamentChanged();
+    public abstract void elementChanged();
 }

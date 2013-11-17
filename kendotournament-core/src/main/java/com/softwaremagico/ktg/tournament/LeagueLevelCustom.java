@@ -56,7 +56,7 @@ public class LeagueLevelCustom extends LeagueLevel {
             }
         }
 
-        // Winners in the manual linking are stored by order.
+        // Winners in the custom linking are stored by order.
         if (winner < sources.size()) {
             return sources.get(winner).getSourceGroup();
         }
@@ -86,7 +86,7 @@ public class LeagueLevelCustom extends LeagueLevel {
             }
         }
 
-        // Winners in the manual linking are stored by order.
+        // Winners in the custom linking are stored by order.
         if (winner < destinations.size()) {
             return destinations.get(winner).getAddress();
         }
@@ -191,8 +191,6 @@ public class LeagueLevelCustom extends LeagueLevel {
             int previousLinksNumber = getNumberOfSourcesOfLink(source);
             if (previousLinksNumber >= source.getMaxNumberOfWinners()) {
                 removefirstSourceLink(source);
-                //} else if (previousLinksNumber >= source.getTeams().size()) {
-                //    removefirstSourceLink(source);
             }
             if (getNumberOfAddressesOfLink(address) > 1) {
                 removefirstAddressLink(address);
@@ -242,7 +240,7 @@ public class LeagueLevelCustom extends LeagueLevel {
         }
     }
 
-    public boolean allGroupsHaveManualLink() {
+    public boolean allGroupsHaveCustomLink() {
         try {
             for (int i = 0; i < tournamentGroups.size(); i++) {
                 boolean found = false;

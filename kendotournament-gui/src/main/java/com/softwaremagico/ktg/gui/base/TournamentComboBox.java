@@ -77,7 +77,7 @@ public class TournamentComboBox extends KComboBox {
     }
 
     private void tournamentComboBoxActionPerformed(ActionEvent evt) {
-        parent.tournamentChanged();
+        parent.elementChanged();
     }
 
     class ComboBoxActionListener implements ActionListener {

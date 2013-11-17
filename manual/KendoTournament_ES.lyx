@@ -136,7 +136,8 @@ Campeonato
 \begin_inset space ~
 \end_inset
 
-manual: aparece la opción de crear un campeonato controlado por el usuario.
+personalizado: aparece la opción de crear un campeonato controlado por el
+ usuario.
  Da completa libertad para añadir combates de manera que se puedan representar
  todos aquellas formas de torneros o ligas que todavía no han sido definidas
  en la aplicación.

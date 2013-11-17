@@ -77,6 +77,7 @@ public class FightPanel extends KFrame {
     private PreviousButton previousButton;
     private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem;
     private KCheckBoxMenuItem changeTeam, changeColor, changeMemberOrder;
+    private NewPersonalizedFight newPersonalizedFight;
 
     public FightPanel() {
         defineWindow(750, 500);
@@ -414,7 +415,7 @@ public class FightPanel extends KFrame {
     }
 
     @Override
-    public void tournamentChanged() {
+    public void elementChanged() {
         updateSelectedTournament();
     }
 

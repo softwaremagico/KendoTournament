@@ -25,10 +25,6 @@ package com.softwaremagico.ktg.language;
  * #L%
  */
 
-/**
- *
- * @author jorge
- */
 public class Language {
 
     private String name;

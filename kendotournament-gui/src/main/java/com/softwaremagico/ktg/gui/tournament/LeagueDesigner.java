@@ -87,7 +87,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         addTeamButton.setText(trans.getTranslatedText("AddTeamButton"));
         acceptButton.setText(trans.getTranslatedText("AcceptButton"));
         closeButton.setText(trans.getTranslatedText("CloseButton"));
-        manualCheckBox.setText(trans.getTranslatedText("ManualFightsMenuItem"));
+        customCheckBox.setText(trans.getTranslatedText("ManualFightsMenuItem"));
         cleanLinksButton.setText(trans.getTranslatedText("CleanLinks"));
         DeleteLevelLabel.setText(trans.getTranslatedText("DeleteLevelLabel"));
         deleteLevelButton.setText(trans.getTranslatedText("DeleteButton"));
@@ -104,7 +104,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     }
 
     protected TournamentType getDefinedType() {
-        if (manualCheckBox.isSelected()) {
+        if (customCheckBox.isSelected()) {
             return TournamentType.CUSTOM_CHAMPIONSHIP;
         }
         return TournamentType.CHAMPIONSHIP;
@@ -132,8 +132,8 @@ public final class LeagueDesigner extends javax.swing.JFrame {
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().getName());
         } catch (NullPointerException npe) {
         }
-        manualCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP));
-        cleanLinksButton.setEnabled(manualCheckBox.isSelected());
+        customCheckBox.setSelected(getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP));
+        cleanLinksButton.setEnabled(customCheckBox.isSelected());
         refreshSpinner = false;
         winnerPassSpinner.setValue(getSelectedTournament().getHowManyTeamsOfGroupPassToTheTree());
         refreshSpinner = true;
@@ -309,7 +309,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         ButtonPanel = new javax.swing.JPanel();
         acceptButton = new javax.swing.JButton();
         closeButton = new javax.swing.JButton();
-        manualCheckBox = new javax.swing.JCheckBox();
+        customCheckBox = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -538,10 +538,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
 
         ButtonPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {acceptButton, closeButton});
 
-        manualCheckBox.setText("Manual");
-        manualCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        customCheckBox.setText("Manual");
+        customCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manualCheckBoxActionPerformed(evt);
+                customCheckBoxActionPerformed(evt);
             }
         });
 
@@ -559,7 +559,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tournamentComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(manualCheckBox))
+                        .addComponent(customCheckBox))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -570,7 +570,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TournamentLabel)
                     .addComponent(tournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manualCheckBox))
+                    .addComponent(customCheckBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -718,15 +718,15 @@ public final class LeagueDesigner extends javax.swing.JFrame {
         this.toFront();
     }//GEN-LAST:event_formWindowOpened
 
-    private void manualCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualCheckBoxActionPerformed
+    private void customCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customCheckBoxActionPerformed
         setTournamentType();
-        if (manualCheckBox.isSelected()) {
+        if (customCheckBox.isSelected()) {
             AlertManager.informationMessage(this.getClass().getName(), "manualChampionshipHelp", "Designer");
         } else {
         }
         updateInfo();
-        cleanLinksButton.setEnabled(manualCheckBox.isSelected());
-    }//GEN-LAST:event_manualCheckBoxActionPerformed
+        cleanLinksButton.setEnabled(customCheckBox.isSelected());
+    }//GEN-LAST:event_customCheckBoxActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane BlackBoardScrollPane;
     private javax.swing.JPanel ButtonPanel;
@@ -741,6 +741,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JButton addTeamButton;
     private javax.swing.JButton cleanLinksButton;
     private javax.swing.JButton closeButton;
+    private javax.swing.JCheckBox customCheckBox;
     private javax.swing.JButton deleteAllButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton deleteLevelButton;
@@ -748,7 +749,6 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox levelComboBox;
-    private javax.swing.JCheckBox manualCheckBox;
     private javax.swing.JList teamList;
     private javax.swing.JComboBox tournamentComboBox;
     private javax.swing.JSpinner winnerPassSpinner;

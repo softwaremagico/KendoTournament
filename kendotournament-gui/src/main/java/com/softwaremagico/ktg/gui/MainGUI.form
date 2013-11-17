@@ -175,6 +175,17 @@
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;project.png&quot;));"/>
                   </AuxValues>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="manualMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Manual"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manualMenuItemActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;manual.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="TournamentPanelMenuItem">
@@ -492,7 +503,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="MainPhotoPanel" pref="324" max="32767" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="328" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
