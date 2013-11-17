@@ -2147,4 +2147,20 @@
 		<ca>Afegir un nou combat:</ca>
 		<it>Aggiungere un nuovo combattimento:</it>	
 	</AddNewFight>
+	<RedTeam>
+		<en>Red Team:</en>
+		<es>Equipo Rojo:</es>
+		<nl>Red Team:</nl>
+		<de>Red Team:</de>
+		<ca>Equip Roig:</ca>
+		<it>Squadra Rosso:</it>	
+	</RedTeam>
+	<WhiteTeam>
+		<en>White Team:</en>
+		<es>Equipo Blanco:</es>
+		<nl>White Team:</nl>
+		<de>White Team:</de>
+		<ca>Equipo Blanc:</ca>
+		<it>Squadra Bianca:</it>	
+	</WhiteTeam>
 </translator>

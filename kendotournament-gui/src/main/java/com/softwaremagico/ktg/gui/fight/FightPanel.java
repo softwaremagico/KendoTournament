@@ -393,6 +393,10 @@ public class FightPanel extends KFrame {
                     changeColor.isSelected());
         }
     }
+    
+    public boolean isColorChanged(){
+        return changeColor.isSelected();
+    }
 
     public void updateSelectedTournament() {
         fightAreaComboBox.update(getSelectedTournament());
