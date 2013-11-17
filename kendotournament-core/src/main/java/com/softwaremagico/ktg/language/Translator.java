@@ -25,31 +25,29 @@ package com.softwaremagico.ktg.language;
  * #L%
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.files.Path;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public class Translator {
 
@@ -60,11 +58,12 @@ public class Translator {
     private boolean retried = false;
     private boolean showedMessage = false;
     private static List<Language> languagesList = null;
-    private static RoleTags rolesList;
+    private static HashMap<String, RoleTags> rolesList;
 
     public Translator(String tmp_file) {
         fileTranslated = tmp_file;
         doc = parseFile(doc, fileTranslated);
+        rolesList = new HashMap<>();
     }
 
     /**
@@ -173,9 +172,9 @@ public class Translator {
     }
 
     public static RoleTags getAvailableRoles(String language) {
-        if (rolesList == null) {
+        if (rolesList.get(language) == null) {
             int red, green, blue;
-            rolesList = new RoleTags();
+            rolesList.put(language, new RoleTags());
             Document storedRoles = null;
             storedRoles = parseFile(storedRoles, "roles.xml");
             NodeList nodeLst = storedRoles.getElementsByTagName("role");
@@ -213,10 +212,10 @@ public class Translator {
                     Element rol = (Element) translatedRoles.item(0);
                     RoleTag role = new RoleTag(tag, rol.getTextContent().trim(), abbrev);
                     role.addColor(red, green, blue);
-                    rolesList.add(role);
+                    rolesList.get(language).add(role);
                 }
             }
         }
-        return rolesList;
+        return rolesList.get(language);
     }
 }
