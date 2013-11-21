@@ -23,16 +23,6 @@ package com.softwaremagico.ktg.gui.fight;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.gui.base.KFrame;
-import com.softwaremagico.ktg.gui.base.KPanel;
-import com.softwaremagico.ktg.gui.base.KendoFrame;
-import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
-import com.softwaremagico.ktg.gui.base.buttons.KButton;
-import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -44,13 +34,24 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 
-public class TreeWindow extends KendoFrame {
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
+import com.softwaremagico.ktg.gui.base.buttons.KButton;
+import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 
-    private BlackBoardPanel bbp;
+public class TreeWindow extends KendoFrame {
+	private static final long serialVersionUID = -1587125061547952914L;
+	private BlackBoardPanel bbp;
     private JScrollPane blackBoardScrollPane;
     private Tournament tournament;
 

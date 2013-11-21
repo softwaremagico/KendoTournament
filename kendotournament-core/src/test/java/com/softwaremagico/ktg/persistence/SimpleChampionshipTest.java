@@ -9,6 +9,7 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
+import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.sql.SQLException;
@@ -90,7 +91,7 @@ public class SimpleChampionshipTest {
 	}
 
 	@Test(dependsOnMethods = { "addTeams" })
-	public void createFights() throws SQLException {
+	public void createFights() throws SQLException, PersonalizedFightsException {
 		ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.SIMPLE);
 		FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == getNumberOfCombats(TeamPool.getInstance()

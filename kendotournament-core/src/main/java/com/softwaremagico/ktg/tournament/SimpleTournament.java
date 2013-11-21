@@ -132,7 +132,7 @@ public class SimpleTournament implements ITournamentManager {
     }
 
     @Override
-    public List<Fight> createRandomFights(Integer level) {
+    public List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException {
         if (level != 0) {
             return null;
         }
@@ -140,7 +140,7 @@ public class SimpleTournament implements ITournamentManager {
     }
 
     @Override
-    public List<Fight> createSortedFights(Integer level) {
+    public List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException {
         if (level != 0) {
             return null;
         }

@@ -50,7 +50,7 @@ import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 
 public class RankingWindow extends KFrame {
-
+	private static final long serialVersionUID = 3242543566294149320L;
 	private final static String FONT = "Arial";
 	private final static int AUTO_CLOSE_SECONDS = 30;
 	private final static int MIN_ROWS = 6;
