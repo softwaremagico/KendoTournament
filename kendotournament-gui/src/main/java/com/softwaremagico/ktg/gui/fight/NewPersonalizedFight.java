@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.TeamComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -49,7 +50,6 @@ public class NewPersonalizedFight extends KFrame {
     private static final long serialVersionUID = -8484422346146735562L;
     private final static int DEFAULT_LEVEL = 0;
     private final static int DEFAULT_GROUP = 0;
-    private int fightArea = 0;
     private FightPanel parent;
     private Tournament tournament;
     private TeamComboBox team1, team2;
@@ -58,27 +58,16 @@ public class NewPersonalizedFight extends KFrame {
     public NewPersonalizedFight(Tournament tournament, FightPanel parent) {
         this.tournament = tournament;
         this.parent = parent;
-        defineWindow(450, 200);
+        defineWindow(450, 160);
         setResizable(false);
         setElements();
+        setTitle(LanguagePool.getTranslator("gui.xml").getTranslatedText("AddNewFight"));
     }
 
     private void setElements() {
         setLayout(new GridBagLayout());
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
-        KLabel newFightLabel = new KLabel("AddNewFight");
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(newFightLabel, gridBagConstraints);
 
         KLabel team1Label;
         if (!parent.isColorChanged()) {
@@ -88,13 +77,14 @@ public class NewPersonalizedFight extends KFrame {
         }
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.ipady = xPadding;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(10, 10, 0, 5);
         getContentPane().add(team1Label, gridBagConstraints);
 
         KLabel team2Label;
@@ -105,49 +95,50 @@ public class NewPersonalizedFight extends KFrame {
         }
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.ipady = xPadding;
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(10, 5, 0, 10);
         getContentPane().add(team2Label, gridBagConstraints);
 
         team1 = new TeamComboBox(tournament, this);
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(5, 10, 5, 5);
         getContentPane().add(team1, gridBagConstraints);
 
         JLabel versusLabel = new JLabel(" vs ");
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.ipadx = 0;
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 0;
         gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(5, 2, 5, 2);
         getContentPane().add(versusLabel, gridBagConstraints);
 
         team2 = new TeamComboBox(tournament, this);
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridheight = 1;
         gridBagConstraints.gridwidth = 1;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 1;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(5, 5, 5, 10);
         getContentPane().add(team2, gridBagConstraints);
 
         setDefaultFight();
@@ -172,20 +163,24 @@ public class NewPersonalizedFight extends KFrame {
         gridBagConstraints.fill = GridBagConstraints.NONE;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridy = 2;
+        //gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
         gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        gridBagConstraints.insets = new Insets(0, 0, 0, 5);
         getContentPane().add(buttonPanel, gridBagConstraints);
 
+    }
+
+    private int getFightArea() {
+        return parent.getSelectedFightArea();
     }
 
     private void setDefaultFight() {
         Fight lastFight;
         try {
-            lastFight = FightPool.getInstance().getCurrentFight(tournament, fightArea);
+            lastFight = FightPool.getInstance().getCurrentFight(tournament, getFightArea());
             if (lastFight != null) {
                 if (!parent.isTeamChanged()) {
                     team1.setSelectedItem(lastFight.getTeam1());
