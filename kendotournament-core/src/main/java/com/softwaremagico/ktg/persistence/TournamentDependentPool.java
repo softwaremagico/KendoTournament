@@ -258,7 +258,8 @@ public abstract class TournamentDependentPool<ElementPool> {
             } else {
                 addElementToRemove(tournament, element);
             }
-            getSortedElements(tournament).remove(element);
+            //getSortedElements(tournament).remove(element);
+            sortedElements = null;
             getElementToUpdate(tournament).remove(element);
         }
         return true;
@@ -333,7 +334,6 @@ public abstract class TournamentDependentPool<ElementPool> {
             // Change element.
             getMap(tournament).remove(oldId);
             getMap(tournament).put(newId, newElement);
-            sortedElements = new HashMap<>();
 
             // Element added previously but not stored in database.
             ElementPool elementStillNotInDatabase = getElementToStore(tournament).get(oldId);
@@ -345,6 +345,7 @@ public abstract class TournamentDependentPool<ElementPool> {
                 addElementToUpdate(tournament, oldElement, newElement);
             }
         }
+        sortedElements = new HashMap<>();
         return true;
     }
 

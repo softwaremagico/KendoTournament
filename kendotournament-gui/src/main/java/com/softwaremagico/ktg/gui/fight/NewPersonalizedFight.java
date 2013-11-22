@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.gui.fight;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KPanel;
@@ -34,6 +35,7 @@ import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -217,11 +219,11 @@ public class NewPersonalizedFight extends KFrame {
             if (!parent.isTeamChanged()) {
                 fight = new Fight(tournament, team1.getSelectedTeam(), team2.getSelectedTeam(),
                         parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
-                        .getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
+                        .getFromLevel(tournament, DEFAULT_LEVEL).size());
             } else {
                 fight = new Fight(tournament, team2.getSelectedTeam(), team1.getSelectedTeam(),
                         parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
-                        .getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
+                        .getFromLevel(tournament, DEFAULT_LEVEL).size());
             }
         }
         return fight;
@@ -232,6 +234,8 @@ public class NewPersonalizedFight extends KFrame {
             Fight newFight = createFight();
             if (newFight != null) {
                 FightPool.getInstance().add(tournament, newFight);
+                TournamentManagerFactory.getManager(tournament).getGroups().get(0).addFight(newFight);
+                AlertManager.informationMessage(NewPersonalizedFight.class.getName(), "addFight", "");
             }
         } catch (SQLException ex) {
             KendoLog.errorMessage(NewPersonalizedFight.class.getName(), ex);

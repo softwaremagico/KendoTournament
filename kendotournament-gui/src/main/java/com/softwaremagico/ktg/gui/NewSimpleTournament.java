@@ -612,7 +612,7 @@ public class NewSimpleTournament extends javax.swing.JFrame {
                 if (!FightPool.existRepeatedFight(fights)) {
                     FightPool.getInstance().remove((Tournament) TournamentComboBox.getSelectedItem());
                     //Delete old group fights if any.
-                    TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem()).removeFights();
+                    TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem()).resetFights();
                     //Create new fights
                     FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
                     TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());

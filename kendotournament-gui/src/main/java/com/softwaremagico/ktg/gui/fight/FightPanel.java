@@ -24,6 +24,7 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
@@ -77,8 +78,8 @@ public class FightPanel extends KFrame {
     private FightAreaComboBox fightAreaComboBox;
     private NextButton nextButton;
     private PreviousButton previousButton;
-    private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem;
-    private KCheckBoxMenuItem changeTeam, changeColor, changeMemberOrder;
+    private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem, deleteFightMenuItem, addFightMenuItem, changeMemberOrder;
+    private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
 
     public FightPanel() {
@@ -215,11 +216,34 @@ public class FightPanel extends KFrame {
         optionsMenu.setMnemonic(KeyEvent.VK_O);
         optionsMenu.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
 
-        changeMemberOrder = new KCheckBoxMenuItem("ChangeTeamOrder");
+        changeMemberOrder = new KMenuItem("ChangeTeamOrder");
         changeMemberOrder.setMnemonic(KeyEvent.VK_O);
         changeMemberOrder.setIcon(new ImageIcon(Path.getIconPath() + "changeTeam.png"));
 
         optionsMenu.add(changeMemberOrder);
+
+        final FightPanel fightPanel = this;
+        addFightMenuItem = new KMenuItem("AddFigthtButton");
+        addFightMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "list-add.png"));
+        addFightMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createPersonalizedFights(fightPanel);
+            }
+        });
+        optionsMenu.add(addFightMenuItem);
+
+        deleteFightMenuItem = new KMenuItem("DeleteFigthtButton");
+        deleteFightMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "list-remove.png"));
+        deleteFightMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteSelectedFight();
+            }
+        });
+
+        optionsMenu.add(deleteFightMenuItem);
+
 
         return optionsMenu;
     }
@@ -428,6 +452,14 @@ public class FightPanel extends KFrame {
             showTreeMenuItem.setEnabled(false);
             groupScoreMenuItem.setEnabled(false);
         }
+
+        if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+            deleteFightMenuItem.setEnabled(true);
+            addFightMenuItem.setEnabled(true);
+        } else {
+            deleteFightMenuItem.setEnabled(false);
+            addFightMenuItem.setEnabled(false);
+        }
     }
 
     public void updateSelectedFightArea() {
@@ -582,7 +614,7 @@ public class FightPanel extends KFrame {
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
                             // Create fights of next level (if any).
-                            List<Fight> newFights = new ArrayList<>();
+                            List<Fight> newFights;
                             try {
                                 // Standard championship.
                                 newFights = TournamentManagerFactory.getManager(getSelectedTournament())
@@ -599,18 +631,7 @@ public class FightPanel extends KFrame {
                                     }
                                 }
                             } catch (PersonalizedFightsException e) {
-                                // Personalized championship. Open window for
-                                // creating new fights.
-                                newPersonalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel) {
-                                    private static final long serialVersionUID = 1816689023758710456L;
-
-                                    @Override
-                                    protected void acceptAction() {
-                                        super.acceptAction();
-                                        dispose();
-                                    }
-                                };
-                                newPersonalizedFight.setVisible(true);
+                                createPersonalizedFights(fightPanel);
                             }
                         } else {
                             // If it was the last fight of arena groups.
@@ -621,6 +642,11 @@ public class FightPanel extends KFrame {
                         }
                     }
                     updateNextButton();
+                } else {
+                    //Personalized tournament, if empty, add new fight. 
+                    if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+                        createPersonalizedFights(fightPanel);
+                    }
                 }
             } catch (SQLException ex) {
                 AlertManager.showSqlErrorMessage(ex);
@@ -628,6 +654,33 @@ public class FightPanel extends KFrame {
             // Update score panel.
             updateScorePanel();
         }
+    }
+
+    private void createPersonalizedFights(FightPanel fightPanel) {
+        // Personalized championship. Open window for
+        // creating new fights.
+        newPersonalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
+        newPersonalizedFight.setVisible(true);
+    }
+
+    /**
+     * Deletes the selected fight.
+     */
+    private void deleteSelectedFight() {
+        try {
+            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+                    getSelectedFightArea());
+
+            if (currentFight != null) {
+                TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().get(currentFight.getGroup()).removeFight(currentFight);
+                // Update score panel.
+                updateScorePanel();
+                AlertManager.informationMessage(NewPersonalizedFight.class.getName(), "fightDeleted", "");
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
+
     }
 
     class PreviousButton extends UpButton {

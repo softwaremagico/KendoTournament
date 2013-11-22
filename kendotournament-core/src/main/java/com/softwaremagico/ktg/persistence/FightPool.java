@@ -235,7 +235,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected String getId(Fight element) {
-        return element.hashCode() + "";
+        return element.getTournament() + "" + element.getGroup() + element.getOrderInGroup();
     }
 
     public Integer getLastLevelUsed(Tournament tournament) throws SQLException {
@@ -296,6 +296,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
                 remove(tournament, fight);
             }
         }
+        resetAuxiliaryParameters(tournament);
     }
 
     @Override

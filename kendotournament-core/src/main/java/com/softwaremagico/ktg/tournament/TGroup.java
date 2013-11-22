@@ -304,7 +304,29 @@ public abstract class TGroup {
         return index;
     }
 
-    public void removeFights() {
+    public void resetFights() {
         fightsOfGroup = new ArrayList<>();
+    }
+
+    public void removeFight(Fight fight) throws SQLException {
+        if (getFights().contains(fight)) {
+            FightPool.getInstance().remove(tournament, fight);
+            fightsOfGroup.remove(fight);
+            resetFightsOrder();
+        }
+    }
+
+    /**
+     * Remove missed index in the fights when one is deleted.
+     */
+    private void resetFightsOrder() throws SQLException {
+        for (int i = 0; i < getFights().size(); i++) {
+            //Order in group is part of the Id. Cannot be updated, must be deleted the original one and added the new one.
+            Fight original = getFights().get(i);
+            FightPool.getInstance().remove(tournament, original);
+            original.setOrderInGroup(i);
+            FightPool.getInstance().add(tournament, original);
+        }
+        resetFights();
     }
 }

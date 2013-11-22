@@ -86,5 +86,5 @@ public interface ITournamentManager {
     /**
      * Remove all fights of all groups.
      */
-    void removeFights();
+    void resetFights();
 }
