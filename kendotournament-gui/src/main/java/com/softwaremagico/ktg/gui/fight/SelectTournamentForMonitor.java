@@ -27,8 +27,9 @@ import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 
 
 public class SelectTournamentForMonitor extends ListFromTournamentCreateFile {
+	private static final long serialVersionUID = 906296204949013558L;
 
-    public SelectTournamentForMonitor() {
+	public SelectTournamentForMonitor() {
         createGui(false);
         this.setTitle(trans.getTranslatedText("titleMonitorTournament"));
         GenerateButton.setText(trans.getTranslatedText("ButtonMonitorTournament"));

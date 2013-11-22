@@ -45,8 +45,8 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 public class RoundFight extends JPanel {
-
-    private List<TeamFight> teamFights = new ArrayList<>();
+	private static final long serialVersionUID = -4168299695100498820L;
+	private List<TeamFight> teamFights = new ArrayList<>();
     private Fight fight;
     private int height = 65;
     Translator trans = null;
@@ -167,8 +167,8 @@ public class RoundFight extends JPanel {
     }
 
     private class DrawPanel extends JPanel {
-
-        private List<PanelBackground> draws;
+		private static final long serialVersionUID = -1487466822879962512L;
+		private List<PanelBackground> draws;
         private List<Boolean> drawsAnnoted;
 
         DrawPanel(boolean selected) {

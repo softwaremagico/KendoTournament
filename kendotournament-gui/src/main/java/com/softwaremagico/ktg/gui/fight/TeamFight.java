@@ -39,8 +39,8 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 public class TeamFight extends JPanel {
-
-    private List<CompetitorFight> competitorFights = new ArrayList<>();
+	private static final long serialVersionUID = -9000360981825238564L;
+	private List<CompetitorFight> competitorFights = new ArrayList<>();
     private Fight fight;
     private final int lineBorder = 5;
     private RoundFight roundFight = null;

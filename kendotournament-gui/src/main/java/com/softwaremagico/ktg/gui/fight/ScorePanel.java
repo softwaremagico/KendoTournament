@@ -35,8 +35,8 @@ import java.util.List;
 import javax.swing.Box;
 
 public class ScorePanel extends KPanel {
-
-    private Tournament tournament = null;
+	private static final long serialVersionUID = -5287777476022379382L;
+	private Tournament tournament = null;
     private Integer fightArea = null;
     private List<RoundFight> roundFights;
 

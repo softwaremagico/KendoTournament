@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
+import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -115,7 +116,7 @@ public class ChampionshipFightAreaTest {
     }
 
     @Test(dependsOnMethods = {"createTournamentGroups"})
-    public void createFights() throws SQLException {
+    public void createFights() throws SQLException, PersonalizedFightsException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
         Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
     }
@@ -171,7 +172,7 @@ public class ChampionshipFightAreaTest {
     }
 
     @Test(dependsOnMethods = {"solveFirstLevel"})
-    public void solveSecondLevel() throws SQLException {
+    public void solveSecondLevel() throws SQLException, PersonalizedFightsException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
 
         // Check teams of group.
@@ -233,7 +234,7 @@ public class ChampionshipFightAreaTest {
     }
 
     @Test(dependsOnMethods = {"solveSecondLevel"})
-    public void solveThirdLevel() throws SQLException {
+    public void solveThirdLevel() throws SQLException, PersonalizedFightsException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
 
         // Check teams of group.
@@ -265,7 +266,7 @@ public class ChampionshipFightAreaTest {
     }
 
     @Test(dependsOnMethods = {"solveThirdLevel"})
-    public void solveFourthLevel() throws SQLException {
+    public void solveFourthLevel() throws SQLException, PersonalizedFightsException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(3));
 
         // Check teams of group.

@@ -10,6 +10,7 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
+import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
@@ -110,7 +111,7 @@ public class CustomChampionshipTest {
 	}
 
 	@Test(dependsOnMethods = { "createTournamentGroups" })
-	public void createFights() throws SQLException {
+	public void createFights() throws SQLException, PersonalizedFightsException {
 		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
 	}
@@ -141,7 +142,7 @@ public class CustomChampionshipTest {
 	}
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
-	public void solveSecondLevel() throws SQLException {
+	public void solveSecondLevel() throws SQLException, PersonalizedFightsException {
 		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
 
 		// Check teams of group.
@@ -170,7 +171,7 @@ public class CustomChampionshipTest {
 	}
 
 	@Test(dependsOnMethods = { "solveSecondLevel" })
-	public void solveThirdLevel() throws SQLException {
+	public void solveThirdLevel() throws SQLException, PersonalizedFightsException {
 		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
 
 		// Check teams of group.

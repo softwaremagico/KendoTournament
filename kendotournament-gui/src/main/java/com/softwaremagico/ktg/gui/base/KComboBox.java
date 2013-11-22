@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.base;
 
 import javax.swing.JComboBox;
 
-public class KComboBox extends JComboBox{
+public class KComboBox<T> extends JComboBox<T>{
+	private static final long serialVersionUID = -9108599234992762273L;
     
 }

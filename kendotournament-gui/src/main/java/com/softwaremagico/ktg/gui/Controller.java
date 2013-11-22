@@ -1293,8 +1293,8 @@ public class Controller {
     }
 
     class SelectTournamentPersonalized extends ListFromTournamentCreateFile {
-
-        private String title;
+		private static final long serialVersionUID = -2551958099358143398L;
+		private String title;
 
         public SelectTournamentPersonalized(String title, String buttonTag) {
             createGui(false);

@@ -43,7 +43,7 @@ public class CloseButton extends KButton {
         addActionListener(new CloseListener());
     }
 
-    protected void closeAction() {
+    public void closeAction() {
         window.dispose();
     }
 

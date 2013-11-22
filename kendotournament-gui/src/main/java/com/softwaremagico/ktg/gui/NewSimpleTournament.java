@@ -32,6 +32,7 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
+import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Toolkit;
@@ -573,8 +574,12 @@ public class NewSimpleTournament extends javax.swing.JFrame {
             if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
                 fightsModel.removeAllElements();
                 setTournamentType();
-                fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-                        getDefinedType()).createRandomFights(0);
+                try {
+					fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
+					        getDefinedType()).createRandomFights(0);
+				} catch (PersonalizedFightsException e) {
+					//Not possible here. 
+				}
                 fillFights();
                 try {
                     FightsList.setSelectedIndex(0);
@@ -655,8 +660,12 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         try {
             if (fightsModel.isEmpty() || AlertManager.questionMessage("deleteFights", "Warning!")) {
                 setTournamentType();
-                fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-                        getDefinedType()).createSortedFights(0);
+                try {
+					fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
+					        getDefinedType()).createSortedFights(0);
+				} catch (PersonalizedFightsException e) {
+					// Not possible here. 
+				}
                 fightsModel.removeAllElements();
 
                 fillFights();
