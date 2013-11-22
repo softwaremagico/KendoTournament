@@ -29,12 +29,15 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.PanelBackground;
+import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -45,16 +48,21 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
 public class RoundFight extends JPanel {
-	private static final long serialVersionUID = -4168299695100498820L;
-	private List<TeamFight> teamFights = new ArrayList<>();
+
+    private static final long serialVersionUID = -4168299695100498820L;
+    private List<TeamFight> teamFights = new ArrayList<>();
     private Fight fight;
     private int height = 65;
-    Translator trans = null;
-    DrawPanel DW = null;
+    private Translator trans = null;
+    private DrawPanel drawsPanel = null;
     private Tournament tournament;
+    private GridBagConstraints teamGridBagConstraints, drawGridBagConstraints;
+    private Integer xPadding = 5;
+    private int teamSize;
 
     RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number, boolean invertedTeam, boolean invertedColor) {
         this.tournament = tournament;
+        teamSize = tournament.getTeamSize();
         setLanguage();
         decoration(selected);
         if (f != null) {
@@ -64,6 +72,7 @@ public class RoundFight extends JPanel {
 
     RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, boolean invertedTeam, boolean invertedColor) {
         this.tournament = tournament;
+        teamSize = tournament.getTeamSize();
         setLanguage();
         decoration(selected);
         if (f != null) {
@@ -72,9 +81,37 @@ public class RoundFight extends JPanel {
     }
 
     RoundFight(int teamSize, boolean selected, int fight_number, int fight_total, boolean invertedColor) {
+        this.teamSize = teamSize;
         setLanguage();
         decoration(selected);
         fillCurrentFightPanel(teamSize, fight_number, fight_total, invertedColor);
+    }
+
+    private void setTeamGridBagConstraints() {
+        teamGridBagConstraints = new GridBagConstraints();
+        teamGridBagConstraints.fill = GridBagConstraints.BOTH;
+        teamGridBagConstraints.ipadx = xPadding;
+        teamGridBagConstraints.ipady = xPadding;
+        teamGridBagConstraints.gridy = 0;
+        teamGridBagConstraints.gridheight = 1;
+        teamGridBagConstraints.gridwidth = 1;
+        teamGridBagConstraints.weightx = 0.5;
+        teamGridBagConstraints.weighty = 1;
+        //teamGridBagConstraints.insets = new Insets(5, 5, 5, 5);
+    }
+
+    private void setDrawGridBagConstraints() {
+        drawGridBagConstraints = new GridBagConstraints();
+        drawGridBagConstraints.fill = GridBagConstraints.BOTH;
+        drawGridBagConstraints.ipadx = xPadding;
+        teamGridBagConstraints.ipady = xPadding;
+        drawGridBagConstraints.gridx = 1;
+        drawGridBagConstraints.gridy = 0;
+        drawGridBagConstraints.gridheight = 1;
+        drawGridBagConstraints.gridwidth = 1;
+        drawGridBagConstraints.weightx = 0;
+        drawGridBagConstraints.weighty = 1;
+        drawGridBagConstraints.insets = new Insets(10, 5, 10, 5);
     }
 
     /**
@@ -91,7 +128,11 @@ public class RoundFight extends JPanel {
     }
 
     private void decoration(boolean selected) {
-        setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));
+        //setLayout(new BoxLayout(this, javax.swing.BoxLayout.X_AXIS));        
+        setLayout(new GridBagLayout());
+        setTeamGridBagConstraints();
+        setDrawGridBagConstraints();
+
         if (selected) {
             Border blackline = BorderFactory.createLineBorder(Color.black, 5);
             setBorder(blackline);
@@ -106,7 +147,7 @@ public class RoundFight extends JPanel {
         fight = f;
         removeAll();
         teamFights = new ArrayList<>();
-        TeamFight tf;
+        TeamFight tf1, tf2;
         int fight_total = 0;
         try {
             fight_total = FightPool.getInstance().get(tournament, fight.getAsignedFightArea()).size();
@@ -114,22 +155,27 @@ public class RoundFight extends JPanel {
             AlertManager.showSqlErrorMessage(ex);
         }
         if (!invertedTeam) {
-            tf = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total, invertedColor);
+            tf1 = new TeamFight(tournament, this, f.getTeam1(), f, true, selected, menu, fight_number, fight_total, invertedColor);
         } else {
-            tf = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total, invertedColor);
+            tf1 = new TeamFight(tournament, this, f.getTeam2(), f, true, selected, menu, fight_number, fight_total, invertedColor);
         }
-        add(tf, BorderLayout.WEST);
-        teamFights.add(tf);
 
-        DW = createDrawPanel(selected && menu);
-        add(DW, BorderLayout.EAST);
         if (!invertedTeam) {
-            tf = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total, invertedColor);
+            tf2 = new TeamFight(tournament, this, f.getTeam2(), f, false, selected, menu, fight_number, fight_total, invertedColor);
         } else {
-            tf = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total, invertedColor);
+            tf2 = new TeamFight(tournament, this, f.getTeam1(), f, false, selected, menu, fight_number, fight_total, invertedColor);
         }
-        add(tf, BorderLayout.EAST);
-        teamFights.add(tf);
+
+        teamGridBagConstraints.gridx = 0;
+        add(tf1, teamGridBagConstraints);
+        teamFights.add(tf1);
+
+        drawsPanel = createDrawPanel(selected && menu);
+        add(drawsPanel, drawGridBagConstraints);
+
+        teamGridBagConstraints.gridx = 2;
+        add(tf2, teamGridBagConstraints);
+        teamFights.add(tf2);
 
         repaint();
         revalidate();
@@ -139,16 +185,16 @@ public class RoundFight extends JPanel {
         removeAll();
         teamFights = new ArrayList<>();
         TeamFight tf = new TeamFight(tournament, true, teamSize, fight_number, fight_total, invertedColor);
-        add(tf, BorderLayout.WEST);
+        teamGridBagConstraints.gridx = 0;
+        add(tf, teamGridBagConstraints);
         teamFights.add(tf);
 
-        Dimension minSize = new Dimension(10, 2);
-        Dimension prefSize = new Dimension(10, 5);
-        Dimension maxSize = new Dimension(20, 5);
-        add(new Box.Filler(minSize, prefSize, maxSize));
+        drawsPanel = createDrawPanel(false);
+        add(drawsPanel, drawGridBagConstraints);
 
         tf = new TeamFight(tournament, false, teamSize, fight_number, fight_total, invertedColor);
-        add(tf, BorderLayout.EAST);
+        teamGridBagConstraints.gridx = 2;
+        add(tf, teamGridBagConstraints);
         teamFights.add(tf);
 
         repaint();
@@ -166,16 +212,16 @@ public class RoundFight extends JPanel {
         return drawPanel;
     }
 
-    private class DrawPanel extends JPanel {
-		private static final long serialVersionUID = -1487466822879962512L;
-		private List<PanelBackground> draws;
-        private List<Boolean> drawsAnnoted;
+    private class DrawPanel extends KPanel {
 
-        DrawPanel(boolean selected) {
-            setMinimumSize(new Dimension(15, 20));
-            setPreferredSize(new Dimension(20, 60));
-            setMaximumSize(new Dimension(50, Short.MAX_VALUE));
-            setLayout(new BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        private static final long serialVersionUID = -1487466822879962512L;
+        private List<PanelBackground> draws;
+        private List<Boolean> drawsAnnoted;
+        private GridBagConstraints gridBagConstraints;
+
+        public DrawPanel(boolean selected) {
+            this.setLayout(new GridBagLayout());
+            setGridBagConstraints();
 
             createDrawsPanel();
             if (selected) {
@@ -184,46 +230,34 @@ public class RoundFight extends JPanel {
             updateDrawsPanel();
         }
 
+        private void setGridBagConstraints() {
+            gridBagConstraints = new GridBagConstraints();
+            gridBagConstraints.fill = GridBagConstraints.BOTH;
+            gridBagConstraints.ipadx = 0;
+            gridBagConstraints.ipady = xPadding*2;
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridheight = 1;
+            gridBagConstraints.gridwidth = 1;
+            gridBagConstraints.weightx = 1;
+            gridBagConstraints.weighty = 1;
+            gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        }
+
         private void createDrawsPanel() {
             draws = new ArrayList<>();
             drawsAnnoted = new ArrayList<>();
 
-            Dimension minSize = new Dimension(0, 5);
-            Dimension prefSize = new Dimension(5, 12);
-            Dimension maxSize = new Dimension(5, Short.MAX_VALUE);
-
-            add(new Box.Filler(minSize, prefSize, maxSize));
-            //add(Box.createVerticalGlue());
-
-            for (int i = 0; i < fight.getTeam1().getNumberOfMembers(fight.getLevel()); i++) {
-                JPanel competitorPanel = new JPanel();
-                competitorPanel.setLayout(new BoxLayout(competitorPanel, javax.swing.BoxLayout.X_AXIS));
-                competitorPanel.setMinimumSize(new Dimension(50, 50));
-                competitorPanel.setPreferredSize(new Dimension(500, 60));
-                competitorPanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 70));
-
-
+            for (int i = 0; i < teamSize; i++) {
                 PanelBackground round = new PanelBackground();
                 round.setMinimumSize(new Dimension(15, height));
                 round.setPreferredSize(new Dimension(20, height));
-                round.setMaximumSize(new Dimension(60, 70));
-                competitorPanel.add(round, BorderLayout.EAST);
+                round.setMaximumSize(new Dimension(60, 75));
                 draws.add(round);
+                gridBagConstraints.gridy = i;
+                this.add(round, gridBagConstraints);
 
-                add(competitorPanel);
-
-                minSize = new Dimension(5, 0);
-                prefSize = new Dimension(5, 5);
-                maxSize = new Dimension(5, Short.MAX_VALUE);
-                add(new Box.Filler(minSize, prefSize, maxSize));
                 drawsAnnoted.add(false);
             }
-
-            minSize = new Dimension(5, 0);
-            prefSize = new Dimension(5, 4);
-            maxSize = new Dimension(5, Short.MAX_VALUE);
-
-            add(new Box.Filler(minSize, prefSize, maxSize));
         }
 
         private void addPopUpMenu() {
@@ -279,12 +313,14 @@ public class RoundFight extends JPanel {
         }
 
         private void updateDrawsPanel() {
-            for (int i = 0; i < draws.size(); i++) {
-                boolean nextStarted = false;
-                if (i < fight.getDuels().size() - 1) {
-                    nextStarted = fight.getDuels().get(i + 1).isStarted();
+            if (fight != null) {
+                for (int i = 0; i < draws.size(); i++) {
+                    boolean nextStarted = false;
+                    if (i < fight.getDuels().size() - 1) {
+                        nextStarted = fight.getDuels().get(i + 1).isStarted();
+                    }
+                    updateDrawPanel(draws.get(i), fight.getDuels().get(i).winner(), fight.getWinner(), nextStarted, i);
                 }
-                updateDrawPanel(draws.get(i), fight.getDuels().get(i).winner(), fight.getWinner(), nextStarted, i);
             }
         }
 
