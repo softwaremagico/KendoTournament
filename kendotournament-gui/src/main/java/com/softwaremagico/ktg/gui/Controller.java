@@ -37,6 +37,7 @@ import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.gui.fight.*;
 import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
 import com.softwaremagico.ktg.gui.tournament.LeagueEvolution;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.lists.AccreditionCards;
 import com.softwaremagico.ktg.lists.ClubList;
 import com.softwaremagico.ktg.lists.DiplomaEditor;
@@ -495,7 +496,7 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            SelectTournamentPersonalized selectTournament = new SelectTournamentPersonalized("", "AcceptButton");
+            SelectTournamentPersonalized selectTournament = new SelectTournamentPersonalized("AcceptButton");
             selectTournament.setVisible(true);
         }
     }
@@ -1293,14 +1294,14 @@ public class Controller {
     }
 
     class SelectTournamentPersonalized extends ListFromTournamentCreateFile {
-		private static final long serialVersionUID = -2551958099358143398L;
-		private String title;
 
-        public SelectTournamentPersonalized(String title, String buttonTag) {
+        private static final long serialVersionUID = -2551958099358143398L;
+
+        public SelectTournamentPersonalized(String buttonTag) {
             createGui(false);
+            trans = LanguagePool.getTranslator("gui.xml");
             //Not modified last selected tournament.
-            this.title = title;
-            this.setTitle(title);
+            this.setTranslatedTitle("ManualFightsMenuItem");
             GenerateButton.setText(trans.getTranslatedText(buttonTag));
             addGenerateButtonListener(new PersonalizedTournamentListener());
         }
@@ -1316,11 +1317,12 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    if (AlertManager.questionMessage("convertToPersonalized", title)) {
+                    if (AlertManager.questionMessage("convertToPersonalized", getTitle())) {
                         //Remove old information. 
                         getSelectedTournament().setType(TournamentType.PERSONALIZED);
+                        TournamentPool.getInstance().update(getSelectedTournament());
                         FightPool.getInstance().remove(getSelectedTournament());
-                        
+
                         //Open fight panel.
                         try {
                             fightPanel.dispose();
@@ -1329,13 +1331,13 @@ public class Controller {
                         fightPanel = new FightPanel();
                         fightPanel.setVisible(true);
                         addFightPanelListeners();
-                        
+
                         NewPersonalizedFight personalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
                         personalizedFight.setVisible(true);
                         
                         dispose();
                     } else {
-                        AlertManager.warningMessage(Controller.class.getName(), "canceledAction", title);
+                        AlertManager.warningMessage(Controller.class.getName(), "canceledAction", getTitle());
                     }
                 } catch (Exception ex) {
                     AlertManager.errorMessage(RolesMenu.class.getName(), "importFail", "");

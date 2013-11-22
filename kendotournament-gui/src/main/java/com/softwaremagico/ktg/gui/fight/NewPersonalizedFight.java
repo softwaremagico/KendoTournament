@@ -23,19 +23,6 @@ package com.softwaremagico.ktg.gui.fight;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
@@ -46,207 +33,228 @@ import com.softwaremagico.ktg.gui.base.TeamComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.persistence.FightPool;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class NewPersonalizedFight extends KFrame {
-	private static final long serialVersionUID = -8484422346146735562L;
-	private final static int DEFAULT_LEVEL = 0;
-	private final static int DEFAULT_GROUP = 0;
-	private int fightArea = 0;
-	private FightPanel parent;
-	private Tournament tournament;
-	private TeamComboBox team1, team2;
-	private KButton acceptButton;
 
-	public NewPersonalizedFight(Tournament tournament, FightPanel parent) {
-		this.tournament = tournament;
-		this.parent = parent;
-		defineWindow(450, 190);
-		setResizable(false);
-		setElements();
-	}
+    private static final long serialVersionUID = -8484422346146735562L;
+    private final static int DEFAULT_LEVEL = 0;
+    private final static int DEFAULT_GROUP = 0;
+    private int fightArea = 0;
+    private FightPanel parent;
+    private Tournament tournament;
+    private TeamComboBox team1, team2;
+    private KButton acceptButton;
 
-	private void setElements() {
-		setLayout(new GridBagLayout());
+    public NewPersonalizedFight(Tournament tournament, FightPanel parent) {
+        this.tournament = tournament;
+        this.parent = parent;
+        defineWindow(450, 200);
+        setResizable(false);
+        setElements();
+    }
 
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+    private void setElements() {
+        setLayout(new GridBagLayout());
 
-		KLabel newFightLabel = new KLabel("AddNewFight");
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 0;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 3;
-		gridBagConstraints.weightx = 1;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(newFightLabel, gridBagConstraints);
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-		KLabel team1Label;
-		if (!parent.isColorChanged()) {
-			team1Label = new KLabel("RedTeam");
-		} else {
-			team1Label = new KLabel("WhiteTeam");
-		}
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 1;
-		gridBagConstraints.weightx = 0;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(team1Label, gridBagConstraints);
+        KLabel newFightLabel = new KLabel("AddNewFight");
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(newFightLabel, gridBagConstraints);
 
-		KLabel team2Label;
-		if (!parent.isColorChanged()) {
-			team2Label = new KLabel("WhiteTeam");
-		} else {
-			team2Label = new KLabel("RedTeam");
-		}
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 1;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 1;
-		gridBagConstraints.weightx = 0;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(team2Label, gridBagConstraints);
+        KLabel team1Label;
+        if (!parent.isColorChanged()) {
+            team1Label = new KLabel("RedTeam");
+        } else {
+            team1Label = new KLabel("WhiteTeam");
+        }
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 0;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(team1Label, gridBagConstraints);
 
-		team1 = new TeamComboBox(tournament, this);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 1;
-		gridBagConstraints.weightx = 1;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(team1, gridBagConstraints);
+        KLabel team2Label;
+        if (!parent.isColorChanged()) {
+            team2Label = new KLabel("WhiteTeam");
+        } else {
+            team2Label = new KLabel("RedTeam");
+        }
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 0;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(team2Label, gridBagConstraints);
 
-		JLabel versusLabel = new JLabel(" vs ");
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 1;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 1;
-		gridBagConstraints.weightx = 0;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(versusLabel, gridBagConstraints);
+        team1 = new TeamComboBox(tournament, this);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(team1, gridBagConstraints);
 
-		team2 = new TeamComboBox(tournament, this);
-		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 2;
-		gridBagConstraints.gridy = 2;
-		gridBagConstraints.gridheight = 1;
-		gridBagConstraints.gridwidth = 1;
-		gridBagConstraints.weightx = 1;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(team2, gridBagConstraints);
+        JLabel versusLabel = new JLabel(" vs ");
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 0;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(versusLabel, gridBagConstraints);
 
-		setDefaultFight();
+        team2 = new TeamComboBox(tournament, this);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridheight = 1;
+        gridBagConstraints.gridwidth = 1;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 1;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(team2, gridBagConstraints);
 
-		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.setMinimumSize(new Dimension(200, 50));
-		acceptButton = new KButton();
-		acceptButton.setTranslatedText("AcceptButton");
-		acceptButton.setPreferredSize(new Dimension(80, 35));
-		acceptButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				acceptAction();
-			}
-		});
-		buttonPanel.add(acceptButton);
-		CustomCloseButton closeButton = new CustomCloseButton(this);
-		closeButton.setPreferredSize(new Dimension(80, 35));
-		buttonPanel.add(closeButton);
+        setDefaultFight();
 
-		gridBagConstraints.anchor = GridBagConstraints.LINE_END;
-		gridBagConstraints.fill = GridBagConstraints.NONE;
-		gridBagConstraints.ipadx = xPadding;
-		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 3;
-		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
-		gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-		gridBagConstraints.weightx = 1;
-		gridBagConstraints.weighty = 0;
-		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-		getContentPane().add(buttonPanel, gridBagConstraints);
+        KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setMinimumSize(new Dimension(200, 50));
+        acceptButton = new KButton();
+        acceptButton.setTranslatedText("AcceptButton");
+        acceptButton.setPreferredSize(new Dimension(80, 35));
+        acceptButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                acceptAction();
+            }
+        });
+        buttonPanel.add(acceptButton);
+        CustomCloseButton closeButton = new CustomCloseButton(this);
+        closeButton.setPreferredSize(new Dimension(80, 35));
+        buttonPanel.add(closeButton);
 
-	}
+        gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+        gridBagConstraints.fill = GridBagConstraints.NONE;
+        gridBagConstraints.ipadx = xPadding;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
+        gridBagConstraints.weightx = 1;
+        gridBagConstraints.weighty = 0;
+        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+        getContentPane().add(buttonPanel, gridBagConstraints);
 
-	private void setDefaultFight() {
-		Fight lastFight;
-		try {
-			lastFight = FightPool.getInstance().getCurrentFight(tournament, fightArea);
-			if (lastFight != null) {
-				if (!parent.isTeamChanged()) {
-					team1.setSelectedItem(lastFight.getTeam1());
-					team2.setSelectedItem(lastFight.getTeam2());
-				} else {
-					team1.setSelectedItem(lastFight.getTeam2());
-					team2.setSelectedItem(lastFight.getTeam1());
-				}
-			}
-		} catch (SQLException e) {
-			// Do nothing.
-		}
-	}
+    }
 
-	@Override
-	public void update() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+    private void setDefaultFight() {
+        Fight lastFight;
+        try {
+            lastFight = FightPool.getInstance().getCurrentFight(tournament, fightArea);
+            if (lastFight != null) {
+                if (!parent.isTeamChanged()) {
+                    team1.setSelectedItem(lastFight.getTeam1());
+                    team2.setSelectedItem(lastFight.getTeam2());
+                } else {
+                    team1.setSelectedItem(lastFight.getTeam2());
+                    team2.setSelectedItem(lastFight.getTeam1());
+                }
+            } else {
+                if (team2.getItemCount() > 1) {
+                    team2.setSelectedIndex(1);
+                }
+            }
+        } catch (SQLException e) {
+            if (team2.getItemCount() > 1) {
+                team2.setSelectedIndex(1);
+            }
+        }
+    }
 
-	@Override
-	public void elementChanged() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	protected Fight createFight() throws SQLException {
-		Fight fight = null;
-		if (!parent.isTeamChanged()) {
-			fight = new Fight(tournament, team1.getSelectedTeam(), team2.getSelectedTeam(),
-					parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
-							.getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
-		} else {
-			fight = new Fight(tournament, team2.getSelectedTeam(), team1.getSelectedTeam(),
-					parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
-							.getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
-		}
-		return fight;
-	}
+    @Override
+    public void elementChanged() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	protected void acceptAction() {
-		try {
-			Fight newFight = createFight();
-			FightPool.getInstance().add(tournament, newFight);
-		} catch (SQLException ex) {
-			KendoLog.errorMessage(NewPersonalizedFight.class.getName(), ex);
-		}
-		parent.updateScorePanel();
-	}
+    protected Fight createFight() throws SQLException {
+        Fight fight = null;
+        if (!team1.getSelectedTeam().equals(team2.getSelectedTeam())) {
+            if (!parent.isTeamChanged()) {
+                fight = new Fight(tournament, team1.getSelectedTeam(), team2.getSelectedTeam(),
+                        parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
+                        .getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
+            } else {
+                fight = new Fight(tournament, team2.getSelectedTeam(), team1.getSelectedTeam(),
+                        parent.getSelectedFightArea(), DEFAULT_LEVEL, DEFAULT_GROUP, FightPool.getInstance()
+                        .getFromLevel(tournament, DEFAULT_LEVEL).size() + 1);
+            }
+        }
+        return fight;
+    }
 
-	class CustomCloseButton extends CloseButton {
+    protected void acceptAction() {
+        try {
+            Fight newFight = createFight();
+            if (newFight != null) {
+                FightPool.getInstance().add(tournament, newFight);
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(NewPersonalizedFight.class.getName(), ex);
+        }
+        parent.updateScorePanel();
+    }
 
-		private static final long serialVersionUID = -3713010823196887285L;
+    class CustomCloseButton extends CloseButton {
 
-		public CustomCloseButton(JFrame window) {
-			super(window);
-		}
+        private static final long serialVersionUID = -3713010823196887285L;
 
-		@Override
-		public void closeAction() {
+        public CustomCloseButton(JFrame window) {
+            super(window);
+        }
 
-		}
-	}
+        @Override
+        public void closeAction() {
+            dispose();
+        }
+    }
 }

@@ -81,6 +81,9 @@ public class TournamentManagerFactory {
                 manager = new CustomChampionship(tournament);
                 manager.fillGroups();
                 break;
+            case PERSONALIZED:
+                manager = new PersonalizedTournament(tournament);
+                break;
             case SIMPLE:
             default:
                 manager = new SimpleTournament(tournament);

@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.persistence.RolePool;
-
 import java.sql.SQLException;
 
 /**
@@ -70,6 +69,10 @@ public class Role implements Comparable<Role> {
 
     public Tournament getTournament() {
         return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 
     public String getDatabaseTag() {
