@@ -393,8 +393,8 @@ public class FightPanel extends KFrame {
                     changeColor.isSelected());
         }
     }
-    
-    public boolean isColorChanged(){
+
+    public boolean isColorChanged() {
         return changeColor.isSelected();
     }
 
@@ -539,22 +539,27 @@ public class FightPanel extends KFrame {
                     if (group.areFightsOver()) {
                         boolean moreDrawTeams = true;
                         Ranking ranking = null;
-                        while (moreDrawTeams) {
-                            ranking = new Ranking(group.getFights());
-                            // Search for draw scores.
-                            List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament()
-                                    .getHowManyTeamsOfGroupPassToTheTree());
-                            if (teamsInDraw != null) {
-                                // Solve Draw Scores
-                                resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
-                            } else {
-                                // No more draw teams, exit loop.
-                                moreDrawTeams = false;
+                        //Personalized has not undraw options. 
+                        if (!getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+                            while (moreDrawTeams) {
+                                ranking = new Ranking(group.getFights());
+                                // Search for draw scores.
+                                List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament()
+                                        .getHowManyTeamsOfGroupPassToTheTree());
+                                if (teamsInDraw != null) {
+                                    // Solve Draw Scores
+                                    resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
+                                } else {
+                                    // No more draw teams, exit loop.
+                                    moreDrawTeams = false;
+                                }
+                                ranking = new Ranking(group.getFights());
                             }
-                            ranking = new Ranking(group.getFights());
+
+                            // Show score.
+                            openRankingWindow(ranking, true);
                         }
-                        // Show score.
-                        openRankingWindow(ranking, true);
+
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
