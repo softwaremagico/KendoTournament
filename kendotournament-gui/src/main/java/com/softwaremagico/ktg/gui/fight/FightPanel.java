@@ -445,20 +445,20 @@ public class FightPanel extends KFrame {
         if (getSelectedTournament().getType().equals(TournamentType.CHAMPIONSHIP)
                 || getSelectedTournament().getType().equals(TournamentType.LEAGUE_TREE)
                 || getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
-            showTreeMenuItem.setEnabled(true);
+            showTreeMenuItem.setVisible(true);
             // Disable group score panel if not useful.
-            groupScoreMenuItem.setEnabled(true);
+            groupScoreMenuItem.setVisible(true);
         } else {
-            showTreeMenuItem.setEnabled(false);
-            groupScoreMenuItem.setEnabled(false);
+            showTreeMenuItem.setVisible(false);
+            groupScoreMenuItem.setVisible(false);
         }
 
         if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
-            deleteFightMenuItem.setEnabled(true);
-            addFightMenuItem.setEnabled(true);
+            deleteFightMenuItem.setVisible(true);
+            addFightMenuItem.setVisible(true);
         } else {
-            deleteFightMenuItem.setEnabled(false);
-            addFightMenuItem.setEnabled(false);
+            deleteFightMenuItem.setVisible(false);
+            addFightMenuItem.setVisible(false);
         }
     }
 

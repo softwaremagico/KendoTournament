@@ -102,6 +102,15 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter*
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Novedades
+\end_layout
+
+\end_inset
+
 Novedades
 \end_layout
 
@@ -121,7 +130,7 @@ de
 roles: una nueva opción en la ventana de roles permite copiar todos los
  roles de un campeonato anterior, evitando así la tediosa actividad de volver
  a insertarlos uno a uno.
- Más información en la sección 
+ Más información en la Sección 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "Importar-roles"
@@ -141,7 +150,14 @@ personalizado: aparece la opción de crear un campeonato controlado por el
  Da completa libertad para añadir combates de manera que se puedan representar
  todos aquellas formas de torneros o ligas que todavía no han sido definidas
  en la aplicación.
- 
+ Más información en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Campeonato-Personalizado"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Chapter
@@ -1984,6 +2000,92 @@ Ganadores: En esta opción se puede indicar el número de grupos que pasan
  a la siguiente fase.
  Si se indica un dos, tanto el primero como el segundo pasará a la siguiente
  fase, etc.
+ 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Campeonato-Personalizado"
+
+\end_inset
+
+Campeonato 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Personalizado
+\end_layout
+
+\end_inset
+
+Personalizado
+\end_layout
+
+\begin_layout Standard
+Esta opción permite reflejar cualquier tipo de liga o campeonato que el
+ usuario desee.
+ 
+\end_layout
+
+\begin_layout Standard
+Aquí el usuario podrá añadir los combates que desee sin ninguna restricción.
+ Una ventana emergente permitirá elegir que equipo se enfrentará contra
+ quien y será añadido automáticamente al marcador de la liga (Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+).
+ Cada vez que se completen todos los combates visibles, aparecerá de nuevo
+ la ventana emergente para poder añadir combates nuevos.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_ES/Personalizado.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Personalizado.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para ver la clasificación de los equipos, en cualquier momento se pueden
+ usar la opción adecuada del menú.
  
 \end_layout
 
