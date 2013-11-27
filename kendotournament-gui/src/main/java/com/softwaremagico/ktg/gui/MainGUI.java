@@ -242,6 +242,40 @@ public final class MainGUI extends KendoFrame {
         });
     }
 
+    private void disconnect() {
+        DatabaseConnection.getInstance().disconnect();
+        //Delete memory information.
+        DatabaseConnection.getInstance().resetDatabase();
+        DatabaseConnection.getInstance().setPassword("");
+        enableMenuItems();
+        AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void performDisconnection() {
+        if (!DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
+            disconnect();
+        } else {
+            // Data not stored. Ask the user.
+            int confirmed = JOptionPane.showConfirmDialog(null, LanguagePool.getTranslator("messages.xml")
+                    .getTranslatedText("saveBeforeExit"), "Exit", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (confirmed == JOptionPane.YES_OPTION) {
+                if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
+                    try {
+                        DatabaseConnection.getInstance().updateDatabase();
+                    } catch (SQLException ex) {
+                        AlertManager.showSqlErrorMessage(ex);
+                    }
+                }
+                disconnect();
+            } else if (confirmed == JOptionPane.NO_OPTION) {
+                disconnect();
+            } else {
+                // Do nothing.
+            }
+        }
+    }
+
     /**
      * **********************************************
      *
@@ -387,8 +421,8 @@ public final class MainGUI extends KendoFrame {
     public void addCompetitorsGlobalScoreMenuItemListener(ActionListener al) {
         CompetitorsGlobalScoreMenuItem.addActionListener(al);
     }
-    
-    public void addManualMenuItemListener(ActionListener al){
+
+    public void addManualMenuItemListener(ActionListener al) {
         manualMenuItem.addActionListener(al);
     }
 
@@ -714,13 +748,7 @@ public final class MainGUI extends KendoFrame {
     }//GEN-LAST:event_manualMenuItemActionPerformed
 
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
-        DatabaseConnection.getInstance().disconnect();
-        //Delete memory information.
-        DatabaseConnection.getInstance().resetDatabase();
-        DatabaseConnection.getInstance().setPassword("");
-        enableMenuItems();
-        AlertManager.translatedMessage(this.getClass().getName(), "databaseDisconnected", "MySQL",
-                JOptionPane.INFORMATION_MESSAGE);
+        performDisconnection();
     }// GEN-LAST:event_DatabaseDisconnectMenuItemActionPerformed
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ExitMenuItemActionPerformed

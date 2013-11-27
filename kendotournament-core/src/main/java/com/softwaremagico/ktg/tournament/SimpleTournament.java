@@ -201,9 +201,9 @@ public class SimpleTournament implements ITournamentManager {
     }
 
     @Override
-    public void removeFights() {
+    public void resetFights() {
         if (group != null) {
-            group.removeFights();
+            group.resetFights();
         }
     }
 

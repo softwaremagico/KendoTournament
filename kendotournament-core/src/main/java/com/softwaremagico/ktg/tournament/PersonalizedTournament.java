@@ -1,9 +1,8 @@
 package com.softwaremagico.ktg.tournament;
 
-import java.util.List;
-
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
+import java.util.List;
 
 
 public class PersonalizedTournament extends SimpleTournament {

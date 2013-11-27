@@ -56,8 +56,17 @@ public abstract class ListFromTournamentCreateFile extends KendoFrame {
         ArenaComboBox.setEnabled(false);
     }
 
+    public void setTranslatedTitle(String tag) {
+        if (trans == null) {
+            trans = LanguagePool.getTranslator("gui.xml");
+        }
+        setTitle(trans.getTranslatedText(tag));
+    }
+
     private void setLanguage() {
-        trans = LanguagePool.getTranslator("gui.xml");
+        if (trans == null) {
+            trans = LanguagePool.getTranslator("gui.xml");
+        }
         TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
         ArenaLabel.setText(trans.getTranslatedText("FightArea"));
         CancelButton.setText(trans.getTranslatedText("CancelButton"));

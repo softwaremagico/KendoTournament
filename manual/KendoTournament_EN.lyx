@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.0.0
+v1.1.0
 \end_layout
 
 \begin_layout Author
@@ -102,6 +102,15 @@ LatexCommand tableofcontents
 \end_layout
 
 \begin_layout Chapter*
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+What's new
+\end_layout
+
+\end_inset
+
 What's new
 \end_layout
 
@@ -134,7 +143,14 @@ Personalized
 Championship: new option for creating a completly custom championship.
  User can add any fight and therefore, any kind of tournament or league
  can be represented.
- 
+ More info in section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Custom"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Chapter
@@ -1821,6 +1837,94 @@ Winners: In this option you can put the number of winners that will pass
  to the next round.
  If you put one, only the winner of that group will pass to the next round.
  If you put two, the first and second will pass to the next round, etc.
+ 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Custom"
+
+\end_inset
+
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Custom
+\end_layout
+
+\end_inset
+
+Custom
+\end_layout
+
+\begin_layout Standard
+This option allows the creation of any kind of championship or league by
+ the user.
+ 
+\end_layout
+
+\begin_layout Standard
+With this option, the user can add any fight without restrictions.
+ A pop-up window will ask the user for the new fight configuration: which
+ team will face another one.
+ The created fight will be added automatically to the Scoreboard (Section
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+).
+ Each time all fights are over, the pop-up window will appear again asking
+ for a new fight to be added.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_EN/Custom.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Custom league.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Anytime the team classification can be obtained using the correct option
+ of the menu.
  
 \end_layout
 

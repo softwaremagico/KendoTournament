@@ -70,6 +70,15 @@ public class Fight implements Comparable<Fight> {
     }
 
     /**
+     * Only used when order must be corrected. i.e. fight is deleted.
+     *
+     * @param value
+     */
+    public void setOrderInGroup(Integer value) {
+        orderInGroup = value;
+    }
+
+    /**
      * Get the championship group in which this fight is included.
      *
      * @return

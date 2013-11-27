@@ -643,7 +643,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                 //Delete fights.
                 FightPool.getInstance().remove(getSelectedTournament());
                 //Delete fights and teams in groups
-                TournamentManagerFactory.getManager(getSelectedTournament()).removeFights();
+                TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
                 //Remove teams of level greater than zero. 
                 TournamentManagerFactory.getManager(getSelectedTournament()).removeTeams(1);                 
                 try {

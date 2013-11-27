@@ -238,9 +238,9 @@ public class Championship implements ITournamentManager {
 	}
 
 	@Override
-	public void removeFights() {
+	public void resetFights() {
 		for (TGroup group : getGroups()) {
-			group.removeFights();
+			group.resetFights();
 		}
 	}
 

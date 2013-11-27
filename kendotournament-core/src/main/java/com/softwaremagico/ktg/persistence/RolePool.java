@@ -305,10 +305,13 @@ public class RolePool extends TournamentDependentPool<Role> {
      * @throws SQLException
      */
     public void importRoles(Tournament sourceTournament, Tournament destinationTournament) throws SQLException {
-        List<Role> sourceRoles = get(sourceTournament);
-        for (Role role : sourceRoles) {
-            if (getRole(destinationTournament, role.getCompetitor()) == null) {
-                add(destinationTournament, role);
+        if (sourceTournament != null && destinationTournament != null) {
+            List<Role> sourceRoles = get(sourceTournament);
+            for (Role role : sourceRoles) {
+                if (getRole(destinationTournament, role.getCompetitor()) == null) {
+                    role.setTournament(destinationTournament);
+                    add(destinationTournament, role);
+                }
             }
         }
     }
