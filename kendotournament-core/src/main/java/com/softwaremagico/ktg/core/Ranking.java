@@ -256,6 +256,6 @@ public class Ranking {
 
     @Override
     public String toString() {
-        return teamRanking.toString();
+        return getTeamsRanking().toString();
     }
 }
