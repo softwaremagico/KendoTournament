@@ -29,7 +29,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <org.testng.version>6.8.5</org.testng.version>
+        <org.testng.version>6.8.7</org.testng.version>
         <maven-surefire-plugin.version>2.14.1</maven-surefire-plugin.version>
         <maven-compiler-plugin>3.1</maven-compiler-plugin>
     </properties>
