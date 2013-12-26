@@ -5,7 +5,7 @@ import com.softwaremagico.ktg.persistence.UndrawPool;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
+public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
 
     private Team team;
     private List<Fight> fights;
@@ -103,51 +103,7 @@ public class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     }
 
     @Override
-    public int compareTo(ScoreOfTeam o) {
-        if (getWonFights() > o.getWonFights()) {
-            return -1;
-        }
-        if (getWonFights() < o.getWonFights()) {
-            return 1;
-        }
-        if (getWonDuels() > o.getWonDuels()) {
-            return -1;
-        }
-        if (getWonDuels() < o.getWonDuels()) {
-            return 1;
-        }
-        if (getHits() > o.getHits()) {
-            return -1;
-        }
-        if (getHits() < o.getHits()) {
-            return 1;
-        }
-        if (getDrawFights() > o.getDrawFights()) {
-            return -1;
-        }
-
-        if (getDrawFights() < o.getDrawFights()) {
-            return 1;
-        }
-
-        if (getDrawDuels() > o.getDrawDuels()) {
-            return -1;
-        }
-
-        if (getDrawDuels() < o.getDrawDuels()) {
-            return 1;
-        }
-
-        if (getGoldenPoints() > o.getGoldenPoints()) {
-            return -1;
-        }
-
-        if (getGoldenPoints() < o.getGoldenPoints()) {
-            return 1;
-        }
-
-        return 0;
-    }
+    public abstract int compareTo(ScoreOfTeam o);
 
     @Override
     public String toString() {

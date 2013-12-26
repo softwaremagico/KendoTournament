@@ -25,7 +25,9 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Image;
 import java.io.InputStream;
@@ -45,9 +47,10 @@ public class Tournament implements Comparable<Tournament> {
     private int howManyTeamsOfGroupPassToTheTree;
     private int teamSize;
     private TournamentType mode; // simple, championship, custom, personalized, tree
-    private float scoreForWin = 1;
-    private float scoreForDraw = 0;
-    private String choosedScore = "European";
+    // private float scoreForWin = 1;
+    // private float scoreForDraw = 0;
+    // private ScoreType choosedScore = ScoreType.EUROPEAN;
+    private TournamentScore tournamentScore;
 
     static {
         CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
@@ -60,6 +63,7 @@ public class Tournament implements Comparable<Tournament> {
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
         this.mode = mode;
+        tournamentScore = new TournamentScore(ScoreType.CLASSIC, 1, 1);
     }
 
     public Photo getBanner() {
@@ -136,24 +140,6 @@ public class Tournament implements Comparable<Tournament> {
         return name;
     }
 
-    public void changeScoreOptions(String type, float win, float draw) {
-        choosedScore = type;
-        scoreForWin = win;
-        scoreForDraw = draw;
-    }
-
-    public float getScoreForWin() {
-        return scoreForWin;
-    }
-
-    public float getScoreForDraw() {
-        return scoreForDraw;
-    }
-
-    public String getChoosedScore() {
-        return choosedScore;
-    }
-
     public void addBanner(InputStream input, int size) {
         banner = new Photo(getName());
         banner.setImage(input, size);
@@ -219,5 +205,13 @@ public class Tournament implements Comparable<Tournament> {
         } else {
             return (pos + 1) + "";
         }
+    }
+
+    public TournamentScore getTournamentScore() {
+        return tournamentScore;
+    }
+
+    public void setTournamentScore(TournamentScore tournamentScore) {
+        this.tournamentScore = tournamentScore;
     }
 }

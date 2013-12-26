@@ -528,7 +528,7 @@ public class DiplomaPDF {
             cell.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(cell);
 
-            p = new Paragraph(cr.getWonDuels() + "", FontFactory.getFont(font, fontSize - 8));
+            p = new Paragraph(cr.getDuelsWon() + "", FontFactory.getFont(font, fontSize - 8));
             cell = new PdfPCell(p);
             cell.setBorderWidth(0);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);

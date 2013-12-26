@@ -92,7 +92,7 @@ public class CompetitorsScoreList extends ParentList {
             mainTable.addCell(getCell(competitorTopTen.get(i).getCompetitor().getSurnameName(), 1));
             /*mainTable.addCell(getCell(competitorTopTen.get(i).getWonFights() + "/" + competitorTopTen.get(i).getDrawFights(), 1,
              Element.ALIGN_CENTER));*/
-            mainTable.addCell(getCell(competitorTopTen.get(i).getWonDuels() + "/" + competitorTopTen.get(i).getDrawDuels(), 1,
+            mainTable.addCell(getCell(competitorTopTen.get(i).getDuelsWon() + "/" + competitorTopTen.get(i).getDuelsDraw(), 1,
                     Element.ALIGN_CENTER));
             mainTable.addCell(getCell("" + competitorTopTen.get(i).getHits(), 1, Element.ALIGN_CENTER));
 

@@ -24,7 +24,7 @@ public class ScoreTest {
 	private static final Integer MEMBERS = 3;
 	private static final Integer TEAMS_PER_GROUP = 4;
 	private static final Integer GROUPS = 2;
-	public static final String TOURNAMENT_NAME = "scoreChampionshipTest";
+	private static final String TOURNAMENT_NAME = "scoreChampionshipTest";
 	private static Tournament tournament = null;
 
 	@Test

@@ -50,7 +50,7 @@ public enum TournamentType {
 
 	public static TournamentType getType(String value) {
 		for (TournamentType types : TournamentType.values()) {
-			if (types.sqlName.equals(value)) {
+			if (types.getSqlName().equals(value)) {
 				return types;
 			}
 		}

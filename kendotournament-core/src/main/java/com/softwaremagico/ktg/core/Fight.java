@@ -262,6 +262,18 @@ public class Fight implements Comparable<Fight> {
         return duels;
     }
 
+    public boolean isWon(RegisteredPerson competitor) {
+        if (competitor != null) {
+            if (team1.isMember(competitor) && winner().equals(team1)) {
+                return true;
+            }
+            if (team2.isMember(competitor) && winner().equals(team2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Integer getWonDuels(RegisteredPerson competitor) {
         int winDuels = 0;
         if (competitor != null) {

@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="1" verbose="1" name="CoreTestSuite">
-    <test name="DatabaseSet" enabled="false" preserve-order="true">
+    <test name="DatabaseSet" enabled="true" preserve-order="true">
         <groups>
             <run>
                 <include name="populateDatabase" />
@@ -11,8 +11,9 @@
                 <include name="championshipTreeTest" />                
                 <include name="championshipFightAreaTest" />                                          
                 <include name="scoreTest" />
+                <include name="customScoreTest" />
                 <include name="changeMemberOrderTest" />  
-                <include name="databaseStore" />
+                <exclude name="databaseStore" />
             </run>
         </groups>
         <classes>
@@ -25,6 +26,7 @@
             <class name="com.softwaremagico.ktg.persistence.ChampionshipFightAreaTest" />
             <class name="com.softwaremagico.ktg.persistence.ChangeMemberOrderTest" />
             <class name="com.softwaremagico.ktg.persistence.ScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.CustomScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.DatabaseStore" />
         </classes>
     </test>

@@ -25,9 +25,11 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.TournamentPool;
+import com.softwaremagico.ktg.tournament.ScoreType;
+import com.softwaremagico.ktg.tournament.TournamentScore;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.List;
@@ -68,15 +70,14 @@ public class ChooseScore extends javax.swing.JFrame {
     private void selectStyle() {
         refreshing = true;
         try {
-            switch (((Tournament) (TournamentComboBox.getSelectedItem())).getChoosedScore()) {
-                case "European":
+            switch (((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getScoreType()) {
+                case EUROPEAN:
                     EuropeanRadioButton.setSelected(true);
                     break;
-                case "Custom":
+                case CUSTOM:
                     CustomRadioButton.setSelected(true);
-                    float tmp_draw = ((Tournament) (TournamentComboBox.getSelectedItem())).getScoreForDraw();
-                    WinSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getScoreForWin());
-                    DrawSpinner.setValue(tmp_draw);
+                    WinSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsVictory());
+                    DrawSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsDraw());
                     break;
                 default:
                     ClassicRadioButton.setSelected(true);
@@ -371,12 +372,12 @@ public class ChooseScore extends javax.swing.JFrame {
 
     private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
         Tournament tournament = ((Tournament) (TournamentComboBox.getSelectedItem()));
-        ((Tournament) (TournamentComboBox.getSelectedItem())).changeScoreOptions(getStyle(), getWinnerPoints(), getDrawPoints());
+        ((Tournament) (TournamentComboBox.getSelectedItem())).setTournamentScore(new TournamentScore(ScoreType.getScoreType(getStyle()), getWinnerPoints(), getDrawPoints()));
         try {
             if (TournamentPool.getInstance().update(tournament)) {
                 AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "Score");
                 this.dispose();
-            }else{
+            } else {
                 AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
             }
         } catch (SQLException ex) {

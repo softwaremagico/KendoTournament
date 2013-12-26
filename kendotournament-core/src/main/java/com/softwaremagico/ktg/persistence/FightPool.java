@@ -16,11 +16,15 @@ import java.util.Set;
 public class FightPool extends TournamentDependentPool<Fight> {
 
     private static FightPool instance;
-    private Integer currentFight = null;
     private HashMap<Tournament, HashMap<Integer, List<Fight>>> figthsPerArea;
 
     private FightPool() {
         figthsPerArea = new HashMap<>();
+    }
+
+    @Override
+    protected String getId(Fight element) {
+        return element.getTournament() + "" + element.getGroup() + element.getLevel() + element.getOrderInGroup();
     }
 
     public static boolean existRepeatedFight(List<Fight> fights) {
@@ -134,12 +138,8 @@ public class FightPool extends TournamentDependentPool<Fight> {
         if (fightsOfTournament == null || fightsOfTournament.isEmpty()) {
             return null;
         }
-        if (currentFight != null && !fightsOfTournament.get(currentFight).isOver()) {
-            return currentFight;
-        }
         for (Integer i = 0; i < fightsOfTournament.size(); i++) {
             if (!fightsOfTournament.get(i).isOver()) {
-                currentFight = i;
                 return i;
             }
         }
@@ -231,11 +231,6 @@ public class FightPool extends TournamentDependentPool<Fight> {
         }
         Collections.sort(fightsOfLevel);
         return fightsOfLevel;
-    }
-
-    @Override
-    protected String getId(Fight element) {
-        return element.getTournament() + "" + element.getGroup() + element.getOrderInGroup();
     }
 
     public Integer getLastLevelUsed(Tournament tournament) throws SQLException {
@@ -379,7 +374,6 @@ public class FightPool extends TournamentDependentPool<Fight> {
      */
     private void resetAuxiliaryParameters(Tournament tournament) {
         figthsPerArea.put(tournament, null);
-        currentFight = null;
     }
 
     /**
@@ -389,6 +383,5 @@ public class FightPool extends TournamentDependentPool<Fight> {
      */
     private void resetAuxiliaryParameters() {
         figthsPerArea = new HashMap<>();
-        currentFight = null;
     }
 }

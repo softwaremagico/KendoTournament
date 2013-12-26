@@ -137,7 +137,7 @@ public class StatisticsTopTen extends StatisticsGUI {
         for (int i = startValue; i < endValue; i++) {
             String c = (i + 1) + " - " + competitorTopTen.get(i).getCompetitor().getName() + " " + competitorTopTen.get(i).getCompetitor().getSurname();
 
-            dataset.addValue(competitorTopTen.get(i).getWonDuels(), series1, c);
+            dataset.addValue(competitorTopTen.get(i).getDuelsWon(), series1, c);
             dataset.addValue(competitorTopTen.get(i).getHits(), series2, c);
         }
         return dataset;

@@ -41,6 +41,8 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
+import com.softwaremagico.ktg.tournament.ScoreType;
+import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import java.io.*;
 import java.sql.PreparedStatement;
@@ -54,6 +56,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class SQL extends Database {
+
     public static final Integer DATABASE_NUMBER_TABLES = 9;
     public static final Integer MAX_ID_LENGTH = 12;
     public static final Integer MAX_NAME_LENGTH = 50;
@@ -66,11 +69,7 @@ public abstract class SQL extends Database {
     public static final Integer MAX_TOURNAMENT_TYPE_LENGTH = 20;
     public static final Integer MAX_SCORE_TYPE_LENGTH = 15;
     public static final Integer MAX_ROLE_NAME_LENGTH = 15;
-    
-    
-    
     protected static final Translator trans = LanguagePool.getTranslator("messages.xml");
-    
 
     @Override
     public synchronized void clearDatabase() {
@@ -90,7 +89,7 @@ public abstract class SQL extends Database {
             KendoLog.errorMessage(this.getClass().getName(), ex);
         }
     }
-    
+
     protected synchronized void createTable(String query) throws SQLException {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(query);
@@ -136,7 +135,7 @@ public abstract class SQL extends Database {
             throws SQLException;
 
     protected abstract InputStream getBinaryStream(ResultSet rs, String column) throws SQLException;
-    
+
     protected abstract String getBoolean(Boolean value);
 
     protected abstract int getMaxElementsInQuery();
@@ -162,7 +161,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
             try (PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?);")) {
+                            .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?);")) {
                 stmt.setString(1, person.getId());
                 stmt.setString(2, person.getName());
                 stmt.setString(3, person.getSurname());
@@ -249,8 +248,8 @@ public abstract class SQL extends Database {
         for (RegisteredPerson newPerson : newPeople) {
             RegisteredPerson oldPerson = peopleExchange.get(newPerson);
             try (PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE competitor SET ID=?, Name=?, Surname=?, Club=? WHERE ID='"
-                    + oldPerson.getId() + "'")) {
+                            .prepareStatement("UPDATE competitor SET ID=?, Name=?, Surname=?, Club=? WHERE ID='"
+                            + oldPerson.getId() + "'")) {
                 stmt.setString(1, newPerson.getId());
                 stmt.setString(2, newPerson.getName());
                 stmt.setString(3, newPerson.getSurname());
@@ -299,7 +298,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "setPhoto");
         for (Photo photo : photos) {
             try (PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId() + "'")) {
+                            .prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId() + "'")) {
                 storeBinaryStream(stmt, 1, photo.getInput(), (int) photo.getSize());
                 stmt.setLong(2, photo.getSize());
                 try {
@@ -596,7 +595,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "addTournaments");
         for (Tournament tournament : tournaments) {
             try (PreparedStatement stmt = connection
-                    .prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                            .prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
                 stmt.setString(1, tournament.getName());
                 if (tournament.getBanner() != null) {
                     storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament.getBanner()
@@ -610,9 +609,9 @@ public abstract class SQL extends Database {
                 stmt.setInt(5, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(6, tournament.getTeamSize());
                 stmt.setString(7, tournament.getType().getSqlName());
-                stmt.setFloat(8, tournament.getScoreForWin());
-                stmt.setFloat(9, tournament.getScoreForDraw());
-                stmt.setString(10, tournament.getChoosedScore());
+                stmt.setFloat(8, tournament.getTournamentScore().getPointsVictory());
+                stmt.setFloat(9, tournament.getTournamentScore().getPointsDraw());
+                stmt.setString(10, tournament.getTournamentScore().getScoreType().getTag());
                 if (tournament.getDiploma() != null) {
                     storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma()
                             .getSize());
@@ -628,8 +627,8 @@ public abstract class SQL extends Database {
                 } else {
                     storeBinaryStream(stmt, 13, null, 0);
                     stmt.setLong(14, 0);
-                } 
-               stmt.executeUpdate();
+                }
+                stmt.executeUpdate();
             } catch (SQLException ex) {
                 showSqlError(ex);
                 return false;
@@ -650,27 +649,27 @@ public abstract class SQL extends Database {
         try (Statement st = connection.createStatement();
                 ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
             while (rs.next()) {
-                Tournament t = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"),
+                Tournament tournament = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"),
                         rs.getInt("PassingTeams"), rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type")
                         .toString()));
-                t.changeScoreOptions(rs.getObject("ScoreType").toString(), rs.getInt("ScoreWin"),
-                        rs.getInt("ScoreDraw"));
+                tournament.setTournamentScore(new TournamentScore(ScoreType.getScoreType(rs.getString("ScoreType")), rs.getInt("ScoreWin"),
+                        rs.getInt("ScoreDraw")));
                 InputStream sImage = getBinaryStream(rs, "Banner");
                 Integer size = rs.getInt("Size");
-                Photo banner = new Photo(t.getName());
+                Photo banner = new Photo(tournament.getName());
                 banner.setImage(sImage, size);
-                t.setBanner(banner);
+                tournament.setBanner(banner);
                 sImage = getBinaryStream(rs, "Accreditation");
                 size = rs.getInt("AccreditationSize");
-                Photo accreditation = new Photo(t.getName());
+                Photo accreditation = new Photo(tournament.getName());
                 accreditation.setImage(sImage, size);
-                t.setAccreditation(accreditation);
+                tournament.setAccreditation(accreditation);
                 sImage = getBinaryStream(rs, "Diploma");
                 size = rs.getInt("DiplomaSize");
-                Photo diploma = new Photo(t.getName());
+                Photo diploma = new Photo(tournament.getName());
                 diploma.setImage(sImage, size);
-                t.setDiploma(diploma);
-                results.add(t);
+                tournament.setDiploma(diploma);
+                results.add(tournament);
             }
             KendoLog.exiting(this.getClass().getName(), "getTournaments");
             return results;
@@ -714,8 +713,8 @@ public abstract class SQL extends Database {
         for (Tournament tournament : newTournaments) {
             Tournament oldTournament = tournamentsExchange.get(tournament);
             try (PreparedStatement stmt = connection
-                    .prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=? WHERE Name='"
-                    + oldTournament.getName() + "';")) {
+                            .prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=? WHERE Name='"
+                            + oldTournament.getName() + "';")) {
                 try {
                     storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament.getBanner()
                             .getSize());
@@ -728,9 +727,9 @@ public abstract class SQL extends Database {
                 stmt.setInt(4, tournament.getHowManyTeamsOfGroupPassToTheTree());
                 stmt.setInt(5, tournament.getTeamSize());
                 stmt.setString(6, tournament.getType().getSqlName());
-                stmt.setFloat(7, tournament.getScoreForWin());
-                stmt.setFloat(8, tournament.getScoreForDraw());
-                stmt.setString(9, tournament.getChoosedScore());
+                stmt.setFloat(7, tournament.getTournamentScore().getPointsVictory());
+                stmt.setFloat(8, tournament.getTournamentScore().getPointsDraw());
+                stmt.setString(9, tournament.getTournamentScore().getScoreType().getTag());
                 try {
                     storeBinaryStream(stmt, 10, tournament.getDiploma().getInput(), (int) tournament.getDiploma()
                             .getSize());

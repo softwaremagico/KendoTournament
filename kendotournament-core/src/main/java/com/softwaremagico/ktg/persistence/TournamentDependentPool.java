@@ -21,7 +21,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public boolean add(Tournament tournament, ElementPool element) throws SQLException {
         if (!getMap(tournament).containsValue(element)) {
-            sortedElements = new HashMap<>(); // Sorted elements need to be
+            sortedElements = null; // Sorted elements need to be
             // recreated.
             getMap(tournament).put(getId(element), element);
             addElementToStore(tournament, element);
