@@ -132,9 +132,9 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 
 		float rateSurname = (name.length() + getShortSurname(20).length()) / (float) surname.length();
 		float rateName = (name.length() + getShortSurname(20).length()) / (float) name.length();
-		String ret = getShortSurname((int) (maxLength / rateSurname)) + ", "
+		String ret = getShortSurname((int) (maxLength / rateSurname)).trim() + ", "
 				+ getShortName((int) (maxLength / rateName));
-		return ret;
+		return ret.trim();
 	}
 
 	/**
@@ -163,20 +163,20 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 			// Short surname.
 			String surnameShort = surname.substring(0, Math.min(maxLength, surname.length())).toUpperCase();
 			if (surname.length() > maxLength) {
-				surnameShort += ".";
+				surnameShort = surnameShort.trim() + ".";
 			}
 			// Short surname
 			if (surnameShort.length() < maxLength) {
 				String nameShort = name.substring(0, Math.min(maxLength - surnameShort.length() + 1, name.length()));
 				// Name cut.
 				if (nameShort.length() < name.length()) {
-					return surnameShort + ", " + nameShort + ".";
+					return surnameShort.trim() + ", " + nameShort.trim() + ".";
 				} else {
 					// Full name.
-					return surnameShort + ", " + nameShort;
+					return surnameShort.trim() + ", " + nameShort.trim();
 				}
 			} else {
-				return surnameShort + ", " + name.substring(0, 1) + ".";
+				return surnameShort.trim() + ", " + name.substring(0, 1) + ".";
 			}
 		} else {
 			return " --- --- ";
@@ -220,8 +220,8 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 
 	public String getAcronim() {
 		String acronim = "";
-		acronim += name.substring(0, 1).toUpperCase();
-		String[] shortSurname = surname.split(" ");
+		acronim += name.trim().substring(0, 1).toUpperCase();
+		String[] shortSurname = surname.trim().split(" ");
 		if (shortSurname[0].length() < 4 && shortSurname.length > 1) {
 			acronim += shortSurname[0].substring(0, 1).toLowerCase();
 			acronim += shortSurname[1].substring(0, 1).toUpperCase();
