@@ -1600,6 +1600,14 @@
 		<ca>Europeu:</ca>
 		<it>Europeo:</it>
 	</EuropeanRadioButton>
+	<InernationlRadioButton>
+		<en>Internationl:</en>
+		<es>Internacional:</es>
+		<nl>Internationaal:</nl>
+		<de>Internationale:</de>
+		<ca>Internacional:</ca>
+		<it>Internazionale:</it>
+	</InernationlRadioButton>
 	<CustomRadioButton>
 		<en>Custom:</en>
 		<es>Personalizado:</es>
@@ -1680,14 +1688,14 @@
 		<ca>Semifinal</ca>
 		<it>Semifinale</it>
 	</SemiFinalLabel>
-	<EuropeanUndrawLabel>
+	<InternationalUndrawLabel>
 		<en>Only for Undraw</en>
 		<es>Solo para desempatar</es>
 		<nl>Alleen voor Undraw</nl>
 		<de>Only for Undraw</de>
 		<ca>Sols per desempatar</ca>
 		<it>Solo per lo spareggio</it>
-	</EuropeanUndrawLabel>
+	</InternationalUndrawLabel>
 	<Export>
 		<en>Export to...</en>
 		<es>Exportar a...</es>

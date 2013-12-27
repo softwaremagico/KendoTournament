@@ -1,5 +1,7 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
 public class ScoreOfTeamCustom extends ScoreOfTeam {

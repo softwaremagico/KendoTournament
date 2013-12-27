@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.tournament.ScoreType;
 import java.util.ArrayList;
 import java.util.Collections;

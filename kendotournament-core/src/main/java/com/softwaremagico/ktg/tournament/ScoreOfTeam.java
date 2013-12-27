@@ -1,5 +1,9 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.persistence.UndrawPool;
 
 import java.sql.SQLException;

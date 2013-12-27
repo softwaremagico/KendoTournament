@@ -32,7 +32,7 @@ import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.ScoreOfCompetitor;
-import com.softwaremagico.ktg.core.ScoreOfTeam;
+import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.MyFile;

@@ -1,16 +1,18 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
-public class ScoreOfTeamClassic extends ScoreOfTeam {
+public class ScoreOfTeamInternational extends ScoreOfTeam {
 
-    public ScoreOfTeamClassic(Team team, List<Fight> fights) {
+    public ScoreOfTeamInternational(Team team, List<Fight> fights) {
         super(team, fights);
     }
 
     @Override
     public int compareTo(ScoreOfTeam o) {
-        if (getWonFights() > o.getWonFights()) {
+              if (getWonFights() > o.getWonFights()) {
             return -1;
         }
         

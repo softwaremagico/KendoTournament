@@ -1,17 +1,12 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.ScoreOfTeam;
-import com.softwaremagico.ktg.core.ScoreOfTeamClassic;
-import com.softwaremagico.ktg.core.ScoreOfTeamCustom;
-import com.softwaremagico.ktg.core.ScoreOfTeamEuropean;
 import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
 public enum ScoreType {
 
-    CLASSIC("classic"),
-    EUROPEAN("european"),
+    INTERNATIONAL("international"),
     CUSTOM("custom");
     private String tag;
 
@@ -25,13 +20,11 @@ public enum ScoreType {
 
     public static ScoreOfTeam getScoreOfTeam(Team team, List<Fight> fights) {
         switch (team.getTournament().getTournamentScore().getScoreType()) {
-            case EUROPEAN:
-                return new ScoreOfTeamEuropean(team, fights);
             case CUSTOM:
                 return new ScoreOfTeamCustom(team, fights);
-            case CLASSIC:
+            case INTERNATIONAL:
             default:
-                return new ScoreOfTeamClassic(team, fights);
+                return new ScoreOfTeamInternational(team, fights);
         }
     }
 
@@ -41,6 +34,6 @@ public enum ScoreType {
                 return scoreType;
             }
         }
-        return CLASSIC;
+        return INTERNATIONAL;
     }
 }

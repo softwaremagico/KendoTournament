@@ -49,7 +49,7 @@ public class Tournament implements Comparable<Tournament> {
     private TournamentType mode; // simple, championship, custom, personalized, tree
     // private float scoreForWin = 1;
     // private float scoreForDraw = 0;
-    // private ScoreType choosedScore = ScoreType.EUROPEAN;
+    // private ScoreType choosedScore = ScoreType.INTERNATIONAL;
     private TournamentScore tournamentScore;
 
     static {
@@ -63,7 +63,7 @@ public class Tournament implements Comparable<Tournament> {
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
         this.mode = mode;
-        tournamentScore = new TournamentScore(ScoreType.CLASSIC, 1, 1);
+        tournamentScore = new TournamentScore(ScoreType.INTERNATIONAL, 1, 1);
     }
 
     public Photo getBanner() {
