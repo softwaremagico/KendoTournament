@@ -246,7 +246,7 @@ public class Team implements Comparable<Team> {
         if (name.length() <= length) {
             return name;
         } else {
-            return name.substring(0, length - 3) + ". " + name.substring(name.length() - 2, name.length());
+            return name.substring(0, length - 3).trim() + ". " + name.substring(name.length() - 2, name.length()).trim();
         }
     }
 
