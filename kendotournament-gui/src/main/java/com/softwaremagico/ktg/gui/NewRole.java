@@ -216,6 +216,8 @@ public class NewRole extends KendoFrame {
                     CompetitorAccreditationCardPDF pdf = new CompetitorAccreditationCardPDF((getSelectedTournament()), person);
                     pdf.createFile(file);
                 }
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "userWithoutRole", "Role");
             }
         } catch (Exception ex) {
             AlertManager.showErrorInformation(this.getClass().getName(), ex);

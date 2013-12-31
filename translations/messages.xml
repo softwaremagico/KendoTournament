@@ -1158,5 +1158,13 @@
 		<ca>Acció cancel·lada.</ca>
 		<it>Azione annullata.</it>
 	</canceledAction>
+	<userWithoutRole>
+		<en>The selected user is not enrolled in the tournament.</en>
+		<es>El usuario seleccionado no está inscrito en el torneo.</es>
+		<nl>The selected user is not enrolled in the tournament.</nl>
+		<de>The selected user is not enrolled in the tournament.</de>
+		<ca>L'usuari seleccionat no està inscrit en el torneig.</ca>
+		<it></it>
+	</userWithoutRole>
 </translator>
 
