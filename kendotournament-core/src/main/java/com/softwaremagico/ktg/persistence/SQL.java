@@ -161,7 +161,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
             try (PreparedStatement stmt = connection
-                            .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club, Photo, PhotoSize) VALUES (?,?,?,?,?,?);")) {
+                            .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club) VALUES (?,?,?,?,?,?);")) {
                 stmt.setString(1, person.getId());
                 stmt.setString(2, person.getName());
                 stmt.setString(3, person.getSurname());
@@ -170,14 +170,6 @@ public abstract class SQL extends Database {
                     clubName = person.getClub().getName();
                 }
                 stmt.setString(4, clubName);
-                InputStream photo = null;
-                Integer size = 0;
-                if (person.getPhoto() != null) {
-                    photo = person.getPhoto().getInput();
-                    size = person.getPhoto().getSize();
-                }
-                storeBinaryStream(stmt, 5, photo, size);
-                stmt.setLong(6, size);
                 try {
                     stmt.executeUpdate();
                 } catch (OutOfMemoryError ofm) {
@@ -197,7 +189,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
         List<RegisteredPerson> results = new ArrayList<>();
         try (Statement s = connection.createStatement();
-                ResultSet rs = s.executeQuery("SELECT * FROM competitor ORDER BY Surname;")) {
+                ResultSet rs = s.executeQuery("SELECT ID, Name, Surname, Club FROM competitor ORDER BY Surname;")) {
             while (rs.next()) {
                 RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name")
                         .toString(), rs.getObject("Surname").toString());
@@ -270,7 +262,7 @@ public abstract class SQL extends Database {
     @Override
     protected synchronized Photo getPhoto(String competitorId) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "getPhoto");
-        String query = "SELECT Photo,PhotoSize FROM competitor WHERE ID='" + competitorId + "'";
+        String query = "SELECT Photo, PhotoSize FROM competitor WHERE ID='" + competitorId + "'";
         Photo photo = new Photo(competitorId);
         try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery(query)) {
             if (rs.next()) {
