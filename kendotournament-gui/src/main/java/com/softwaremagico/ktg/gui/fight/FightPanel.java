@@ -674,7 +674,7 @@ public class FightPanel extends KFrame {
      * are used.
      */
     private void updateDatabase() throws SQLException {
-        //Exchange fights y more than one fight area exists. 
+        //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament().getFightingAreas() > 1) {
             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                 //Save fights.
@@ -690,6 +690,9 @@ public class FightPanel extends KFrame {
                 }
                 // Load fights. 
                 FightPool.getInstance().reset(getSelectedTournament());
+                //Recreate Tournament structure.
+                TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
+                TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
             }
         }
     }
