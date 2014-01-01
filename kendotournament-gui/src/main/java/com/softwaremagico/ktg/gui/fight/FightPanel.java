@@ -640,7 +640,13 @@ public class FightPanel extends KFrame {
                             // If it was the last fight of arena groups.
                             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                                 // wait for other arena fights. Show message.
-                                AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait");
+                                String arenas = "";
+                                for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
+                                    if (getSelectedFightArea() != i) {
+                                        arenas += Tournament.getFightAreaName(i) + " ";
+                                    }
+                                }
+                                AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait", arenas);
                             }
                         }
                     }
