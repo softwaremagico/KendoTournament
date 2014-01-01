@@ -190,6 +190,12 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     }
 
     @Override
+    public void reset(Tournament tournament) {
+        duelsPerFight = new HashMap<>();
+        super.reset(tournament);
+    }
+
+    @Override
     protected List<Duel> sort(Tournament tournament) throws SQLException {
         List<Duel> unsorted = new ArrayList<>(getMap(tournament).values());
         Collections.sort(unsorted);

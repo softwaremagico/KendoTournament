@@ -645,24 +645,24 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                 //Delete fights and teams in groups
                 TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
                 //Remove teams of level greater than zero. 
-                TournamentManagerFactory.getManager(getSelectedTournament()).removeTeams(1);                 
+                TournamentManagerFactory.getManager(getSelectedTournament()).removeTeams(1);
                 try {
-					if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
-					    AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
-					    //Update tournament type to database.
-					    TournamentPool.getInstance().update(getSelectedTournament());
-					    //Delete all previous links if exists.
-					    CustomLinkPool.getInstance().remove(getSelectedTournament());
-					    //Update manual links if necesary.
-					    if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
-					        //Add new links.
-					        CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
-					    }
-					    this.dispose();
-					}
-				} catch (PersonalizedFightsException e) {
-					// Not possible here.
-				}
+                    if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
+                        AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                        //Update tournament type to database.
+                        TournamentPool.getInstance().update(getSelectedTournament());
+                        //Delete all previous links if exists.
+                        CustomLinkPool.getInstance().remove(getSelectedTournament());
+                        //Update manual links if necesary.
+                        if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
+                            //Add new links.
+                            CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
+                        }
+                        this.dispose();
+                    }
+                } catch (PersonalizedFightsException e) {
+                    // Not possible here.
+                }
             }
         } catch (NullPointerException npe) {
         } catch (SQLException ex) {

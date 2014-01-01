@@ -307,11 +307,21 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public void reset(Tournament tournament) {
-        sortedElements.remove(tournament);
-        elements.remove(tournament);
-        elementsToStore.remove(tournament);
-        elementsToDelete.remove(tournament);
-        elementsToUpdate.remove(tournament);
+        if (sortedElements != null) {
+            sortedElements.remove(tournament);
+        }
+        if (elements != null) {
+            elements.remove(tournament);
+        }
+        if (elementsToStore != null) {
+            elementsToStore.remove(tournament);
+        }
+        if (elementsToDelete != null) {
+            elementsToDelete.remove(tournament);
+        }
+        if (elementsToUpdate != null) {
+            elementsToUpdate.remove(tournament);
+        }
     }
 
     protected abstract List<ElementPool> sort(Tournament tournament) throws SQLException;

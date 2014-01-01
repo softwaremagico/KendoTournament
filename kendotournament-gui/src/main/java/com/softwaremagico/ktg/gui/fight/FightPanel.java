@@ -674,9 +674,12 @@ public class FightPanel extends KFrame {
      * are used.
      */
     private void updateDatabase() throws SQLException {
+        System.out.println("Updating database!!");
+        System.out.println("*-------------------------------------*");
         //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament().getFightingAreas() > 1) {
             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
+                System.out.println(FightPool.getInstance().get(getSelectedTournament()));
                 //Save fights.
                 if (FightPool.getInstance().needsToBeStoredInDatabase()) {
                     //if (AlertManager.questionMessage("saveRequired", "SQL")) {
@@ -693,6 +696,7 @@ public class FightPanel extends KFrame {
                 //Recreate Tournament structure.
                 TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
                 TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+                System.out.println(FightPool.getInstance().get(getSelectedTournament()));
             }
         }
     }
