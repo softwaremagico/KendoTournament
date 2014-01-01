@@ -160,6 +160,29 @@ reference "sub:Campeonato-Personalizado"
 .
 \end_layout
 
+\begin_layout Description
+Mejorada
+\begin_inset space ~
+\end_inset
+
+la
+\begin_inset space ~
+\end_inset
+
+conexión
+\begin_inset space ~
+\end_inset
+
+entre
+\begin_inset space ~
+\end_inset
+
+equipos: la utilización de distintos equipos para un mismo torneo ha sido
+ optimizada.
+ Ahora funciona mucho más rápido que en versiones anteriores.
+ 
+\end_layout
+
 \begin_layout Chapter
 Uso básico
 \end_layout
@@ -3854,7 +3877,16 @@ Los otros tres equipos indican los datos de forma similar, salvo que el
 \begin_layout Standard
 
 \emph on
-Nota: Un detalle muy importante en estos casos, especialmente si los portátiles
+Nota: los combates deben ser guardados una vez creados para que puedan ser
+ vistos por los demás ordenadores.
+ Recuerda guardar el torneo una vez generado.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Nota: un detalle muy importante en estos casos, especialmente si los portátiles
  están trabajando únicamente con las baterías, es evitar que el ordenador
  de coordinación se suspenda (stand by).
  Si este se suspende, la conexión Wi-Fi se cortará y por tanto, los otros

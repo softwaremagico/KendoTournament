@@ -153,6 +153,20 @@ reference "sub:Custom"
 .
 \end_layout
 
+\begin_layout Description
+Improved
+\begin_inset space ~
+\end_inset
+
+network
+\begin_inset space ~
+\end_inset
+
+communication: now using multiples computers for the same championship has
+ been improved.
+ Now is quicker than before!
+\end_layout
+
 \begin_layout Chapter
 Basic mode
 \end_layout
@@ -3379,6 +3393,14 @@ Server: localhost, user: kendo, password: *******.
 \begin_layout Standard
 The other three computers will have the same information, unless the server
  is the IP of the coordination computer.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Note: fights must be saved before created to be seen by the others computes.
+ Remember to save the fights when created.
  
 \end_layout
 
