@@ -43,6 +43,7 @@ import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
@@ -610,18 +611,8 @@ public class FightPanel extends KFrame {
                             // Show score.
                             openRankingWindow(ranking, true);
                         }
-
-                        //Exchange fights y more than one fight area exists. 
-                        if (getSelectedTournament().getFightingAreas() > 1) {
-                            if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
-                                //Save fights.
-                                if (FightPool.getInstance().needsToBeStoredInDatabase()) {
-                                    AlertManager.questionMessage("saveRequired", "SQL");
-                                }
-                                // Load fights. 
-                                FightPool.getInstance().reset(getSelectedTournament());
-                            }
-                        }
+                        
+                        updateDatabase();
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
@@ -665,6 +656,31 @@ public class FightPanel extends KFrame {
             }
             // Update score panel.
             updateScorePanel();
+        }
+    }
+
+    /**
+     * Database must be updated if different arenas (withb different computers)
+     * are used.
+     */
+    private void updateDatabase() throws SQLException {
+        //Exchange fights y more than one fight area exists. 
+        if (getSelectedTournament().getFightingAreas() > 1) {
+            if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
+                //Save fights.
+                if (FightPool.getInstance().needsToBeStoredInDatabase()) {
+                    if (AlertManager.questionMessage("saveRequired", "SQL")) {
+                        try {
+                            DatabaseConnection.getInstance().updateDatabase();
+                            AlertManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+                        } catch (SQLException ex) {
+                            AlertManager.showSqlErrorMessage(ex);
+                        }
+                    }
+                }
+                // Load fights. 
+                FightPool.getInstance().reset(getSelectedTournament());
+            }
         }
     }
     
