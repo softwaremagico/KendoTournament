@@ -1136,7 +1136,7 @@ public abstract class SQL extends Database {
                 }
                 query = "";
             }
-        }
+            }
         KendoLog.exiting(this.getClass().getName(), "addDuels");
         return true;
     }
