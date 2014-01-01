@@ -612,30 +612,34 @@ public class FightPanel extends KFrame {
                             openRankingWindow(ranking, true);
                         }
                         
+                        //Exchange fights with other computer.
                         updateDatabase();
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
-                            // Create fights of next level (if any).
-                            List<Fight> newFights;
-                            try {
-                                // Standard championship.
-                                newFights = TournamentManagerFactory.getManager(getSelectedTournament())
-                                        .createSortedFights(currentFight.getLevel() + 1);
-                                if (newFights != null && newFights.size() > 0) {
-                                    // Add new fights and continue.
-                                    FightPool.getInstance().add(getSelectedTournament(), newFights);
-                                } else {
-                                    // No more fights, show final winner
-                                    // message.
-                                    if (ranking != null) {
-                                        AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished", "!!!!!!",
-                                                ranking.getTeamsRanking().get(0).getName());
+                                // Create fights of next level (if any).
+                                List<Fight> newFights;
+                                try {
+
+                                    // Standard championship.
+                                    newFights = TournamentManagerFactory.getManager(getSelectedTournament())
+                                            .createSortedFights(currentFight.getLevel() + 1);
+                                    if (newFights != null && newFights.size() > 0) {
+                                        // Add new fights and continue.
+                                        FightPool.getInstance().add(getSelectedTournament(), newFights);
+                                        //Save this fights to avoid multiple creation.
+                                        updateDatabase();
+                                    } else {
+                                        // No more fights, show final winner
+                                        // message.
+                                        if (ranking != null) {
+                                            AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished", "!!!!!!",
+                                                    ranking.getTeamsRanking().get(0).getName());
+                                        }
                                     }
+                                } catch (PersonalizedFightsException e) {
+                                    createPersonalizedFights(fightPanel);
                                 }
-                            } catch (PersonalizedFightsException e) {
-                                createPersonalizedFights(fightPanel);
-                            }
                         } else {
                             // If it was the last fight of arena groups.
                             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
@@ -675,14 +679,14 @@ public class FightPanel extends KFrame {
             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                 //Save fights.
                 if (FightPool.getInstance().needsToBeStoredInDatabase()) {
-                    if (AlertManager.questionMessage("saveRequired", "SQL")) {
-                        try {
-                            DatabaseConnection.getInstance().updateDatabase();
-                            AlertManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
-                        } catch (SQLException ex) {
-                            AlertManager.showSqlErrorMessage(ex);
-                        }
+                    //if (AlertManager.questionMessage("saveRequired", "SQL")) {
+                    try {
+                        DatabaseConnection.getInstance().updateDatabase();
+                        //     AlertManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+                    } catch (SQLException ex) {
+                        AlertManager.showSqlErrorMessage(ex);
                     }
+                    //}
                 }
                 // Load fights. 
                 FightPool.getInstance().reset(getSelectedTournament());
