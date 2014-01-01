@@ -1159,12 +1159,20 @@
 		<it>Azione annullata.</it>
 	</canceledAction>
 	<userWithoutRole>
-		<en>The selected user is not enrolled in the tournament.</en>
-		<es>El usuario seleccionado no está inscrito en el torneo.</es>
-		<nl>The selected user is not enrolled in the tournament.</nl>
-		<de>The selected user is not enrolled in the tournament.</de>
-		<ca>L'usuari seleccionat no està inscrit en el torneig.</ca>
+		<en>The selected person is not enrolled in the tournament.</en>
+		<es>La persona seleccionada no está inscrita en el torneo.</es>
+		<nl>The selected person is not enrolled in the tournament.</nl>
+		<de>The selected person is not enrolled in the tournament.</de>
+		<ca>La persona seleccionada no està inscrita en el torneig.</ca>
 		<it></it>
 	</userWithoutRole>
+	<saveRequired>
+		<en>Fights must be saved into the database to proceed. Do you want to save it now?</en>
+		<es>Los combates deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
+		<nl>Fights must be saved into the database to proceed. Do you want to save it now?</nl>
+		<de>Fights must be saved into the database to proceed. Do you want to save it now?</de>
+		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
+		<it></it>
+	</saveRequired>
 </translator>
 
