@@ -263,7 +263,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     @Override
     public boolean remove(Tournament tournament, Fight element) throws SQLException {
         // Delete duels.
-        List<Duel> duels = DuelPool.getInstance().get(tournament, element);
+        List<Duel> duels = DuelPool.getInstance().get(element);
         DuelPool.getInstance().remove(tournament, duels);
 
         // Delete undraws where this fights is involved.

@@ -27,7 +27,13 @@ public class LoopTournamentGroup extends TGroup {
 		}
 		for (Team team : remainingTeams) {
 			for (Team adversary : remainingFights.getAdversaries(team)) {
-				Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), getIndex(), fights.size());
+				Fight fight = new Fight(getTournament(), team, adversary, getFightArea(), getLevel(), getIndex(),
+						fights.size());
+				// Force the creation of duels for more than one fight area. If
+				// not, multiple computers generates different duels.
+				if (getTournament().getFightingAreas() > 1) {
+					fight.getDuels();
+				}
 				fights.add(fight);
 			}
 		}

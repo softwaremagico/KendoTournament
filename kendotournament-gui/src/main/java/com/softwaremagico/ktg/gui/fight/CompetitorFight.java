@@ -53,8 +53,8 @@ import com.softwaremagico.ktg.persistence.DuelPool;
 import java.sql.SQLException;
 
 public class CompetitorFight extends JPanel {
-
-    private static final int SCORE_DIMENSION = 50;
+	private static final long serialVersionUID = -7099479717436351865L;
+	private static final int SCORE_DIMENSION = 50;
     private static final int FAULTS_DIMENSION = 15;
     private static final int MARGIN = 5;
     private static final int NAME_CHARACTERS = 11;

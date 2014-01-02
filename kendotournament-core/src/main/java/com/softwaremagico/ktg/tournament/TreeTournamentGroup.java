@@ -33,6 +33,11 @@ public class TreeTournamentGroup extends TGroup {
 			} else {
 				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
 			}
+			// Force the creation of duels for more than one fight area. If not, multiple computers
+			// generates different duels.
+			if (getTournament().getFightingAreas() > 1) {
+				fight.getDuels();
+			}
 			fights.add(fight);
 		}
 		return fights;

@@ -129,7 +129,7 @@ public class Fight implements Comparable<Fight> {
 
     public List<Duel> getDuels() {
         try {
-            return DuelPool.getInstance().get(tournament, this);
+            return DuelPool.getInstance().get(this);
         } catch (SQLException ex) {
             KendoLog.errorMessage(this.getClass().getName(), ex);
         }

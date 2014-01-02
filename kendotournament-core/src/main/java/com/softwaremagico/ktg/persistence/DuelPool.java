@@ -25,14 +25,14 @@ public class DuelPool extends TournamentDependentPool<Duel> {
         return instance;
     }
 
-    private List<Duel> createDuels(Tournament tournament, Fight fight) throws SQLException {
+    private List<Duel> createDuels(Fight fight) throws SQLException {
         List<Duel> duels = new ArrayList<>();
         try {
-            for (int i = 0; i < tournament.getTeamSize(); i++) {
+            for (int i = 0; i < fight.getTournament().getTeamSize(); i++) {
                 Duel duel = new Duel(fight, i);
                 duels.add(duel);
                 //New duel not in database. Add it. 
-                add(tournament, duel);
+                add(fight.getTournament(), duel);
             }
         } catch (NullPointerException npe) {
         }
@@ -64,13 +64,13 @@ public class DuelPool extends TournamentDependentPool<Duel> {
      * @param fight
      * @return
      */
-    public List<Duel> get(Tournament tournament, Fight fight) throws SQLException {
+    public List<Duel> get(Fight fight) throws SQLException {
         if (duelsPerFight == null) {
             duelsPerFight = new HashMap<>();
         }
         List<Duel> results = duelsPerFight.get(fight);
         if (results == null) {
-            List<Duel> allDuels = new ArrayList<>(getMap(tournament).values());
+            List<Duel> allDuels = new ArrayList<>(getMap(fight.getTournament()).values());
             results = new ArrayList<>();
             for (Duel duel : allDuels) {
                 if (duel.getFight().equals(fight)) {
@@ -80,7 +80,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
             if (results.size() > 0) {
                 Collections.sort(results);
             } else {
-                results = createDuels(tournament, fight);
+                results = createDuels(fight);
             }
             duelsPerFight.put(fight, results);
         }
