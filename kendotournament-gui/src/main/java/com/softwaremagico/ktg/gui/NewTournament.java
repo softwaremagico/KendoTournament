@@ -57,6 +57,7 @@ public class NewTournament extends KendoFrame {
     private BufferedImage banner;
     private boolean defaultBanner = true;
     private int previousAreaSpinnerValue = 1;
+    private boolean updatingTournament = false;
 
     /**
      * Creates new form NewTournament
@@ -131,22 +132,24 @@ public class NewTournament extends KendoFrame {
     }
 
     public void updateWindow(Tournament tournament) {
+        updatingTournament = true;
+        oldTournament = tournament;
+        maxCompetitorTeam = tournament.getTeamSize();
+        NameTextField.setText(tournament.getName());
+        NameTextField.setEditable(false);
+        NumCompetitorsSpinner.setValue(tournament.getTeamSize());
+        BannerTextField.setText("");
+        usingMultipleComputersCheckBox.setSelected(tournament.isUsingMultipleComputers());
+        AreasSpinner.setValue(tournament.getFightingAreas());
         try {
-            oldTournament = tournament;
-            maxCompetitorTeam = tournament.getTeamSize();
-            NameTextField.setText(tournament.getName());
-            NameTextField.setEditable(false);
-            NumCompetitorsSpinner.setValue(tournament.getTeamSize());
-            BannerTextField.setText("");
-            usingMultipleComputersCheckBox.setSelected(tournament.isUsingMultipleComputers());
             if (tournament.getBanner() != null) {
                 createBanner(tournament.getBanner());
             } else {
                 createBanner();
             }
-            AreasSpinner.setValue(tournament.getFightingAreas());
         } catch (NullPointerException npe) {
         }
+        updatingTournament = false;
     }
 
     @Override
@@ -411,7 +414,7 @@ public class NewTournament extends KendoFrame {
     private void AreasSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_AreasSpinnerStateChanged
         if ((Integer) AreasSpinner.getValue() < 1) {
             AreasSpinner.setValue(1);
-        } else if ((Integer) AreasSpinner.getValue() == 2 && previousAreaSpinnerValue == 1) {
+        } else if (!updatingTournament && (Integer) AreasSpinner.getValue() == 2 && previousAreaSpinnerValue == 1) {
             usingMultipleComputersCheckBox.setSelected(true);
         }
         previousAreaSpinnerValue = (Integer) AreasSpinner.getValue();
