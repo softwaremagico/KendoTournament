@@ -47,7 +47,7 @@ public class Tournament implements Comparable<Tournament> {
     private int howManyTeamsOfGroupPassToTheTree;
     private int teamSize;
     private boolean usingMultipleComputers;
-    private TournamentType mode; // simple, championship, custom, personalized, tree
+    private TournamentType type; // simple, championship, custom, personalized, tree
     // private float scoreForWin = 1;
     // private float scoreForDraw = 0;
     // private ScoreType choosedScore = ScoreType.INTERNATIONAL;
@@ -58,12 +58,12 @@ public class Tournament implements Comparable<Tournament> {
         CHAMPIONSHIP_TYPES.add(TournamentType.CUSTOM_CHAMPIONSHIP);
     }
 
-    public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType mode) {
+    public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType type) {
         this.name = name;
         fightingAreas = areas;
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
-        this.mode = mode;
+        this.type = type;
         tournamentScore = new TournamentScore(ScoreType.INTERNATIONAL, 1, 1);
     }
 
@@ -116,24 +116,24 @@ public class Tournament implements Comparable<Tournament> {
     }
 
     public TournamentType getType() {
-        return mode;
+        return type;
     }
 
     public boolean isChampionship() {
-        return isChampionship(mode);
+        return isChampionship(type);
     }
 
     public boolean isChampionship(TournamentType mode) {
         return CHAMPIONSHIP_TYPES.contains(mode);
     }
 
-    public void setType(TournamentType newMode) {
-        if (!this.mode.equals(newMode)) {
+    public void setType(TournamentType type) {
+        if (!this.type.equals(type)) {
             // Groups are mantained between custom and championship modes.
-            if (!isChampionship(newMode) || !isChampionship()) {
+            if (!isChampionship(type) || !isChampionship()) {
                 TournamentManagerFactory.removeManager(this);
             }
-            this.mode = newMode;
+            this.type = type;
         }
     }
 

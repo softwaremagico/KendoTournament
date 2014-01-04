@@ -175,11 +175,16 @@ public class NewTournament extends KendoFrame {
                 }
                 //Store tournament into database
                 if (oldTournament != null) {
-                    TournamentPool.getInstance().update(oldTournament, newTournament);
                     //If tournament team size has changed (tournament update), delete old teams of tournament.
                     if (maxCompetitorTeam != null && maxCompetitorTeam != newTournament.getTeamSize()) {
                         TeamPool.getInstance().remove(oldTournament);
                     }
+                    //Add previous fields.
+                    newTournament.setAccreditation(oldTournament.getAccreditation());
+                    newTournament.setDiploma(oldTournament.getDiploma());
+                    newTournament.setType(oldTournament.getType());
+                    newTournament.setTournamentScore(oldTournament.getTournamentScore());
+                    TournamentPool.getInstance().update(oldTournament, newTournament);
                     AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
                 } else {
                     TournamentPool.getInstance().add(newTournament);
