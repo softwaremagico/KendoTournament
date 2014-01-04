@@ -46,6 +46,7 @@ public class Tournament implements Comparable<Tournament> {
     private int fightingAreas;
     private int howManyTeamsOfGroupPassToTheTree;
     private int teamSize;
+    private boolean usingMultipleComputers;
     private TournamentType mode; // simple, championship, custom, personalized, tree
     // private float scoreForWin = 1;
     // private float scoreForDraw = 0;
@@ -213,5 +214,13 @@ public class Tournament implements Comparable<Tournament> {
 
     public void setTournamentScore(TournamentScore tournamentScore) {
         this.tournamentScore = tournamentScore;
+    }
+
+    public boolean isUsingMultipleComputers() {
+        return usingMultipleComputers;
+    }
+
+    public void setUsingMultipleComputers(boolean multipleComputers) {
+        this.usingMultipleComputers = multipleComputers;
     }
 }

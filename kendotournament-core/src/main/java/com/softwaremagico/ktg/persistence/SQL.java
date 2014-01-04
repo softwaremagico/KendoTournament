@@ -587,7 +587,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "addTournaments");
         for (Tournament tournament : tournaments) {
             try (PreparedStatement stmt = connection
-                            .prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+                            .prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize, UsingMultipleComputers) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
                 stmt.setString(1, tournament.getName());
                 if (tournament.getBanner() != null) {
                     storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament.getBanner()
@@ -604,6 +604,7 @@ public abstract class SQL extends Database {
                 stmt.setFloat(8, tournament.getTournamentScore().getPointsVictory());
                 stmt.setFloat(9, tournament.getTournamentScore().getPointsDraw());
                 stmt.setString(10, tournament.getTournamentScore().getScoreType().getTag());
+                stmt.setBoolean(11, tournament.isUsingMultipleComputers());
                 if (tournament.getDiploma() != null) {
                     storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma()
                             .getSize());
@@ -661,6 +662,7 @@ public abstract class SQL extends Database {
                 Photo diploma = new Photo(tournament.getName());
                 diploma.setImage(sImage, size);
                 tournament.setDiploma(diploma);
+                tournament.setUsingMultipleComputers(rs.getBoolean("UsingMultipleComputers"));
                 results.add(tournament);
             }
             KendoLog.exiting(this.getClass().getName(), "getTournaments");
@@ -705,7 +707,7 @@ public abstract class SQL extends Database {
         for (Tournament tournament : newTournaments) {
             Tournament oldTournament = tournamentsExchange.get(tournament);
             try (PreparedStatement stmt = connection
-                            .prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=? WHERE Name='"
+                            .prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=?, UsingMultipleComputers=? WHERE Name='"
                             + oldTournament.getName() + "';")) {
                 try {
                     storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament.getBanner()
@@ -739,6 +741,7 @@ public abstract class SQL extends Database {
                     stmt.setLong(13, 0);
                 }
                 stmt.setString(14, tournament.getName());
+                stmt.setBoolean(15, tournament.isUsingMultipleComputers());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 showSqlError(ex);

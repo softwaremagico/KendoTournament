@@ -613,7 +613,7 @@ public class FightPanel extends KFrame {
                         }
 
                         //Exchange fights with other computer.
-                        updateDatabase();
+                        updateDatabaseForMultipleComputers();
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
@@ -628,7 +628,7 @@ public class FightPanel extends KFrame {
                                     // Add new fights and continue.
                                     FightPool.getInstance().add(getSelectedTournament(), newFights);
                                     //Save this fights to avoid multiple creation.
-                                    updateDatabase();
+                                    updateDatabaseForMultipleComputers();
                                 } else {
                                     // No more fights, show final winner
                                     // message.
@@ -673,11 +673,11 @@ public class FightPanel extends KFrame {
      * Database must be updated if different arenas (withb different computers)
      * are used.
      */
-    private void updateDatabase() throws SQLException {
+    private void updateDatabaseForMultipleComputers() throws SQLException {
         System.out.println("Updating database!!");
         System.out.println("*-------------------------------------*");
         //Exchange fights if more than one fight area exists. 
-        if (getSelectedTournament().getFightingAreas() > 1) {
+        if (getSelectedTournament().isUsingMultipleComputers()) {
             System.out.println(FightPool.getInstance().get(getSelectedTournament()));
             //Save fights.
             if (FightPool.getInstance().needsToBeStoredInDatabase()) {

@@ -165,7 +165,9 @@ public class SQLite extends SQL {
                 + "\"ScoreDraw\" integer NOT NULL DEFAULT 0,"
                 + "\"ScoreType\" varchar(" + MAX_SCORE_TYPE_LENGTH + ") NOT NULL DEFAULT 'Classic'," + "\"Diploma\" mediumblob,"
                 + "\"Accreditation\" mediumblob," + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
-                + "\"AccreditationSize\" double NOT NULL," + "PRIMARY KEY (Name)" + ")";
+                + "\"AccreditationSize\" double NOT NULL," 
+                + "\"UsingMultipleComputers\" integer DEFAULT 0,"
+                + "PRIMARY KEY (Name)" + ")";
         createTable(sqlQuery);
     }
 

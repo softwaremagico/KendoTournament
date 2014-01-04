@@ -210,7 +210,9 @@ public class MySQL extends SQL {
                 + "`ScoreDraw` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT 0,"
                 + "`ScoreType` varchar(" + MAX_SCORE_TYPE_LENGTH + ") NOT NULL DEFAULT 'Classic'," + "`Diploma` mediumblob,"
                 + "`Accreditation` mediumblob," + "`DiplomaSize` double NOT NULL DEFAULT '0',"
-                + "`AccreditationSize` double NOT NULL," + "PRIMARY KEY (Name)" + ") " + MYSQL_TABLE_DEFINITION;
+                + "`AccreditationSize` double NOT NULL," 
+                + "`UsingMultipleComputers` int(" + 1 + ") DEFAULT 0,"
+                + "PRIMARY KEY (Name)" + ") " + MYSQL_TABLE_DEFINITION;
         createTable(sqlQuery);
     }
 
@@ -235,8 +237,8 @@ public class MySQL extends SQL {
                 + "`Competitor` varchar(" + MAX_ID_LENGTH + ") NOT NULL DEFAULT '0000000Z',"
                 + "`Role` varchar(" + MAX_ROLE_NAME_LENGTH + ") NOT NULL,"
                 + "`ImpressCardOrder` int(" + MYSQL_MAX_INT_LENGTH + ") DEFAULT 0,"
-                + "`ImpressCardPrinted` int(" + MYSQL_MAX_INT_LENGTH + ") DEFAULT 0,"
-                + "`DiplomaPrinted` int(" + MYSQL_MAX_INT_LENGTH + ") DEFAULT 0,"
+                + "`ImpressCardPrinted` int(" + 1 + ") DEFAULT 0,"
+                + "`DiplomaPrinted` int(" + 1 + ") DEFAULT 0,"
                 + "PRIMARY KEY (Competitor, Tournament),"
                 + "KEY `TournamentRole` (`Tournament`),"
                 + "KEY `CompetitorRole` (`Competitor`),"
