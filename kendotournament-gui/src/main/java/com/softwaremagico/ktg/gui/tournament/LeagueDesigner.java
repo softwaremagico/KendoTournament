@@ -30,6 +30,7 @@ import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
@@ -658,6 +659,10 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                         if (getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
                             //Add new links.
                             CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
+                        }
+                        //Store if needed.
+                        if(getSelectedTournament().isUsingMultipleComputers()){
+                            DatabaseConnection.getInstance().updateDatabase();
                         }
                         this.dispose();
                     }
