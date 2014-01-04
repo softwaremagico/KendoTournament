@@ -50,12 +50,13 @@ import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 
 public class NewTournament extends KendoFrame {
-    
+
     Translator trans = null;
     private Integer maxCompetitorTeam = null;
     private Tournament oldTournament = null;
     private BufferedImage banner;
     private boolean defaultBanner = true;
+    private int previousAreaSpinnerValue = 1;
 
     /**
      * Creates new form NewTournament
@@ -66,15 +67,15 @@ public class NewTournament extends KendoFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
         createBanner();
-        
+
         JComponent editor = NumCompetitorsSpinner.getEditor();
         JFormattedTextField tf = ((JSpinner.DefaultEditor) editor).getTextField();
         tf.setHorizontalAlignment(SwingConstants.RIGHT);
-        
+
         editor = AreasSpinner.getEditor();
         tf = ((JSpinner.DefaultEditor) editor).getTextField();
         tf.setHorizontalAlignment(SwingConstants.RIGHT);
-        
+
         NameTextField.setEditable(true);
     }
 
@@ -93,23 +94,24 @@ public class NewTournament extends KendoFrame {
         FightingAreasLabel.setText(trans.getTranslatedText("FightArea"));
         PDFButton.setText(trans.getTranslatedText("AccreditationPDFButton"));
         SearchButton.setText(trans.getTranslatedText("SearchButton"));
+        usingMultipleComputersCheckBox.setText(trans.getTranslatedText("UsingMultipleComputersTag"));
     }
-    
+
     private void createBanner() {
         createBanner(Path.getDefaultBanner());
         defaultBanner = true;
     }
-    
+
     private void createBanner(String path) {
         createBanner(Media.getImageFitted(path, bannerPanel));
         defaultBanner = false;
     }
-    
+
     private void createBanner(Photo photo) {
         createBanner(Media.getImageFitted(photo, bannerPanel));
         defaultBanner = false;
     }
-    
+
     private void createBanner(BufferedImage image) {
         banner = image;
         JLabel picLabel = new JLabel(new ImageIcon(image));
@@ -119,7 +121,7 @@ public class NewTournament extends KendoFrame {
         bannerPanel.revalidate();
         bannerPanel.repaint();
     }
-    
+
     private void cleanWindow() {
         oldTournament = null;
         NameTextField.setText("");
@@ -127,7 +129,7 @@ public class NewTournament extends KendoFrame {
         BannerTextField.setText("");
         createBanner();
     }
-    
+
     public void updateWindow(Tournament tournament) {
         try {
             oldTournament = tournament;
@@ -146,7 +148,7 @@ public class NewTournament extends KendoFrame {
         } catch (NullPointerException npe) {
         }
     }
-    
+
     @Override
     public String defaultFileName() {
         try {
@@ -159,7 +161,7 @@ public class NewTournament extends KendoFrame {
             return null;
         }
     }
-    
+
     public boolean acceptTournament() {
         try {
             if (NameTextField.getText().length() > 0) {
@@ -401,21 +403,24 @@ public class NewTournament extends KendoFrame {
             createBanner(file);
         }
     }//GEN-LAST:event_ExploreButtonActionPerformed
-    
+
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_CancelButtonActionPerformed
-    
+
     private void AreasSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_AreasSpinnerStateChanged
         if ((Integer) AreasSpinner.getValue() < 1) {
             AreasSpinner.setValue(1);
+        } else if ((Integer) AreasSpinner.getValue() == 2 && previousAreaSpinnerValue == 1) {
+            usingMultipleComputersCheckBox.setSelected(true);
         }
+        previousAreaSpinnerValue = (Integer) AreasSpinner.getValue();
     }//GEN-LAST:event_AreasSpinnerStateChanged
-    
+
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
             Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
-            
+
             try {
                 String file;
                 if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
@@ -431,7 +436,7 @@ public class NewTournament extends KendoFrame {
             AlertManager.errorMessage(this.getClass().getName(), "noTournamentFieldsFilled", "MySQL");
         }
     }//GEN-LAST:event_PDFButtonActionPerformed
-    
+
     private void NumCompetitorsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_NumCompetitorsSpinnerStateChanged
         if ((Integer) NumCompetitorsSpinner.getValue() < 1) {
             NumCompetitorsSpinner.setValue(1);

@@ -2171,4 +2171,12 @@
 		<ca>Equipo Blanc:</ca>
 		<it>Squadra Bianca:</it>	
 	</WhiteTeam>
+	<UsingMultipleComputersTag>
+		<en>Using one computer per shiaijo.</en>
+		<es>Usar un ordenador por shiaijo.</es>
+		<nl>Using one computer per shiaijo.</nl>
+		<de>Using one computer per shiaijo.</de>
+		<ca>Usar un ordinador per shiaijo.</ca>
+		<it>Usare un computer per shiaijo.</it>	
+	</UsingMultipleComputersTag>
 </translator>

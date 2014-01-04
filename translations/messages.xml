@@ -1164,15 +1164,15 @@
 		<nl>The selected person is not enrolled in the tournament.</nl>
 		<de>The selected person is not enrolled in the tournament.</de>
 		<ca>La persona seleccionada no està inscrita en el torneig.</ca>
-		<it></it>
+		<it>La persona seleccionata non è inscritta al torneo.</it>
 	</userWithoutRole>
 	<saveRequired>
-		<en>Fights must be saved into the database to proceed. Do you want to save it now?</en>
+		<en>Fights must be saved into the database to proceed. Do you want to save them now?</en>
 		<es>Los combates deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
-		<nl>Fights must be saved into the database to proceed. Do you want to save it now?</nl>
-		<de>Fights must be saved into the database to proceed. Do you want to save it now?</de>
+		<nl>Fights must be saved into the database to proceed. Do you want to save then now?</nl>
+		<de>Fights must be saved into the database to proceed. Do you want to save then now?</de>
 		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
-		<it></it>
+		<it>Il combattimenti devono essere salvati nella base di dati per continuare. Vuoi salvarli adesso?</it>
 	</saveRequired>
 </translator>
 
