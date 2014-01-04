@@ -46,8 +46,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="TournamentPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="TournamentPanel" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="AcceptButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -72,9 +72,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="usingMultipleComputersCheckBox" max="32767" attributes="0"/>
                       <Component id="bannerPanel" alignment="0" pref="585" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -119,6 +120,8 @@
                       <Component id="FightingAreasLabel" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="usingMultipleComputersCheckBox" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="BannerTextField" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="BannerLabel" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -126,7 +129,7 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="bannerPanel" min="-2" pref="72" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -199,6 +202,12 @@
         <Component class="javax.swing.JLabel" name="NumberCompetitorsLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Num Competitors:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JCheckBox" name="usingMultipleComputersCheckBox">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="UsingMultipleComputers"/>
+            <Property name="horizontalAlignment" type="int" value="4"/>
           </Properties>
         </Component>
       </SubComponents>
