@@ -207,6 +207,7 @@ public final class LeagueDesigner extends javax.swing.JFrame {
                     championship.removeLinks();
                 }
                 TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).removeGroup(groupBox.getTournamentGroup());
+                TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).setDefaultFightAreas();
                 updateInfo();
             }
         } catch (NullPointerException npe) {
