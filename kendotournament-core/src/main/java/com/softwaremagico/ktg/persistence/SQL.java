@@ -90,7 +90,7 @@ public abstract class SQL extends Database {
         }
     }
 
-    protected synchronized void createTable(String query) throws SQLException {
+    protected synchronized void executeQuery(String query) throws SQLException {
         try (Statement st = connection.createStatement()) {
             st.executeUpdate(query);
         } catch (SQLException ex) {
@@ -139,6 +139,8 @@ public abstract class SQL extends Database {
     protected abstract String getBoolean(Boolean value);
 
     protected abstract int getMaxElementsInQuery();
+
+    protected abstract boolean createColumnUsingMultipleComputers();
 
     /**
      * *******************************************************************
@@ -604,7 +606,16 @@ public abstract class SQL extends Database {
                 stmt.setFloat(8, tournament.getTournamentScore().getPointsVictory());
                 stmt.setFloat(9, tournament.getTournamentScore().getPointsDraw());
                 stmt.setString(10, tournament.getTournamentScore().getScoreType().getTag());
-                stmt.setBoolean(11, tournament.isUsingMultipleComputers());
+                try {
+                    stmt.setBoolean(11, tournament.isUsingMultipleComputers());
+                } catch (SQLException sqle) {
+                    //No column exists. Update from previous version.
+                    if (createColumnUsingMultipleComputers()) {
+                        //Try again.
+                        addTournaments(tournaments);
+                        break;
+                    }
+                }
                 if (tournament.getDiploma() != null) {
                     storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma()
                             .getSize());
@@ -662,7 +673,15 @@ public abstract class SQL extends Database {
                 Photo diploma = new Photo(tournament.getName());
                 diploma.setImage(sImage, size);
                 tournament.setDiploma(diploma);
-                tournament.setUsingMultipleComputers(rs.getBoolean("UsingMultipleComputers"));
+                try {
+                    tournament.setUsingMultipleComputers(rs.getBoolean("UsingMultipleComputers"));
+                } catch (SQLException sqle) {
+                    //No column exists. Update from previous version.
+                    if (createColumnUsingMultipleComputers()) {
+                        //Try again.
+                        return getTournaments();
+                    }
+                }
                 results.add(tournament);
             }
             KendoLog.exiting(this.getClass().getName(), "getTournaments");

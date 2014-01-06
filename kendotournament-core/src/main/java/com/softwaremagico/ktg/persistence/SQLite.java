@@ -154,7 +154,7 @@ public class SQLite extends SQL {
                 + "\"Mail\" varchar(" + MAX_EMAIL_LENGTH + ") DEFAULT NULL," + "\"Phone\" varchar(" + MAX_PHONE_LENGTH + ") DEFAULT NULL,"
                 + "\"City\" varchar(" + MAX_CITY_LENGTH + ") DEFAULT NULL," + "\"Web\" varchar(" + MAX_WEB_LENGTH + ") DEFAULT NULL,"
                 + "\"Address\" varchar(" + MAX_ADDRESS_LENGTH + ") DEFAULT NULL," + "PRIMARY KEY (Name)" + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableTournament() throws SQLException {
@@ -168,7 +168,7 @@ public class SQLite extends SQL {
                 + "\"AccreditationSize\" double NOT NULL," 
                 + "\"UsingMultipleComputers\" integer DEFAULT 0,"
                 + "PRIMARY KEY (Name)" + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableCompetitor() throws SQLException {
@@ -182,7 +182,7 @@ public class SQLite extends SQL {
                 + "PRIMARY KEY (ID),"
                 + "CONSTRAINT \"ClubBelong\" FOREIGN KEY (\"Club\") REFERENCES \"club\" (\"Name\") ON DELETE SET NULL ON UPDATE CASCADE"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableRole() throws SQLException {
@@ -197,7 +197,7 @@ public class SQLite extends SQL {
                 + "CONSTRAINT \"CompetitorRoleC\" FOREIGN KEY (\"Competitor\") REFERENCES \"competitor\" (\"ID\") ON DELETE CASCADE ON UPDATE CASCADE,"
                 + "CONSTRAINT \"TournamentRoleC\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableTeam() throws SQLException {
@@ -211,7 +211,7 @@ public class SQLite extends SQL {
                 + "PRIMARY KEY (Name, Position, FightOfTournament, Tournament),"
                 + "CONSTRAINT \"Tournament\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableFight() throws SQLException {
@@ -227,7 +227,7 @@ public class SQLite extends SQL {
                 + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel, TournamentGroup),"
                 + "CONSTRAINT \"TournamentFight\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableDuel() throws SQLException {
@@ -248,7 +248,7 @@ public class SQLite extends SQL {
                 + "PRIMARY KEY (Team1,Team2,Tournament,GroupIndex,TournamentLevel,MemberOrder,TournamentGroup),"
                 + "CONSTRAINT \"DuelOfFight\"  FOREIGN KEY (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") REFERENCES \"fight\" (\"Team1\", \"Team2\", \"Tournament\", \"GroupIndex\", \"TournamentLevel\", \"TournamentGroup\") ON DELETE NO ACTION ON UPDATE NO ACTION"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableUndraw() throws SQLException {
@@ -263,7 +263,7 @@ public class SQLite extends SQL {
                 + "CONSTRAINT \"TeamDraw\" FOREIGN KEY (\"Team\") REFERENCES \"team\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE,"
                 + "CONSTRAINT \"TournamentUndraw\" FOREIGN KEY (\"Tournament\") REFERENCES \"tournament\" (\"Name\") ON DELETE CASCADE ON UPDATE CASCADE"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableCustomLink() throws SQLException {
@@ -271,7 +271,7 @@ public class SQLite extends SQL {
                 + "\"SourceGroup\" integer NOT NULL," + "\"AddressGroup\" integer NOT NULL,"
                 + "\"WinnerOrder\" integer NOT NULL," + "PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)"
                 + ")";
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     @Override
@@ -322,6 +322,19 @@ public class SQLite extends SQL {
     protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
         byte[] bytes = rs.getBytes(column);
         return new ByteArrayInputStream(bytes);
+    }
+    
+        @Override
+    protected boolean createColumnUsingMultipleComputers() {
+        try {
+            String sqlQuery = "ALTER TABLE \"tournament\" ADD COLUMN \"usingMultipleComputers\" integer DEFAULT 0;";
+            executeQuery(sqlQuery);
+            KendoLog.info(MySQL.class.getName(), "Column `usingMultipleComputers` added to table `tournament`.");
+            return true;
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(MySQL.class.getName(), ex);
+        }
+        return false;
     }
 
     /**

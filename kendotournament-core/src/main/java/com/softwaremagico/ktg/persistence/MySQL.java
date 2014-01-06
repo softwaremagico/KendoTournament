@@ -33,6 +33,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MySQL extends SQL {
 
@@ -199,7 +201,7 @@ public class MySQL extends SQL {
                 + "`Mail` varchar(" + MAX_EMAIL_LENGTH + ") DEFAULT NULL," + "`Phone` varchar(" + MAX_PHONE_LENGTH + ") DEFAULT NULL,"
                 + "`City` varchar(" + MAX_CITY_LENGTH + ") DEFAULT NULL," + "`Web` varchar(" + MAX_WEB_LENGTH + ") DEFAULT NULL,"
                 + "`Address` varchar(" + MAX_ADDRESS_LENGTH + ") DEFAULT NULL," + "PRIMARY KEY (Name), KEY `Representative` (`Representative`)" + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableTournament() throws SQLException {
@@ -210,10 +212,10 @@ public class MySQL extends SQL {
                 + "`ScoreDraw` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL DEFAULT 0,"
                 + "`ScoreType` varchar(" + MAX_SCORE_TYPE_LENGTH + ") NOT NULL DEFAULT 'Classic'," + "`Diploma` mediumblob,"
                 + "`Accreditation` mediumblob," + "`DiplomaSize` double NOT NULL DEFAULT '0',"
-                + "`AccreditationSize` double NOT NULL," 
+                + "`AccreditationSize` double NOT NULL,"
                 + "`UsingMultipleComputers` int(" + 1 + ") DEFAULT 0,"
                 + "PRIMARY KEY (Name)" + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableCompetitor() throws SQLException {
@@ -228,7 +230,7 @@ public class MySQL extends SQL {
                 + "KEY `ClubBelongKey` (`Club`),"
                 + "CONSTRAINT `ClubBelong` FOREIGN KEY (`Club`) REFERENCES `club` (`Name`) ON DELETE SET NULL ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableRole() throws SQLException {
@@ -245,7 +247,7 @@ public class MySQL extends SQL {
                 + "CONSTRAINT `CompetitorRoleC` FOREIGN KEY (`Competitor`) REFERENCES `competitor` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,"
                 + "CONSTRAINT `TournamentRoleC` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableTeam() throws SQLException {
@@ -263,7 +265,7 @@ public class MySQL extends SQL {
                 + "KEY `TCLTeamIndex` (`Name`,`FightOfTournament`,`Tournament`),"
                 + "CONSTRAINT `Tournament` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableFight() throws SQLException {
@@ -282,7 +284,7 @@ public class MySQL extends SQL {
                 + "KEY `Team2Fight` (`Team2`,`TournamentLevel`,`Tournament`),"
                 + "CONSTRAINT `TournamentFight` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableDuel() throws SQLException {
@@ -304,7 +306,7 @@ public class MySQL extends SQL {
                 + "KEY `Fight_K` (`Team1`,`Team2`,`Tournament`,`GroupIndex`,`TournamentLevel`,`TournamentGroup`),  "
                 + "CONSTRAINT `DuelOfFight`  FOREIGN KEY (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) REFERENCES `fight` (`Team1`, `Team2`, `Tournament`, `GroupIndex`, `TournamentLevel`, `TournamentGroup`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableUndraw() throws SQLException {
@@ -320,7 +322,7 @@ public class MySQL extends SQL {
                 + "CONSTRAINT `TeamDraw` FOREIGN KEY (`Team`) REFERENCES `team` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,"
                 + "CONSTRAINT `TournamentUndraw` FOREIGN KEY (`Tournament`) REFERENCES `tournament` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     private void createTableCustomLink() throws SQLException {
@@ -328,7 +330,7 @@ public class MySQL extends SQL {
                 + "`SourceGroup` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL," + "`AddressGroup` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL,"
                 + "`WinnerOrder` int(" + MYSQL_MAX_INT_LENGTH + ") NOT NULL," + "PRIMARY KEY (Tournament,SourceGroup,AddressGroup,WinnerOrder)"
                 + ") " + MYSQL_TABLE_DEFINITION;
-        createTable(sqlQuery);
+        executeQuery(sqlQuery);
     }
 
     @Override
@@ -364,6 +366,19 @@ public class MySQL extends SQL {
     @Override
     protected InputStream getBinaryStream(ResultSet rs, String column) throws SQLException {
         return rs.getBinaryStream(column);
+    }
+
+    @Override
+    protected boolean createColumnUsingMultipleComputers() {
+        try {
+            String sqlQuery = "ALTER TABLE `tournament` ADD COLUMN `usingMultipleComputers` TINYINT(1) NOT NULL DEFAULT '0' AFTER `AccreditationSize`;";
+            executeQuery(sqlQuery);
+            KendoLog.info(MySQL.class.getName(), "Column `usingMultipleComputers` added to table `tournament`.");
+            return true;
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(MySQL.class.getName(), ex);
+        }
+        return false;
     }
 
     /**
@@ -402,7 +417,7 @@ public class MySQL extends SQL {
         KendoLog.errorMessage(this.getClass().getName(), exception);
         return trans.getTranslatedText("unknownDatabaseError");
     }
-    
+
     @Override
     protected String getBoolean(Boolean value) {
         return value.toString();
