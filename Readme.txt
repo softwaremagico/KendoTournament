@@ -118,8 +118,9 @@ Version:
 1.0.0	Performance impreved.
 		Tests added. 
 		
-1.0.1	Import roles. Roles can be copied from a previous championship.
+1.1.0	Import roles. Roles can be copied from a previous championship.
 		Manual Championship. Fully editable championship. 
+		Multiples computer use updated. 
 
 
 
