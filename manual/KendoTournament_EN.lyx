@@ -547,6 +547,130 @@ Adding general information into the database.
 
 \end_layout
 
+\begin_layout Subsection
+Inserting a 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+competitor
+\end_layout
+
+\end_inset
+
+competitor
+\end_layout
+
+\begin_layout Standard
+When a future participant appears before the register desk, the steps you
+ have to do in order to include him in the program are the following:
+\end_layout
+
+\begin_layout Enumerate
+Asking the participant if he or she has been in another league before, in
+ this case, their data will already exists in the program.
+ 
+\end_layout
+
+\begin_layout Enumerate
+If not, you will have to introduce all his or her data.
+ Follow the next steps:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Take a 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+photography
+\end_layout
+
+\end_inset
+
+photography with a webcam and a suitable software for it to store it later
+ in an accessible carpet.
+ 
+\end_layout
+
+\begin_layout Enumerate
+In the application (
+\emph on
+Insert
+\emph default
+, 
+\emph on
+Add
+\emph default
+ new participant), introduce all the data of the new participant: Name,
+ ID Number, Photography, etc.
+ 
+\end_layout
+
+\begin_layout Enumerate
+When you are finishing the data insertion, you have to define the 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+role
+\end_layout
+
+\end_inset
+
+role of each participant: competitor, referee, etc.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If the participant already exists on the database, the next steps are advised
+ to follow:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+In the window (
+\emph on
+Insert
+\emph default
+, 
+\emph on
+Add
+\emph default
+ new participant), click on 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+search
+\end_layout
+
+\end_inset
+
+search button.
+ Search for the participant in order to check if all the data are correct,
+ using ID number or name for that.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Include the 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+role
+\end_layout
+
+\end_inset
+
+role of the participant in order to use it in the actual league.
+ 
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Float figure
 wide false
@@ -579,6 +703,86 @@ Adding a new competitor.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Inserting-a-tournament"
+
+\end_inset
+
+Inserting a tournament or league
+\end_layout
+
+\begin_layout Standard
+For inserting a new championship (tournament or league) only is needed to
+ select the correct option menú.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_EN/NewTournament.png
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+New championship.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this window, you can define the general information of the championship.
+ Number of shiaijos, size of team, banner, ...
+\end_layout
+
+\begin_layout Standard
+The option 
+\begin_inset Quotes eld
+\end_inset
+
+Using one computer per shiaijo
+\begin_inset Quotes erd
+\end_inset
+
+ is need in the case that you want to use more than one computer for one
+ tournament.
+ For more information, read the Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Advanced-use"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -622,7 +826,7 @@ teams: a team is only valid for a league, because the name of the team may
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -1018,130 +1222,6 @@ Erase
  
 \end_layout
 
-\begin_layout Subsection
-Example of a 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-competitor
-\end_layout
-
-\end_inset
-
-competitor insertion
-\end_layout
-
-\begin_layout Standard
-When a future participant appears before the register desk, the steps you
- have to do in order to include him in the program are the following:
-\end_layout
-
-\begin_layout Enumerate
-Asking the participant if he or she has been in another league before, in
- this case, their data will already exists in the program.
- 
-\end_layout
-
-\begin_layout Enumerate
-If not, you will have to introduce all his or her data.
- Follow the next steps:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Take a 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-photography
-\end_layout
-
-\end_inset
-
-photography with a webcam and a suitable software for it to store it later
- in an accessible carpet.
- 
-\end_layout
-
-\begin_layout Enumerate
-In the application (
-\emph on
-Insert
-\emph default
-, 
-\emph on
-Add
-\emph default
- new participant), introduce all the data of the new participant: Name,
- ID Number, Photography, etc.
- 
-\end_layout
-
-\begin_layout Enumerate
-When you are finishing the data insertion, you have to define the 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-role
-\end_layout
-
-\end_inset
-
-role of each participant: competitor, referee, etc.
- 
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-If the participant already exists on the database, the next steps are advised
- to follow:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-In the window (
-\emph on
-Insert
-\emph default
-, 
-\emph on
-Add
-\emph default
- new participant), click on 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-search
-\end_layout
-
-\end_inset
-
-search button.
- Search for the participant in order to check if all the data are correct,
- using ID number or name for that.
- 
-\end_layout
-
-\begin_layout Enumerate
-Include the 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-role
-\end_layout
-
-\end_inset
-
-role of the participant in order to use it in the actual league.
- 
-\end_layout
-
-\end_deeper
 \begin_layout Section
 \begin_inset Index idx
 status open
@@ -2909,6 +2989,13 @@ Steps 1, 2, 3 and 4 will be done only once because they are common to different
 \end_layout
 
 \begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Advanced-use"
+
+\end_inset
+
+
 \begin_inset Index idx
 status open
 
@@ -3295,6 +3382,36 @@ backups
 \end_inset
 
 backups.
+\end_layout
+
+\begin_layout Section
+Configuring Advanced Use mode
+\end_layout
+
+\begin_layout Standard
+For using the
+\begin_inset Quotes eld
+\end_inset
+
+advanced use mode, as well as using a MySQL server, you need to choose the
+ option 
+\begin_inset Quotes eld
+\end_inset
+
+Using one computer per shiaijo
+\begin_inset Quotes erd
+\end_inset
+
+ in the window for creating a new championship.
+ For more information, you can read Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Inserting-a-tournament"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Section

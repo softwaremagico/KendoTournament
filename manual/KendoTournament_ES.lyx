@@ -179,7 +179,7 @@ entre
 
 equipos: la utilización de distintos equipos para un mismo torneo ha sido
  optimizada.
- Ahora funciona mucho más rápido que en versiones anteriores.
+ Ahora funciona mucho más rápido y mejor que en versiones anteriores.
  
 \end_layout
 
@@ -554,7 +554,7 @@ club únicamente se insertará una vez, independientemente de los torneos
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -584,6 +584,116 @@ Opciones para insertar informació general.
 
 \end_layout
 
+\begin_layout Subsection
+Inserción de un 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+competidor
+\end_layout
+
+\end_inset
+
+competidor
+\end_layout
+
+\begin_layout Standard
+Cuando un futuro participante se presenta ante el mostrador de registro,
+ los pasos que hay que hacer para incluirlo en el programa son los siguientes:
+\end_layout
+
+\begin_layout Enumerate
+Preguntar si ya ha sido incluido en una liga anterior, en cuyo caso ya existirán
+ sus datos en el programa.
+\end_layout
+
+\begin_layout Enumerate
+Si no es así, habrá que incluir todos los datos.
+ Para ello:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Realizar una 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+fotografía
+\end_layout
+
+\end_inset
+
+fotografía con una webcam y un software adecuado para ello para después
+ almacenarla en una carpeta localizable.
+\end_layout
+
+\begin_layout Enumerate
+En el programa (Insertar -> Añadir nuevo participante), introducir todos
+ los datos del nuevo participante: nombre, DNI, foto, etc.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Al finalizar la inclusión de datos, hay que definir el 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+rol
+\end_layout
+
+\end_inset
+
+rol de dicho participante: Si es competidor, árbitro, etc.
+ En este momento, el participante pertenecerá a la liga actual.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Si ya estuviera incluido en la base de datos los pasos aconsejados a realizar
+ son:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+En la ventana (Insertar -> Añadir nuevo participante) darle al botón 
+\emph on
+
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+buscar
+\end_layout
+
+\end_inset
+
+buscar
+\emph default
+.
+ Buscar allí el participante para ver que todos los datos están correctamente,
+ utilizando el DNI o nombre para ello.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Incluir el 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+rol
+\end_layout
+
+\end_inset
+
+rol del participante para que ya pueda utilizarse en la liga actual.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Float figure
 wide false
@@ -620,6 +730,87 @@ Inserción de datos de un competidor.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Inserción-de-un-torneo"
+
+\end_inset
+
+Inserción de un torneo o liga
+\end_layout
+
+\begin_layout Standard
+Para insertar un nuevo campeonato (ya sea modo torneo o liga), basta con
+ seleccionar la opción adecuada del menú.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_ES/NewTournament.png
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Insertar un nuevo campeonato
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Aquí se define la información general del campeonato.
+ El número de shiaijos, el tamaño de los equipos, el banner, etc.
+ 
+\end_layout
+
+\begin_layout Standard
+La opción 
+\begin_inset Quotes eld
+\end_inset
+
+Usar un ordenador por shiaijo
+\begin_inset Quotes erd
+\end_inset
+
+ es necesaria en el caso de que se utilicen más de un ordenador.
+ Para más información consultar el Capítulo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Uso-avanzado"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -1105,116 +1296,6 @@ combates relacionados con esta liga.
  
 \end_layout
 
-\begin_layout Subsection
-Ejemplo de inserción de un 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-competidor
-\end_layout
-
-\end_inset
-
-competidor
-\end_layout
-
-\begin_layout Standard
-Cuando un futuro participante se presenta ante el mostrador de registro,
- los pasos que hay que hacer para incluirlo en el programa son los siguientes:
-\end_layout
-
-\begin_layout Enumerate
-Preguntar si ya ha sido incluido en una liga anterior, en cuyo caso ya existirán
- sus datos en el programa.
-\end_layout
-
-\begin_layout Enumerate
-Si no es así, habrá que incluir todos los datos.
- Para ello:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Realizar una 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-fotografía
-\end_layout
-
-\end_inset
-
-fotografía con una webcam y un software adecuado para ello para después
- almacenarla en una carpeta localizable.
-\end_layout
-
-\begin_layout Enumerate
-En el programa (Insertar -> Añadir nuevo participante), introducir todos
- los datos del nuevo participante: nombre, DNI, foto, etc.
- 
-\end_layout
-
-\begin_layout Enumerate
-Al finalizar la inclusión de datos, hay que definir el 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-rol
-\end_layout
-
-\end_inset
-
-rol de dicho participante: Si es competidor, árbitro, etc.
- En este momento, el participante pertenecerá a la liga actual.
- 
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Si ya estuviera incluido en la base de datos los pasos aconsejados a realizar
- son:
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-En la ventana (Insertar -> Añadir nuevo participante) darle al botón 
-\emph on
-
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-buscar
-\end_layout
-
-\end_inset
-
-buscar
-\emph default
-.
- Buscar allí el participante para ver que todos los datos están correctamente,
- utilizando el DNI o nombre para ello.
- 
-\end_layout
-
-\begin_layout Enumerate
-Incluir el 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-rol
-\end_layout
-
-\end_inset
-
-rol del participante para que ya pueda utilizarse en la liga actual.
-\end_layout
-
-\end_deeper
 \begin_layout Section
 \begin_inset Index idx
 status open
@@ -3219,6 +3300,13 @@ Los pasos 1, 2, 3 y 4 solamente tienen que hacerse una única vez ya que
 \end_layout
 
 \begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Uso-avanzado"
+
+\end_inset
+
+
 \begin_inset Index idx
 status open
 
@@ -3757,6 +3845,31 @@ de
 
 seguridad, ya que permite duplicar las bases de datos.
  
+\end_layout
+
+\begin_layout Section
+Configurando el uso avanzado
+\end_layout
+
+\begin_layout Standard
+Para poder utilizar el modo avanzado, además de usar la base de datos MySQL
+ es necesario seleccionar la opción 
+\begin_inset Quotes eld
+\end_inset
+
+Usar un ordenador por shiaijo
+\begin_inset Quotes erd
+\end_inset
+
+ en la pantalla de creación de campeonatos.
+ Ver la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Inserción-de-un-torneo"
+
+\end_inset
+
+ para más información de la creación de campeonatos.
 \end_layout
 
 \begin_layout Section

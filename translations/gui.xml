@@ -2147,10 +2147,18 @@
 		<ca>Classificació dels competidors</ca>
 		<it>Classificazione dei competitori</it>
 	</GeneralClassification>
+	<UsingMultipleComputersTag>
+		<en>Using one computer per shiaijo.</en>
+		<es>Usar un ordenador por shiaijo.</es>
+		<nl>Gebruik een computer per shiaijo</nl>
+		<de>Using one computer per shiaijo.</de>
+		<ca>Usar un ordinador per shiaijo.</ca>
+		<it>Usare un computer per shiaijo.</it>	
+	</UsingMultipleComputersTag>
 	<AddNewFight>
 		<en>Add a new fight:</en>
 		<es>Añadir un nuevo combate:</es>
-		<nl>Add a new fight:</nl>
+		<nl>Voeg wedstrijd toe:</nl>
 		<de>Add a new fight:</de>
 		<ca>Afegir un nou combat:</ca>
 		<it>Aggiungere un nuovo combattimento:</it>	
@@ -2166,17 +2174,9 @@
 	<WhiteTeam>
 		<en>White Team:</en>
 		<es>Equipo Blanco:</es>
-		<nl>White Team:</nl>
+		<nl>Witte Team:</nl>
 		<de>White Team:</de>
 		<ca>Equipo Blanc:</ca>
 		<it>Squadra Bianca:</it>	
 	</WhiteTeam>
-	<UsingMultipleComputersTag>
-		<en>Using one computer per shiaijo.</en>
-		<es>Usar un ordenador por shiaijo.</es>
-		<nl>Using one computer per shiaijo.</nl>
-		<de>Using one computer per shiaijo.</de>
-		<ca>Usar un ordinador per shiaijo.</ca>
-		<it>Usare un computer per shiaijo.</it>	
-	</UsingMultipleComputersTag>
 </translator>

@@ -1121,22 +1121,19 @@
 		<de>The generated document is empty. Please, review the selected options.</de>
 		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
 		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
-	</emptyPdfError>
-	
-	<!-- -TRANSLATION -->
-	
+	</emptyPdfError>	
 	<importSuccess>
-		<en>Data has been importes successfully.</en>
+		<en>Data has been imported successfully.</en>
 		<es>Se han importado con éxito los datos.</es>
-		<nl>Data has been importes successfully.</nl>
-		<de>Data has been importes successfully.</de>
+		<nl>De gegevens zijn met succes geïmporteerd.</nl>
+		<de>Data has been imported successfully.</de>
 		<ca>S'han importat amb èxit les dades.</ca>
 		<it>I dati sono stati importati con successo.</it>
 	</importSuccess>
 	<importFail>
 		<en>An error has occurred when trying to import the data.</en>
 		<es>Ha habido un error mientras se intentaban importar los datos.</es>
-		<nl>An error has occurred when trying to import the data.</nl>
+		<nl>Er is een fout opgetreden bij het importeren van de data.</nl>
 		<de>An error has occurred when trying to import the data.</de>
 		<ca>Hi ha hagut un error mentres s'intentaven importar les dades.</ca>
 		<it>Si è verificato un errore mentre si stava intentando importare i dati.</it>
@@ -1144,7 +1141,7 @@
 	<convertToPersonalized>
 		<en>Do you want to define as personalized the selected tournament?</en>
 		<es>¿Quiere definir como personalizado el torneo seleccionado?</es>
-		<nl>Do you want to define as personalized the selected tournament?</nl>
+		<nl>Wil je het geselecteerde toernooi als gepersonaliseerd definiëren?</nl>
 		<de>Do you want to define as personalized the selected tournament?</de>
 		<de>Do you want to define as personalized the selected tournament?</de>
 		<ca>Vol definir com a manual el torneig seleccionat?</ca>
@@ -1153,7 +1150,7 @@
 	<canceledAction>
 		<en>Action canceled.</en>
 		<es>Acción cancelada.</es>
-		<nl>Action canceled.</nl>
+		<nl>Bewerking afgebroken!</nl>
 		<de>Action canceled.</de>
 		<ca>Acció cancel·lada.</ca>
 		<it>Azione annullata.</it>
@@ -1161,7 +1158,7 @@
 	<userWithoutRole>
 		<en>The selected person is not enrolled in the tournament.</en>
 		<es>La persona seleccionada no está inscrita en el torneo.</es>
-		<nl>The selected person is not enrolled in the tournament.</nl>
+		<nl>De geselecteerde persoon in niet aan het toernooi toegevoegd!</nl>
 		<de>The selected person is not enrolled in the tournament.</de>
 		<ca>La persona seleccionada no està inscrita en el torneig.</ca>
 		<it>La persona seleccionata non è inscritta al torneo.</it>
@@ -1169,7 +1166,7 @@
 	<saveRequired>
 		<en>Fights must be saved into the database to proceed. Do you want to save them now?</en>
 		<es>Los combates deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
-		<nl>Fights must be saved into the database to proceed. Do you want to save then now?</nl>
+		<nl>Om verder te kunnen gaan moeten wedstrijden in de database worden opgeslagen. Wil je ze nu opslaan?</nl>
 		<de>Fights must be saved into the database to proceed. Do you want to save then now?</de>
 		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
 		<it>Il combattimenti devono essere salvati nella base di dati per continuare. Vuoi salvarli adesso?</it>
