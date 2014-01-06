@@ -1121,11 +1121,14 @@
 		<de>The generated document is empty. Please, review the selected options.</de>
 		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
 		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
-	</emptyPdfError>	
+	</emptyPdfError>
+	
+	<!-- -TRANSLATION -->
+	
 	<importSuccess>
 		<en>Data has been imported successfully.</en>
 		<es>Se han importado con éxito los datos.</es>
-		<nl>De gegevens zijn met succes geïmporteerd.</nl>
+		<nl>Data has been imported successfully.</nl>
 		<de>Data has been imported successfully.</de>
 		<ca>S'han importat amb èxit les dades.</ca>
 		<it>I dati sono stati importati con successo.</it>
@@ -1133,7 +1136,7 @@
 	<importFail>
 		<en>An error has occurred when trying to import the data.</en>
 		<es>Ha habido un error mientras se intentaban importar los datos.</es>
-		<nl>Er is een fout opgetreden bij het importeren van de data.</nl>
+		<nl>An error has occurred when trying to import the data.</nl>
 		<de>An error has occurred when trying to import the data.</de>
 		<ca>Hi ha hagut un error mentres s'intentaven importar les dades.</ca>
 		<it>Si è verificato un errore mentre si stava intentando importare i dati.</it>
@@ -1141,7 +1144,7 @@
 	<convertToPersonalized>
 		<en>Do you want to define as personalized the selected tournament?</en>
 		<es>¿Quiere definir como personalizado el torneo seleccionado?</es>
-		<nl>Wil je het geselecteerde toernooi als gepersonaliseerd definiëren?</nl>
+		<nl>Do you want to define as personalized the selected tournament?</nl>
 		<de>Do you want to define as personalized the selected tournament?</de>
 		<de>Do you want to define as personalized the selected tournament?</de>
 		<ca>Vol definir com a manual el torneig seleccionat?</ca>
@@ -1150,7 +1153,7 @@
 	<canceledAction>
 		<en>Action canceled.</en>
 		<es>Acción cancelada.</es>
-		<nl>Bewerking afgebroken!</nl>
+		<nl>Action canceled.</nl>
 		<de>Action canceled.</de>
 		<ca>Acció cancel·lada.</ca>
 		<it>Azione annullata.</it>
