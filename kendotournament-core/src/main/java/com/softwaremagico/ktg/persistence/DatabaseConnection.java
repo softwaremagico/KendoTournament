@@ -23,6 +23,7 @@ package com.softwaremagico.ktg.persistence;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
 import java.io.IOException;
@@ -243,7 +244,79 @@ public class DatabaseConnection {
         RegisteredPersonPool.getInstance().reset();
         ClubPool.getInstance().reset();
     }
+    
+    public boolean updateDatabase(Tournament tournament) throws SQLException{
+         connect();
 
+        // Delete actions.
+        if (!UndrawPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+
+        if (!DuelPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!FightPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!TeamPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!RolePool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!CustomLinkPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+        if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+        if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+        if (!ClubPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+
+        // Add actions
+        if (!TournamentPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!ClubPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!PhotoPool.getInstance().addElementsToDatabase()) {
+            return false;
+        }
+        if (!RolePool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        if (!TeamPool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        if (!FightPool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        if (!DuelPool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        if (!UndrawPool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        if (!CustomLinkPool.getInstance().addElementsToDatabase(tournament)) {
+            return false;
+        }
+        disconnect();
+        AutoSave.getInstance().resetTime();
+        return true;
+    }
+     
     public boolean updateDatabase() throws SQLException {
         connect();
 

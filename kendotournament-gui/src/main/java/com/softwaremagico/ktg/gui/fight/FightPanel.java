@@ -674,21 +674,15 @@ public class FightPanel extends KFrame {
      * are used.
      */
     private void updateDatabaseForMultipleComputers() throws SQLException {
-        System.out.println("Updating database!!");
-        System.out.println("*-------------------------------------*");
         //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament().isUsingMultipleComputers()) {
-            System.out.println(FightPool.getInstance().get(getSelectedTournament()));
             //Save fights.
             if (FightPool.getInstance().needsToBeStoredInDatabase()) {
-                //if (AlertManager.questionMessage("saveRequired", "SQL")) {
                 try {
-                    DatabaseConnection.getInstance().updateDatabase();
-                    //     AlertManager.informationMessage(this.getClass().getName(), "updatedDatabase", "SQL");
+                    DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
                 } catch (SQLException ex) {
                     AlertManager.showSqlErrorMessage(ex);
                 }
-                //}
             }
             // Load fights. 
             FightPool.getInstance().reset(getSelectedTournament());
