@@ -1174,5 +1174,15 @@
 		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
 		<it>Il combattimenti devono essere salvati nella base di dati per continuare. Vuoi salvarli adesso?</it>
 	</saveRequired>
+	
+	<!-- TRANSLATIONS -->
+	<fightInOtherArea>
+		<en>You are going to change a team that is in other shiaijo. Are you sure to procedeed?</en>
+		<es>Vas a editar un equipo que está en otro shiaijo. ¿Estás seguro de continuar?</es>
+		<nl>You are going to change a team that is in other shiaijo. Are you sure to procedeed?</nl>
+		<de>You are going to change a team that is in other shiaijo. Are you sure to procedeed?</de>
+		<ca>Editaràs un equip que està en un altre shiaijo. Estàs segur de continuar?</ca>
+		<it>Si va a cambiare una squadra che sta in un altro shiaijo. Si è sicuro di continuare?</it>
+	</fightInOtherArea>
 </translator>
 

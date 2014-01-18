@@ -1065,7 +1065,7 @@ public class Controller {
                 changeTeam.dispose();
             } catch (NullPointerException npe) {
             }
-            changeTeam = new ChangeOrderTeam();
+            changeTeam = new ChangeOrderTeam(fightPanel.getSelectedFightArea());
             addChangeOrderListeners();
             changeTeam.setVisible(true);
         }

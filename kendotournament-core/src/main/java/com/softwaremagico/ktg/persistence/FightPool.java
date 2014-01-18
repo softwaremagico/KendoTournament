@@ -70,7 +70,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public List<Fight> get(Tournament tournament, int fightArea) throws SQLException {
-        List<Fight> fightsArea = getFightsPerArena(tournament, fightArea);
+        List<Fight> fightsArea = getFromArena(tournament, fightArea);
         if (fightsArea != null) {
             return fightsArea;
         }
@@ -214,7 +214,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         return null;
     }
 
-    private List<Fight> getFightsPerArena(Tournament tournament, int fightArea) {
+    private List<Fight> getFromArena(Tournament tournament, int fightArea) {
         if (figthsPerArea.get(tournament) == null) {
             figthsPerArea.put(tournament, new HashMap<Integer, List<Fight>>());
         }
@@ -226,6 +226,18 @@ public class FightPool extends TournamentDependentPool<Fight> {
         List<Fight> fightsOfLevel = new ArrayList<>();
         for (Fight fight : allFights) {
             if (fight.getLevel() == level) {
+                fightsOfLevel.add(fight);
+            }
+        }
+        Collections.sort(fightsOfLevel);
+        return fightsOfLevel;
+    }
+
+    private List<Fight> getFromArenaAndLevel(Tournament tournament, int fightArea, Integer level) throws SQLException {
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
+        List<Fight> fightsOfLevel = new ArrayList<>();
+        for (Fight fight : allFights) {
+            if (fight.getLevel() == level && fight.getAsignedFightArea() == fightArea) {
                 fightsOfLevel.add(fight);
             }
         }
@@ -383,5 +395,15 @@ public class FightPool extends TournamentDependentPool<Fight> {
      */
     private void resetAuxiliaryParameters() {
         figthsPerArea = new HashMap<>();
+    }
+
+    public boolean isInThisFightArea(Tournament tournament, Team team, int fightArea, int level) throws SQLException {
+        List<Fight> fights = getFromArenaAndLevel(tournament, fightArea, level);
+        for (Fight fight : fights) {
+            if (fight.getTeam1().equals(team) || fight.getTeam2().equals(team)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

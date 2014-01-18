@@ -23,6 +23,7 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -45,11 +46,13 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     private List<Team> teams = new ArrayList<>();
     private DefaultListModel<Team> teamsModel = new DefaultListModel<>();
     protected boolean refreshTournament = true;
+    private int selectedFightArea = 0;
 
     /**
      * Creates new form ChangeOrderTeam
      */
-    public ChangeOrderTeam() {
+    public ChangeOrderTeam(int selectedFightArea) {
+        this.selectedFightArea = selectedFightArea;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -85,11 +88,15 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         refreshTournament = true;
     }
 
+    private Tournament getSelectedTournament() {
+        return (Tournament) TournamentComboBox.getSelectedItem();
+    }
+
     private void update() {
         try {
-            int level = FightPool.getInstance().getLastLevelUsed((Tournament) TournamentComboBox.getSelectedItem());
-            KendoTournamentGenerator.getInstance().setLastSelectedTournament(TournamentComboBox.getSelectedItem().toString());
-            teams = TeamPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem(), level);
+            int level = FightPool.getInstance().getLastLevelUsed(getSelectedTournament());
+            KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().toString());
+            teams = TeamPool.getInstance().get(getSelectedTournament(), level);
             fillTeams();
         } catch (NullPointerException npe) {
             AlertManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
@@ -106,7 +113,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
         }
     }
 
-    private Team returnSelectedTeam() {
+    private Team getSelectedTeam() {
         if (TeamList.getSelectedIndex() >= 0) {
             return teams.get(TeamList.getSelectedIndex());
         }
@@ -114,27 +121,33 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
     }
 
     private void openOrderTeamWindow() {
-        Team team = returnSelectedTeam();
+        Team team = getSelectedTeam();
         if (team != null) {
             try {
-                OrderTeam orderTeam;
-                Integer fightIndex = FightPool.getInstance().getCurrentFightIndex((Tournament) TournamentComboBox.getSelectedItem());
-                if (fightIndex == null) {
-                    fightIndex = FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem()).size() - 1;
+                if (FightPool.getInstance().isInThisFightArea(getSelectedTournament(), team, selectedFightArea, FightPool.getInstance().getMaxLevel(getSelectedTournament())) || 
+                        AlertManager.questionMessage("fightInOtherArea", "????")) {
+                    try {
+                        OrderTeam orderTeam;
+                        Integer fightIndex = FightPool.getInstance().getCurrentFightIndex(getSelectedTournament());
+                        if (fightIndex == null) {
+                            fightIndex = FightPool.getInstance().get(getSelectedTournament()).size() - 1;
+                        }
+                        orderTeam = new OrderTeam(getSelectedTournament(), fightIndex);
+                        orderTeam.updateOrderWindow(team);
+                        orderTeam.setVisible(true);
+                        orderTeam.toFront();
+                    } catch (SQLException ex) {
+                    }
                 }
-                orderTeam = new OrderTeam((Tournament) TournamentComboBox.getSelectedItem(), fightIndex);
-                orderTeam.updateOrderWindow(team);
-                orderTeam.setVisible(true);
-                orderTeam.toFront();
             } catch (SQLException ex) {
+                AlertManager.errorMessage(ChangeOrderTeam.class.getName(), ex);
             }
         }
     }
-    
-     public void addCloseListener(ActionListener al) {
+
+    public void addCloseListener(ActionListener al) {
         CloseButton.addActionListener(al);
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
