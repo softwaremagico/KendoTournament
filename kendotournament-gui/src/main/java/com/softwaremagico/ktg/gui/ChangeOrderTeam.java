@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -36,6 +35,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
@@ -97,6 +97,7 @@ public class ChangeOrderTeam extends javax.swing.JFrame {
             int level = FightPool.getInstance().getLastLevelUsed(getSelectedTournament());
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(getSelectedTournament().toString());
             teams = TeamPool.getInstance().get(getSelectedTournament(), level);
+            Collections.sort(teams);
             fillTeams();
         } catch (NullPointerException npe) {
             AlertManager.errorMessage(this.getClass().getName(), "noTournament", "Panel");
