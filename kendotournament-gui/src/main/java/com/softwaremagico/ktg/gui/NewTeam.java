@@ -335,6 +335,7 @@ public class NewTeam extends KendoFrame {
                 }
             }
             NameTextField.setEnabled(true);
+            NameTextField.requestFocusInWindow();
         }
     }
 

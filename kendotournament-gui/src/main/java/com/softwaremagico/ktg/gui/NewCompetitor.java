@@ -210,6 +210,7 @@ public class NewCompetitor extends KendoFrame {
 					AlertManager.showSqlErrorMessage(ex);
 				}
 				cleanWindow();
+                                NameTextField.requestFocusInWindow();
 				this.repaint();
 				return comp;
 			} else {
