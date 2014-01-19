@@ -226,7 +226,7 @@ public class TournamentGroupBox extends Group {
 		color = value;
 	}
 
-	public void openDesignGroupWindow(LeagueDesigner jf) {
+	public void openDesignGroupWindow(TournamentDesigner jf) {
 		dgw = new DesignGroupWindow(tournamentGroup);
 		addDesignGroupListeners(jf);
 		dgw.setVisible(true);
@@ -275,15 +275,15 @@ public class TournamentGroupBox extends Group {
 	/**
 	 * Add all listeners to GUI.
 	 */
-	private void addDesignGroupListeners(LeagueDesigner jf) {
+	private void addDesignGroupListeners(TournamentDesigner jf) {
 		dgw.addWindowCloseListener(new closeWindows(jf));
 	}
 
 	class closeWindows extends WindowAdapter {
 
-		private LeagueDesigner leagueDesigner;
+		private TournamentDesigner leagueDesigner;
 
-		closeWindows(LeagueDesigner jf) {
+		closeWindows(TournamentDesigner jf) {
 			leagueDesigner = jf;
 		}
 

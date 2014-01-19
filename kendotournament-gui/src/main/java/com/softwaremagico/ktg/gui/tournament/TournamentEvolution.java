@@ -33,7 +33,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JScrollBar;
 import javax.swing.Timer;
 
-public class LeagueEvolution extends javax.swing.JFrame {
+public class TournamentEvolution extends javax.swing.JFrame {
 
     BlackBoardPanel bbp;
     Timer timer = null;
@@ -42,15 +42,15 @@ public class LeagueEvolution extends javax.swing.JFrame {
     private Tournament tournament;
 
     /**
-     * Creates new form LeagueEvolution
+     * Creates new form TournamentEvolution
      */
-    public LeagueEvolution(Tournament tournament) {
+    public TournamentEvolution(Tournament tournament) {
         this.tournament = tournament;
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         this.setSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
-        this.setExtendedState(this.getExtendedState() | LeagueEvolution.MAXIMIZED_BOTH);
+        this.setExtendedState(this.getExtendedState() | TournamentEvolution.MAXIMIZED_BOTH);
         bbp = new BlackBoardPanel(null, false);
         BlackBoardScrollPane.setViewportView(bbp);
     }

@@ -23,6 +23,8 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.gui.league.NewLoopLeague;
+import com.softwaremagico.ktg.gui.league.NewSimpleLeague;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
@@ -35,8 +37,8 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.gui.fight.*;
-import com.softwaremagico.ktg.gui.tournament.LeagueDesigner;
-import com.softwaremagico.ktg.gui.tournament.LeagueEvolution;
+import com.softwaremagico.ktg.gui.tournament.TournamentDesigner;
+import com.softwaremagico.ktg.gui.tournament.TournamentEvolution;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.lists.AccreditionCards;
 import com.softwaremagico.ktg.lists.ClubList;
@@ -105,10 +107,10 @@ public class Controller {
     private SelectCompetitorForWonFights selectWonFightsOfCompetitor = null;
     private ChooseScore chooseScore = null;
     private ShortNewFight shortFight = null;
-    private LeagueDesigner designer = null;
-    private NewSimpleTournament newSimpleTournament;
-    private NewLoopTournament newRing;
-    private LeagueEvolution leagueEvolution = null;
+    private TournamentDesigner designer = null;
+    private NewSimpleLeague newSimpleTournament;
+    private NewLoopLeague newRing;
+    private TournamentEvolution leagueEvolution = null;
     private SelectTournament selectTournament = null;
     private ChangeOrderTeam changeTeam = null;
     private DatabaseConversor databaseConversor = null;
@@ -615,7 +617,7 @@ public class Controller {
                 newSimpleTournament.dispose();
             } catch (NullPointerException npe) {
             }
-            newSimpleTournament = new NewSimpleTournament();
+            newSimpleTournament = new NewSimpleLeague();
             newSimpleTournament.setVisible(true);
             // AddNewTeamListeners();
 
@@ -630,7 +632,7 @@ public class Controller {
                 newRing.dispose();
             } catch (NullPointerException npe) {
             }
-            newRing = new NewLoopTournament();
+            newRing = new NewLoopLeague();
             newRing.setVisible(true);
 
         }
@@ -644,7 +646,7 @@ public class Controller {
                 designer.dispose();
             } catch (NullPointerException npe) {
             }
-            designer = new LeagueDesigner();
+            designer = new TournamentDesigner();
             designer.setVisible(true);
         }
     }
@@ -1033,7 +1035,7 @@ public class Controller {
                 leagueEvolution.dispose();
             } catch (NullPointerException npe) {
             }
-            leagueEvolution = new LeagueEvolution(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+            leagueEvolution = new TournamentEvolution(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             leagueEvolution.setVisible(true);
             leagueEvolution.setExtendedState(leagueEvolution.getExtendedState() | JFrame.MAXIMIZED_BOTH);
             leagueEvolution.updateBlackBoard(fightPanel.getSelectedTournament(), false);

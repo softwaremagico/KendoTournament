@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui;
+package com.softwaremagico.ktg.gui.league;
 
 /*
  * #%L
@@ -27,6 +27,7 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.FightPool;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
-public class NewSimpleTournament extends javax.swing.JFrame {
+public class NewSimpleLeague extends javax.swing.JFrame {
 
     Translator trans = null;
     DefaultListModel<String> fightsModel = new DefaultListModel<>();
@@ -51,9 +52,9 @@ public class NewSimpleTournament extends javax.swing.JFrame {
     private boolean refreshTeam1 = true;
 
     /**
-     * Creates new form NewSimpleTournament
+     * Creates new form NewSimpleLeague
      */
-    public NewSimpleTournament() {
+    public NewSimpleLeague() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
@@ -220,310 +221,239 @@ public class NewSimpleTournament extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		NewFightPanel = new javax.swing.JPanel();
-		AddButton = new javax.swing.JButton();
-		Team1ComboBox = new javax.swing.JComboBox();
-		Team2ComboBox = new javax.swing.JComboBox();
-		Team1Label = new javax.swing.JLabel();
-		Team2Label = new javax.swing.JLabel();
-		FightAreaLabel = new javax.swing.JLabel();
-		FightAreaComboBox = new javax.swing.JComboBox();
-		RandomButton = new javax.swing.JButton();
-		SortedButton = new javax.swing.JButton();
-		FightsPanel = new javax.swing.JPanel();
-		FightScrollPane = new javax.swing.JScrollPane();
-		FightsList = new javax.swing.JList();
-		DeleteButton = new javax.swing.JButton();
-		UpButton = new javax.swing.JButton();
-		DownButton = new javax.swing.JButton();
-		DeleteAllButton = new javax.swing.JButton();
-		AcceptButton = new javax.swing.JButton();
-		TournamentLabel = new javax.swing.JLabel();
-		TournamentComboBox = new javax.swing.JComboBox();
+        NewFightPanel = new javax.swing.JPanel();
+        AddButton = new javax.swing.JButton();
+        Team1ComboBox = new javax.swing.JComboBox();
+        Team2ComboBox = new javax.swing.JComboBox();
+        Team1Label = new javax.swing.JLabel();
+        Team2Label = new javax.swing.JLabel();
+        FightAreaLabel = new javax.swing.JLabel();
+        FightAreaComboBox = new javax.swing.JComboBox();
+        RandomButton = new javax.swing.JButton();
+        SortedButton = new javax.swing.JButton();
+        FightsPanel = new javax.swing.JPanel();
+        FightScrollPane = new javax.swing.JScrollPane();
+        FightsList = new javax.swing.JList();
+        DeleteButton = new javax.swing.JButton();
+        UpButton = new javax.swing.JButton();
+        DownButton = new javax.swing.JButton();
+        DeleteAllButton = new javax.swing.JButton();
+        AcceptButton = new javax.swing.JButton();
+        TournamentLabel = new javax.swing.JLabel();
+        TournamentComboBox = new javax.swing.JComboBox();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-		NewFightPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        NewFightPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		AddButton.setText("Add");
-		AddButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AddButtonActionPerformed(evt);
-			}
-		});
+        AddButton.setText("Add");
+        AddButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddButtonActionPerformed(evt);
+            }
+        });
 
-		Team1ComboBox.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				Team1ComboBoxActionPerformed(evt);
-			}
-		});
+        Team1ComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Team1ComboBoxActionPerformed(evt);
+            }
+        });
 
-		Team1Label.setText("Team 1:");
+        Team1Label.setText("Team 1:");
 
-		Team2Label.setText("Team 2:");
+        Team2Label.setText("Team 2:");
 
-		FightAreaLabel.setText("Fight Area:");
+        FightAreaLabel.setText("Fight Area:");
 
-		RandomButton.setText("Random");
-		RandomButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				RandomButtonActionPerformed(evt);
-			}
-		});
+        RandomButton.setText("Random");
+        RandomButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RandomButtonActionPerformed(evt);
+            }
+        });
 
-		SortedButton.setText("Sorted");
-		SortedButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				SortedButtonActionPerformed(evt);
-			}
-		});
+        SortedButton.setText("Sorted");
+        SortedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SortedButtonActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout NewFightPanelLayout = new javax.swing.GroupLayout(NewFightPanel);
-		NewFightPanel.setLayout(NewFightPanelLayout);
-		NewFightPanelLayout
-				.setHorizontalGroup(NewFightPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								NewFightPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												NewFightPanelLayout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																NewFightPanelLayout
-																		.createSequentialGroup()
-																		.addGroup(
-																				NewFightPanelLayout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(Team2Label)
-																						.addComponent(Team1Label)
-																						.addComponent(FightAreaLabel))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				107, Short.MAX_VALUE)
-																		.addGroup(
-																				NewFightPanelLayout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								FightAreaComboBox,
-																								0,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								Team2ComboBox,
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								0,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								Team1ComboBox,
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								257,
-																								javax.swing.GroupLayout.PREFERRED_SIZE)))
-														.addGroup(
-																NewFightPanelLayout
-																		.createSequentialGroup()
-																		.addComponent(RandomButton,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				76,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(SortedButton)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				171, Short.MAX_VALUE)
-																		.addComponent(AddButton,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				87,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+        javax.swing.GroupLayout NewFightPanelLayout = new javax.swing.GroupLayout(NewFightPanel);
+        NewFightPanel.setLayout(NewFightPanelLayout);
+        NewFightPanelLayout.setHorizontalGroup(
+            NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewFightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(NewFightPanelLayout.createSequentialGroup()
+                        .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Team2Label)
+                            .addComponent(Team1Label)
+                            .addComponent(FightAreaLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                        .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(FightAreaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Team2ComboBox, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Team1ComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(NewFightPanelLayout.createSequentialGroup()
+                        .addComponent(RandomButton, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SortedButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                        .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
 
-		NewFightPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { AddButton,
-				RandomButton, SortedButton });
+        NewFightPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AddButton, RandomButton, SortedButton});
 
-		NewFightPanelLayout.setVerticalGroup(NewFightPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				NewFightPanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(Team1ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(Team1Label))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(Team2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(Team2Label))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(FightAreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(FightAreaLabel))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(AddButton).addComponent(RandomButton).addComponent(SortedButton))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        NewFightPanelLayout.setVerticalGroup(
+            NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NewFightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(Team1ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Team1Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(Team2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Team2Label))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(FightAreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(FightAreaLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddButton)
+                    .addComponent(RandomButton)
+                    .addComponent(SortedButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-		FightsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        FightsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-		FightsList.setModel(fightsModel);
-		FightsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		FightScrollPane.setViewportView(FightsList);
+        FightsList.setModel(fightsModel);
+        FightsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        FightScrollPane.setViewportView(FightsList);
 
-		DeleteButton.setText("Delete");
-		DeleteButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteButtonActionPerformed(evt);
-			}
-		});
+        DeleteButton.setText("Delete");
+        DeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteButtonActionPerformed(evt);
+            }
+        });
 
-		UpButton.setText("Up");
-		UpButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				UpButtonActionPerformed(evt);
-			}
-		});
+        UpButton.setText("Up");
+        UpButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpButtonActionPerformed(evt);
+            }
+        });
 
-		DownButton.setText("Down");
-		DownButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DownButtonActionPerformed(evt);
-			}
-		});
+        DownButton.setText("Down");
+        DownButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DownButtonActionPerformed(evt);
+            }
+        });
 
-		DeleteAllButton.setText("Delete All");
-		DeleteAllButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteAllButtonActionPerformed(evt);
-			}
-		});
+        DeleteAllButton.setText("Delete All");
+        DeleteAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteAllButtonActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout FightsPanelLayout = new javax.swing.GroupLayout(FightsPanel);
-		FightsPanel.setLayout(FightsPanelLayout);
-		FightsPanelLayout.setHorizontalGroup(FightsPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				FightsPanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								FightsPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-										.addGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												FightsPanelLayout
-														.createSequentialGroup()
-														.addComponent(UpButton)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(DownButton)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78,
-																Short.MAX_VALUE)
-														.addComponent(DeleteButton,
-																javax.swing.GroupLayout.PREFERRED_SIZE, 87,
-																javax.swing.GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(
-																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-														.addComponent(DeleteAllButton))
-										.addComponent(FightScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 438,
-												Short.MAX_VALUE)).addContainerGap()));
+        javax.swing.GroupLayout FightsPanelLayout = new javax.swing.GroupLayout(FightsPanel);
+        FightsPanel.setLayout(FightsPanelLayout);
+        FightsPanelLayout.setHorizontalGroup(
+            FightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FightsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(FightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FightsPanelLayout.createSequentialGroup()
+                        .addComponent(UpButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DownButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DeleteAllButton))
+                    .addComponent(FightScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
+                .addContainerGap())
+        );
 
-		FightsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { DeleteAllButton,
-				DeleteButton, DownButton, UpButton });
+        FightsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DeleteAllButton, DeleteButton, DownButton, UpButton});
 
-		FightsPanelLayout.setVerticalGroup(FightsPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				FightsPanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(FightScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(
-								FightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(UpButton).addComponent(DownButton).addComponent(DeleteAllButton)
-										.addComponent(DeleteButton)).addContainerGap()));
+        FightsPanelLayout.setVerticalGroup(
+            FightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FightsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(FightScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(FightsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UpButton)
+                    .addComponent(DownButton)
+                    .addComponent(DeleteAllButton)
+                    .addComponent(DeleteButton))
+                .addContainerGap())
+        );
 
-		AcceptButton.setText("Accept");
-		AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				AcceptButtonActionPerformed(evt);
-			}
-		});
+        AcceptButton.setText("Accept");
+        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcceptButtonActionPerformed(evt);
+            }
+        });
 
-		TournamentLabel.setText("Tournament:");
+        TournamentLabel.setText("Tournament:");
 
-		TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				TournamentComboBoxActionPerformed(evt);
-			}
-		});
+        TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TournamentComboBoxActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addGap(20, 20, 20)
-								.addComponent(TournamentLabel)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99,
-										Short.MAX_VALUE)
-								.addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 257,
-										javax.swing.GroupLayout.PREFERRED_SIZE).addGap(23, 23, 23))
-				.addGroup(
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-												.addComponent(NewFightPanel, javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(FightsPanel, javax.swing.GroupLayout.Alignment.LEADING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88,
-														javax.swing.GroupLayout.PREFERRED_SIZE)).addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(TournamentLabel))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(NewFightPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-						.addComponent(FightsPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(AcceptButton).addContainerGap()));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(TournamentLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(NewFightPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(FightsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(AcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TournamentLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(NewFightPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addComponent(FightsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(AcceptButton)
+                .addContainerGap())
+        );
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void Team1ComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_Team1ComboBoxActionPerformed
         if (refreshTeam1) {
@@ -678,27 +608,26 @@ public class NewSimpleTournament extends javax.swing.JFrame {
         } catch (NullPointerException npe) {
         }
     }// GEN-LAST:event_SortedButtonActionPerformed
-		// Variables declaration - do not modify//GEN-BEGIN:variables
-
-	private javax.swing.JButton AcceptButton;
-	private javax.swing.JButton AddButton;
-	private javax.swing.JButton DeleteAllButton;
-	private javax.swing.JButton DeleteButton;
-	private javax.swing.JButton DownButton;
-	private javax.swing.JComboBox FightAreaComboBox;
-	private javax.swing.JLabel FightAreaLabel;
-	private javax.swing.JScrollPane FightScrollPane;
-	private javax.swing.JList FightsList;
-	private javax.swing.JPanel FightsPanel;
-	private javax.swing.JPanel NewFightPanel;
-	private javax.swing.JButton RandomButton;
-	private javax.swing.JButton SortedButton;
-	private javax.swing.JComboBox Team1ComboBox;
-	private javax.swing.JLabel Team1Label;
-	private javax.swing.JComboBox Team2ComboBox;
-	private javax.swing.JLabel Team2Label;
-	protected javax.swing.JComboBox TournamentComboBox;
-	private javax.swing.JLabel TournamentLabel;
-	private javax.swing.JButton UpButton;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AcceptButton;
+    private javax.swing.JButton AddButton;
+    private javax.swing.JButton DeleteAllButton;
+    private javax.swing.JButton DeleteButton;
+    private javax.swing.JButton DownButton;
+    private javax.swing.JComboBox FightAreaComboBox;
+    private javax.swing.JLabel FightAreaLabel;
+    private javax.swing.JScrollPane FightScrollPane;
+    private javax.swing.JList FightsList;
+    private javax.swing.JPanel FightsPanel;
+    private javax.swing.JPanel NewFightPanel;
+    private javax.swing.JButton RandomButton;
+    private javax.swing.JButton SortedButton;
+    private javax.swing.JComboBox Team1ComboBox;
+    private javax.swing.JLabel Team1Label;
+    private javax.swing.JComboBox Team2ComboBox;
+    private javax.swing.JLabel Team2Label;
+    protected javax.swing.JComboBox TournamentComboBox;
+    private javax.swing.JLabel TournamentLabel;
+    private javax.swing.JButton UpButton;
+    // End of variables declaration//GEN-END:variables
 }

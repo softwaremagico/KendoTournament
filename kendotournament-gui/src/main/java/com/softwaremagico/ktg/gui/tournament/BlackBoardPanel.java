@@ -62,10 +62,10 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 	private Integer selectedGroupIndex = null;
 	private Timer timer;
 	private boolean wasDoubleClick = true;
-	private LeagueDesigner parent;
+	private TournamentDesigner parent;
 	private boolean interactive = false;
 
-	public BlackBoardPanel(LeagueDesigner parent, boolean interactive) {
+	public BlackBoardPanel(TournamentDesigner parent, boolean interactive) {
 		this.parent = parent;
 		this.interactive = interactive;
 		setLayout(new java.awt.GridBagLayout());

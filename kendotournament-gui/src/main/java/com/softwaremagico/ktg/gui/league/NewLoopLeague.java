@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.gui;
+package com.softwaremagico.ktg.gui.league;
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,11 +23,12 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
+import com.softwaremagico.ktg.gui.league.NewSimpleLeague;
 import com.softwaremagico.ktg.tournament.TournamentType;
 
-public class NewLoopTournament extends NewSimpleTournament {
+public class NewLoopLeague extends NewSimpleLeague {
 
-    public NewLoopTournament() {
+    public NewLoopLeague() {
     }
 
     @Override

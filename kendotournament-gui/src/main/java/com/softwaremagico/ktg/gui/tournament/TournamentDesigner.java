@@ -48,7 +48,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-public final class LeagueDesigner extends javax.swing.JFrame {
+public final class TournamentDesigner extends javax.swing.JFrame {
 
     private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
@@ -59,9 +59,9 @@ public final class LeagueDesigner extends javax.swing.JFrame {
     private boolean refreshSpinner = true;
 
     /**
-     * Creates new form LeagueDesigner
+     * Creates new form TournamentDesigner
      */
-    public LeagueDesigner() {
+    public TournamentDesigner() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
