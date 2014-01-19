@@ -110,7 +110,6 @@ public class SummaryPDF extends ParentList {
             if (competitor != null) {
                 name = competitor.getSurnameNameIni();
             }
-            System.out.println(i + ", " + f.getIndex() + " -> " + name + ": " + getScore(f, i, 0, true));
             Table.addCell(getCell(name, 1, 1, Element.ALIGN_LEFT));
 
             //Faults
