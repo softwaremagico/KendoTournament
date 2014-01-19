@@ -632,6 +632,7 @@ public abstract class SQL extends Database {
                     storeBinaryStream(stmt, 13, null, 0);
                     stmt.setLong(14, 0);
                 }
+                stmt.setBoolean(15, tournament.isUsingMultipleComputers());
                 stmt.executeUpdate();
             } catch (SQLException ex) {
                 showSqlError(ex);
