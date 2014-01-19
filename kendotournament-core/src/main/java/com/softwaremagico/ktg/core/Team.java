@@ -167,27 +167,27 @@ public class Team implements Comparable<Team> {
     }
 
     /**
-     * Get the order of a member in a level.
+     * Get the order of a member in a fight.
      *
-     * @param level
+     * @param fightIndex
      * @param competitorID
      * @return
      * @throws SQLException
      */
-    public Integer getMemberOrder(String competitorID, int level) throws SQLException {
-        return getMemberOrder(RegisteredPersonPool.getInstance().get(competitorID), level);
+    public Integer getMemberOrder(String competitorID, int fightIndex) throws SQLException {
+        return getMemberOrder(RegisteredPersonPool.getInstance().get(competitorID), fightIndex);
     }
 
     /**
-     * Get the order of a member in a level.
+     * Get the order of a member in a fight.
      *
-     * @param level
+     * @param fightIndex
      * @param competitor
      * @return
      */
-    public Integer getMemberOrder(RegisteredPerson competitor, int level) {
+    public Integer getMemberOrder(RegisteredPerson competitor, int fightIndex) {
         try {
-            HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(level);
+            HashMap<Integer, RegisteredPerson> orderInLevel = getMembersOrder(fightIndex);
             for (Integer order : orderInLevel.keySet()) {
                 if (orderInLevel.get(order).equals(competitor)) {
                     return order;

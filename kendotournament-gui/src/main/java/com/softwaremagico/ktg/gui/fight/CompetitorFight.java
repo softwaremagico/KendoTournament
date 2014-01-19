@@ -46,7 +46,6 @@ import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.gui.PanelBackground;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.DuelPool;
@@ -58,9 +57,9 @@ public class CompetitorFight extends JPanel {
     private static final int FAULTS_DIMENSION = 15;
     private static final int MARGIN = 5;
     private static final int NAME_CHARACTERS = 11;
-    private PanelBackground round1;
-    private PanelBackground round2;
-    private PanelBackground faults;
+    private PointPanel round1;
+    private PointPanel round2;
+    private PointPanel faults;
     private JLabel nameLabel;
     private RegisteredPerson competitor;
     private Fight fight;
@@ -124,7 +123,7 @@ public class CompetitorFight extends JPanel {
     }
 
     private void fill(String name, int point1X, int point2X, int faultX, int nameX, boolean left) {
-        round1 = new PanelBackground();
+        round1 = new PointPanel();
         round1.setMinimumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
         round1.setPreferredSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
         round1.setMaximumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
@@ -140,7 +139,7 @@ public class CompetitorFight extends JPanel {
         gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
         add(round1, gridBagConstraints);
 
-        round2 = new PanelBackground();
+        round2 = new PointPanel();
         round2.setMinimumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
         round2.setPreferredSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
         round2.setMaximumSize(new Dimension(SCORE_DIMENSION, SCORE_DIMENSION));
@@ -155,7 +154,7 @@ public class CompetitorFight extends JPanel {
         gridBagConstraints.insets = new Insets(MARGIN, MARGIN, MARGIN, MARGIN);
         add(round2, gridBagConstraints);
 
-        faults = new PanelBackground();
+        faults = new PointPanel();
         faults.setMinimumSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
         faults.setPreferredSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
         faults.setMaximumSize(new Dimension(FAULTS_DIMENSION, SCORE_DIMENSION));
@@ -208,13 +207,13 @@ public class CompetitorFight extends JPanel {
         gridBagConstraints = new GridBagConstraints();
     }
 
-    private void updateScorePanel(PanelBackground panel, Score hit) {
+    private void updateScorePanel(PointPanel panel, Score hit) {
         panel.setBackground(Score.getImage(hit.getImageName()));
         panel.revalidate();
         panel.repaint();
     }
 
-    private void updateFaultPanel(PanelBackground panel, boolean fault) {
+    private void updateFaultPanel(PointPanel panel, boolean fault) {
         if (fault) {
             panel.setBackground(Score.getImage(Score.FAULT.getImageName()));
         } else {
@@ -228,13 +227,13 @@ public class CompetitorFight extends JPanel {
         Integer player;
         try {
             if (fight != null) {
-                if ((player = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
+                if ((player = fight.getTeam1().getMemberOrder(competitor, fight.getIndex())) != null) {
                     Duel d = fight.getDuels().get(player);
                     updateScorePanel(round1, d.getHits(true).get(0));
                     updateScorePanel(round2, d.getHits(true).get(1));
                     updateFaultPanel(faults, d.getFaults(true));
                 }
-                if ((player = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
+                if ((player = fight.getTeam2().getMemberOrder(competitor, fight.getIndex())) != null) {
                     Duel d = fight.getDuels().get(player);
                     updateScorePanel(round1, d.getHits(false).get(0));
                     updateScorePanel(round2, d.getHits(false).get(1));
@@ -247,8 +246,8 @@ public class CompetitorFight extends JPanel {
     }
 
     private void addAllMenus() {
-        if (fight.getTeam1().getNumberOfMembers(fight.getLevel()) > 0
-                || fight.getTeam2().getNumberOfMembers(fight.getLevel()) > 0) {
+        if (fight.getTeam1().getNumberOfMembers(fight.getIndex()) > 0
+                || fight.getTeam2().getNumberOfMembers(fight.getIndex()) > 0) {
             addPopUpMenu();
         }
     }
@@ -304,7 +303,7 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel duel = null;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 if (!point.equals(Score.EMPTY)) {
                     duel.setResultInRound(round, point, true);
@@ -312,7 +311,7 @@ public class CompetitorFight extends JPanel {
                     duel.clearResultInRound(round, true);
                 }
             }
-            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 if (!point.equals(Score.EMPTY)) {
                     duel.setResultInRound(round, point, false);
@@ -337,14 +336,14 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel duel = null;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 duel.setFaults(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d,
                 // fight, index);
                 updateScorePanels();
             }
-            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 duel.setFaults(false);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d,
@@ -367,14 +366,14 @@ public class CompetitorFight extends JPanel {
         Integer index;
         Duel duel = null;
         try {
-            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam1().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 duel.resetFaults(true);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d,
                 // fight, index);
                 updateScorePanels();
             }
-            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getLevel())) != null) {
+            if ((index = fight.getTeam2().getMemberOrder(competitor, fight.getIndex())) != null) {
                 duel = fight.getDuels().get(index);
                 duel.resetFaults(false);
                 // KendoTournamentGenerator.getInstance().fightManager.storeDuel(d,
