@@ -122,13 +122,15 @@ Version:
 		Manual Championship. Fully editable championship. 
 		Multiples computer use updated. 
 
+1.1.1	Data exchange among computers can be forced with an option in the Scoreboard.
+		User now is alerted if he is trying to change a team order from other shiaijo. 
 
 
 Thanks to
 -------------------------
 The Kendo Club of the University of Valencia, for all lessons of kendo.
 Jos Maas for the dutch translation.
-Stefan Schürrle for the german translation.
+Stefan SchÃ¼rrle for the german translation.
 Jose Vicente Aparicio, for the translation to catalonian.
 Paola Lonetti, for the translation to italian. 
 

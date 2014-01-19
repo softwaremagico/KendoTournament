@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.1.0
+v1.1.1
 \end_layout
 
 \begin_layout Author
@@ -112,6 +112,29 @@ What's new
 \end_inset
 
 What's new
+\end_layout
+
+\begin_layout Section*
+v1.1.1
+\end_layout
+
+\begin_layout Description
+Data
+\begin_inset space ~
+\end_inset
+
+exchange: added new options that allow the user to force data exchange between
+ computers in different shiaijos.
+\end_layout
+
+\begin_layout Description
+Team
+\begin_inset space ~
+\end_inset
+
+order: an information message is displayed alerting the user that he is
+ trying to modify the team order of team that is in different shiaijo.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -3411,6 +3434,22 @@ reference "sub:Inserting-a-tournament"
 \end_inset
 
 .
+ 
+\end_layout
+
+\begin_layout Standard
+When this options is selected, new options will appear in the 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+scoreboard
+\end_layout
+
+\end_inset
+
+Scoreboard allowing the user to force the data exchange among all computers
+ that are managing the different shiaijos.
  
 \end_layout
 

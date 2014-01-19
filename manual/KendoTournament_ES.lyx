@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.1.0
+v1.1.1
 \end_layout
 
 \begin_layout Author
@@ -112,6 +112,38 @@ Novedades
 \end_inset
 
 Novedades
+\end_layout
+
+\begin_layout Section*
+v1.1.1
+\end_layout
+
+\begin_layout Description
+Intercambio
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+datos: se han añadido nuevas opciones para forzar el intercambio de datos
+ entre ordenadores de distintos shiaijos.
+ 
+\end_layout
+
+\begin_layout Description
+Orden
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+equipos: se avisa al usuario si se intenta cambiar el orden de un equipo
+ que está en un shiaijo distinto del utilizado.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -3870,6 +3902,22 @@ reference "sub:Inserción-de-un-torneo"
 \end_inset
 
  para más información de la creación de campeonatos.
+\end_layout
+
+\begin_layout Standard
+Cuando esta opción es seleccionada, aparecerán nuevas opciones en el 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+marcador
+\end_layout
+
+\end_inset
+
+Marcador de la Liga que permiten forzar el intercambio de datos entre el
+ ordenador actual y el resto utilizado para controlar distintos shiaijos.
+ 
 \end_layout
 
 \begin_layout Section

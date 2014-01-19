@@ -79,7 +79,7 @@ public class FightPanel extends KFrame {
     private FightAreaComboBox fightAreaComboBox;
     private NextButton nextButton;
     private PreviousButton previousButton;
-    private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem, deleteFightMenuItem, addFightMenuItem, changeMemberOrder;
+    private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem, deleteFightMenuItem, addFightMenuItem, changeMemberOrder, updateDatabase;
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
 
@@ -141,6 +141,24 @@ public class FightPanel extends KFrame {
         });
 
         windowMenu.add(changeTeam);
+
+        updateDatabase = new KMenuItem("DatabaseUpdateMenuItem");
+        updateDatabase.setIcon(new ImageIcon(Path.getIconPath() + "updatePanel.png"));
+
+        updateDatabase.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try {
+                    updateDatabaseForMultipleComputers();
+                    AlertManager.informationMessage(this.getClass().getName(), "importSuccess", "Update");
+                } catch (SQLException ex) {
+                    AlertManager.errorMessage(this.getClass().getName(), "importFail", "Update");
+                    KendoLog.errorMessage(this.getClass().getName(), ex);
+                }
+            }
+        });
+        windowMenu.add(updateDatabase);
+
 
         KMenuItem exitMenuItem = new KMenuItem("ExitMenuItem");
         exitMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
@@ -443,9 +461,9 @@ public class FightPanel extends KFrame {
         fightAreaComboBox.update(getSelectedTournament());
         updateSelectedFightArea();
         // Disable tree window if championship is not the correct one.
-        if (getSelectedTournament().getType().equals(TournamentType.CHAMPIONSHIP)
+        if (getSelectedTournament() != null && (getSelectedTournament().getType().equals(TournamentType.CHAMPIONSHIP)
                 || getSelectedTournament().getType().equals(TournamentType.LEAGUE_TREE)
-                || getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
+                || getSelectedTournament().getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP))) {
             showTreeMenuItem.setVisible(true);
             // Disable group score panel if not useful.
             groupScoreMenuItem.setVisible(true);
@@ -454,12 +472,18 @@ public class FightPanel extends KFrame {
             groupScoreMenuItem.setVisible(false);
         }
 
-        if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+        if (getSelectedTournament() != null && getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
             deleteFightMenuItem.setVisible(true);
             addFightMenuItem.setVisible(true);
         } else {
             deleteFightMenuItem.setVisible(false);
             addFightMenuItem.setVisible(false);
+        }
+        //Network update if it is using more than one computes.
+        if (getSelectedTournament() == null || !getSelectedTournament().isUsingMultipleComputers()) {
+            updateDatabase.setVisible(false);
+        } else {
+            updateDatabase.setVisible(true);
         }
     }
 
@@ -670,19 +694,17 @@ public class FightPanel extends KFrame {
     }
 
     /**
-     * Database must be updated if different arenas (withb different computers)
+     * Database must be updated if different arenas (with different computers)
      * are used.
      */
     private void updateDatabaseForMultipleComputers() throws SQLException {
         //Exchange fights if more than one fight area exists. 
-        if (getSelectedTournament().isUsingMultipleComputers()) {
+        if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             //Save fights.
-            if (FightPool.getInstance().needsToBeStoredInDatabase()) {
-                try {
-                    DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
-                } catch (SQLException ex) {
-                    AlertManager.showSqlErrorMessage(ex);
-                }
+            try {
+                DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
+            } catch (SQLException ex) {
+                AlertManager.showSqlErrorMessage(ex);
             }
             // Load fights. 
             FightPool.getInstance().reset(getSelectedTournament());
