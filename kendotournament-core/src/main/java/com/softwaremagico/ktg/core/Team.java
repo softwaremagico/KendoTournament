@@ -28,7 +28,9 @@ package com.softwaremagico.ktg.core;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Team implements Comparable<Team> {
 
@@ -87,9 +89,10 @@ public class Team implements Comparable<Team> {
      * @param fightIndex
      */
     public void removeMembersOrder(int fightIndex) {
-        for (Integer fights : membersOrder.keySet()) {
-            if (fights >= fightIndex) {
-                membersOrder.remove(fights);
+        List<Integer> fights = new ArrayList<>(membersOrder.keySet());
+        for (Integer fight : fights) {
+            if (fight >= fightIndex) {
+                membersOrder.remove(fight);
             }
         }
     }
