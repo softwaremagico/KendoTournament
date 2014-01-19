@@ -15,8 +15,10 @@ import java.util.List;
 public class TeamPool extends TournamentDependentPool<Team> {
 
     private static TeamPool instance;
+    private HashMap<Tournament, Integer> membersOrderToDelete;
 
     private TeamPool() {
+        membersOrderToDelete = new HashMap<>();
     }
 
     public static TeamPool getInstance() {
@@ -196,6 +198,63 @@ public class TeamPool extends TournamentDependentPool<Team> {
         if (elementsToUpdate.size() > 0) {
             return DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
         }
+        return true;
+    }
+
+    public void removeTeamsOrder(Tournament tournament, int fightIndex) throws SQLException {
+        membersOrderToDelete.put(tournament, fightIndex);
+
+        List<Team> teams = get(tournament);
+        for (Team team : teams) {
+            team.removeMembersOrder(fightIndex);
+        }
+    }
+
+    @Override
+    public void reset() {
+        resetAuxiliaryParameters();
+        super.reset();
+    }
+
+    @Override
+    public void reset(Tournament tournament) {
+        resetAuxiliaryParameters(tournament);
+        super.reset(tournament);
+    }
+
+    /**
+     * Reset auxiliary lists and variables used to speed up some methods.
+     *
+     * @param tournament
+     */
+    private void resetAuxiliaryParameters(Tournament tournament) {
+        membersOrderToDelete.put(tournament, null);
+    }
+
+    /**
+     * Reset auxiliary lists and variables used to speed up some methods.
+     *
+     * @param tournament
+     */
+    private void resetAuxiliaryParameters() {
+        membersOrderToDelete = new HashMap<>();
+    }
+
+    public boolean removeOldMembersOrderFromDatabase(Tournament tournament) throws SQLException {
+        if (!DatabaseConnection.getConnection().getDatabase().removeTeamsOrder(tournament, membersOrderToDelete.get(tournament))) {
+            return false;
+        }
+        membersOrderToDelete.put(tournament, null);
+        return true;
+    }
+
+    public boolean removeOldMembersOrderFromDatabase() throws SQLException {
+        for (Tournament tournament : membersOrderToDelete.keySet()) {
+            if (!DatabaseConnection.getConnection().getDatabase().removeTeamsOrder(tournament, membersOrderToDelete.get(tournament))) {
+                return false;
+            }
+        }
+        membersOrderToDelete = new HashMap<>();
         return true;
     }
 }

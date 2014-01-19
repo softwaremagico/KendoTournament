@@ -897,6 +897,27 @@ public abstract class SQL extends Database {
     }
 
     @Override
+    protected synchronized boolean removeTeamsOrder(Tournament tournament, Integer fightIndex) throws SQLException {
+        KendoLog.entering(this.getClass().getName(), "removeTeams");
+        if (fightIndex != null) {
+            String query = "";
+            query += "DELETE FROM team WHERE Tournament='"
+                    + tournament.getName() + "' AND FightOfTournament >=" + fightIndex + "; ";
+            try (Statement s = connection.createStatement()) {
+                s.executeUpdate(query);
+            } catch (SQLException ex) {
+                showSqlError(ex);
+                return false;
+            } catch (NullPointerException npe) {
+                KendoLog.severe(this.getClass().getName(), "Database connection fail");
+                throw new SQLException("Database connection fail.");
+            }
+        }
+        KendoLog.exiting(this.getClass().getName(), "removeTeams");
+        return true;
+    }
+
+    @Override
     protected synchronized boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException {
         KendoLog.entering(this.getClass().getName(), "updateTeams");
         List<Team> oldTeams = new ArrayList<>(teamsExchange.values());

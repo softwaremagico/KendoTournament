@@ -244,9 +244,9 @@ public class DatabaseConnection {
         RegisteredPersonPool.getInstance().reset();
         ClubPool.getInstance().reset();
     }
-    
-    public boolean updateDatabase(Tournament tournament) throws SQLException{
-         connect();
+
+    public boolean updateDatabase(Tournament tournament) throws SQLException {
+        connect();
 
         // Delete actions.
         if (!UndrawPool.getInstance().removeElementsFromDatabase(tournament)) {
@@ -260,6 +260,9 @@ public class DatabaseConnection {
             return false;
         }
         if (!TeamPool.getInstance().removeElementsFromDatabase(tournament)) {
+            return false;
+        }
+        if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase(tournament)) {
             return false;
         }
         if (!RolePool.getInstance().removeElementsFromDatabase(tournament)) {
@@ -316,7 +319,7 @@ public class DatabaseConnection {
         AutoSave.getInstance().resetTime();
         return true;
     }
-     
+
     public boolean updateDatabase() throws SQLException {
         connect();
 
@@ -332,6 +335,9 @@ public class DatabaseConnection {
             return false;
         }
         if (!TeamPool.getInstance().removeElementsFromDatabase()) {
+            return false;
+        }
+        if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase()) {
             return false;
         }
         if (!RolePool.getInstance().removeElementsFromDatabase()) {

@@ -60,8 +60,8 @@ public class Team implements Comparable<Team> {
     }
 
     /**
-     * Set a member in a team or change the order with current member if fightIndex >
-     * 0
+     * Set a member in a team or change the order with current member if
+     * fightIndex > 0
      *
      * @param member
      * @param order
@@ -76,6 +76,20 @@ public class Team implements Comparable<Team> {
             } else {
                 //Other levels must do an exchange because other members already exist in team.
                 exchangeMembersOrder(getMemberOrder(member, fightIndex), order, fightIndex);
+            }
+        }
+    }
+
+    /**
+     * Removes all member order with fightIndex equals or greater than the
+     * parameter.
+     *
+     * @param fightIndex
+     */
+    public void removeMembersOrder(int fightIndex) {
+        for (Integer fights : membersOrder.keySet()) {
+            if (fights >= fightIndex) {
+                membersOrder.remove(fights);
             }
         }
     }

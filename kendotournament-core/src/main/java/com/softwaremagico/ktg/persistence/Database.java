@@ -189,7 +189,7 @@ public abstract class Database {
      ********************************************************************
      */
     /**
-     * @throws TeamMemberOrderException 
+     * @throws TeamMemberOrderException
      *
      */
     protected abstract List<Team> getTeams(Tournament tournament) throws SQLException, TeamMemberOrderException;
@@ -197,6 +197,8 @@ public abstract class Database {
     protected abstract boolean addTeams(List<Team> teams) throws SQLException;
 
     protected abstract boolean removeTeams(List<Team> teams) throws SQLException;
+
+    protected abstract boolean removeTeamsOrder(Tournament tournament, Integer fightIndex) throws SQLException;
 
     protected abstract boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException;
 

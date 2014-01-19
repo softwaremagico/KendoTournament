@@ -660,9 +660,11 @@ public final class TournamentDesigner extends javax.swing.JFrame {
                             //Add new links.
                             CustomLinkPool.getInstance().add(getSelectedTournament(), ((LeagueLevelCustom) TournamentManagerFactory.getManager(getSelectedTournament()).getLevel(0)).getLinks());
                         }
+                        //Delete old teams order
+                        TeamPool.getInstance().removeTeamsOrder(getSelectedTournament(), 1);
                         //Store if needed.
                         if(getSelectedTournament().isUsingMultipleComputers()){
-                            DatabaseConnection.getInstance().updateDatabase();
+                            DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
                         }
                         this.dispose();
                     }
