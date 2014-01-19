@@ -165,7 +165,7 @@ public class SQLite extends SQL {
                 + "\"ScoreDraw\" integer NOT NULL DEFAULT 0,"
                 + "\"ScoreType\" varchar(" + MAX_SCORE_TYPE_LENGTH + ") NOT NULL DEFAULT 'Classic'," + "\"Diploma\" mediumblob,"
                 + "\"Accreditation\" mediumblob," + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
-                + "\"AccreditationSize\" double NOT NULL," 
+                + "\"AccreditationSize\" double NOT NULL,"
                 + "\"UsingMultipleComputers\" integer DEFAULT 0,"
                 + "PRIMARY KEY (Name)" + ")";
         executeQuery(sqlQuery);
@@ -323,8 +323,8 @@ public class SQLite extends SQL {
         byte[] bytes = rs.getBytes(column);
         return new ByteArrayInputStream(bytes);
     }
-    
-        @Override
+
+    @Override
     protected boolean createColumnUsingMultipleComputers() {
         try {
             String sqlQuery = "ALTER TABLE \"tournament\" ADD COLUMN \"usingMultipleComputers\" integer DEFAULT 0;";
@@ -366,7 +366,7 @@ public class SQLite extends SQL {
                 return trans.getTranslatedText("noDatabase");
         }
         KendoLog.errorMessage(this.getClass().getName(), exception);
-        return trans.getTranslatedText("unknownDatabaseError");
+        return trans.getTranslatedText("unknownDatabaseError") + ": " + exception.getMessage();
 
         // #define SQLITE_OK 0 /* Successful result */
         // #define SQLITE_INTERNAL 2 /* An internal logic error in SQLite */

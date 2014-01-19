@@ -33,8 +33,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class MySQL extends SQL {
 
@@ -415,7 +413,7 @@ public class MySQL extends SQL {
                 return trans.getTranslatedText("noDatabase");
         }
         KendoLog.errorMessage(this.getClass().getName(), exception);
-        return trans.getTranslatedText("unknownDatabaseError");
+        return trans.getTranslatedText("unknownDatabaseError") + ": " + exception.getMessage();
     }
 
     @Override
