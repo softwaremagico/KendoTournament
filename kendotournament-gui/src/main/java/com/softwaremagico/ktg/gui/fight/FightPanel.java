@@ -45,6 +45,7 @@ import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
@@ -710,6 +711,8 @@ public class FightPanel extends KFrame {
             }
             // Load fights. 
             FightPool.getInstance().reset(getSelectedTournament());
+            // Load teams.
+            TeamPool.getInstance().reset(getSelectedTournament());
             //Recreate Tournament structure.
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
