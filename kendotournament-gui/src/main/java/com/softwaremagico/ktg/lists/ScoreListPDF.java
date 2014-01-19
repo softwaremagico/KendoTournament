@@ -33,7 +33,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.core.Team;
@@ -87,12 +86,6 @@ public class ScoreListPDF extends ParentList {
     }
 
     private PdfPTable championshipTable(PdfPTable mainTable) {
-        List<Fight> fights = new ArrayList<>();
-        try {
-            fights = FightPool.getInstance().get(tournament);
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
         for (int l = 0; l < tournamentManager.getNumberOfLevels(); l++) {
             List<TGroup> groups = tournamentManager.getGroups(l);
             boolean printTitle = false;
@@ -136,7 +129,7 @@ public class ScoreListPDF extends ParentList {
                             /*
                              * Header of the teams
                              */
-                            Ranking ranking = new Ranking(fights);
+                            Ranking ranking = new Ranking(groups.get(i).getFights());
                             ScoreOfTeam scoreOfTeam = ranking.getScoreOfTeam(j);
 
                             mainTable.addCell(getCell(scoreOfTeam.getTeam().getName(), 0, Element.ALIGN_LEFT));
