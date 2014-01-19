@@ -151,6 +151,8 @@ public class FightPanel extends KFrame {
                 try {
                     updateDatabaseForMultipleComputers();
                     AlertManager.informationMessage(this.getClass().getName(), "importSuccess", "Update");
+                    // Update score panel.
+                    updateScorePanel();
                 } catch (SQLException ex) {
                     AlertManager.errorMessage(this.getClass().getName(), "importFail", "Update");
                     KendoLog.errorMessage(this.getClass().getName(), ex);
