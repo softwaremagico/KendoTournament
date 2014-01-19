@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.persistence;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
@@ -1174,6 +1175,11 @@ public abstract class SQL extends Database {
             if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
                 try (PreparedStatement s = connection.prepareStatement(query)) {
                     s.executeUpdate();
+                }catch(MySQLIntegrityConstraintViolationException e){
+                    //Error when storing duels. Probably because the tournament has been redesigned and now exists different duels with same primary key. Ignore the error and try an update.
+                    HashMap<Duel, Duel> duelsToUpdate = new HashMap<>();
+                    duelsToUpdate.put(duels.get(i), duels.get(i));
+                    updateDuels(duelsToUpdate);
                 } catch (SQLException ex) {
                     showSqlError(ex);
                     return false;
