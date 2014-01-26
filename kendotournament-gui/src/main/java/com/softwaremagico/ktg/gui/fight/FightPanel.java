@@ -64,12 +64,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
@@ -90,7 +92,7 @@ public class FightPanel extends KFrame {
     private Timer timer = new Timer("Database Exchange");
 
     public FightPanel() {
-        defineWindow(750, 500);
+        defineWindow(850, 500);
         setResizable(true);
         setElements();
         addResizedEvent();
@@ -295,7 +297,11 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(tournamentDefinitionPanel, gridBagConstraints);
 
-        scorePanel = new ScorePanel();
+        JScrollPane scrollPanel = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scorePanel = new ScorePanel(scrollPanel);
+        scrollPanel.setViewportView(scorePanel);
+        scrollPanel.setBorder(BorderFactory.createEmptyBorder());
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
         gridBagConstraints.gridx = 0;
@@ -305,7 +311,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weightx = 1;
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(scorePanel, gridBagConstraints);
+        getContentPane().add(scrollPanel, gridBagConstraints);
 
         buttonPlacePanel = createButtonPanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
@@ -510,7 +516,7 @@ public class FightPanel extends KFrame {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 updateScorePanel();
-            }
+            }            
         });
     }
 
@@ -803,6 +809,7 @@ public class FightPanel extends KFrame {
         @Override
         public void run() {
             AlertManager.waitingDatabaseMessage(this.getClass().getName(), "waitingConnection", "!!!!!!");
+            this.cancel();
         }
     }
 }

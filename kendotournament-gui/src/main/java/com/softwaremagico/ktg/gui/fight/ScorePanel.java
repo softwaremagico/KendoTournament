@@ -33,14 +33,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Box;
+import javax.swing.JComponent;
 
 public class ScorePanel extends KPanel {
-	private static final long serialVersionUID = -5287777476022379382L;
-	private Tournament tournament = null;
+
+    private static final long serialVersionUID = -5287777476022379382L;
+    private Tournament tournament = null;
     private Integer fightArea = null;
     private List<RoundFight> roundFights;
+    private JComponent container;
 
-    public ScorePanel() {
+    public ScorePanel(JComponent container) {
+        this.container = container;
         setMinimumSize(new java.awt.Dimension(400, 400));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
     }
@@ -146,6 +150,9 @@ public class ScorePanel extends KPanel {
     }
 
     private int numberOfFightsToShow() {
+        if (container != null) {
+            return (int) container.getHeight() / screenSizeOfTeam();
+        }
         return (int) getHeight() / screenSizeOfTeam();
     }
 

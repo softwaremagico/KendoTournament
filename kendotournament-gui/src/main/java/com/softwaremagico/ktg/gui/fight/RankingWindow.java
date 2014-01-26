@@ -121,10 +121,10 @@ public class RankingWindow extends KFrame {
 		rankingPanel.setLayout(experimentLayout);
 		setTitle(rankingPanel, getFontSize() + 4);
 		setTeams(rankingPanel, getFontSize());
-		JScrollPane rankingScrollPane = new JScrollPane();
-		rankingScrollPane.setViewportView(rankingPanel);
-		rankingScrollPane.setBorder(BorderFactory.createEmptyBorder());
-		return rankingScrollPane;
+		JScrollPane scrollPanel = new JScrollPane();
+		scrollPanel.setViewportView(rankingPanel);
+		scrollPanel.setBorder(BorderFactory.createEmptyBorder());
+		return scrollPanel;
 	}
 
 	private void setTitle(KPanel rankingPanel, int titleFontSize) {

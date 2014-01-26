@@ -78,8 +78,8 @@ public class AlertManager {
         }
         customIconMessage(className, winnerIcon, text.trim() + ":\n" + winnerTeam.trim(), title);
     }
-    
-        public static void waitingDatabaseMessage(String className, String code, String title) {
+
+    public static void waitingDatabaseMessage(String className, String code, String title) {
         if (clockIcon == null) {
             clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
         }
