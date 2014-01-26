@@ -65,6 +65,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -89,6 +90,8 @@ public class FightPanel extends KFrame {
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
     // private Timer timer = new Timer("Database Exchange");
+    private JDialog waitingDialog;
+    private static ImageIcon clockIcon = null;
 
     public FightPanel() {
         defineWindow(850, 500);
@@ -649,6 +652,8 @@ public class FightPanel extends KFrame {
                             // Show score.
                             openRankingWindow(ranking, true);
                         }
+                        
+                        openWaitingMessage();
 
                         //Exchange fights with other computer.
                         updateDatabaseForMultipleComputers();
@@ -706,6 +711,7 @@ public class FightPanel extends KFrame {
             } catch (SQLException ex) {
                 AlertManager.showSqlErrorMessage(ex);
             }
+            //closeWaitingMessage();
             // Update score panel.
             updateScorePanel();
         }
@@ -719,8 +725,7 @@ public class FightPanel extends KFrame {
         //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             //Create timer for showing waiting message.
-            //WaitingMessageTask timerTask = new WaitingMessageTask();
-            //timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
+            openWaitingMessage();
             //Save fights.
             try {
                 DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
@@ -735,11 +740,7 @@ public class FightPanel extends KFrame {
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
 
-            //Stop timer.
-            //try {
-            //    timerTask.cancel();
-            //} catch (NullPointerException npe) {
-            //}
+            closeWaitingMessage();
         }
     }
 
@@ -808,6 +809,34 @@ public class FightPanel extends KFrame {
         @Override
         public void run() {
             AlertManager.waitingDatabaseMessage(this.getClass().getName(), "waitingConnection", "!!!!!!");
+        }
+    }
+
+    private void openWaitingMessage() {
+        if (waitingDialog == null) {
+            if (clockIcon == null) {
+                clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
+            }
+            
+            JOptionPane optionPane = new JOptionPane(
+                LanguagePool.getTranslator("messages.xml").getTranslatedText("waitingConnection"),
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION);
+            
+            
+            waitingDialog = new JDialog(this, LanguagePool.getTranslator("messages.xml").getTranslatedText("waitingConnection"),
+                    false);
+            waitingDialog.pack();
+            waitingDialog.setAlwaysOnTop(true);
+            waitingDialog.setIconImage(clockIcon.getImage());
+            waitingDialog.setContentPane(optionPane);
+        }
+        waitingDialog.setVisible(true);
+    }
+
+    private void closeWaitingMessage() {
+        if (waitingDialog != null) {
+            waitingDialog.setVisible(false);
         }
     }
 }

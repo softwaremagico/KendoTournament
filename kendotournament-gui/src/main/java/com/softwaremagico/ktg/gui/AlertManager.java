@@ -64,7 +64,7 @@ public class AlertManager {
 
     public static void customIconMessage(String className, ImageIcon icon, String text, String title) {
         KendoLog.finest(className, text);
-        JOptionPane.showMessageDialog(null, text, title, JOptionPane.INFORMATION_MESSAGE, winnerIcon);
+        JOptionPane.showMessageDialog(null, text, title, JOptionPane.INFORMATION_MESSAGE, icon);
     }
 
     public static void winnerMessage(String className, String code, String title, String winnerTeam) {
