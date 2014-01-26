@@ -60,6 +60,8 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -71,7 +73,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 public class FightPanel extends KFrame {
+    // Wait for some seconds until show waiting message.
 
+    private static Integer CONNECTION_TASK_PERIOD = 10000;
     private static final long serialVersionUID = -7506045720514481230L;
     private KPanel tournamentDefinitionPanel;
     private ScorePanel scorePanel;
@@ -83,6 +87,7 @@ public class FightPanel extends KFrame {
     private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem, deleteFightMenuItem, addFightMenuItem, changeMemberOrder, updateDatabase;
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
+    private Timer timer = new Timer("Database Exchange");
 
     public FightPanel() {
         defineWindow(750, 500);
@@ -708,6 +713,9 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
+            //Create timer for showing waiting message.
+            WaitingMessageTask timerTask = new WaitingMessageTask();
+            timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
             //Save fights.
             try {
                 DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
@@ -721,6 +729,12 @@ public class FightPanel extends KFrame {
             //Recreate Tournament structure.
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+
+            //Stop timer.
+            try {
+                timerTask.cancel();
+            } catch (NullPointerException npe) {
+            }
         }
     }
 
@@ -781,6 +795,14 @@ public class FightPanel extends KFrame {
             // Update score panel.
             updateScorePanel();
             updateNextButton();
+        }
+    }
+
+    class WaitingMessageTask extends TimerTask {
+
+        @Override
+        public void run() {
+            AlertManager.waitingDatabaseMessage(this.getClass().getName(), "waitingConnection", "!!!!!!");
         }
     }
 }

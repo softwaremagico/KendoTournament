@@ -1184,5 +1184,13 @@
 		<ca>Editaràs un equip que està en un altre shiaijo. Estàs segur de continuar?</ca>
 		<it>Si va a cambiare una squadra che sta in un altro shiaijo. Si è sicuro di continuare?</it>
 	</fightInOtherArea>
+	<waitingConnection>
+		<en>Waiting database response. Check the network connection.</en>
+		<es>Esperando respuesta de la base de datos. Compruebe la conexión de red.</es>
+		<nl>Waiting database response. Check the network connection.</nl>
+		<de>Waiting database response. Check the network connection.</de>
+		<ca>Esperant resposta de la base de dades. Comprove la connexió de xarxa.</ca>
+		<it>Aspettando risposta dalla base di dati. Controllare la conessionne di rete.</it>
+	</waitingConnection>
 </translator>
 

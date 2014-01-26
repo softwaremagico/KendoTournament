@@ -41,6 +41,7 @@ public class AlertManager {
     private static final int LINE = 50;
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static ImageIcon winnerIcon = null;
+    private static ImageIcon clockIcon = null;
 
     /**
      * Show an error message translated to the language stored
@@ -61,6 +62,12 @@ public class AlertManager {
         customMessage(className, text + ": " + finalText, title, JOptionPane.ERROR_MESSAGE);
     }
 
+    public static void customIconMessage(String className, ImageIcon icon, String text, String title) {
+        KendoLog.finest(className, text);
+        JFrame frame = null;
+        JOptionPane.showMessageDialog(frame, text, title, JOptionPane.INFORMATION_MESSAGE, winnerIcon);
+    }
+
     public static void winnerMessage(String className, String code, String title, String winnerTeam) {
         String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
@@ -69,11 +76,14 @@ public class AlertManager {
         if (winnerIcon == null) {
             winnerIcon = new ImageIcon(AlertManager.class.getResource("/cup.png"));
         }
-        KendoLog.finest(className, text);
-        JFrame frame = null;
-        JOptionPane.showMessageDialog(frame,
-                text.trim() + ":\n" + winnerTeam.trim(), title,
-                JOptionPane.INFORMATION_MESSAGE, winnerIcon);
+        customIconMessage(className, winnerIcon, text.trim() + ":\n" + winnerTeam.trim(), title);
+    }
+    
+        public static void waitingDatabaseMessage(String className, String code, String title) {
+        if (clockIcon == null) {
+            clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
+        }
+        customIconMessage(className, clockIcon, trans.getTranslatedText(code), title);
     }
 
     public static void translatedMessage(String className, String code, String title, String finalText, int option) {
