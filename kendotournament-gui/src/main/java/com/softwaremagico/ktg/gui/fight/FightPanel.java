@@ -674,10 +674,14 @@ public class FightPanel extends KFrame {
                                 // wait for other arena fights. Show message.
                                 String arenas = "";
                                 for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
-                                    if (getSelectedFightArea() != i) {
+                                    //Obtain not fimished arenas.
+                                    if (getSelectedFightArea() != i && !FightPool.getInstance().areAllOver(getSelectedTournament(), i)) {
                                         arenas += Tournament.getFightAreaName(i) + " ";
                                     }
                                 }
+                                //Prepare message
+                                arenas = arenas.trim().replace(" ", ", ");
+                                //Show message
                                 AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait", arenas);
                             }
                         }
