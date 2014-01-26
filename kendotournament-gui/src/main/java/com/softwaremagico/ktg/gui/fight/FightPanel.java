@@ -720,8 +720,8 @@ public class FightPanel extends KFrame {
         //Exchange fights if more than one fight area exists. 
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             //Create timer for showing waiting message.
-            WaitingMessageTask timerTask = new WaitingMessageTask();
-            timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
+            //WaitingMessageTask timerTask = new WaitingMessageTask();
+            //timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
             //Save fights.
             try {
                 DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
@@ -737,10 +737,10 @@ public class FightPanel extends KFrame {
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
 
             //Stop timer.
-            try {
-                timerTask.cancel();
-            } catch (NullPointerException npe) {
-            }
+            //try {
+            //    timerTask.cancel();
+            //} catch (NullPointerException npe) {
+            //}
         }
     }
 
