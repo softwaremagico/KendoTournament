@@ -298,7 +298,7 @@ public class FightPanel extends KFrame {
         getContentPane().add(tournamentDefinitionPanel, gridBagConstraints);
 
         JScrollPane scrollPanel = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scorePanel = new ScorePanel(scrollPanel);
         scrollPanel.setViewportView(scorePanel);
         scrollPanel.setBorder(BorderFactory.createEmptyBorder());
@@ -516,7 +516,7 @@ public class FightPanel extends KFrame {
             @Override
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 updateScorePanel();
-            }            
+            }
         });
     }
 
@@ -809,7 +809,6 @@ public class FightPanel extends KFrame {
         @Override
         public void run() {
             AlertManager.waitingDatabaseMessage(this.getClass().getName(), "waitingConnection", "!!!!!!");
-            this.cancel();
         }
     }
 }
