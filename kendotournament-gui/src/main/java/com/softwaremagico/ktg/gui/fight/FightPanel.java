@@ -669,7 +669,7 @@ public class FightPanel extends KFrame {
                                 createPersonalizedFights(fightPanel);
                             }
                         } else {
-                            // If it was the last fight of arena groups.
+                            // If it was the last fight of one arena groups.
                             if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                                 // wait for other arena fights. Show message.
                                 String arenas = "";
