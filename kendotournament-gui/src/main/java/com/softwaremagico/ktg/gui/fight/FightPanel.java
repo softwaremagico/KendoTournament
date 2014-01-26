@@ -60,7 +60,6 @@ import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -89,7 +88,7 @@ public class FightPanel extends KFrame {
     private JMenuItem showTreeMenuItem, groupScoreMenuItem, globalScoreMenuItem, deleteFightMenuItem, addFightMenuItem, changeMemberOrder, updateDatabase;
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
-    private Timer timer = new Timer("Database Exchange");
+    // private Timer timer = new Timer("Database Exchange");
 
     public FightPanel() {
         defineWindow(850, 500);
