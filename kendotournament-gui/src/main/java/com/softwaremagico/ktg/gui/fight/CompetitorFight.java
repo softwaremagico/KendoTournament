@@ -109,7 +109,7 @@ public class CompetitorFight extends JPanel {
     }
 
     protected void updateCompetitorNameLength(int width) {
-        int characters = ((width - (SCORE_DIMENSION + MARGIN * 2) * 2) - (FAULTS_DIMENSION + MARGIN * 2)) / 23;
+        int characters = ((width - (SCORE_DIMENSION + MARGIN * 2) * 2) - (FAULTS_DIMENSION + MARGIN * 2)) / 28;
         if (characters > 3 && competitor != null) {
             nameLabel.setText(competitor.getSurnameNameIni(characters));
         }
