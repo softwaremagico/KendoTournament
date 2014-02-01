@@ -78,11 +78,18 @@ public class AlertManager {
         customIconMessage(className, winnerIcon, text.trim() + ":\n" + winnerTeam.trim(), title);
     }
 
-    public static void waitingDatabaseMessage(String className, String code, String title) {
+    public static JOptionPane createWaitingDatabaseMessage() {
         if (clockIcon == null) {
             clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
         }
-        customIconMessage(className, clockIcon, trans.getTranslatedText(code), title);
+
+        JOptionPane waitingMessage = new JOptionPane(
+                trans.getTranslatedText("waitingConnection"),
+                JOptionPane.QUESTION_MESSAGE,
+                JOptionPane.OK_OPTION, clockIcon);
+
+        return waitingMessage;
+        // customIconMessage(className, clockIcon, trans.getTranslatedText("waitingConnection"), "");
     }
 
     public static void translatedMessage(String className, String code, String title, String finalText, int option) {

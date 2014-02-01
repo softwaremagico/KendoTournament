@@ -23,79 +23,67 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import java.awt.Frame;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import com.softwaremagico.ktg.language.LanguagePool;
-
 public class WaitingMessageThread extends Thread {
-	private static Integer CONNECTION_TASK_PERIOD = 3000;
-	private JDialog waitingDialog;
-	private ImageIcon clockIcon = null;
-	private Timer timer = new Timer("Waiting Message");
-	private WaitingTask timerTask;
-	private Frame parent;
 
-	public WaitingMessageThread(Frame parent) {
-		this.parent = parent;
-	}
+    private static Integer CONNECTION_TASK_PERIOD = 3000;
+    private JOptionPane waitingDialog;
+    private ImageIcon clockIcon = null;
+    private Timer timer = new Timer("Waiting Message");
+    private WaitingTask timerTask;
+    private Frame parent;
 
-	@Override
-	public void run() {
-		openWaitingMessage();
-	}
+    public WaitingMessageThread(Frame parent) {
+        this.parent = parent;
+    }
 
-	private void createWaitingMessage() {
-		if (waitingDialog == null) {
-			if (clockIcon == null) {
-				clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
-			}
+    @Override
+    public void run() {
+        openWaitingMessage();
+    }
 
-			JOptionPane optionPane = new JOptionPane(LanguagePool.getTranslator("messages.xml").getTranslatedText(
-					"waitingConnection"), JOptionPane.INFORMATION_MESSAGE, JOptionPane.DEFAULT_OPTION);
+    private void createWaitingMessage() {
+        if (waitingDialog == null) {
+            if (clockIcon == null) {
+                clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
+            }
+            waitingDialog = AlertManager.createWaitingDatabaseMessage();
+        }
+    }
 
-			waitingDialog = new JDialog(parent, LanguagePool.getTranslator("messages.xml").getTranslatedText(
-					"waitingConnection"), false);
-			waitingDialog.pack();
-			waitingDialog.setAlwaysOnTop(true);
-			waitingDialog.setIconImage(clockIcon.getImage());
-			waitingDialog.setContentPane(optionPane);
-		}
-	}
+    public void openWaitingMessage() {
+        // Close old ones.
+        try {
+            timerTask.cancel();
+        } catch (NullPointerException npe) {
+        }
+        timerTask = new WaitingTask();
+        timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
+    }
 
-	public void openWaitingMessage() {
-		// Close old ones.
-		try {
-			timerTask.cancel();
-		} catch (NullPointerException npe) {
-		}
-		timerTask = new WaitingTask();
-		timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
-	}
+    public void closeWaitingMessage() {
+        if (waitingDialog != null) {
+            waitingDialog.setVisible(false);
+        }
+        try {
+            timerTask.cancel();
+        } catch (NullPointerException npe) {
+        }
+    }
 
-	public void closeWaitingMessage() {
-		if (waitingDialog != null) {
-			waitingDialog.setVisible(false);
-		}
-		try {
-			timerTask.cancel();
-		} catch (NullPointerException npe) {
-		}
-	}
+    class WaitingTask extends TimerTask {
 
-	class WaitingTask extends TimerTask {
-		@Override
-		public void run() {
-			if (waitingDialog == null) {
-				createWaitingMessage();
-			}
-			waitingDialog.setVisible(true);
-		}
-	}
+        @Override
+        public void run() {
+            if (waitingDialog == null) {
+                createWaitingMessage();
+            }
+            waitingDialog.setVisible(true);
+        }
+    }
 }
