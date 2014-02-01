@@ -86,7 +86,7 @@ public class AlertManager {
         JOptionPane waitingMessage = new JOptionPane(
                 trans.getTranslatedText("waitingConnection"),
                 JOptionPane.QUESTION_MESSAGE,
-                JOptionPane.OK_OPTION, clockIcon);
+                JOptionPane.CLOSED_OPTION, clockIcon);
 
         return waitingMessage;
         // customIconMessage(className, clockIcon, trans.getTranslatedText("waitingConnection"), "");

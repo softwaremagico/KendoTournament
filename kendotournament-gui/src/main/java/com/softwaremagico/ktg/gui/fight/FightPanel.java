@@ -654,6 +654,7 @@ public class FightPanel extends KFrame {
                                 }
                                 ranking = new Ranking(group.getFights());
                             }
+                            //Not show score now, wait for network data exchange. 
                             showScore = true;
                         }
 
@@ -729,7 +730,7 @@ public class FightPanel extends KFrame {
      * Database must be updated if different arenas (with different computers)
      * are used.
      */
-    private void updateDatabaseForMultipleComputers() throws SQLException {
+    private void updateDatabaseForMultipleComputers() throws SQLException {       
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             // Create timer for showing waiting message.

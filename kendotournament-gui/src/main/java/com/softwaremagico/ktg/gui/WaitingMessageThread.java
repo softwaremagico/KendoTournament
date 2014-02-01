@@ -23,8 +23,12 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.core.KendoLog;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
@@ -33,7 +37,9 @@ import javax.swing.JOptionPane;
 
 public class WaitingMessageThread extends Thread {
 
-    private static Integer CONNECTION_TASK_PERIOD = 3000;
+    private static final Integer WIDTH = 600;
+    private static final Integer HEIGHT = 155;
+    private static final Integer CONNECTION_TASK_PERIOD = 3000;
     private JDialog waitingDialog;
     private ImageIcon clockIcon = null;
     private Timer timer = new Timer("Waiting Message");
@@ -55,9 +61,30 @@ public class WaitingMessageThread extends Thread {
                 clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
             }
 
-            JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+            final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
 
-            waitingDialog = new JDialog(parent,"tic tac", true);
+            optionPane.addPropertyChangeListener(
+                    new PropertyChangeListener() {
+                        @Override
+                        public void propertyChange(PropertyChangeEvent e) {
+                            String prop = e.getPropertyName();
+
+                            if (waitingDialog.isVisible()
+                                    && (e.getSource() == optionPane)
+                                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                                waitingDialog.setVisible(false);
+                            }
+                        }
+                    });
+
+            waitingDialog = new JDialog(parent, "tic tac", true);
+
+            waitingDialog.setSize(WIDTH, HEIGHT);
+            waitingDialog.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+            waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                    - (int) (WIDTH / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                    / 2 - (int) (HEIGHT / 2));
+
             waitingDialog.setContentPane(optionPane);
         }
     }
@@ -75,6 +102,7 @@ public class WaitingMessageThread extends Thread {
     public void closeWaitingMessage() {
         if (waitingDialog != null) {
             waitingDialog.setVisible(false);
+            KendoLog.info(WaitingMessageThread.class.getName(), "Closing 'Waiting Database' Message.");
         }
         try {
             timerTask.cancel();
@@ -89,6 +117,7 @@ public class WaitingMessageThread extends Thread {
             if (waitingDialog == null) {
                 createWaitingMessage();
             }
+            KendoLog.info(WaitingMessageThread.class.getName(), "Create 'Waiting Database' Message.");
             waitingDialog.setVisible(true);
         }
     }
