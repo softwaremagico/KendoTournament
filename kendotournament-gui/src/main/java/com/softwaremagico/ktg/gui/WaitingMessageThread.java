@@ -57,10 +57,8 @@ public class WaitingMessageThread extends Thread {
 
             JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
 
-            waitingDialog = optionPane.createDialog(null,"tic tac");
-            waitingDialog.pack();
-            waitingDialog.setAlwaysOnTop(true);
-            waitingDialog.setIconImage(clockIcon.getImage());
+            waitingDialog = new JDialog(parent,"tic tac", true);
+            waitingDialog.setContentPane(optionPane);
         }
     }
 
