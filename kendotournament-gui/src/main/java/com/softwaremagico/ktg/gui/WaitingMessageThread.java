@@ -23,16 +23,18 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.language.LanguagePool;
 import java.awt.Frame;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class WaitingMessageThread extends Thread {
 
     private static Integer CONNECTION_TASK_PERIOD = 3000;
-    private JOptionPane waitingDialog;
+    private JDialog waitingDialog;
     private ImageIcon clockIcon = null;
     private Timer timer = new Timer("Waiting Message");
     private WaitingTask timerTask;
@@ -52,7 +54,13 @@ public class WaitingMessageThread extends Thread {
             if (clockIcon == null) {
                 clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
             }
-            waitingDialog = AlertManager.createWaitingDatabaseMessage();
+
+            JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+
+            waitingDialog = optionPane.createDialog(null,"tic tac");
+            waitingDialog.pack();
+            waitingDialog.setAlwaysOnTop(true);
+            waitingDialog.setIconImage(clockIcon.getImage());
         }
     }
 
