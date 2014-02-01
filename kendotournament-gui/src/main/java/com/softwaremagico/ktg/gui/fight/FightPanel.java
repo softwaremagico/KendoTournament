@@ -624,6 +624,7 @@ public class FightPanel extends KFrame {
         @Override
         public void acceptAction() {
             try {
+                boolean showScore = false;
                 // Exists fights.
                 if (!FightPool.getInstance().get(getSelectedTournament(), getSelectedFightArea()).isEmpty()) {
                     // Finish current fight.
@@ -653,12 +654,15 @@ public class FightPanel extends KFrame {
                                 }
                                 ranking = new Ranking(group.getFights());
                             }
-                            // Show score.
-                            openRankingWindow(ranking, true);
+                            showScore = true;
                         }
 
                         // Exchange fights with other computer.
                         updateDatabaseForMultipleComputers();
+                        if (showScore) {
+                            // Show score.
+                            openRankingWindow(ranking, true);
+                        }
 
                         // If it was the last fight of all groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
