@@ -76,6 +76,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
@@ -798,9 +799,8 @@ public class FightPanel extends KFrame {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessage();
-            waitingDialog.setVisible(true);
-            updateFightsInMultipleComputers();            
-            waitingDialog.dispose();
+            UpdateDataWorker updateData = new UpdateDataWorker();
+            updateData.execute();
         }
     }
     
@@ -835,5 +835,23 @@ public class FightPanel extends KFrame {
         // Recreate Tournament structure.
         TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+    }
+    
+    class UpdateDataWorker extends SwingWorker<Boolean, Object> {
+        
+        @Override
+        public Boolean doInBackground() {
+            waitingDialog.setVisible(true);
+            updateFightsInMultipleComputers();
+            return true;
+        }
+        
+        @Override
+        protected void done() {
+            try {
+                waitingDialog.setVisible(false);
+            } catch (Exception ignore) {
+            }
+        }
     }
 }
