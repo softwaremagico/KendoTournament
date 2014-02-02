@@ -32,7 +32,6 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.gui.WaitingMessageThread;
 import com.softwaremagico.ktg.gui.base.FightAreaComboBox;
 import com.softwaremagico.ktg.gui.base.KCheckBoxMenuItem;
 import com.softwaremagico.ktg.gui.base.KFrame;
@@ -52,19 +51,24 @@ import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -77,6 +81,7 @@ public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
 
     private static final long serialVersionUID = -7506045720514481230L;
+    private static final Integer WAITING_TASK_PERIOD = 3000;
     private KPanel tournamentDefinitionPanel;
     private ScorePanel scorePanel;
     private KPanel buttonPlacePanel;
@@ -88,7 +93,9 @@ public class FightPanel extends KFrame {
             changeMemberOrder, updateDatabase;
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
-    private WaitingMessageThread waitingMessage;
+    private JDialog waitingDialog;
+    private Timer timer = new Timer("Database Connection");
+    private Task timerTask;
 
     // private Timer timer = new Timer("Database Exchange");
     public FightPanel() {
@@ -731,9 +738,8 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
-            // Create timer for showing waiting message.
-            waitingMessage = new WaitingMessageThread(this);
-            waitingMessage.start();
+            createWaitingMessageTask();
+
             // Save fights.
             try {
                 DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
@@ -748,8 +754,8 @@ public class FightPanel extends KFrame {
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
 
-            waitingMessage.closeWaitingMessage();
-            waitingMessage.interrupt();
+            closeWaitingMessageTask();
+
         }
     }
 
@@ -811,6 +817,57 @@ public class FightPanel extends KFrame {
             // Update score panel.
             updateScorePanel();
             updateNextButton();
+        }
+    }
+
+    private void createWaitingMessage() {
+        final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+        waitingDialog = new JDialog(this, "tic tac", true);
+
+        waitingDialog.setSize(WIDTH, HEIGHT);
+        waitingDialog.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                - (int) (WIDTH / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (HEIGHT / 2));
+
+        waitingDialog.setContentPane(optionPane);
+    }
+
+    private void createWaitingMessageTask() {
+        // Create timer for showing waiting message.
+        if (waitingDialog == null) {
+            createWaitingMessage();
+        }
+        timerTask = new Task(waitingDialog);
+        timer.schedule(timerTask, WAITING_TASK_PERIOD);
+    }
+
+    private void closeWaitingMessageTask() {
+        try {
+            waitingDialog.setVisible(false);
+        } catch (Exception e) {
+        }
+        waitingDialog = null;
+
+        try {
+            timerTask.cancel();
+        } catch (NullPointerException npe) {
+        }
+    }
+
+    class Task extends TimerTask {
+
+        private JDialog waitingDialog;
+
+        public Task(JDialog waitingDialog) {
+            this.waitingDialog = waitingDialog;
+        }
+
+        @Override
+        public void run() {
+            if (waitingDialog != null) {
+                waitingDialog.setVisible(true);
+            }
         }
     }
 }

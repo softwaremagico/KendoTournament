@@ -23,17 +23,11 @@ package com.softwaremagico.ktg.lists;
  * #L%
  */
 
-import com.itextpdf.text.Document;
-import com.softwaremagico.ktg.core.Duel;
 import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TimerPanel extends javax.swing.JFrame {
 
-    List<Duel> duels = new ArrayList<>();
     protected int fontSize = 17;
-    Document document;
 
     /** Creates new form TimerPanel */
     public TimerPanel() {
