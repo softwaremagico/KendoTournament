@@ -867,7 +867,7 @@ public class FightPanel extends KFrame {
                     });
 
 
-            waitingNetworkDialog = new JDialog(this, "tic tac", false);
+            waitingNetworkDialog = new JDialog(new JFrame(), "tic tac", false);
             waitingNetworkDialog.setAlwaysOnTop(true);
             waitingNetworkDialog.requestFocus();
             waitingNetworkDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
