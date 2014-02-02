@@ -738,7 +738,11 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
-            createWaitingMessageTask();
+            // createWaitingMessageTask();
+            if (waitingDialog == null) {
+                createWaitingMessage();
+            }
+            waitingDialog.setVisible(true);
 
             // Save fights.
             try {
@@ -754,7 +758,8 @@ public class FightPanel extends KFrame {
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
 
-            closeWaitingMessageTask();
+            //  closeWaitingMessageTask();
+            waitingDialog.setVisible(false);
 
         }
     }
@@ -824,11 +829,13 @@ public class FightPanel extends KFrame {
         final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
         waitingDialog = new JDialog(this, "tic tac", true);
 
-        waitingDialog.setSize(WIDTH, HEIGHT);
-        waitingDialog.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        int width = 600;
+        int height = 150;
+        waitingDialog.setSize(width, height);
+        waitingDialog.setMinimumSize(new Dimension(width, height));
         waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
-                - (int) (WIDTH / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-                / 2 - (int) (HEIGHT / 2));
+                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (width / 2));
 
         waitingDialog.setContentPane(optionPane);
     }
