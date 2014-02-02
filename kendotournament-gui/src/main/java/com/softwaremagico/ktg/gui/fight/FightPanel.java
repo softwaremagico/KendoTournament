@@ -804,7 +804,7 @@ public class FightPanel extends KFrame {
     }
 
     /**
-     * Creates a dialog box with a waiting network message. 
+     * Creates a dialog box with a waiting network message.
      */
     private void createWaitingMessage() {
         if (waitingDialog == null) {
@@ -812,9 +812,10 @@ public class FightPanel extends KFrame {
             waitingDialog = new JDialog(this, "tic tac", true);
             waitingDialog.setAlwaysOnTop(true);
             waitingDialog.requestFocus();
+            waitingDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
             int width = 600;
-            int height = 150;
+            int height = 155;
             waitingDialog.setSize(width, height);
             waitingDialog.setMinimumSize(new Dimension(width, height));
             waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
@@ -826,7 +827,7 @@ public class FightPanel extends KFrame {
     }
 
     /**
-     * Exchange data among computers. 
+     * Exchange data among computers.
      */
     private void updateFightsInMultipleComputers() {
         // Save fights.
@@ -869,6 +870,7 @@ public class FightPanel extends KFrame {
             }
             try {
                 waitingDialog.setVisible(false);
+                waitingDialog.dispose();
             } catch (Exception ignore) {
             }
         }
