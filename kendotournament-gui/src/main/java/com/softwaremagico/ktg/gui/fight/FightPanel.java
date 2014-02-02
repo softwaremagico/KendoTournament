@@ -738,11 +738,11 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
-            // createWaitingMessageTask();
-            if (waitingDialog == null) {
-                createWaitingMessage();
-            }
-            waitingDialog.setVisible(true);
+            createWaitingMessageTask();
+            //if (waitingDialog == null) {
+            //     createWaitingMessage();
+            //}
+            // waitingDialog.setVisible(true);
 
             // Save fights.
             try {
@@ -758,8 +758,8 @@ public class FightPanel extends KFrame {
             TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
             TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
 
-            //  closeWaitingMessageTask();
-            waitingDialog.setVisible(false);
+            closeWaitingMessageTask();
+            // waitingDialog.setVisible(false);
 
         }
     }
