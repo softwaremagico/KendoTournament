@@ -27,13 +27,15 @@ import com.softwaremagico.ktg.core.KendoLog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class WaitingMessageThread extends Thread {
 
@@ -42,9 +44,17 @@ public class WaitingMessageThread extends Thread {
     private static final Integer CONNECTION_TASK_PERIOD = 3000;
     private JDialog waitingDialog;
     private ImageIcon clockIcon = null;
-    private Timer timer = new Timer("Waiting Message");
-    private WaitingTask timerTask;
+    private Timer timer;
     private Frame parent;
+    private Runnable waitingRunnable;
+    private ActionListener timerAction = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            if (waitingDialog != null) {
+                waitingDialog.setVisible(true);
+            }
+        }
+    };
 
     public WaitingMessageThread(Frame parent) {
         this.parent = parent;
@@ -52,73 +62,57 @@ public class WaitingMessageThread extends Thread {
 
     @Override
     public void run() {
-        openWaitingMessage();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("2");
+                // Here, we can safely update the GUI
+                // because we'll be called from the
+                // event dispatch thread
+                createWaitingMessage();
+                System.out.println("3");
+                timer = new Timer(CONNECTION_TASK_PERIOD, timerAction);
+            }
+        });
     }
 
     private void createWaitingMessage() {
-        if (waitingDialog == null) {
-            if (clockIcon == null) {
-                clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
-            }
+        if (clockIcon == null) {
+            clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
+        }
 
-            final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+        final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
 
-            optionPane.addPropertyChangeListener(
-                    new PropertyChangeListener() {
-                        @Override
-                        public void propertyChange(PropertyChangeEvent e) {
-                            String prop = e.getPropertyName();
+        optionPane.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent e) {
+                        String prop = e.getPropertyName();
 
-                            if (waitingDialog.isVisible()
-                                    && (e.getSource() == optionPane)
-                                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
-                                waitingDialog.setVisible(false);
-                            }
+                        if (waitingDialog.isVisible()
+                                && (e.getSource() == optionPane)
+                                && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                            waitingDialog.setVisible(false);
                         }
-                    });
+                    }
+                });
 
-            waitingDialog = new JDialog(parent, "tic tac", true);
+        waitingDialog = new JDialog(parent, "tic tac", true);
 
-            waitingDialog.setSize(WIDTH, HEIGHT);
-            waitingDialog.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-            waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
-                    - (int) (WIDTH / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-                    / 2 - (int) (HEIGHT / 2));
+        waitingDialog.setSize(WIDTH, HEIGHT);
+        waitingDialog.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                - (int) (WIDTH / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (HEIGHT / 2));
 
-            waitingDialog.setContentPane(optionPane);
-        }
+        waitingDialog.setContentPane(optionPane);
     }
-
-    public void openWaitingMessage() {
-        // Close old ones.
-        try {
-            timerTask.cancel();
-        } catch (NullPointerException npe) {
-        }
-        timerTask = new WaitingTask();
-        timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
-    }
-
+    
     public void closeWaitingMessage() {
-        if (waitingDialog != null) {
-            waitingDialog.setVisible(false);
-            KendoLog.info(WaitingMessageThread.class.getName(), "Closing 'Waiting Database' Message.");
-        }
         try {
-            timerTask.cancel();
-        } catch (NullPointerException npe) {
+            waitingDialog.setVisible(false);
+        } catch (Exception e) {
         }
-    }
-
-    class WaitingTask extends TimerTask {
-
-        @Override
-        public void run() {
-            if (waitingDialog == null) {
-                createWaitingMessage();
-            }
-            KendoLog.info(WaitingMessageThread.class.getName(), "Create 'Waiting Database' Message.");
-            waitingDialog.setVisible(true);
-        }
+        waitingDialog = null;
     }
 }
