@@ -85,8 +85,8 @@ public class AlertManager {
 
         JOptionPane waitingMessage = new JOptionPane(
                 trans.getTranslatedText("waitingConnection"),
-                JOptionPane.QUESTION_MESSAGE,
-                JOptionPane.NO_OPTION, clockIcon);
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, clockIcon);
 
         return waitingMessage;
     }
