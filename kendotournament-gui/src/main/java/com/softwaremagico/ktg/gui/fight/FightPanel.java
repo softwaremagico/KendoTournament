@@ -741,11 +741,8 @@ public class FightPanel extends KFrame {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessageTask();
-            
             ExchangeDataThread databaseFightsExchange = new ExchangeDataThread();
-            databaseFightsExchange.start();
-            
-            closeWaitingMessageTask();
+            databaseFightsExchange.start();            
         }
     }
 
@@ -835,30 +832,34 @@ public class FightPanel extends KFrame {
     }
 
     private void closeWaitingMessageTask() {
-        try {
-            waitingDialog.setVisible(false);
-        } catch (Exception e) {
-        }
-        waitingDialog = null;
-
-        try {
-            timerTask.cancel();
-        } catch (NullPointerException npe) {
-        }
+        timerTask.closeDialog();
     }
 
     class Task extends TimerTask {
 
-        private JDialog waitingDialog;
+        private JDialog delayedDialog;
 
-        public Task(JDialog waitingDialog) {
-            this.waitingDialog = waitingDialog;
+        public Task(JDialog delayedDialog) {
+            this.delayedDialog = delayedDialog;
         }
 
         @Override
         public void run() {
-            if (waitingDialog != null) {
-                waitingDialog.setVisible(true);
+            if (delayedDialog != null) {
+                delayedDialog.setVisible(true);
+            }
+        }
+
+        public void closeDialog() {
+            try {
+                delayedDialog.setVisible(false);
+            } catch (Exception e) {
+            }
+            delayedDialog = null;
+
+            try {
+                this.cancel();
+            } catch (NullPointerException npe) {
             }
         }
     }
@@ -877,6 +878,7 @@ public class FightPanel extends KFrame {
         // Recreate Tournament structure.
         TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+        closeWaitingMessageTask();
     }
 
     class ExchangeDataThread extends Thread {
