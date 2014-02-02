@@ -59,6 +59,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -809,6 +811,21 @@ public class FightPanel extends KFrame {
     private void createWaitingMessage() {
         if (waitingDialog == null) {
             final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+            optionPane.addPropertyChangeListener(
+                    new PropertyChangeListener() {
+                        @Override
+                        public void propertyChange(PropertyChangeEvent e) {
+                            String prop = e.getPropertyName();
+
+                            if (waitingDialog.isVisible()
+                                    && (e.getSource() == optionPane)
+                                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                                waitingDialog.setVisible(false);
+                            }
+                        }
+                    });
+
+
             waitingDialog = new JDialog(this, "tic tac", true);
             waitingDialog.setAlwaysOnTop(true);
             waitingDialog.requestFocus();
