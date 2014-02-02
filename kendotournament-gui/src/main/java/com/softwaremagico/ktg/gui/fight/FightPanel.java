@@ -827,7 +827,7 @@ public class FightPanel extends KFrame {
 
     private void createWaitingMessage() {
         final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
-        waitingDialog = new JDialog(this, "tic tac", true);
+        waitingDialog = new JDialog(this, "tic tac", false);
 
         int width = 600;
         int height = 150;
