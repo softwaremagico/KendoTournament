@@ -59,6 +59,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
@@ -739,28 +741,11 @@ public class FightPanel extends KFrame {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessageTask();
-            //if (waitingDialog == null) {
-            //     createWaitingMessage();
-            //}
-            // waitingDialog.setVisible(true);
-
-            // Save fights.
-            try {
-                DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
-            } catch (SQLException ex) {
-                AlertManager.showSqlErrorMessage(ex);
-            }
-            // Load fights.
-            FightPool.getInstance().reset(getSelectedTournament());
-            // Load teams.
-            TeamPool.getInstance().reset(getSelectedTournament());
-            // Recreate Tournament structure.
-            TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
-            TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
-
+            
+            ExchangeDataThread databaseFightsExchange = new ExchangeDataThread();
+            databaseFightsExchange.start();
+            
             closeWaitingMessageTask();
-            // waitingDialog.setVisible(false);
-
         }
     }
 
@@ -877,4 +862,41 @@ public class FightPanel extends KFrame {
             }
         }
     }
+
+    private void updateFightsInMultipleComputers() {
+        // Save fights.
+        try {
+            DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        // Load fights.
+        FightPool.getInstance().reset(getSelectedTournament());
+        // Load teams.
+        TeamPool.getInstance().reset(getSelectedTournament());
+        // Recreate Tournament structure.
+        TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
+        TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
+    }
+
+    class ExchangeDataThread extends Thread {
+
+        @Override
+        public void run() {
+            try {
+                UpdateFightsRunnable updateFightsRunnable = new UpdateFightsRunnable();
+                SwingUtilities.invokeAndWait(updateFightsRunnable);
+            } catch (InterruptedException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
+
+        class UpdateFightsRunnable implements Runnable {
+
+            @Override
+            public void run() {
+                updateFightsInMultipleComputers();
+            }
+        };
+    };
 }
