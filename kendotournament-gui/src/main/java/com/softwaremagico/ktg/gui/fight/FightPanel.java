@@ -601,6 +601,67 @@ public class FightPanel extends KFrame {
         }
     }
 
+    private void createPersonalizedFights(FightPanel fightPanel) {
+        // Personalized championship. Open window for
+        // creating new fights.
+        newPersonalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
+        newPersonalizedFight.setVisible(true);
+    }
+
+    /**
+     * Deletes the selected fight.
+     */
+    private void deleteSelectedFight() {
+        try {
+            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+                    getSelectedFightArea());
+
+            if (currentFight != null) {
+                TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().get(currentFight.getGroup())
+                        .removeFight(currentFight);
+                // Update score panel.
+                updateScorePanel();
+                AlertManager.informationMessage(NewPersonalizedFight.class.getName(), "fightDeleted", "");
+            }
+        } catch (SQLException ex) {
+            KendoLog.errorMessage(this.getClass().getName(), ex);
+        }
+
+    }
+
+    class PreviousButton extends UpButton {
+
+        private static final long serialVersionUID = -6545316498980721275L;
+
+        protected PreviousButton() {
+            setTranslatedText("PreviousButton");
+        }
+
+        @Override
+        public void acceptAction() {
+            try {
+                Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+                        getSelectedFightArea());
+                if (currentFight != null) {
+                    currentFight.setOver(false);
+                    Fight previousFight = FightPool.getInstance().get(
+                            getSelectedTournament(),
+                            getSelectedFightArea(),
+                            FightPool.getInstance().getCurrentFightIndex(getSelectedTournament(),
+                            getSelectedFightArea()) - 1);
+                    if (previousFight != null) {
+                        previousFight.setOver(false);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FightPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            // Update score panel.
+            updateScorePanel();
+            updateNextButton();
+        }
+    }
+
     class NextButton extends DownButton {
 
         private static final long serialVersionUID = -7724190339280274613L;
@@ -742,68 +803,7 @@ public class FightPanel extends KFrame {
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessageTask();
             ExchangeDataThread databaseFightsExchange = new ExchangeDataThread();
-            databaseFightsExchange.start();            
-        }
-    }
-
-    private void createPersonalizedFights(FightPanel fightPanel) {
-        // Personalized championship. Open window for
-        // creating new fights.
-        newPersonalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
-        newPersonalizedFight.setVisible(true);
-    }
-
-    /**
-     * Deletes the selected fight.
-     */
-    private void deleteSelectedFight() {
-        try {
-            Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
-                    getSelectedFightArea());
-
-            if (currentFight != null) {
-                TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().get(currentFight.getGroup())
-                        .removeFight(currentFight);
-                // Update score panel.
-                updateScorePanel();
-                AlertManager.informationMessage(NewPersonalizedFight.class.getName(), "fightDeleted", "");
-            }
-        } catch (SQLException ex) {
-            KendoLog.errorMessage(this.getClass().getName(), ex);
-        }
-
-    }
-
-    class PreviousButton extends UpButton {
-
-        private static final long serialVersionUID = -6545316498980721275L;
-
-        protected PreviousButton() {
-            setTranslatedText("PreviousButton");
-        }
-
-        @Override
-        public void acceptAction() {
-            try {
-                Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
-                        getSelectedFightArea());
-                if (currentFight != null) {
-                    currentFight.setOver(false);
-                    Fight previousFight = FightPool.getInstance().get(
-                            getSelectedTournament(),
-                            getSelectedFightArea(),
-                            FightPool.getInstance().getCurrentFightIndex(getSelectedTournament(),
-                            getSelectedFightArea()) - 1);
-                    if (previousFight != null) {
-                        previousFight.setOver(false);
-                    }
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(FightPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            // Update score panel.
-            updateScorePanel();
-            updateNextButton();
+            databaseFightsExchange.start();
         }
     }
 
@@ -887,8 +887,8 @@ public class FightPanel extends KFrame {
         public void run() {
             try {
                 UpdateFightsRunnable updateFightsRunnable = new UpdateFightsRunnable();
-                SwingUtilities.invokeAndWait(updateFightsRunnable);
-            } catch (InterruptedException | InvocationTargetException e) {
+                SwingUtilities.invokeLater(updateFightsRunnable);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
