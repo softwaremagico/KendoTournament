@@ -96,7 +96,7 @@ public class FightPanel extends KFrame {
             changeMemberOrder, updateDatabase;
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
-    private JDialog waitingDialog;
+    private JDialog waitingNetworkDialog, waitingArenaDialog;
 
     // private Timer timer = new Timer("Database Exchange");
     public FightPanel() {
@@ -690,7 +690,7 @@ public class FightPanel extends KFrame {
 
         @Override
         public void acceptAction() {
-            createWaitingMessage();
+            createWaitingNetworkMessage();
             UpdateDataWorker updateData = new UpdateDataWorker();
             updateData.execute();
         }
@@ -763,19 +763,8 @@ public class FightPanel extends KFrame {
                         // If it was the last fight of one arena groups.
                         if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
                             // wait for other arena fights. Show message.
-                            String arenas = "";
-                            for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
-                                // Obtain not fimished arenas.
-                                if (getSelectedFightArea() != i
-                                        && !FightPool.getInstance().areAllOver(getSelectedTournament(), i)) {
-                                    arenas += Tournament.getFightAreaName(i) + " ";
-                                }
-                            }
-                            // Prepare message
-                            arenas = arenas.trim().replace(" ", ", ");
-                            // Show message
-                            AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait",
-                                    arenas);
+                            createWaitingArenasMessage();
+                            waitingArenaDialog.setVisible(true);
                         }
                     }
                 }
@@ -808,8 +797,59 @@ public class FightPanel extends KFrame {
     /**
      * Creates a dialog box with a waiting network message.
      */
-    private void createWaitingMessage() {
-        if (waitingDialog == null) {
+    private void createWaitingArenasMessage() throws SQLException {
+        // wait for other arena fights. Show message.
+        String arenas = "";
+        for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
+            // Obtain not fimished arenas.
+            if (getSelectedFightArea() != i
+                    && !FightPool.getInstance().areAllOver(getSelectedTournament(), i)) {
+                arenas += Tournament.getFightAreaName(i) + " ";
+            }
+        }
+        // Prepare message
+        arenas = arenas.trim().replace(" ", ", ");
+
+        final JOptionPane optionPane = new JOptionPane(
+                LanguagePool.getTranslator("messages.xml").getTranslatedText("waitingArena") + ": " + arenas,
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION);
+        optionPane.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent e) {
+                        String prop = e.getPropertyName();
+
+                        if (waitingArenaDialog.isVisible()
+                                && (e.getSource() == optionPane)
+                                && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                            waitingArenaDialog.setVisible(false);
+                        }
+                    }
+                });
+
+
+        waitingArenaDialog = new JDialog(this, "Waiting", false);
+        waitingArenaDialog.setAlwaysOnTop(true);
+        waitingArenaDialog.requestFocus();
+        waitingArenaDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        int width = 450;
+        int height = 155;
+        waitingArenaDialog.setSize(width, height);
+        waitingArenaDialog.setMinimumSize(new Dimension(width, height));
+        waitingArenaDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (height / 2));
+
+        waitingArenaDialog.setContentPane(optionPane);
+    }
+
+    /**
+     * Creates a dialog box with a waiting network message.
+     */
+    private void createWaitingNetworkMessage() {
+        if (waitingNetworkDialog == null) {
             final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
             optionPane.addPropertyChangeListener(
                     new PropertyChangeListener() {
@@ -817,29 +857,29 @@ public class FightPanel extends KFrame {
                         public void propertyChange(PropertyChangeEvent e) {
                             String prop = e.getPropertyName();
 
-                            if (waitingDialog.isVisible()
+                            if (waitingNetworkDialog.isVisible()
                                     && (e.getSource() == optionPane)
                                     && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
-                                waitingDialog.setVisible(false);
+                                waitingNetworkDialog.setVisible(false);
                             }
                         }
                     });
 
 
-            waitingDialog = new JDialog(this, "tic tac", true);
-            waitingDialog.setAlwaysOnTop(true);
-            waitingDialog.requestFocus();
-            waitingDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            waitingNetworkDialog = new JDialog(this, "tic tac", false);
+            waitingNetworkDialog.setAlwaysOnTop(true);
+            waitingNetworkDialog.requestFocus();
+            waitingNetworkDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
             int width = 600;
             int height = 155;
-            waitingDialog.setSize(width, height);
-            waitingDialog.setMinimumSize(new Dimension(width, height));
-            waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+            waitingNetworkDialog.setSize(width, height);
+            waitingNetworkDialog.setMinimumSize(new Dimension(width, height));
+            waitingNetworkDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
                     - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
                     / 2 - (int) (height / 2));
 
-            waitingDialog.setContentPane(optionPane);
+            waitingNetworkDialog.setContentPane(optionPane);
         }
     }
 
@@ -887,8 +927,8 @@ public class FightPanel extends KFrame {
             } catch (NullPointerException npe) {
             }
             try {
-                waitingDialog.setVisible(false);
-                waitingDialog.dispose();
+                waitingNetworkDialog.setVisible(false);
+                waitingNetworkDialog.dispose();
             } catch (Exception ignore) {
             }
         }
@@ -897,7 +937,7 @@ public class FightPanel extends KFrame {
 
             @Override
             public void run() {
-                waitingDialog.setVisible(true);
+                waitingNetworkDialog.setVisible(true);
             }
         }
     }
