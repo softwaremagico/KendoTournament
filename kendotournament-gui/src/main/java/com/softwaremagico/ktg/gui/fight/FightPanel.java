@@ -59,12 +59,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -77,7 +74,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
@@ -96,8 +92,6 @@ public class FightPanel extends KFrame {
     private KCheckBoxMenuItem changeTeam, changeColor;
     private NewPersonalizedFight newPersonalizedFight;
     private JDialog waitingDialog;
-    private Timer timer = new Timer("Database Connection");
-    private Task timerTask;
 
     // private Timer timer = new Timer("Database Exchange");
     public FightPanel() {
@@ -801,15 +795,18 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
-            createWaitingMessageTask();
+            createWaitingMessage();
+
             ExchangeDataThread databaseFightsExchange = new ExchangeDataThread();
             databaseFightsExchange.start();
+
+
         }
     }
 
     private void createWaitingMessage() {
         final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
-        waitingDialog = new JDialog(this, "tic tac", false);
+        waitingDialog = new JDialog(this, "tic tac", true);
 
         int width = 600;
         int height = 150;
@@ -820,48 +817,6 @@ public class FightPanel extends KFrame {
                 / 2 - (int) (width / 2));
 
         waitingDialog.setContentPane(optionPane);
-    }
-
-    private void createWaitingMessageTask() {
-        // Create timer for showing waiting message.
-        if (waitingDialog == null) {
-            createWaitingMessage();
-        }
-        timerTask = new Task(waitingDialog);
-        timer.schedule(timerTask, WAITING_TASK_PERIOD);
-    }
-
-    private void closeWaitingMessageTask() {
-        timerTask.closeDialog();
-    }
-
-    class Task extends TimerTask {
-
-        private JDialog delayedDialog;
-
-        public Task(JDialog delayedDialog) {
-            this.delayedDialog = delayedDialog;
-        }
-
-        @Override
-        public void run() {
-            if (delayedDialog != null) {
-                delayedDialog.setVisible(true);
-            }
-        }
-
-        public void closeDialog() {
-            try {
-                delayedDialog.setVisible(false);
-            } catch (Exception e) {
-            }
-            delayedDialog = null;
-
-            try {
-                this.cancel();
-            } catch (NullPointerException npe) {
-            }
-        }
     }
 
     private void updateFightsInMultipleComputers() {
@@ -878,27 +833,19 @@ public class FightPanel extends KFrame {
         // Recreate Tournament structure.
         TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
-        closeWaitingMessageTask();
     }
 
     class ExchangeDataThread extends Thread {
 
         @Override
         public void run() {
-            try {
-                UpdateFightsRunnable updateFightsRunnable = new UpdateFightsRunnable();
-                SwingUtilities.invokeLater(updateFightsRunnable);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (waitingDialog != null) {
+                waitingDialog.setVisible(true);
+            }
+            updateFightsInMultipleComputers();
+            if (waitingDialog != null) {
+                waitingDialog.setVisible(false);
             }
         }
-
-        class UpdateFightsRunnable implements Runnable {
-
-            @Override
-            public void run() {
-                updateFightsInMultipleComputers();
-            }
-        };
     };
 }
