@@ -59,6 +59,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
@@ -100,66 +102,66 @@ public class FightPanel extends KFrame {
         setElements();
         addResizedEvent();
     }
-
+    
     private void setElements() {
         // Add Main menu.
         setJMenuBar(createMenu());
-
+        
         setLayout(new GridBagLayout());
         setMainPanels();
         tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         updateSelectedTournament();
         updateNextButton();
     }
-
+    
     public JMenuBar createMenu() {
         JMenuBar mainMenu = new JMenuBar();
         mainMenu.add(windowMenu());
         mainMenu.add(createOptionsMenu());
         mainMenu.add(createShowMenu());
-
+        
         return mainMenu;
     }
-
+    
     private JMenu windowMenu() {
-
+        
         KMenu windowMenu = new KMenu("WindowMenuItem");
         windowMenu.setMnemonic(KeyEvent.VK_E);
         windowMenu.setIcon(new ImageIcon(Path.getIconPath() + "panel.png"));
-
+        
         changeColor = new KCheckBoxMenuItem("ColourCheckBox");
         changeColor.setMnemonic(KeyEvent.VK_C);
         changeColor.setIcon(new ImageIcon(Path.getIconPath() + "color-invert.png"));
-
+        
         changeColor.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateScorePanel();
             }
         });
-
+        
         windowMenu.add(changeColor);
-
+        
         changeTeam = new KCheckBoxMenuItem("InverseCheckBox");
         changeTeam.setMnemonic(KeyEvent.VK_T);
         changeTeam.setIcon(new ImageIcon(Path.getIconPath() + "team-invert.png"));
-
+        
         changeTeam.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateScorePanel();
             }
         });
-
+        
         windowMenu.add(changeTeam);
-
+        
         updateDatabase = new KMenuItem("DatabaseUpdateMenuItem");
         updateDatabase.setIcon(new ImageIcon(Path.getIconPath() + "updatePanel.png"));
 
         //Ctrl + S for save. 
         updateDatabase.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S,
                 java.awt.event.InputEvent.CTRL_MASK));
-
+        
         updateDatabase.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,27 +178,27 @@ public class FightPanel extends KFrame {
             }
         });
         windowMenu.add(updateDatabase);
-
+        
         KMenuItem exitMenuItem = new KMenuItem("ExitMenuItem");
         exitMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "exit.png"));
-
+        
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dispose();
             }
         });
-
+        
         windowMenu.add(exitMenuItem);
-
+        
         return windowMenu;
     }
-
+    
     private JMenu createShowMenu() {
         KMenu showMenu = new KMenu("ShowMenuItem");
         showMenu.setMnemonic(KeyEvent.VK_S);
         showMenu.setIcon(new ImageIcon(Path.getIconPath() + "show.png"));
-
+        
         showTreeMenuItem = new KMenuItem("TreeButton");
         showTreeMenuItem.setMnemonic(KeyEvent.VK_T);
         showTreeMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "tree.png"));
@@ -207,7 +209,7 @@ public class FightPanel extends KFrame {
             }
         });
         showMenu.add(showTreeMenuItem);
-
+        
         groupScoreMenuItem = new KMenuItem("PointListMenuItemGroup");
         groupScoreMenuItem.setMnemonic(KeyEvent.VK_P);
         groupScoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
@@ -228,7 +230,7 @@ public class FightPanel extends KFrame {
             }
         });
         showMenu.add(groupScoreMenuItem);
-
+        
         globalScoreMenuItem = new KMenuItem("PointListMenuItemGlobal");
         globalScoreMenuItem.setMnemonic(KeyEvent.VK_G);
         globalScoreMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
@@ -243,21 +245,21 @@ public class FightPanel extends KFrame {
             }
         });
         showMenu.add(globalScoreMenuItem);
-
+        
         return showMenu;
     }
-
+    
     private JMenu createOptionsMenu() {
         KMenu optionsMenu = new KMenu("OptionsMenu");
         optionsMenu.setMnemonic(KeyEvent.VK_O);
         optionsMenu.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
-
+        
         changeMemberOrder = new KMenuItem("ChangeTeamOrder");
         changeMemberOrder.setMnemonic(KeyEvent.VK_O);
         changeMemberOrder.setIcon(new ImageIcon(Path.getIconPath() + "changeTeam.png"));
-
+        
         optionsMenu.add(changeMemberOrder);
-
+        
         final FightPanel fightPanel = this;
         addFightMenuItem = new KMenuItem("AddFigthtButton");
         addFightMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "list-add.png"));
@@ -268,7 +270,7 @@ public class FightPanel extends KFrame {
             }
         });
         optionsMenu.add(addFightMenuItem);
-
+        
         deleteFightMenuItem = new KMenuItem("DeleteFigthtButton");
         deleteFightMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "list-remove.png"));
         deleteFightMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -277,19 +279,19 @@ public class FightPanel extends KFrame {
                 deleteSelectedFight();
             }
         });
-
+        
         optionsMenu.add(deleteFightMenuItem);
-
+        
         return optionsMenu;
     }
-
+    
     public void addChangeTeamMenuItemListener(ActionListener al) {
         changeMemberOrder.addActionListener(al);
     }
-
+    
     private void setMainPanels() {
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
+        
         tournamentDefinitionPanel = createTournamentPanel();
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
@@ -301,7 +303,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 0;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(tournamentDefinitionPanel, gridBagConstraints);
-
+        
         JScrollPane scrollPanel = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scorePanel = new ScorePanel(scrollPanel);
@@ -317,7 +319,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(scrollPanel, gridBagConstraints);
-
+        
         buttonPlacePanel = createButtonPanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = xPadding;
@@ -330,12 +332,12 @@ public class FightPanel extends KFrame {
         gridBagConstraints.insets = new Insets(0, 0, 0, 0);
         getContentPane().add(buttonPlacePanel, gridBagConstraints);
     }
-
+    
     private KPanel createTournamentPanel() {
         KPanel tournamentPanel = new KPanel();
         tournamentPanel.setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
+        
         KLabel tournamentLabel = new KLabel("TournamentLabel");
         tournamentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -348,7 +350,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         tournamentPanel.add(tournamentLabel, gridBagConstraints);
-
+        
         tournamentComboBox = new TournamentComboBox(this);
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
@@ -360,7 +362,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         tournamentPanel.add(tournamentComboBox, gridBagConstraints);
-
+        
         KLabel fightAreaLabel = new KLabel("FightArea");
         fightAreaLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
@@ -373,7 +375,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         tournamentPanel.add(fightAreaLabel, gridBagConstraints);
-
+        
         fightAreaComboBox = new FightAreaComboBox(getSelectedTournament());
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = xPadding;
@@ -391,15 +393,15 @@ public class FightPanel extends KFrame {
                 updateSelectedFightArea();
             }
         });
-
+        
         return tournamentPanel;
     }
-
+    
     private KPanel createButtonPanel() {
         KPanel buttonPanel = new KPanel();
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
-
+        
         previousButton = new PreviousButton();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
@@ -411,7 +413,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(previousButton, gridBagConstraints);
-
+        
         KPanel teamOptions = new KPanel();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
@@ -423,7 +425,7 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(teamOptions, gridBagConstraints);
-
+        
         nextButton = new NextButton(this);
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 0;
@@ -435,23 +437,23 @@ public class FightPanel extends KFrame {
         gridBagConstraints.weighty = 1;
         gridBagConstraints.insets = new Insets(5, 5, 5, 5);
         buttonPanel.add(nextButton, gridBagConstraints);
-
+        
         return buttonPanel;
     }
-
+    
     @Override
     public void update() {
         updateSelectedTournament();
     }
-
+    
     public Tournament getSelectedTournament() {
         return tournamentComboBox.getSelectedTournament();
     }
-
+    
     public int getSelectedFightArea() {
         return fightAreaComboBox.getSelectedFightArea();
     }
-
+    
     public void updateScorePanel() {
         if (scorePanel != null) {
             scorePanel.updateTournament(getSelectedTournament(), getSelectedFightArea(), changeTeam.isSelected(),
@@ -476,7 +478,7 @@ public class FightPanel extends KFrame {
     public boolean isTeamChanged() {
         return changeTeam.isSelected();
     }
-
+    
     public void updateSelectedTournament() {
         fightAreaComboBox.update(getSelectedTournament());
         updateSelectedFightArea();
@@ -492,7 +494,7 @@ public class FightPanel extends KFrame {
             showTreeMenuItem.setVisible(false);
             groupScoreMenuItem.setVisible(false);
         }
-
+        
         if (getSelectedTournament() != null && getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
             deleteFightMenuItem.setVisible(true);
             addFightMenuItem.setVisible(true);
@@ -507,16 +509,16 @@ public class FightPanel extends KFrame {
             updateDatabase.setVisible(true);
         }
     }
-
+    
     public void updateSelectedFightArea() {
         updateScorePanel();
     }
-
+    
     @Override
     public void elementChanged() {
         updateSelectedTournament();
     }
-
+    
     private void addResizedEvent() {
         addComponentListener(new java.awt.event.ComponentAdapter() {
             @Override
@@ -564,22 +566,22 @@ public class FightPanel extends KFrame {
         }
         return n;
     }
-
+    
     private void openRankingWindow(List<Fight> fights) {
         Ranking ranking = new Ranking(fights);
         openRankingWindow(ranking, false);
     }
-
+    
     private void openRankingWindow(Ranking ranking, boolean autoclose) {
         RankingWindow mp = new RankingWindow(ranking, autoclose);
         mp.setVisible(true);
     }
-
+    
     private void openTreeWindow() {
         TreeWindow tw = new TreeWindow(getSelectedTournament());
         tw.setVisible(true);
     }
-
+    
     private void updateNextButton() {
         // Now it was the last one of a group.
         if (TournamentManagerFactory.getManager(getSelectedTournament()) != null
@@ -594,7 +596,7 @@ public class FightPanel extends KFrame {
             }
         }
     }
-
+    
     private void createPersonalizedFights(FightPanel fightPanel) {
         // Personalized championship. Open window for
         // creating new fights.
@@ -609,7 +611,7 @@ public class FightPanel extends KFrame {
         try {
             Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
                     getSelectedFightArea());
-
+            
             if (currentFight != null) {
                 TournamentManagerFactory.getManager(getSelectedTournament()).getGroups().get(currentFight.getGroup())
                         .removeFight(currentFight);
@@ -620,17 +622,17 @@ public class FightPanel extends KFrame {
         } catch (SQLException ex) {
             KendoLog.errorMessage(this.getClass().getName(), ex);
         }
-
+        
     }
-
+    
     class PreviousButton extends UpButton {
-
+        
         private static final long serialVersionUID = -6545316498980721275L;
-
+        
         protected PreviousButton() {
             setTranslatedText("PreviousButton");
         }
-
+        
         @Override
         public void acceptAction() {
             try {
@@ -655,18 +657,18 @@ public class FightPanel extends KFrame {
             updateNextButton();
         }
     }
-
+    
     class NextButton extends DownButton {
-
+        
         private static final long serialVersionUID = -7724190339280274613L;
         private FightPanel fightPanel;
-
+        
         protected NextButton(FightPanel fightPanel) {
             this.fightPanel = fightPanel;
             updateText(false);
             updateIcon(false);
         }
-
+        
         protected final void updateIcon(boolean last) {
             if (last) {
                 setIcon(new ImageIcon(Path.getIconPath() + "highscores.png"));
@@ -674,7 +676,7 @@ public class FightPanel extends KFrame {
                 setIcon(new ImageIcon(Path.getIconPath() + "down.png"));
             }
         }
-
+        
         protected final void updateText(boolean last) {
             if (last) {
                 setTranslatedText("FinishGroupButton");
@@ -682,7 +684,7 @@ public class FightPanel extends KFrame {
                 setTranslatedText("NextButton");
             }
         }
-
+        
         @Override
         public void acceptAction() {
             try {
@@ -694,7 +696,7 @@ public class FightPanel extends KFrame {
                             getSelectedFightArea());
                     currentFight.setOver(true);
                     FightPool.getInstance().update(currentFight.getTournament(), currentFight);
-
+                    
                     TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
                     // If it was the last fight of group.
                     if (group.areFightsOver()) {
@@ -796,29 +798,39 @@ public class FightPanel extends KFrame {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessage();
-
-            ExchangeDataThread databaseFightsExchange = new ExchangeDataThread();
-            databaseFightsExchange.start();
-
-
+            waitingDialog.setVisible(true);
+            try {
+                SwingUtilities.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateFightsInMultipleComputers();
+                    }
+                });
+            } catch (InterruptedException | InvocationTargetException ex) {
+                Logger.getLogger(FightPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            waitingDialog.dispose();
         }
     }
-
+    
     private void createWaitingMessage() {
         final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
-        waitingDialog = new JDialog(this, "tic tac", true);
-
+        waitingDialog = new JDialog(this, "tic tac", false);
+        waitingDialog.setAlwaysOnTop(true);
+        waitingDialog.requestFocus();
+        
         int width = 600;
         int height = 150;
         waitingDialog.setSize(width, height);
         waitingDialog.setMinimumSize(new Dimension(width, height));
         waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
                 - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-                / 2 - (int) (width / 2));
-
+                / 2 - (int) (height / 2));
+        
         waitingDialog.setContentPane(optionPane);
     }
-
+    
     private void updateFightsInMultipleComputers() {
         // Save fights.
         try {
@@ -834,18 +846,4 @@ public class FightPanel extends KFrame {
         TournamentManagerFactory.getManager(getSelectedTournament()).resetFights();
         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
     }
-
-    class ExchangeDataThread extends Thread {
-
-        @Override
-        public void run() {
-            if (waitingDialog != null) {
-                waitingDialog.setVisible(true);
-            }
-            updateFightsInMultipleComputers();
-            if (waitingDialog != null) {
-                waitingDialog.setVisible(false);
-            }
-        }
-    };
 }

@@ -80,8 +80,8 @@ public class ConvertDatabase {
 
     public class ThreadConversion extends Thread {
 
-        TimerPanel timerPanel;
-        Translator transl;
+        private TimerPanel timerPanel;
+        private Translator transl;
 
         public ThreadConversion(TimerPanel tp) {
             transl = LanguagePool.getTranslator("gui.xml");
