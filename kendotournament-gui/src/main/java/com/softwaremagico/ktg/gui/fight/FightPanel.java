@@ -799,17 +799,7 @@ public class FightPanel extends KFrame {
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
             createWaitingMessage();
             waitingDialog.setVisible(true);
-            try {
-                SwingUtilities.invokeAndWait(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateFightsInMultipleComputers();
-                    }
-                });
-            } catch (InterruptedException | InvocationTargetException ex) {
-                Logger.getLogger(FightPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            updateFightsInMultipleComputers();            
             waitingDialog.dispose();
         }
     }
