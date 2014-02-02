@@ -688,107 +688,108 @@ public class FightPanel extends KFrame {
 
         @Override
         public void acceptAction() {
-            try {
-                boolean showScore = false;
-                // Exists fights.
-                if (!FightPool.getInstance().get(getSelectedTournament(), getSelectedFightArea()).isEmpty()) {
-                    // Finish current fight.
-                    Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
-                            getSelectedFightArea());
-                    currentFight.setOver(true);
-                    FightPool.getInstance().update(currentFight.getTournament(), currentFight);
+            createWaitingMessage();
+            UpdateDataWorker updateData = new UpdateDataWorker();
+            updateData.execute();
+        }
+    }
 
-                    TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
-                    // If it was the last fight of group.
-                    if (group.areFightsOver()) {
-                        // Personalized cannot undraw.
-                        Ranking ranking = null;
-                        if (!getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
-                            boolean moreDrawTeams = true;
-                            while (moreDrawTeams) {
-                                ranking = new Ranking(group.getFights());
-                                // Search for draw scores.
-                                List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament()
-                                        .getHowManyTeamsOfGroupPassToTheTree());
-                                if (teamsInDraw != null) {
-                                    // Solve Draw Scores
-                                    resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
-                                } else {
-                                    // No more draw teams, exit loop.
-                                    moreDrawTeams = false;
-                                }
-                                ranking = new Ranking(group.getFights());
+    private void nextFights() {
+        try {
+            // Exists fights.
+            if (!FightPool.getInstance().get(getSelectedTournament(), getSelectedFightArea()).isEmpty()) {
+                // Finish current fight.
+                Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
+                        getSelectedFightArea());
+                currentFight.setOver(true);
+                FightPool.getInstance().update(currentFight.getTournament(), currentFight);
+
+                TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
+                // If it was the last fight of group.
+                if (group.areFightsOver()) {
+                    // Personalized cannot undraw.
+                    Ranking ranking = null;
+                    if (!getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+                        boolean moreDrawTeams = true;
+                        while (moreDrawTeams) {
+                            ranking = new Ranking(group.getFights());
+                            // Search for draw scores.
+                            List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getSelectedTournament()
+                                    .getHowManyTeamsOfGroupPassToTheTree());
+                            if (teamsInDraw != null) {
+                                // Solve Draw Scores
+                                resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
+                            } else {
+                                // No more draw teams, exit loop.
+                                moreDrawTeams = false;
                             }
-                            //Not show score now, wait for network data exchange. 
-                            showScore = true;
+                            ranking = new Ranking(group.getFights());
                         }
-
-                        // Exchange fights with other computer.
-                        updateDatabaseForMultipleComputers();
-                        if (showScore) {
-                            // Show score.
-                            openRankingWindow(ranking, true);
-                        }
-
-                        // If it was the last fight of all groups.
-                        if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
-                            // Create fights of next level (if any).
-                            List<Fight> newFights;
-                            try {
-
-                                // Standard championship.
-                                newFights = TournamentManagerFactory.getManager(getSelectedTournament())
-                                        .createSortedFights(currentFight.getLevel() + 1);
-                                if (newFights != null && newFights.size() > 0) {
-                                    // Add new fights and continue.
-                                    FightPool.getInstance().add(getSelectedTournament(), newFights);
-                                    // Save this fights to avoid multiple creation.
-                                    updateDatabaseForMultipleComputers();
-                                } else {
-                                    // No more fights, show final winner
-                                    // message.
-                                    if (ranking != null) {
-                                        AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished",
-                                                "!!!!!!", ranking.getTeamsRanking().get(0).getName());
-                                    }
-                                }
-                            } catch (PersonalizedFightsException e) {
-                                createPersonalizedFights(fightPanel);
-                            }
-                        } else {
-                            // If it was the last fight of one arena groups.
-                            if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
-                                // wait for other arena fights. Show message.
-                                String arenas = "";
-                                for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
-                                    // Obtain not fimished arenas.
-                                    if (getSelectedFightArea() != i
-                                            && !FightPool.getInstance().areAllOver(getSelectedTournament(), i)) {
-                                        arenas += Tournament.getFightAreaName(i) + " ";
-                                    }
-                                }
-                                // Prepare message
-                                arenas = arenas.trim().replace(" ", ", ");
-                                // Show message
-                                AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait",
-                                        arenas);
-                            }
-                        }
+                        //Not show score now, wait for network data exchange. 
+                        openRankingWindow(ranking, true);
                     }
-                    updateNextButton();
-                } else {
-                    // Personalized tournament, if empty, add new fight.
-                    if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
-                        createPersonalizedFights(fightPanel);
+
+                    // Exchange fights with other computer.
+                    updateDatabaseForMultipleComputers();
+
+                    // If it was the last fight of all groups.
+                    if (FightPool.getInstance().areAllOver(getSelectedTournament())) {
+                        // Create fights of next level (if any).
+                        List<Fight> newFights;
+                        try {
+
+                            // Standard championship.
+                            newFights = TournamentManagerFactory.getManager(getSelectedTournament())
+                                    .createSortedFights(currentFight.getLevel() + 1);
+                            if (newFights != null && newFights.size() > 0) {
+                                // Add new fights and continue.
+                                FightPool.getInstance().add(getSelectedTournament(), newFights);
+                                // Save this fights to avoid multiple creation.
+                                updateDatabaseForMultipleComputers();
+                            } else {
+                                // No more fights, show final winner
+                                // message.
+                                if (ranking != null) {
+                                    AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished",
+                                            "!!!!!!", ranking.getTeamsRanking().get(0).getName());
+                                }
+                            }
+                        } catch (PersonalizedFightsException e) {
+                            createPersonalizedFights(this);
+                        }
+                    } else {
+                        // If it was the last fight of one arena groups.
+                        if (FightPool.getInstance().areAllOver(getSelectedTournament(), getSelectedFightArea())) {
+                            // wait for other arena fights. Show message.
+                            String arenas = "";
+                            for (int i = 0; i < getSelectedTournament().getFightingAreas(); i++) {
+                                // Obtain not fimished arenas.
+                                if (getSelectedFightArea() != i
+                                        && !FightPool.getInstance().areAllOver(getSelectedTournament(), i)) {
+                                    arenas += Tournament.getFightAreaName(i) + " ";
+                                }
+                            }
+                            // Prepare message
+                            arenas = arenas.trim().replace(" ", ", ");
+                            // Show message
+                            AlertManager.informationMessage(this.getClass().getName(), "waitingArena", "Wait",
+                                    arenas);
+                        }
                     }
                 }
-            } catch (SQLException ex) {
-                AlertManager.showSqlErrorMessage(ex);
+                updateNextButton();
+            } else {
+                // Personalized tournament, if empty, add new fight.
+                if (getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
+                    createPersonalizedFights(this);
+                }
             }
-            // closeWaitingMessage();
-            // Update score panel.
-            updateScorePanel();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
         }
+        // closeWaitingMessage();
+        // Update score panel.
+        updateScorePanel();
     }
 
     /**
@@ -798,29 +799,35 @@ public class FightPanel extends KFrame {
     private void updateDatabaseForMultipleComputers() throws SQLException {
         // Exchange fights if more than one fight area exists.
         if (getSelectedTournament() != null && getSelectedTournament().isUsingMultipleComputers()) {
-            createWaitingMessage();
-            UpdateDataWorker updateData = new UpdateDataWorker();
-            updateData.execute();
+            updateFightsInMultipleComputers();
         }
     }
 
+    /**
+     * Creates a dialog box with a waiting network message. 
+     */
     private void createWaitingMessage() {
-        final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
-        waitingDialog = new JDialog(this, "tic tac", true);
-        waitingDialog.setAlwaysOnTop(true);
-        waitingDialog.requestFocus();
+        if (waitingDialog == null) {
+            final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
+            waitingDialog = new JDialog(this, "tic tac", true);
+            waitingDialog.setAlwaysOnTop(true);
+            waitingDialog.requestFocus();
 
-        int width = 600;
-        int height = 150;
-        waitingDialog.setSize(width, height);
-        waitingDialog.setMinimumSize(new Dimension(width, height));
-        waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
-                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-                / 2 - (int) (height / 2));
+            int width = 600;
+            int height = 150;
+            waitingDialog.setSize(width, height);
+            waitingDialog.setMinimumSize(new Dimension(width, height));
+            waitingDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                    - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                    / 2 - (int) (height / 2));
 
-        waitingDialog.setContentPane(optionPane);
+            waitingDialog.setContentPane(optionPane);
+        }
     }
 
+    /**
+     * Exchange data among computers. 
+     */
     private void updateFightsInMultipleComputers() {
         // Save fights.
         try {
@@ -845,9 +852,12 @@ public class FightPanel extends KFrame {
 
         @Override
         public Boolean doInBackground() {
-            timerTask = new Task();
-            timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
-            updateFightsInMultipleComputers();
+            if (getSelectedTournament().isUsingMultipleComputers()) {
+                timerTask = new Task();
+                timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
+            }
+            nextFights();
+
             return true;
         }
 
@@ -864,6 +874,7 @@ public class FightPanel extends KFrame {
         }
 
         class Task extends TimerTask {
+
             @Override
             public void run() {
                 waitingDialog.setVisible(true);
