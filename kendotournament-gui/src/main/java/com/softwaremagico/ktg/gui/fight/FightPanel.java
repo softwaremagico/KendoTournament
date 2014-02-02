@@ -806,7 +806,7 @@ public class FightPanel extends KFrame {
 
     private void createWaitingMessage() {
         final JOptionPane optionPane = AlertManager.createWaitingDatabaseMessage();
-        waitingDialog = new JDialog(this, "tic tac", false);
+        waitingDialog = new JDialog(this, "tic tac", true);
         waitingDialog.setAlwaysOnTop(true);
         waitingDialog.requestFocus();
 
