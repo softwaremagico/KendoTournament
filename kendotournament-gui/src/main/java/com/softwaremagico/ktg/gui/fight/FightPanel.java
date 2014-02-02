@@ -578,6 +578,7 @@ public class FightPanel extends KFrame {
     private void openRankingWindow(Ranking ranking, boolean autoclose) {
         RankingWindow mp = new RankingWindow(ranking, autoclose);
         mp.setVisible(true);
+        mp.setAlwaysOnTop(true);
     }
 
     private void openTreeWindow() {
@@ -829,13 +830,13 @@ public class FightPanel extends KFrame {
                 });
 
 
-        waitingArenaDialog = new JDialog(this, "Waiting", false);
+        waitingArenaDialog = new JDialog(new JFrame(), "Waiting", false);
         waitingArenaDialog.setAlwaysOnTop(true);
         waitingArenaDialog.requestFocus();
         waitingArenaDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         int width = 450;
-        int height = 155;
+        int height = 135;
         waitingArenaDialog.setSize(width, height);
         waitingArenaDialog.setMinimumSize(new Dimension(width, height));
         waitingArenaDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
@@ -921,7 +922,6 @@ public class FightPanel extends KFrame {
 
         @Override
         protected void done() {
-            System.out.println("done!!");
             try {
                 timerTask.cancel();
             } catch (NullPointerException npe) {
