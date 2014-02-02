@@ -864,6 +864,7 @@ public class FightPanel extends KFrame {
 
         @Override
         protected void done() {
+            System.out.println("done!!");
             try {
                 timerTask.cancel();
             } catch (NullPointerException npe) {
