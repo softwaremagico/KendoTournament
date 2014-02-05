@@ -27,7 +27,7 @@
             <class name="com.softwaremagico.ktg.persistence.ChampionshipFightAreaTest" />
             <class name="com.softwaremagico.ktg.persistence.ChangeMemberOrderTest" />
             <class name="com.softwaremagico.ktg.persistence.ScoreTest" />
-            <class name="com.softwaremagico.ktg.persistence.HierarchicalScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.EuropeanScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.CustomScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.DatabaseStore" />
         </classes>

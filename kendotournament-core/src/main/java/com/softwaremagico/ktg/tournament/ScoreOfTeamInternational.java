@@ -4,9 +4,9 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
-public class ScoreOfTeamHierarchical extends ScoreOfTeam {
+public class ScoreOfTeamInternational extends ScoreOfTeam {
 
-    public ScoreOfTeamHierarchical(Team team, List<Fight> fights) {
+    public ScoreOfTeamInternational(Team team, List<Fight> fights) {
         super(team, fights);
     }
 
@@ -20,14 +20,6 @@ public class ScoreOfTeamHierarchical extends ScoreOfTeam {
             return 1;
         }
 
-        if (getDrawFights() > o.getDrawFights()) {
-            return -1;
-        }
-
-        if (getDrawFights() < o.getDrawFights()) {
-            return 1;
-        }
-
         if (getWonDuels() > o.getWonDuels()) {
             return -1;
         }
@@ -36,19 +28,27 @@ public class ScoreOfTeamHierarchical extends ScoreOfTeam {
             return 1;
         }
 
-        if (getDrawDuels() > o.getDrawDuels()) {
-            return -1;
-        }
-
-        if (getDrawDuels() < o.getDrawDuels()) {
-            return 1;
-        }
-
         if (getHits() > o.getHits()) {
             return -1;
         }
 
         if (getHits() < o.getHits()) {
+            return 1;
+        }
+
+        if (getDrawFights() > o.getDrawFights()) {
+            return -1;
+        }
+
+        if (getDrawFights() < o.getDrawFights()) {
+            return 1;
+        }
+
+        if (getDrawDuels() > o.getDrawDuels()) {
+            return -1;
+        }
+
+        if (getDrawDuels() < o.getDrawDuels()) {
             return 1;
         }
 

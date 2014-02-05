@@ -12,30 +12,14 @@ public class ScoreOfTeamEuropean extends ScoreOfTeam {
 
     @Override
     public int compareTo(ScoreOfTeam o) {
-              if (getWonFights() > o.getWonFights()) {
+        if (getWonFights() > o.getWonFights()) {
             return -1;
         }
-        
+
         if (getWonFights() < o.getWonFights()) {
             return 1;
         }
-        
-        if (getWonDuels() > o.getWonDuels()) {
-            return -1;
-        }
-        
-        if (getWonDuels() < o.getWonDuels()) {
-            return 1;
-        }
-        
-        if (getHits() > o.getHits()) {
-            return -1;
-        }
-        
-        if (getHits() < o.getHits()) {
-            return 1;
-        }
-        
+
         if (getDrawFights() > o.getDrawFights()) {
             return -1;
         }
@@ -44,11 +28,27 @@ public class ScoreOfTeamEuropean extends ScoreOfTeam {
             return 1;
         }
 
+        if (getWonDuels() > o.getWonDuels()) {
+            return -1;
+        }
+
+        if (getWonDuels() < o.getWonDuels()) {
+            return 1;
+        }
+
         if (getDrawDuels() > o.getDrawDuels()) {
             return -1;
         }
 
         if (getDrawDuels() < o.getDrawDuels()) {
+            return 1;
+        }
+
+        if (getHits() > o.getHits()) {
+            return -1;
+        }
+
+        if (getHits() < o.getHits()) {
             return 1;
         }
 

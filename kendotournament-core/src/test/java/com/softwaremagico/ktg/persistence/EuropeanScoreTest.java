@@ -21,14 +21,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Test(groups = {"europeanChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
-public class HierarchicalScoreTest {
+public class EuropeanScoreTest {
 
     private static final Integer MEMBERS = 3;
     private static final Integer TEAMS_PER_GROUP = 4;
     private static final Integer GROUPS = 2;
     public static final String TOURNAMENT_NAME = "europeanChampionshipTest";
     private static Tournament tournament = null;
-    private static final ScoreType SCORE_TYPE = ScoreType.HIERARCHICAL;
+    private static final ScoreType SCORE_TYPE = ScoreType.EUROPEAN;
 
     @Test
     public void addTournament() throws SQLException {
