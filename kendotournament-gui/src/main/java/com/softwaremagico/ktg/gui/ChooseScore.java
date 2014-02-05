@@ -35,8 +35,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ChooseScore extends javax.swing.JFrame {
-
-    Translator trans = null;
+	private static final long serialVersionUID = 4593127586769712466L;
+	
+	Translator trans = null;
     private boolean refreshing = false;
 
     /**
@@ -99,7 +100,7 @@ public class ChooseScore extends javax.swing.JFrame {
         if (HierarchicalRadioButton.isSelected()) {
             return ScoreType.HIERARCHICAL;
         }
-        return ScoreType.INTERNATIONAL;
+        return ScoreType.DEFAULT;
     }
 
     private Integer getWinnerPoints() {

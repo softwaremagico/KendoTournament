@@ -6,37 +6,38 @@ import java.util.List;
 
 public enum ScoreType {
 
-    INTERNATIONAL("international"),
-    HIERARCHICAL("hierarchical"),
-    CUSTOM("custom");
-    private String tag;
+	CLASSIC("classic"), INTERNATIONAL("international"), HIERARCHICAL("hierarchical"), CUSTOM("custom");
 
-    ScoreType(String tag) {
-        this.tag = tag;
-    }
+	public static ScoreType DEFAULT = ScoreType.INTERNATIONAL;
 
-    public String getTag() {
-        return tag;
-    }
+	private String tag;
 
-    public static ScoreOfTeam getScoreOfTeam(Team team, List<Fight> fights) {
-        switch (team.getTournament().getTournamentScore().getScoreType()) {
-            case CUSTOM:
-                return new ScoreOfTeamCustom(team, fights);
-            case HIERARCHICAL:
-                return new ScoreOfTeamHierarchical(team, fights);
-            case INTERNATIONAL:
-            default:
-                return new ScoreOfTeamInternational(team, fights);
-        }
-    }
+	ScoreType(String tag) {
+		this.tag = tag;
+	}
 
-    public static ScoreType getScoreType(String tag) {
-        for (ScoreType scoreType : ScoreType.values()) {
-            if (scoreType.getTag().equals(tag)) {
-                return scoreType;
-            }
-        }
-        return INTERNATIONAL;
-    }
+	public String getTag() {
+		return tag;
+	}
+
+	public static ScoreOfTeam getScoreOfTeam(Team team, List<Fight> fights) {
+		switch (team.getTournament().getTournamentScore().getScoreType()) {
+		case CUSTOM:
+			return new ScoreOfTeamCustom(team, fights);
+		case HIERARCHICAL:
+			return new ScoreOfTeamHierarchical(team, fights);
+		case INTERNATIONAL:
+		default:
+			return new ScoreOfTeamInternational(team, fights);
+		}
+	}
+
+	public static ScoreType getScoreType(String tag) {
+		for (ScoreType scoreType : ScoreType.values()) {
+			if (scoreType.getTag().equals(tag)) {
+				return scoreType;
+			}
+		}
+		return DEFAULT;
+	}
 }
