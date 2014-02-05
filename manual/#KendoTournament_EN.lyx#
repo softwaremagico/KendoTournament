@@ -1375,16 +1375,26 @@ Scoring rules
 \begin_layout Standard
 In this window you can determine the different scoring rules, that is, how
  much will be worth winning a match or if the match ends in a tie.
- Now there are four options:
+ Now there are three options:
 \end_layout
 
 \begin_layout Description
-Classic: standard Japanese system in which only the matches that have been
- won will be counted, and the tied matches will count as lost.
+International:
 \end_layout
 
 \begin_layout Description
-International: in the case that two teams had scored a 
+Hierarchical:
+\end_layout
+
+\begin_layout Description
+Custom:
+\end_layout
+
+\begin_layout Standard
+By default, the Japanese system exists, in which only the matches that have
+ been won will be counted, and the tied matches will count as lost.
+ Another option consists on the system that actually is being used in Europe:
+ in the case that two teams had scored a 
 \begin_inset Index idx
 status open
 
@@ -1397,21 +1407,10 @@ draw
 draw according to the matches they have won, the team that will pass will
  be the one with more draw combats, because it is considered more valuable
  a draw than a loss.
- 
-\end_layout
-
-\begin_layout Description
-Hierarchical: in the case of same number of winned fights, the user with
- more draw fights will be prevail over the one with less draw fights.
- In a case of a tie, the same behaviour with the duels.
- 
-\end_layout
-
-\begin_layout Description
-Custom: lastly, there is a system that allows to give a score to the matches
- that have been won or lost, to imitate other system such as the football
- one, a victory will be valued with three points and a draw will be valued
- with one point.
+ Lastly, there is a system that allows to give a score to the matches that
+ have been won or lost, to imitate other system such as the football one,
+ a victory will be valued with three points and a draw will be valued with
+ one point.
  Here the user can choose any scoring system that he or she prefers.
  
 \end_layout

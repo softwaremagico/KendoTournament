@@ -1485,10 +1485,22 @@ puntuaciones
 \begin_layout Standard
 En esta ventana se pueden definir las distintas reglas de puntuaciones,
  es decir, cuanto valdrá ganar un combate y cuanto valdrá un empate.
- Por defecto, existe el sistema japonés, en el que solamente se contabilizan
+ Existen cuatro opciones disponibles:
+\end_layout
+
+\begin_layout Description
+Clásico: este es el sistema japonés en el que solamente se contabilizan
  los combates ganados, y los empatados equivalen a los perdidos.
- Otra opción, representa el sistema que actualmente está extendiéndose en
- Europa: en el que en caso de que dos equipos hayan 
+\end_layout
+
+\begin_layout Description
+Internacional: los combates empatados únicamente tendrán valor si el número
+ de combates ganados, duelos y golpes dados es el mismo.
+ 
+\end_layout
+
+\begin_layout Description
+Jerárquico: en el que en caso de que dos equipos hayan 
 \begin_inset Index idx
 status open
 
@@ -1501,9 +1513,16 @@ empate
 empatado según sus combates ganados, prevalecerá aquel que tenga un mayor
  número de combates empatados, ya que se considera que estos puntúan más
  que los perdidos.
- Por último, existe un sistema que permite otorgar una puntuación a los
- combates ganados y empatados, para imitar otros sistemas como los del fútbol,
- en los que el ganador se lleva tres puntos y en un empate se lleva un punto.
+ En caso de empate, se contabilizarán los duelos siguiendo la misma regla
+ y en caso de empate, los golpes dados.
+ 
+\end_layout
+
+\begin_layout Description
+Personalizado: por último, existe un sistema que permite otorgar una puntuación
+ a los combates ganados y empatados, para imitar otros sistemas como los
+ del fútbol, en los que el ganador se lleva tres puntos y en un empate se
+ lleva un punto.
  Aquí el usuario podrá elegir el sistema de puntuación que prefiera.
  
 \end_layout
@@ -1512,7 +1531,7 @@ empatado según sus combates ganados, prevalecerá aquel que tenga un mayor
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center

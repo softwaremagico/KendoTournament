@@ -2179,4 +2179,21 @@
 		<ca>Equipo Blanc:</ca>
 		<it>Squadra Bianca:</it>	
 	</WhiteTeam>
+	<!-- TRADUCIR -->
+	<HierarchicalRadioButton>
+		<en>Hierarchical:</en>
+		<es>Jerárquico:</es>
+		<nl>Hierarchical:</nl>
+		<de>Hierarchical:</de>
+		<ca>Jeràrquic:</ca>
+		<it>Gerarchico:</it>
+	</HierarchicalRadioButton>
+	<HierarchicalDrawTag>
+		<en>More than lost</en>
+		<es>Más que perdidos</es>
+		<nl>More than lost</nl>
+		<de>More than lost</de>
+		<ca>Més que perduts</ca>
+		<it>Più che persi</it>
+	</HierarchicalDrawTag>
 </translator>

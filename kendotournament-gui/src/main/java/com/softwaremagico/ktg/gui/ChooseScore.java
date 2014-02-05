@@ -56,11 +56,13 @@ public class ChooseScore extends javax.swing.JFrame {
     private void setLanguage() {
         trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.getTranslatedText("Hits"));
-       // ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
+        // ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
         InternationalRadioButton.setText(trans.getTranslatedText("InernationlRadioButton"));
         CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
+        HierarchicalRadioButton.setText(trans.getTranslatedText("HierarchicalRadioButton"));
         WinLabel.setText(trans.getTranslatedText("WinTag"));
         DrawLabel.setText(trans.getTranslatedText("DrawTag"));
+        HierarchicalDrawLabel.setText(trans.getTranslatedText("HierarchicalDrawTag"));
         AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
         CloseButton.setText(trans.getTranslatedText("CloseButton"));
         TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
@@ -76,6 +78,8 @@ public class ChooseScore extends javax.swing.JFrame {
                     WinSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsVictory());
                     DrawSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsDraw());
                     break;
+                case HIERARCHICAL:
+                    HierarchicalRadioButton.setSelected(true);
                 default:
                     InternationalRadioButton.setSelected(true);
                     break;
@@ -91,6 +95,9 @@ public class ChooseScore extends javax.swing.JFrame {
         }
         if (CustomRadioButton.isSelected()) {
             return ScoreType.CUSTOM;
+        }
+        if (HierarchicalRadioButton.isSelected()) {
+            return ScoreType.HIERARCHICAL;
         }
         return ScoreType.INTERNATIONAL;
     }
@@ -147,6 +154,9 @@ public class ChooseScore extends javax.swing.JFrame {
         DrawLabel = new javax.swing.JLabel();
         InternationalUndrawLabel = new javax.swing.JLabel();
         DrawSpinner = new javax.swing.JSpinner();
+        HierarchicalRadioButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        HierarchicalDrawLabel = new javax.swing.JLabel();
         CloseButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         TournamentComboBox = new javax.swing.JComboBox();
@@ -165,11 +175,11 @@ public class ChooseScore extends javax.swing.JFrame {
         ScorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         ScoreGroup.add(InternationalRadioButton);
-        InternationalRadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        InternationalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         InternationalRadioButton.setText("International");
 
         ScoreGroup.add(CustomRadioButton);
-        CustomRadioButton.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        CustomRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         CustomRadioButton.setText("Custom");
 
         WinSpinner.setValue(1);
@@ -181,10 +191,10 @@ public class ChooseScore extends javax.swing.JFrame {
 
         jLabel7.setText("1");
 
-        WinLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        WinLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         WinLabel.setText("Winned");
 
-        DrawLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        DrawLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
         DrawLabel.setText("Draw");
 
         InternationalUndrawLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -196,6 +206,14 @@ public class ChooseScore extends javax.swing.JFrame {
             }
         });
 
+        ScoreGroup.add(HierarchicalRadioButton);
+        HierarchicalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        HierarchicalRadioButton.setText("Hierarchical");
+
+        jLabel1.setText("1");
+
+        HierarchicalDrawLabel.setText("More than lost");
+
         javax.swing.GroupLayout ScorePanelLayout = new javax.swing.GroupLayout(ScorePanel);
         ScorePanel.setLayout(ScorePanelLayout);
         ScorePanelLayout.setHorizontalGroup(
@@ -203,19 +221,25 @@ public class ChooseScore extends javax.swing.JFrame {
             .addGroup(ScorePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CustomRadioButton)
-                    .addComponent(InternationalRadioButton))
-                .addGap(46, 46, 46)
+                    .addComponent(InternationalRadioButton)
+                    .addComponent(HierarchicalRadioButton)
+                    .addComponent(CustomRadioButton))
+                .addGap(100, 100, 100)
                 .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(WinLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(WinSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(94, 94, 94)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(WinSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(WinLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DrawLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(InternationalUndrawLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(DrawSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(InternationalUndrawLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(ScorePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(HierarchicalDrawLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(DrawSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(DrawLabel, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         ScorePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DrawSpinner, WinSpinner});
@@ -224,7 +248,7 @@ public class ChooseScore extends javax.swing.JFrame {
             ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ScorePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(WinLabel)
                     .addComponent(DrawLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -232,12 +256,17 @@ public class ChooseScore extends javax.swing.JFrame {
                     .addComponent(InternationalRadioButton)
                     .addComponent(jLabel7)
                     .addComponent(InternationalUndrawLabel))
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(HierarchicalRadioButton)
+                    .addComponent(jLabel1)
+                    .addComponent(HierarchicalDrawLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(CustomRadioButton)
                     .addComponent(WinSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DrawSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         CloseButton.setText("Close");
@@ -264,7 +293,7 @@ public class ChooseScore extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(TournamentLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TournamentComboBox, 0, 367, Short.MAX_VALUE)
+                .addComponent(TournamentComboBox, 0, 384, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -309,8 +338,8 @@ public class ChooseScore extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScorePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ScorePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CloseButton)
                     .addComponent(AcceptButton))
@@ -374,6 +403,8 @@ public class ChooseScore extends javax.swing.JFrame {
     private javax.swing.JRadioButton CustomRadioButton;
     private javax.swing.JLabel DrawLabel;
     private javax.swing.JSpinner DrawSpinner;
+    private javax.swing.JLabel HierarchicalDrawLabel;
+    private javax.swing.JRadioButton HierarchicalRadioButton;
     private javax.swing.JRadioButton InternationalRadioButton;
     private javax.swing.JLabel InternationalUndrawLabel;
     private javax.swing.ButtonGroup ScoreGroup;
@@ -382,6 +413,7 @@ public class ChooseScore extends javax.swing.JFrame {
     private javax.swing.JLabel TournamentLabel;
     private javax.swing.JLabel WinLabel;
     private javax.swing.JSpinner WinSpinner;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
