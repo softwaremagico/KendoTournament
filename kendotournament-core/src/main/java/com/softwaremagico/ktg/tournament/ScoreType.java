@@ -7,6 +7,7 @@ import java.util.List;
 public enum ScoreType {
 
     INTERNATIONAL("international"),
+    HIERARCHICAL("hierarchical"),
     CUSTOM("custom");
     private String tag;
 
@@ -22,6 +23,8 @@ public enum ScoreType {
         switch (team.getTournament().getTournamentScore().getScoreType()) {
             case CUSTOM:
                 return new ScoreOfTeamCustom(team, fights);
+            case HIERARCHICAL:
+                return new ScoreOfTeamHierarchical(team, fights);
             case INTERNATIONAL:
             default:
                 return new ScoreOfTeamInternational(team, fights);
