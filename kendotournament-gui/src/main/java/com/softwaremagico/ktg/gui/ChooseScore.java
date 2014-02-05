@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -30,392 +31,457 @@ import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentScore;
+
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.List;
 
 public class ChooseScore extends javax.swing.JFrame {
 	private static final long serialVersionUID = 4593127586769712466L;
-	
+
 	Translator trans = null;
-    private boolean refreshing = false;
+	private boolean refreshing = false;
 
-    /**
-     * Creates new form ChooseScoreGUI
-     */
-    public ChooseScore() {
-        refreshing = true;
-        initComponents();
-        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        fillTournaments();
-        selectStyle();
-        setLanguage();
-        refreshing = false;
-    }
+	/**
+	 * Creates new form ChooseScoreGUI
+	 */
+	public ChooseScore() {
+		refreshing = true;
+		initComponents();
+		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+		fillTournaments();
+		selectStyle();
+		setLanguage();
+		refreshing = false;
+	}
 
-    private void setLanguage() {
-        trans = LanguagePool.getTranslator("gui.xml");
-        this.setTitle(trans.getTranslatedText("Hits"));
-        // ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
-        InternationalRadioButton.setText(trans.getTranslatedText("InernationlRadioButton"));
-        CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
-        HierarchicalRadioButton.setText(trans.getTranslatedText("HierarchicalRadioButton"));
-        WinLabel.setText(trans.getTranslatedText("WinTag"));
-        DrawLabel.setText(trans.getTranslatedText("DrawTag"));
-        HierarchicalDrawLabel.setText(trans.getTranslatedText("HierarchicalDrawTag"));
-        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
-        CloseButton.setText(trans.getTranslatedText("CloseButton"));
-        TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
-        InternationalUndrawLabel.setText(trans.getTranslatedText("InternationalUndrawLabel"));
-    }
+	private void setLanguage() {
+		trans = LanguagePool.getTranslator("gui.xml");
+		this.setTitle(trans.getTranslatedText("Hits"));
+		// ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
+		InternationalRadioButton.setText(trans.getTranslatedText("InernationlRadioButton"));
+		CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
+		HierarchicalRadioButton.setText(trans.getTranslatedText("HierarchicalRadioButton"));
+		WinLabel.setText(trans.getTranslatedText("WinTag"));
+		DrawLabel.setText(trans.getTranslatedText("DrawTag"));
+		HierarchicalDrawLabel.setText(trans.getTranslatedText("HierarchicalDrawTag"));
+		AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+		CloseButton.setText(trans.getTranslatedText("CloseButton"));
+		TournamentLabel.setText(trans.getTranslatedText("TournamentLabel"));
+		InternationalUndrawLabel.setText(trans.getTranslatedText("InternationalUndrawLabel"));
+	}
 
-    private void selectStyle() {
-        refreshing = true;
-        try {
-            switch (((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getScoreType()) {
-                case CUSTOM:
-                    CustomRadioButton.setSelected(true);
-                    WinSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsVictory());
-                    DrawSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getPointsDraw());
-                    break;
-                case HIERARCHICAL:
-                    HierarchicalRadioButton.setSelected(true);
-                default:
-                    InternationalRadioButton.setSelected(true);
-                    break;
-            }
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException aiob) {
-        }
-        refreshing = false;
-    }
+	private javax.swing.JRadioButton getRadioButton(ScoreType scoreType) {
+		switch (scoreType) {
+		case CUSTOM:
+			return CustomRadioButton;
+		case HIERARCHICAL:
+			return HierarchicalRadioButton;
+		case CLASSIC:
+			// TODO
+			return null;
+		case EUROPEAN:
+			return InternationalRadioButton;
+		}
+		return InternationalRadioButton;
+	}
 
-    private ScoreType getStyle() {
-        if (InternationalRadioButton.isSelected()) {
-            return ScoreType.INTERNATIONAL;
-        }
-        if (CustomRadioButton.isSelected()) {
-            return ScoreType.CUSTOM;
-        }
-        if (HierarchicalRadioButton.isSelected()) {
-            return ScoreType.HIERARCHICAL;
-        }
-        return ScoreType.DEFAULT;
-    }
+	private void selectStyle() {
+		refreshing = true;
 
-    private Integer getWinnerPoints() {
-        if (CustomRadioButton.isSelected()) {
-            return (Integer) WinSpinner.getValue();
-        }
-        return 1;
-    }
+		//Select correct RadioButton
+		javax.swing.JRadioButton selectedRadioButton = getRadioButton(((Tournament) (TournamentComboBox
+				.getSelectedItem())).getTournamentScore().getScoreType());
+		selectedRadioButton.setSelected(true);
 
-    private Integer getDrawPoints() {
-        if (CustomRadioButton.isSelected()) {
-            return (Integer) DrawSpinner.getValue();
-        }
-        return 0;
-    }
+		//Set spinners values. 
+		if (((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore().getScoreType()
+				.equals(ScoreType.CUSTOM)) {
+			WinSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore()
+					.getPointsVictory());
+			DrawSpinner.setValue(((Tournament) (TournamentComboBox.getSelectedItem())).getTournamentScore()
+					.getPointsDraw());
+		}
 
-    private void fillTournaments() {
-        refreshing = true;
-        try {
-            List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
-            try {
-                for (int i = 0; i < listTournaments.size(); i++) {
-                    TournamentComboBox.addItem(listTournaments.get(i));
-                }
-                TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-            } catch (NullPointerException npe) {
-                AlertManager.showErrorInformation(this.getClass().getName(), npe);
-            }
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
-        refreshing = false;
-        //fillFightsPanel();
-    }
+		refreshing = false;
+	}
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	private ScoreType getStyle() {
+		if (InternationalRadioButton.isSelected()) {
+			return ScoreType.EUROPEAN;
+		}
+		if (CustomRadioButton.isSelected()) {
+			return ScoreType.CUSTOM;
+		}
+		if (HierarchicalRadioButton.isSelected()) {
+			return ScoreType.HIERARCHICAL;
+		}
+		//TODO add classic here. 
+		return ScoreType.DEFAULT;
+	}
 
-        ScoreGroup = new javax.swing.ButtonGroup();
-        ScorePanel = new javax.swing.JPanel();
-        InternationalRadioButton = new javax.swing.JRadioButton();
-        CustomRadioButton = new javax.swing.JRadioButton();
-        WinSpinner = new javax.swing.JSpinner();
-        jLabel7 = new javax.swing.JLabel();
-        WinLabel = new javax.swing.JLabel();
-        DrawLabel = new javax.swing.JLabel();
-        InternationalUndrawLabel = new javax.swing.JLabel();
-        DrawSpinner = new javax.swing.JSpinner();
-        HierarchicalRadioButton = new javax.swing.JRadioButton();
-        jLabel1 = new javax.swing.JLabel();
-        HierarchicalDrawLabel = new javax.swing.JLabel();
-        CloseButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        TournamentComboBox = new javax.swing.JComboBox();
-        TournamentLabel = new javax.swing.JLabel();
-        AcceptButton = new javax.swing.JButton();
+	private Integer getWinnerPoints() {
+		if (CustomRadioButton.isSelected()) {
+			return (Integer) WinSpinner.getValue();
+		}
+		return 1;
+	}
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Score");
-        setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
+	private Integer getDrawPoints() {
+		if (CustomRadioButton.isSelected()) {
+			return (Integer) DrawSpinner.getValue();
+		}
+		return 0;
+	}
 
-        ScorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+	private void fillTournaments() {
+		refreshing = true;
+		try {
+			List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
+			try {
+				for (int i = 0; i < listTournaments.size(); i++) {
+					TournamentComboBox.addItem(listTournaments.get(i));
+				}
+				TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+			} catch (NullPointerException npe) {
+				AlertManager.showErrorInformation(this.getClass().getName(), npe);
+			}
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+		}
+		refreshing = false;
+		// fillFightsPanel();
+	}
 
-        ScoreGroup.add(InternationalRadioButton);
-        InternationalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        InternationalRadioButton.setText("International");
+	/**
+	 * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
+	 * content of this method is always regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        ScoreGroup.add(CustomRadioButton);
-        CustomRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        CustomRadioButton.setText("Custom");
+		ScoreGroup = new javax.swing.ButtonGroup();
+		ScorePanel = new javax.swing.JPanel();
+		InternationalRadioButton = new javax.swing.JRadioButton();
+		CustomRadioButton = new javax.swing.JRadioButton();
+		WinSpinner = new javax.swing.JSpinner();
+		jLabel7 = new javax.swing.JLabel();
+		WinLabel = new javax.swing.JLabel();
+		DrawLabel = new javax.swing.JLabel();
+		InternationalUndrawLabel = new javax.swing.JLabel();
+		DrawSpinner = new javax.swing.JSpinner();
+		HierarchicalRadioButton = new javax.swing.JRadioButton();
+		jLabel1 = new javax.swing.JLabel();
+		HierarchicalDrawLabel = new javax.swing.JLabel();
+		CloseButton = new javax.swing.JButton();
+		jPanel1 = new javax.swing.JPanel();
+		TournamentComboBox = new javax.swing.JComboBox();
+		TournamentLabel = new javax.swing.JLabel();
+		AcceptButton = new javax.swing.JButton();
 
-        WinSpinner.setValue(1);
-        WinSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                WinSpinnerStateChanged(evt);
-            }
-        });
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+		setTitle("Score");
+		setResizable(false);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowOpened(java.awt.event.WindowEvent evt) {
+				formWindowOpened(evt);
+			}
+		});
 
-        jLabel7.setText("1");
+		ScorePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        WinLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        WinLabel.setText("Winned");
+		ScoreGroup.add(InternationalRadioButton);
+		InternationalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+		InternationalRadioButton.setText("International");
 
-        DrawLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        DrawLabel.setText("Draw");
+		ScoreGroup.add(CustomRadioButton);
+		CustomRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+		CustomRadioButton.setText("Custom");
 
-        InternationalUndrawLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        InternationalUndrawLabel.setText("For Undraw");
+		WinSpinner.setValue(1);
+		WinSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				WinSpinnerStateChanged(evt);
+			}
+		});
 
-        DrawSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                DrawSpinnerStateChanged(evt);
-            }
-        });
+		jLabel7.setText("1");
 
-        ScoreGroup.add(HierarchicalRadioButton);
-        HierarchicalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        HierarchicalRadioButton.setText("Hierarchical");
+		WinLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+		WinLabel.setText("Winned");
 
-        jLabel1.setText("1");
+		DrawLabel.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+		DrawLabel.setText("Draw");
 
-        HierarchicalDrawLabel.setText("More than lost");
+		InternationalUndrawLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+		InternationalUndrawLabel.setText("For Undraw");
 
-        javax.swing.GroupLayout ScorePanelLayout = new javax.swing.GroupLayout(ScorePanel);
-        ScorePanel.setLayout(ScorePanelLayout);
-        ScorePanelLayout.setHorizontalGroup(
-            ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ScorePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(InternationalRadioButton)
-                    .addComponent(HierarchicalRadioButton)
-                    .addComponent(CustomRadioButton))
-                .addGap(100, 100, 100)
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(WinSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(WinLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(InternationalUndrawLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(ScorePanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(HierarchicalDrawLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(DrawSpinner, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(DrawLabel, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		DrawSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				DrawSpinnerStateChanged(evt);
+			}
+		});
 
-        ScorePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DrawSpinner, WinSpinner});
+		ScoreGroup.add(HierarchicalRadioButton);
+		HierarchicalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+		HierarchicalRadioButton.setText("Hierarchical");
 
-        ScorePanelLayout.setVerticalGroup(
-            ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ScorePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(WinLabel)
-                    .addComponent(DrawLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(InternationalRadioButton)
-                    .addComponent(jLabel7)
-                    .addComponent(InternationalUndrawLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(HierarchicalRadioButton)
-                    .addComponent(jLabel1)
-                    .addComponent(HierarchicalDrawLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(CustomRadioButton)
-                    .addComponent(WinSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DrawSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
+		jLabel1.setText("1");
 
-        CloseButton.setText("Close");
-        CloseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CloseButtonActionPerformed(evt);
-            }
-        });
+		HierarchicalDrawLabel.setText("More than lost");
 
-        TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TournamentComboBoxActionPerformed(evt);
-            }
-        });
+		javax.swing.GroupLayout ScorePanelLayout = new javax.swing.GroupLayout(ScorePanel);
+		ScorePanel.setLayout(ScorePanelLayout);
+		ScorePanelLayout
+				.setHorizontalGroup(ScorePanelLayout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								ScorePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												ScorePanelLayout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(InternationalRadioButton)
+														.addComponent(HierarchicalRadioButton)
+														.addComponent(CustomRadioButton))
+										.addGap(100, 100, 100)
+										.addGroup(
+												ScorePanelLayout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(jLabel7,
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(jLabel1,
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(WinSpinner,
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																javax.swing.GroupLayout.PREFERRED_SIZE, 42,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(WinLabel,
+																javax.swing.GroupLayout.Alignment.TRAILING))
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109,
+												Short.MAX_VALUE)
+										.addGroup(
+												ScorePanelLayout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(InternationalUndrawLabel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+														.addGroup(
+																ScorePanelLayout
+																		.createSequentialGroup()
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addGroup(
+																				ScorePanelLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								HierarchicalDrawLabel,
+																								javax.swing.GroupLayout.Alignment.TRAILING)
+																						.addComponent(
+																								DrawSpinner,
+																								javax.swing.GroupLayout.Alignment.TRAILING,
+																								javax.swing.GroupLayout.PREFERRED_SIZE,
+																								56,
+																								javax.swing.GroupLayout.PREFERRED_SIZE)
+																						.addComponent(
+																								DrawLabel,
+																								javax.swing.GroupLayout.Alignment.TRAILING))))
+										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-        TournamentLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        TournamentLabel.setText("Tournament:");
+		ScorePanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { DrawSpinner,
+				WinSpinner });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(TournamentLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TournamentComboBox, 0, 384, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TournamentComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TournamentLabel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		ScorePanelLayout.setVerticalGroup(ScorePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				ScorePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(WinLabel).addComponent(DrawLabel))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(
+								ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+										.addComponent(InternationalRadioButton).addComponent(jLabel7)
+										.addComponent(InternationalUndrawLabel))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(
+								ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(HierarchicalRadioButton).addComponent(jLabel1)
+										.addComponent(HierarchicalDrawLabel))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addGroup(
+								ScorePanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+										.addComponent(CustomRadioButton)
+										.addComponent(WinSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addComponent(DrawSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(26, Short.MAX_VALUE)));
 
-        AcceptButton.setText("Accept");
-        AcceptButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AcceptButtonActionPerformed(evt);
-            }
-        });
+		CloseButton.setText("Close");
+		CloseButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CloseButtonActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ScorePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(AcceptButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+		TournamentComboBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				TournamentComboBoxActionPerformed(evt);
+			}
+		});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {AcceptButton, CloseButton});
+		TournamentLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+		TournamentLabel.setText("Tournament:");
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ScorePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CloseButton)
-                    .addComponent(AcceptButton))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		jPanel1.setLayout(jPanel1Layout);
+		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(TournamentLabel)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(TournamentComboBox, 0, 384, Short.MAX_VALUE).addContainerGap()));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						jPanel1Layout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										jPanel1Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+												.addComponent(TournamentComboBox,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(TournamentLabel))
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		AcceptButton.setText("Accept");
+		AcceptButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				AcceptButtonActionPerformed(evt);
+			}
+		});
 
-    private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TournamentComboBoxActionPerformed
-        selectStyle();
-    }//GEN-LAST:event_TournamentComboBoxActionPerformed
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(ScorePanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												layout.createSequentialGroup()
+														.addGap(0, 0, Short.MAX_VALUE)
+														.addComponent(AcceptButton)
+														.addPreferredGap(
+																javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+														.addComponent(CloseButton,
+																javax.swing.GroupLayout.PREFERRED_SIZE, 93,
+																javax.swing.GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.toFront();
-    }//GEN-LAST:event_formWindowOpened
+		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { AcceptButton, CloseButton });
 
-    private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcceptButtonActionPerformed
-        Tournament tournament = ((Tournament) (TournamentComboBox.getSelectedItem()));
-        ((Tournament) (TournamentComboBox.getSelectedItem())).setTournamentScore(new TournamentScore(getStyle(), getWinnerPoints(), getDrawPoints()));
-        try {
-            if (TournamentPool.getInstance().update(tournament)) {
-                AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "Score");
-                this.dispose();
-            } else {
-                AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
-            }
-        } catch (SQLException ex) {
-            AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
-            AlertManager.showSqlErrorMessage(ex);
-        }
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(ScorePanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addGroup(
+								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(CloseButton).addComponent(AcceptButton)).addContainerGap()));
 
-    }//GEN-LAST:event_AcceptButtonActionPerformed
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-    private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_CloseButtonActionPerformed
+	private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
+		selectStyle();
+	}// GEN-LAST:event_TournamentComboBoxActionPerformed
 
-    private void DrawSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_DrawSpinnerStateChanged
-        if (!refreshing) {
-            if ((Integer) DrawSpinner.getValue() < 0) {
-                DrawSpinner.setValue(0);
-            }
-            if ((Integer) DrawSpinner.getValue() >= (Integer) WinSpinner.getValue()) {
-                DrawSpinner.setValue((Integer) WinSpinner.getValue() - 1);
-            }
-        }
-    }//GEN-LAST:event_DrawSpinnerStateChanged
+	private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
+		this.toFront();
+	}// GEN-LAST:event_formWindowOpened
 
-    private void WinSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_WinSpinnerStateChanged
-        if (!refreshing) {
-            if ((Integer) WinSpinner.getValue() < 1) {
-                WinSpinner.setValue(1);
-            }
-        }
-    }//GEN-LAST:event_WinSpinnerStateChanged
+	private void AcceptButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_AcceptButtonActionPerformed
+		Tournament tournament = ((Tournament) (TournamentComboBox.getSelectedItem()));
+		((Tournament) (TournamentComboBox.getSelectedItem())).setTournamentScore(new TournamentScore(getStyle(),
+				getWinnerPoints(), getDrawPoints()));
+		try {
+			if (TournamentPool.getInstance().update(tournament)) {
+				AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "Score");
+				this.dispose();
+			} else {
+				AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
+			}
+		} catch (SQLException ex) {
+			AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");
+			AlertManager.showSqlErrorMessage(ex);
+		}
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AcceptButton;
-    private javax.swing.JButton CloseButton;
-    private javax.swing.JRadioButton CustomRadioButton;
-    private javax.swing.JLabel DrawLabel;
-    private javax.swing.JSpinner DrawSpinner;
-    private javax.swing.JLabel HierarchicalDrawLabel;
-    private javax.swing.JRadioButton HierarchicalRadioButton;
-    private javax.swing.JRadioButton InternationalRadioButton;
-    private javax.swing.JLabel InternationalUndrawLabel;
-    private javax.swing.ButtonGroup ScoreGroup;
-    private javax.swing.JPanel ScorePanel;
-    private javax.swing.JComboBox TournamentComboBox;
-    private javax.swing.JLabel TournamentLabel;
-    private javax.swing.JLabel WinLabel;
-    private javax.swing.JSpinner WinSpinner;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
-    // End of variables declaration//GEN-END:variables
+	}// GEN-LAST:event_AcceptButtonActionPerformed
+
+	private void CloseButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CloseButtonActionPerformed
+		this.dispose();
+	}// GEN-LAST:event_CloseButtonActionPerformed
+
+	private void DrawSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_DrawSpinnerStateChanged
+		if (!refreshing) {
+			if ((Integer) DrawSpinner.getValue() < 0) {
+				DrawSpinner.setValue(0);
+			}
+			if ((Integer) DrawSpinner.getValue() >= (Integer) WinSpinner.getValue()) {
+				DrawSpinner.setValue((Integer) WinSpinner.getValue() - 1);
+			}
+		}
+	}// GEN-LAST:event_DrawSpinnerStateChanged
+
+	private void WinSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_WinSpinnerStateChanged
+		if (!refreshing) {
+			if ((Integer) WinSpinner.getValue() < 1) {
+				WinSpinner.setValue(1);
+			}
+		}
+	}// GEN-LAST:event_WinSpinnerStateChanged
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton AcceptButton;
+	private javax.swing.JButton CloseButton;
+	private javax.swing.JRadioButton CustomRadioButton;
+	private javax.swing.JLabel DrawLabel;
+	private javax.swing.JSpinner DrawSpinner;
+	private javax.swing.JLabel HierarchicalDrawLabel;
+	private javax.swing.JRadioButton HierarchicalRadioButton;
+	private javax.swing.JRadioButton InternationalRadioButton;
+	private javax.swing.JLabel InternationalUndrawLabel;
+	private javax.swing.ButtonGroup ScoreGroup;
+	private javax.swing.JPanel ScorePanel;
+	private javax.swing.JComboBox TournamentComboBox;
+	private javax.swing.JLabel TournamentLabel;
+	private javax.swing.JLabel WinLabel;
+	private javax.swing.JSpinner WinSpinner;
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel7;
+	private javax.swing.JPanel jPanel1;
+	// End of variables declaration//GEN-END:variables
 }

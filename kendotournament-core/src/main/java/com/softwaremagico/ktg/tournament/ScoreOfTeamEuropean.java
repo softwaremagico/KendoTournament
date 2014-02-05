@@ -4,9 +4,9 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
-public class ScoreOfTeamInternational extends ScoreOfTeam {
+public class ScoreOfTeamEuropean extends ScoreOfTeam {
 
-    public ScoreOfTeamInternational(Team team, List<Fight> fights) {
+    public ScoreOfTeamEuropean(Team team, List<Fight> fights) {
         super(team, fights);
     }
 

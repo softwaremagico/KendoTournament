@@ -64,7 +64,7 @@ public class Tournament implements Comparable<Tournament> {
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
         this.type = type;
-        tournamentScore = new TournamentScore(ScoreType.INTERNATIONAL, 1, 1);
+        tournamentScore = new TournamentScore(ScoreType.EUROPEAN, 1, 1);
     }
 
     public Photo getBanner() {

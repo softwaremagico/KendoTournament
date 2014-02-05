@@ -6,9 +6,9 @@ import java.util.List;
 
 public enum ScoreType {
 
-	CLASSIC("classic"), INTERNATIONAL("international"), HIERARCHICAL("hierarchical"), CUSTOM("custom");
+	CLASSIC("classic"), EUROPEAN("international"), HIERARCHICAL("hierarchical"), CUSTOM("custom");
 
-	public static ScoreType DEFAULT = ScoreType.INTERNATIONAL;
+	public static ScoreType DEFAULT = ScoreType.EUROPEAN;
 
 	private String tag;
 
@@ -22,13 +22,15 @@ public enum ScoreType {
 
 	public static ScoreOfTeam getScoreOfTeam(Team team, List<Fight> fights) {
 		switch (team.getTournament().getTournamentScore().getScoreType()) {
+		case CLASSIC:
+			return new ScoreOfTeamClassic(team, fights);
 		case CUSTOM:
 			return new ScoreOfTeamCustom(team, fights);
 		case HIERARCHICAL:
 			return new ScoreOfTeamHierarchical(team, fights);
-		case INTERNATIONAL:
+		case EUROPEAN:
 		default:
-			return new ScoreOfTeamInternational(team, fights);
+			return new ScoreOfTeamEuropean(team, fights);
 		}
 	}
 
