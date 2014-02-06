@@ -137,6 +137,12 @@ order: an information message is displayed alerting the user that he is
  
 \end_layout
 
+\begin_layout Description
+Scores: more score rules added to allow the user to create different tournaments
+ or leagues.
+ 
+\end_layout
+
 \begin_layout Section*
 v1.1.0
 \end_layout
@@ -1380,38 +1386,42 @@ In this window you can determine the different scoring rules, that is, how
 
 \begin_layout Description
 Classic: standard Japanese system in which only the matches that have been
- won will be counted, and the tied matches will count as lost.
+ won will be counted, and the tied matches will count the same as a lost
+ one.
 \end_layout
 
 \begin_layout Description
-International: in the case that two teams had scored a 
-\begin_inset Index idx
-status open
-
-\begin_layout Plain Layout
-draw
-\end_layout
-
+Win
+\begin_inset space ~
 \end_inset
 
-draw according to the matches they have won, the team that will pass will
- be the one with more draw combats, because it is considered more valuable
- a draw than a loss.
+over
+\begin_inset space ~
+\end_inset
+
+draws: in the case of same number of winned fights, the team with more winned
+ duels will win.
+ In a case of the same number of winned duels, the team with more hits will
+ win.
+ If there still a tie, the team that will pass will be the one with more
+ draw combats, because it is considered more valuable a draw than a loss.
  
 \end_layout
 
 \begin_layout Description
-Hierarchical: in the case of same number of winned fights, the user with
- more draw fights will be prevail over the one with less draw fights.
- In a case of a tie, the same behaviour with the duels.
+European: in the case of same number of winned fights, the team with more
+ draw fights will be prevail over the one with less draw fights.
+ In a case of a tie, the same behaviour with the duels, if also there is
+ a tie, then the team with more hits will win.
+ This is the score rules used in the European Kendo Championships.
  
 \end_layout
 
 \begin_layout Description
 Custom: lastly, there is a system that allows to give a score to the matches
- that have been won or lost, to imitate other system such as the football
- one, a victory will be valued with three points and a draw will be valued
- with one point.
+ that have been won or lost, to imitate other system such as other sports,
+ a victory will be valued with three points and a draw will be valued with
+ one point.
  Here the user can choose any scoring system that he or she prefers.
  
 \end_layout

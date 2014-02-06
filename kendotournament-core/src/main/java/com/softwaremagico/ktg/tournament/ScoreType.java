@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum ScoreType {
 
-    CLASSIC("classic"), INTERNATIONAL("international"), EUROPEAN("european"), CUSTOM("custom");
+    CLASSIC("classic"), WIN_OVER_DRAWS("winOverDraws"), EUROPEAN("european"), CUSTOM("custom");
     public static ScoreType DEFAULT = ScoreType.EUROPEAN;
     private String tag;
 
@@ -24,8 +24,8 @@ public enum ScoreType {
                 return new ScoreOfTeamClassic(team, fights);
             case CUSTOM:
                 return new ScoreOfTeamCustom(team, fights);
-            case INTERNATIONAL:
-                return new ScoreOfTeamInternational(team, fights);
+            case WIN_OVER_DRAWS:
+                return new ScoreOfTeamWinOverDraws(team, fights);
             case EUROPEAN:
             default:
                 return new ScoreOfTeamEuropean(team, fights);

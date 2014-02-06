@@ -1600,14 +1600,14 @@
 		<ca>Europeu:</ca>
 		<it>Europeo:</it>
 	</EuropeanRadioButton>
-	<InernationlRadioButton>
+	<InternationlRadioButton>
 		<en>Internationl:</en>
 		<es>Internacional:</es>
 		<nl>Internationaal:</nl>
 		<de>Internationale:</de>
 		<ca>Internacional:</ca>
 		<it>Internazionale:</it>
-	</InernationlRadioButton>
+	</InternationlRadioButton>
 	<CustomRadioButton>
 		<en>Custom:</en>
 		<es>Personalizado:</es>
@@ -2180,14 +2180,6 @@
 		<it>Squadra Bianca:</it>	
 	</WhiteTeam>
 	<!-- TRADUCIR -->
-	<HierarchicalRadioButton>
-		<en>Hierarchical:</en>
-		<es>Jerárquico:</es>
-		<nl>Hierarchical:</nl>
-		<de>Hierarchical:</de>
-		<ca>Jeràrquic:</ca>
-		<it>Gerarchico:</it>
-	</HierarchicalRadioButton>
 	<HierarchicalDrawTag>
 		<en>More than lost</en>
 		<es>Más que perdidos</es>
@@ -2196,4 +2188,12 @@
 		<ca>Més que perduts</ca>
 		<it>Più che persi</it>
 	</HierarchicalDrawTag>
+	<WinOverDrawsRadioButton>
+		<en>Win over draws:</en>
+		<es>Victorias sobre empates:</es>
+		<nl>Win over draws:</nl>
+		<de>Win over draws:</de>
+		<ca>Victòries sobre empats:</ca>
+		<it>Vittoria supera pareggio:</it>
+	</WinOverDrawsRadioButton>
 </translator>

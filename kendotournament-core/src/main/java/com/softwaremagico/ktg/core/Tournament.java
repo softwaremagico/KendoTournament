@@ -50,7 +50,7 @@ public class Tournament implements Comparable<Tournament> {
     private TournamentType type; // simple, championship, custom, personalized, tree
     // private float scoreForWin = 1;
     // private float scoreForDraw = 0;
-    // private ScoreType choosedScore = ScoreType.INTERNATIONAL;
+    // private ScoreType choosedScore = ScoreType.WIN_OVER_DRAWS;
     private TournamentScore tournamentScore;
 
     static {
@@ -64,7 +64,7 @@ public class Tournament implements Comparable<Tournament> {
         howManyTeamsOfGroupPassToTheTree = passingTeams;
         this.teamSize = teamSize;
         this.type = type;
-        tournamentScore = new TournamentScore(ScoreType.INTERNATIONAL, 1, 1);
+        tournamentScore = new TournamentScore(ScoreType.WIN_OVER_DRAWS, 1, 1);
     }
 
     public Photo getBanner() {
