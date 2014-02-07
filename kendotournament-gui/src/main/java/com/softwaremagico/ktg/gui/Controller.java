@@ -23,8 +23,6 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.gui.league.NewLoopLeague;
-import com.softwaremagico.ktg.gui.league.NewSimpleLeague;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
@@ -37,6 +35,8 @@ import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.gui.fight.*;
+import com.softwaremagico.ktg.gui.league.NewLoopLeague;
+import com.softwaremagico.ktg.gui.league.NewSimpleLeague;
 import com.softwaremagico.ktg.gui.tournament.TournamentDesigner;
 import com.softwaremagico.ktg.gui.tournament.TournamentEvolution;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -199,6 +199,7 @@ public class Controller {
         main.addTreeOptionMenuItemListener(new TournamentTreeListener());
         main.addCompetitorsGlobalScoreMenuItemListener(new NewCompetitorsScoreListListener());
         main.addManualMenuItemListener(new NewPersonalizedFightListener());
+        main.addLoadMenuItemListener(new LoadListener());
     }
 
     class TournamentTreeListener implements ActionListener {
@@ -225,6 +226,31 @@ public class Controller {
                 } catch (SQLException ex) {
                     AlertManager.showSqlErrorMessage(ex);
                 }
+            }
+        }
+    }
+
+    class LoadListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
+                int confirmed = JOptionPane.showConfirmDialog(null, LanguagePool.getTranslator("messages.xml")
+                        .getTranslatedText("saveBeforeExit"), "Load", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (confirmed == JOptionPane.CANCEL_OPTION) {
+                    return;
+                }
+                if (confirmed == JOptionPane.YES_OPTION) {
+                    try {
+                        DatabaseConnection.getInstance().updateDatabase();
+                    } catch (SQLException ex) {
+                        AlertManager.showSqlErrorMessage(ex);
+                    }
+                }
+            }
+            if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
+                DatabaseConnection.getInstance().resetDatabase();
+                AlertManager.informationMessage(this.getClass().getName(), "RefresehdData", "Load");
             }
         }
     }
@@ -874,7 +900,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             Club club = searchClub.returnSelectedItem();
             if (club != null) {
-                newClub.UpdateWindow(club);
+                newClub.updateWindow(club);
                 newClub.setVisible(true);
                 searchClub.dispose();
             }
@@ -1336,7 +1362,7 @@ public class Controller {
 
                         NewPersonalizedFight personalizedFight = new NewPersonalizedFight(getSelectedTournament(), fightPanel);
                         personalizedFight.setVisible(true);
-                        
+
                         dispose();
                     } else {
                         AlertManager.warningMessage(Controller.class.getName(), "canceledAction", getTitle());

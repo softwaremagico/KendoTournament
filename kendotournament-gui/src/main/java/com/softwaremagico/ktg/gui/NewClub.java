@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.persistence.ClubPool;
@@ -37,192 +36,205 @@ import java.util.List;
 
 public class NewClub extends javax.swing.JFrame {
 
-	private Translator trans = null;
-	private Club club;
-	private List<RegisteredPerson> competitors;
-	private NewCompetitor newCompetitor = null;
-	private boolean updateClubOfCompetitor;
+    private Translator trans = null;
+    private Club club;
+    private List<RegisteredPerson> competitors;
+    private NewCompetitor newCompetitor = null;
+    private boolean updateClubOfCompetitor;
+    private String modifiedClubName = null;
 
-	/**
-	 * Creates new form NewClub
-	 */
-	public NewClub() {
-		initComponents();
-		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-		setLanguage();
-		fillCompetitors();
-		updateClubOfCompetitor = true;
-	}
+    /**
+     * Creates new form NewClub
+     */
+    public NewClub() {
+        initComponents();
+        setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
+                (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+        setLanguage();
+        fillCompetitors();
+        updateClubOfCompetitor = true;
+    }
 
-	/**
-	 * Translate the GUI to the selected language.
-	 */
-	public final void setLanguage() {
-		trans = LanguagePool.getTranslator("gui.xml");
-		this.setTitle(trans.getTranslatedText("titleClub"));
-		AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
-		CancelButton.setText(trans.getTranslatedText("CancelButton"));
-		NameLabel.setText(trans.getTranslatedText("NameLabel"));
-		CountryLabel.setText(trans.getTranslatedText("CountryLabel"));
-		CityLabel.setText(trans.getTranslatedText("CityLabel"));
-		AddressLabel.setText(trans.getTranslatedText("AddressLabel"));
-		RepresentativeLabel.setText(trans.getTranslatedText("RepresentativeLabel"));
-		PhoneLabel.setText(trans.getTranslatedText("PhoneLabel"));
-		MailLabel.setText(trans.getTranslatedText("MailLabel"));
-		SearchButton.setText(trans.getTranslatedText("SearchButton"));
-	}
+    /**
+     * Translate the GUI to the selected language.
+     */
+    public final void setLanguage() {
+        trans = LanguagePool.getTranslator("gui.xml");
+        this.setTitle(trans.getTranslatedText("titleClub"));
+        AcceptButton.setText(trans.getTranslatedText("AcceptButton"));
+        CancelButton.setText(trans.getTranslatedText("CancelButton"));
+        NameLabel.setText(trans.getTranslatedText("NameLabel"));
+        CountryLabel.setText(trans.getTranslatedText("CountryLabel"));
+        CityLabel.setText(trans.getTranslatedText("CityLabel"));
+        AddressLabel.setText(trans.getTranslatedText("AddressLabel"));
+        RepresentativeLabel.setText(trans.getTranslatedText("RepresentativeLabel"));
+        PhoneLabel.setText(trans.getTranslatedText("PhoneLabel"));
+        MailLabel.setText(trans.getTranslatedText("MailLabel"));
+        SearchButton.setText(trans.getTranslatedText("SearchButton"));
+    }
 
-	public void UpdateWindow(Club club) {
-		try {
-			this.club = club;
-			NameTextField.setText(club.getName());
-			CountryTextField.setText(club.getCountry());
-			CityTextField.setText(club.getCity());
-			AddressTextField.setText(club.getAddress());
-			FillCompetitorsFromClub(club);
-			selectRepresentative(club);
-			PhoneTextField.setText(club.getPhone());
-			MailTextField.setText(club.getMail());
-		} catch (NullPointerException npe) {
-		}
-	}
+    public void updateWindow(Club club) {
+        try {
+            this.club = club;
+            modifiedClubName = club.getName();
+            NameTextField.setText(club.getName());
+            CountryTextField.setText(club.getCountry());
+            CityTextField.setText(club.getCity());
+            AddressTextField.setText(club.getAddress());
+            fillCompetitorsFromClub(club);
+            selectRepresentative(club);
+            PhoneTextField.setText(club.getPhone());
+            MailTextField.setText(club.getMail());
+        } catch (NullPointerException npe) {
+        }
+    }
 
-	private void CleanWindow() {
-		NameTextField.setText("");
-		CountryTextField.setText("");
-		CityTextField.setText("");
-		AddressTextField.setText("");
-		PhoneTextField.setText("");
-		MailTextField.setText("");
-		RepresentativeComboBox.removeAllItems();
-	}
+    private void cleanWindow() {
+        modifiedClubName = null;
+        NameTextField.setText("");
+        CountryTextField.setText("");
+        CityTextField.setText("");
+        AddressTextField.setText("");
+        PhoneTextField.setText("");
+        MailTextField.setText("");
+        RepresentativeComboBox.removeAllItems();
+    }
 
-	public void FillCompetitorsFromClub(Club club) {
-		try {
-			competitors = RegisteredPersonPool.getInstance().getByClub(club.getName());
-			RepresentativeComboBox.removeAllItems();
-			RepresentativeComboBox.addItem("");
-			for (int i = 0; i < competitors.size(); i++) {
-				RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
-				if (club.getRepresentativeID() != null && club.getRepresentativeID().equals(competitors.get(i).getId())) {
-					RepresentativeComboBox.setSelectedIndex(i);
-				}
-			}
-			// Disable options if no competitors exists.
-			enableRepresentative();
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		updateClubOfCompetitor = false;
-	}
+    public void fillCompetitorsFromClub(Club club) {
+        try {
+            competitors = RegisteredPersonPool.getInstance().getByClub(club.getName());
+            RepresentativeComboBox.removeAllItems();
+            RepresentativeComboBox.addItem("");
+            for (int i = 0; i < competitors.size(); i++) {
+                RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
+                if (club.getRepresentativeID() != null && club.getRepresentativeID().equals(competitors.get(i).getId())) {
+                    RepresentativeComboBox.setSelectedIndex(i);
+                }
+            }
+            // Disable options if no competitors exists.
+            enableRepresentative();
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        updateClubOfCompetitor = false;
+    }
 
-	private void fillCompetitors() {
-		try {
-			competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
-			RepresentativeComboBox.removeAllItems();
-			RepresentativeComboBox.addItem("");
-			for (int i = 0; i < competitors.size(); i++) {
-				RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
-			}
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-		// Disable options if no competitors exists.
-		enableRepresentative();
-		updateClubOfCompetitor = true;
-	}
+    private void fillCompetitors() {
+        try {
+            competitors = RegisteredPersonPool.getInstance().getPeopleWithoutClub();
+            RepresentativeComboBox.removeAllItems();
+            RepresentativeComboBox.addItem("");
+            for (int i = 0; i < competitors.size(); i++) {
+                RepresentativeComboBox.addItem(competitors.get(i).getSurname() + ", " + competitors.get(i).getName());
+            }
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+        // Disable options if no competitors exists.
+        enableRepresentative();
+        updateClubOfCompetitor = true;
+    }
 
-	private void enableRepresentative() {
-		RepresentativeComboBox.setEnabled(!competitors.isEmpty());
-		PhoneTextField.setEnabled(!competitors.isEmpty());
-		MailTextField.setEnabled(!competitors.isEmpty());
-	}
+    private void enableRepresentative() {
+        RepresentativeComboBox.setEnabled(!competitors.isEmpty());
+        PhoneTextField.setEnabled(!competitors.isEmpty());
+        MailTextField.setEnabled(!competitors.isEmpty());
+    }
 
-	private void selectRepresentative(Club c) {
-		for (int i = 0; i < competitors.size(); i++) {
-			if (competitors.get(i).getId().equals(c.getRepresentativeID())) {
-				RepresentativeComboBox.setSelectedIndex(i + 1);
-			}
-		}
-	}
+    private void selectRepresentative(Club c) {
+        for (int i = 0; i < competitors.size(); i++) {
+            if (competitors.get(i).getId().equals(c.getRepresentativeID())) {
+                RepresentativeComboBox.setSelectedIndex(i + 1);
+            }
+        }
+    }
 
-	public void acceptClub() {
-		try {
-			setAlwaysOnTop(false);
-			if (NameTextField.getText().length() > 0 && CountryTextField.getText().length() > 0
-					&& CityTextField.getText().length() > 0) {
-				club = new Club(NameTextField.getText().trim(), CountryTextField.getText().trim(), CityTextField
-						.getText().trim());
-				club.setAddress(AddressTextField.getText());
-				try {
-					club.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(),
-							MailTextField.getText(), PhoneTextField.getText());
-				} catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
-					npe.printStackTrace();
-				}
-				if (ClubPool.getInstance().add(club)) {
-					AlertManager.informationMessage(this.getClass().getName(), "clubStored", "Club");
-				} else if (ClubPool.getInstance().update(club)) {
-					AlertManager.informationMessage(this.getClass().getName(), "clubUpdated", "Club");
-				} else {
-					AlertManager.errorMessage(this.getClass().getName(), "clubNotStored", "Club");
-				}
-				CleanWindow();
-				if (newCompetitor != null) {
-					// newCompetitor.fillClub();
-					newCompetitor.addClub(club); // Update competitor window.
-					if (updateClubOfCompetitor) { // Update club of selected
-													// competitor.
-						if (RepresentativeComboBox.getSelectedIndex() > 0) {
-							competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).setClub(club);
-							RegisteredPersonPool.getInstance().update(
-									competitors.get(RepresentativeComboBox.getSelectedIndex() - 1),
-									competitors.get(RepresentativeComboBox.getSelectedIndex() - 1));
-						}
-					}
-					this.dispose();
-				}
-			} else {
-				AlertManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "SQL");
-			}
-		} catch (NullPointerException npe) {
-			AlertManager.showErrorInformation(this.getClass().getName(), npe);
-		} catch (SQLException ex) {
-			AlertManager.showSqlErrorMessage(ex);
-		}
-	}
+    public void acceptClub() {
+        try {
+            setAlwaysOnTop(false);
+            if (NameTextField.getText().length() > 0 && CountryTextField.getText().length() > 0
+                    && CityTextField.getText().length() > 0) {
+                club = new Club(NameTextField.getText().trim(), CountryTextField.getText().trim(), CityTextField
+                        .getText().trim());
+                club.setAddress(AddressTextField.getText());
+                try {
+                    if (RepresentativeComboBox.getSelectedIndex() > 0) {
+                        club.setRepresentative(competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).getId(),
+                                MailTextField.getText(), PhoneTextField.getText());
+                    }
+                } catch (NullPointerException | ArrayIndexOutOfBoundsException npe) {
+                }
+                if (modifiedClubName == null) {
+                    if (ClubPool.getInstance().add(club)) {
+                        AlertManager.informationMessage(this.getClass().getName(), "clubStored", "Club");
+                    } else {
+                        AlertManager.errorMessage(this.getClass().getName(), "clubNotStored", "Club");
+                    }
+                } else {
+                    try {
+                        ClubPool.getInstance().remove(modifiedClubName);
+                        ClubPool.getInstance().add(club);
+                        AlertManager.informationMessage(this.getClass().getName(), "clubUpdated", "Club");
+                    } catch (Exception e) {
+                        AlertManager.errorMessage(this.getClass().getName(), "clubNotStored", "Club");
+                    }
+                }
+                cleanWindow();
+                if (newCompetitor != null) {
+                    // newCompetitor.fillClub();
+                    newCompetitor.addClub(club); // Update competitor window.
+                    if (updateClubOfCompetitor) { // Update club of selected
+                        // competitor.
+                        if (RepresentativeComboBox.getSelectedIndex() > 0) {
+                            competitors.get(RepresentativeComboBox.getSelectedIndex() - 1).setClub(club);
+                            RegisteredPersonPool.getInstance().update(
+                                    competitors.get(RepresentativeComboBox.getSelectedIndex() - 1),
+                                    competitors.get(RepresentativeComboBox.getSelectedIndex() - 1));
+                        }
+                    }
+                    this.dispose();
+                }
+            } else {
+                AlertManager.errorMessage(this.getClass().getName(), "noClubFieldsFilled", "SQL");
+            }
+        } catch (NullPointerException npe) {
+            AlertManager.showErrorInformation(this.getClass().getName(), npe);
+        } catch (SQLException ex) {
+            AlertManager.showSqlErrorMessage(ex);
+        }
+    }
 
-	public void updateClubsInCompetitor(NewCompetitor nc) {
-		newCompetitor = nc;
-	}
+    public void updateClubsInCompetitor(NewCompetitor nc) {
+        newCompetitor = nc;
+    }
 
-	/**
-	 * **********************************************
-	 * 
-	 * LISTENERS
-	 * 
-	 *********************************************** 
-	 */
-	/**
-	 * Add the same action listener to all langugaes of the menu.
-	 * 
-	 * @param al
-	 */
-	public void addSearchListener(ActionListener al) {
-		SearchButton.addActionListener(al);
-	}
+    /**
+     * **********************************************
+     *
+     * LISTENERS
+     *
+     ***********************************************
+     */
+    /**
+     * Add the same action listener to all langugaes of the menu.
+     *
+     * @param al
+     */
+    public void addSearchListener(ActionListener al) {
+        SearchButton.addActionListener(al);
+    }
 
-	public void addAcceptListener(ActionListener al) {
-		AcceptButton.addActionListener(al);
-	}
+    public void addAcceptListener(ActionListener al) {
+        AcceptButton.addActionListener(al);
+    }
 
-	/**
-	 * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-	 * content of this method is always regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed"
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
@@ -470,25 +482,25 @@ public class NewClub extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
-	private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
-		this.dispose();
-	}// GEN-LAST:event_CancelButtonActionPerformed
+    private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
+        this.dispose();
+    }// GEN-LAST:event_CancelButtonActionPerformed
 
-	private void RepresentativeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RepresentativeComboBoxActionPerformed
-		// UpdateRepresentative();
-	}// GEN-LAST:event_RepresentativeComboBoxActionPerformed
+    private void RepresentativeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_RepresentativeComboBoxActionPerformed
+        // UpdateRepresentative();
+    }// GEN-LAST:event_RepresentativeComboBoxActionPerformed
 
-	private void PhoneTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_PhoneTextFieldKeyReleased
-		// UpdateRepresentative();
-	}// GEN-LAST:event_PhoneTextFieldKeyReleased
+    private void PhoneTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_PhoneTextFieldKeyReleased
+        // UpdateRepresentative();
+    }// GEN-LAST:event_PhoneTextFieldKeyReleased
 
-	private void MailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_MailTextFieldKeyReleased
-		// UpdateRepresentative();
-	}// GEN-LAST:event_MailTextFieldKeyReleased
+    private void MailTextFieldKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_MailTextFieldKeyReleased
+        // UpdateRepresentative();
+    }// GEN-LAST:event_MailTextFieldKeyReleased
 
-	private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
-		this.toFront();
-	}// GEN-LAST:event_formWindowOpened
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_formWindowOpened
+        this.toFront();
+    }// GEN-LAST:event_formWindowOpened
 		// Variables declaration - do not modify//GEN-BEGIN:variables
 
 	private javax.swing.JButton AcceptButton;

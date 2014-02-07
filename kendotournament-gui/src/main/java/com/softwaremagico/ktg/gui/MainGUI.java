@@ -125,6 +125,7 @@ public final class MainGUI extends KendoFrame {
         TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
         CompetitorsGlobalScoreMenuItem.setText(trans.getTranslatedText("GeneralClassification"));
         manualMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
+        reloadMenuItem.setText(trans.getTranslatedText("LoadMenuItem"));
     }
 
     private void setPhoto() {
@@ -425,6 +426,10 @@ public final class MainGUI extends KendoFrame {
     public void addManualMenuItemListener(ActionListener al) {
         manualMenuItem.addActionListener(al);
     }
+    
+    public void addLoadMenuItemListener(ActionListener al){
+        reloadMenuItem.addActionListener(al);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -445,6 +450,7 @@ public final class MainGUI extends KendoFrame {
         DatabaseConnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"connect.png"));
         DatabaseDisconnectMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"disconnect.png"));
         ConvertDatabaseMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"convertDatabase.png"));
+        reloadMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"reload.png"));
         SaveMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"save.png"));
         ExitMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"exit.png"));
         InsertMenu = new javax.swing.JMenu();
@@ -537,6 +543,10 @@ public final class MainGUI extends KendoFrame {
 
         ProgramMenu.add(DatabaseMenu);
 
+        reloadMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        reloadMenuItem.setText("Reload");
+        ProgramMenu.add(reloadMenuItem);
+
         SaveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         SaveMenuItem.setText("Save");
         ProgramMenu.add(SaveMenuItem);
@@ -589,11 +599,6 @@ public final class MainGUI extends KendoFrame {
         DefineFightsMenu.add(DesignerMenuItem);
 
         manualMenuItem.setText("Manual");
-        manualMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manualMenuItemActionPerformed(evt);
-            }
-        });
         DefineFightsMenu.add(manualMenuItem);
 
         TournamentMenu.add(DefineFightsMenu);
@@ -736,16 +741,12 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void manualMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_manualMenuItemActionPerformed
 
     private void DatabaseDisconnectMenuItemActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DatabaseDisconnectMenuItemActionPerformed
         performDisconnection();
@@ -829,5 +830,6 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem TournamentTreeMenuItem;
     private javax.swing.JMenuItem WonLostMenuItem;
     private javax.swing.JMenuItem manualMenuItem;
+    private javax.swing.JMenuItem reloadMenuItem;
     // End of variables declaration//GEN-END:variables
 }

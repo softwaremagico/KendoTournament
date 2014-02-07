@@ -2195,5 +2195,13 @@
 		<de>Win over draws:</de>
 		<ca>Victòries sobre empats:</ca>
 		<it>Vittoria supera pareggio:</it>
-	</WinOverDrawsRadioButton>
+	</WinOverDrawsRadioButton>	
+	<LoadMenuItem>
+		<en>Reload</en>
+		<es>Recargar</es>
+		<nl>Reload</nl>
+		<de>Reload</de>
+		<ca>Recarregar</ca>
+		<it>Recaricare</it>
+	</LoadMenuItem>
 </translator>
