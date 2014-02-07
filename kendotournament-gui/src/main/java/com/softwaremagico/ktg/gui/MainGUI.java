@@ -264,11 +264,11 @@ public final class MainGUI extends KendoFrame {
                 if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
                     try {
                         DatabaseConnection.getInstance().updateDatabase();
+                        disconnect();
                     } catch (SQLException ex) {
                         AlertManager.showSqlErrorMessage(ex);
                     }
                 }
-                disconnect();
             } else if (confirmed == JOptionPane.NO_OPTION) {
                 disconnect();
             } else {
