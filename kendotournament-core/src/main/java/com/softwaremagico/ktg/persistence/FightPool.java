@@ -193,22 +193,6 @@ public class FightPool extends TournamentDependentPool<Fight> {
         }
 
         return null;
-
-//        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
-//        List<Fight> fightsOfArea = new ArrayList<>();
-//        for (Fight fight : allFights) {
-//            if (fight.getAsignedFightArea() == fightArea) {
-//                fightsOfArea.add(fight);
-//            }
-//        }
-//
-//        Collections.sort(fightsOfArea);
-//
-//        Integer index = getCurrentFightIndex(tournament, fightArea) + fightIndex;
-//        if (index >= 0 && index < fightsOfArea.size()) {
-//            return fightsOfArea.get(index);
-//        }
-//        return null;
     }
 
     public int getFightIndex(Fight fight) throws SQLException {

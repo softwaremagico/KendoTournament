@@ -649,7 +649,8 @@ public class FightPanel extends KFrame {
                             getSelectedFightArea(),
                             FightPool.getInstance().getCurrentFightIndex(getSelectedTournament(),
                             getSelectedFightArea()) - 1);
-                    if (previousFight != null) {
+                    //In multiples computers we cannot change fights of previous levels. 
+                    if (previousFight != null && (!getSelectedTournament().isUsingMultipleComputers() || previousFight.getLevel() == currentFight.getLevel())) {
                         previousFight.setOver(false);
                     }
                 }
@@ -694,7 +695,7 @@ public class FightPanel extends KFrame {
             createWaitingNetworkMessage();
             UpdateDataWorker updateData = new UpdateDataWorker();
             updateData.execute();
-            nextFights();
+            //nextFights();
         }
     }
 
@@ -915,7 +916,7 @@ public class FightPanel extends KFrame {
                 timerTask = new Task();
                 timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
             }
-            //nextFights();
+            nextFights();
             return true;
         }
 
