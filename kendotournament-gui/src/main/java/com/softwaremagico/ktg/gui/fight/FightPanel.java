@@ -694,6 +694,7 @@ public class FightPanel extends KFrame {
             createWaitingNetworkMessage();
             UpdateDataWorker updateData = new UpdateDataWorker();
             updateData.execute();
+            nextFights();
         }
     }
 
@@ -728,7 +729,6 @@ public class FightPanel extends KFrame {
                             }
                             ranking = new Ranking(group.getFights());
                         }
-                        //Not show score now, wait for network data exchange. 
                         openRankingWindow(ranking, true);
                     }
 
@@ -915,8 +915,7 @@ public class FightPanel extends KFrame {
                 timerTask = new Task();
                 timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
             }
-            nextFights();
-
+            //nextFights();
             return true;
         }
 
