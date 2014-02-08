@@ -57,10 +57,10 @@ public abstract class Database {
     /**
      * Connect to the database
      *
-     * @param tmp_password database password.
-     * @param tmp_user user database.
-     * @param tmp_database satabase schema.
-     * @param tmp_server server IP
+     * @param password database password.
+     * @param user user database.
+     * @param database satabase schema.
+     * @param server server IP
      * @param verbose show error messages.
      * @param retry do another try if can solve the SQL problem.
      * @return true if the connection is ok.

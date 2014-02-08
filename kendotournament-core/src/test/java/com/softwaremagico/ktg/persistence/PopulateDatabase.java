@@ -41,12 +41,7 @@ public class PopulateDatabase {
     @Before
     @Test
     public void connectToDatabase() {
-        DatabaseConnection.getInstance().setDatabase(getDatabaseTested().getDatabaseClass());
         DatabaseConnection.getInstance().setDatabaseEngine(getDatabaseTested().toString());
-        DatabaseConnection.getInstance().setPassword(DATABASE_PASSWORD);
-        DatabaseConnection.getInstance().setServer(DATABASE_SERVER);
-        DatabaseConnection.getInstance().setUser(DATABASE_USER);
-        DatabaseConnection.getInstance().setDatabaseName(DATABASE_NAME);
         //Create database if not exists.
         try {
             DatabaseConnection.getInstance().testDatabaseConnection(DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_SERVER, false);

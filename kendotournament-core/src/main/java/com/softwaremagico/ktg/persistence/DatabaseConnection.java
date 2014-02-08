@@ -26,6 +26,7 @@ package com.softwaremagico.ktg.persistence;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -227,9 +228,14 @@ public class DatabaseConnection {
         }
         return databaseEngine;
     }
+    
+    public void setDatabaseEngine(DatabaseEngine databaseEngine) {
+        this.databaseEngine = databaseEngine;
+       setDatabase(databaseEngine.getDatabaseClass());
+    }
 
     public void setDatabaseEngine(String engine) {
-        databaseEngine = DatabaseEngine.getDatabase(engine);
+    	setDatabaseEngine(DatabaseEngine.getDatabase(engine));
     }
 
     public void resetDatabase() {
