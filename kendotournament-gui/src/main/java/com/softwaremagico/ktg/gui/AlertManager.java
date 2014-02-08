@@ -25,9 +25,11 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.FightPool;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
@@ -47,6 +49,7 @@ public class AlertManager {
     private static final Translator trans = LanguagePool.getTranslator("messages.xml");
     private static ImageIcon winnerIcon = null;
     private static ImageIcon clockIcon = null;
+    private static JDialog waitingNetworkDialog;
 
     /**
      * Show an error message translated to the language stored
@@ -129,7 +132,94 @@ public class AlertManager {
         return winnerDialog;
     }
 
-    public static JOptionPane createWaitingDatabaseMessage() {
+    public static JDialog createWaitingArenasMessage(Tournament tournament, int fightArea) throws SQLException {
+        // wait for other arena fights. Show message.
+        String arenas = "";
+        for (int i = 0; i < tournament.getFightingAreas(); i++) {
+            // Obtain not fimished arenas.
+            if (fightArea != i
+                    && !FightPool.getInstance().areAllOver(tournament, i)) {
+                arenas += Tournament.getFightAreaName(i) + " ";
+            }
+        }
+        // Prepare message
+        arenas = arenas.trim().replace(" ", ", ");
+
+        final JOptionPane optionPane = new JOptionPane(
+                LanguagePool.getTranslator("messages.xml").getTranslatedText("waitingArena") + ": " + arenas,
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION);
+
+        final JDialog waitingArenaDialog = new JDialog(new JFrame(), "Waiting", false);
+
+        optionPane.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent e) {
+                        String prop = e.getPropertyName();
+
+                        if (waitingArenaDialog.isVisible()
+                                && (e.getSource() == optionPane)
+                                && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                            waitingArenaDialog.setVisible(false);
+                        }
+                    }
+                });
+
+        waitingArenaDialog.setAlwaysOnTop(true);
+        waitingArenaDialog.requestFocus();
+        waitingArenaDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        int width = 450;
+        int height = 135;
+        waitingArenaDialog.setSize(width, height);
+        waitingArenaDialog.setMinimumSize(new Dimension(width, height));
+        waitingArenaDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (height / 2));
+
+        waitingArenaDialog.setContentPane(optionPane);
+
+        return waitingArenaDialog;
+    }
+
+    public static JDialog createWaitingNetworkMessage() {
+        if (waitingNetworkDialog == null) {
+            final JOptionPane optionPane = createWaitingDatabaseMessage();
+            optionPane.addPropertyChangeListener(
+                    new PropertyChangeListener() {
+                        @Override
+                        public void propertyChange(PropertyChangeEvent e) {
+                            String prop = e.getPropertyName();
+
+                            if (waitingNetworkDialog.isVisible()
+                                    && (e.getSource() == optionPane)
+                                    && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                                waitingNetworkDialog.setVisible(false);
+                            }
+                        }
+                    });
+
+
+            waitingNetworkDialog = new JDialog(new JFrame(), "tic tac", false);
+            waitingNetworkDialog.setAlwaysOnTop(true);
+            waitingNetworkDialog.requestFocus();
+            waitingNetworkDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            int width = 600;
+            int height = 155;
+            waitingNetworkDialog.setSize(width, height);
+            waitingNetworkDialog.setMinimumSize(new Dimension(width, height));
+            waitingNetworkDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                    - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                    / 2 - (int) (height / 2));
+
+            waitingNetworkDialog.setContentPane(optionPane);
+        }
+        return waitingNetworkDialog;
+    }
+
+    private static JOptionPane createWaitingDatabaseMessage() {
         if (clockIcon == null) {
             clockIcon = new ImageIcon(AlertManager.class.getResource("/waiting.png"));
         }
