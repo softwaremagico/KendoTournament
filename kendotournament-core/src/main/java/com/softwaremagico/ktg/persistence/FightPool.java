@@ -182,16 +182,20 @@ public class FightPool extends TournamentDependentPool<Fight> {
     }
 
     public Fight getFightFromCurrent(Tournament tournament, Integer fightArea, Integer fightIndex) throws SQLException {
-
-        List<Fight> fightsOfArea = get(tournament, fightArea);
-        Fight currentFight = getCurrentFight(tournament, fightArea);
-        if (currentFight != null) {
-            int currentFightIndex = fightsOfArea.indexOf(currentFight);
-            if (currentFightIndex + fightIndex < fightsOfArea.size() && currentFightIndex + fightIndex >= 0) {
-                return fightsOfArea.get(currentFightIndex + fightIndex);
+        List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
+        List<Fight> fightsOfArea = new ArrayList<>();
+        for (Fight fight : allFights) {
+            if (fight.getAsignedFightArea() == fightArea) {
+                fightsOfArea.add(fight);
             }
         }
 
+        Collections.sort(fightsOfArea);
+
+        Integer index = getCurrentFightIndex(tournament, fightArea) + fightIndex;
+        if (index >= 0 && index < fightsOfArea.size()) {
+            return fightsOfArea.get(index);
+        }
         return null;
     }
 
