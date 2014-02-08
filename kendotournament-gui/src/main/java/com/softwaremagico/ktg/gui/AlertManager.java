@@ -28,11 +28,16 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -67,7 +72,7 @@ public class AlertManager {
         JOptionPane.showMessageDialog(null, text, title, JOptionPane.INFORMATION_MESSAGE, icon);
     }
 
-    public static void winnerMessage(String className, String code, String title, String winnerTeam) {
+    public static JDialog winnerMessage(String className, String code, String title, String winnerTeam) {
         String text = trans.getTranslatedText(code);
         if (text.endsWith(".")) {
             text = text.substring(0, text.length() - 1);
@@ -75,7 +80,53 @@ public class AlertManager {
         if (winnerIcon == null) {
             winnerIcon = new ImageIcon(AlertManager.class.getResource("/cup.png"));
         }
-        customIconMessage(className, winnerIcon, text.trim() + ":\n" + winnerTeam.trim(), title);
+        return createWinnerMessage(className, text.trim() + ":\n" + winnerTeam.trim());
+        //customIconMessage(className, winnerIcon, text.trim() + ":\n" + winnerTeam.trim(), title);
+    }
+
+    private static JDialog createWinnerMessage(String className, String text) {
+        KendoLog.finest(className, text);
+        if (winnerIcon == null) {
+            winnerIcon = new ImageIcon(AlertManager.class.getResource("/cup.png"));
+        }
+
+        final JOptionPane winnerMessage = new JOptionPane(
+                text,
+                JOptionPane.INFORMATION_MESSAGE,
+                JOptionPane.DEFAULT_OPTION, winnerIcon);
+
+        final JDialog winnerDialog = new JDialog(new JFrame(), "!!!!", false);
+
+        winnerMessage.addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent e) {
+                        String prop = e.getPropertyName();
+
+                        if (winnerDialog.isVisible()
+                                && (e.getSource() == winnerMessage)
+                                && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                            winnerDialog.dispose();
+                        }
+                    }
+                });
+
+        int width = 580;
+        int height = 155;
+        winnerDialog.setSize(width, height);
+        winnerDialog.setMinimumSize(new Dimension(width, height));
+        winnerDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
+                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
+                / 2 - (int) (height / 2));
+
+
+        winnerDialog.setAlwaysOnTop(true);
+        winnerDialog.requestFocus();
+        winnerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        winnerDialog.setContentPane(winnerMessage);
+
+        return winnerDialog;
     }
 
     public static JOptionPane createWaitingDatabaseMessage() {

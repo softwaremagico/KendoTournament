@@ -754,8 +754,9 @@ public class FightPanel extends KFrame {
                                 // No more fights, show final winner
                                 // message.
                                 if (ranking != null) {
-                                    AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished",
+                                    JDialog winnerMessage = AlertManager.winnerMessage(this.getClass().getName(), "leagueFinished",
                                             "!!!!!!", ranking.getTeamsRanking().get(0).getName());
+                                    winnerMessage.setVisible(true);
                                 }
                             }
                         } catch (PersonalizedFightsException e) {
@@ -904,6 +905,11 @@ public class FightPanel extends KFrame {
         TournamentManagerFactory.getManager(getSelectedTournament()).fillGroups();
     }
 
+    private void closeWaitingDialog() {
+        waitingNetworkDialog.setVisible(false);
+        waitingNetworkDialog.dispose();
+    }
+
     class UpdateDataWorker extends SwingWorker<Boolean, Object> {
 
         private Integer CONNECTION_TASK_PERIOD = 3000;
@@ -927,8 +933,7 @@ public class FightPanel extends KFrame {
             } catch (NullPointerException npe) {
             }
             try {
-                waitingNetworkDialog.setVisible(false);
-                waitingNetworkDialog.dispose();
+                closeWaitingDialog();
             } catch (Exception ignore) {
             }
         }
