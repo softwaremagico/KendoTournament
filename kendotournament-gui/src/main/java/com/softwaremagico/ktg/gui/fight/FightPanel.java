@@ -660,6 +660,7 @@ public class FightPanel extends KFrame {
     }
 
     class NextButton extends DownButton {
+
         private static final long serialVersionUID = -7724190339280274613L;
 
         protected NextButton(FightPanel fightPanel) {
@@ -688,10 +689,13 @@ public class FightPanel extends KFrame {
             waitingNetworkDialog = AlertManager.createWaitingNetworkMessage();
             UpdateDataWorker updateData = new UpdateDataWorker();
             updateData.execute();
-            //nextFights();
         }
     }
 
+    /**
+     * Real next button action. Creates next fights, ask for fights in other
+     * computers and show information messages to the user.
+     */
     private void nextFights() {
         try {
             // Exists fights.
@@ -811,6 +815,10 @@ public class FightPanel extends KFrame {
         waitingNetworkDialog.dispose();
     }
 
+    /**
+     * Swing worker for exchange data between computers and show a waiting
+     * message without freeze the GUI.
+     */
     class UpdateDataWorker extends SwingWorker<Boolean, Object> {
 
         private Integer CONNECTION_TASK_PERIOD = 3000;
