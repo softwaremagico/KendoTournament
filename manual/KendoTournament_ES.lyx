@@ -506,6 +506,90 @@ Gráficas.
 \end_layout
 
 \begin_layout Section
+Basic program behaviour
+\end_layout
+
+\begin_layout Standard
+El menu tiene una sección 
+\begin_inset Quotes eld
+\end_inset
+
+Program
+\begin_inset Quotes erd
+\end_inset
+
+ estándar muy similar a otros softwares.
+ Aquí existen las siguientes opciones:
+\end_layout
+
+\begin_layout Description
+Base
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+datos: aquí puedes gestionar la conexión, desconexión y conversión de la
+ base de datos.
+ 
+\end_layout
+
+\begin_layout Description
+Recargar: puedes forazar el refresco de los datos.
+ Equivale a un guardar + cargar.
+ 
+\end_layout
+
+\begin_layout Description
+Guardar: almacena toda los cambios realizados hasta ese momento en la base
+ de datos.
+ Esto incluy los nuevos competidores, cambios en el torneo, puntuación añadida,
+ etc.
+ 
+\end_layout
+
+\begin_layout Description
+Salie: cierra el programa.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_ES/ProgramMenu.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Menú Programa.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Inserción de la información
 \end_layout
 

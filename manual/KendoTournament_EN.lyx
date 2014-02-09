@@ -468,6 +468,81 @@ Charts.
 \end_layout
 
 \begin_layout Section
+Basic program behaviour
+\end_layout
+
+\begin_layout Standard
+The menu has a standar 
+\begin_inset Quotes eld
+\end_inset
+
+Program
+\begin_inset Quotes erd
+\end_inset
+
+ section where you can select the next options: 
+\end_layout
+
+\begin_layout Description
+Database: here you can manage the connection, disconnection or conversion
+ of the database.
+ 
+\end_layout
+
+\begin_layout Description
+Reload: you can force the reload of data from the database (save + load).
+ Very useful where using multiples computers.
+\end_layout
+
+\begin_layout Description
+Save: you can store in the database all changes made.
+ This includes new users, tournament definitions, score added ...
+\end_layout
+
+\begin_layout Description
+Exit: close the program.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images_EN/ProgramMenu.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Program Menu.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Inserting information
 \end_layout
 
