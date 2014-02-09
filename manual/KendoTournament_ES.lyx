@@ -538,7 +538,7 @@ datos: aquí puedes gestionar la conexión, desconexión y conversión de la
 
 \begin_layout Description
 Recargar: puedes forazar el refresco de los datos.
- Equivale a un guardar + cargar.
+ Borra todos los datos en memoria y los obtiene de nuevo de la base de datos.
  
 \end_layout
 

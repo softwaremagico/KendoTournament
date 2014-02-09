@@ -490,8 +490,9 @@ Database: here you can manage the connection, disconnection or conversion
 \end_layout
 
 \begin_layout Description
-Reload: you can force the reload of data from the database (save + load).
- Very useful where using multiples computers.
+Reload: you can force the reload of data from the database.
+ It erases all not saved data and load them again from database.
+ 
 \end_layout
 
 \begin_layout Description
