@@ -204,7 +204,7 @@ public class RankingWindow extends KFrame {
 	}
 
 	private int getFontSize() {
-		return this.getWidth() / 50;
+		return this.getWidth() / 60;
 	}
 
 	@Override
