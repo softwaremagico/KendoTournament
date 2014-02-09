@@ -820,8 +820,6 @@ public class FightPanel extends KFrame {
      * message without freeze the GUI.
      */
     class UpdateDataWorker extends SwingWorker<Boolean, Object> {
-
-        private Integer CONNECTION_TASK_PERIOD = 3000;
         private Timer timer = new Timer("Waiting");
         private Task timerTask;
 
@@ -829,7 +827,7 @@ public class FightPanel extends KFrame {
         public Boolean doInBackground() {
             if (getSelectedTournament().isUsingMultipleComputers()) {
                 timerTask = new Task();
-                timer.schedule(timerTask, CONNECTION_TASK_PERIOD);
+                timer.schedule(timerTask, WAITING_TASK_PERIOD);
             }
             nextFights();
             return true;

@@ -121,7 +121,8 @@ public final class MainGUI extends KendoFrame {
         DebugMenuCheckBox.setText(trans.getTranslatedText("DebugOption"));
         ConvertDatabaseMenuItem.setText(trans.getTranslatedText("ConvertDatabase"));
         FightsCardMenuItem.setText(trans.getTranslatedText("FightsCard"));
-        AutosaveCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
+        AutosaveMenu.setText(trans.getTranslatedText("AutosaveMenuItem"));
+        AutosaveByTimeCheckBox.setText(trans.getTranslatedText("AutosaveMenuItem"));
         TournamentTreeMenuItem.setText(trans.getTranslatedText("TreeButton"));
         CompetitorsGlobalScoreMenuItem.setText(trans.getTranslatedText("GeneralClassification"));
         manualMenuItem.setText(trans.getTranslatedText("ManualFightsMenuItem"));
@@ -206,7 +207,7 @@ public final class MainGUI extends KendoFrame {
         LogMenuCheckBox.setState(KendoTournamentGenerator.getInstance().getLogOption());
         DebugMenuCheckBox.setState(KendoTournamentGenerator.isDebugOptionSelected());
         refresh = true;
-        AutosaveCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
+        AutosaveByTimeCheckBox.setState(KendoTournamentGenerator.isAutosaveOptionSelected());
     }
 
     private void close() {
@@ -442,6 +443,7 @@ public final class MainGUI extends KendoFrame {
     private void initComponents() {
 
         LanguageButtonGroup = new javax.swing.ButtonGroup();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         MainPhotoPanel = new javax.swing.JPanel();
         MainMenuBar = new javax.swing.JMenuBar();
         ProgramMenu = new javax.swing.JMenu();
@@ -496,8 +498,13 @@ public final class MainGUI extends KendoFrame {
         OptionsMenu = new javax.swing.JMenu();
         LanguageMenu = new javax.swing.JMenu();
         LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"language.png"));
-        AutosaveCheckBox = new javax.swing.JCheckBoxMenuItem();
-        AutosaveCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
+        AutosaveMenu = new javax.swing.JMenu();
+        AutosaveMenu.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
+        AutosaveByTimeCheckBox = new javax.swing.JCheckBoxMenuItem();
+        AutosaveByTimeCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"session-save.png"));
+        DisabledAutoSaveRadioButton = new javax.swing.JRadioButtonMenuItem();
+        AutosaveByTimeRadioButton = new javax.swing.JRadioButtonMenuItem();
+        AutosaveByActionRadioButton = new javax.swing.JRadioButtonMenuItem();
         LogMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
         LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"log.png"));
         DebugMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
@@ -685,14 +692,31 @@ public final class MainGUI extends KendoFrame {
         LanguageMenu.setText("Language");
         OptionsMenu.add(LanguageMenu);
 
-        AutosaveCheckBox.setSelected(true);
-        AutosaveCheckBox.setText("Autosave");
-        AutosaveCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+        AutosaveMenu.setText("Autosave");
+
+        AutosaveByTimeCheckBox.setSelected(true);
+        AutosaveByTimeCheckBox.setText("AutosaveByTime");
+        AutosaveByTimeCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                AutosaveCheckBoxStateChanged(evt);
+                AutosaveByTimeCheckBoxStateChanged(evt);
             }
         });
-        OptionsMenu.add(AutosaveCheckBox);
+        AutosaveMenu.add(AutosaveByTimeCheckBox);
+
+        buttonGroup1.add(DisabledAutoSaveRadioButton);
+        DisabledAutoSaveRadioButton.setText("Disabled");
+        AutosaveMenu.add(DisabledAutoSaveRadioButton);
+
+        buttonGroup1.add(AutosaveByTimeRadioButton);
+        AutosaveByTimeRadioButton.setSelected(true);
+        AutosaveByTimeRadioButton.setText("Autosave By Time");
+        AutosaveMenu.add(AutosaveByTimeRadioButton);
+
+        buttonGroup1.add(AutosaveByActionRadioButton);
+        AutosaveByActionRadioButton.setText("Autosave By Action");
+        AutosaveMenu.add(AutosaveByActionRadioButton);
+
+        OptionsMenu.add(AutosaveMenu);
 
         LogMenuCheckBox.setSelected(true);
         LogMenuCheckBox.setText("Log");
@@ -741,7 +765,7 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -768,8 +792,8 @@ public final class MainGUI extends KendoFrame {
         }
     }// GEN-LAST:event_DebugMenuCheckBoxItemStateChanged
 
-    private void AutosaveCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_AutosaveCheckBoxStateChanged
-        KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveCheckBox.getState());
+    private void AutosaveByTimeCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_AutosaveCheckBoxStateChanged
+        KendoTournamentGenerator.getInstance().setAutosaveOption(AutosaveByTimeCheckBox.getState());
     }// GEN-LAST:event_AutosaveCheckBoxStateChanged
 
     private void WindowClose(java.awt.event.WindowEvent evt) {// GEN-FIRST:event_WindowClose
@@ -778,7 +802,10 @@ public final class MainGUI extends KendoFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AboutMenuItem;
     private javax.swing.JMenuItem AccreditationMenuItem;
-    private javax.swing.JCheckBoxMenuItem AutosaveCheckBox;
+    private javax.swing.JRadioButtonMenuItem AutosaveByActionRadioButton;
+    private javax.swing.JCheckBoxMenuItem AutosaveByTimeCheckBox;
+    private javax.swing.JRadioButtonMenuItem AutosaveByTimeRadioButton;
+    private javax.swing.JMenu AutosaveMenu;
     private javax.swing.JMenuItem ClubListMenuItem;
     private javax.swing.JMenuItem ClubMenuItem;
     private javax.swing.JMenuItem CompetitorMenuItem;
@@ -792,6 +819,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenu DefineFightsMenu;
     private javax.swing.JMenuItem DesignerMenuItem;
     private javax.swing.JMenuItem DiplomaMenuItem;
+    private javax.swing.JRadioButtonMenuItem DisabledAutoSaveRadioButton;
     private javax.swing.JMenuItem ExitMenuItem;
     private javax.swing.JMenuItem FightListMenuItem;
     private javax.swing.JMenuItem FightMenuItem;
@@ -829,6 +857,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem TournamentTopTenMenuItem;
     private javax.swing.JMenuItem TournamentTreeMenuItem;
     private javax.swing.JMenuItem WonLostMenuItem;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem manualMenuItem;
     private javax.swing.JMenuItem reloadMenuItem;
     // End of variables declaration//GEN-END:variables
