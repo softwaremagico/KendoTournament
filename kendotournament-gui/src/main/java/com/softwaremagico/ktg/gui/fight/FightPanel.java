@@ -110,7 +110,6 @@ public class FightPanel extends KFrame {
         setMainPanels();
         tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
         updateSelectedTournament();
-        updateNextButton();
     }
 
     public JMenuBar createMenu() {
@@ -507,6 +506,7 @@ public class FightPanel extends KFrame {
         } else {
             updateDatabase.setVisible(true);
         }
+        updateNextButton();
     }
 
     public void updateSelectedFightArea() {
