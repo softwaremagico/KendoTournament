@@ -51,16 +51,12 @@ import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -664,12 +660,9 @@ public class FightPanel extends KFrame {
     }
 
     class NextButton extends DownButton {
-
         private static final long serialVersionUID = -7724190339280274613L;
-        private FightPanel fightPanel;
 
         protected NextButton(FightPanel fightPanel) {
-            this.fightPanel = fightPanel;
             updateText(false);
             updateIcon(false);
         }
@@ -781,9 +774,6 @@ public class FightPanel extends KFrame {
         } catch (SQLException ex) {
             AlertManager.showSqlErrorMessage(ex);
         }
-        // closeWaitingMessage();
-        // Update score panel.
-        updateScorePanel();
     }
 
     /**
@@ -839,6 +829,7 @@ public class FightPanel extends KFrame {
 
         @Override
         protected void done() {
+            //Close waiting message
             try {
                 timerTask.cancel();
             } catch (NullPointerException npe) {
@@ -847,6 +838,8 @@ public class FightPanel extends KFrame {
                 closeWaitingDialog();
             } catch (Exception ignore) {
             }
+            // Update score panel.
+            updateScorePanel();
         }
 
         class Task extends TimerTask {
