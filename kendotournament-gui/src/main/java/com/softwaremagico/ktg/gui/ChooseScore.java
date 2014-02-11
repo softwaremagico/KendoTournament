@@ -27,9 +27,11 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentScore;
+
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.List;
@@ -402,6 +404,7 @@ public class ChooseScore extends javax.swing.JFrame {
         try {
             if (TournamentPool.getInstance().update(tournament)) {
                 AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "Score");
+                AutoSaveByAction.getInstance().save();
                 this.dispose();
             } else {
                 AlertManager.errorMessage(NewTournament.class.getName(), "genericError", "Score");

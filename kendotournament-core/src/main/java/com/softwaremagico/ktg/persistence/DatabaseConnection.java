@@ -322,7 +322,7 @@ public class DatabaseConnection {
             return false;
         }
         disconnect();
-        AutoSave.getInstance().resetTime();
+        AutoSaveByTime.getInstance().resetTime();
         return true;
     }
 
@@ -397,7 +397,7 @@ public class DatabaseConnection {
             return false;
         }
         disconnect();
-        AutoSave.getInstance().resetTime();
+        AutoSaveByTime.getInstance().resetTime();
         return true;
     }
 

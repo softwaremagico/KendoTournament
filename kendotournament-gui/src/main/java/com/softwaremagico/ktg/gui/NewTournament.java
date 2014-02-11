@@ -31,15 +31,18 @@ import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.TournamentAccreditationPDF;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tools.Media;
 import com.softwaremagico.ktg.tournament.TournamentType;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -186,9 +189,11 @@ public class NewTournament extends KendoFrame {
                     newTournament.setTournamentScore(oldTournament.getTournamentScore());
                     TournamentPool.getInstance().update(oldTournament, newTournament);
                     AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
+                    AutoSaveByAction.getInstance().save();
                 } else {
                     TournamentPool.getInstance().add(newTournament);
                     AlertManager.informationMessage(NewTournament.class.getName(), "tournamentStored", "SQL");
+                    AutoSaveByAction.getInstance().save();
                 }
                 KendoTournamentGenerator.getInstance().setLastSelectedTournament(NameTextField.getText());
                 return true;

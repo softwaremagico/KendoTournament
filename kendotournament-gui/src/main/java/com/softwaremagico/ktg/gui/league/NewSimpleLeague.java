@@ -30,16 +30,19 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 
 public class NewSimpleLeague extends javax.swing.JFrame {
@@ -547,6 +550,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
                     FightPool.getInstance().add((Tournament) TournamentComboBox.getSelectedItem(), fights);
                     TournamentPool.getInstance().update((Tournament) TournamentComboBox.getSelectedItem());
                     AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+                    AutoSaveByAction.getInstance().save();
                     this.dispose();
                 } else {
                     AlertManager.errorMessage(this.getClass().getName(), "repeatedFight", "New Fight");

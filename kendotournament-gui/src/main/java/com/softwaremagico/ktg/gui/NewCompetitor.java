@@ -28,6 +28,7 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.PhotoPool;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
@@ -36,12 +37,14 @@ import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -206,6 +209,7 @@ public class NewCompetitor extends KendoFrame {
 						RegisteredPersonPool.getInstance().add(comp);
 						AlertManager.informationMessage(this.getClass().getName(), "competitorStored", "SQL");
 					}
+					AutoSaveByAction.getInstance().save();
 				} catch (SQLException ex) {
 					AlertManager.showSqlErrorMessage(ex);
 				}

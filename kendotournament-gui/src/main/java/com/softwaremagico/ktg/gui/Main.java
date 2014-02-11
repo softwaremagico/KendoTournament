@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import com.softwaremagico.ktg.core.Configuration;
-import com.softwaremagico.ktg.persistence.AutoSave;
+import com.softwaremagico.ktg.persistence.AutoSaveByTime;
 
 public class Main {
 
@@ -54,7 +54,7 @@ public class Main {
         Configuration.readLanguageConfiguration();
 
         MainGUI gui = new MainGUI();
-        AutoSave.getInstance();
+        AutoSaveByTime.getInstance();
         try {
             new Controller(gui);
         } catch (Exception ex) {

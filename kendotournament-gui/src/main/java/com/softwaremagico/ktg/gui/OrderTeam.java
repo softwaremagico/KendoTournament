@@ -28,7 +28,9 @@ import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.fight.TeamFight;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TeamPool;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -131,6 +133,7 @@ public class OrderTeam extends NewTeam {
             try {
                 TeamPool.getInstance().update(tournament, team);
                 AlertManager.informationMessage(this.getClass().getName(), "orderChanged", "League");
+                AutoSaveByAction.getInstance().save();
                 this.dispose();
             } catch (SQLException ex) {
                 AlertManager.showSqlErrorMessage(ex);

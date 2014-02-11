@@ -31,8 +31,10 @@ import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.TeamAccreditationCardPDF;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
+
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -40,6 +42,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.JFileChooser;
 
 public class NewTeam extends KendoFrame {
@@ -316,10 +319,12 @@ public class NewTeam extends KendoFrame {
                             if (oldTeam != null) {
                                 if (TeamPool.getInstance().update(tournament, oldTeam, team)) {
                                     AlertManager.informationMessage(this.getClass().getName(), "teamUpdated", "Team");
+                                    AutoSaveByAction.getInstance().save();
                                 }
                             } else {
                                 if (TeamPool.getInstance().add(tournament, team)) {
                                     AlertManager.informationMessage(this.getClass().getName(), "teamStored", "Team");
+                                    AutoSaveByAction.getInstance().save();
                                 } else {
                                     AlertManager.informationMessage(this.getClass().getName(), "repatedTeam", "Team");
                                 }

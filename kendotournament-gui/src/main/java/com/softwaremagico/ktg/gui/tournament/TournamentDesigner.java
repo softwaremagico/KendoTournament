@@ -29,6 +29,7 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
@@ -41,10 +42,12 @@ import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -666,6 +669,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
                         if(getSelectedTournament().isUsingMultipleComputers()){
                             DatabaseConnection.getInstance().updateDatabase(getSelectedTournament());
                         }
+                        AutoSaveByAction.getInstance().save();
                         this.dispose();
                     }
                 } catch (PersonalizedFightsException e) {

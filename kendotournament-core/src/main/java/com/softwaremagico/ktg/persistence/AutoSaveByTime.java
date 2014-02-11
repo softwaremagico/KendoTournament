@@ -29,21 +29,21 @@ import java.util.TimerTask;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 
-public class AutoSave {
+public class AutoSaveByTime {
 
 	private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
-	private static AutoSave instance = new AutoSave();
+	private static AutoSaveByTime instance = new AutoSaveByTime();
 	private Timer timer = new Timer("Autosave");
 	private Task timerTask;
 
-	private AutoSave() {
+	private AutoSaveByTime() {
 		timerTask = new Task();
 		//For each minute. 
 		timer.schedule(timerTask, 0, 60000);
 
 	}
 
-	public static AutoSave getInstance() {
+	public static AutoSaveByTime getInstance() {
 		return instance;
 	}
 
@@ -68,16 +68,8 @@ public class AutoSave {
 			minutes++;
 			if (minutes >= save_period) {
 				if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
-					AutoSaveThread autosaveThread = new AutoSaveThread();
+					AutoSaveByTimeThread autosaveThread = new AutoSaveByTimeThread();
 					autosaveThread.run();
-					// if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
-					// KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
-					// try {
-					// DatabaseConnection.getInstance().updateDatabase();
-					// } catch (SQLException ex) {
-					// KendoLog.errorMessage(this.getClass().getName(), ex);
-					// }
-					// }
 				}
 			}
 		}

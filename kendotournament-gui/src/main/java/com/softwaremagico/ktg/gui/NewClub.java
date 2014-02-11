@@ -25,10 +25,12 @@ package com.softwaremagico.ktg.gui;
  */
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -167,6 +169,7 @@ public class NewClub extends javax.swing.JFrame {
                 if (modifiedClubName == null) {
                     if (ClubPool.getInstance().add(club)) {
                         AlertManager.informationMessage(this.getClass().getName(), "clubStored", "Club");
+                        AutoSaveByAction.getInstance().save();
                     } else {
                         AlertManager.errorMessage(this.getClass().getName(), "clubNotStored", "Club");
                     }
@@ -175,6 +178,7 @@ public class NewClub extends javax.swing.JFrame {
                         ClubPool.getInstance().remove(modifiedClubName);
                         ClubPool.getInstance().add(club);
                         AlertManager.informationMessage(this.getClass().getName(), "clubUpdated", "Club");
+                        AutoSaveByAction.getInstance().save();
                     } catch (Exception e) {
                         AlertManager.errorMessage(this.getClass().getName(), "clubNotStored", "Club");
                     }

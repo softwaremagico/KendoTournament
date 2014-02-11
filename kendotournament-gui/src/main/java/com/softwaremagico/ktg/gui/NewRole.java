@@ -34,13 +34,16 @@ import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
+
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JFileChooser;
 
 public class NewRole extends KendoFrame {
@@ -351,10 +354,12 @@ public class NewRole extends KendoFrame {
                 if (oldRole != null) {
                     if (RolePool.getInstance().update(getSelectedTournament(), oldRole, newRole)) {
                         AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                        AutoSaveByAction.getInstance().save();
                     }
                 } else {
                     if (RolePool.getInstance().add(getSelectedTournament(), newRole)) {
                         AlertManager.informationMessage(this.getClass().getName(), "roleChanged", "Role");
+                        AutoSaveByAction.getInstance().save();
                     }
                 }
                 if (close) {

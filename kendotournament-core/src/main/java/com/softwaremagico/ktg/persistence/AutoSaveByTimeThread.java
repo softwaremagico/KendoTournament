@@ -4,13 +4,13 @@ import java.sql.SQLException;
 
 import com.softwaremagico.ktg.core.KendoLog;
 
-public class AutoSaveThread extends Thread {
+public class AutoSaveByTimeThread extends Thread {
 
 	@Override
 	public void run() {
 		if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
 			if (DatabaseConnection.getInstance().needsToBeStoredInDatabase()) {
-				KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
+				KendoLog.debug(AutoSaveByTime.class.getName(), "Autosaving...");
 				try {
 					DatabaseConnection.getInstance().updateDatabase();
 				} catch (SQLException ex) {

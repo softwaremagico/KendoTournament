@@ -34,8 +34,10 @@ import com.softwaremagico.ktg.gui.base.TeamComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -44,6 +46,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -236,6 +239,7 @@ public class NewPersonalizedFight extends KFrame {
                 FightPool.getInstance().add(tournament, newFight);
                 TournamentManagerFactory.getManager(tournament).getGroups().get(0).addFight(newFight);
                 AlertManager.informationMessage(NewPersonalizedFight.class.getName(), "addFight", "");
+                AutoSaveByAction.getInstance().save();
             }
         } catch (SQLException ex) {
             KendoLog.errorMessage(NewPersonalizedFight.class.getName(), ex);
