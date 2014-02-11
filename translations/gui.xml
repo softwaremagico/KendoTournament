@@ -2204,4 +2204,28 @@
 		<ca>Recarregar</ca>
 		<it>Recaricare</it>
 	</LoadMenuItem>
+	<DisabledRadioButton>
+		<en>Disabled</en>
+		<es>Deshabilitado</es>
+		<nl>Disabled</nl>
+		<de>Disabled</de>
+		<ca></ca>
+		<it>Desabilitato</it>
+	</DisabledRadioButton>
+	<ByTimeRadioButton>
+		<en>By Time</en>
+		<es>Por Tiempo</es>
+		<nl>By Time</nl>
+		<de>By Time</de>
+		<ca></ca>
+		<it>Per Tempo</it>
+	</ByTimeRadioButton>
+	<ByActionRadioButton>
+		<en>By Action</en>
+		<es>Por Acción</es>
+		<nl>By Action</nl>
+		<de>By Action</de>
+		<ca></ca>
+		<it>Per Azzione</it>
+	</ByActionRadioButton>
 </translator>

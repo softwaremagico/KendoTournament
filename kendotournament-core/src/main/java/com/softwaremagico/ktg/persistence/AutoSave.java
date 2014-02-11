@@ -30,40 +30,40 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class AutoSave {
-
+    
     private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
     private static AutoSave instance = new AutoSave();
     private Timer timer = new Timer("Autosave");
     private Task timerTask;
-
+    
     private AutoSave() {
         timerTask = new Task();
         timer.schedule(timerTask, 0, 60000);
-
+        
     }
-
+    
     public static AutoSave getInstance() {
         return instance;
     }
-
+    
     public void resetTime() {
         timerTask.reset();
     }
-
+    
     public void setAutosavePeriod(Integer minutes) {
         timerTask.setPeriod(minutes);
     }
-
+    
     class Task extends TimerTask {
-
+        
         private int minutes = 0;
         private int save_period = AUTOSAVE_MINUTES_PERIOD;
-
+        
         @Override
         public void run() {
             minutes++;
             if (minutes >= save_period) {
-                if (KendoTournamentGenerator.isAutosaveOptionSelected()) {
+                if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
                     if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
                         KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
                         try {
@@ -75,11 +75,11 @@ public class AutoSave {
                 }
             }
         }
-
+        
         public void reset() {
             minutes = 0;
         }
-
+        
         public void setPeriod(Integer newMinutes) {
             if (newMinutes > 0) {
                 save_period = newMinutes;
