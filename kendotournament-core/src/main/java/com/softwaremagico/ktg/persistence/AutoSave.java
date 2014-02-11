@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.persistence;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,67 +24,72 @@ package com.softwaremagico.ktg.persistence;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoLog;
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+
 public class AutoSave {
-    
-    private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
-    private static AutoSave instance = new AutoSave();
-    private Timer timer = new Timer("Autosave");
-    private Task timerTask;
-    
-    private AutoSave() {
-        timerTask = new Task();
-        timer.schedule(timerTask, 0, 60000);
-        
-    }
-    
-    public static AutoSave getInstance() {
-        return instance;
-    }
-    
-    public void resetTime() {
-        timerTask.reset();
-    }
-    
-    public void setAutosavePeriod(Integer minutes) {
-        timerTask.setPeriod(minutes);
-    }
-    
-    class Task extends TimerTask {
-        
-        private int minutes = 0;
-        private int save_period = AUTOSAVE_MINUTES_PERIOD;
-        
-        @Override
-        public void run() {
-            minutes++;
-            if (minutes >= save_period) {
-                if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
-                    if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
-                        KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
-                        try {
-                            DatabaseConnection.getInstance().updateDatabase();
-                        } catch (SQLException ex) {
-                            KendoLog.errorMessage(this.getClass().getName(), ex);
-                        }
-                    }
-                }
-            }
-        }
-        
-        public void reset() {
-            minutes = 0;
-        }
-        
-        public void setPeriod(Integer newMinutes) {
-            if (newMinutes > 0) {
-                save_period = newMinutes;
-            }
-        }
-    }
+
+	private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
+	private static AutoSave instance = new AutoSave();
+	private Timer timer = new Timer("Autosave");
+	private Task timerTask;
+
+	private AutoSave() {
+		timerTask = new Task();
+		//For each minute. 
+		timer.schedule(timerTask, 0, 60000);
+
+	}
+
+	public static AutoSave getInstance() {
+		return instance;
+	}
+
+	public void resetTime() {
+		timerTask.reset();
+	}
+
+	public void setAutosavePeriod(Integer minutes) {
+		timerTask.setPeriod(minutes);
+	}
+
+	/**
+	 * Starts a thread for saving data when expired a counter.
+	 */
+	class Task extends TimerTask {
+
+		private int minutes = 0;
+		private int save_period = AUTOSAVE_MINUTES_PERIOD;
+
+		@Override
+		public void run() {
+			minutes++;
+			if (minutes >= save_period) {
+				if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
+					AutoSaveThread autosaveThread = new AutoSaveThread();
+					autosaveThread.run();
+					// if (DatabaseConnection.getInstance().isDatabaseConnectionTested()) {
+					// KendoLog.debug(AutoSave.class.getName(), "Autosaving...");
+					// try {
+					// DatabaseConnection.getInstance().updateDatabase();
+					// } catch (SQLException ex) {
+					// KendoLog.errorMessage(this.getClass().getName(), ex);
+					// }
+					// }
+				}
+			}
+		}
+
+		public void reset() {
+			minutes = 0;
+		}
+
+		public void setPeriod(Integer newMinutes) {
+			if (newMinutes > 0) {
+				save_period = newMinutes;
+			}
+		}
+	}
 }
