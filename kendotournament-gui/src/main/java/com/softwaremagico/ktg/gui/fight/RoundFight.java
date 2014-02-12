@@ -328,7 +328,7 @@ public class RoundFight extends JPanel {
             if ((winner == 0 && over != 2) || //fight over and the duel is draw.
                     (winner == 0 && nextStarted) || //fight not over, but next duel started
                     (drawsAnnoted.get(index) && winner == 0)) { //Set by the user.
-                panel.setBackgroundExtended(Score.getImage(Score.DRAW.getImageName()));
+                panel.setBackgroundExtended(Score.getImage(Score.DRAW.getPngImageName()));
             } else {
                 drawsAnnoted.set(index, false);
                 panel.removeBackground();

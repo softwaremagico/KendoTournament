@@ -33,21 +33,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author LOCAL\jhortelano
- */
 public enum Score {
 
-    MEN("men.png", "Men", 'M'),
-    KOTE("kote.png", "Kote", 'K'),
-    DO("do.png", "Do", 'D'),
-    TSUKI("tsuki.png", "Tsuki", 'T'),
-    IPPON("ippon.png", "Ippon", 'I'),
-    HANSOKU("hansoku.png", "Hansoku", 'H'),
-    EMPTY("empty.png", "ClearMenuItem", ' '),
-    FAULT("fault.png", "FaultMenuItem", '^'),
-    DRAW("draw.png", "Draw", 'X');
+    MEN("men", "Men", 'M'),
+    KOTE("kote", "Kote", 'K'),
+    DO("do", "Do", 'D'),
+    TSUKI("tsuki", "Tsuki", 'T'),
+    IPPON("ippon", "Ippon", 'I'),
+    HANSOKU("hansoku", "Hansoku", 'H'),
+    EMPTY("empty", "ClearMenuItem", ' '),
+    FAULT("fault", "FaultMenuItem", '^'),
+    DRAW("draw", "Draw", 'X');
     private final String imageName;
     private final char abbreviature;
     private final String name;
@@ -72,9 +68,13 @@ public enum Score {
         }
         return image;
     }
+    
+    public String getSvgImageName() {
+    	 return imageName + ".svg";
+    }
 
-    public String getImageName() {
-        return imageName;
+    public String getPngImageName() {
+        return imageName + ".png";
     }
 
     public char getAbbreviature() {
