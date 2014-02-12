@@ -23,65 +23,63 @@ package com.softwaremagico.ktg.persistence;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-
 public class AutoSaveByTime {
 
-	private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
-	private static AutoSaveByTime instance = new AutoSaveByTime();
-	private Timer timer = new Timer("Autosave");
-	private Task timerTask;
+    private static final Integer AUTOSAVE_MINUTES_PERIOD = 20;
+    private static AutoSaveByTime instance = new AutoSaveByTime();
+    private Timer timer = new Timer("Autosave");
+    private Task timerTask;
 
-	private AutoSaveByTime() {
-		timerTask = new Task();
-		//For each minute. 
-		timer.schedule(timerTask, 0, 60000);
+    private AutoSaveByTime() {
+        timerTask = new Task();
+        //For each minute. 
+        timer.schedule(timerTask, 0, 60000);
 
-	}
+    }
 
-	public static AutoSaveByTime getInstance() {
-		return instance;
-	}
+    public static AutoSaveByTime getInstance() {
+        return instance;
+    }
 
-	public void resetTime() {
-		timerTask.reset();
-	}
+    public void resetTime() {
+        timerTask.reset();
+    }
 
-	public void setAutosavePeriod(Integer minutes) {
-		timerTask.setPeriod(minutes);
-	}
+    public void setAutosavePeriod(Integer minutes) {
+        timerTask.setPeriod(minutes);
+    }
 
-	/**
-	 * Starts a thread for saving data when expired a counter.
-	 */
-	class Task extends TimerTask {
+    /**
+     * Starts a thread for saving data when expired a counter.
+     */
+    class Task extends TimerTask {
 
-		private int minutes = 0;
-		private int save_period = AUTOSAVE_MINUTES_PERIOD;
+        private int minutes = 0;
+        private int save_period = AUTOSAVE_MINUTES_PERIOD;
 
-		@Override
-		public void run() {
-			minutes++;
-			if (minutes >= save_period) {
-				if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
-					AutoSaveByTimeThread autosaveThread = new AutoSaveByTimeThread();
-					autosaveThread.run();
-				}
-			}
-		}
+        @Override
+        public void run() {
+            minutes++;
+            if (minutes >= save_period) {
+                if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_TIME)) {
+                    AutoSaveThread autosaveThread = new AutoSaveThread();
+                    autosaveThread.start();
+                }
+            }
+        }
 
-		public void reset() {
-			minutes = 0;
-		}
+        public void reset() {
+            minutes = 0;
+        }
 
-		public void setPeriod(Integer newMinutes) {
-			if (newMinutes > 0) {
-				save_period = newMinutes;
-			}
-		}
-	}
+        public void setPeriod(Integer newMinutes) {
+            if (newMinutes > 0) {
+                save_period = newMinutes;
+            }
+        }
+    }
 }
