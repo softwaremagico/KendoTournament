@@ -15,8 +15,8 @@ public class AutoSaveByAction {
 
 	public void save() {
 		if (KendoTournamentGenerator.getAutosaveOption().equals(AutoSaveOption.BY_ACTION)) {
-			AutoSaveByTimeThread autosaveThread = new AutoSaveByTimeThread();
-			autosaveThread.run();
+			AutoSaveThread autosaveThread = new AutoSaveThread();
+			autosaveThread.start();
 		}
 	}
 }
