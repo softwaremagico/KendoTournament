@@ -210,16 +210,16 @@ public class CompetitorFight extends JPanel {
 	}
 
 	private void updateScorePanel(PointPanel panel, Score hit) {
-		panel.setBackground(Score.getImage(hit.getImageName()));
+		panel.setBackground(Score.getImage(hit.getPngImageName()));
 		panel.revalidate();
 		panel.repaint();
 	}
 
 	private void updateFaultPanel(PointPanel panel, boolean fault) {
 		if (fault) {
-			panel.setBackground(Score.getImage(Score.FAULT.getImageName()));
+			panel.setBackground(Score.getImage(Score.FAULT.getPngImageName()));
 		} else {
-			panel.setBackground(Score.getImage(Score.EMPTY.getImageName()));
+			panel.setBackground(Score.getImage(Score.EMPTY.getPngImageName()));
 		}
 		panel.revalidate();
 		panel.repaint();
