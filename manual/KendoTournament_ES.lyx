@@ -115,7 +115,7 @@ Novedades
 \end_layout
 
 \begin_layout Section*
-v1.1.1
+v1.2.0
 \end_layout
 
 \begin_layout Description
@@ -149,6 +149,11 @@ equipos: se avisa al usuario si se intenta cambiar el orden de un equipo
 \begin_layout Description
 Puntuaciones: nuevas opciones de puntuaciones que permiten crear más opciones
  de torneos o ligas.
+ 
+\end_layout
+
+\begin_layout Description
+Autoguardado: nuevas opciones de autoguardado.
  
 \end_layout
 
@@ -3327,9 +3332,12 @@ autoguardado
 
 \end_inset
 
-Autoguardado: si se selecciona esta opción, la base de datos se almacenará
+Autoguardado: permite seleccionar distintas opciones de autoguardado.
+ Si se selecciona el autoguardado por tiempo, la nueva información se almacenará
  de forma automática cada veinte minutos.
- Evitando perder datos si ocurriera algún problema.
+ Si en cambio se selecciona el autoguardado por acción, cada vez que se
+ introduzca algún cambio (nuevo competidor, un punto en un combate, ...) se
+ almacenará en la base de datos.
  
 \end_layout
 
