@@ -115,7 +115,7 @@ What's new
 \end_layout
 
 \begin_layout Section*
-v1.1.1
+v1.2.0
 \end_layout
 
 \begin_layout Description
@@ -140,6 +140,11 @@ order: an information message is displayed alerting the user that he is
 \begin_layout Description
 Scores: more score rules added to allow the user to create different tournaments
  or leagues.
+ 
+\end_layout
+
+\begin_layout Description
+Autosave: new options for autosaving.
  
 \end_layout
 
@@ -3013,11 +3018,29 @@ Lastly, the program allows the user to configure some options for its use:
 \end_layout
 
 \begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Language
+\end_layout
+
+\end_inset
+
 Language: you can select the language in which the program will be displayed.
  
 \end_layout
 
 \begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Log
+\end_layout
+
+\end_inset
+
 Log: you can create a register with the program’s log.
  This way, a text file with all the actions that has been done with the
  program will be stored and you can have a monitoring of this program.
@@ -3025,6 +3048,33 @@ Log: you can create a register with the program’s log.
 \end_layout
 
 \begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Autosave
+\end_layout
+
+\end_inset
+
+Autosave: the user can activate the autosave option.
+ If it is selected autosave by time, all information not saved before will
+ be saved for each 20 minutes.
+ If autosave by action is selected, each change in the application (new
+ user, add score point, ...) will be automatically saved.
+ 
+\end_layout
+
+\begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+Debug
+\end_layout
+
+\end_inset
+
 Debug: you can see any errors of the program if there is any.
  This allows the user to have more information if any action could not be
  done due to a configuration or introduction error.

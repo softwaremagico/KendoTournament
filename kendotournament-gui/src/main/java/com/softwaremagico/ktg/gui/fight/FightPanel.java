@@ -43,6 +43,7 @@ import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
@@ -778,6 +779,7 @@ public class FightPanel extends KFrame {
         } catch (SQLException ex) {
             AlertManager.showSqlErrorMessage(ex);
         }
+        AutoSaveByAction.getInstance().save();
     }
 
     /**
