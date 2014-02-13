@@ -42,7 +42,7 @@ public enum Score {
     IPPON("ippon", "Ippon", 'I'),
     HANSOKU("hansoku", "Hansoku", 'H'),
     EMPTY("empty", "ClearMenuItem", ' '),
-    FAULT("fault", "FaultMenuItem", '^'),
+    FAULT("fault", "FaultMenuItem", '\u25B2'),
     DRAW("draw", "Draw", 'X');
     private final String imageName;
     private final char abbreviature;
