@@ -35,12 +35,12 @@ import javax.imageio.ImageIO;
 
 public enum Score {
 
-    MEN("men", "Men", '\u24C2'),
-    KOTE("kote", "Kote", '\u24C0'),
-    DO("do", "Do", '\u24B9'),
-    TSUKI("tsuki", "Tsuki", '\u24C9'),
-    IPPON("ippon", "Ippon", '\u24BE'),
-    HANSOKU("hansoku", "Hansoku", '\u24BD'),
+    MEN("men", "Men", 'M'),
+    KOTE("kote", "Kote", 'K'),
+    DO("do", "Do", 'D'),
+    TSUKI("tsuki", "Tsuki", 'T'),
+    IPPON("ippon", "Ippon", 'I'),
+    HANSOKU("hansoku", "Hansoku", 'H'),
     EMPTY("empty", "ClearMenuItem", ' '),
     FAULT("fault", "FaultMenuItem", '\u25B2'),
     DRAW("draw", "Draw", 'X');
