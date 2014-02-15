@@ -122,8 +122,9 @@ Version:
 		Manual Championship. Fully editable championship. 
 		Multiples computer use updated. 
 
-1.1.1	Data exchange among computers can be forced with an option in the Scoreboard.
+1.2.0	Data exchange among computers can be forced with an option in the Scoreboard.
 		User now is alerted if he is trying to change a team order from other shiaijo. 
+		Now autosave options.
 
 
 Thanks to
