@@ -2179,11 +2179,10 @@
 		<ca>Equipo Blanc:</ca>
 		<it>Squadra Bianca:</it>	
 	</WhiteTeam>
-	<!-- TRADUCIR -->
 	<HierarchicalDrawTag>
 		<en>More than lost</en>
 		<es>Más que perdidos</es>
-		<nl>More than lost</nl>
+		<nl>Meer dan verloren</nl>
 		<de>More than lost</de>
 		<ca>Més que perduts</ca>
 		<it>Più che persi</it>
@@ -2191,7 +2190,7 @@
 	<WinOverDrawsRadioButton>
 		<en>Win over draws:</en>
 		<es>Victorias sobre empates:</es>
-		<nl>Win over draws:</nl>
+		<nl>Winst boven gelijkspel:</nl>
 		<de>Win over draws:</de>
 		<ca>Victòries sobre empats:</ca>
 		<it>Vittoria supera pareggio:</it>
@@ -2199,7 +2198,7 @@
 	<LoadMenuItem>
 		<en>Reload</en>
 		<es>Recargar</es>
-		<nl>Reload</nl>
+		<nl>Opnieuw laden</nl>
 		<de>Reload</de>
 		<ca>Recarregar</ca>
 		<it>Recaricare</it>
@@ -2207,7 +2206,7 @@
 	<DisabledRadioButton>
 		<en>Disabled</en>
 		<es>Deshabilitado</es>
-		<nl>Disabled</nl>
+		<nl>Uitgeschakeld</nl>
 		<de>Disabled</de>
 		<ca></ca>
 		<it>Desabilitato</it>
@@ -2215,17 +2214,17 @@
 	<ByTimeRadioButton>
 		<en>By Time</en>
 		<es>Por Tiempo</es>
-		<nl>By Time</nl>
+		<nl>Op Tijd</nl>
 		<de>By Time</de>
-		<ca></ca>
+		<ca>Per Temps</ca>
 		<it>Per Tempo</it>
 	</ByTimeRadioButton>
 	<ByActionRadioButton>
 		<en>By Action</en>
 		<es>Por Acción</es>
-		<nl>By Action</nl>
+		<nl>Op Aktie</nl>
 		<de>By Action</de>
-		<ca></ca>
+		<ca>Per Acció</ca>
 		<it>Per Azzione</it>
 	</ByActionRadioButton>
 </translator>

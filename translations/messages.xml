@@ -1174,12 +1174,10 @@
 		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
 		<it>Il combattimenti devono essere salvati nella base di dati per continuare. Vuoi salvarli adesso?</it>
 	</saveRequired>
-	
-	<!-- TRANSLATIONS -->
 	<fightInOtherArea>
 		<en>You are going to modify a team that is in other shiaijo. Are you sure to procedeed?</en>
 		<es>Vas a editar un equipo que está en otro shiaijo. ¿Estás seguro de continuar?</es>
-		<nl>You are going to modify a team that is in other shiaijo. Are you sure to procedeed?</nl>
+		<nl>Je staat op het punt wijzigingen aan te brengen in een team dat in een andere shiaijo staat. Weet je zeker dat je wilt doorgaan?</nl>
 		<de>You are going to modify a team that is in other shiaijo. Are you sure to procedeed?</de>
 		<ca>Editaràs un equip que està en un altre shiaijo. Estàs segur de continuar?</ca>
 		<it>Si va a cambiare una squadra che sta in un altro shiaijo. Si è sicuro di continuare?</it>
@@ -1187,7 +1185,7 @@
 	<waitingConnection>
 		<en>Waiting database response. Check the network connection.</en>
 		<es>Esperando respuesta de la base de datos. Compruebe la conexión de red.</es>
-		<nl>Waiting database response. Check the network connection.</nl>
+		<nl>Wachten op reactie van de database. Controleer netwerkconnectie.</nl>
 		<de>Waiting database response. Check the network connection.</de>
 		<ca>Esperant resposta de la base de dades. Comprove la connexió de xarxa.</ca>
 		<it>Aspettando risposta dalla base di dati. Controllare la conessionne di rete.</it>
