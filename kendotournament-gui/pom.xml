@@ -180,9 +180,6 @@
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
                                     <fileset dir="../images" excludes="**/*.svg" />
                                 </copy>
-                                <copy todir="${linux.releasedir}${linux.destination-folder}/database" overwrite="true" >
-                                    <fileset dir="../database" includes="**/*_empty.*" />
-                                </copy>
                                 <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
                                     <fileset dir="../manual" includes="**/*.pdf" />
                                 </copy>
@@ -212,9 +209,6 @@
                                 <copy todir="${windows.releasedir}/images" overwrite="true" >
                                     <fileset dir="../images" excludes="**/*.svg" />
                                 </copy>
-                                <copy todir="${windows.releasedir}/database" overwrite="true" >
-                                    <fileset dir="../database" includes="**/*_empty.*" />
-                                </copy>
                                 <copy todir="${windows.releasedir}/manual" overwrite="true" >
                                     <fileset dir="../manual" includes="**/*.pdf" />
                                 </copy>
@@ -228,7 +222,7 @@
                                     <fileset dir="../" includes="**/Readme.txt" />
                                 </copy>   
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
-                                    <fileset dir="${windows.origin}/" includes="**/icon.ico" />
+                                    <fileset dir="${windows.origin}/" includes="**/*.ico" />
                                 </copy>  
                                 <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
                                     <fileset dir="${windows.origin}/" includes="**/KendoTournamentManager.exe" />
