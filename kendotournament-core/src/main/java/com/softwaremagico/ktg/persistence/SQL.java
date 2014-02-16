@@ -164,7 +164,7 @@ public abstract class SQL extends Database {
         KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
         for (RegisteredPerson person : registeredPeople) {
             try (PreparedStatement stmt = connection
-                            .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club) VALUES (?,?,?,?,?,?);")) {
+                            .prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club) VALUES (?,?,?,?);")) {
                 stmt.setString(1, person.getId());
                 stmt.setString(2, person.getName());
                 stmt.setString(3, person.getSurname());
