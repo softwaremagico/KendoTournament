@@ -50,7 +50,7 @@ public class TeamFight extends JPanel {
     private boolean leftJustify, selectedFight, menuActive;
     private Tournament tournament;
 
-    TeamFight(Tournament tournament, RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total, boolean invertedColor) {
+    protected TeamFight(Tournament tournament, RoundFight rf, Team t, Fight f, boolean left, boolean selected, boolean menu, int fight_number, int fight_total, boolean invertedColor) {
         this.tournament = tournament;
         fight = f;
         roundFight = rf;
@@ -123,7 +123,7 @@ public class TeamFight extends JPanel {
         add(new Box.Filler(minSize, prefSize, maxSize));
     }
 
-    final void fill(Team t, boolean left, boolean selected, boolean menu) {
+    private final void fill(Team t, boolean left, boolean selected, boolean menu) {
         removeAll();
         competitorFights = new ArrayList<>();
         for (int i = 0; i < tournament.getTeamSize(); i++) {
@@ -140,7 +140,7 @@ public class TeamFight extends JPanel {
         }
     }
 
-    final void fill(boolean left, int teamSize) {
+    private final void fill(boolean left, int teamSize) {
         removeAll();
         competitorFights = new ArrayList<>();
         for (int i = 0; i < teamSize; i++) {
@@ -151,7 +151,7 @@ public class TeamFight extends JPanel {
         revalidate();
     }
 
-    void updateScorePanel() {
+    protected void updateScorePanel() {
         for (int i = 0; i < competitorFights.size(); i++) {
             competitorFights.get(i).updateScorePanels();
         }

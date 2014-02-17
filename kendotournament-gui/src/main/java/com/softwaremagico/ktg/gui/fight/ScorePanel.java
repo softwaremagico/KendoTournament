@@ -49,13 +49,13 @@ public class ScorePanel extends KPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
     }
 
-    public void updateTournament(Tournament selectedTournament, Integer fightArea, boolean invertedTeam, boolean invertedColor) {
+    public void updateTournament(Tournament selectedTournament, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean menuAllowed) {
         this.tournament = selectedTournament;
         this.fightArea = fightArea;
-        fillFightsPanel(invertedTeam, invertedColor);
+        fillFightsPanel(invertedTeam, invertedColor, menuAllowed);
     }
 
-    private void fillFightsPanel(boolean invertedTeam, boolean invertedColor) {
+    private void fillFightsPanel(boolean invertedTeam, boolean invertedColor, boolean menu) {
         removeAll();
         roundFights = new ArrayList<>();
         try {
@@ -67,16 +67,16 @@ public class ScorePanel extends KPanel {
 
                 //Penultimus
                 if (numberOfFightsToShow() > 4) {
-                    addFightPanel(-2, fightArea, invertedTeam, invertedColor, false);
+                    addFightPanel(-2, fightArea, invertedTeam, invertedColor, false, menu);
                     showedFights++;
                 }
                 //Previous
                 if (numberOfFightsToShow() > 2) {
-                    addFightPanel(-1, fightArea, invertedTeam, invertedColor, false);
+                    addFightPanel(-1, fightArea, invertedTeam, invertedColor, false, menu);
                     showedFights++;
                 }
                 //Current
-                addFightPanel(0, fightArea, invertedTeam, invertedColor, true);
+                addFightPanel(0, fightArea, invertedTeam, invertedColor, true, menu);
                 showedFights++;
 
                 //Nexts
@@ -85,7 +85,7 @@ public class ScorePanel extends KPanel {
                         int currentFightIndex = FightPool.getInstance().getCurrentFightIndex(tournament, fightArea);
                         for (int i = currentFightIndex + 1;
                                 showedFights < numberOfFightsToShow() && i < FightPool.getInstance().get(tournament, fightArea).size(); i++) {
-                            addFightPanel(i - currentFightIndex, fightArea, invertedTeam, invertedColor, false);
+                            addFightPanel(i - currentFightIndex, fightArea, invertedTeam, invertedColor, false, menu);
                             showedFights++;
                         }
                         //No more fights.
@@ -118,16 +118,16 @@ public class ScorePanel extends KPanel {
         }
     }
 
-    private RoundFight createFightPanel(int fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
+    private RoundFight createFightPanel(int fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected, boolean menu) {
         RoundFight rf = null;
-        Fight f = null;
+        Fight fight = null;
         try {
             try {
-                f = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
+                fight = FightPool.getInstance().get(tournament, fightArea, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent);
             } catch (NullPointerException npe) {
             }
-            if (f != null) {
-                rf = new RoundFight(tournament, f, selected, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
+            if (fight != null) {
+                rf = new RoundFight(tournament, fight, selected, menu, FightPool.getInstance().getCurrentFightIndex(tournament, fightArea) + fightRelativeToCurrent, invertedTeam, invertedColor);
             } else {
                 rf = new RoundFight(tournament.getTeamSize(), selected, 0, 0, invertedColor);
             }
@@ -138,12 +138,12 @@ public class ScorePanel extends KPanel {
         return rf;
     }
 
-    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected) {
+    private void addFightPanel(Integer fightRelativeToCurrent, Integer fightArea, boolean invertedTeam, boolean invertedColor, boolean selected, boolean menu) {
         Dimension minSize = new Dimension(0, 5);
         Dimension prefSize = new Dimension(5, 5);
         Dimension maxSize = new Dimension(5, 5);
 
-        RoundFight rf = createFightPanel(fightRelativeToCurrent, fightArea, invertedTeam, invertedColor, selected);
+        RoundFight rf = createFightPanel(fightRelativeToCurrent, fightArea, invertedTeam, invertedColor, selected, menu);
         roundFights.add(rf);
         add(rf);
         add(new Box.Filler(minSize, prefSize, maxSize));

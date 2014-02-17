@@ -98,6 +98,7 @@ public class FightPanel extends KFrame {
 	private NewPersonalizedFight newPersonalizedFight;
 	private JDialog waitingNetworkDialog, waitingArenaDialog;
 	private JMenu optionsMenu;
+	private boolean menuAllowed = true;
 
 	private Timer monitorTimer = new Timer("Monitor Database Refresh");
 	private MonitorTask monitorTimerTask;
@@ -166,11 +167,13 @@ public class FightPanel extends KFrame {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (monitorMode.isSelected()) {
+					menuAllowed = false;
 					buttonPlacePanel.setVisible(false);
 					optionsMenu.setVisible(false);
 					monitorTimerTask = new MonitorTask();
 					monitorTimer.schedule(monitorTimerTask, 1000, REFRESH_MONITOR * 1000);
 				} else {
+					menuAllowed = true;
 					buttonPlacePanel.setVisible(true);
 					optionsMenu.setVisible(true);
 					try {
@@ -486,7 +489,7 @@ public class FightPanel extends KFrame {
 	public void updateScorePanel() {
 		if (scorePanel != null) {
 			scorePanel.updateTournament(getSelectedTournament(), getSelectedFightArea(), changeTeam.isSelected(),
-					changeColor.isSelected());
+					changeColor.isSelected(), menuAllowed);
 		}
 	}
 

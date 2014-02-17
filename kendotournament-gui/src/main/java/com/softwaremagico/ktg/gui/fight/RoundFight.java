@@ -60,17 +60,7 @@ public class RoundFight extends JPanel {
     private Integer xPadding = 5;
     private int teamSize;
 
-    RoundFight(Tournament tournament, Fight f, boolean selected, int fight_number, boolean invertedTeam, boolean invertedColor) {
-        this.tournament = tournament;
-        teamSize = tournament.getTeamSize();
-        setLanguage();
-        decoration(selected);
-        if (f != null) {
-            fillCurrentFightPanel(f, selected, selected, fight_number, invertedTeam, invertedColor);
-        }
-    }
-
-    RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, boolean invertedTeam, boolean invertedColor) {
+    protected RoundFight(Tournament tournament, Fight f, boolean selected, boolean menu, int fight_number, boolean invertedTeam, boolean invertedColor) {
         this.tournament = tournament;
         teamSize = tournament.getTeamSize();
         setLanguage();
@@ -80,7 +70,7 @@ public class RoundFight extends JPanel {
         }
     }
 
-    RoundFight(int teamSize, boolean selected, int fight_number, int fight_total, boolean invertedColor) {
+    protected RoundFight(int teamSize, boolean selected, int fight_number, int fight_total, boolean invertedColor) {
         this.teamSize = teamSize;
         setLanguage();
         decoration(selected);
