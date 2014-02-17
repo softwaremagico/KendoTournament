@@ -158,7 +158,7 @@ public class ScorePanel extends KPanel {
 
     private int screenSizeOfTeam() {
         try {
-            return 60 * tournament.getTeamSize() + 45;
+            return 70 * tournament.getTeamSize() + 45;
         } catch (NullPointerException npe) {
             return 225;
         }

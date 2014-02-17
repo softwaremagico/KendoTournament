@@ -26,8 +26,8 @@ package com.softwaremagico.ktg.gui.base;
 
 import com.softwaremagico.ktg.core.Tournament;
 
-public class FightAreaComboBox extends KComboBox {
-
+public class FightAreaComboBox extends KComboBox<String> {
+	private static final long serialVersionUID = 6996473679515411757L;
 	private Tournament tournament;
 
 	public FightAreaComboBox(Tournament tournament) {
@@ -61,6 +61,14 @@ public class FightAreaComboBox extends KComboBox {
 		} catch (NullPointerException npe) {
 			return -1;
 		}
+	}
+
+	public void setSelectedFightArea(int fightArea) {
+		int selected = fightArea;
+		if (fightArea > tournament.getFightingAreas()) {
+			selected = 0;
+		}
+		setSelectedIndex(selected);
 	}
 
 	public String getSelectedFightAreaName() {
