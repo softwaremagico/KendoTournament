@@ -2227,4 +2227,14 @@
 		<ca>Per Acció</ca>
 		<it>Per Azzione</it>
 	</ByActionRadioButton>
+	
+	<!-- TRADUCIR -->
+	<ConfirmLabel>
+		<en>Confirm:</en>
+		<es>Confirmar:</es>
+		<nl>Bevestigen:</nl>
+		<de>Confirm:</de>
+		<ca>Confirmar:</ca>
+		<it>Confermare:</it>
+	</ConfirmLabel>
 </translator>

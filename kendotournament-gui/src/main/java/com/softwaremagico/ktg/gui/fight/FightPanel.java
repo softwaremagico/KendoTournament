@@ -65,6 +65,8 @@ import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KMenu;
 import com.softwaremagico.ktg.gui.base.KMenuItem;
 import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.gui.base.PasswordConfirmator;
+import com.softwaremagico.ktg.gui.base.PasswordCreator;
 import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
@@ -102,6 +104,7 @@ public class FightPanel extends KFrame {
 
 	private Timer monitorTimer = new Timer("Monitor Database Refresh");
 	private MonitorTask monitorTimerTask;
+	private FightPanel reference;
 
 	// private Timer timer = new Timer("Database Exchange");
 	public FightPanel() {
@@ -119,6 +122,7 @@ public class FightPanel extends KFrame {
 		setMainPanels();
 		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
 		updateSelectedTournament();
+		checkMonitorBlock();
 	}
 
 	public JMenuBar createMenu() {
@@ -132,7 +136,7 @@ public class FightPanel extends KFrame {
 	}
 
 	private JMenu windowMenu() {
-
+		reference = this;
 		KMenu windowMenu = new KMenu("WindowMenuItem");
 		windowMenu.setMnemonic(KeyEvent.VK_E);
 		windowMenu.setIcon(new ImageIcon(Path.getIconPath() + "panel.png"));
@@ -167,19 +171,28 @@ public class FightPanel extends KFrame {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				if (monitorMode.isSelected()) {
-					menuAllowed = false;
-					buttonPlacePanel.setVisible(false);
-					optionsMenu.setVisible(false);
-					monitorTimerTask = new MonitorTask();
-					monitorTimer.schedule(monitorTimerTask, 1000, REFRESH_MONITOR * 1000);
+					blockMonitor();
+					// Block monitor mode if desired.
+					new PasswordCreator();
 				} else {
-					menuAllowed = true;
-					buttonPlacePanel.setVisible(true);
-					optionsMenu.setVisible(true);
-					try {
-						monitorTimerTask.cancel();
-					} catch (Exception e) {
+					// Unblock monitor mode
+					boolean allowed = false;
+					if (KendoTournamentGenerator.getBlockingString() == null
+							|| String.copyValueOf(KendoTournamentGenerator.getBlockingString()).length() == 0) {
+						allowed = true;
+					} else {
+						new PasswordConfirmator(reference);
+						// Password has been reseted.
+						if (KendoTournamentGenerator.getBlockingString() == null
+								|| String.copyValueOf(KendoTournamentGenerator.getBlockingString()).length() == 0) {
+							allowed = true;
+						}
+					}
 
+					if (allowed) {
+						unblockMonitor();
+					} else {
+						monitorMode.setSelected(true);
 					}
 				}
 				updateScorePanel();
@@ -224,6 +237,34 @@ public class FightPanel extends KFrame {
 		windowMenu.add(exitMenuItem);
 
 		return windowMenu;
+	}
+
+	private void checkMonitorBlock() {
+		if (KendoTournamentGenerator.getBlockingString() != null
+				&& String.copyValueOf(KendoTournamentGenerator.getBlockingString()).length() > 0) {
+			monitorMode.setSelected(true);
+			blockMonitor();
+		}
+	}
+
+	private void blockMonitor() {
+		menuAllowed = false;
+		buttonPlacePanel.setVisible(false);
+		optionsMenu.setVisible(false);
+		monitorTimerTask = new MonitorTask();
+		monitorTimer.schedule(monitorTimerTask, 1000, REFRESH_MONITOR * 1000);
+	}
+
+	public void unblockMonitor() {
+		menuAllowed = true;
+		buttonPlacePanel.setVisible(true);
+		optionsMenu.setVisible(true);
+		try {
+			monitorTimerTask.cancel();
+		} catch (Exception e) {
+		}
+		monitorMode.setSelected(false);
+		updateScorePanel();
 	}
 
 	private JMenu createShowMenu() {

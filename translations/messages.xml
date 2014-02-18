@@ -1190,5 +1190,15 @@
 		<ca>Esperant resposta de la base de dades. Comprove la connexió de xarxa.</ca>
 		<it>Aspettando risposta dalla base di dati. Controllare la conessionne di rete.</it>
 	</waitingConnection>
+	
+	<!-- TRADUCIR -->
+	<passwordDoesNotMatch>
+		<en>The inserted password does not match!</en>
+		<es>La contraseña insertada no coincide!</es>
+		<nl>The inserted password does not match!</nl>
+		<de>The inserted password does not match!</de>
+		<ca>La contrasenya inserida no coincidix!</ca>
+		<it>La password digitata non corrisponde!</it>
+	</passwordDoesNotMatch>
 </translator>
 
