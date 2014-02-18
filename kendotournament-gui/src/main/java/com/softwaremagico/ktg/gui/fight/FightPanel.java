@@ -86,7 +86,7 @@ public class FightPanel extends KFrame {
 
 	private static final long serialVersionUID = -7506045720514481230L;
 	private static final Integer WAITING_TASK_PERIOD = 3000;
-	private static final Integer REFRESH_MONITOR = 15;
+	private static final Integer REFRESH_MONITOR = 10;
 	private KPanel tournamentDefinitionPanel;
 	private ScorePanel scorePanel;
 	private KPanel buttonPlacePanel;
@@ -252,6 +252,7 @@ public class FightPanel extends KFrame {
 		buttonPlacePanel.setVisible(false);
 		optionsMenu.setVisible(false);
 		monitorTimerTask = new MonitorTask();
+		tournamentComboBox.setEnabled(false);
 		monitorTimer.schedule(monitorTimerTask, 1000, REFRESH_MONITOR * 1000);
 	}
 
@@ -259,6 +260,7 @@ public class FightPanel extends KFrame {
 		menuAllowed = true;
 		buttonPlacePanel.setVisible(true);
 		optionsMenu.setVisible(true);
+		tournamentComboBox.setEnabled(true);
 		try {
 			monitorTimerTask.cancel();
 		} catch (Exception e) {
