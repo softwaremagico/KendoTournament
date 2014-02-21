@@ -9,8 +9,10 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
+import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 import java.sql.SQLException;
@@ -31,6 +33,7 @@ public class ChampionshipFightAreaTest {
     public void addTournament() throws SQLException {
         tournament = new Tournament(TOURNAMENT_NAME, FIGHTS_AREA, 2, 3, TournamentType.CHAMPIONSHIP);
         TournamentPool.getInstance().add(tournament);
+        tournament.setTournamentScore(new TournamentScore(ScoreType.WIN_OVER_DRAWS));
         Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
     }
 
