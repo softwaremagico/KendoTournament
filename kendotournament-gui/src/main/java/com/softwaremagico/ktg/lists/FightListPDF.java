@@ -86,7 +86,6 @@ public class FightListPDF extends ParentList {
 
 	private PdfPTable simpleTable(PdfPTable mainTable) {
 		PdfPCell cell;
-		Paragraph p;
 		mainTable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 
 		for (int i = 0; i < tournament.getFightingAreas(); i++) {

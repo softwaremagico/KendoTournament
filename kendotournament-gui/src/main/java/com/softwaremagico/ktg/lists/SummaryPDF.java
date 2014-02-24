@@ -46,8 +46,8 @@ public class SummaryPDF extends ParentList {
     protected boolean showNotFinishedFights = true; //If true, only show not finished fights, if false only show finished fights.
     protected boolean showAll = true; //If true, show finished and not finished fights;
 
-    public SummaryPDF(Tournament tmp_championship, int shiaijo) {
-        tournament = tmp_championship;
+    public SummaryPDF(Tournament championship, int shiaijo) {
+        tournament = championship;
         useOnlyShiaijo = shiaijo;
     }
 
