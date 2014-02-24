@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.tournament;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -27,42 +28,66 @@ import com.softwaremagico.ktg.core.Tournament;
 
 public class LeagueLevelChampionship extends LeagueLevel {
 
-    protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-        super(tournament, level, nextLevel, previousLevel);
-        if (level > 0) { //Inner levels always have at least one group.
-            addGroup(new TreeTournamentGroup(tournament, level, 0, getGroups().size()));
-        }
-    }
+	protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+		super(tournament, level, nextLevel, previousLevel);
+		if (level > 0) { // Inner levels always have at least one group.
+			addGroup(new TreeTournamentGroup(tournament, level, 0, getGroups().size()));
+		}
+	}
 
-    @Override
-    protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-        return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
-    }
+	@Override
+	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
+			LeagueLevel previousLevel) {
+		return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
+	}
 
-    private Integer obtainPositionOfOneWinnerPair(Integer branch, Integer branchs) {
-        if (branch % 2 == 0) {
-            return branch / 2;
-        } else {
-            return (branchs - branch) / 2;
-        }
-    }
+	/**
+	 * Even number of groups.
+	 * 
+	 * @param branch
+	 * @param branchs
+	 * @return
+	 */
+	private Integer obtainPositionOfOneWinnerEven(Integer branch, Integer branchs) {
+		if (branch % 2 == 0) {
+			return branch / 2;
+		} else {
+			return (branchs - branch) / 2;
+		}
+	}
 
-    private Integer obtainPositionOfOneWinnerOdd(Integer branch, Integer branchs) {
-        if (branch % 2 == 0) {
-            return branch / 2;
-        } else {
-            return ((branch + 1) % branchs) / 2;
-        }
-    }
+	private Integer obtainPositionOfWinner(Integer branch, Integer branchs) {
+		return branch / 2;
+	}
 
-    @Override
-    public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
-        Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
-        Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
-        if ((size() % 2) == 0) {
-            return obtainPositionOfOneWinnerPair(winnerIndex, winnerTeams);
-        } else {
-            return obtainPositionOfOneWinnerOdd(winnerIndex, winnerTeams);
-        }
-    }
+	/**
+	 * Odd number of groups
+	 * 
+	 * @param branch
+	 * @param branchs
+	 * @return
+	 */
+	private Integer obtainPositionOfOneWinnerOdd(Integer branch, Integer branchs) {
+		if (branch % 2 == 0) {
+			return branch / 2;
+		} else {
+			return ((branch + 1) % branchs) / 2;
+		}
+	}
+
+	@Override
+	public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
+		Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
+		Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
+		// If inner level or tree championship
+		if (previousLevel != null || tournament.getHowManyTeamsOfGroupPassToTheTree() == 1) {
+			return obtainPositionOfWinner(winnerIndex, winnerTeams);
+		} else {
+			if ((size() % 2) == 0) {
+				return obtainPositionOfOneWinnerEven(winnerIndex, winnerTeams);
+			} else {
+				return obtainPositionOfOneWinnerOdd(winnerIndex, winnerTeams);
+			}
+		}
+	}
 }
