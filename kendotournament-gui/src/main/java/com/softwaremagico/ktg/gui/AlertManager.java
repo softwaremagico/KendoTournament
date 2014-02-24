@@ -175,8 +175,7 @@ public class AlertManager {
         waitingArenaDialog.setSize(width, height);
         waitingArenaDialog.setMinimumSize(new Dimension(width, height));
         waitingArenaDialog.setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2
-                - (int) (width / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()
-                / 2 - (int) (height / 2));
+                - (int) (width / 2), 0);
 
         waitingArenaDialog.setContentPane(optionPane);
 

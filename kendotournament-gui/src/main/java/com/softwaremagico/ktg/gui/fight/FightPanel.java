@@ -85,7 +85,7 @@ public class FightPanel extends KFrame {
 	// Wait for some seconds until show waiting message.
 
 	private static final long serialVersionUID = -7506045720514481230L;
-	private static final Integer WAITING_TASK_PERIOD = 3000;
+	private static final Integer WAITING_TASK_PERIOD = 10000;
 	private static final Integer REFRESH_MONITOR = 10;
 	private KPanel tournamentDefinitionPanel;
 	private ScorePanel scorePanel;
@@ -101,6 +101,7 @@ public class FightPanel extends KFrame {
 	private JDialog waitingNetworkDialog, waitingArenaDialog;
 	private JMenu optionsMenu;
 	private boolean menuAllowed = true;
+	private boolean moreDrawTeams = false; // We are waiting for user action for undraw.
 
 	private Timer monitorTimer = new Timer("Monitor Database Refresh");
 	private MonitorTask monitorTimerTask;
@@ -790,7 +791,7 @@ public class FightPanel extends KFrame {
 					// Personalized cannot undraw.
 					Ranking ranking = null;
 					if (!getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
-						boolean moreDrawTeams = true;
+						moreDrawTeams = true;
 						while (moreDrawTeams) {
 							ranking = new Ranking(group.getFights());
 							// Search for draw scores.
@@ -935,7 +936,11 @@ public class FightPanel extends KFrame {
 
 			@Override
 			public void run() {
-				waitingNetworkDialog.setVisible(true);
+				// If are draw fights, the next fight action has not finished BUT does not means that is a network
+				// error.
+				if (!moreDrawTeams) {
+					waitingNetworkDialog.setVisible(true);
+				}
 			}
 		}
 	}
