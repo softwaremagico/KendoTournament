@@ -194,7 +194,7 @@
 	</storeFightsError>
 	<storeDuelError>
 		<en>Error when trying to store a duel into the database.</en>
-		<es>Error mientras se intentaba almacenar un duelo en la base de datos.</es>
+		<es>Error mientras se intentaba almacenar un combate en la base de datos.</es>
 		<nl>Fout bij het opslaan van de wedstrijd in de database.</nl>
 		<de>Fehler beim speichern eines Duells.</de>
 		<ca>Error mentre s'intentava enmagatzemar un duel a la base de dades.</ca>
@@ -290,7 +290,7 @@
 	</fightStored>
 	<duelStored>
 		<en>The duel has been stored into the database.</en>
-		<es>Se ha agregado el duelo a la base de datos.</es>
+		<es>Se ha agregado el combate a la base de datos.</es>
 		<nl>De wedstrijd is aan de database toegevoegd.</nl>
 		<de>Das Kampfduell wurde gespeichert.</de>
 		<ca>S'ha agregat el duel a la base de dades.</ca>
@@ -778,7 +778,7 @@
 	</noFightsDistributedInArenas>
 	<noLinkFinished>
 		<en>The league design is not finished. Fights can not be generated. </en>
-		<es>No se ha acabado el diseño de la liga. Los combates no pueden ser generados. </es>
+		<es>No se ha acabado el diseño de la liga. Los partidos no pueden ser generados. </es>
 		<nl>De samenstelling van de poule is nog niet voltooid. Wedstrijden kunnen nog niet worden aangemaakt.</nl>
 		<de>Das Wettbewerbsdesign ist nicht fertig. Kämpfe können nicht erstellt werden.</de>
 		<ca>No s'ha finalitzat el diseny de la lliga. Els combats no poden ser generats.</ca>
@@ -786,7 +786,7 @@
 	</noLinkFinished>
 	<winnerOfgroup>
 		<en>The fights of a pool are over. Teams that pass to the next round are</en>
-		<es>Los combates de un grupo han acabado. Los equipos que pasan a la siguiente ronda son</es>
+		<es>Los partidos de un grupo han acabado. Los equipos que pasan a la siguiente ronda son</es>
 		<nl>De wedstrijden van de groep zijn voorbij. Teams die doorgaan naar de volgende ronde zijn:</nl>
 		<de>Die Kämpfe des Pools sind vorbei. Die Teams die eine Runde weiterkommen sind</de>
 		<ca>Els combats d'un grup han finalitzat. Els equips que passen a la següent ronda són:</ca>
@@ -802,7 +802,7 @@
 	</storeUndrawError>
 	<waitingArena>
 		<en>Wait until all fights are finished. Remain shiaijo </en>
-		<es>Espere mientras se acaban los combates del shiaijo </es>
+		<es>Espere mientras se acaban los partidos del shiaijo </es>
 		<nl>Wacht tot alle wedstrijden voorbij zijn: Volgende wedstrijd </nl>
 		<de>Wait until all fights are finished. Remain shiaijo</de>
 		<ca>Espere mentre finalitzen els combats del shiaijo</ca>
@@ -932,7 +932,7 @@
 	<!-- ///////////TRADUCIR //////////////// -->
 	<addFight>
 		<en>The fight has been added correctly.</en>
-		<es>El combate ha sido añadido con éxito.</es>
+		<es>El partido ha sido añadido con éxito.</es>
 		<nl>De wedstrijd is correct toegevoegd.</nl>
 		<de>The fight has been added correctly.</de>
 		<ca>El combat ha sigut inserit correctament.</ca>
@@ -940,7 +940,7 @@
 	</addFight>
 	<waitNewLevel>
 		<en>The team order can not be changed until all current fights are finished.</en>
-		<es>No se puede cambiar el orden del equipo hasta que se terminen los combates actuales.</es>
+		<es>No se puede cambiar el orden del equipo hasta que se terminen los partidos actuales.</es>
 		<nl>De samenstelling van het team kan niet worden gewijzigd voordat alle wedstrijden zijn beëindigd.</nl>
 		<de>The team order can not be changed until all current fights are finished.</de>
 		<ca>El ordre del equips not pot ser cambiat fins que els combats no finisquen</ca>
@@ -1036,7 +1036,7 @@
 	</deleteRoleError>
 	<deleteDuelError>
 		<en>Error when trying to remove a duel into the database.</en>
-		<es>Error mientras se intentaba eliminar un duelo en la base de datos.</es>
+		<es>Error mientras se intentaba eliminar un combate en la base de datos.</es>
 		<nl>Fout bij het verwijderen van een gevecht uit de database.</nl>
 		<de>Error when trying to remove a duel into the database.</de>
 		<ca>Error mentre s'intentava esborrar un duel a la base de dades.</ca>
@@ -1068,7 +1068,7 @@
 	</repatedTeam>
 	<repeatedFight>
 		<en>There is a repeated fight in the tournament.</en>
-		<es>Existe un combate repetido en el torneo.</es>
+		<es>Existe un partido repetido en el torneo.</es>
 		<nl>Wedstrijd bestaat al in het toernooi.</nl>
 		<de>There is a repeated fight in the tournament.</de>
 		<ca>Existeix un combat repetit al campionat.</ca>
@@ -1168,7 +1168,7 @@
 	</userWithoutRole>
 	<saveRequired>
 		<en>Fights must be saved into the database to proceed. Do you want to save them now?</en>
-		<es>Los combates deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
+		<es>Los partidos deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
 		<nl>Om verder te kunnen gaan moeten wedstrijden in de database worden opgeslagen. Wil je ze nu opslaan?</nl>
 		<de>Fights must be saved into the database to proceed. Do you want to save then now?</de>
 		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
