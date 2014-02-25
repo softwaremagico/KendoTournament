@@ -45,6 +45,7 @@ public class SummaryPDF extends ParentList {
     private int useOnlyShiaijo = -1;
     protected boolean showNotFinishedFights = true; //If true, only show not finished fights, if false only show finished fights.
     protected boolean showAll = true; //If true, show finished and not finished fights;
+    protected boolean divideByShiaijo = false; //If true, each shiaijo in different page. 
 
     public SummaryPDF(Tournament championship, int shiaijo) {
         tournament = championship;
