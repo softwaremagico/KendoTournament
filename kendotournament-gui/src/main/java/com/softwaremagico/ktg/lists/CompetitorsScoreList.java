@@ -36,7 +36,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Ranking;
-import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -49,7 +49,7 @@ public class CompetitorsScoreList extends ParentList {
 
     private List<Duel> duels = new ArrayList<>();
     private Tournament tournament;
-    private List<ScoreOfCompetitor> competitorTopTen;
+    private List<ScoreOfCompetitorClassic> competitorTopTen;
 
     public CompetitorsScoreList(Tournament tournament) {
         this.tournament = tournament;

@@ -243,13 +243,14 @@ public class ChampionshipFightAreaTest {
         // Check teams of group.
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
         Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team01")));
+        Assert.assertTrue(group1.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
 
         TGroup group2 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(1);
         Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team09")));
-        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team05")));
+        Assert.assertTrue(group2.getTeams().contains(TeamPool.getInstance().get(tournament, "Team13")));
 
         // Add new points. Wins Team9.
-        group2.getFights().get(0).getDuels().get(0).setHit(false, 0, Score.MEN);
+        group2.getFights().get(0).getDuels().get(0).setHit(true, 0, Score.MEN);
 
         // finish fights.
         for (Fight fight : group1.getFights()) {

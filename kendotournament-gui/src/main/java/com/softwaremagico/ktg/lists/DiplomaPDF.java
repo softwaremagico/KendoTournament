@@ -31,7 +31,7 @@ import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
-import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -75,7 +75,7 @@ public class DiplomaPDF {
     List<Duel> duels = new ArrayList<>();
     static int TOTAL_RANGES = 9;
     List<ScoreOfTeam> teamTopTen;
-    List<ScoreOfCompetitor> competitorTopTen;
+    List<ScoreOfCompetitorClassic> competitorTopTen;
     List<RoleTag> rolesWithDiploma = null;
     private boolean allDiplomas;
 
@@ -512,7 +512,7 @@ public class DiplomaPDF {
             return image;
         }
 
-        private PdfPTable CompetitorTable(RegisteredPerson c, ScoreOfCompetitor cr, int index, String font, int fontSize) {
+        private PdfPTable CompetitorTable(RegisteredPerson c, ScoreOfCompetitorClassic cr, int index, String font, int fontSize) {
             PdfPCell cell;
             Paragraph p;
             float[] width = {(float) 0.3, (float) 0.3, (float) 0.3};

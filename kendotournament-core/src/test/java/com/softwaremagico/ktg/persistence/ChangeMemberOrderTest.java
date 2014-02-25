@@ -5,7 +5,7 @@ import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Score;
-import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
@@ -144,9 +144,9 @@ public class ChangeMemberOrderTest {
 
         // Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
         // will do nothing)
-        ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITH_SCORE));
-        ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITHOUT_SCORE));
         Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
         Assert.assertTrue(scoreCompWinner.getHits() == 2);
@@ -205,9 +205,9 @@ public class ChangeMemberOrderTest {
 
         // Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
         // will do nothing)
-        ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITH_SCORE));
-        ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITHOUT_SCORE));
         Assert.assertTrue(scoreCompWinner.getFightsWon() == 1);
         Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
@@ -262,9 +262,9 @@ public class ChangeMemberOrderTest {
 
         // Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
         // will do nothing)
-        ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITH_SCORE));
-        ScoreOfCompetitor scoreCompLooser = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompLooser = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITHOUT_SCORE));
         Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
         Assert.assertTrue(scoreCompWinner.getHits() == 2);
@@ -275,9 +275,9 @@ public class ChangeMemberOrderTest {
     @Test(dependsOnMethods = {"solveThirdLevel"})
     public void finalRanking() throws SQLException {
         Ranking ranking = new Ranking(FightPool.getInstance().get(tournament));
-        ScoreOfCompetitor scoreCompWinner = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompWinner = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITH_SCORE));
-        ScoreOfCompetitor scoreCompLooser = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
+        ScoreOfCompetitorClassic scoreCompLooser = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
                 COMPETITOR_WITHOUT_SCORE));
        
         Assert.assertTrue(scoreCompWinner.getDuelsWon() == 3);

@@ -26,7 +26,7 @@ package com.softwaremagico.ktg.statistics;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.RoleTag;
-import com.softwaremagico.ktg.core.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.fight.FightPanel;
@@ -52,7 +52,7 @@ public class StatisticsTopTen extends StatisticsGUI {
 
     Translator transl;
     Tournament tournament;
-    List<ScoreOfCompetitor> competitorTopTen;
+    List<ScoreOfCompetitorClassic> competitorTopTen;
     int startRange = 0;
     private List<RegisteredPerson> competitors;
     boolean changesAllowed = false;

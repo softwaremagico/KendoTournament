@@ -1,8 +1,10 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.tournament;
 
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.util.List;
 
-public class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor> {
+public class ScoreOfCompetitorClassic implements Comparable<ScoreOfCompetitorClassic> {
 
     private RegisteredPerson competitor;
     private List<Fight> fights;
@@ -13,7 +15,7 @@ public class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor> {
     private Integer fightsWon = null;
     private Integer fightsDraw = null;
 
-    public ScoreOfCompetitor(RegisteredPerson competitor, List<Fight> fights) {
+    public ScoreOfCompetitorClassic(RegisteredPerson competitor, List<Fight> fights) {
         this.competitor = competitor;
         this.fights = fights;
     }
@@ -89,7 +91,7 @@ public class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor> {
     }
 
     @Override
-    public int compareTo(ScoreOfCompetitor o) {
+    public int compareTo(ScoreOfCompetitorClassic o) {
         if (getDuelsWon() > o.getDuelsWon()) {
             return -1;
         }

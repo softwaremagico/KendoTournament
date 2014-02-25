@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.tournament.ScoreType;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class Ranking {
     List<Team> teamRanking = null;
     List<RegisteredPerson> competitorsRanking = null;
     List<ScoreOfTeam> teamScoreRanking = null;
-    List<ScoreOfCompetitor> competitorsScoreRanking = null;
+    List<ScoreOfCompetitorClassic> competitorsScoreRanking = null;
 
     public Ranking(List<Fight> fights) {
         this.fights = fights;
@@ -118,16 +119,16 @@ public class Ranking {
         return competitorsRanking;
     }
 
-    public List<ScoreOfCompetitor> getCompetitorsScoreRanking() {
+    public List<ScoreOfCompetitorClassic> getCompetitorsScoreRanking() {
         if (competitorsScoreRanking == null) {
             competitorsScoreRanking = getCompetitorsScoreRanking(fights);
         }
         return competitorsScoreRanking;
     }
 
-    public ScoreOfCompetitor getScoreRanking(RegisteredPerson competitor) {
-        List<ScoreOfCompetitor> scoreRanking = getCompetitorsScoreRanking();
-        for (ScoreOfCompetitor score : scoreRanking) {
+    public ScoreOfCompetitorClassic getScoreRanking(RegisteredPerson competitor) {
+        List<ScoreOfCompetitorClassic> scoreRanking = getCompetitorsScoreRanking();
+        for (ScoreOfCompetitorClassic score : scoreRanking) {
             if (score.getCompetitor().equals(competitor)) {
                 return score;
             }
@@ -143,8 +144,8 @@ public class Ranking {
         return null;
     }
 
-    public ScoreOfCompetitor getScoreOfCompetitor(Integer order) {
-        List<ScoreOfCompetitor> teamsOrder = getCompetitorsScoreRanking();
+    public ScoreOfCompetitorClassic getScoreOfCompetitor(Integer order) {
+        List<ScoreOfCompetitorClassic> teamsOrder = getCompetitorsScoreRanking();
         if (order >= 0 && order < teamsOrder.size()) {
             return teamsOrder.get(order);
         }
@@ -199,15 +200,15 @@ public class Ranking {
         return scores;
     }
 
-    public static ScoreOfCompetitor getScoreRanking(RegisteredPerson competitor, List<Fight> fights) {
-        return new ScoreOfCompetitor(competitor, fights);
+    public static ScoreOfCompetitorClassic getScoreRanking(RegisteredPerson competitor, List<Fight> fights) {
+        return new ScoreOfCompetitorClassic(competitor, fights);
     }
 
-    public static List<ScoreOfCompetitor> getCompetitorsScoreRanking(List<Fight> fights) {
+    public static List<ScoreOfCompetitorClassic> getCompetitorsScoreRanking(List<Fight> fights) {
         List<RegisteredPerson> competitors = getRegisteredPersons(fights);
-        List<ScoreOfCompetitor> scores = new ArrayList<>();
+        List<ScoreOfCompetitorClassic> scores = new ArrayList<>();
         for (RegisteredPerson competitor : competitors) {
-            scores.add(new ScoreOfCompetitor(competitor, fights));
+            scores.add(new ScoreOfCompetitorClassic(competitor, fights));
         }
         Collections.sort(scores);
         return scores;
@@ -243,13 +244,13 @@ public class Ranking {
 
     public static List<RegisteredPerson> getCompetitorsRanking(List<Fight> fights) {
         List<RegisteredPerson> competitors = getRegisteredPersons(fights);
-        List<ScoreOfCompetitor> scores = new ArrayList<>();
+        List<ScoreOfCompetitorClassic> scores = new ArrayList<>();
         for (RegisteredPerson competitor : competitors) {
-            scores.add(new ScoreOfCompetitor(competitor, fights));
+            scores.add(new ScoreOfCompetitorClassic(competitor, fights));
         }
         Collections.sort(scores);
         List<RegisteredPerson> competitorsRanking = new ArrayList<>();
-        for (ScoreOfCompetitor score : scores) {
+        for (ScoreOfCompetitorClassic score : scores) {
             competitorsRanking.add(score.getCompetitor());
         }
         return competitorsRanking;
