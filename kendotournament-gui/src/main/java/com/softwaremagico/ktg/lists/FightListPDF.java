@@ -49,6 +49,7 @@ import java.util.List;
 
 public class FightListPDF extends ParentList {
 
+	private final static Integer BORDER_WIDTH = 0;
 	private Tournament tournament;
 	private ITournamentManager tournamentManager;
 
@@ -101,7 +102,7 @@ public class FightListPDF extends ParentList {
 
 			for (int j = 0; j < fights.size(); j++) {
 				cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
-				cell.setBorderWidth(0);
+				cell.setBorderWidth(BORDER_WIDTH);
 				cell.setColspan(3);
 				// if (fights.get(j).isOver()) {
 				// cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200,
@@ -149,7 +150,7 @@ public class FightListPDF extends ParentList {
 						if (groups.get(i).isFightOfGroup(fights.get(j))) {
 
 							cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
-							cell.setBorderWidth(1);
+							cell.setBorderWidth(BORDER_WIDTH);
 							cell.setColspan(3);
 							// if (FightPool.getManager(tournament).get(j).isOver())
 							// {
