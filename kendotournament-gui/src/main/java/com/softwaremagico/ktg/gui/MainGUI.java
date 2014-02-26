@@ -491,9 +491,9 @@ public final class MainGUI extends KendoFrame {
         TeamListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         RefereeListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         FightListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
-        PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
-        SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"gtodo.png"));
+        PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
         CompetitorsGlobalScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
@@ -649,14 +649,14 @@ public final class MainGUI extends KendoFrame {
         FightListMenuItem.setText("List of Fights");
         ListMenu.add(FightListMenuItem);
 
-        PointListMenuItem.setText("List of Points");
-        ListMenu.add(PointListMenuItem);
-
         FightsCardMenuItem.setText("FightsCard");
         ListMenu.add(FightsCardMenuItem);
 
         SummaryMenuItem.setText("Fights Summary");
         ListMenu.add(SummaryMenuItem);
+
+        PointListMenuItem.setText("List of Points");
+        ListMenu.add(PointListMenuItem);
 
         TournamentTreeMenuItem.setText("TournamentTree");
         ListMenu.add(TournamentTreeMenuItem);
@@ -787,7 +787,7 @@ public final class MainGUI extends KendoFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addComponent(MainPhotoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
