@@ -491,11 +491,11 @@ public final class MainGUI extends KendoFrame {
         TeamListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         RefereeListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         FightListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
-        FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
-        SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"gtodo.png"));
+        FightsCardMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"gtodo.png"));
+        SummaryMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
-        TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
         CompetitorsGlobalScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
+        TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
         DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
         StatisticsMenu = new javax.swing.JMenu();
         TournamentStatisticsMenu = new javax.swing.JMenu();
@@ -658,11 +658,11 @@ public final class MainGUI extends KendoFrame {
         PointListMenuItem.setText("List of Points");
         ListMenu.add(PointListMenuItem);
 
-        TournamentTreeMenuItem.setText("TournamentTree");
-        ListMenu.add(TournamentTreeMenuItem);
-
         CompetitorsGlobalScoreMenuItem.setText("CompetitorsGlobalScore");
         ListMenu.add(CompetitorsGlobalScoreMenuItem);
+
+        TournamentTreeMenuItem.setText("TournamentTree");
+        ListMenu.add(TournamentTreeMenuItem);
 
         DiplomaMenuItem.setText("Diploma");
         ListMenu.add(DiplomaMenuItem);
