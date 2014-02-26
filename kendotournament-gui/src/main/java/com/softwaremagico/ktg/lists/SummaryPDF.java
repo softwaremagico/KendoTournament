@@ -164,7 +164,7 @@ public class SummaryPDF extends ParentList {
                 /*
                  * Header of the phase
                  */
-                if (lastLevel != fights.get(i).getLevel() && !tournament.getType().equals(TournamentType.SIMPLE)) {
+                if (lastLevel != fights.get(i).getLevel() && !tournament.getType().equals(TournamentType.LEAGUE)) {
                     mainTable.addCell(getEmptyRow());
                     mainTable.addCell(getHeader1(trans.getTranslatedText("Round") + " " + (fights.get(i).getLevel() + 1) + ":", 0, Element.ALIGN_LEFT));
                     lastLevel = fights.get(i).getLevel();

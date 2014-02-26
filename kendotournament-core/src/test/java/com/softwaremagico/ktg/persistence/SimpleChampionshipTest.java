@@ -41,7 +41,7 @@ public class SimpleChampionshipTest {
 
 	@Test
 	public void addTournament() throws SQLException {
-		tournament = new Tournament(TOURNAMENT_NAME, 1, 2, MEMBERS, TournamentType.SIMPLE);
+		tournament = new Tournament(TOURNAMENT_NAME, 1, 2, MEMBERS, TournamentType.LEAGUE);
 		TournamentPool.getInstance().add(tournament);
 		Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
 	}
@@ -92,7 +92,7 @@ public class SimpleChampionshipTest {
 
 	@Test(dependsOnMethods = { "addTeams" })
 	public void createFights() throws SQLException, PersonalizedFightsException {
-		ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.SIMPLE);
+		ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.LEAGUE);
 		FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == getNumberOfCombats(TeamPool.getInstance()
 				.get(tournament).size()));

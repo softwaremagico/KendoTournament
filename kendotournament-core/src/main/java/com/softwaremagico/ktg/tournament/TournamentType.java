@@ -28,9 +28,9 @@ public enum TournamentType {
 
 	CHAMPIONSHIP("championship"),
 
-	LEAGUE_TREE("tree"),
+	TREE("tree"),
 
-	SIMPLE("simple"),
+	LEAGUE("simple"),
 
 	LOOP("loop"),
 

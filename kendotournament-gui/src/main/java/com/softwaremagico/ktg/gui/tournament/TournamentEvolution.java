@@ -57,7 +57,7 @@ public class TournamentEvolution extends javax.swing.JFrame {
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
         this.tournament = tournament;
-        if (!tournament.getType().equals(TournamentType.SIMPLE)) {
+        if (!tournament.getType().equals(TournamentType.LEAGUE)) {
             bbp.update(tournament);
             BlackBoardScrollPane.revalidate();
             BlackBoardScrollPane.repaint();

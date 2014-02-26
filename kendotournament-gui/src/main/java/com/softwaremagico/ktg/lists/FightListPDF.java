@@ -171,7 +171,7 @@ public class FightListPDF extends ParentList {
 	@Override
 	public void createBodyRows(Document document, PdfPTable mainTable, float width, float height, PdfWriter writer,
 			String font, int fontSize) {
-		if (tournament.getType().equals(TournamentType.SIMPLE)) {
+		if (tournament.getType().equals(TournamentType.LEAGUE)) {
 			simpleTable(mainTable);
 		} else {
 			championshipTable(mainTable);

@@ -624,7 +624,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
     }//GEN-LAST:event_winnerPassSpinnerStateChanged
 
     private void teamListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teamListMouseClicked
-        if (!getSelectedTournament().getType().equals(TournamentType.SIMPLE)) {
+        if (!getSelectedTournament().getType().equals(TournamentType.LEAGUE)) {
             if (evt.getClickCount() == 2) {
                 addTeam();
             }

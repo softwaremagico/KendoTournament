@@ -171,7 +171,7 @@ public class NewTournament extends KendoFrame {
     public boolean acceptTournament() {
         try {
             if (NameTextField.getText().length() > 0) {
-                Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
+                Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.LEAGUE);
                 newTournament.setUsingMultipleComputers(usingMultipleComputersCheckBox.isSelected());
                 if (!defaultBanner) {
                     newTournament.addBanner(banner);
@@ -432,7 +432,7 @@ public class NewTournament extends KendoFrame {
 
     private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PDFButtonActionPerformed
         if (NameTextField.getText().length() > 0) {
-            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.SIMPLE);
+            Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(), TournamentType.LEAGUE);
 
             try {
                 String file;

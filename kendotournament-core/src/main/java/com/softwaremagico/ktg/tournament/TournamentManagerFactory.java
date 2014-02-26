@@ -84,7 +84,7 @@ public class TournamentManagerFactory {
             case PERSONALIZED:
                 manager = new PersonalizedTournament(tournament);
                 break;
-            case SIMPLE:
+            case LEAGUE:
             default:
                 manager = new SimpleTournament(tournament);
                 break;

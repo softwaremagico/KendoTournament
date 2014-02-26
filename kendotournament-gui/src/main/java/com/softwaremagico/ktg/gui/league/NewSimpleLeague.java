@@ -219,7 +219,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
     }
 
     protected TournamentType getDefinedType() {
-        return TournamentType.SIMPLE;
+        return TournamentType.LEAGUE;
     }
 
     @SuppressWarnings("unchecked")
