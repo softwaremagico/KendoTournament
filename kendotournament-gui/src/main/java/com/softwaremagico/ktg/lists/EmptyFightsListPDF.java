@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.lists;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,23 +29,24 @@ import com.softwaremagico.ktg.core.Tournament;
 
 public class EmptyFightsListPDF extends SummaryPDF {
 
-    EmptyFightsListPDF(Tournament championship, int shiaijo, boolean showAll) {
-        super(championship, shiaijo);
-        this.showAll = showAll;
-    }
+	protected EmptyFightsListPDF(Tournament championship, int shiaijo, boolean showAll) {
+		super(championship, shiaijo);
+		this.showAll = showAll;
+		divideByShiaijo = true;
+	}
 
-    @Override
-    protected String getDrawFight(Fight f, int duel) {
-        return "";
-    }
+	@Override
+	protected String getDrawFight(Fight f, int duel) {
+		return "";
+	}
 
-    @Override
-    protected String getFaults(Fight f, int duel, boolean leftTeam) {
-        return "";
-    }
+	@Override
+	protected String getFaults(Fight f, int duel, boolean leftTeam) {
+		return "";
+	}
 
-    @Override
-    protected String getScore(Fight f, int duel, int score, boolean leftTeam) {
-        return "";
-    }
+	@Override
+	protected String getScore(Fight f, int duel, int score, boolean leftTeam) {
+		return "";
+	}
 }

@@ -42,7 +42,7 @@
 	</titleClub>
 	<titleNewFight>
 		<en>Generate different fights for a league</en>
-		<es>Crea nuevos combates para una campeonato</es>
+		<es>Crea nuevos partidos para una campeonato</es>
 		<nl>Genereer wedstrijden in de poule</nl>
 		<de>Erstelle verschiedene Kämpfe für den Wettbewerb</de>
 		<ca>Crea nous combats oer a una lliga</ca>
@@ -130,7 +130,7 @@
 	</titleDiplomas>
 	<titleListFights>
 		<en>Generate the list of fights</en>
-		<es>Crear la lista de combates</es>
+		<es>Crear la lista de partidos</es>
 		<nl>Genereer de wedstrijdenlijst</nl>
 		<de>Erstelle Liste der Kämpfe</de>
 		<ca>Crear la llista de combats</ca>
@@ -154,7 +154,7 @@
 	</titleHitStatistics>
 	<titleSummary>
 		<en>Generate a summary of fights</en>
-		<es>Crear un resumen de los combates</es>
+		<es>Crear un resumen de los partidos</es>
 		<nl>genereer een samenvatting van de wedstrijden</nl>
 		<de>Erstelle Zusammenfassung der Kämpfe</de>
 		<ca>Crear un resum dels combats</ca>
@@ -178,7 +178,7 @@
 	</titleTeamTopTen>
 	<titleWonStatistics>
 		<en>Generate won fights statistics</en>
-		<es>Generar Listado de combates ganados</es>
+		<es>Generar listado de partidos ganados</es>
 		<nl>Genereer statistieken van gewonnenwedstrijden</nl>
 		<de>Erstelle Gewonnene Kämpfe Statistik</de>
 		<ca>Crear llistat de combats guanyats</ca>
@@ -762,7 +762,7 @@
 	</ListMenu>
 	<FightListMenuItem>
 		<en>List of figts</en>
-		<es>Lista de combates</es>
+		<es>Lista de partidos</es>
 		<nl>Overzicht wedstrijden</nl>
 		<de>Liste der Kämpfe</de>
 		<ca>Llista de combats</ca>
@@ -794,7 +794,7 @@
 	</DiplomaMenuItem>	
 	<SummaryMenuItem>
 		<en>Fights summary</en>
-		<es>Resumen de combates</es>
+		<es>Resumen de partidos</es>
 		<nl>Samenvatting van de wedtrijden</nl>
 		<de>Kampfzusammenfassung</de>
 		<ca>Resum de combats</ca>
@@ -850,7 +850,7 @@
 	</ReceivedHitsStatisticsMenuItem>	
 	<WonLostMenuItem>
 		<en>Won fights (Total)</en>
-		<es>Combates ganados (Total)</es>
+		<es>Partidos ganados (Total)</es>
 		<nl>Gewonnen wedstrijden (Totaal)</nl>
 		<de>Gewonnene Kämpfe (Total)</de>
 		<ca>Combats guanyats (Total)</ca>
@@ -1098,7 +1098,7 @@
 	</FightArea>
 	<deleteFights>
 		<en>Do you want to remove the previous generated fights?</en>
-		<es>¿Quieres eliminar los combates previamente creados?</es>
+		<es>¿Quieres eliminar los partidos previamente creados?</es>
 		<nl>Wil je de eerder aangemaakte wedstrijden verwijderen?</nl>
 		<de>Wollen Sie die zuletzt erstellten Kämpfe löschen?</de>
 		<ca>Vols eliminar els combats prèviament creats?</ca>
@@ -1210,7 +1210,7 @@
 	</fightsWon>
 	<duelsWon>
 		<en>Won duels</en>
-		<es>Duelos ganados</es>
+		<es>Combates ganados</es>
 		<nl>Aantal wedstrijden gewonnen:</nl>
 		<de>Gewonnene Duelle</de>
 		<ca>Duels guanyats</ca>
@@ -1250,7 +1250,7 @@
 	</ReceivedHitStatistics>
 	<WonStatistics>
 		<en>Won/lost fights</en>
-		<es>Combates ganados/perdidos</es>
+		<es>Partidos ganados/perdidos</es>
 		<nl>Gewonnen/verloren wedtsrijden</nl>
 		<de>Gewonnene/Verlorene Kämpfe</de>
 		<ca>Combats guanyats/perduts</ca>
@@ -1282,7 +1282,7 @@
 	</PlayerTopTen>
 	<WonFights>
 		<en>Won fights</en>
-		<es>Combates ganados</es>
+		<es>Partidos ganados</es>
 		<nl>Gewonnen wedstrijden</nl>
 		<de>Gewonnene Kämpfe</de>
 		<ca>Combats guanyats</ca>
@@ -1290,7 +1290,7 @@
 	</WonFights>
 	<DrawFights>
 		<en>Draw fights</en>
-		<es>Combates empatados</es>
+		<es>Partidos empatados</es>
 		<nl>Gelijke wedstrijden</nl>
 		<de>Unentschiedene Kämpfe</de>
 		<ca>Combats empatats</ca>
@@ -1314,7 +1314,7 @@
 	</DrawMatchs>
 	<LostFights>
 		<en>Lost fights</en>
-		<es>Combates perdidos</es>
+		<es>Partidos perdidos</es>
 		<nl>Verloren wedstrijden</nl>
 		<de>Verlorene Kämpfe</de>
 		<ca>Combats perduts</ca>
@@ -1330,7 +1330,7 @@
 	</PassLabel>
 	<nextLevel>
 		<en>All round's fights are over. Do you want to continue in the next phase of the league?</en>
-		<es>Los combates the esta ronda han acabado. ¿Quieres pasar a la siguiente fase del campeonato?</es>
+		<es>Los partidos the esta ronda han acabado. ¿Quieres pasar a la siguiente fase del campeonato?</es>
 		<nl>Alle wedstrijden in de poule zijn voorbij. Wil je verder gaan met het toernooi?</nl>
 		<de>Alle Kämpfe der Runde sind zuende. Wollen Sie mit der nächsten Runde weitermachen?</de>
 		<ca>Els combats d'aquesta ronda han finalitzat. Vols passar a la següent fase del campionat?</ca>
@@ -1362,7 +1362,7 @@
 	</ToolTipEditable>
 	<ToolTipNotEditable>
 		<en>Teams will be inserted while the combats are solved.</en>
-		<es>Los equipos se irán completando automáticamente según ser resuelvan los combates.</es>
+		<es>Los equipos se irán completando automáticamente según ser resuelvan los partidos.</es>
 		<nl>Teams zullen worden toegevoegd als de wedstrijden voorbij zijn.</nl>
 		<de>Die Teams werden eingesetzt, während die Kämpfe erstellt werden.</de>
 		<ca>Els equips aniran completant-se automàticament segons es resolguen els combats.</ca>
@@ -1538,7 +1538,7 @@
 	</Hits>
 	<Fights>
 		<en>Fights</en>
-		<es>Combates</es>
+		<es>Partidos</es>
 		<nl>Wedstrijden</nl>
 		<de>Kämpfe</de>
 		<ca>Combats</ca>
@@ -1925,7 +1925,7 @@
 	</ImportDatabaseProgressBarLabelTeam>		
 	<ExportDatabaseProgressBarLabelFight>
 		<en>Exporting fights:</en>
-		<es>Exportando los combates:</es>
+		<es>Exportando los partidos:</es>
 		<nl>Wedstrijden Exporteren:</nl>
 		<de>Exporting fights:</de>
 		<ca>Exportant els combats:</ca>
@@ -1933,7 +1933,7 @@
 	</ExportDatabaseProgressBarLabelFight>
 	<ImportDatabaseProgressBarLabelFight>
 		<en>Importing fights:</en>
-		<es>Importando los combates:</es>
+		<es>Importando los partidos:</es>
 		<nl>Wedstrijden Importeren:</nl>
 		<de>Importing fights:</de>
 		<ca>Important els combats:</ca>
@@ -2037,7 +2037,7 @@
 	</WrittingToDisk>
 	<FightsCard>
 		<en>Fights card</en>
-		<es>Ficha de combates</es>
+		<es>Ficha de partidos</es>
 		<nl>Wedstrijdkaart</nl>
 		<de>Fights card</de>
 		<ca>Fitxa de combats</ca>
@@ -2045,7 +2045,7 @@
 	</FightsCard>
 	<ShowEndFights>
 		<en>Add ended fights</en>
-		<es>Incluir combates acabados</es>
+		<es>Incluir partidos acabados</es>
 		<nl>Beëindigde wedstrijden toevoegen</nl>
 		<de>Add ended fights</de>
 		<ca>Incluoure combats finalitzats</ca>
@@ -2157,7 +2157,7 @@
 	</UsingMultipleComputersTag>
 	<AddNewFight>
 		<en>Add a new fight:</en>
-		<es>Añadir un nuevo combate:</es>
+		<es>Añadir un nuevo partido:</es>
 		<nl>Voeg wedstrijd toe:</nl>
 		<de>Add a new fight:</de>
 		<ca>Afegir un nou combat:</ca>

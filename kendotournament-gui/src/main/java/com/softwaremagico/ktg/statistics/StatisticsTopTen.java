@@ -23,20 +23,11 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Ranking;
-import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.core.RoleTag;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.gui.fight.FightPanel;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.persistence.RolePool;
 import java.sql.SQLException;
 import java.util.List;
+
 import javax.swing.JPanel;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -48,11 +39,23 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import com.softwaremagico.ktg.core.Ranking;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.gui.fight.FightPanel;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.persistence.RolePool;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
+
 public class StatisticsTopTen extends StatisticsGUI {
 
     Translator transl;
     Tournament tournament;
-    List<ScoreOfCompetitorClassic> competitorTopTen;
+	List<ScoreOfCompetitor> competitorTopTen;
     int startRange = 0;
     private List<RegisteredPerson> competitors;
     boolean changesAllowed = false;
