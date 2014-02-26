@@ -1158,13 +1158,13 @@ public abstract class SQL extends Database {
                         + ", "
                         + duels.get(i).getOrder()
                         + ", '"
-                        + duels.get(i).getHits(true).get(0).getAbbreviature()
+                        + duels.get(i).getHits(true).get(0).getAbbreviation()
                         + "', '"
-                        + duels.get(i).getHits(true).get(1).getAbbreviature()
+                        + duels.get(i).getHits(true).get(1).getAbbreviation()
                         + "', '"
-                        + duels.get(i).getHits(false).get(0).getAbbreviature()
+                        + duels.get(i).getHits(false).get(0).getAbbreviation()
                         + "', '"
-                        + duels.get(i).getHits(false).get(1).getAbbreviature()
+                        + duels.get(i).getHits(false).get(1).getAbbreviation()
                         + "', "
                         + getBoolean(duels.get(i).getFaults(true))
                         + ", "
@@ -1229,9 +1229,9 @@ public abstract class SQL extends Database {
                     + newDuels.get(i).getFight().getTournament() + "', Team2='" + newDuels.get(i).getFight().getTeam2()
                     + "', TournamentLevel=" + newDuels.get(i).getFight().getLevel() + ", TournamentGroup="
                     + newDuels.get(i).getFight().getGroup() + ", GroupIndex=" + newDuels.get(i).getFight().getOrderInGroup()
-                    + ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0).getAbbreviature()
-                    + "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1).getAbbreviature() + "', PointPlayer2A='"
-                    + newDuels.get(i).getHits(false).get(0).getAbbreviature() + "', PointPlayer2B='" + newDuels.get(i).getHits(false).get(1).getAbbreviature()
+                    + ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0).getAbbreviation()
+                    + "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1).getAbbreviation() + "', PointPlayer2A='"
+                    + newDuels.get(i).getHits(false).get(0).getAbbreviation() + "', PointPlayer2B='" + newDuels.get(i).getHits(false).get(1).getAbbreviation()
                     + "', FaultsPlayer1=" + newDuels.get(i).getFaults(true) + ", FaultsPlayer2=" + newDuels.get(i).getFaults(false)
                     + " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='"
                     + oldDuel.getFight().getTeam2() + "' AND Tournament='"

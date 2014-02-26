@@ -461,7 +461,7 @@ public class Duel implements Comparable<Duel> {
         if (memberA != null) {
             text += memberA.getShortSurnameName(10) + " (";
             for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-                text += (hitsFromCompetitorA.get(i).getAbbreviature());
+                text += (hitsFromCompetitorA.get(i).getAbbreviation());
             }
         } else {
             text += "  <<Empty>>  (  ";
@@ -470,7 +470,7 @@ public class Duel implements Comparable<Duel> {
         if (memberB != null) {
             text += memberB.getShortSurnameName(10) + " (";
             for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-                text += (hitsFromCompetitorB.get(i).getAbbreviature());
+                text += (hitsFromCompetitorB.get(i).getAbbreviation());
             }
         } else {
              text += "  <<Empty>>  (  ";

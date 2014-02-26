@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.core;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -35,86 +36,111 @@ import javax.imageio.ImageIO;
 
 public enum Score {
 
-    MEN("men", "Men", 'M'),
-    KOTE("kote", "Kote", 'K'),
-    DO("do", "Do", 'D'),
-    TSUKI("tsuki", "Tsuki", 'T'),
-    IPPON("ippon", "Ippon", 'I'),
-    HANSOKU("hansoku", "Hansoku", 'H'),
-    EMPTY("empty", "ClearMenuItem", ' '),
-    FAULT("fault", "FaultMenuItem", '^'),
-    DRAW("draw", "Draw", 'X');
-    private final String imageName;
-    private final char abbreviature;
-    private final String name;
-    private static HashMap<String, Image> existingScore = new HashMap<>();
+	MEN("men", "Men", 'M', 'M'),
 
-    Score(String imageName, String name, char abbreviature) {
-        this.imageName = imageName;
-        this.abbreviature = abbreviature;
-        this.name = name;
-    }
+	KOTE("kote", "Kote", 'K', 'K'),
 
-    public static Image getImage(String fileName) {
-        Image image = existingScore.get(fileName);
-        if (image == null) {
-            File file = new File(Path.getScoreFolder() + fileName);
-            try {
-                image = ImageIO.read(file);
-            } catch (IOException ex) {
-                KendoLog.severe(Score.class.getName(), "No image '" + Path.getScoreFolder() + fileName + "' found.");
-            }
-            existingScore.put(fileName, image);
-        }
-        return image;
-    }
-    
-    public String getSvgImageName() {
-    	 return imageName + ".svg";
-    }
+	DO("do", "Do", 'D', 'D'),
 
-    public String getPngImageName() {
-        return imageName + ".png";
-    }
+	TSUKI("tsuki", "Tsuki", 'T', 'T'),
 
-    public char getAbbreviature() {
-        return abbreviature;
-    }
+	IPPON("ippon", "Ippon", 'I', 'I'),
 
-    public String getName() {
-        return name;
-    }
+	HANSOKU("hansoku", "Hansoku", 'H', 'H'),
 
-    public static Score getScore(char abbreviature) {
-        for (Score s : Score.values()) {
-            if (s.abbreviature == abbreviature) {
-                return s;
-            }
-        }
-        return EMPTY;
-    }
+	EMPTY("empty", "ClearMenuItem", ' ', ' '),
 
-    public static Score getScore(String name) {
-        for (Score s : Score.values()) {
-            if (s.name == null ? name == null : s.name.equals(name)) {
-                return s;
-            }
-        }
-        return EMPTY;
-    }
+	FAULT("fault", "FaultMenuItem", '^', '\u25B2'),
 
-    public static boolean isValidPoint(Score sc) {
-        return getValidPoints().contains(sc);
-    }
+	DRAW("draw", "Draw", 'X', 'X');
 
-    public static ArrayList<Score> getValidPoints() {
-        ArrayList<Score> points = new ArrayList<>();
-        points.add(MEN);
-        points.add(KOTE);
-        points.add(DO);
-        points.add(TSUKI);
-        points.add(IPPON);
-        points.add(HANSOKU);
-        return points;
-    }
+	private final String imageName;
+	private final char abbreviation;
+	private final char enhancedAbbreviation;
+	private final String name;
+	private static HashMap<String, Image> existingScore = new HashMap<>();
+
+	Score(String imageName, String name, char abbreviation, char enhancedAbbreviation) {
+		this.imageName = imageName;
+		this.abbreviation = abbreviation;
+		this.name = name;
+		this.enhancedAbbreviation = enhancedAbbreviation;
+	}
+
+	public static Image getImage(String fileName) {
+		Image image = existingScore.get(fileName);
+		if (image == null) {
+			File file = new File(Path.getScoreFolder() + fileName);
+			try {
+				image = ImageIO.read(file);
+			} catch (IOException ex) {
+				KendoLog.severe(Score.class.getName(), "No image '" + Path.getScoreFolder() + fileName + "' found.");
+			}
+			existingScore.put(fileName, image);
+		}
+		return image;
+	}
+
+	public String getSvgImageName() {
+		return imageName + ".svg";
+	}
+
+	public String getPngImageName() {
+		return imageName + ".png";
+	}
+
+	/**
+	 * Abbreviature for simple fonts.
+	 * 
+	 * @return
+	 */
+	public char getAbbreviation() {
+		return abbreviation;
+	}
+
+	/**
+	 * Abbreviature for fonts with complex symbols.
+	 * 
+	 * @return
+	 */
+	public char getEnhancedAbbreviation() {
+		return enhancedAbbreviation;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public static Score getScore(char abbreviature) {
+		for (Score s : Score.values()) {
+			if (s.abbreviation == abbreviature) {
+				return s;
+			}
+		}
+		return EMPTY;
+	}
+
+	public static Score getScore(String name) {
+		for (Score s : Score.values()) {
+			if (s.name == null ? name == null : s.name.equals(name)) {
+				return s;
+			}
+		}
+		return EMPTY;
+	}
+
+	public static boolean isValidPoint(Score sc) {
+		return getValidPoints().contains(sc);
+	}
+
+	public static ArrayList<Score> getValidPoints() {
+		ArrayList<Score> points = new ArrayList<>();
+		points.add(MEN);
+		points.add(KOTE);
+		points.add(DO);
+		points.add(TSUKI);
+		points.add(IPPON);
+		points.add(HANSOKU);
+		return points;
+	}
 }

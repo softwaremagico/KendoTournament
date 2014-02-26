@@ -57,9 +57,9 @@ public class SummaryPDF extends ParentList {
         // Draw Fights
         String draw;
         if (f.getDuels().get(duel).winner() == 0 && f.isOver()) {
-            draw = "" + Score.DRAW.getAbbreviature();
+            draw = "" + Score.DRAW.getAbbreviation();
         } else {
-            draw = "" + Score.EMPTY.getAbbreviature();
+            draw = "" + Score.EMPTY.getAbbreviation();
         }
         return draw;
     }
@@ -73,18 +73,18 @@ public class SummaryPDF extends ParentList {
             faults = f.getDuels().get(duel).getFaults(false);
         }
         if (faults) {
-            faultSimbol = "" + Score.FAULT.getAbbreviature();
+            faultSimbol = "" + Score.FAULT.getAbbreviation();
         } else {
-            faultSimbol = "" + Score.EMPTY.getAbbreviature();
+            faultSimbol = "" + Score.EMPTY.getAbbreviation();
         }
         return faultSimbol;
     }
 
     protected String getScore(Fight f, int duel, int score, boolean leftTeam) {
         if (leftTeam) {
-            return f.getDuels().get(duel).getHits(true).get(score).getAbbreviature() + "";
+            return f.getDuels().get(duel).getHits(true).get(score).getAbbreviation() + "";
         } else {
-            return f.getDuels().get(duel).getHits(false).get(score).getAbbreviature() + "";
+            return f.getDuels().get(duel).getHits(false).get(score).getAbbreviation() + "";
         }
     }
 
