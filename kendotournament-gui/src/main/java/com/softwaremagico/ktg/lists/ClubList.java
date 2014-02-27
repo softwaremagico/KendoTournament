@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.lists;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -24,23 +25,24 @@ package com.softwaremagico.ktg.lists;
  */
 
 public class ClubList extends ListFromTournamentCreatePDF {
+	private static final long serialVersionUID = -1050164263551305195L;
 
-    public ClubList() {
-        super(false);
-        this.setTitle(trans.getTranslatedText("titleSummary"));
-    }
+	public ClubList() {
+		super(false);
+		this.setTitle(trans.getTranslatedText("ClubListMenuItem"));
+	}
 
-    @Override
-    public String defaultFileName() {
-        try {
-            return TournamentComboBox.getSelectedItem().toString() + "_ClubList";
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+	@Override
+	public String defaultFileName() {
+		try {
+			return TournamentComboBox.getSelectedItem().toString() + "_ClubList";
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
 
-    @Override
-    protected ParentList getPdfGenerator() {
-        return new ClubListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
-    }
+	@Override
+	protected ParentList getPdfGenerator() {
+		return new ClubListPDF(listTournaments.get(TournamentComboBox.getSelectedIndex()));
+	}
 }
