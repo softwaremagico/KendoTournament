@@ -93,7 +93,8 @@ public class CompetitorFight extends JPanel {
 		} catch (NullPointerException npe) {
 			AlertManager.showErrorInformation(this.getClass().getName(), npe);
 		}
-		if (menu) {
+		// Only selected fight can have menu and if it is allowed.
+		if (selected && menu) {
 			addAllMenus();
 		}
 	}

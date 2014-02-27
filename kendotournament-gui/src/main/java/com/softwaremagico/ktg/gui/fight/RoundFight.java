@@ -197,8 +197,8 @@ public class RoundFight extends JPanel {
         }
     }
 
-    private DrawPanel createDrawPanel(boolean selected) {
-        DrawPanel drawPanel = new DrawPanel(selected);
+    private DrawPanel createDrawPanel(boolean withMenu) {
+        DrawPanel drawPanel = new DrawPanel(withMenu);
         return drawPanel;
     }
 
@@ -209,12 +209,12 @@ public class RoundFight extends JPanel {
         private List<Boolean> drawsAnnoted;
         private GridBagConstraints gridBagConstraints;
 
-        public DrawPanel(boolean selected) {
+        public DrawPanel(boolean withMenu) {
             this.setLayout(new GridBagLayout());
             setGridBagConstraints();
 
             createDrawsPanel();
-            if (selected) {
+            if (withMenu) {
                 addPopUpMenu();
             }
             updateDrawsPanel();

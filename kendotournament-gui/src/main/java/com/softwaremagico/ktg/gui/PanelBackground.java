@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -35,48 +36,52 @@ import javax.swing.JPanel;
 
 public class PanelBackground extends JPanel {
 
-    Image imageBackground = null;
-    
-    public void setBackground(File file) throws IOException {
-        if (file == null) {
-            imageBackground = null;
-        } else {
-            imageBackground = ImageIO.read(file);
-        }
-        FileInputStream imageInput = new FileInputStream(file.getPath());
-        BufferedImage input = ImageIO.read(imageInput);
-        int srcHeight = input.getHeight();
-        int srcWidth = input.getWidth();
-        imageBackground = imageBackground.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
-    }
+	private static final long serialVersionUID = 7270426441645674138L;
+	private Image imageBackground = null;
 
-    public void setBackground(Image image) {
-        int srcHeight = image.getHeight(this);
-        int srcWidth = image.getWidth(this);
-        imageBackground = image.getScaledInstance(getPreferredSize().width, (int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
-    }
+	public void setBackground(File file) throws IOException {
+		if (file == null) {
+			imageBackground = null;
+		} else {
+			imageBackground = ImageIO.read(file);
+		}
+		FileInputStream imageInput = new FileInputStream(file.getPath());
+		BufferedImage input = ImageIO.read(imageInput);
+		int srcHeight = input.getHeight();
+		int srcWidth = input.getWidth();
+		imageBackground = imageBackground.getScaledInstance(getPreferredSize().width,
+				(int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+	}
 
-    public void setBackgroundExtended(Image image) {
-        imageBackground = image.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
-    }
+	public void setBackground(Image image) {
+		int srcHeight = image.getHeight(this);
+		int srcWidth = image.getWidth(this);
+		imageBackground = image.getScaledInstance(getPreferredSize().width,
+				(int) ((((double) getPreferredSize().width / srcWidth) * srcHeight)), Image.SCALE_FAST);
+	}
 
-    public void removeBackground() {
-        imageBackground = null;
-    }
+	public void setBackgroundExtended(Image image) {
+		imageBackground = image
+				.getScaledInstance(getPreferredSize().width, getPreferredSize().height, Image.SCALE_FAST);
+	}
 
-    @Override
-    public void paint(Graphics g) {
-        g.setColor(getBackground());
-        g.fillRect(0, 0, getWidth(), getHeight());
-        if (imageBackground != null) {
-            g.drawImage(imageBackground, 0, 0, null);
-        }
-        Component c;
-        for (int i = 0; i < getComponentCount(); i++) {
-            c = getComponent(i);
-            g.translate(c.getX(), c.getY());
-            c.print(g);
-            g.translate(-c.getX(), -c.getY());
-        }
-    }
+	public void removeBackground() {
+		imageBackground = null;
+	}
+
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(getBackground());
+		g.fillRect(0, 0, getWidth(), getHeight());
+		if (imageBackground != null) {
+			g.drawImage(imageBackground, 0, 0, null);
+		}
+		Component c;
+		for (int i = 0; i < getComponentCount(); i++) {
+			c = getComponent(i);
+			g.translate(c.getX(), c.getY());
+			c.print(g);
+			g.translate(-c.getX(), -c.getY());
+		}
+	}
 }
