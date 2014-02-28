@@ -41,11 +41,11 @@
 		<it>Aggiunger un nuovo club nel database</it>
 	</titleClub>
 	<titleNewFight>
-		<en>Generate different fights for a league</en>
+		<en>Generate different matchs for a league</en>
 		<es>Crea nuevos partidos para una campeonato</es>
 		<nl>Genereer wedstrijden in de poule</nl>
 		<de>Erstelle verschiedene Kämpfe für den Wettbewerb</de>
-		<ca>Crea nous combats oer a una lliga</ca>
+		<ca>Crea nous partits per a una lliga</ca>
 		<it>Crea un nuovo combatte per un campionato</it>
 	</titleNewFight>
 	<titleNewTeam>
@@ -129,11 +129,11 @@
 		<it>Creare la lista dei Diploma del campionato</it>
 	</titleDiplomas>
 	<titleListFights>
-		<en>Generate the list of fights</en>
+		<en>Generate the list of matchs</en>
 		<es>Crear la lista de partidos</es>
 		<nl>Genereer de wedstrijdenlijst</nl>
 		<de>Erstelle Liste der Kämpfe</de>
-		<ca>Crear la llista de combats</ca>
+		<ca>Crear la llista de partits</ca>
 		<it>Creare la lista degli incontri</it>
 	</titleListFights>
 	<titleListPoints>
@@ -153,11 +153,11 @@
 		<it>Creare le statistiche dei colpi</it>
 	</titleHitStatistics>
 	<titleSummary>
-		<en>Generate a summary of fights</en>
+		<en>Generate a summary of matchs</en>
 		<es>Crear un resumen de los partidos</es>
 		<nl>genereer een samenvatting van de wedstrijden</nl>
 		<de>Erstelle Zusammenfassung der Kämpfe</de>
-		<ca>Crear un resum dels combats</ca>
+		<ca>Crear un resum dels partits</ca>
 		<it>Creare un riassunto degli incontri</it>
 	</titleSummary>
 	<titleAccreditionCard>
@@ -177,11 +177,11 @@
 		<it>Creare il ranking delle squadre</it>
 	</titleTeamTopTen>
 	<titleWonStatistics>
-		<en>Generate won fights statistics</en>
+		<en>Generate won matchs statistics</en>
 		<es>Generar listado de partidos ganados</es>
 		<nl>Genereer statistieken van gewonnenwedstrijden</nl>
 		<de>Erstelle Gewonnene Kämpfe Statistik</de>
-		<ca>Crear llistat de combats guanyats</ca>
+		<ca>Crear llistat de partits guanyats</ca>
 		<it>Creare la lista degli incontri vinti</it>
 	</titleWonStatistics>
 	<titleMonitorTournament>
@@ -765,7 +765,7 @@
 		<es>Lista de partidos</es>
 		<nl>Overzicht wedstrijden</nl>
 		<de>Liste der Kämpfe</de>
-		<ca>Llista de combats</ca>
+		<ca>Llista de partits</ca>
 		<it>Lista degli incontri</it>
 	</FightListMenuItem>
 	<RefereeListMenuItem>
@@ -793,11 +793,11 @@
 		<it>Diplomi</it>
 	</DiplomaMenuItem>	
 	<SummaryMenuItem>
-		<en>Fights summary</en>
+		<en>Matchs summary</en>
 		<es>Resumen de partidos</es>
 		<nl>Samenvatting van de wedtrijden</nl>
 		<de>Kampfzusammenfassung</de>
-		<ca>Resum de combats</ca>
+		<ca>Resum de partits</ca>
 		<it>Riassunto degli incontri</it>
 	</SummaryMenuItem>	
 	<ClubListMenuItem>
@@ -849,11 +849,11 @@
 		<it>Percentuale dei golpi ricevuti</it>
 	</ReceivedHitsStatisticsMenuItem>	
 	<WonLostMenuItem>
-		<en>Won fights (Total)</en>
+		<en>Won matchs (Total)</en>
 		<es>Partidos ganados (Total)</es>
 		<nl>Gewonnen wedstrijden (Totaal)</nl>
 		<de>Gewonnene Kämpfe (Total)</de>
-		<ca>Combats guanyats (Total)</ca>
+		<ca>Partits guanyats (Total)</ca>
 		<it>Incontri vinti (Totale)</it>
 	</WonLostMenuItem>	
 	<TournamentStatisticsMenu>
@@ -1097,11 +1097,11 @@
 		<it>Shiaijo:</it>
 	</FightArea>
 	<deleteFights>
-		<en>Do you want to remove the previous generated fights?</en>
+		<en>Do you want to remove the previous generated matchs?</en>
 		<es>¿Quieres eliminar los partidos previamente creados?</es>
 		<nl>Wil je de eerder aangemaakte wedstrijden verwijderen?</nl>
 		<de>Wollen Sie die zuletzt erstellten Kämpfe löschen?</de>
-		<ca>Vols eliminar els combats prèviament creats?</ca>
+		<ca>Vols eliminar els partits prèviament creats?</ca>
 		<it>Si vuole eliminare gli incontri precedentemente creati?</it>
 	</deleteFights>
 	<Team1Label>
@@ -1193,7 +1193,7 @@
 		<it>Fallo</it>
 	</FaultMenuItem>
 	<DrawGame>
-		<en>There is a draw fight.</en>
+		<en>There is a draw match.</en>
 		<es>Hay un empate!</es>
 		<nl>Gelijkspel.</nl>
 		<de>Es gibt Kämpfe, die unentschieden sind.</de>
@@ -1209,11 +1209,11 @@
 		<it>Incontri vinti</it>
 	</fightsWon>
 	<duelsWon>
-		<en>Won duels</en>
+		<en>Won fights</en>
 		<es>Combates ganados</es>
 		<nl>Aantal wedstrijden gewonnen:</nl>
 		<de>Gewonnene Duelle</de>
-		<ca>Duels guanyats</ca>
+		<ca>Combats guanyats</ca>
 		<it>Duelli vinti</it>
 	</duelsWon>
 	<histsWon>
@@ -1249,11 +1249,11 @@
 		<it>Colpi ricevuti</it>
 	</ReceivedHitStatistics>
 	<WonStatistics>
-		<en>Won/lost fights</en>
+		<en>Won/lost matchs</en>
 		<es>Partidos ganados/perdidos</es>
 		<nl>Gewonnen/verloren wedtsrijden</nl>
 		<de>Gewonnene/Verlorene Kämpfe</de>
-		<ca>Combats guanyats/perduts</ca>
+		<ca>Partits guanyats/perduts</ca>
 		<it>Incontri vinti/persi</it>
 	</WonStatistics>
 	<TopTenTitle>
@@ -1281,19 +1281,19 @@
 		<it>Partecipanti</it>
 	</PlayerTopTen>
 	<WonFights>
-		<en>Won fights</en>
+		<en>Won matchs</en>
 		<es>Partidos ganados</es>
 		<nl>Gewonnen wedstrijden</nl>
 		<de>Gewonnene Kämpfe</de>
-		<ca>Combats guanyats</ca>
+		<ca>Partits guanyats</ca>
 		<it>Incontri vinti</it>
 	</WonFights>
 	<DrawFights>
-		<en>Draw fights</en>
+		<en>Draw matchs</en>
 		<es>Partidos empatados</es>
 		<nl>Gelijke wedstrijden</nl>
 		<de>Unentschiedene Kämpfe</de>
-		<ca>Combats empatats</ca>
+		<ca>Partits empatats</ca>
 		<it>Incontri pareggiati</it>
 	</DrawFights>
 	<WonMatchs>
@@ -1313,11 +1313,11 @@
 		<it>Incontri pareggiati</it>
 	</DrawMatchs>
 	<LostFights>
-		<en>Lost fights</en>
+		<en>Lost matchs</en>
 		<es>Partidos perdidos</es>
 		<nl>Verloren wedstrijden</nl>
 		<de>Verlorene Kämpfe</de>
-		<ca>Combats perduts</ca>
+		<ca>Partits perduts</ca>
 		<it>Incontri persi</it>
 	</LostFights>
 	<PassLabel>
@@ -1329,11 +1329,11 @@
 		<it>Numero di vincitori</it>
 	</PassLabel>
 	<nextLevel>
-		<en>All round's fights are over. Do you want to continue in the next phase of the league?</en>
+		<en>All round's matchs are over. Do you want to continue in the next phase of the league?</en>
 		<es>Los partidos the esta ronda han acabado. ¿Quieres pasar a la siguiente fase del campeonato?</es>
 		<nl>Alle wedstrijden in de poule zijn voorbij. Wil je verder gaan met het toernooi?</nl>
 		<de>Alle Kämpfe der Runde sind zuende. Wollen Sie mit der nächsten Runde weitermachen?</de>
-		<ca>Els combats d'aquesta ronda han finalitzat. Vols passar a la següent fase del campionat?</ca>
+		<ca>Els partits d'aquesta ronda han finalitzat. Vols passar a la següent fase del campionat?</ca>
 		<it>Gli incontri di questa ronda sono finiti. Si vuole passare alla fase successiva del campionato</it>
 	</nextLevel>
 	<GroupString>
@@ -1365,7 +1365,7 @@
 		<es>Los equipos se irán completando automáticamente según ser resuelvan los partidos.</es>
 		<nl>Teams zullen worden toegevoegd als de wedstrijden voorbij zijn.</nl>
 		<de>Die Teams werden eingesetzt, während die Kämpfe erstellt werden.</de>
-		<ca>Els equips aniran completant-se automàticament segons es resolguen els combats.</ca>
+		<ca>Els equips aniran completant-se automàticament segons es resolguen els partits.</ca>
 		<it>Le squadre si completeranno automaticamente mentre si realizzano gli incontri</it>
 	</ToolTipNotEditable>
 	<noTeams>
@@ -1537,11 +1537,11 @@
 		<it>Punti</it>
 	</Hits>
 	<Fights>
-		<en>Fights</en>
+		<en>Matchs</en>
 		<es>Partidos</es>
 		<nl>Wedstrijden</nl>
 		<de>Kämpfe</de>
-		<ca>Combats</ca>
+		<ca>Partits</ca>
 		<it>Incontri</it>
 	</Fights>
 	<Team>
@@ -1924,19 +1924,19 @@
 		<it>Importando le squadre:</it>
 	</ImportDatabaseProgressBarLabelTeam>		
 	<ExportDatabaseProgressBarLabelFight>
-		<en>Exporting fights:</en>
+		<en>Exporting matchs:</en>
 		<es>Exportando los partidos:</es>
 		<nl>Wedstrijden Exporteren:</nl>
-		<de>Exporting fights:</de>
-		<ca>Exportant els combats:</ca>
+		<de>Exporting matchs:</de>
+		<ca>Exportant els partits:</ca>
 		<it>Esportando gli incontri:</it>
 	</ExportDatabaseProgressBarLabelFight>
 	<ImportDatabaseProgressBarLabelFight>
-		<en>Importing fights:</en>
+		<en>Importing matchs:</en>
 		<es>Importando los partidos:</es>
 		<nl>Wedstrijden Importeren:</nl>
-		<de>Importing fights:</de>
-		<ca>Important els combats:</ca>
+		<de>Importing matchs:</de>
+		<ca>Important els partits:</ca>
 		<it>Importando gli incontri:</it>
 	</ImportDatabaseProgressBarLabelFight>
 	<ExportDatabaseProgressBarLabelRole>
@@ -2036,19 +2036,19 @@
 		<it>Scrivendo nel disco...</it>
 	</WrittingToDisk>
 	<FightsCard>
-		<en>Fights card</en>
+		<en>Matchs card</en>
 		<es>Ficha de partidos</es>
 		<nl>Wedstrijdkaart</nl>
-		<de>Fights card</de>
-		<ca>Fitxa de combats</ca>
+		<de>Matchs card</de>
+		<ca>Fitxa de partits</ca>
 		<it>Scheda dell'incontro</it>
 	</FightsCard>
 	<ShowEndFights>
-		<en>Add ended fights</en>
+		<en>Add ended matchs</en>
 		<es>Incluir partidos acabados</es>
 		<nl>Beëindigde wedstrijden toevoegen</nl>
-		<de>Add ended fights</de>
-		<ca>Incluoure combats finalitzats</ca>
+		<de>Add ended matchs</de>
+		<ca>Incluoure partits finalitzats</ca>
 		<it>Aggiungere gli incontri conclusi</it>
 	</ShowEndFights>
 	<Page>
@@ -2156,11 +2156,11 @@
 		<it>Usare un computer per shiaijo.</it>	
 	</UsingMultipleComputersTag>
 	<AddNewFight>
-		<en>Add a new fight:</en>
+		<en>Add a new match:</en>
 		<es>Añadir un nuevo partido:</es>
 		<nl>Voeg wedstrijd toe:</nl>
-		<de>Add a new fight:</de>
-		<ca>Afegir un nou combat:</ca>
+		<de>Add a new match:</de>
+		<ca>Afegir un nou partit:</ca>
 		<it>Aggiungere un nuovo combattimento:</it>	
 	</AddNewFight>
 	<RedTeam>
@@ -2227,8 +2227,6 @@
 		<ca>Per Acció</ca>
 		<it>Per Azzione</it>
 	</ByActionRadioButton>
-	
-	<!-- TRADUCIR -->
 	<ConfirmLabel>
 		<en>Confirm:</en>
 		<es>Confirmar:</es>
