@@ -41,7 +41,7 @@ import java.util.Locale;
  */
 public class KendoTournamentGenerator {
 
-    private final static String VERSION = "1.2.1";
+    private final static String VERSION = "1.2.0";
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
     private static AutoSaveOption autosave = AutoSaveOption.BY_TIME;

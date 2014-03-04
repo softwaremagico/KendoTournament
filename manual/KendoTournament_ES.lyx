@@ -106,7 +106,7 @@ LatexCommand tableofcontents
 status open
 
 \begin_layout Plain Layout
-Novedades
+novedades
 \end_layout
 
 \end_inset
@@ -157,6 +157,19 @@ Autoguardado: nuevas opciones de autoguardado.
  
 \end_layout
 
+\begin_layout Description
+Monitor: nueva funcionalidad que permite mostrar en un proyector las puntuacione
+s del campeonato.
+ Más información en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section*
 v1.1.0
 \end_layout
@@ -190,7 +203,7 @@ Campeonato
 
 personalizado: aparece la opción de crear un campeonato controlado por el
  usuario.
- Da completa libertad para añadir combates de manera que se puedan representar
+ Da completa libertad para añadir partidos de manera que se puedan representar
  todos aquellas formas de torneros o ligas que todavía no han sido definidas
  en la aplicación.
  Más información en la Sección 
@@ -470,7 +483,7 @@ diseño
 \end_inset
 
 Diseño de la liga.
- Se tendrá que decidir los combates iniciales, la estructura de la liga
+ Se tendrá que decidir los partidos iniciales, la estructura de la liga
  y otros detalles.
  Ejemplos de liga son torneos (todos los equipos contra todos), ligas en
  árbol con eliminatorias, etc.
@@ -488,7 +501,7 @@ panel
 \end_inset
 
 Panel de liga.
- Permitirá hacer el seguimiento de los combates, actualizar las puntuaciones,
+ Permitirá hacer el seguimiento de los partidos, actualizar las puntuaciones,
  faltas, etc.
 \end_layout
 
@@ -511,7 +524,7 @@ Gráficas.
 \end_layout
 
 \begin_layout Section
-Basic program behaviour
+Comportamiento básico del programa
 \end_layout
 
 \begin_layout Standard
@@ -1067,7 +1080,7 @@ status open
 
 \end_inset
 
-Árbitro: como su nombre indica, arbitrará los combates.
+Árbitro: como su nombre indica, arbitrará los partidos.
  No participará en ninguno de ellos y no recibe diploma.
 \end_layout
 
@@ -1410,14 +1423,14 @@ borrar
 status open
 
 \begin_layout Plain Layout
-combates
+partidos
 \end_layout
 
 \end_inset
 
-combates relacionados con esta liga.
+partidos relacionados con esta liga.
  Si borramos un competidor, el equipo perderá el participante, y por tanto,
- los combates ya existentes serán incongruentes.
+ los partidos ya existentes serán incongruentes.
  Se recomienda únicamente borrar competidores si el torneo no ha comenzado
  todavía.
  
@@ -1557,8 +1570,8 @@ liga
 
 \end_inset
 
-liga, se podrán definir los distintos combates.
- Existen varias formas de definir los combates de acuerdo con el tipo de
+liga, se podrán definir los distintos partidos.
+ Existen varias formas de definir los partidos de acuerdo con el tipo de
  liga que se necesite.
  Para ello no hay más que seleccionar la opción adecuada en el menú superior:
 \end_layout
@@ -1579,13 +1592,13 @@ puntuaciones
 
 \begin_layout Standard
 En esta ventana se pueden definir las distintas reglas de puntuaciones,
- es decir, cuanto valdrá ganar un combate y cuanto valdrá un empate.
+ es decir, cuanto valdrá ganar un partido y cuanto valdrá un empate.
  Existen cuatro opciones disponibles:
 \end_layout
 
 \begin_layout Description
 Clásico: este es el sistema japonés en el que solamente se contabilizan
- los combates ganados, y los empatados equivalen a los perdidos.
+ los partidos ganados, y los empatados equivalen a los perdidos.
 \end_layout
 
 \begin_layout Description
@@ -1597,8 +1610,8 @@ sobre
 \begin_inset space ~
 \end_inset
 
-empates: los combates empatados únicamente tendrán valor si el número de
- combates ganados, duelos y golpes dados es el mismo.
+empates: los partidos empatados únicamente tendrán valor si el número de
+ partidos ganados, combates y golpes dados es el mismo.
  
 \end_layout
 
@@ -1613,10 +1626,10 @@ empate
 
 \end_inset
 
-empatado según sus combates ganados, prevalecerá aquel que tenga un mayor
- número de combates empatados, ya que se considera que estos puntúan más
+empatado según sus partidos ganados, prevalecerá aquel que tenga un mayor
+ número de partidos empatados, ya que se considera que estos puntúan más
  que los perdidos.
- En caso de empate, se contabilizarán los duelos siguiendo la misma regla
+ En caso de empate, se contabilizarán los combates siguiendo la misma regla
  y en caso de empate, los golpes dados.
  Este es el sistema de puntuación utilizado por la Federación Europea de
  Kendo.
@@ -1625,7 +1638,7 @@ empatado según sus combates ganados, prevalecerá aquel que tenga un mayor
 
 \begin_layout Description
 Personalizado: por último, existe un sistema que permite otorgar una puntuación
- a los combates ganados y empatados, para imitar otros sistemas como los
+ a los partidos ganados y empatados, para imitar otros sistemas como los
  de otros deportes, en los que el ganador se lleva tres puntos y en un empate
  se lleva un punto.
  Aquí el usuario podrá elegir el sistema de puntuación que prefiera.
@@ -1694,7 +1707,7 @@ liga sencilla
 
 \end_inset
 
- liga sencilla a una liga en la que todos los equipos combaten contra todos.
+ liga sencilla a una liga en la que todos los equipos partidon contra todos.
  El ganador, obviamente será aquel que haga tenga más partidos ganados,
  en caso de 
 \begin_inset Index idx
@@ -1706,7 +1719,7 @@ empate
 
 \end_inset
 
-empate aquel que tenga más combates ganados y en caso de nuevo empate el
+empate aquel que tenga más partidos ganados y en caso de nuevo empate el
  que tenga más puntos.
  
 \end_layout
@@ -1753,19 +1766,19 @@ Liga Sencilla
 \end_layout
 
 \begin_layout Standard
-Existe un botón que permite generar los combates aleatoriamente.
+Existe un botón que permite generar los partidos aleatoriamente.
  Si se pulsa, se generará un listado de 
 \begin_inset Index idx
 status open
 
 \begin_layout Plain Layout
-combates
+partidos
 \end_layout
 
 \end_inset
 
-combates en el que el programa intentará que cada uno de los equipos haga
- dos combates seguidos sin salir del shiaijo para agilizar los combates,
+partidos en el que el programa intentará que cada uno de los equipos haga
+ dos partidos seguidos sin salir del shiaijo para agilizar los partidos,
  como es tradicional en el Kendo.
  
 \end_layout
@@ -1777,7 +1790,7 @@ Otro botón permite hacer lo mismo, pero los equipos se seleccionarán por
 \end_layout
 
 \begin_layout Standard
-Los combates no serán almacenados hasta que no se pulse el botón 
+Los partidos no serán almacenados hasta que no se pulse el botón 
 \emph on
 Aceptar
 \emph default
@@ -1797,8 +1810,8 @@ borrado
 
 \end_inset
 
-borrará cualquier combate que pudiera existir previamente en esa liga y
- se guardarán los nuevos combates.
+borrará cualquier partido que pudiera existir previamente en esa liga y
+ se guardarán los nuevos partidos.
  ¡Esto significa que cualquier resultado existente será eliminado!
 \end_layout
 
@@ -1820,7 +1833,7 @@ Una liga en círculo es aquella en que un equipo se enfrenta de forma consecutiv
  a todos los demás equipos sin descanso alguno.
  De esta forma, como si de una rueda se tratara, cada uno de los equipos
  se enfrentará contra todos los equipos adversarios de forma consecutiva,
- intentando distribuir sus fuerzas en los diversos combates.
+ intentando distribuir sus fuerzas en los diversos partidos.
  Aunque no es un sistema de liga oficial, resulta muy útil en entrenamientos
  y por ello se incluye en el programa.
  Para el uso de esta modalidad, se recomienda que los participantes con
@@ -1831,9 +1844,9 @@ Una liga en círculo es aquella en que un equipo se enfrenta de forma consecutiv
 
 \begin_layout Standard
 En esta ventana, el usuario solamente deberá seleccionar el orden en el
- que saldrán los equipos y el programa calculará todos los combates manteniendo
+ que saldrán los equipos y el programa calculará todos los partidos manteniendo
  este mismo orden.
- Hay que resaltar que el número de combates totales obtenidos de esta forma
+ Hay que resaltar que el número de partidos totales obtenidos de esta forma
  equivale a (equipos*(equipos-1)/2), por lo que solo es conveniente realizar
  este campeonato con un número reducido de equipos.
  
@@ -2086,7 +2099,7 @@ Borrar Nivel
 \end_layout
 
 \begin_layout Standard
-Esta opción permite limpiar un nivel (columna del árbol) y todos los combates
+Esta opción permite limpiar un nivel (columna del árbol) y todos los partidos
  asociados a este.
  De esta forma se permite volver hacia atrás en el campeonato si algún error
  hubiera ocurrido.
@@ -2206,7 +2219,7 @@ Generar
 \begin_inset space ~
 \end_inset
 
-Partidos: una vez acabado, si se pulsa este botón se generan todos los combates
+Partidos: una vez acabado, si se pulsa este botón se generan todos los partidos
  deseados.
  La ventana se cerrará por que ya no será útil.
  El resto de la liga se habrá automatizado.
@@ -2227,12 +2240,12 @@ Diseño
 \begin_inset space ~
 \end_inset
 
-Anterior: permite obtener el diseño que representa la puntuación de combates
+Anterior: permite obtener el diseño que representa la puntuación de partidos
  ya realizados.
  Útil especialmente cuando se modifica por error el diseño en árbol de una
  liga ya comenzada.
  No tiene efecto si ya se ha pulsado al botón Generar Partidos y ya se han
- generado los nuevos combates.
+ generado los nuevos partidos.
 \end_layout
 
 \begin_layout Description
@@ -2275,7 +2288,7 @@ Campeonato
 status open
 
 \begin_layout Plain Layout
-Personalizado
+personalizado
 \end_layout
 
 \end_inset
@@ -2290,7 +2303,7 @@ Esta opción permite reflejar cualquier tipo de liga o campeonato que el
 \end_layout
 
 \begin_layout Standard
-Aquí el usuario podrá añadir los combates que desee sin ninguna restricción.
+Aquí el usuario podrá añadir los partidos que desee sin ninguna restricción.
  Una ventana emergente permitirá elegir que equipo se enfrentará contra
  quien y será añadido automáticamente al marcador de la liga (Sección 
 \begin_inset CommandInset ref
@@ -2300,8 +2313,8 @@ reference "sec:Marcador-de-la"
 \end_inset
 
 ).
- Cada vez que se completen todos los combates visibles, aparecerá de nuevo
- la ventana emergente para poder añadir combates nuevos.
+ Cada vez que se completen todos los partidos visibles, aparecerá de nuevo
+ la ventana emergente para poder añadir partidos nuevos.
  
 \end_layout
 
@@ -2371,8 +2384,8 @@ Marcador de la liga
 
 \begin_layout Standard
 Esta es la pantalla más importante del programa, ya que es la que permite
- controlar el transcurso de los combates.
- En este panel el usuario puede ir incluyendo los golpes del combate según
+ controlar el transcurso de los partidos.
+ En este panel el usuario puede ir incluyendo los golpes del partido según
  se están produciendo de una forma sencilla, rápida e intuitiva.
  
 \end_layout
@@ -2439,18 +2452,18 @@ Control de
 status open
 
 \begin_layout Plain Layout
-combates
+partidos
 \end_layout
 
 \end_inset
 
-combates
+partidos
 \end_layout
 
 \begin_layout Standard
-Aquí aparecer un listado de combates entre los equipos.
+Aquí aparecer un listado de partidos entre los equipos.
  Este listado dependerá de la liga seleccionada, del shiaijo seleccionado
- y de los combates definidos previamente con el diseñador de ligas.
+ y de los partidos definidos previamente con el diseñador de ligas.
  Cambiando el 
 \begin_inset Index idx
 status open
@@ -2461,32 +2474,32 @@ shiaijo
 
 \end_inset
 
-shiaijo cambiará el listado, para mostrar otros grupos de combates.
+shiaijo cambiará el listado, para mostrar otros grupos de partidos.
  
 \end_layout
 
 \begin_layout Standard
-El listado de combates es adaptativo a la resolución de la pantalla.
+El listado de partidos es adaptativo a la resolución de la pantalla.
  Es decir, cuanto mayor sea la resolución de la pantalla que lo muestre,
- más combates aparecerán en el panel.
- Normalmente aparecerán uno, dos o tres combates.
- En la imagen presentada solamente aparece un combate, pero pueden ser los
+ más partidos aparecerán en el panel.
+ Normalmente aparecerán uno, dos o tres partidos.
+ En la imagen presentada solamente aparece un partido, pero pueden ser los
  siguientes tres:
 \end_layout
 
 \begin_layout Description
-Combate
+Partido
 \begin_inset space ~
 \end_inset
 
 anterior: con la puntuación pasada, que permite a los competidores revisar
- el transcurso de sus combates una vez han salido del shiaijo, así como
+ el transcurso de sus partidos una vez han salido del shiaijo, así como
  al público recordar la puntuación pasada.
  
 \end_layout
 
 \begin_layout Description
-Combate
+Partido
 \begin_inset space ~
 \end_inset
 
@@ -2495,17 +2508,17 @@ actual: marcado con un recuadro negro.
  En este partido se pueden ir incluyendo las distintas puntuaciones o faltas
  simplemente seleccionando la casilla correspondiente con el botón derecho
  del ratón.
- Un menú permite seleccionar el tipo de golpe y el combate será actualizado
+ Un menú permite seleccionar el tipo de golpe y el partido será actualizado
  en el momento.
 \end_layout
 
 \begin_layout Description
-Combate
+Partido
 \begin_inset space ~
 \end_inset
 
 posterior: un listado con los nombres de los próximos combatientes permite
- a estos estar listos para el próximo combate.
+ a estos estar listos para el próximo partido.
  Así se ahorra tiempo y permite al público ver el transcurso de la liga.
  Si la pantalla es lo suficientemente grande pueden aparecer varios partidos
  posteriores.
@@ -2513,8 +2526,8 @@ posterior: un listado con los nombres de los próximos combatientes permite
 \end_layout
 
 \begin_layout Standard
-Recuerda que solamente se puede editar el combate actual.
- El resto de combates están bloqueados.
+Recuerda que solamente se puede editar el partido actual.
+ El resto de partidos están bloqueados.
  
 \end_layout
 
@@ -2584,12 +2597,12 @@ empates
 \begin_layout Standard
 Si se selecciona con el botón derecho del ratón al espacio que existe entre
  los dos equipos, aparecerá un pequeño menú en el que permite indicar a
- la aplicación que el combate ha acabado en empate.
+ la aplicación que el partido ha acabado en empate.
  Esta opción lo que hará será dibujar una gran equis entre los dos equipos
  para que el usuario y público puedan recordar más fácilmente que hay un
  empate.
- De todas formas, cuando se añade cualquier puntuación al siguiente combate,
- la aplicación entiende que el combate anterior ha acabado y por tanto incluye
+ De todas formas, cuando se añade cualquier puntuación al siguiente partido,
+ la aplicación entiende que el partido anterior ha acabado y por tanto incluye
  la equis automáticamente si es necesario.
  
 \end_layout
@@ -2600,11 +2613,11 @@ Grupo de botones
 
 \begin_layout Standard
 En la parte inferior de la ventana aparece dos grandes botones que permiten
- navegar entre los combates:
+ navegar entre los partidos:
 \end_layout
 
 \begin_layout Description
-Combate
+Partido
 \begin_inset space ~
 \end_inset
 
@@ -2613,28 +2626,28 @@ anterior: permite retroceder entre los partidos para corregir posibles errores
 \end_layout
 
 \begin_layout Description
-Combate
+Partido
 \begin_inset space ~
 \end_inset
 
 siguiente: da por concluido el partido actual y este se convierte en el
  partido anterior.
  El próximo partido podrá ser editado para la inclusión de sus puntuaciones.
- Para dar por concluido el partido, espera a que todos los combates de los
+ Para dar por concluido el partido, espera a que todos los partidos de los
  distintos competidores se hayan realizado.
  Este botón también es el que permitirá en los campeonatos generar las siguiente
-s fases según se van resolviendo los combates.
- Una vez todos los combates estén acabados (todos los de todos los shiaijos)
+s fases según se van resolviendo los partidos.
+ Una vez todos los partidos estén acabados (todos los de todos los shiaijos)
  el programa generará automáticamente las siguientes rondas.
- Por tanto, acuérdate de finalizar cada uno de los combates antes de cambiar
+ Por tanto, acuérdate de finalizar cada uno de los partidos antes de cambiar
  de shiaijo.
  Y si ves que no genera los partidos de siguiente nivel, muy probablemente
- es que se habrá olvidado de finalizar los combates del algún otro shiaijo.
+ es que se habrá olvidado de finalizar los partidos del algún otro shiaijo.
  
 \begin_inset Newline newline
 \end_inset
 
-Además, cuando se acaban todos los combates de un grupo, mostrará durante
+Además, cuando se acaban todos los partidos de un grupo, mostrará durante
  un breve periodo de tiempo, la puntuación de todos los equipos que han
  participado en dicho grupo.
  
@@ -2649,7 +2662,7 @@ Opciones secundarias aparecen en el menú superior.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Paragraph*
 Dentro de la opción 
 \emph on
 Ventana
@@ -2684,7 +2697,7 @@ los
 \end_inset
 
 equipos: como resulta difícil predecir dónde estará colocado el ordenador
- respecto al combate, esta opción permite invertir el lado de los equipos
+ respecto al partido, esta opción permite invertir el lado de los equipos
  representados en el panel.
  De esta forma los equipos que estén a la izquierda pasarán a la derecha
  y viceversa.
@@ -2722,8 +2735,41 @@ los
 
 colores: similar a la opción anterior, permite intercambiar los colores
  que diferencian los colores de los equipos.
- No tiene efecto alguno en los combates, pero resulta de gran ayuda para
+ No tiene efecto alguno en los partidos, pero resulta de gran ayuda para
  seguir el desarrollo del campeonato.
+ 
+\end_layout
+
+\begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+monitor
+\end_layout
+
+\end_inset
+
+Monitor: la idea de esta opción es permitir utilizar un projector que muestre
+ al público el transcurso del campeonato y así ver las puntuaciones de los
+ distintos competidores.
+ La mejor forma de usar esta opción es tener un ordenador conectado a una
+ base de datos 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MySQL
+\end_layout
+
+\end_inset
+
+MySQL y que se encargue de proyectar los resultados.
+ La pantalla mostrada cambia cada cierto tiempo en los distintos shiaijos,
+ permitiendo mostrar todo el campeonato con un único proyector.
+ Esta opción puede ser protegida por una contraseña, asegurando que nadie
+ manipula el ordenador si está desatendido, dejando una ventana no interactiva
+ que no permite realizar ninguna modificación en las puntuaciones.
  
 \end_layout
 
@@ -2732,7 +2778,7 @@ Salir: cierra la ventana de forma segura sin que se pierda información.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Paragraph*
 Menú 
 \emph on
 Opciones
@@ -2773,15 +2819,25 @@ un
 
 equipo: según la liga va avanzando y los equipos se van clasificando, los
  miembros del mismo pueden desear cambiar el orden de aparición en el próximo
- combate.
+ partido.
  Al seleccionar esta opción, aparecerá una ventana que permitirá cambiar
  el orden de los mismos.
- Esto solamente se aplicará a partir del combate actual, y por tanto, solamente
- es aplicable a aquellos equipos que tengan algún combate pendiente.
+ Esto solamente se aplicará a partir del partido actual, y por tanto, solamente
+ es aplicable a aquellos equipos que tengan algún partido pendiente.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Description
+Añadir/borrar
+\begin_inset space ~
+\end_inset
+
+partido: únicamente disponible en ligas personalizadas y simples.
+ Permite añadir cualquier combinación de partidos de forma manual.
+ 
+\end_layout
+
+\begin_layout Paragraph*
 Menú 
 \emph on
 Mostrar
@@ -2801,8 +2857,8 @@ status open
 
 Árbol: muestra una ventana en dónde se ve la progresión de la liga (está
  opción solo estará disponible en el caso de que tenga forma de campeonato),
- los equipos que pasan a la fase siguiente y los combates definidos.
- Las fases se autocompletan una vez todos los combates de la fase anterior
+ los equipos que pasan a la fase siguiente y los partidos definidos.
+ Las fases se autocompletan una vez todos los partidos de la fase anterior
  han sido finalizados.
  Permite además guardar el progreso como imagen para su posterior impresión.
 \end_layout
@@ -2831,7 +2887,7 @@ puntuaciones
 
 (grupo): esta opción mostrará un listado de los equipos que actualmente
  estén compitiendo en el grupo actual.
- Mostrando los combates ganados y empatados, tanto por equipos como de forma
+ Mostrando los partidos ganados y empatados, tanto por equipos como de forma
  individual.
  Así como los puntos realizados.
  Además, los equipos aparecen ordenados por puntuación, lo que significa
@@ -2935,7 +2991,7 @@ equipos: un listado con todos los equipos e integrantes que participan en
 status open
 
 \begin_layout Plain Layout
-combates, lista
+partidos, lista
 \end_layout
 
 \end_inset
@@ -2948,9 +3004,9 @@ de
 \begin_inset space ~
 \end_inset
 
-combates: listado con todos los combates ya definidos en la liga.
+partidos: listado con todos los partidos ya definidos en la liga.
  De esta forma si no existe un proyector y no pueden ver los marcadores,
- al menos pueden conocer el orden de los combates para estar preparados
+ al menos pueden conocer el orden de los partidos para estar preparados
  cuando sea su turno.
  
 \end_layout
@@ -2998,7 +3054,7 @@ punto de oro
 status open
 
 \begin_layout Plain Layout
-combates, resumen
+partidos, resumen
 \end_layout
 
 \end_inset
@@ -3011,7 +3067,7 @@ de
 \begin_inset space ~
 \end_inset
 
-combates: genera un resumen de todos los combates incluyendo los golpes
+partidos: genera un resumen de todos los partidos incluyendo los golpes
  que ha realizado cada uno de los competidores.
  
 \end_layout
@@ -3021,7 +3077,7 @@ combates: genera un resumen de todos los combates incluyendo los golpes
 status open
 
 \begin_layout Plain Layout
-combates, ficha
+partidos, ficha
 \end_layout
 
 \end_inset
@@ -3034,7 +3090,7 @@ de
 \begin_inset space ~
 \end_inset
 
-combates: similar a la opción anterior, pero los combates aparecerán en
+partidos: similar a la opción anterior, pero los partidos aparecerán en
  blanco.
  Permite hacer un seguimiento manual de la liga, en el que una persona puede
  ir apuntando los puntos que marcan los árbitros.
@@ -3336,7 +3392,7 @@ Autoguardado: permite seleccionar distintas opciones de autoguardado.
  Si se selecciona el autoguardado por tiempo, la nueva información se almacenará
  de forma automática cada veinte minutos.
  Si en cambio se selecciona el autoguardado por acción, cada vez que se
- introduzca algún cambio (nuevo competidor, un punto en un combate, ...) se
+ introduzca algún cambio (nuevo competidor, un punto en un partido, ...) se
  almacenará en la base de datos.
  
 \end_layout
@@ -3439,7 +3495,7 @@ Crear los distintos equipos y sus componentes.
 \end_layout
 
 \begin_layout Enumerate
-Definir el estilo de la liga y con ello los combates entre equipos.
+Definir el estilo de la liga y con ello los partidos entre equipos.
 \end_layout
 
 \begin_layout Enumerate
@@ -3485,7 +3541,7 @@ El uso avanzado de la aplicación permite utilizar distintos computadores
  accediendo a la base de datos a la vez.
  Esto permite poder colocar un ordenador en cada uno de los shiaijos de
  forma que la persona que lo maneje se tenga que centrar solamente en su
- zona de combate y olvidarse de las demás.
+ zona de partido y olvidarse de las demás.
  Para ello, simplemente hay que instalar la base de datos 
 \begin_inset Index idx
 status open
@@ -4113,7 +4169,7 @@ Para la gestión de este campeonato, se utilizaron cuatro equipos portátiles.
  las acreditaciones o la composición de los equipos.
  Los otros tres equipos estaban cada uno en una mesa de control de los shiaijos.
  Estos tres equipos, se encargaban de introducir la puntuación de cada uno
- de los combates según estos se iban realizando.
+ de los partidos según estos se iban realizando.
  
 \end_layout
 
@@ -4136,7 +4192,7 @@ Wi-Fi, evitando así la presencia de cables innecesarios.
 \begin_layout Standard
 La idea original, era tener cuatro pantallas para mostrar los resultados.
  Tres pantallas en cada uno de los shiaijos, que mostraran los resultados
- del combate actual a los árbitros y/o al público, y otra pantalla que mostrará
+ del partido actual a los árbitros y/o al público, y otra pantalla que mostrará
  la evolución del árbol de la liga al público o las puntuaciones de cada
  uno de todos los shiaijos.
  Para mostrar estas pantallas, debían de haber, u otros cuatro equipos en
@@ -4165,7 +4221,7 @@ Los otros tres equipos indican los datos de forma similar, salvo que el
 \begin_layout Standard
 
 \emph on
-Nota: los combates deben ser guardados una vez creados para que puedan ser
+Nota: los partidos deben ser guardados una vez creados para que puedan ser
  vistos por los demás ordenadores.
  Recuerda guardar el torneo una vez generado.
  

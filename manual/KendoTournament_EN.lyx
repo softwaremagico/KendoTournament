@@ -106,7 +106,7 @@ LatexCommand tableofcontents
 status open
 
 \begin_layout Plain Layout
-What's new
+what's new
 \end_layout
 
 \end_inset
@@ -148,6 +148,19 @@ Autosave: new options for autosaving.
  
 \end_layout
 
+\begin_layout Description
+Monitor: new functionality that allows the use of a projector to display
+ the score of a championship.
+ More info in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section*
 v1.1.0
 \end_layout
@@ -175,7 +188,7 @@ Personalized
 \end_inset
 
 Championship: new option for creating a completly custom championship.
- User can add any fight and therefore, any kind of tournament or league
+ User can add any match and therefore, any kind of tournament or league
  can be represented.
  More info in section 
 \begin_inset CommandInset ref
@@ -987,7 +1000,7 @@ role
 
 role of a participant is what he does into the league.
  When inserting a new competitor, we store basic information such as the
- name or ID number, but it does not means that the participant fights is
+ name or ID number, but it does not means that the participant matchs is
  in a team of the league.
  There are different roles available into the league:
 \end_layout
@@ -1003,7 +1016,7 @@ competitor
 \end_inset
 
 Competitor: a competitor is who will be a member of a team.
- Therefore, he will fights in the league to achieve the victory.
+ Therefore, he will matchs in the league to achieve the victory.
  Only competitors can be a member of a team.
  
 \end_layout
@@ -1018,7 +1031,7 @@ referee
 
 \end_inset
 
-Referee: the person who controls the fights development.
+Referee: the person who controls the matchs development.
  
 \end_layout
 
@@ -1480,19 +1493,19 @@ over
 \begin_inset space ~
 \end_inset
 
-draws: in the case of same number of winned fights, the team with more winned
- duels will win.
- In a case of the same number of winned duels, the team with more hits will
- win.
+draws: in the case of same number of winned matchs, the team with more winned
+ fights will win.
+ In a case of the same number of winned fights, the team with more hits
+ will win.
  If there still a tie, the team that will pass will be the one with more
  draw combats, because it is considered more valuable a draw than a loss.
  
 \end_layout
 
 \begin_layout Description
-European: in the case of same number of winned fights, the team with more
- draw fights will be prevail over the one with less draw fights.
- In a case of a tie, the same behaviour with the duels, if also there is
+European: in the case of same number of winned matchs, the team with more
+ draw matchs will be prevail over the one with less draw matchs.
+ In a case of a tie, the same behaviour with the fights, if also there is
  a tie, then the team with more hits will win.
  This is the score rules used in the European Kendo Championships.
  
@@ -1569,14 +1582,14 @@ league, simple
 
 \end_inset
 
- is a league where all teams fights one among each other.
- The winner will be the team with most won fights.
+ is a league where all teams matchs one among each other.
+ The winner will be the team with most won matchs.
  
 \end_layout
 
 \begin_layout Standard
 User can define any combination between different teams, or can use the
- pre-existent options to define all fights.
+ pre-existent options to define all matchs.
  
 \end_layout
 
@@ -1615,9 +1628,9 @@ Simple league.
 \end_layout
 
 \begin_layout Standard
-Exists a button to create random fights.
- If it is clicked, a fight list will be generated.
- Each team will fight for two consecutive fights.
+Exists a button to create random matchs.
+ If it is clicked, a match list will be generated.
+ Each team will match for two consecutive matchs.
  As usual in kendo.
  
 \end_layout
@@ -1628,7 +1641,7 @@ Other button has a similar behaviour, but the teams will be selected by
 \end_layout
 
 \begin_layout Standard
-Fights will not be created until the button 
+Matchs will not be created until the button 
 \emph on
 Accept
 \emph default
@@ -1639,7 +1652,7 @@ Accept
 \emph on
 Accept
 \emph default
- button is pressed, all previous fights will be 
+ button is pressed, all previous matchs will be 
 \begin_inset Index idx
 status open
 
@@ -1669,12 +1682,12 @@ Round-Robin Leagues or Ring Leagues
 \begin_layout Standard
 We call round-robin league or ring league is the one in which a team competes
  in a successive way with each other without resting.
- This way, each of the teams will fights against the other teams in a successive
+ This way, each of the teams will matchs against the other teams in a successive
  way, trying to distribute their strengths in different matches.
  Although is not an official league system, it is very useful in training
  and it is why is included in the program.
  For using this modality, it is recommended that the participants with more
- experience fight earlier, saying, being in higher positions in the list.
+ experience match earlier, saying, being in higher positions in the list.
  In this window, the user only need to select the order in which the teams
  will enter the shiaijo and the program will calculate all the matches keeping
  that order.
@@ -1885,7 +1898,7 @@ custom championship
 
 \end_inset
 
-custom championship
+Custom championship
 \end_layout
 
 \begin_layout Standard
@@ -2077,7 +2090,7 @@ name "sub:Custom"
 status open
 
 \begin_layout Plain Layout
-Custom
+custom
 \end_layout
 
 \end_inset
@@ -2092,10 +2105,10 @@ This option allows the creation of any kind of championship or league by
 \end_layout
 
 \begin_layout Standard
-With this option, the user can add any fight without restrictions.
- A pop-up window will ask the user for the new fight configuration: which
+With this option, the user can add any match without restrictions.
+ A pop-up window will ask the user for the new match configuration: which
  team will face another one.
- The created fight will be added automatically to the Scoreboard (Section
+ The created match will be added automatically to the Scoreboard (Section
  
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -2104,8 +2117,8 @@ reference "sec:Marcador-de-la"
 \end_inset
 
 ).
- Each time all fights are over, the pop-up window will appear again asking
- for a new fight to be added.
+ Each time all matchs are over, the pop-up window will appear again asking
+ for a new match to be added.
  
 \end_layout
 
@@ -2448,7 +2461,7 @@ Options in the different upper menu.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Paragraph
 In the 
 \emph on
 Windows
@@ -2516,11 +2529,49 @@ colours: similar to the previous option, allows to exchange the colour of
 \end_layout
 
 \begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+monitor
+\end_layout
+
+\end_inset
+
+Monitor: the basic function of the monitors is to use them with a projector
+ and show them to the audience and, this way, they could see how the league
+ or championship is going.
+ The best way to use those options is having a computer connected exclusively
+ to the 
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+MySQL
+\end_layout
+
+\end_inset
+
+MySQL database via network and to a project visible to the audience.
+ This screen shows the matches that are currently disputing, displaying
+ the teams matching and the score of that match.
+ Each 10 seconds, the screen will change for displaying the different shiaijo.
+ This way, with only one projector you can display the entire league.
+ This window is not interactive, that is you cannot modify any result from
+ this screen, avoiding any mistake.
+ Obviously, there is no inconvenient to connect more projectors in order
+ to display any information.
+ This feature can be protected by a password, to asure that nobody use an
+ unattended computer.
+ 
+\end_layout
+
+\begin_layout Description
 Exit: close the window.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Paragraph*
 
 \emph on
 Options
@@ -2565,7 +2616,17 @@ team: it is possible to change the team's member order.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Description
+Add/remove
+\begin_inset space ~
+\end_inset
+
+match: only for custom and simple leagues.
+ Allows to manually add new matchs.
+ 
+\end_layout
+
+\begin_layout Paragraph
 
 \emph on
 Show
@@ -3708,8 +3769,8 @@ The other three computers will have the same information, unless the server
 \begin_layout Standard
 
 \emph on
-Note: fights must be saved before created to be seen by the others computes.
- Remember to save the fights when created.
+Note: matchs must be saved before created to be seen by the others computes.
+ Remember to save the matchs when created.
  
 \end_layout
 
