@@ -1091,11 +1091,19 @@
 	<FightArea>
 		<en>Shiaijo:</en>
 		<es>Shiaijo:</es>
-		<nl>Wedstrijdveld</nl>
+		<nl>Wedstrijdveld:</nl>
 		<de>Shiaijo:</de>
 		<ca>Shiaijo:</ca>
 		<it>Shiaijo:</it>
 	</FightArea>
+	<FightAreaNoDots>
+		<en>Shiaijo</en>
+		<es>Shiaijo</es>
+		<nl>Wedstrijdveld</nl>
+		<de>Shiaijo</de>
+		<ca>Shiaijo</ca>
+		<it>Shiaijo</it>
+	</FightAreaNoDots>
 	<deleteFights>
 		<en>Do you want to remove the previous generated matchs?</en>
 		<es>¿Quieres eliminar los partidos previamente creados?</es>

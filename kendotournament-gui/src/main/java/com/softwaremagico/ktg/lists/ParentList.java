@@ -119,7 +119,7 @@ public abstract class ParentList extends PdfDocument {
      * @return
      */
     public PdfPCell getHeader1(String text, int border) {
-        return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 8);
+        return getHeader(text, border, Element.ALIGN_CENTER, fontSize + 10);
     }
 
     /**
@@ -131,7 +131,7 @@ public abstract class ParentList extends PdfDocument {
      * @return
      */
     public PdfPCell getHeader1(String text, int border, int align) {
-        return getHeader(text, border, align, fontSize + 8);
+        return getHeader(text, border, align, fontSize + 10);
     }
 
     /**
