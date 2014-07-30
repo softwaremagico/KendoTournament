@@ -40,8 +40,6 @@ import java.util.Locale;
  * Base clase to manage the core of the software.
  */
 public class KendoTournamentGenerator {
-
-    private final static String VERSION = "1.2.0";
     private static KendoTournamentGenerator kendoTournament = null;
     private static boolean debugMode = true;
     private static AutoSaveOption autosave = AutoSaveOption.BY_TIME;
@@ -125,10 +123,6 @@ public class KendoTournamentGenerator {
             }
         }
         return teams;
-    }
-
-    public String getVersion() {
-        return VERSION;
     }
 
     public String getLanguage() {

@@ -1,38 +1,56 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>kendo-tournament-manager-core</artifactId>
-    <packaging>jar</packaging>
-    <name>Kendo Tournament Manager Core</name>
-	
-    <parent>
-        <groupId>com.softwaremagico</groupId>
-        <artifactId>kendo-tournament-manager</artifactId>
-        <version>1.2.1</version>
-    </parent>
-    
-    <properties>
-        <mysql-connector.version>5.1.25</mysql-connector.version>
-        <itext.version>5.4.4</itext.version>        
-    </properties>
-  
-    <dependencies>
-	<dependency>
-		<groupId>org.xerial</groupId>
-		<artifactId>sqlite-jdbc</artifactId>
-		<version>3.7.2</version>
-	</dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql-connector.version}</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>com.itextpdf</groupId>
-            <artifactId>itextpdf</artifactId>
-            <version>${itext.version}</version>
-            <type>jar</type>
-        </dependency>
-    </dependencies>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>kendo-tournament-manager-core</artifactId>
+	<packaging>jar</packaging>
+	<name>Kendo Tournament Manager Core</name>
+
+	<parent>
+		<groupId>com.softwaremagico</groupId>
+		<artifactId>kendo-tournament-manager</artifactId>
+		<version>1.2.1</version>
+	</parent>
+
+	<properties>
+		<mysql-connector.version>5.1.25</mysql-connector.version>
+		<itext.version>5.4.4</itext.version>
+	</properties>
+
+	<build>
+		<finalName>KendoTournamentManager</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Implementation-Version>${project.parent.version}</Implementation-Version>
+						</manifestEntries>
+					</archive>
+				</configuration>
+				<version>2.4</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-connector.version}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>${itext.version}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
 </project>

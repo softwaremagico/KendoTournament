@@ -23,10 +23,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -34,9 +30,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class AboutBox extends javax.swing.JFrame {
+import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.files.Version;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.language.Translator;
 
-    private PanelBackground logo;
+public final class AboutBox extends javax.swing.JFrame {
+	private static final long serialVersionUID = 7071161655693525810L;
+	private PanelBackground logo;
     Translator trans = null;
 
     /**
@@ -45,7 +46,7 @@ public final class AboutBox extends javax.swing.JFrame {
     public AboutBox() {
         initComponents();
         setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
-        VersionLabel.setText("v" + KendoTournamentGenerator.getInstance().getVersion() + " ");
+        VersionLabel.setText("v" + Version.getVersion() + " ");
         setLanguage();
         UpdateLogo();
     }
