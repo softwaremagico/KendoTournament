@@ -20,6 +20,7 @@
 		<finalName>KendoTournamentManager</finalName>
 		<plugins>
 			<plugin>
+				<!-- Add version number to core jar -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
