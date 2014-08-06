@@ -1,11 +1,12 @@
 package com.softwaremagico.ktg.persistence;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;

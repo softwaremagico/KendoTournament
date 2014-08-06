@@ -24,7 +24,6 @@ package com.softwaremagico.ktg.gui.fight;
  * #L%
  */
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KFrame;
@@ -34,6 +33,7 @@ import com.softwaremagico.ktg.gui.base.TeamComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;

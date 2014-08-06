@@ -29,7 +29,6 @@ import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
@@ -37,7 +36,9 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -23,8 +23,10 @@ package com.softwaremagico.ktg.core;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.DuelPool;
 import com.softwaremagico.ktg.persistence.FightPool;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

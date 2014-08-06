@@ -28,6 +28,8 @@ package com.softwaremagico.ktg.core;
 
 import com.softwaremagico.ktg.files.Folder;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.io.File;
 import java.io.IOException;
 

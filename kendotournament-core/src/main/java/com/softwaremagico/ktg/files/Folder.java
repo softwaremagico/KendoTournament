@@ -25,7 +25,8 @@ package com.softwaremagico.ktg.files;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;

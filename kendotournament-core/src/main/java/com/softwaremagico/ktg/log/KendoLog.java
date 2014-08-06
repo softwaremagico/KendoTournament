@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.core;
+package com.softwaremagico.ktg.log;
 
 /*
  * #%L
@@ -25,9 +25,11 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;

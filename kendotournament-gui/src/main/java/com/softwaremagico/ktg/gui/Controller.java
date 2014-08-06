@@ -26,7 +26,6 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
@@ -51,6 +50,7 @@ import com.softwaremagico.ktg.lists.RefereeList;
 import com.softwaremagico.ktg.lists.SelectTournamentForCompetitorPointList;
 import com.softwaremagico.ktg.lists.SummaryList;
 import com.softwaremagico.ktg.lists.TeamList;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.DatabaseEngine;
 import com.softwaremagico.ktg.persistence.FightPool;
@@ -58,6 +58,7 @@ import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.statistics.*;
 import com.softwaremagico.ktg.tournament.TournamentType;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -69,6 +70,7 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 

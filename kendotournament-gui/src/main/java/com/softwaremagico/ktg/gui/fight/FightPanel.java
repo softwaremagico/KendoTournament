@@ -50,7 +50,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
@@ -71,6 +70,7 @@ import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.DownButton;
 import com.softwaremagico.ktg.gui.base.buttons.UpButton;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;

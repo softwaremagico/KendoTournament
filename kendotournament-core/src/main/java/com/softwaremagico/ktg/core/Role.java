@@ -25,7 +25,9 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.RolePool;
+
 import java.sql.SQLException;
 
 /**

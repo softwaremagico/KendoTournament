@@ -23,7 +23,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Role;
@@ -34,6 +33,7 @@ import com.softwaremagico.ktg.gui.base.RolesMenu;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.persistence.RolePool;

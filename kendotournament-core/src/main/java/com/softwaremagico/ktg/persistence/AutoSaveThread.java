@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.persistence;
 
-import com.softwaremagico.ktg.core.KendoLog;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.sql.SQLException;
 
 public class AutoSaveThread extends Thread {

@@ -26,7 +26,9 @@ package com.softwaremagico.ktg.core;
  * #L%
  */
 
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.PhotoPool;
+
 import java.sql.SQLException;
 import java.text.Collator;
 import java.util.Locale;

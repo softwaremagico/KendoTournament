@@ -27,11 +27,14 @@ package com.softwaremagico.ktg.core;
  */
 
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import javax.imageio.ImageIO;
 
 public enum Score {

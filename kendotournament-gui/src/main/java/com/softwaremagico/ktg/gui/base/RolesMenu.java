@@ -25,15 +25,17 @@ package com.softwaremagico.ktg.gui.base;
  */
 
 
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 import com.softwaremagico.ktg.gui.NewRole;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.RolePool;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

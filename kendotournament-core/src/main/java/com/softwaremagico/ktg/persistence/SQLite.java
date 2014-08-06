@@ -26,8 +26,9 @@ package com.softwaremagico.ktg.persistence;
  * #L%
  */
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
-import com.softwaremagico.ktg.core.KendoLog;
 import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.log.KendoLog;
+
 import java.io.*;
 import java.sql.*;
 import java.util.logging.Level;
