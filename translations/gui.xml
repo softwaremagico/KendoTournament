@@ -1289,20 +1289,20 @@
 		<it>Partecipanti</it>
 	</PlayerTopTen>
 	<WonFights>
-		<en>Won matchs</en>
-		<es>Partidos ganados</es>
+		<en>Won fights</en>
+		<es>Combates ganados</es>
 		<nl>Gewonnen wedstrijden</nl>
-		<de>Gewonnene Kämpfe</de>
-		<ca>Partits guanyats</ca>
-		<it>Incontri vinti</it>
+		<de>Gewonnene Duelle</de>
+		<ca>Combats guanyats</ca>
+		<it>Duelli vinti</it>
 	</WonFights>
 	<DrawFights>
-		<en>Draw matchs</en>
-		<es>Partidos empatados</es>
+		<en>Draw fights</en>
+		<es>Combates empatados</es>
 		<nl>Gelijke wedstrijden</nl>
-		<de>Unentschiedene Kämpfe</de>
-		<ca>Partits empatats</ca>
-		<it>Incontri pareggiati</it>
+		<de>Unentschiedene Duelle</de>
+		<ca>Combats empatats</ca>
+		<it>Duelli pareggiati</it>
 	</DrawFights>
 	<WonMatchs>
 		<en>Won matches</en>
