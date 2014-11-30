@@ -118,6 +118,8 @@ Version:
 		User now is alerted if he is trying to change a team order from other shiaijo. 
 		Now autosave options.
 		Monitor added. 
+
+1.2.1   Minor bugs fixed. 
 		
 1.3.0	[Planned] Kachinuki league mode.
 

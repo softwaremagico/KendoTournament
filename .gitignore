@@ -18,3 +18,6 @@ target
 project.properties
 output.log
 KendoTournamentManager.zip
+kendo-tournament-manager-*.deb
+kendo-tournament-manager-*.exe
+kendo-tournament-manager-*.zip
