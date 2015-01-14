@@ -17,7 +17,6 @@
 	</properties>
 
 	<build>
-		<finalName>KendoTournamentManager</finalName>
 		<plugins>
 			<plugin>
 				<!-- Add version number to core jar -->
