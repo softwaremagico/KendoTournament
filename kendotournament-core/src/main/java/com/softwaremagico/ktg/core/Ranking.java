@@ -34,6 +34,7 @@ import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
 import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
 import com.softwaremagico.ktg.tournament.ScoreOfCompetitorCustom;
 import com.softwaremagico.ktg.tournament.ScoreOfCompetitorEuropean;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitorInternational;
 import com.softwaremagico.ktg.tournament.ScoreOfCompetitorWinOverDraws;
 import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.tournament.ScoreType;
@@ -223,6 +224,13 @@ public class Ranking {
 		for (Fight fight : fights) {
 			if (fight.getTournament().getTournamentScore().getScoreType().equals(ScoreType.EUROPEAN)) {
 				return new ScoreOfCompetitorEuropean(competitor, fights);
+			}
+		}
+
+		// If one fight is european, use european comparation
+		for (Fight fight : fights) {
+			if (fight.getTournament().getTournamentScore().getScoreType().equals(ScoreType.INTERNATIONAL)) {
+				return new ScoreOfCompetitorInternational(competitor, fights);
 			}
 		}
 

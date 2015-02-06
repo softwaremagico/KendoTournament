@@ -63,6 +63,7 @@ public class ChooseScore extends javax.swing.JFrame {
         WinOverDrawsRadioButton.setText(trans.getTranslatedText("WinOverDrawsRadioButton"));
         CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
         EuropeanRadioButton.setText(trans.getTranslatedText("EuropeanRadioButton"));
+        InternationalRadioButton.setText(trans.getTranslatedText("InternationlRadioButton"));
         WinLabel.setText(trans.getTranslatedText("WinTag"));
         DrawLabel.setText(trans.getTranslatedText("DrawTag"));
         HierarchicalDrawLabel.setText(trans.getTranslatedText("HierarchicalDrawTag"));
@@ -78,6 +79,8 @@ public class ChooseScore extends javax.swing.JFrame {
                 return CustomRadioButton;
             case EUROPEAN:
                 return EuropeanRadioButton;
+            case INTERNATIONAL:
+            	return InternationalRadioButton;
             case CLASSIC:
                 return ClassicRadioButton;
             case WIN_OVER_DRAWS:
@@ -115,6 +118,9 @@ public class ChooseScore extends javax.swing.JFrame {
         }
         if (EuropeanRadioButton.isSelected()) {
             return ScoreType.EUROPEAN;
+        }
+        if (InternationalRadioButton.isSelected()) {
+            return ScoreType.INTERNATIONAL;
         }
         if (ClassicRadioButton.isSelected()) {
             return ScoreType.CLASSIC;
