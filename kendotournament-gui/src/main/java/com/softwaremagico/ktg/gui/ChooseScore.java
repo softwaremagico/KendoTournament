@@ -62,7 +62,6 @@ public class ChooseScore extends javax.swing.JFrame {
         ClassicRadioButton.setText(trans.getTranslatedText("ClassicRadioButton"));
         WinOverDrawsRadioButton.setText(trans.getTranslatedText("WinOverDrawsRadioButton"));
         CustomRadioButton.setText(trans.getTranslatedText("CustomRadioButton"));
-        EuropeanRadioButton.setText(trans.getTranslatedText("EuropeanRadioButton"));
         InternationalRadioButton.setText(trans.getTranslatedText("InternationlRadioButton"));
         WinLabel.setText(trans.getTranslatedText("WinTag"));
         DrawLabel.setText(trans.getTranslatedText("DrawTag"));
@@ -77,8 +76,6 @@ public class ChooseScore extends javax.swing.JFrame {
         switch (scoreType) {
             case CUSTOM:
                 return CustomRadioButton;
-            case EUROPEAN:
-                return EuropeanRadioButton;
             case INTERNATIONAL:
             	return InternationalRadioButton;
             case CLASSIC:
@@ -116,7 +113,7 @@ public class ChooseScore extends javax.swing.JFrame {
         if (CustomRadioButton.isSelected()) {
             return ScoreType.CUSTOM;
         }
-        if (EuropeanRadioButton.isSelected()) {
+        if (InternationalRadioButton.isSelected()) {
             return ScoreType.EUROPEAN;
         }
         if (InternationalRadioButton.isSelected()) {
@@ -147,8 +144,8 @@ public class ChooseScore extends javax.swing.JFrame {
         try {
             List<Tournament> listTournaments = TournamentPool.getInstance().getSorted();
             try {
-                for (int i = 0; i < listTournaments.size(); i++) {
-                    TournamentComboBox.addItem(listTournaments.get(i));
+                for (Tournament listTournament : listTournaments) {
+                    TournamentComboBox.addItem(listTournament);
                 }
                 TournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
             } catch (NullPointerException npe) {
@@ -183,7 +180,7 @@ public class ChooseScore extends javax.swing.JFrame {
         DrawLabel = new javax.swing.JLabel();
         InternationalUndrawLabel = new javax.swing.JLabel();
         DrawSpinner = new javax.swing.JSpinner();
-        EuropeanRadioButton = new javax.swing.JRadioButton();
+        InternationalRadioButton = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         HierarchicalDrawLabel = new javax.swing.JLabel();
         ClassicRadioButton = new javax.swing.JRadioButton();
@@ -244,9 +241,9 @@ public class ChooseScore extends javax.swing.JFrame {
             }
         });
 
-        ScoreGroup.add(EuropeanRadioButton);
-        EuropeanRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
-        EuropeanRadioButton.setText("European");
+        ScoreGroup.add(InternationalRadioButton);
+        InternationalRadioButton.setFont(new java.awt.Font("Ubuntu", 1, 14)); // NOI18N
+        InternationalRadioButton.setText("International");
 
         jLabel1.setText("1");
 
@@ -272,7 +269,7 @@ public class ChooseScore extends javax.swing.JFrame {
                     .addGroup(ScorePanelLayout.createSequentialGroup()
                         .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(WinOverDrawsRadioButton)
-                            .addComponent(EuropeanRadioButton)
+                            .addComponent(InternationalRadioButton)
                             .addComponent(CustomRadioButton))
                         .addGap(100, 100, 100)
                         .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,7 +312,7 @@ public class ChooseScore extends javax.swing.JFrame {
                     .addComponent(InternationalUndrawLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(ScorePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EuropeanRadioButton)
+                    .addComponent(InternationalRadioButton)
                     .addComponent(jLabel1)
                     .addComponent(HierarchicalDrawLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -451,8 +448,8 @@ public class ChooseScore extends javax.swing.JFrame {
     private javax.swing.JRadioButton CustomRadioButton;
     private javax.swing.JLabel DrawLabel;
     private javax.swing.JSpinner DrawSpinner;
-    private javax.swing.JRadioButton EuropeanRadioButton;
     private javax.swing.JLabel HierarchicalDrawLabel;
+    private javax.swing.JRadioButton InternationalRadioButton;
     private javax.swing.JLabel InternationalUndrawLabel;
     private javax.swing.ButtonGroup ScoreGroup;
     private javax.swing.JPanel ScorePanel;

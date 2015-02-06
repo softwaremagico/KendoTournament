@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.2.0
+v1.2.1
 \end_layout
 
 \begin_layout Author
@@ -1616,7 +1616,7 @@ empates: los partidos empatados únicamente tendrán valor si el número de
 \end_layout
 
 \begin_layout Description
-Europeo: en el que en caso de que dos equipos hayan 
+Internacional: en el que en caso de que dos equipos hayan 
 \begin_inset Index idx
 status open
 
@@ -1629,10 +1629,9 @@ empate
 empatado según sus partidos ganados, prevalecerá aquel que tenga un mayor
  número de partidos empatados, ya que se considera que estos puntúan más
  que los perdidos.
- En caso de empate, se contabilizarán los combates siguiendo la misma regla
- y en caso de empate, los golpes dados.
- Este es el sistema de puntuación utilizado por la Federación Europea de
- Kendo.
+ En caso de empate, se contabilizarán únicamente los combates ganados y
+ en caso de empate nuevamente, los golpes dados.
+ Este es el sistema de puntuación utilizado en el mundial de kendo.
  
 \end_layout
 

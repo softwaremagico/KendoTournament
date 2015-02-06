@@ -13,6 +13,7 @@
                 <include name="scoreTest" />
                 <include name="customScoreTest" />
                 <include name="europeanChampionshipTest" />
+                <include name="internationalChampionshipTest" />
                 <include name="changeMemberOrderTest" />  
                 <exclude name="databaseStore" />
             </run>
@@ -28,6 +29,7 @@
             <class name="com.softwaremagico.ktg.persistence.ChangeMemberOrderTest" />
             <class name="com.softwaremagico.ktg.persistence.ScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.EuropeanScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.InternationalScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.CustomScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.DatabaseStore" />
         </classes>

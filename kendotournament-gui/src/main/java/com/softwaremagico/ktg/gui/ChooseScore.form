@@ -12,6 +12,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
@@ -129,7 +130,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="WinOverDrawsRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="EuropeanRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="InternationalRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="CustomRadioButton" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
@@ -180,7 +181,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="EuropeanRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="InternationalRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="HierarchicalDrawLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -260,7 +261,7 @@
                 <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="DrawSpinnerStateChanged"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="EuropeanRadioButton">
+            <Component class="javax.swing.JRadioButton" name="InternationalRadioButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="ScoreGroup"/>
@@ -268,7 +269,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Ubuntu" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="European"/>
+                <Property name="text" type="java.lang.String" value="International"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">

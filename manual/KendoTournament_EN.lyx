@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.2.0
+v1.2.1
 \end_layout
 
 \begin_layout Author
@@ -1503,11 +1503,11 @@ draws: in the case of same number of winned matchs, the team with more winned
 \end_layout
 
 \begin_layout Description
-European: in the case of same number of winned matchs, the team with more
+International: in the case of same number of won matchs, the team with more
  draw matchs will be prevail over the one with less draw matchs.
- In a case of a tie, the same behaviour with the fights, if also there is
- a tie, then the team with more hits will win.
- This is the score rules used in the European Kendo Championships.
+ In a case of a tie, the team with more won fights will pass, if also there
+ is a tie, then the team with more hits will win.
+ This is the score rules used in the International Kendo Championships.
  
 \end_layout
 

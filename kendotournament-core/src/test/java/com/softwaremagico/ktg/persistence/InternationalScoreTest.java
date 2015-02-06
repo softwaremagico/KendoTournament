@@ -20,15 +20,15 @@ import java.sql.SQLException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-@Test(groups = {"europeanChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
-public class EuropeanScoreTest {
+@Test(groups = {"internationalChampionshipTest"}, dependsOnGroups = {"populateDatabase"})
+public class InternationalScoreTest {
 
     private static final Integer MEMBERS = 3;
     private static final Integer TEAMS_PER_GROUP = 4;
     private static final Integer GROUPS = 2;
-    public static final String TOURNAMENT_NAME = "europeanChampionshipTest";
+    public static final String TOURNAMENT_NAME = "internationalChampionshipTest";
     private static Tournament tournament = null;
-    private static final ScoreType SCORE_TYPE = ScoreType.EUROPEAN;
+    private static final ScoreType SCORE_TYPE = ScoreType.INTERNATIONAL;
 
     @Test
     public void addTournament() throws SQLException {
@@ -44,7 +44,7 @@ public class EuropeanScoreTest {
             RolePool.getInstance().add(
                     tournament,
                     new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false,
-                            false));
+                    false));
         }
         Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length
                 * PopulateDatabase.competitors.length);
@@ -127,9 +127,11 @@ public class EuropeanScoreTest {
             groupTest.getFights().get(1).getDuels().get(0).setHit(true, 0, Score.MEN);
             groupTest.getFights().get(1).getDuels().get(0).setHit(true, 1, Score.MEN);
             groupTest.getFights().get(1).getDuels().get(1).setHit(false, 0, Score.MEN);
+            //Team3 vs Team4
             //Team1 vs Team4
             groupTest.getFights().get(3).getDuels().get(0).setHit(false, 0, Score.MEN);
-
+            
+            
             //Total Team1 0/1M 2F 2H
             //Total Team2 0/0M 0F 0H
             //Total Team3 1/1M 1/1F 2H
@@ -139,11 +141,11 @@ public class EuropeanScoreTest {
         for (Fight fight : FightPool.getInstance().get(tournament)) {
             fight.setOver(true);
         }
-        //Team01 has more duels won, but less draw fights than team3 and team4.
+        //Team01 has more duels won, but less draw fights.
         //Tam03 has less draw duels but more hits than team4. In International, win Team03
         TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().get(0);
         Ranking ranking1 = new Ranking(group1.getFights());
-        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team04")));
-        Assert.assertTrue(ranking1.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team03")));
+        Assert.assertTrue(ranking1.getTeam(0).equals(TeamPool.getInstance().get(tournament, "Team03")));
+        Assert.assertTrue(ranking1.getTeam(1).equals(TeamPool.getInstance().get(tournament, "Team04")));
     }
 }
