@@ -107,13 +107,13 @@ public class Duel implements Comparable<Duel> {
     public boolean isOver() {
         int pointA = 0;
         int pointB = 0;
-        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-            if (Score.isValidPoint(hitsFromCompetitorA.get(i))) {
+        for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+            if (Score.isValidPoint(hitsFromCompetitorA1)) {
                 pointA++;
             }
         }
-        for (int i = 0; i < hitsFromCompetitorB.size(); i++) {
-            if (Score.isValidPoint(hitsFromCompetitorB.get(i))) {
+        for (Score hitsFromCompetitorB1 : hitsFromCompetitorB) {
+            if (Score.isValidPoint(hitsFromCompetitorB1)) {
                 pointB++;
             }
         }
@@ -270,16 +270,16 @@ public class Duel implements Comparable<Duel> {
     public Integer getScore(boolean firstTeamPlayer) {
         int round = 0;
         if (firstTeamPlayer) {
-            for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-                if (!hitsFromCompetitorA.get(i).equals(Score.EMPTY)) {
+            for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+                if (!hitsFromCompetitorA1.equals(Score.EMPTY)) {
                     round++;
                 } else {
                     return round;
                 }
             }
         } else {
-            for (int i = 0; i < hitsFromCompetitorB.size(); i++) {
-                if (!hitsFromCompetitorB.get(i).equals(Score.EMPTY)) {
+            for (Score hitsFromCompetitorB1 : hitsFromCompetitorB) {
+                if (!hitsFromCompetitorB1.equals(Score.EMPTY)) {
                     round++;
                 } else {
                     return round;
@@ -295,16 +295,16 @@ public class Duel implements Comparable<Duel> {
      * @return -1 if player of first team, 0 if draw, 1 if player of second
      * tiem.
      */
-    public int winner() {
+    public int winner() {        
         int pointA = 0;
         int pointB = 0;
-        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-            if (Score.isValidPoint(hitsFromCompetitorA.get(i))) {
+        for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+            if (Score.isValidPoint(hitsFromCompetitorA1)) {
                 pointA++;
             }
         }
-        for (int i = 0; i < hitsFromCompetitorB.size(); i++) {
-            if (Score.isValidPoint(hitsFromCompetitorB.get(i))) {
+        for (Score hitsFromCompetitorB1 : hitsFromCompetitorB) {
+            if (Score.isValidPoint(hitsFromCompetitorB1)) {
                 pointB++;
             }
         }
@@ -320,13 +320,13 @@ public class Duel implements Comparable<Duel> {
 
     private int getHits(Score sc) {
         int count = 0;
-        for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-            if (hitsFromCompetitorA.get(i).equals(sc)) {
+        for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+            if (hitsFromCompetitorA1.equals(sc)) {
                 count++;
             }
         }
-        for (int i = 0; i < hitsFromCompetitorB.size(); i++) {
-            if (hitsFromCompetitorB.get(i).equals(sc)) {
+        for (Score hitsFromCompetitorB1 : hitsFromCompetitorB) {
+            if (hitsFromCompetitorB1.equals(sc)) {
                 count++;
             }
         }
@@ -360,14 +360,14 @@ public class Duel implements Comparable<Duel> {
     private int getHits(Score sc, boolean firstTeamPlayer) {
         int count = 0;
         if (firstTeamPlayer) {
-            for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-                if (hitsFromCompetitorA.get(i).equals(sc)) {
+            for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+                if (hitsFromCompetitorA1.equals(sc)) {
                     count++;
                 }
             }
         } else {
-            for (int i = 0; i < hitsFromCompetitorB.size(); i++) {
-                if (hitsFromCompetitorB.get(i).equals(sc)) {
+            for (Score hitsFromCompetitorB1 : hitsFromCompetitorB) {
+                if (hitsFromCompetitorB1.equals(sc)) {
                     count++;
                 }
             }
@@ -446,7 +446,6 @@ public class Duel implements Comparable<Duel> {
      *
      * @param firstTeamPlayer true will choose the player of the first team,
      * false will choose the player of the second team.
-     * @return
      */
     public void completeIppons(boolean firstTeamPlayer) {
         setResultInRound(0, Score.IPPON, firstTeamPlayer);
@@ -460,8 +459,8 @@ public class Duel implements Comparable<Duel> {
         String text = "";
         if (memberA != null) {
             text += memberA.getShortSurnameName(10) + " (";
-            for (int i = 0; i < hitsFromCompetitorA.size(); i++) {
-                text += (hitsFromCompetitorA.get(i).getAbbreviation());
+            for (Score hitsFromCompetitorA1 : hitsFromCompetitorA) {
+                text += (hitsFromCompetitorA1.getAbbreviation());
             }
         } else {
             text += "  <<Empty>>  (  ";
