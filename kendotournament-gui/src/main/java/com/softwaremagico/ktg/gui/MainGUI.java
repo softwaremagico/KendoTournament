@@ -131,6 +131,7 @@ public final class MainGUI extends KendoFrame {
         DisabledAutosaveRadioButton.setText(trans.getTranslatedText("DisabledRadioButton"));
         AutosaveByActionRadioButton.setText(trans.getTranslatedText("ByActionRadioButton"));
         AutosaveByTimeRadioButton.setText(trans.getTranslatedText("ByTimeRadioButton"));
+        clearCacheMenuItem.setText(trans.getTranslatedText("ClearCacheLabel"));
     }
 
     private void setPhoto() {
@@ -306,8 +307,8 @@ public final class MainGUI extends KendoFrame {
      * @param al
      */
     public void addListenerToLanguages(ActionListener al) {
-        for (int i = 0; i < languageList.size(); i++) {
-            languageList.get(i).addActionListener(al);
+        for (JRadioButtonMenuItem languageList1 : languageList) {
+            languageList1.addActionListener(al);
         }
     }
 
@@ -447,6 +448,10 @@ public final class MainGUI extends KendoFrame {
         reloadMenuItem.addActionListener(al);
     }
 
+    public void addClearCacheMenuItemListener(ActionListener al) {
+        clearCacheMenuItem.addActionListener(al);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -525,6 +530,8 @@ public final class MainGUI extends KendoFrame {
         LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"log.png"));
         DebugMenuCheckBox = new javax.swing.JCheckBoxMenuItem();
         DebugMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+"debug.png"));
+        clearCacheMenuItem = new javax.swing.JMenuItem();
+        clearCacheMenuItem.setIcon(new ImageIcon(Path.returnIconFolder()+"clearCache.png"));
         HelpMenu = new javax.swing.JMenu();
         HelpMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"help.png"));
         AboutMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"info.png"));
@@ -758,6 +765,9 @@ public final class MainGUI extends KendoFrame {
         });
         OptionsMenu.add(DebugMenuCheckBox);
 
+        clearCacheMenuItem.setText("Clear Cache");
+        OptionsMenu.add(clearCacheMenuItem);
+
         MainMenuBar.add(OptionsMenu);
 
         HelpMenu.setText("Help");
@@ -887,6 +897,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem TournamentTreeMenuItem;
     private javax.swing.JMenuItem WonLostMenuItem;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JMenuItem clearCacheMenuItem;
     private javax.swing.JMenuItem manualMenuItem;
     private javax.swing.JMenuItem reloadMenuItem;
     // End of variables declaration//GEN-END:variables

@@ -69,7 +69,7 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 
 	@Override
 	protected List<CustomWinnerLink> sort(Tournament tournament) throws SQLException {
-		List<CustomWinnerLink> unsorted = new ArrayList<CustomWinnerLink>(getMap(tournament).values());
+		List<CustomWinnerLink> unsorted = new ArrayList<>(getMap(tournament).values());
 		Collections.sort(unsorted);
 		return unsorted;
 	}

@@ -34,6 +34,8 @@ public class TeamPool extends TournamentDependentPool<Team> {
      *
      * @param tournament
      * @param level
+     * @return 
+     * @throws java.sql.SQLException
      */
     public List<Team> get(Tournament tournament, Integer level) throws SQLException {
         List<Team> results = new ArrayList<>();
@@ -104,6 +106,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * consistent).
      *
      * @param tournament
+     * @throws java.sql.SQLException
      */
     @Override
     public void remove(Tournament tournament) throws SQLException {
@@ -116,6 +119,9 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * consistent).
      *
      * @param tournament
+     * @param elements
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public boolean remove(Tournament tournament, List<Team> elements) throws SQLException {
@@ -130,6 +136,9 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * consistent).
      *
      * @param tournament
+     * @param elementName
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public boolean remove(Tournament tournament, String elementName) throws SQLException {
@@ -141,6 +150,9 @@ public class TeamPool extends TournamentDependentPool<Team> {
      * consistent).
      *
      * @param tournament
+     * @param element
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public boolean remove(Tournament tournament, Team element) throws SQLException {
@@ -257,5 +269,11 @@ public class TeamPool extends TournamentDependentPool<Team> {
         }
         membersOrderToDelete = new HashMap<>();
         return true;
+    }
+    
+        @Override
+    public void clearCache() {
+        super.clearCache();
+        membersOrderToDelete = null;
     }
 }

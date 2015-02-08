@@ -96,6 +96,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
      *
      * @param element
      * @return
+     * @throws java.sql.SQLException
      */
     @Override
     public boolean remove(RegisteredPerson element) throws SQLException {

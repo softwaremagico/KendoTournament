@@ -98,4 +98,9 @@ public class PhotoPool {
         }
         return true;
     }
+
+    public void clearCache() {
+        elements = null;
+        photosToStore = null;
+    }
 }

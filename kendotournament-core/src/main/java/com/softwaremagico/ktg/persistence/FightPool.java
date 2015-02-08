@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class FightPool extends TournamentDependentPool<Fight> {
@@ -98,7 +99,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
     public Fight get(Tournament tournament, Team team1, Team team2, Integer level, Integer group, Integer index)
             throws SQLException {
         for (Fight fight : getMap(tournament).values()) {
-            if (fight.getGroup() == group && fight.getOrderInGroup() == index && fight.getTournament().equals(tournament)
+            if (Objects.equals(fight.getGroup(), group) && Objects.equals(fight.getOrderInGroup(), index) && fight.getTournament().equals(tournament)
                     && fight.getTeam1().equals(team1) && fight.getTeam2().equals(team2) && fight.getLevel().equals(level)) {
                 return fight;
             }
@@ -111,7 +112,8 @@ public class FightPool extends TournamentDependentPool<Fight> {
      *
      * @param tournament
      * @param fightArea
-     * @return Null if no fights exist.
+     * @return Null if no
+     * @throws java.sql.SQLException fights exist.
      */
     public Fight getCurrentFight(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
@@ -130,8 +132,8 @@ public class FightPool extends TournamentDependentPool<Fight> {
      * Get the first fight not over.
      *
      * @param tournament
-     * @param fightArea
      * @return Null if all fights are over.
+     * @throws java.sql.SQLException
      */
     public Integer getCurrentFightIndex(Tournament tournament) throws SQLException {
         List<Fight> fightsOfTournament = get(tournament);
@@ -152,6 +154,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
      * @param tournament
      * @param fightArea
      * @return last fight if all fights are over or null if no fight exists.
+     * @throws java.sql.SQLException
      */
     public Integer getCurrentFightIndex(Tournament tournament, Integer fightArea) throws SQLException {
         List<Fight> fightsOfArena = get(tournament, fightArea);
@@ -185,7 +188,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfArea = new ArrayList<>();
         for (Fight fight : allFights) {
-            if (fight.getAsignedFightArea() == fightArea) {
+            if (Objects.equals(fight.getAsignedFightArea(), fightArea)) {
                 fightsOfArea.add(fight);
             }
         }
@@ -225,7 +228,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfLevel = new ArrayList<>();
         for (Fight fight : allFights) {
-            if (fight.getLevel() == level) {
+            if (Objects.equals(fight.getLevel(), level)) {
                 fightsOfLevel.add(fight);
             }
         }
@@ -237,7 +240,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
         List<Fight> allFights = new ArrayList<>(getMap(tournament).values());
         List<Fight> fightsOfLevel = new ArrayList<>();
         for (Fight fight : allFights) {
-            if (fight.getLevel() == level && fight.getAsignedFightArea() == fightArea) {
+            if (Objects.equals(fight.getLevel(), level) && fight.getAsignedFightArea() == fightArea) {
                 fightsOfLevel.add(fight);
             }
         }
@@ -405,5 +408,11 @@ public class FightPool extends TournamentDependentPool<Fight> {
             }
         }
         return false;
+    }
+    
+    @Override
+    public void clearCache(){
+        super.clearCache();
+        resetAuxiliaryParameters();
     }
 }

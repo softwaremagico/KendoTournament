@@ -163,6 +163,7 @@ public class RolePool extends TournamentDependentPool<Role> {
      * Remove all roles of a competitor of any tournament.
      *
      * @param person
+     * @throws java.sql.SQLException
      */
     public void remove(RegisteredPerson person) throws SQLException {
         List<Role> roles = getAll();
@@ -177,6 +178,9 @@ public class RolePool extends TournamentDependentPool<Role> {
      * Removing a role must delete the team.
      *
      * @param tournament
+     * @param elements
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     public boolean remove(Tournament tournament, List<Role> elements) throws SQLException {
@@ -201,6 +205,9 @@ public class RolePool extends TournamentDependentPool<Role> {
      * Removing a role must delete the team.
      *
      * @param tournament
+     * @param element
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public boolean remove(Tournament tournament, Role element) throws SQLException {
@@ -215,6 +222,9 @@ public class RolePool extends TournamentDependentPool<Role> {
      * Removing a role must delete the team.
      *
      * @param tournament
+     * @param elementName
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     public boolean remove(Tournament tournament, String elementName) throws SQLException {
@@ -314,5 +324,11 @@ public class RolePool extends TournamentDependentPool<Role> {
                 }
             }
         }
+    }
+
+    @Override
+    public void clearCache() {
+        super.clearCache();
+        roleTags = null;
     }
 }

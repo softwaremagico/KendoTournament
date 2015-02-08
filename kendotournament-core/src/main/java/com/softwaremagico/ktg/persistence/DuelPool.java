@@ -60,9 +60,9 @@ public class DuelPool extends TournamentDependentPool<Duel> {
      * Obtain the duels for a fight. If the fight is new, then create the new
      * duels and enqueue it to store into the database.
      *
-     * @param tournament
      * @param fight
      * @return
+     * @throws java.sql.SQLException
      */
     public List<Duel> get(Fight fight) throws SQLException {
         if (duelsPerFight == null) {
@@ -216,5 +216,11 @@ public class DuelPool extends TournamentDependentPool<Duel> {
             return DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
         }
         return true;
+    }
+
+    @Override
+    public void clearCache() {
+        super.clearCache();
+        duelsPerFight = new HashMap<>();
     }
 }

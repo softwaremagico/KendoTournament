@@ -193,11 +193,11 @@ public class SummaryPDF extends ParentList {
                             + trans.getTranslatedText("FightAreaNoDots") + " "
                             + Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));
 
-                    for (int j = 0; j < fights.size(); j++) {
-                        if (groups.get(i).isFightOfGroup(fights.get(j))) {
+                    for (Fight fight : fights) {
+                        if (groups.get(i).isFightOfGroup(fight)) {
                             try {
-                                cell = new PdfPCell(fightTable(fights.get(j), first));
-                            } catch (DocumentException ex) {
+                                cell = new PdfPCell(fightTable(fight, first));
+                            }catch (DocumentException ex) {
                                 cell = new PdfPCell();
                                 AlertManager.showErrorInformation(this.getClass().getName(), ex);
                             }

@@ -121,6 +121,11 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     /**
      * Obtain all elements that contains the desired string
+     *
+     * @param tournament
+     * @param string
+     * @return
+     * @throws java.sql.SQLException
      */
     public List<ElementPool> getById(Tournament tournament, String string) throws SQLException {
         List<ElementPool> result = new ArrayList<>();
@@ -361,4 +366,12 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate)
             throws SQLException;
+
+    public void clearCache() {
+        elements = null;
+        sortedElements = null;
+        elementsToStore = null;
+        elementsToDelete = null;
+        elementsToUpdate = null;
+    }
 }

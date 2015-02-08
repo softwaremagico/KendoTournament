@@ -2243,4 +2243,12 @@
 		<ca>Confirmar:</ca>
 		<it>Confermare:</it>
 	</ConfirmLabel>
+	<ClearCacheLabel>
+		<en>Clear Cache</en>
+		<es>Limpar Cache</es>
+		<nl>Clear Cache</nl>
+		<de>Clear Cache</de>
+		<ca>Pulix la Cache</ca>
+		<it>Pulire la Cache</it>
+	</ClearCacheLabel>
 </translator>

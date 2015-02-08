@@ -166,6 +166,10 @@ public abstract class SimplePool<ElementPool> {
 
     /**
      * Obtain all elements that contains the desired string
+     *
+     * @param string
+     * @return
+     * @throws java.sql.SQLException
      */
     public List<ElementPool> search(String string) throws SQLException {
         List<ElementPool> result = new ArrayList<>();
@@ -185,6 +189,8 @@ public abstract class SimplePool<ElementPool> {
      * Update an element that the primary key has no changed.
      *
      * @param elementUpdated
+     * @return
+     * @throws java.sql.SQLException
      */
     public boolean update(ElementPool elementUpdated) throws SQLException {
         return update(elementUpdated, elementUpdated);
@@ -195,6 +201,8 @@ public abstract class SimplePool<ElementPool> {
      *
      * @param oldElement
      * @param newElement
+     * @return
+     * @throws java.sql.SQLException
      */
     public boolean update(ElementPool oldElement, ElementPool newElement) throws SQLException {
         String id = getId(oldElement);
@@ -227,5 +235,13 @@ public abstract class SimplePool<ElementPool> {
         } catch (SQLException ex) {
             return true;
         }
+    }
+
+    public void clearCache() {
+        elements = null;
+        sortedElements = null;
+        elementsToStore = null;
+        elementsToRemove = null;
+        elementsToUpdate = null;
     }
 }
