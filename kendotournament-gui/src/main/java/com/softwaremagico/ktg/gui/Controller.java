@@ -64,6 +64,7 @@ import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.persistence.UndrawPool;
 import com.softwaremagico.ktg.statistics.*;
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 
 import java.awt.event.ActionEvent;
@@ -250,6 +251,7 @@ public class Controller {
         TeamPool.getInstance().clearCache();
         TournamentPool.getInstance().clearCache();
         UndrawPool.getInstance().clearCache();
+        TournamentManagerFactory.clearCache();
     }
 
     class TournamentTreeListener implements ActionListener {

@@ -80,6 +80,7 @@ import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import java.util.Objects;
 
 public class FightPanel extends KFrame {
     // Wait for some seconds until show waiting message.
@@ -325,15 +326,15 @@ public class FightPanel extends KFrame {
     }
 
     private JMenu createOptionsMenu() {
-        KMenu optionsMenu = new KMenu("OptionsMenu");
-        optionsMenu.setMnemonic(KeyEvent.VK_O);
-        optionsMenu.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
+        KMenu options = new KMenu("OptionsMenu");
+        options.setMnemonic(KeyEvent.VK_O);
+        options.setIcon(new ImageIcon(Path.getIconPath() + "options.png"));
 
         changeMemberOrder = new KMenuItem("ChangeTeamOrder");
         changeMemberOrder.setMnemonic(KeyEvent.VK_O);
         changeMemberOrder.setIcon(new ImageIcon(Path.getIconPath() + "changeTeam.png"));
 
-        optionsMenu.add(changeMemberOrder);
+        options.add(changeMemberOrder);
 
         final FightPanel fightPanel = this;
         addFightMenuItem = new KMenuItem("AddFigthtButton");
@@ -344,7 +345,7 @@ public class FightPanel extends KFrame {
                 createPersonalizedFights(fightPanel);
             }
         });
-        optionsMenu.add(addFightMenuItem);
+        options.add(addFightMenuItem);
 
         deleteFightMenuItem = new KMenuItem("DeleteFigthtButton");
         deleteFightMenuItem.setIcon(new ImageIcon(Path.getIconPath() + "list-remove.png"));
@@ -355,9 +356,9 @@ public class FightPanel extends KFrame {
             }
         });
 
-        optionsMenu.add(deleteFightMenuItem);
+        options.add(deleteFightMenuItem);
 
-        return optionsMenu;
+        return options;
     }
 
     public void addChangeTeamMenuItemListener(ActionListener al) {
@@ -621,8 +622,8 @@ public class FightPanel extends KFrame {
 
         // Ask the user who is the real winner.
         List<String> optionsList = new ArrayList<>();
-        for (int i = 0; i < drawTeams.size(); i++) {
-            optionsList.add(drawTeams.get(i).getName());
+        for (Team drawTeam : drawTeams) {
+            optionsList.add(drawTeam.getName());
         }
         Object[] options = optionsList.toArray();
         int n = JOptionPane.showOptionDialog(frame,
@@ -724,8 +725,8 @@ public class FightPanel extends KFrame {
                             getSelectedFightArea()) - 1);
                     // In multiples computers we cannot change fights of previous levels.
                     if (previousFight != null
-                            && (!getSelectedTournament().isUsingMultipleComputers() || previousFight.getLevel() == currentFight
-                            .getLevel())) {
+                            && (!getSelectedTournament().isUsingMultipleComputers() || Objects.equals(previousFight.getLevel(), currentFight
+                                    .getLevel()))) {
                         previousFight.setOver(false);
                     }
                 }
@@ -804,8 +805,8 @@ public class FightPanel extends KFrame {
                                 // No more draw teams, exit loop.
                                 moreDrawTeams = false;
                             }
-                            ranking = new Ranking(group.getFights());
                         }
+                        ranking = new Ranking(group.getFights());
                         openRankingWindow(ranking, true);
                     }
 

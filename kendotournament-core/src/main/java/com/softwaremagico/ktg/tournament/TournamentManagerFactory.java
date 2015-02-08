@@ -16,7 +16,7 @@ public class TournamentManagerFactory {
      * tournament type, it will create a new manager.
      *
      * @param tournament
-     * @param types
+     * @param type
      * @return
      */
     public static ITournamentManager getManager(Tournament tournament, TournamentType type) {
@@ -91,5 +91,9 @@ public class TournamentManagerFactory {
                 break;
         }
         return manager;
+    }
+
+    public static void clearCache() {
+        managers = new HashMap<>();
     }
 }

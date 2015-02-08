@@ -24,6 +24,9 @@ public class ClubPool extends SimplePool<Club> {
 
     /**
      * Obtain all elements that contains the desired string
+     * @param city
+     * @return 
+     * @throws java.sql.SQLException
      */
     public List<Club> getByCity(String city) throws SQLException {
         List<Club> result = new ArrayList<>();
@@ -38,6 +41,9 @@ public class ClubPool extends SimplePool<Club> {
 
     /**
      * Obtain all elements that contains the desired string
+     * @param country
+     * @return 
+     * @throws java.sql.SQLException
      */
     public List<Club> getByCountry(String country) throws SQLException {
         List<Club> result = new ArrayList<>();
@@ -52,6 +58,9 @@ public class ClubPool extends SimplePool<Club> {
 
     /**
      * Obtain all elements that contains the desired string
+     * @param name
+     * @return 
+     * @throws java.sql.SQLException
      */
     public List<Club> getByName(String name) throws SQLException {
         List<Club> result = new ArrayList<>();
