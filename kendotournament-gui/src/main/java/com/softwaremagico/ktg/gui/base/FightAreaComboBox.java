@@ -46,7 +46,7 @@ public class FightAreaComboBox extends KComboBox<String> {
 			for (int i = 0; i < tournament.getFightingAreas(); i++) {
 				addItem(Tournament.getFightAreaName(i));
 			}
-			if (fightArea >= 0) {
+			if (fightArea >= 0 && fightArea < tournament.getFightingAreas()) {
 				setSelectedIndex(fightArea);
 			} else if (getItemCount() > 0) {
 				setSelectedIndex(0);

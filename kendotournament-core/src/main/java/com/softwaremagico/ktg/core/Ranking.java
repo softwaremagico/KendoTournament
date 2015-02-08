@@ -75,7 +75,7 @@ public class Ranking {
 		HashMap<Integer, List<Team>> teamsByPosition = new HashMap<>();
 		List<ScoreOfTeam> scores = getTeamsScoreRanking();
 
-		Integer position = new Integer(0);
+		Integer position = 0;
 		for (int i = 0; i < scores.size(); i++) {
 			if (teamsByPosition.get(position) == null) {
 				teamsByPosition.put(position, new ArrayList<Team>());

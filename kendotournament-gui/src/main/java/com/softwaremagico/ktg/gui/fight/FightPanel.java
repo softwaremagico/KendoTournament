@@ -557,6 +557,12 @@ public class FightPanel extends KFrame {
 
     public void updateSelectedTournament() {
         fightAreaComboBox.update(getSelectedTournament());
+        try {
+            //Preload the undraw pool to ensure that not stop if network connection is down. 
+            UndrawPool.getInstance().initialize(getSelectedTournament());
+        } catch (SQLException ex) {
+            //Only for increase speed. Do nothing if fails.
+        }
         updateSelectedFightArea();
         // Disable tree window if championship is not the correct one.
         if (getSelectedTournament() != null

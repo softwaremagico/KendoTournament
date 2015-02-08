@@ -39,8 +39,7 @@ public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getWonFights() {
         if (wonFights == null) {
             wonFights = 0;
-            for (int j = 0; j < fights.size(); j++) {
-                Fight fight = fights.get(j);
+            for (Fight fight : fights) {
                 Team winner = fight.winner();
                 if (winner != null && winner.equals(team)) {
                     wonFights++;
@@ -53,8 +52,7 @@ public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getDrawFights() {
         if (drawFights == null) {
             drawFights = 0;
-            for (int j = 0; j < fights.size(); j++) {
-                Fight fight = fights.get(j);
+            for (Fight fight : fights) {
                 if ((fight.getTeam1().equals(team) || fight.getTeam2().equals(team))) {
                     if (fight.isDrawFight()) {
                         drawFights++;
@@ -68,8 +66,8 @@ public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getWonDuels() {
         if (wonDuels == null) {
             wonDuels = 0;
-            for (int j = 0; j < fights.size(); j++) {
-                wonDuels += fights.get(j).getWonDuels(team);
+            for (Fight fight : fights) {
+                wonDuels += fight.getWonDuels(team);
             }
         }
         return wonDuels;
@@ -78,8 +76,8 @@ public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getDrawDuels() {
         if (drawDuels == null) {
             drawDuels = 0;
-            for (int j = 0; j < fights.size(); j++) {
-                drawDuels += fights.get(j).getDrawDuels(team);
+            for (Fight fight : fights) {
+                drawDuels += fight.getDrawDuels(team);
             }
         }
         return drawDuels;
@@ -88,8 +86,8 @@ public abstract class ScoreOfTeam implements Comparable<ScoreOfTeam> {
     public Integer getHits() {
         if (hits == null) {
             hits = 0;
-            for (int j = 0; j < fights.size(); j++) {
-                hits += fights.get(j).getScore(team);
+            for (Fight fight : fights) {
+                hits += fight.getScore(team);
             }
         }
         return hits;
