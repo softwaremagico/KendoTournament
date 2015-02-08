@@ -368,10 +368,6 @@ public abstract class TournamentDependentPool<ElementPool> {
             throws SQLException;
 
     public void clearCache() {
-        elements = null;
-        sortedElements = null;
-        elementsToStore = null;
-        elementsToDelete = null;
-        elementsToUpdate = null;
+        reset();
     }
 }

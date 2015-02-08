@@ -221,6 +221,6 @@ public class DuelPool extends TournamentDependentPool<Duel> {
     @Override
     public void clearCache() {
         super.clearCache();
-        duelsPerFight = new HashMap<>();
+        reset();
     }
 }

@@ -238,10 +238,6 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public void clearCache() {
-        elements = null;
-        sortedElements = null;
-        elementsToStore = null;
-        elementsToRemove = null;
-        elementsToUpdate = null;
+        reset();
     }
 }

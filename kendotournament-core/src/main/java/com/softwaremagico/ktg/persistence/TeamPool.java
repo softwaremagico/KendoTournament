@@ -274,6 +274,6 @@ public class TeamPool extends TournamentDependentPool<Team> {
         @Override
     public void clearCache() {
         super.clearCache();
-        membersOrderToDelete = null;
+        membersOrderToDelete = new HashMap<>();
     }
 }
