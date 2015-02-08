@@ -120,8 +120,8 @@ Version:
 		Monitor added. 
 
 1.2.1   Minor bugs fixed. 
-		
-1.3.0	[Planned] Kachinuki league mode.
+
+1.2.2	Adapted to the rules of the WKC
 
 
 
