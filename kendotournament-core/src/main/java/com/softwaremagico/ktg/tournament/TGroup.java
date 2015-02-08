@@ -162,9 +162,9 @@ public abstract class TGroup {
 
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
-        for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).getGroup() == index && fights.get(i).getLevel().equals(level)) {
-                fightsG.add(fights.get(i));
+        for (Fight fight : fights) {
+            if (fight.getGroup() == index && fight.getLevel().equals(level)) {
+                fightsG.add(fight);
             }
         }
         return fightsG;
@@ -176,8 +176,8 @@ public abstract class TGroup {
         List<Fight> fights = getFightsOfGroup(allFights);
 
         if (fights.size() > 0) {
-            for (int i = 0; i < fights.size(); i++) {
-                if (!fights.get(i).isOver()) {
+            for (Fight fight : fights) {
+                if (!fight.isOver()) {
                     return false;
                 }
             }
@@ -190,8 +190,8 @@ public abstract class TGroup {
         List<Fight> fights = getFights();
 
         if (fights.size() > 0) {
-            for (int i = 0; i < fights.size(); i++) {
-                if (!fights.get(i).isOver()) {
+            for (Fight fight : fights) {
+                if (!fight.isOver()) {
                     return false;
                 }
             }
@@ -203,8 +203,8 @@ public abstract class TGroup {
     public boolean areFightsStarted() {
         List<Fight> fights = getFights();
 
-        for (int i = 0; i < fights.size(); i++) {
-            if (fights.get(i).isOver() || fights.get(i).getScore(true) > 0 || fights.get(i).getScore(false) > 0) {
+        for (Fight fight : fights) {
+            if (fight.isOver() || fight.getScore(true) > 0 || fight.getScore(false) > 0) {
                 return true;
             }
         }
@@ -220,11 +220,13 @@ public abstract class TGroup {
 
     /**
      * If the fightManager are over or fightManager are not needed.
+     * @param fights
+     * @return 
      */
     public static boolean areFightsOverOrNull(List<Fight> fights) {
         if (fights.size() > 0) {
-            for (int i = 0; i < fights.size(); i++) {
-                if (!fights.get(i).isOver()) {
+            for (Fight fight : fights) {
+                if (!fight.isOver()) {
                     return false;
                 }
             }
@@ -300,6 +302,7 @@ public abstract class TGroup {
     /**
      * Gets the index of the group in the tournament. The index is relative to
      * all groups independent of the level.
+     * @return 
      */
     public int getIndex() {
         return index;

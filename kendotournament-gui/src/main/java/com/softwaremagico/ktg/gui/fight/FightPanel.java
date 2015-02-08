@@ -612,7 +612,7 @@ public class FightPanel extends KFrame {
      * @param winnersOfgroup
      * @return position in the list of the choosen one.
      */
-    private int resolvDrawTeams(List<Team> drawTeams, int level, int group) {
+    private int resolveDrawTeams(List<Team> drawTeams, int level, int group) {
         JFrame frame = null;
 
         // If it is draw because there is only one team. Then it wins.
@@ -722,7 +722,7 @@ public class FightPanel extends KFrame {
                             getSelectedTournament(),
                             getSelectedFightArea(),
                             FightPool.getInstance().getCurrentFightIndex(getSelectedTournament(),
-                            getSelectedFightArea()) - 1);
+                                    getSelectedFightArea()) - 1);
                     // In multiples computers we cannot change fights of previous levels.
                     if (previousFight != null
                             && (!getSelectedTournament().isUsingMultipleComputers() || Objects.equals(previousFight.getLevel(), currentFight
@@ -780,6 +780,8 @@ public class FightPanel extends KFrame {
         try {
             // Exists fights.
             if (!FightPool.getInstance().get(getSelectedTournament(), getSelectedFightArea()).isEmpty()) {
+                //Disable button until data synchronized. 
+                nextButton.setEnabled(false);
                 // Finish current fight.
                 Fight currentFight = FightPool.getInstance().getCurrentFight(getSelectedTournament(),
                         getSelectedFightArea());
@@ -800,7 +802,7 @@ public class FightPanel extends KFrame {
                                     .getHowManyTeamsOfGroupPassToTheTree());
                             if (teamsInDraw != null) {
                                 // Solve Draw Scores
-                                resolvDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
+                                resolveDrawTeams(teamsInDraw, currentFight.getLevel(), currentFight.getGroup());
                             } else {
                                 // No more draw teams, exit loop.
                                 moreDrawTeams = false;
@@ -900,6 +902,7 @@ public class FightPanel extends KFrame {
     private void closeWaitingDialog() {
         waitingNetworkDialog.setVisible(false);
         waitingNetworkDialog.dispose();
+        nextButton.setEnabled(true);
     }
 
     /**
