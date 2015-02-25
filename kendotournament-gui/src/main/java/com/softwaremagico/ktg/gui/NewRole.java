@@ -47,8 +47,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 
 public class NewRole extends KendoFrame {
-
-    private Translator trans = null;
+	private static final long serialVersionUID = 1704796642678109441L;
+	private Translator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshCompetitor = true;
