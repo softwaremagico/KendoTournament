@@ -26,11 +26,13 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class LeagueLevel {
-
+public abstract class LeagueLevel implements Serializable {
+	private static final long serialVersionUID = -2913139758103386033L;
 	protected int level;
 	protected Tournament tournament;
 	protected List<TGroup> tournamentGroups;

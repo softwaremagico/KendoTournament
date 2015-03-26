@@ -40,267 +40,274 @@ import java.util.Locale;
  * Base clase to manage the core of the software.
  */
 public class KendoTournamentGenerator {
-    private static KendoTournamentGenerator kendoTournament = null;
-    private static boolean debugMode = true;
-    private static AutoSaveOption autosave = AutoSaveOption.BY_TIME;
-    private String language = null;
-    private String explorationFolder = null;
-    private String lastSelectedTournament = "";
-    private String lastSelectedClub = "";
-    private int nameDiplomaPosition = 100;
-    private boolean logActivated = true;
-    private static char[] blockingString;
+	private static KendoTournamentGenerator kendoTournament = null;
+	private static boolean debugMode = true;
+	private static AutoSaveOption autosave = AutoSaveOption.BY_TIME;
+	private String language = null;
+	private String explorationFolder = null;
+	private String lastSelectedTournament = "";
+	private String lastSelectedClub = "";
+	private int nameDiplomaPosition = 100;
+	private boolean logActivated = true;
+	private static char[] blockingString;
 
-    private KendoTournamentGenerator() {
-        loadConfig();
-    }
+	private KendoTournamentGenerator() {
+		loadConfig();
+	}
 
-    public static KendoTournamentGenerator getInstance() {
-        if (kendoTournament == null) {
-            kendoTournament = new KendoTournamentGenerator();
-        }
-        return kendoTournament;
-    }
+	public static KendoTournamentGenerator getInstance() {
+		if (kendoTournament == null) {
+			kendoTournament = new KendoTournamentGenerator();
+		}
+		return kendoTournament;
+	}
 
-    public void setLastSelectedTournament(String selected) {
-        lastSelectedTournament = selected;
-        storeConfig();
-    }
+	public void setLastSelectedTournament(String selected) {
+		lastSelectedTournament = selected;
+		storeConfig();
+	}
 
-    public void setLastSelectedClub(String selected) {
-        lastSelectedClub = selected;
-        storeConfig();
-    }
+	public void setLastSelectedClub(String selected) {
+		lastSelectedClub = selected;
+		storeConfig();
+	}
 
-    public void setLastNamePositionOnDiploma(int selected) {
-        nameDiplomaPosition = selected;
-        storeConfig();
-    }
+	public void setLastNamePositionOnDiploma(int selected) {
+		nameDiplomaPosition = selected;
+		storeConfig();
+	}
 
-    public void setLogOption(boolean option) {
-        logActivated = option;
-        storeConfig();
-    }
+	public void setLogOption(boolean option) {
+		logActivated = option;
+		storeConfig();
+	}
 
-    public void setDebugOption(boolean option) {
-        debugMode = option;
-        storeConfig();
-    }
+	private static void setDebug(boolean option) {
+		debugMode = option;
+	}
 
-    public void setAutosaveOption(AutoSaveOption autoSave) {
-        KendoTournamentGenerator.autosave = autoSave;
-        storeConfig();
-    }
+	public void setDebugOption(boolean option) {
+		setDebug(option);
+		storeConfig();
+	}
 
-    public Tournament getLastSelectedTournament() {
-        try {
-            return TournamentPool.getInstance().get(lastSelectedTournament);
-        } catch (SQLException ex) {
-            return null;
-        }
-    }
+	private static void setAutoSave(AutoSaveOption autoSave) {
+		autosave = autoSave;
+	}
 
-    public String getLastSelectedClub() {
-        return lastSelectedClub;
-    }
+	public void setAutosaveOption(AutoSaveOption autoSave) {
+		setAutoSave(autoSave);
+		storeConfig();
+	}
 
-    public Integer getLastNamePositionOnDiploma() {
-        return nameDiplomaPosition;
-    }
+	public Tournament getLastSelectedTournament() {
+		try {
+			return TournamentPool.getInstance().get(lastSelectedTournament);
+		} catch (SQLException ex) {
+			return null;
+		}
+	}
 
-    public boolean getLogOption() {
-        return logActivated;
-    }
+	public String getLastSelectedClub() {
+		return lastSelectedClub;
+	}
 
-    public List<Team> getTeamsOfFights(List<Fight> fightList) {
-        List<Team> teams = new ArrayList<>();
-        for (int i = 0; i < fightList.size(); i++) {
-            if (!teams.contains(fightList.get(i).getTeam1())) {
-                teams.add(fightList.get(i).getTeam1());
-            }
-            if (!teams.contains(fightList.get(i).getTeam2())) {
-                teams.add(fightList.get(i).getTeam2());
-            }
-        }
-        return teams;
-    }
+	public Integer getLastNamePositionOnDiploma() {
+		return nameDiplomaPosition;
+	}
 
-    public String getLanguage() {
-        if (language == null) {
-            if (Locale.getDefault().toString().contains("es_")) {
-                language = "es";
-            } else {
-                language = "en";
-            }
-        }
-        return language;
-    }
+	public boolean getLogOption() {
+		return logActivated;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	public List<Team> getTeamsOfFights(List<Fight> fightList) {
+		List<Team> teams = new ArrayList<>();
+		for (int i = 0; i < fightList.size(); i++) {
+			if (!teams.contains(fightList.get(i).getTeam1())) {
+				teams.add(fightList.get(i).getTeam1());
+			}
+			if (!teams.contains(fightList.get(i).getTeam2())) {
+				teams.add(fightList.get(i).getTeam2());
+			}
+		}
+		return teams;
+	}
 
-    public static AutoSaveOption getAutosaveOption() {
-        return autosave;
-    }
+	public String getLanguage() {
+		if (language == null) {
+			if (Locale.getDefault().toString().contains("es_")) {
+				language = "es";
+			} else {
+				language = "en";
+			}
+		}
+		return language;
+	}
 
-    /**
-     * **********************************************
-     *
-     * ERRORS
-     *
-     ***********************************************
-     */
-    public static boolean isDebugOptionSelected() {
-        return debugMode;
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    /**
-     * **********************************************
-     *
-     * FILES
-     *
-     ***********************************************
-     */
-    /**
-     * Load config from the config file.
-     */
-    private void loadConfig() {
-        obtainStoredLastTournament();
-        obtainStoredLastClub();
-        obtainStoredNamePositionOnDiploma();
-        obtainLogOption();
-        obtainDebugOption();
-        obtainAutosaveOption();
-        // obtainStoredScore();
-    }
+	public static AutoSaveOption getAutosaveOption() {
+		return autosave;
+	}
 
-    /**
-     * Return the roles defined into a XML file.
-     */
-    public RoleTags getAvailableRoles() {
-        return Translator.getAvailableRoles(getLanguage());
-    }
+	/**
+	 * **********************************************
+	 *
+	 * ERRORS
+	 *
+	 ***********************************************
+	 */
+	public static boolean isDebugOptionSelected() {
+		return debugMode;
+	}
 
-    public String getDefaultDirectory() {
-        if (explorationFolder == null) {
-            return System.getProperty("user.home");
-        } else {
-            return explorationFolder;
-        }
-    }
+	/**
+	 * **********************************************
+	 *
+	 * FILES
+	 *
+	 ***********************************************
+	 */
+	/**
+	 * Load config from the config file.
+	 */
+	private void loadConfig() {
+		obtainStoredLastTournament();
+		obtainStoredLastClub();
+		obtainStoredNamePositionOnDiploma();
+		obtainLogOption();
+		obtainDebugOption();
+		obtainAutosaveOption();
+		// obtainStoredScore();
+	}
 
-    public void changeDefaultExplorationFolder(String path) {
-        explorationFolder = path;
-    }
+	/**
+	 * Return the roles defined into a XML file.
+	 */
+	public RoleTags getAvailableRoles() {
+		return Translator.getAvailableRoles(getLanguage());
+	}
 
-    private String obtainStoredDataInConfig(String tag) {
-        try {
-            List<String> tournamentConfigFile;
+	public String getDefaultDirectory() {
+		if (explorationFolder == null) {
+			return System.getProperty("user.home");
+		} else {
+			return explorationFolder;
+		}
+	}
 
-            tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome());
+	public void changeDefaultExplorationFolder(String path) {
+		explorationFolder = path;
+	}
 
-            for (int i = 0; i < tournamentConfigFile.size(); i++) {
-                if (tournamentConfigFile.get(i).contains(tag)) {
-                    try {
-                        return tournamentConfigFile.get(i).split(tag)[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-            }
-        } catch (IOException ex) {
-        }
-        return "";
-    }
+	private String obtainStoredDataInConfig(String tag) {
+		try {
+			List<String> tournamentConfigFile;
 
-    private String obtainStoredLastTournament() {
-        return lastSelectedTournament = obtainStoredDataInConfig("Tournament:");
-    }
+			tournamentConfigFile = Folder.readFileLines(Path.getPathConfigInHome());
 
-    private String obtainStoredLastClub() {
-        return lastSelectedClub = obtainStoredDataInConfig("Club:");
-    }
+			for (int i = 0; i < tournamentConfigFile.size(); i++) {
+				if (tournamentConfigFile.get(i).contains(tag)) {
+					try {
+						return tournamentConfigFile.get(i).split(tag)[1];
+					} catch (ArrayIndexOutOfBoundsException aiofb) {
+					}
+				}
+			}
+		} catch (IOException ex) {
+		}
+		return "";
+	}
 
-    private Integer obtainStoredNamePositionOnDiploma() {
-        try {
-            nameDiplomaPosition = Integer.parseInt(obtainStoredDataInConfig("NameDiploma:"));
-            return nameDiplomaPosition;
-        } catch (Exception e) {
-            return 100;
-        }
-    }
+	private String obtainStoredLastTournament() {
+		return lastSelectedTournament = obtainStoredDataInConfig("Tournament:");
+	}
 
-    private boolean obtainLogOption() {
-        try {
-            logActivated = Boolean.parseBoolean(obtainStoredDataInConfig("Log:"));
-            return logActivated;
-        } catch (Exception e) {
-            return true;
-        }
-    }
+	private String obtainStoredLastClub() {
+		return lastSelectedClub = obtainStoredDataInConfig("Club:");
+	}
 
-    private boolean obtainDebugOption() {
-        try {
-            debugMode = Boolean.parseBoolean(obtainStoredDataInConfig("Debug:"));
-            return debugMode;
-        } catch (Exception e) {
-            return true;
-        }
-    }
+	private Integer obtainStoredNamePositionOnDiploma() {
+		try {
+			nameDiplomaPosition = Integer.parseInt(obtainStoredDataInConfig("NameDiploma:"));
+			return nameDiplomaPosition;
+		} catch (Exception e) {
+			return 100;
+		}
+	}
 
-    private AutoSaveOption obtainAutosaveOption() {
-        try {
-            autosave = AutoSaveOption.getAutoSave(obtainStoredDataInConfig("Autosave:"));
-            return autosave;
-        } catch (Exception e) {
-            return AutoSaveOption.BY_TIME;
-        }
-    }
+	private boolean obtainLogOption() {
+		try {
+			logActivated = Boolean.parseBoolean(obtainStoredDataInConfig("Log:"));
+			return logActivated;
+		} catch (Exception e) {
+			return true;
+		}
+	}
 
-    public void storeConfig() {
-        List<String> configData = new ArrayList<>();
-        configData.add("Tournament:" + lastSelectedTournament);
-        configData.add("Club:" + lastSelectedClub);
-        configData.add("NameDiploma:" + nameDiplomaPosition);
-        configData.add("Log:" + logActivated);
-        configData.add("Debug:" + debugMode);
-        configData.add("Autosave:" + autosave.getTag());
-        // configData.add("ScoreOption:" + choosedScore);
-        // configData.add("ScoreWin:" + scoreForWin);
-        // configData.add("ScoreDraw:" + scoreForDraw);
-        Folder.saveListInFile(configData, Path.getPathConfigInHome());
-    }
+	private boolean obtainDebugOption() {
+		try {
+			debugMode = Boolean.parseBoolean(obtainStoredDataInConfig("Debug:"));
+			return debugMode;
+		} catch (Exception e) {
+			return true;
+		}
+	}
 
-    /**
-     * A competitor has the order of the primary key of the database, except the
-     * VCLO that has a particular order.
-     *
-     * @param competitor
-     * @param role
-     * @param championship
-     * @return
-     */
-    public String getRegisteredPersonNumber(RegisteredPerson competitor, Role role, Tournament tournament) {
-        DecimalFormat myFormatter = new DecimalFormat("00000");
-        if (RoleTag.volunteerRoles.contains(role.getTag().getName())) {
-            Integer order;
-            try {
-                order = RolePool.getInstance().getVolunteerOrder(tournament, competitor);
-            } catch (SQLException ex) {
-                order = 0;
-            }
-            if (order != null) {
-                return myFormatter.format(order);
-            }
-        }
-        return myFormatter.format(role.getAccreditationOrder());
-    }
+	private AutoSaveOption obtainAutosaveOption() {
+		try {
+			autosave = AutoSaveOption.getAutoSave(obtainStoredDataInConfig("Autosave:"));
+			return autosave;
+		} catch (Exception e) {
+			return AutoSaveOption.BY_TIME;
+		}
+	}
 
-    public static char[] getBlockingString() {
-        return blockingString;
-    }
+	public void storeConfig() {
+		List<String> configData = new ArrayList<>();
+		configData.add("Tournament:" + lastSelectedTournament);
+		configData.add("Club:" + lastSelectedClub);
+		configData.add("NameDiploma:" + nameDiplomaPosition);
+		configData.add("Log:" + logActivated);
+		configData.add("Debug:" + debugMode);
+		configData.add("Autosave:" + autosave.getTag());
+		// configData.add("ScoreOption:" + choosedScore);
+		// configData.add("ScoreWin:" + scoreForWin);
+		// configData.add("ScoreDraw:" + scoreForDraw);
+		Folder.saveListInFile(configData, Path.getPathConfigInHome());
+	}
 
-    public static void setBlockingString(char[] secretKey) {
-        blockingString = secretKey;
-    }
+	/**
+	 * A competitor has the order of the primary key of the database, except the VCLO that has a particular order.
+	 *
+	 * @param competitor
+	 * @param role
+	 * @param championship
+	 * @return
+	 */
+	public String getRegisteredPersonNumber(RegisteredPerson competitor, Role role, Tournament tournament) {
+		DecimalFormat myFormatter = new DecimalFormat("00000");
+		if (RoleTag.volunteerRoles.contains(role.getTag().getName())) {
+			Integer order;
+			try {
+				order = RolePool.getInstance().getVolunteerOrder(tournament, competitor);
+			} catch (SQLException ex) {
+				order = 0;
+			}
+			if (order != null) {
+				return myFormatter.format(order);
+			}
+		}
+		return myFormatter.format(role.getAccreditationOrder());
+	}
+
+	public static char[] getBlockingString() {
+		return blockingString;
+	}
+
+	public static void setBlockingString(char[] secretKey) {
+		blockingString = secretKey;
+	}
 }

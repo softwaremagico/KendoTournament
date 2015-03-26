@@ -270,8 +270,8 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 		List<TournamentGroupBox> groupList = grpsBox.get(0);
 		if (groupList != null) {
 			for (int i = 1; i < groupList.size(); i++) {
-				if (groupList.get(i).getTournamentGroup().getFightArea() != groupList.get(i - 1).getTournamentGroup()
-						.getFightArea()) {
+				if (!groupList.get(i).getTournamentGroup().getFightArea().equals(groupList.get(i - 1).getTournamentGroup()
+						.getFightArea())) {
 					g.drawLine(0, (int) groupList.get(i).getY(), (int) this.getWidth(), (int) groupList.get(i).getY());
 				}
 			}

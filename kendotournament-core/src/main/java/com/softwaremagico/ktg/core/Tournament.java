@@ -29,198 +29,200 @@ import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
+
 import java.awt.Image;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tournament implements Comparable<Tournament> {
+public class Tournament implements Comparable<Tournament>, Serializable {
+	private static final long serialVersionUID = 7794355885352426608L;
+	private static char[] fightAreaNames = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+	public static final List<TournamentType> CHAMPIONSHIP_TYPES = new ArrayList<>();
+	private String name;
+	private transient Photo banner;
+	private transient Photo diploma;
+	private transient Photo accreditation;
+	private int fightingAreas;
+	private int howManyTeamsOfGroupPassToTheTree;
+	private int teamSize;
+	private boolean usingMultipleComputers;
+	private TournamentType type; // simple, championship, custom, personalized, tree
+	// private float scoreForWin = 1;
+	// private float scoreForDraw = 0;
+	// private ScoreType choosedScore = ScoreType.WIN_OVER_DRAWS;
+	private TournamentScore tournamentScore;
 
-    private static char[] fightAreaNames = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-        'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    public static final List<TournamentType> CHAMPIONSHIP_TYPES = new ArrayList<>();
-    private String name;
-    private transient Photo banner;
-    private transient Photo diploma;
-    private transient Photo accreditation;
-    private int fightingAreas;
-    private int howManyTeamsOfGroupPassToTheTree;
-    private int teamSize;
-    private boolean usingMultipleComputers;
-    private TournamentType type; // simple, championship, custom, personalized, tree
-    // private float scoreForWin = 1;
-    // private float scoreForDraw = 0;
-    // private ScoreType choosedScore = ScoreType.WIN_OVER_DRAWS;
-    private TournamentScore tournamentScore;
+	static {
+		CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
+		CHAMPIONSHIP_TYPES.add(TournamentType.CUSTOM_CHAMPIONSHIP);
+	}
 
-    static {
-        CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
-        CHAMPIONSHIP_TYPES.add(TournamentType.CUSTOM_CHAMPIONSHIP);
-    }
+	public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType type) {
+		this.name = name;
+		fightingAreas = areas;
+		howManyTeamsOfGroupPassToTheTree = passingTeams;
+		this.teamSize = teamSize;
+		this.type = type;
+		tournamentScore = new TournamentScore(ScoreType.DEFAULT);
+	}
 
-    public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType type) {
-        this.name = name;
-        fightingAreas = areas;
-        howManyTeamsOfGroupPassToTheTree = passingTeams;
-        this.teamSize = teamSize;
-        this.type = type;
-        tournamentScore = new TournamentScore(ScoreType.DEFAULT);
-    }
+	public Photo getBanner() {
+		return banner;
+	}
 
-    public Photo getBanner() {
-        return banner;
-    }
+	public void setBanner(Photo banner) {
+		this.banner = banner;
+	}
 
-    public void setBanner(Photo banner) {
-        this.banner = banner;
-    }
+	public Photo getDiploma() {
+		return diploma;
+	}
 
-    public Photo getDiploma() {
-        return diploma;
-    }
+	public void setDiploma(Photo diploma) {
+		this.diploma = diploma;
+	}
 
-    public void setDiploma(Photo diploma) {
-        this.diploma = diploma;
-    }
+	public Photo getAccreditation() {
+		return accreditation;
+	}
 
-    public Photo getAccreditation() {
-        return accreditation;
-    }
+	public void setAccreditation(Photo accreditation) {
+		this.accreditation = accreditation;
+	}
 
-    public void setAccreditation(Photo accreditation) {
-        this.accreditation = accreditation;
-    }
+	public int getFightingAreas() {
+		return fightingAreas;
+	}
 
-    public int getFightingAreas() {
-        return fightingAreas;
-    }
+	public void setFightingAreas(int fightingAreas) {
+		this.fightingAreas = fightingAreas;
+	}
 
-    public void setFightingAreas(int fightingAreas) {
-        this.fightingAreas = fightingAreas;
-    }
+	public int getHowManyTeamsOfGroupPassToTheTree() {
+		return howManyTeamsOfGroupPassToTheTree;
+	}
 
-    public int getHowManyTeamsOfGroupPassToTheTree() {
-        return howManyTeamsOfGroupPassToTheTree;
-    }
+	public void setHowManyTeamsOfGroupPassToTheTree(int howManyTeamsOfGroupPassToTheTree) {
+		this.howManyTeamsOfGroupPassToTheTree = howManyTeamsOfGroupPassToTheTree;
+	}
 
-    public void setHowManyTeamsOfGroupPassToTheTree(int howManyTeamsOfGroupPassToTheTree) {
-        this.howManyTeamsOfGroupPassToTheTree = howManyTeamsOfGroupPassToTheTree;
-    }
+	public int getTeamSize() {
+		return teamSize;
+	}
 
-    public int getTeamSize() {
-        return teamSize;
-    }
+	public void setTeamSize(int teamSize) {
+		this.teamSize = teamSize;
+	}
 
-    public void setTeamSize(int teamSize) {
-        this.teamSize = teamSize;
-    }
+	public TournamentType getType() {
+		return type;
+	}
 
-    public TournamentType getType() {
-        return type;
-    }
+	public boolean isChampionship() {
+		return isChampionship(type);
+	}
 
-    public boolean isChampionship() {
-        return isChampionship(type);
-    }
+	public boolean isChampionship(TournamentType mode) {
+		return CHAMPIONSHIP_TYPES.contains(mode);
+	}
 
-    public boolean isChampionship(TournamentType mode) {
-        return CHAMPIONSHIP_TYPES.contains(mode);
-    }
+	public void setType(TournamentType type) {
+		if (!this.type.equals(type)) {
+			// Groups are mantained between custom and championship modes.
+			if (!isChampionship(type) || !isChampionship()) {
+				TournamentManagerFactory.removeManager(this);
+			}
+			this.type = type;
+		}
+	}
 
-    public void setType(TournamentType type) {
-        if (!this.type.equals(type)) {
-            // Groups are mantained between custom and championship modes.
-            if (!isChampionship(type) || !isChampionship()) {
-                TournamentManagerFactory.removeManager(this);
-            }
-            this.type = type;
-        }
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void addBanner(InputStream input, int size) {
+		banner = new Photo(getName());
+		banner.setImage(input, size);
+	}
 
-    public void addBanner(InputStream input, int size) {
-        banner = new Photo(getName());
-        banner.setImage(input, size);
-    }
+	public void addBanner(Image img) {
+		banner = new Photo(getName());
+		banner.setImage(img);
+	}
 
-    public void addBanner(Image img) {
-        banner = new Photo(getName());
-        banner.setImage(img);
-    }
+	public void addDiploma(InputStream input, int size) {
+		diploma = new Photo(getName());
+		diploma.setImage(input, size);
+	}
 
-    public void addDiploma(InputStream input, int size) {
-        diploma = new Photo(getName());
-        diploma.setImage(input, size);
-    }
+	public void addDiploma(Image img) {
+		diploma = new Photo(getName());
+		diploma.setImage(img);
+	}
 
-    public void addDiploma(Image img) {
-        diploma = new Photo(getName());
-        diploma.setImage(img);
-    }
+	public void addAccreditation(InputStream input, int size) {
+		accreditation = new Photo(getName());
+		accreditation.setImage(input, size);
+	}
 
-    public void addAccreditation(InputStream input, int size) {
-        accreditation = new Photo(getName());
-        accreditation.setImage(input, size);
-    }
+	public void addAccreditation(Image img) {
+		accreditation = new Photo(getName());
+		accreditation.setImage(img);
+	}
 
-    public void addAccreditation(Image img) {
-        accreditation = new Photo(getName());
-        accreditation.setImage(img);
-    }
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (!(object instanceof Tournament)) {
+			return false;
+		}
+		Tournament otherTournament = (Tournament) object;
+		return this.name.equals(otherTournament.name);
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) {
-            return true;
-        }
-        if (!(object instanceof Tournament)) {
-            return false;
-        }
-        Tournament otherTournament = (Tournament) object;
-        return this.name.equals(otherTournament.name);
-    }
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 
-    @Override
-    public String toString() {
-        return this.getName();
-    }
+	@Override
+	public int compareTo(Tournament t) {
+		return getName().compareTo(t.getName());
+	}
 
-    @Override
-    public int compareTo(Tournament t) {
-        return getName().compareTo(t.getName());
-    }
+	public static String getFightAreaName(int pos) {
+		if (pos < fightAreaNames.length) {
+			return fightAreaNames[pos] + "";
+		} else {
+			return (pos + 1) + "";
+		}
+	}
 
-    public static String getFightAreaName(int pos) {
-        if (pos < fightAreaNames.length) {
-            return fightAreaNames[pos] + "";
-        } else {
-            return (pos + 1) + "";
-        }
-    }
+	public TournamentScore getTournamentScore() {
+		return tournamentScore;
+	}
 
-    public TournamentScore getTournamentScore() {
-        return tournamentScore;
-    }
+	public void setTournamentScore(TournamentScore tournamentScore) {
+		this.tournamentScore = tournamentScore;
+	}
 
-    public void setTournamentScore(TournamentScore tournamentScore) {
-        this.tournamentScore = tournamentScore;
-    }
+	public boolean isUsingMultipleComputers() {
+		return usingMultipleComputers;
+	}
 
-    public boolean isUsingMultipleComputers() {
-        return usingMultipleComputers;
-    }
-
-    public void setUsingMultipleComputers(boolean multipleComputers) {
-        this.usingMultipleComputers = multipleComputers;
-    }
+	public void setUsingMultipleComputers(boolean multipleComputers) {
+		this.usingMultipleComputers = multipleComputers;
+	}
 }

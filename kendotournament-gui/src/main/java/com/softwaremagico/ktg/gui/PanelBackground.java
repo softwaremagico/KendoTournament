@@ -42,6 +42,7 @@ public class PanelBackground extends JPanel {
 	public void setBackground(File file) throws IOException {
 		if (file == null) {
 			imageBackground = null;
+			return;
 		} else {
 			imageBackground = ImageIO.read(file);
 		}

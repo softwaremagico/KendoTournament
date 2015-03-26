@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.language;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -54,171 +55,180 @@ import org.xml.sax.SAXParseException;
 
 public class Translator {
 
-    private String fileTranslated;
-    private Document doc = null;
-    private final String DEFAULT_LANGUAGE = "en";
-    private boolean errorShowed = false;
-    private boolean retried = false;
-    private boolean showedMessage = false;
-    private static List<Language> languagesList = null;
-    private static HashMap<String, RoleTags> rolesList;
+	private String fileTranslated;
+	private Document doc = null;
+	private final String DEFAULT_LANGUAGE = "en";
+	private boolean errorShowed = false;
+	private boolean retried = false;
+	private boolean showedMessage = false;
+	private static List<Language> languagesList = null;
+	private static HashMap<String, RoleTags> rolesList;
 
-    public Translator(String tmp_file) {
-        fileTranslated = tmp_file;
-        doc = parseFile(doc, fileTranslated);
-        rolesList = new HashMap<>();
-    }
+	public Translator(String tmp_file) {
+		fileTranslated = tmp_file;
+		doc = parseFile(doc, fileTranslated);
+		rolesList = new HashMap<>();
+	}
 
-    /**
-     * Parse the file
-     *
-     * @param tagName Tag of the data to be readed
-     */
-    private static Document parseFile(Document usedDoc, String fileParsed) {
-        DocumentBuilderFactory dbf;
-        DocumentBuilder db;
-        try {
-            File file = new File(Path.getTranslatorPath() + fileParsed);
-            dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            usedDoc = db.parse(file);
-            usedDoc.getDocumentElement().normalize();
-        } catch (SAXParseException ex) {
-            String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
-            KendoLog.severe(Translator.class.getName(), text);
-            KendoLog.errorMessage(Translator.class.getName(), ex);
-        } catch (SAXException ex) {
-            KendoLog.errorMessage(Translator.class.getName(), ex);
-        } catch (ParserConfigurationException ex) {
-            KendoLog.errorMessage(Translator.class.getName(), ex);
-        } catch (FileNotFoundException fnf) {
-            String text = "The file " + fileParsed + " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
-            System.out.println(text);
-            //KendoTournamentGenerator.showErrorInformation(fnf);
-        } catch (IOException ex) {
-            Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return usedDoc;
-    }
+	/**
+	 * Parse the file
+	 *
+	 * @param tagName
+	 *            Tag of the data to be readed
+	 */
+	private static Document parseFile(Document usedDoc, String fileParsed) {
+		DocumentBuilderFactory dbf;
+		DocumentBuilder db;
+		try {
+			File file = new File(Path.getTranslatorPath() + fileParsed);
+			dbf = DocumentBuilderFactory.newInstance();
+			db = dbf.newDocumentBuilder();
+			usedDoc = db.parse(file);
+			usedDoc.getDocumentElement().normalize();
+		} catch (SAXParseException ex) {
+			String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId()
+					+ "\nMessage: " + ex.getMessage();
+			KendoLog.severe(Translator.class.getName(), text);
+			KendoLog.errorMessage(Translator.class.getName(), ex);
+		} catch (SAXException ex) {
+			KendoLog.errorMessage(Translator.class.getName(), ex);
+		} catch (ParserConfigurationException ex) {
+			KendoLog.errorMessage(Translator.class.getName(), ex);
+		} catch (FileNotFoundException fnf) {
+			String text = "The file "
+					+ fileParsed
+					+ " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
+			System.out.println(text);
+			// KendoTournamentGenerator.showErrorInformation(fnf);
+		} catch (IOException ex) {
+			Logger.getLogger(Translator.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return usedDoc;
+	}
 
-    public String getTranslatedText(String tag) {
-        return readTag(tag, KendoTournamentGenerator.getInstance().getLanguage());
-    }
+	public String getTranslatedText(String tag) {
+		return readTag(tag, KendoTournamentGenerator.getInstance().getLanguage());
+	}
 
-    private String readTag(String tag, String language) {
-        try {
-            NodeList nodeLst = doc.getElementsByTagName(tag);
-            for (int s = 0; s < nodeLst.getLength(); s++) {
-                Node fstNode = nodeLst.item(s);
-                if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element fstElmnt = (Element) fstNode;
-                    NodeList fstNmElmntLst = fstElmnt.getElementsByTagName(language);
-                    Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
-                    try {
-                        NodeList fstNm = fstNmElmnt.getChildNodes();
-                        retried = false;
-                        return ((Node) fstNm.item(0)).getNodeValue().trim();
-                    } catch (NullPointerException npe) {
-                        //npe.printStackTrace();
-                        if (!retried) {
-                            if (!showedMessage) {
-                                KendoLog.warning(Translator.class.getName(), "There is a problem with tag: " + tag + " in  language: \"" + language + "\". We tray to use english language instead.");
-                                showedMessage = true;
-                            }
-                            retried = true;
-                            return readTag(tag, DEFAULT_LANGUAGE);
-                        }
-                        if (!language.equals(DEFAULT_LANGUAGE)) {
-                            if (!errorShowed) {
-                                KendoLog.warning(this.getClass().getName(), "Selecting english language by default. You can change it later in Options->Language ");
-                                Configuration.storeLanguageConfiguration(language);
-                                errorShowed = true;
-                            }
-                            return readTag(tag, DEFAULT_LANGUAGE);
-                        } else {
-                            if (!errorShowed) {
-                                KendoLog.severe(this.getClass().getName(), "Language selection failed: " + language + " on " + tag + ".");
-                                errorShowed = true;
-                            }
-                            return null;
-                        }
-                    }
+	private String readTag(String tag, String language) {
+		try {
+			NodeList nodeLst = doc.getElementsByTagName(tag);
+			for (int s = 0; s < nodeLst.getLength(); s++) {
+				Node fstNode = nodeLst.item(s);
+				if (fstNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element fstElmnt = (Element) fstNode;
+					NodeList fstNmElmntLst = fstElmnt.getElementsByTagName(language);
+					Element fstNmElmnt = (Element) fstNmElmntLst.item(0);
+					try {
+						NodeList fstNm = fstNmElmnt.getChildNodes();
+						retried = false;
+						return ((Node) fstNm.item(0)).getNodeValue().trim();
+					} catch (NullPointerException npe) {
+						// npe.printStackTrace();
+						if (!retried) {
+							if (!showedMessage) {
+								KendoLog.warning(Translator.class.getName(), "There is a problem with tag: " + tag
+										+ " in  language: \"" + language
+										+ "\". We tray to use english language instead.");
+								showedMessage = true;
+							}
+							retried = true;
+							return readTag(tag, DEFAULT_LANGUAGE);
+						}
+						if (!language.equals(DEFAULT_LANGUAGE)) {
+							if (!errorShowed) {
+								KendoLog.warning(this.getClass().getName(),
+										"Selecting english language by default. You can change it later in Options->Language ");
+								Configuration.storeLanguageConfiguration(language);
+								errorShowed = true;
+							}
+							return readTag(tag, DEFAULT_LANGUAGE);
+						} else {
+							if (!errorShowed) {
+								KendoLog.severe(this.getClass().getName(), "Language selection failed: " + language
+										+ " on " + tag + ".");
+								errorShowed = true;
+							}
+							return null;
+						}
+					}
 
-                }
-            }
-            KendoLog.severe(this.getClass().getName(), "No tag for: " + tag + ".");
-            return null;
-        } catch (NullPointerException npe) {
-            return null;
-        }
-    }
+				}
+			}
+			KendoLog.severe(this.getClass().getName(), "No tag for: " + tag + ".");
+			return null;
+		} catch (NullPointerException npe) {
+			return null;
+		}
+	}
 
-    public static List<Language> getAvailableLanguages() {
-        if (languagesList == null) {
-            languagesList = new ArrayList<>();
-            Document storedLanguages = null;
-            storedLanguages = parseFile(storedLanguages, "languages.xml");
-            NodeList nodeLst = storedLanguages.getElementsByTagName("languages");
-            for (int s = 0; s < nodeLst.getLength(); s++) {
-                Node fstNode = nodeLst.item(s);
-                try {
-                    Language lang = new Language(fstNode.getTextContent(),
-                            fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(),
-                            fstNode.getAttributes().getNamedItem("flag").getNodeValue());
-                    languagesList.add(lang);
-                } catch (NullPointerException npe) {
-                    KendoLog.severe(Translator.class.getName(), "Error retrieving the available languages. Check your installation.");
-                }
-            }
-        }
-        return languagesList;
-    }
+	public synchronized static List<Language> getAvailableLanguages() {
+		if (languagesList == null) {
+			languagesList = new ArrayList<>();
+			Document storedLanguages = null;
+			storedLanguages = parseFile(storedLanguages, "languages.xml");
+			NodeList nodeLst = storedLanguages.getElementsByTagName("languages");
+			for (int s = 0; s < nodeLst.getLength(); s++) {
+				Node fstNode = nodeLst.item(s);
+				try {
+					Language lang = new Language(fstNode.getTextContent(), fstNode.getAttributes()
+							.getNamedItem("abbrev").getNodeValue(), fstNode.getAttributes().getNamedItem("flag")
+							.getNodeValue());
+					languagesList.add(lang);
+				} catch (NullPointerException npe) {
+					KendoLog.severe(Translator.class.getName(),
+							"Error retrieving the available languages. Check your installation.");
+				}
+			}
+		}
+		return languagesList;
+	}
 
-    public static RoleTags getAvailableRoles(String language) {
-        if (rolesList.get(language) == null) {
-            int red, green, blue;
-            rolesList.put(language, new RoleTags());
-            Document storedRoles = null;
-            storedRoles = parseFile(storedRoles, "roles.xml");
-            NodeList nodeLst = storedRoles.getElementsByTagName("role");
-            for (int i = 0; i < nodeLst.getLength(); i++) {
-                org.w3c.dom.Node firstNode = nodeLst.item(i);
-                if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element element = (Element) firstNode;
-                    String tag = element.getAttributes().getNamedItem("tag").getNodeValue();
-                    String abbrev = element.getAttributes().getNamedItem("abbrev").getNodeValue();
-                    try {
-                        red = Integer.parseInt(element.getAttributes().getNamedItem("red").getNodeValue());
-                    } catch (NullPointerException npe) {
-                        red = i * 127;
-                        if (red > 224) {
-                            red = red % 225;
-                        }
-                    }
-                    try {
-                        green = Integer.parseInt(element.getAttributes().getNamedItem("green").getNodeValue());
-                    } catch (NullPointerException npe) {
-                        green = i * 17;
-                        if (green > 224) {
-                            green = green % 225;
-                        }
-                    }
-                    try {
-                        blue = Integer.parseInt(element.getAttributes().getNamedItem("blue").getNodeValue());
-                    } catch (NullPointerException npe) {
-                        blue = 255 - i * 73;
-                        if (blue < 0) {
-                            blue = 255 + blue % 255;
-                        }
-                    }
-                    NodeList translatedRoles = element.getElementsByTagName(language);
-                    Element rol = (Element) translatedRoles.item(0);
-                    RoleTag role = new RoleTag(tag, rol.getTextContent().trim(), abbrev);
-                    role.addColor(red, green, blue);
-                    rolesList.get(language).add(role);
-                }
-            }
-        }
-        return rolesList.get(language);
-    }
+	public static RoleTags getAvailableRoles(String language) {
+		if (rolesList.get(language) == null) {
+			int red, green, blue;
+			rolesList.put(language, new RoleTags());
+			Document storedRoles = null;
+			storedRoles = parseFile(storedRoles, "roles.xml");
+			NodeList nodeLst = storedRoles.getElementsByTagName("role");
+			for (int i = 0; i < nodeLst.getLength(); i++) {
+				org.w3c.dom.Node firstNode = nodeLst.item(i);
+				if (firstNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element element = (Element) firstNode;
+					String tag = element.getAttributes().getNamedItem("tag").getNodeValue();
+					String abbrev = element.getAttributes().getNamedItem("abbrev").getNodeValue();
+					try {
+						red = Integer.parseInt(element.getAttributes().getNamedItem("red").getNodeValue());
+					} catch (NullPointerException npe) {
+						red = i * 127;
+						if (red > 224) {
+							red = red % 225;
+						}
+					}
+					try {
+						green = Integer.parseInt(element.getAttributes().getNamedItem("green").getNodeValue());
+					} catch (NullPointerException npe) {
+						green = i * 17;
+						if (green > 224) {
+							green = green % 225;
+						}
+					}
+					try {
+						blue = Integer.parseInt(element.getAttributes().getNamedItem("blue").getNodeValue());
+					} catch (NullPointerException npe) {
+						blue = 255 - i * 73;
+						if (blue < 0) {
+							blue = 255 + blue % 255;
+						}
+					}
+					NodeList translatedRoles = element.getElementsByTagName(language);
+					Element rol = (Element) translatedRoles.item(0);
+					RoleTag role = new RoleTag(tag, rol.getTextContent().trim(), abbrev);
+					role.addColor(red, green, blue);
+					rolesList.get(language).add(role);
+				}
+			}
+		}
+		return rolesList.get(language);
+	}
 }
