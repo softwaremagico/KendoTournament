@@ -40,427 +40,427 @@ import java.util.TimerTask;
 
 public class DatabaseConnection {
 
-    // Database connection keep alive for X tenth of a second
-    private static Integer CONNECTION_TRIES = 10;
-    private static Integer CONNECTION_TASK_PERIOD = 100;
-    private Database database = null;
-    private String password = "";
-    private String user = "kendouser";
-    private String databaseName = "kendotournament";
-    private String server = "localhost";
-    private DatabaseEngine databaseEngine = DatabaseEngine.SQLite;
-    private boolean databaseConnectionTested = false;
-    private static DatabaseConnection connection = null;
-    private static int connectionCounts = 0;
-    private Timer timer = new Timer("Database Connection");
-    private Task timerTask;
-    private boolean disconnected = true;
+	// Database connection keep alive for X tenth of a second
+	private static Integer CONNECTION_TRIES = 10;
+	private static Integer CONNECTION_TASK_PERIOD = 100;
+	private Database database = null;
+	private String password = "";
+	private String user = "kendouser";
+	private String databaseName = "kendotournament";
+	private String server = "localhost";
+	private DatabaseEngine databaseEngine = DatabaseEngine.SQLite;
+	private boolean databaseConnectionTested = false;
+	private static DatabaseConnection connection = null;
+	private static int connectionCounts = 0;
+	private Timer timer = new Timer("Database Connection");
+	private Task timerTask;
+	private boolean disconnected = true;
 
-    private DatabaseConnection() {
-        obtainStoredDatabaseConnection();
-    }
+	private DatabaseConnection() {
+		obtainStoredDatabaseConnection();
+	}
 
-    public static DatabaseConnection getInstance() {
-        if (connection == null) {
-            connection = new DatabaseConnection();
-        }
-        return connection;
-    }
+	public synchronized static DatabaseConnection getInstance() {
+		if (connection == null) {
+			connection = new DatabaseConnection();
+		}
+		return connection;
+	}
 
-    public Database getDatabase() {
-        return database;
-    }
+	public Database getDatabase() {
+		return database;
+	}
 
-    public void setDatabase(Database database) {
-        databaseConnectionTested = false;
-        this.database = database;
-    }
+	public void setDatabase(Database database) {
+		databaseConnectionTested = false;
+		this.database = database;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        databaseConnectionTested = false;
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		databaseConnectionTested = false;
+		this.password = password;
+	}
 
-    public String getUser() {
-        return user;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public void setUser(String user) {
-        databaseConnectionTested = false;
-        this.user = user;
-    }
+	public void setUser(String user) {
+		databaseConnectionTested = false;
+		this.user = user;
+	}
 
-    public String getDatabaseName() {
-        return databaseName;
-    }
+	public String getDatabaseName() {
+		return databaseName;
+	}
 
-    public void setDatabaseName(String databaseName) {
-        databaseConnectionTested = false;
-        this.databaseName = databaseName;
-    }
+	public void setDatabaseName(String databaseName) {
+		databaseConnectionTested = false;
+		this.databaseName = databaseName;
+	}
 
-    public String getServer() {
-        return server;
-    }
+	public String getServer() {
+		return server;
+	}
 
-    public void setServer(String server) {
-        databaseConnectionTested = false;
-        this.server = server;
-    }
+	public void setServer(String server) {
+		databaseConnectionTested = false;
+		this.server = server;
+	}
 
-    public boolean isDatabaseConnectionTested() {
-        return databaseConnectionTested;
-    }
+	public boolean isDatabaseConnectionTested() {
+		return databaseConnectionTested;
+	}
 
-    public static DatabaseConnection getConnection() {
-        return connection;
-    }
+	public static DatabaseConnection getConnection() {
+		return connection;
+	}
 
-    public static void setConnection(DatabaseConnection connection) {
-        DatabaseConnection.connection = connection;
-    }
+	public static void setConnection(DatabaseConnection connection) {
+		DatabaseConnection.connection = connection;
+	}
 
-    public boolean testDatabaseConnection(String user, String password, String databaseName, String server,
-            boolean storeInConfigFile) throws SQLException {
-        this.user = user;
-        this.password = password;
-        this.databaseName = databaseName;
-        this.server = server;
-        this.database = databaseEngine.getDatabaseClass();
-        if (storeInConfigFile) {
-            generateDatabaseConnectionFile();
-        }
-        databaseConnectionTested = connect();
-        return databaseConnectionTested;
-    }
+	public boolean testDatabaseConnection(String user, String password, String databaseName, String server,
+			boolean storeInConfigFile) throws SQLException {
+		this.user = user;
+		this.password = password;
+		this.databaseName = databaseName;
+		this.server = server;
+		this.database = databaseEngine.getDatabaseClass();
+		if (storeInConfigFile) {
+			generateDatabaseConnectionFile();
+		}
+		databaseConnectionTested = connect();
+		return databaseConnectionTested;
+	}
 
-    public void resetPassword() {
-        password = "";
-    }
+	public void resetPassword() {
+		password = "";
+	}
 
-    private void obtainStoredDatabaseConnection() {
-        try {
-            List<String> connectionData;
+	private void obtainStoredDatabaseConnection() {
+		try {
+			List<String> connectionData;
 
-            connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome());
+			connectionData = Folder.readFileLines(Path.getPathConnectionConfigInHome());
 
-            for (int i = 0; i < connectionData.size(); i++) {
-                if (connectionData.get(i).contains("User:")) {
-                    try {
-                        user = connectionData.get(i).split("User:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Machine:")) {
-                    try {
-                        server = connectionData.get(i).split("Machine:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Database:")) {
-                    try {
-                        databaseName = connectionData.get(i).split("Database:")[1];
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-                if (connectionData.get(i).contains("Engine:")) {
-                    try {
-                        databaseEngine = DatabaseEngine.getDatabase(connectionData.get(i).split("Engine:")[1]);
-                    } catch (ArrayIndexOutOfBoundsException aiofb) {
-                    }
-                }
-            }
-        } catch (IOException ex) {
-        }
-    }
+			for (int i = 0; i < connectionData.size(); i++) {
+				if (connectionData.get(i).contains("User:")) {
+					try {
+						user = connectionData.get(i).split("User:")[1];
+					} catch (ArrayIndexOutOfBoundsException aiofb) {
+					}
+				}
+				if (connectionData.get(i).contains("Machine:")) {
+					try {
+						server = connectionData.get(i).split("Machine:")[1];
+					} catch (ArrayIndexOutOfBoundsException aiofb) {
+					}
+				}
+				if (connectionData.get(i).contains("Database:")) {
+					try {
+						databaseName = connectionData.get(i).split("Database:")[1];
+					} catch (ArrayIndexOutOfBoundsException aiofb) {
+					}
+				}
+				if (connectionData.get(i).contains("Engine:")) {
+					try {
+						databaseEngine = DatabaseEngine.getDatabase(connectionData.get(i).split("Engine:")[1]);
+					} catch (ArrayIndexOutOfBoundsException aiofb) {
+					}
+				}
+			}
+		} catch (IOException ex) {
+		}
+	}
 
-    private void generateDatabaseConnectionFile() {
-        List<String> connectionData = new ArrayList<>();
-        connectionData.add("User:" + user);
-        connectionData.add("Machine:" + server);
-        connectionData.add("Database:" + databaseName);
-        connectionData.add("Engine:" + databaseEngine);
-        Folder.saveListInFile(connectionData, Path.getPathConnectionConfigInHome());
-    }
+	private void generateDatabaseConnectionFile() {
+		List<String> connectionData = new ArrayList<>();
+		connectionData.add("User:" + user);
+		connectionData.add("Machine:" + server);
+		connectionData.add("Database:" + databaseName);
+		connectionData.add("Engine:" + databaseEngine);
+		Folder.saveListInFile(connectionData, Path.getPathConnectionConfigInHome());
+	}
 
-    public boolean isLocallyConnected() {
-        InetAddress ownIP = null;
-        try {
-            ownIP = InetAddress.getLocalHost();
-        } catch (UnknownHostException ex1) {
-        }
+	public boolean isLocallyConnected() {
+		InetAddress ownIP = null;
+		try {
+			ownIP = InetAddress.getLocalHost();
+		} catch (UnknownHostException ex1) {
+		}
 
-        if (database.onlyLocalConnection()) {
-            return true;
-        }
+		if (database.onlyLocalConnection()) {
+			return true;
+		}
 
-        // The easy way.
-        if (server.equals("localhost") || server.equals("127.0.0.1")
-                || (ownIP != null && server.equals(ownIP.getHostAddress()))) {
-            return true;
-        }
-        // Read all network interfaces.
-        try {
-            Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
-            while (net.hasMoreElements()) {
-                NetworkInterface ni = (NetworkInterface) net.nextElement();
-                Enumeration<InetAddress> addr = ni.getInetAddresses();
-                // Get the IP of each interface.
-                while (addr.hasMoreElements()) {
-                    java.net.InetAddress inet = (java.net.InetAddress) addr.nextElement();
-                    if (server.equals(inet.getHostAddress())) {
-                        return true;
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-        return false;
-    }
+		// The easy way.
+		if (server.equals("localhost") || server.equals("127.0.0.1")
+				|| (ownIP != null && server.equals(ownIP.getHostAddress()))) {
+			return true;
+		}
+		// Read all network interfaces.
+		try {
+			Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
+			while (net.hasMoreElements()) {
+				NetworkInterface ni = (NetworkInterface) net.nextElement();
+				Enumeration<InetAddress> addr = ni.getInetAddresses();
+				// Get the IP of each interface.
+				while (addr.hasMoreElements()) {
+					java.net.InetAddress inet = (java.net.InetAddress) addr.nextElement();
+					if (server.equals(inet.getHostAddress())) {
+						return true;
+					}
+				}
+			}
+		} catch (Exception e) {
+		}
+		return false;
+	}
 
-    public DatabaseEngine getDatabaseEngine() {
-        if (databaseEngine == null) {
-            return DatabaseEngine.getDatabase("SQLite");
-        }
-        return databaseEngine;
-    }
-    
-    public void setDatabaseEngine(DatabaseEngine databaseEngine) {
-        this.databaseEngine = databaseEngine;
-       setDatabase(databaseEngine.getDatabaseClass());
-    }
+	public DatabaseEngine getDatabaseEngine() {
+		if (databaseEngine == null) {
+			return DatabaseEngine.getDatabase("SQLite");
+		}
+		return databaseEngine;
+	}
 
-    public void setDatabaseEngine(String engine) {
-    	setDatabaseEngine(DatabaseEngine.getDatabase(engine));
-    }
+	public void setDatabaseEngine(DatabaseEngine databaseEngine) {
+		this.databaseEngine = databaseEngine;
+		setDatabase(databaseEngine.getDatabaseClass());
+	}
 
-    public void resetDatabase() {
-        UndrawPool.getInstance().reset();
-        DuelPool.getInstance().reset();
-        FightPool.getInstance().reset();
-        TeamPool.getInstance().reset();
-        RolePool.getInstance().reset();
-        CustomLinkPool.getInstance().reset();
-        TournamentPool.getInstance().reset();
-        PhotoPool.getInstance().reset();
-        RegisteredPersonPool.getInstance().reset();
-        ClubPool.getInstance().reset();
-    }
+	public void setDatabaseEngine(String engine) {
+		setDatabaseEngine(DatabaseEngine.getDatabase(engine));
+	}
 
-    public boolean updateDatabase(Tournament tournament) throws SQLException {
-        connect();
+	public void resetDatabase() {
+		UndrawPool.getInstance().reset();
+		DuelPool.getInstance().reset();
+		FightPool.getInstance().reset();
+		TeamPool.getInstance().reset();
+		RolePool.getInstance().reset();
+		CustomLinkPool.getInstance().reset();
+		TournamentPool.getInstance().reset();
+		PhotoPool.getInstance().reset();
+		RegisteredPersonPool.getInstance().reset();
+		ClubPool.getInstance().reset();
+	}
 
-        // Delete actions.
-        if (!UndrawPool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
+	public boolean updateDatabase(Tournament tournament) throws SQLException {
+		connect();
 
-        if (!DuelPool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
-        if (!FightPool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
-        if (!TeamPool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
-        if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase(tournament)) {
-            return false;
-        }
-        if (!RolePool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
-        if (!CustomLinkPool.getInstance().removeElementsFromDatabase(tournament)) {
-            return false;
-        }
-        if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!ClubPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
+		// Delete actions.
+		if (!UndrawPool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
 
-        // Add actions
-        if (!TournamentPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!ClubPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!PhotoPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!RolePool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        if (!TeamPool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        if (!FightPool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        if (!DuelPool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        if (!UndrawPool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        if (!CustomLinkPool.getInstance().addElementsToDatabase(tournament)) {
-            return false;
-        }
-        disconnect();
-        AutoSaveByTime.getInstance().resetTime();
-        return true;
-    }
+		if (!DuelPool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
+		if (!FightPool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
+		if (!TeamPool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
+		if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase(tournament)) {
+			return false;
+		}
+		if (!RolePool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
+		if (!CustomLinkPool.getInstance().removeElementsFromDatabase(tournament)) {
+			return false;
+		}
+		if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!ClubPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
 
-    public boolean updateDatabase() throws SQLException {
-        connect();
+		// Add actions
+		if (!TournamentPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!ClubPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!PhotoPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!RolePool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		if (!TeamPool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		if (!FightPool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		if (!DuelPool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		if (!UndrawPool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		if (!CustomLinkPool.getInstance().addElementsToDatabase(tournament)) {
+			return false;
+		}
+		disconnect();
+		AutoSaveByTime.getInstance().resetTime();
+		return true;
+	}
 
-        // Delete actions.
-        if (!UndrawPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
+	public boolean updateDatabase() throws SQLException {
+		connect();
 
-        if (!DuelPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!FightPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!TeamPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase()) {
-            return false;
-        }
-        if (!RolePool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!CustomLinkPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
-        if (!ClubPool.getInstance().removeElementsFromDatabase()) {
-            return false;
-        }
+		// Delete actions.
+		if (!UndrawPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
 
-        // Add actions
-        if (!TournamentPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!ClubPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!PhotoPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!RolePool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!TeamPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!FightPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!DuelPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!UndrawPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        if (!CustomLinkPool.getInstance().addElementsToDatabase()) {
-            return false;
-        }
-        disconnect();
-        AutoSaveByTime.getInstance().resetTime();
-        return true;
-    }
+		if (!DuelPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!FightPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!TeamPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!TeamPool.getInstance().removeOldMembersOrderFromDatabase()) {
+			return false;
+		}
+		if (!RolePool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!CustomLinkPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!TournamentPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!PhotoPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!RegisteredPersonPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
+		if (!ClubPool.getInstance().removeElementsFromDatabase()) {
+			return false;
+		}
 
-    public boolean needsToBeStoredInDatabase() {
-        return ClubPool.getInstance().needsToBeStoredInDatabase()
-                || RegisteredPersonPool.getInstance().needsToBeStoredInDatabase()
-                || PhotoPool.getInstance().needsToBeStoredInDatabase()
-                || TournamentPool.getInstance().needsToBeStoredInDatabase()
-                || RolePool.getInstance().needsToBeStoredInDatabase()
-                || TeamPool.getInstance().needsToBeStoredInDatabase()
-                || FightPool.getInstance().needsToBeStoredInDatabase()
-                || DuelPool.getInstance().needsToBeStoredInDatabase()
-                || UndrawPool.getInstance().needsToBeStoredInDatabase()
-                || CustomLinkPool.getInstance().needsToBeStoredInDatabase();
-    }
+		// Add actions
+		if (!TournamentPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!ClubPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!RegisteredPersonPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!PhotoPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!RolePool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!TeamPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!FightPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!DuelPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!UndrawPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		if (!CustomLinkPool.getInstance().addElementsToDatabase()) {
+			return false;
+		}
+		disconnect();
+		AutoSaveByTime.getInstance().resetTime();
+		return true;
+	}
 
-    public synchronized boolean connect() throws SQLException {
-        boolean connectionSuccess = true;
-        try {
-            timerTask.cancel();
-        } catch (NullPointerException npe) {
-        }
-        if (connectionCounts == 0 && disconnected) {
-            try {
-                connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
-                if (connectionSuccess) {
-                    disconnected = false;
-                }
-            } catch (NullPointerException npe) {
-                connectionSuccess = false;
-            }
-        }
-        if (connectionSuccess) {
-            connectionCounts++;
-        }
-        return connectionSuccess;
-    }
+	public boolean needsToBeStoredInDatabase() {
+		return ClubPool.getInstance().needsToBeStoredInDatabase()
+				|| RegisteredPersonPool.getInstance().needsToBeStoredInDatabase()
+				|| PhotoPool.getInstance().needsToBeStoredInDatabase()
+				|| TournamentPool.getInstance().needsToBeStoredInDatabase()
+				|| RolePool.getInstance().needsToBeStoredInDatabase()
+				|| TeamPool.getInstance().needsToBeStoredInDatabase()
+				|| FightPool.getInstance().needsToBeStoredInDatabase()
+				|| DuelPool.getInstance().needsToBeStoredInDatabase()
+				|| UndrawPool.getInstance().needsToBeStoredInDatabase()
+				|| CustomLinkPool.getInstance().needsToBeStoredInDatabase();
+	}
 
-    public synchronized void disconnect() {
-        connectionCounts--;
-        if (connectionCounts == 0) {
-            try {
-                timerTask.cancel();
-            } catch (NullPointerException npe) {
-            }
-            timerTask = new Task();
-            timer.schedule(timerTask, CONNECTION_TASK_PERIOD, CONNECTION_TASK_PERIOD);
-        }
-    }
+	public synchronized boolean connect() throws SQLException {
+		boolean connectionSuccess = true;
+		try {
+			timerTask.cancel();
+		} catch (NullPointerException npe) {
+		}
+		if (connectionCounts == 0 && disconnected) {
+			try {
+				connectionSuccess = getDatabase().connect(password, user, databaseName, server, false, true);
+				if (connectionSuccess) {
+					disconnected = false;
+				}
+			} catch (NullPointerException npe) {
+				connectionSuccess = false;
+			}
+		}
+		if (connectionSuccess) {
+			connectionCounts++;
+		}
+		return connectionSuccess;
+	}
 
-    class Task extends TimerTask {
-        // times member represent calling times.
+	public synchronized void disconnect() {
+		connectionCounts--;
+		if (connectionCounts == 0) {
+			try {
+				timerTask.cancel();
+			} catch (NullPointerException npe) {
+			}
+			timerTask = new Task();
+			timer.schedule(timerTask, CONNECTION_TASK_PERIOD, CONNECTION_TASK_PERIOD);
+		}
+	}
 
-        private int times = 0;
+	class Task extends TimerTask {
+		// times member represent calling times.
 
-        @Override
-        public void run() {
-            times++;
-            if (times >= CONNECTION_TRIES && connectionCounts == 0) {
-                getDatabase().disconnect();
-                disconnected = true;
-                this.cancel();
-            }
-        }
-    }
+		private int times = 0;
+
+		@Override
+		public void run() {
+			times++;
+			if (times >= CONNECTION_TRIES && connectionCounts == 0) {
+				getDatabase().disconnect();
+				disconnected = true;
+				this.cancel();
+			}
+		}
+	}
 }

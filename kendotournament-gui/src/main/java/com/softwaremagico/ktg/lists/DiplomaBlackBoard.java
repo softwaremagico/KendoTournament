@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.lists;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -38,66 +39,64 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-/**
- *
- * @author jorge
- */
 public class DiplomaBlackBoard extends JPanel {
 
-    Image imagen = null;
-    int yline = 113;
+	Image imagen = null;
+	int yline = 113;
 
-    public DiplomaBlackBoard() {
-        setLayout(new java.awt.BorderLayout());
-    }
+	public DiplomaBlackBoard() {
+		setLayout(new java.awt.BorderLayout());
+	}
 
-    public void setBackground(File file, Dimension d) throws IOException {
-        try {
-            if (file == null) {
-                imagen = null;
-            } else {
-                imagen = ImageIO.read(file);
-            }
-            FileInputStream imageInput = new FileInputStream(file.getPath());
-            BufferedImage input = ImageIO.read(imageInput);
-            //imagen = imagen.getScaledInstance( (int) ((((double) getPreferredSize().height / srcHeight) * srcWidth)),getPreferredSize().height, Image.SCALE_FAST);
-            imagen = imagen.getScaledInstance(d.width, d.height, Image.SCALE_FAST);
-        } catch (javax.imageio.IIOException ie) {
-            AlertManager.showErrorInformation(this.getClass().getName(),ie);
-        }
-    }
+	public void setBackground(File file, Dimension d) throws IOException {
+		try {
+			if (file == null) {
+				imagen = null;
+				return;
+			} else {
+				imagen = ImageIO.read(file);
+			}
+			FileInputStream imageInput = new FileInputStream(file.getPath());
+			BufferedImage input = ImageIO.read(imageInput);
+			// imagen = imagen.getScaledInstance( (int) ((((double) getPreferredSize().height / srcHeight) *
+			// srcWidth)),getPreferredSize().height, Image.SCALE_FAST);
+			imagen = imagen.getScaledInstance(d.width, d.height, Image.SCALE_FAST);
+		} catch (javax.imageio.IIOException ie) {
+			AlertManager.showErrorInformation(this.getClass().getName(), ie);
+		}
+	}
 
-    public void paintLine(Graphics g, double y) {
-        g.drawLine(0, (int) (super.getHeight() - y), super.getWidth(), (int) (super.getHeight() - y));
-    }
+	public void paintLine(Graphics g, double y) {
+		g.drawLine(0, (int) (super.getHeight() - y), super.getWidth(), (int) (super.getHeight() - y));
+	}
 
-    private File getBackground(String image) {
-        File file = new File(image);
-        if (!file.exists()) {
-            file = new File(Path.getDiplomaPath());
-            if (!file.exists()) {
-            }
-        }
-        return file;
-    }
+	private File getBackground(String image) {
+		File file = new File(image);
+		if (!file.exists()) {
+			file = new File(Path.getDiplomaPath());
+			if (!file.exists()) {
+			}
+		}
+		return file;
+	}
 
-    public void changeLine(int y) {
-        yline = (getSize().height * y) / 200;
-        repaint();
-    }
+	public void changeLine(int y) {
+		yline = (getSize().height * y) / 200;
+		repaint();
+	}
 
-    @Override
-    public void paint(Graphics g) {
-        try {
-            setBackground(new Color(255, 255, 255));
-            setBackground(getBackground(Path.getDiplomaPath()), getSize());
-            if (imagen != null) {
-                g.drawImage(imagen, 0, 0, null);
-            }
-            paintLine(g, yline);
-            //super.paint(g);
-        } catch (IOException ex) {
-            Logger.getLogger(DiplomaBlackBoard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@Override
+	public void paint(Graphics g) {
+		try {
+			setBackground(new Color(255, 255, 255));
+			setBackground(getBackground(Path.getDiplomaPath()), getSize());
+			if (imagen != null) {
+				g.drawImage(imagen, 0, 0, null);
+			}
+			paintLine(g, yline);
+			// super.paint(g);
+		} catch (IOException ex) {
+			Logger.getLogger(DiplomaBlackBoard.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 }

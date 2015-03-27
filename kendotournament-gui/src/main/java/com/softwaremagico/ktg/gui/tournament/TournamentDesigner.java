@@ -23,6 +23,14 @@ package com.softwaremagico.ktg.gui.tournament;
  * #L%
  */
 
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -43,17 +51,9 @@ import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 
-import java.awt.Toolkit;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-
 public final class TournamentDesigner extends javax.swing.JFrame {
-
-    private DefaultListModel<String> teamModel = new DefaultListModel<>();
+	private static final long serialVersionUID = 3824274132477001088L;
+	private DefaultListModel<String> teamModel = new DefaultListModel<>();
     private Translator trans = null;
     private List<Team> teams;
     private List<Tournament> listTournaments = new ArrayList<>();
@@ -293,11 +293,11 @@ public final class TournamentDesigner extends javax.swing.JFrame {
     private void initComponents() {
 
         TournamentLabel = new javax.swing.JLabel();
-        tournamentComboBox = new javax.swing.JComboBox();
+        tournamentComboBox = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         BlackBoardScrollPane = new javax.swing.JScrollPane();
         DeleteLevelLabel = new javax.swing.JLabel();
-        levelComboBox = new javax.swing.JComboBox();
+        levelComboBox = new javax.swing.JComboBox<>();
         deleteLevelButton = new javax.swing.JButton();
         addGroupButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -307,7 +307,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
         winnerPassSpinner = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         TeamScrollPane = new javax.swing.JScrollPane();
-        teamList = new javax.swing.JList();
+        teamList = new javax.swing.JList<>();
         addTeamButton = new javax.swing.JButton();
         deleteTeamsButton = new javax.swing.JButton();
         cleanLinksButton = new javax.swing.JButton();
@@ -765,9 +765,9 @@ public final class TournamentDesigner extends javax.swing.JFrame {
     private javax.swing.JButton deleteTeamsButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JComboBox levelComboBox;
-    private javax.swing.JList teamList;
-    private javax.swing.JComboBox tournamentComboBox;
+    private javax.swing.JComboBox<String> levelComboBox;
+    private javax.swing.JList<String> teamList;
+    private javax.swing.JComboBox<Tournament> tournamentComboBox;
     private javax.swing.JSpinner winnerPassSpinner;
     // End of variables declaration//GEN-END:variables
 }

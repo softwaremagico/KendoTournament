@@ -1,11 +1,13 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
+
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
-
-    private Tournament tournament;
+public class CustomWinnerLink implements Comparable<CustomWinnerLink>, Serializable {
+	private static final long serialVersionUID = 2614774791114137647L;
+	private Tournament tournament;
     private Integer source = null;
     private Integer address = null;
     private Integer winner = 1;
@@ -126,7 +128,7 @@ public class CustomWinnerLink implements Comparable<CustomWinnerLink> {
             return tournament.compareTo(o.tournament);
         }
 
-        if (source != o.source) {
+        if (!source.equals(o.source)) {
             return source.compareTo(o.source);
         }
 

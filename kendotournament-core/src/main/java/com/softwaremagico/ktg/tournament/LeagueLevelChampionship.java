@@ -26,8 +26,9 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Tournament;
 
 public class LeagueLevelChampionship extends LeagueLevel {
+	private static final long serialVersionUID = -2490242867449978156L;
 
-    protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+	protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
         super(tournament, level, nextLevel, previousLevel);
         if (level > 0) { // Inner levels always have at least one group.
             addGroup(new TreeTournamentGroup(tournament, level, 0, getGroups().size()));

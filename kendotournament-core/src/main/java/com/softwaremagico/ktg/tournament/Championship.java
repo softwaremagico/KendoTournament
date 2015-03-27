@@ -33,7 +33,7 @@ public class Championship implements ITournamentManager {
                     fight.getDuels();
                 }
             }
-            // Fill teams of groups without fights. (i.e grouo with only one
+            // Fill teams of groups without fights. (i.e group with only one
             // team).
             LeagueLevel level = levelZero;
             while (level.nextLevel != null) {
