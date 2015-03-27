@@ -89,7 +89,7 @@ public class ClubPool extends SimplePool<Club> {
 
     @Override
     protected String getId(Club element) {
-        return element.getName();
+        return element.getName().toLowerCase();
     }
 
     @Override

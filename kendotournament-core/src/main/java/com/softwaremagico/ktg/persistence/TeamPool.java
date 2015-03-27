@@ -98,7 +98,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
 
     @Override
     protected String getId(Team element) {
-        return element.getName();
+        return element.getName().toLowerCase();
     }
 
     /**

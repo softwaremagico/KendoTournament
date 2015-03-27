@@ -302,8 +302,8 @@ public class NewTeam extends KendoFrame {
                     List<RegisteredPerson> participants = new ArrayList<>();
                     Team team = new Team(NameTextField.getText().trim(), tournaments.get(TournamentComboBox.getSelectedIndex()));
 
-                    for (int i = 0; i < competitorsPanel.size(); i++) {
-                        participants.add(competitors.get(competitorsPanel.get(i).competitorComboBox.getSelectedIndex()));
+                    for (CompetitorPanel competitorsPanel1 : competitorsPanel) {
+                        participants.add(competitors.get(competitorsPanel1.competitorComboBox.getSelectedIndex()));
                     }
 
                     if (repeatedCompetitor()) {

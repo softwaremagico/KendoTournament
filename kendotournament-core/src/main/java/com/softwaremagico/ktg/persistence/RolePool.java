@@ -50,7 +50,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 
     @Override
     protected String getId(Role element) {
-        return element.getCompetitor().getId() + element.getTournament().getName();
+        return element.getCompetitor().getId() + element.getTournament().getName().toLowerCase();
     }
 
     protected String getId(Tournament tournament, RegisteredPerson person) {
