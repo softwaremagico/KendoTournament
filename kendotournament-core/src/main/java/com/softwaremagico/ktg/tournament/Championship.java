@@ -119,6 +119,11 @@ public class Championship implements ITournamentManager {
     public void addGroup(TGroup group) {
         getLevel(0).addGroup(group);
     }
+    
+     @Override
+    public int getIndexOfGroup(TGroup group){
+        return getGroups(group.getLevel()).indexOf(group);
+    }
 
     @Override
     public void removeGroup(Integer level, Integer groupIndex) {

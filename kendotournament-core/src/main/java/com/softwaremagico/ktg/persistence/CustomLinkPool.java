@@ -41,7 +41,7 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 
 	@Override
 	protected String getId(CustomWinnerLink element) {
-		return element.getId();
+		return normalizeElementId(element.getId());
 	}
 
 	public void remove(Tournament tournament, Integer source) throws SQLException {

@@ -212,4 +212,9 @@ public class SimpleTournament implements ITournamentManager {
     public void removeTeams() {
         removeTeams(0);
     }
+
+    @Override
+    public int getIndexOfGroup(TGroup group) {
+        return getIndex(0, group);
+    }
 }

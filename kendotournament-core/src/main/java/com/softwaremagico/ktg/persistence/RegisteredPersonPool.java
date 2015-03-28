@@ -77,7 +77,7 @@ public class RegisteredPersonPool extends SimplePool<RegisteredPerson> {
 
     @Override
     protected String getId(RegisteredPerson element) {
-        return element.getId();
+        return normalizeElementId(element.getId());
     }
 
     public List<RegisteredPerson> getPeopleWithoutClub() throws SQLException {

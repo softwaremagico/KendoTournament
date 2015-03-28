@@ -55,7 +55,7 @@ public class PhotoPool {
     }
 
     protected String getId(Photo element) {
-        return element.getId();
+        return normalizeElementId(element.getId());
     }
 
     private List<Photo> getPhotosToStore() {
@@ -102,5 +102,9 @@ public class PhotoPool {
     public void clearCache() {
         elements = null;
         photosToStore = null;
+    }
+
+    protected String normalizeElementId(String elementId) {
+        return elementId.toLowerCase();
     }
 }

@@ -50,7 +50,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 
     @Override
     protected String getId(Tournament element) {
-        return element.getName().toLowerCase();
+        return normalizeElementId(element.getName().toLowerCase());
     }
 
     public Integer getLevelTournament(Tournament tournament) throws SQLException {

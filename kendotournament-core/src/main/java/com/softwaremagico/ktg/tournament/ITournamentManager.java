@@ -31,17 +31,18 @@ public interface ITournamentManager {
 
     /**
      * Generate fights of level.
+     *
      * @param level
-     * @return 
+     * @return
      */
     List<Fight> getFights(Integer level);
-    
+
     List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
-    
+
     List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
-    
+
     void fillGroups();
-    
+
     List<TGroup> getGroups();
 
     List<TGroup> getGroups(Integer level);
@@ -50,12 +51,14 @@ public interface ITournamentManager {
 
     void addGroup(TGroup group);
 
+    int getIndexOfGroup(TGroup group);
+
     void removeGroup(Integer level, Integer groupIndex);
 
     void removeGroup(TGroup group);
 
     void removeGroups(Integer level);
-    
+
     int getIndex(Integer level, TGroup group);
 
     LeagueLevel getLevel(Integer level);
@@ -67,22 +70,23 @@ public interface ITournamentManager {
     boolean exist(Team team);
 
     void removeTeams(Integer level);
-    
+
     void removeTeams();
 
     /**
      * Divide groups into fight areas.
      */
     void setDefaultFightAreas();
-    
+
     void setHowManyTeamsOfGroupPassToTheTree(Integer winners);
-    
+
     /**
-     * We are in the final fight of the tournament. 
-     * @return 
+     * We are in the final fight of the tournament.
+     *
+     * @return
      */
     boolean inTheLastFight();
-    
+
     /**
      * Remove all fights of all groups.
      */

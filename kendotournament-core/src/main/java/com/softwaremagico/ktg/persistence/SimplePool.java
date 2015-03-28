@@ -54,7 +54,7 @@ public abstract class SimplePool<ElementPool> {
     }
 
     public ElementPool get(String elementId) throws SQLException {
-        return (ElementPool) getMap().get(elementId);
+        return (ElementPool) getMap().get(normalizeElementId(elementId));
     }
 
     protected List<ElementPool> getAll() throws SQLException {
@@ -94,6 +94,12 @@ public abstract class SimplePool<ElementPool> {
         return elementsToUpdate;
     }
 
+    /**
+     * Obtains the ID from an element. The ID must be always in lowercase.
+     *
+     * @param element
+     * @return
+     */
     protected abstract String getId(ElementPool element);
 
     protected HashMap<String, ElementPool> getMap() throws SQLException {
@@ -174,7 +180,7 @@ public abstract class SimplePool<ElementPool> {
     public List<ElementPool> search(String string) throws SQLException {
         List<ElementPool> result = new ArrayList<>();
         for (ElementPool element : getMap().values()) {
-            if (getId(element).contains(string)) {
+            if (getId(element).contains(normalizeElementId(string))) {
                 result.add((ElementPool) element);
             }
         }
@@ -239,5 +245,9 @@ public abstract class SimplePool<ElementPool> {
 
     public void clearCache() {
         reset();
+    }
+
+    protected String normalizeElementId(String elementId) {
+        return elementId.toLowerCase();
     }
 }

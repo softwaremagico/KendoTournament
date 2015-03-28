@@ -48,13 +48,11 @@ public abstract class TGroup {
     protected Integer level;
     private Integer fightArea = 0;
     private List<Fight> fightsOfGroup;
-    private int index;
 
-    public TGroup(Tournament tournament, Integer level, Integer fightArea, int index) {
+    public TGroup(Tournament tournament, Integer level, Integer fightArea) {
         this.tournament = tournament;
         this.level = level;
         this.fightArea = fightArea;
-        this.index = index;
         fightsOfGroup = new ArrayList<>();
         if (level == 0) {
             this.numberMaxOfWinners = tournament.getHowManyTeamsOfGroupPassToTheTree();
@@ -163,7 +161,7 @@ public abstract class TGroup {
     private List<Fight> getFightsOfGroup(List<Fight> fights) {
         List<Fight> fightsG = new ArrayList<>();
         for (Fight fight : fights) {
-            if (fight.getGroup() == index && fight.getLevel().equals(level)) {
+            if (fight.getGroup() == getIndex() && fight.getLevel().equals(level)) {
                 fightsG.add(fight);
             }
         }
@@ -220,8 +218,9 @@ public abstract class TGroup {
 
     /**
      * If the fightManager are over or fightManager are not needed.
+     *
      * @param fights
-     * @return 
+     * @return
      */
     public static boolean areFightsOverOrNull(List<Fight> fights) {
         if (fights.size() > 0) {
@@ -237,56 +236,10 @@ public abstract class TGroup {
 
     @Override
     public String toString() {
-        return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + index + ", fight area: "
+        return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + getIndex() + ", fight area: "
                 + fightArea + ", teams " + teams + "\n";
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.tournament);
-        hash = 41 * hash + Objects.hashCode(this.teams);
-        hash = 41 * hash + Objects.hashCode(this.level);
-        hash = 41 * hash + Objects.hashCode(this.index);
-        hash = 41 * hash + Objects.hashCode(this.fightArea);
-        hash = 41 * hash + Objects.hashCode(this.fightsOfGroup);
-        hash = 41 * hash + Objects.hashCode(this.numberMaxOfWinners);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TGroup other = (TGroup) obj;
-        if (!Objects.equals(this.tournament, other.tournament)) {
-            return false;
-        }
-        if (!Objects.equals(this.index, other.index)) {
-            return false;
-        }
-        if (!Objects.equals(this.teams, other.teams)) {
-            return false;
-        }
-        if (!Objects.equals(this.level, other.level)) {
-            return false;
-        }
-        if (!Objects.equals(this.numberMaxOfWinners, other.numberMaxOfWinners)) {
-            return false;
-        }
-        if (!Objects.equals(this.fightArea, other.fightArea)) {
-            return false;
-        }
-        if (!Objects.equals(this.fightsOfGroup, other.fightsOfGroup)) {
-            return false;
-        }
-        return true;
-    }
-
+    
     /**
      * Add a fight obtained from database to the group.
      *
@@ -302,10 +255,11 @@ public abstract class TGroup {
     /**
      * Gets the index of the group in the tournament. The index is relative to
      * all groups independent of the level.
-     * @return 
+     *
+     * @return
      */
     public int getIndex() {
-        return index;
+        return TournamentManagerFactory.getManager(tournament, tournament.getType()).getIndexOfGroup(this);
     }
 
     public void resetFights() {

@@ -64,7 +64,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 
     @Override
     protected String getId(Undraw element) {
-        return element.getTournament().toString().toLowerCase() + element.getLevel() + element.getGroupIndex() + element.getTeam().toString().toLowerCase();
+        return normalizeElementId(element.getTournament().toString() + element.getLevel() + element.getGroupIndex() + element.getTeam().toString());
     }
 
     private List<Undraw> getUndraws(Tournament tournament, Integer level, Integer groupIndex) throws SQLException {

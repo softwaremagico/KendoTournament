@@ -10,8 +10,8 @@ public class TreeTournamentGroup extends TGroup {
 
     public static final int MAX_TEAMS_PER_GROUP = 8;
 
-    public TreeTournamentGroup(Tournament tournament, Integer level, Integer fightArea, Integer groupIndex) {
-        super(tournament, level, fightArea, groupIndex);
+    public TreeTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
+        super(tournament, level, fightArea);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
     @Override
     protected String getId(Fight element) {
-        return element.getTournament().toString().toLowerCase() + "" + element.getGroup() + element.getLevel() + element.getOrderInGroup();
+        return normalizeElementId(element.getTournament().toString() + "" + element.getGroup() + element.getLevel() + element.getOrderInGroup());
     }
 
     public static boolean existRepeatedFight(List<Fight> fights) {

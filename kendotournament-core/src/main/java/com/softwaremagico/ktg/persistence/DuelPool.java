@@ -135,7 +135,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
 	@Override
 	protected String getId(Duel element) {
-		return element.hashCode() + "";
+		return normalizeElementId(element.hashCode() + "");
 	}
 
 	@Override

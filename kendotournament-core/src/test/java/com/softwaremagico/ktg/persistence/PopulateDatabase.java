@@ -3,10 +3,7 @@ package com.softwaremagico.ktg.persistence;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Assert;
-import org.junit.Before;
 import org.testng.annotations.Test;
 
 /**
@@ -27,7 +24,7 @@ public class PopulateDatabase {
     }
 
     /**
-     * Deletes any previously stored information. 
+     * Deletes any previously stored information.
      */
     private void resetDatabase() {
         try {
@@ -38,16 +35,11 @@ public class PopulateDatabase {
         }
     }
 
-    @Before
     @Test
-    public void connectToDatabase() {
+    public void connectToDatabase() throws SQLException {
         DatabaseConnection.getInstance().setDatabaseEngine(getDatabaseTested().toString());
         //Create database if not exists.
-        try {
-            DatabaseConnection.getInstance().testDatabaseConnection(DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_SERVER, false);
-        } catch (SQLException ex) {
-            Logger.getLogger(PopulateDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        DatabaseConnection.getInstance().testDatabaseConnection(DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_SERVER, false);
         resetDatabase();
     }
 
@@ -56,6 +48,7 @@ public class PopulateDatabase {
         for (String clubName : clubs) {
             Club club = new Club(clubName, "España", "Valencia");
             ClubPool.getInstance().add(club);
+            Assert.assertNotNull(ClubPool.getInstance().get(clubName));
         }
         Assert.assertTrue(ClubPool.getInstance().getByName("clb").size() == clubs.length);
     }

@@ -120,8 +120,8 @@ public final class TournamentDesigner extends javax.swing.JFrame {
         tournamentComboBox.removeAllItems();
         try {
             listTournaments = TournamentPool.getInstance().getSorted();
-            for (int i = 0; i < listTournaments.size(); i++) {
-                tournamentComboBox.addItem(listTournaments.get(i));
+            for (Tournament listTournament : listTournaments) {
+                tournamentComboBox.addItem(listTournament);
             }
         } catch (NullPointerException npe) {
         } catch (SQLException ex) {
@@ -155,9 +155,9 @@ public final class TournamentDesigner extends javax.swing.JFrame {
     public void fillTeams() {
         try {
             teamModel.removeAllElements();
-            for (int i = 0; i < teams.size(); i++) {
-                if (!TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).exist(teams.get(i))) {
-                    teamModel.addElement(teams.get(i).getName());
+            for (Team team : teams) {
+                if (!TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).exist(team)) {
+                    teamModel.addElement(team.getName());
                 }
             }
             if (teamModel.size() > 0) {
@@ -185,7 +185,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
         try {
             if (TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getGroups(0).size() < getNumberOfGroupsOfLeague()) {
                 int defaultArena = 0;
-                TGroup group = new TreeTournamentGroup(getSelectedTournament(), 0, defaultArena, TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).getGroups(0).size());
+                TGroup group = new TreeTournamentGroup(getSelectedTournament(), 0, defaultArena);
                 TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).addGroup(group);
                 TournamentManagerFactory.getManager(getSelectedTournament(), getDefinedType()).setDefaultFightAreas();
                 updateInfo();
@@ -228,11 +228,10 @@ public final class TournamentDesigner extends javax.swing.JFrame {
 
     private Team getTeamByName(String name) {
         try {
-            for (int i = 0; i < teams.size(); i++) {
-                if (teams.get(i).getName().equals(name)) {
-                    return teams.get(i);
+            for (Team team : teams) {
+                if (team.getName().equals(name)) {
+                    return team;
                 }
-
             }
         } catch (NullPointerException npe) {
         }

@@ -10,7 +10,7 @@ import java.util.List;
 public class LoopTournamentGroup extends TGroup {
 
     public LoopTournamentGroup(Tournament tournament, Integer level, Integer fightArea) {
-        super(tournament, level, fightArea, 0);
+        super(tournament, level, fightArea);
     }
 
     @Override

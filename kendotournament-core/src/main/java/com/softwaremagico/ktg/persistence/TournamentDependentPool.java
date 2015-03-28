@@ -104,7 +104,7 @@ public abstract class TournamentDependentPool<ElementPool> {
     }
 
     public ElementPool get(Tournament tournament, String elementName) throws SQLException {
-        return (ElementPool) getMap(tournament).get(elementName);
+        return (ElementPool) getMap(tournament).get(normalizeElementId(elementName));
     }
 
     public List<ElementPool> getAll() throws SQLException {
@@ -123,14 +123,14 @@ public abstract class TournamentDependentPool<ElementPool> {
      * Obtain all elements that contains the desired string
      *
      * @param tournament
-     * @param string
+     * @param elementName
      * @return
      * @throws java.sql.SQLException
      */
-    public List<ElementPool> getById(Tournament tournament, String string) throws SQLException {
+    public List<ElementPool> getById(Tournament tournament, String elementName) throws SQLException {
         List<ElementPool> result = new ArrayList<>();
         for (ElementPool element : getMap(tournament).values()) {
-            if (Tools.isSimilar(getId(element), string)) {
+            if (Tools.isSimilar(getId(element), elementName)) {
                 result.add((ElementPool) element);
             }
         }
@@ -369,5 +369,9 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     public void clearCache() {
         reset();
+    }
+
+    protected String normalizeElementId(String elementId) {
+        return elementId.toLowerCase();
     }
 }

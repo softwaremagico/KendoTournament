@@ -89,7 +89,7 @@ public class ChampionshipFightAreaTest {
             if (g > 1) {
                 fightArea = 1;
             }
-            group = new TreeTournamentGroup(tournament, 0, fightArea, g);
+            group = new TreeTournamentGroup(tournament, 0, fightArea);
             TournamentManagerFactory.getManager(tournament).addGroup(group);
             for (int i = 0; i < TEAMS_PER_GROUP; i++) {
                 group.addTeam(TeamPool.getInstance().get(tournament).get(g * TEAMS_PER_GROUP + i));
