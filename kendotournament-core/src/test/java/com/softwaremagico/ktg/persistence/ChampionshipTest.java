@@ -94,11 +94,30 @@ public class ChampionshipTest {
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().size() == GROUPS);
         Assert.assertTrue(TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().size() == GROUPS / 2);
         for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
-            Assert.assertTrue(groupTest.getTeams().size() == TEAMS_PER_GROUP);
+            Assert.assertEquals(groupTest.getTeams().size(), (int) TEAMS_PER_GROUP);
         }
     }
 
     @Test(dependsOnMethods = {"createTournamentGroups"})
+    public void rectifyGroup() throws SQLException {
+        Assert.assertEquals(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size(), (int) GROUPS);
+        TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().remove(0);
+        Assert.assertEquals(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size(), (int) GROUPS - 1);
+        TGroup group = new TreeTournamentGroup(tournament, 0, 0);
+        group.addTeam(TeamPool.getInstance().get(tournament).get(0));
+        group.addTeam(TeamPool.getInstance().get(tournament).get(1));
+        group.addTeam(TeamPool.getInstance().get(tournament).get(2));
+        group.addTeam(TeamPool.getInstance().get(tournament).get(3));
+        TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().add(0, group);
+
+        Assert.assertEquals(TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups().size(), (int) GROUPS);
+
+        for (TGroup groupTest : TournamentManagerFactory.getManager(tournament).getLevel(0).getGroups()) {
+            Assert.assertEquals(groupTest.getTeams().size(), (int) TEAMS_PER_GROUP);
+        }
+    }
+
+    @Test(dependsOnMethods = {"rectifyGroup"})
     public void createFights() throws SQLException, PersonalizedFightsException {
         FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
         Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
