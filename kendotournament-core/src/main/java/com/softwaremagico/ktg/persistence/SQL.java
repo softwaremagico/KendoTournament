@@ -104,13 +104,13 @@ public abstract class SQL extends Database {
         String query = "";
         try {
             List<String> lines = MyFile.inLines(fileName);
-            for (int i = 0; i < lines.size(); i++) {
-                if (!lines.get(i).startsWith("--")) {
-                    if (!lines.get(i).endsWith(";")) {
-                        query += lines.get(i).trim();
+            for (String line : lines) {
+                if (!line.startsWith("--")) {
+                    if (!line.endsWith(";")) {
+                        query += line.trim();
                     } else {
-                        if (lines.get(i).trim().length() > 0) {
-                            query += lines.get(i).trim();
+                        if (line.trim().length() > 0) {
+                            query += line.trim();
                             try (PreparedStatement s = connection.prepareStatement(query)) {
                                 try {
                                     s.executeUpdate();
@@ -448,7 +448,9 @@ public abstract class SQL extends Database {
     /**
      * Store a Club into the database.
      *
-     * @param club
+     * @param clubs
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     protected synchronized boolean addClubs(List<Club> clubs) throws SQLException {
@@ -1077,6 +1079,9 @@ public abstract class SQL extends Database {
      */
     /**
      * Store a duel into the database.
+     * @param tournament
+     * @return 
+     * @throws java.sql.SQLException
      */
     @Override
     protected synchronized List<Duel> getDuels(Tournament tournament) throws SQLException {
