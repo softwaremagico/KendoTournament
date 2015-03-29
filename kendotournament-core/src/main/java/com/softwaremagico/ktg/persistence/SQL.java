@@ -154,11 +154,9 @@ public abstract class SQL extends Database {
     /**
      * Store a role into the database.
      *
-     * @param roleTag
-     * @param tournament
-     * @param c
-     * @param verbose
+     * @param registeredPeople
      * @return
+     * @throws java.sql.SQLException
      */
     @Override
     protected synchronized boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) throws SQLException {
@@ -321,11 +319,9 @@ public abstract class SQL extends Database {
     /**
      * Store a role into the database.
      *
-     * @param roleTag
-     * @param tournament
-     * @param c
-     * @param verbose
+     * @param roles
      * @return
+     * @throws java.sql.SQLException
      */
     @Override
     protected synchronized boolean addRoles(List<Role> roles) throws SQLException {
@@ -421,7 +417,7 @@ public abstract class SQL extends Database {
         List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
         String query = "";
         for (int i = 0; i < newRoles.size(); i++) {
-            query += "UPDATE Role SET Role='" + newRoles.get(i).getDatabaseTag() + "', ImpressCardOrder="
+            query += "UPDATE role SET Role='" + newRoles.get(i).getDatabaseTag() + "', ImpressCardOrder="
                     + newRoles.get(i).getAccreditationOrder() + ", ImpressCardPrinted=" + newRoles.get(i).isAccreditationPrinted()
                     + ", DiplomaPrinted=" + newRoles.get(i).isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName()
                     + "' AND Competitor='" + newRoles.get(i).getCompetitor().getId() + "'; ";
@@ -553,7 +549,7 @@ public abstract class SQL extends Database {
         String query = "";
         for (int i = 0; i < newClubs.size(); i++) {
             Club oldClub = clubsExchange.get(newClubs.get(i));
-            query += "UPDATE Club SET Name='" + newClubs.get(i).getName() + "', Country='" + newClubs.get(i).getCountry() + "', City='"
+            query += "UPDATE club SET Name='" + newClubs.get(i).getName() + "', Country='" + newClubs.get(i).getCountry() + "', City='"
                     + newClubs.get(i).getCity() + "', Address='" + newClubs.get(i).getAddress() + "', Web='" + newClubs.get(i).getWeb()
                     + "', Mail='" + newClubs.get(i).getMail() + "', Phone='" + newClubs.get(i).getPhone() + "', Representative='"
                     + newClubs.get(i).getRepresentativeID() + "' WHERE Name='" + oldClub.getName() + "'; ";
@@ -584,7 +580,9 @@ public abstract class SQL extends Database {
     /**
      * Store a Club into the database.
      *
-     * @param club
+     * @param tournaments
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     protected synchronized boolean addTournaments(List<Tournament> tournaments) throws SQLException {
@@ -785,6 +783,9 @@ public abstract class SQL extends Database {
      ********************************************************************
      */
     /**
+     * @param tournament
+     * @return 
+     * @throws java.sql.SQLException
      * @throws TeamMemberOrderException
      *
      */
@@ -821,9 +822,9 @@ public abstract class SQL extends Database {
     /**
      * Insert a team into the database.
      *
-     * @param team
-     * @param verbose
+     * @param teams
      * @return
+     * @throws java.sql.SQLException
      */
     @Override
     protected synchronized boolean addTeams(List<Team> teams) throws SQLException {
@@ -939,6 +940,9 @@ public abstract class SQL extends Database {
      */
     /**
      *
+     * @param tournament
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     protected synchronized List<Fight> getFights(Tournament tournament) throws SQLException {
@@ -1266,6 +1270,9 @@ public abstract class SQL extends Database {
      */
     /**
      * Store a undraw into the database.
+     * @param tournament
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     protected synchronized List<Undraw> getUndraws(Tournament tournament) throws SQLException {
@@ -1390,6 +1397,9 @@ public abstract class SQL extends Database {
      */
     /**
      * Store user defined links.
+     * @param tournament
+     * @return 
+     * @throws java.sql.SQLException 
      */
     @Override
     protected synchronized List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
