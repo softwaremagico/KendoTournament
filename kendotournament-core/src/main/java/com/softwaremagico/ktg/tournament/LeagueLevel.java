@@ -155,7 +155,7 @@ public abstract class LeagueLevel implements Serializable {
         return null;
     }
 
-    protected List<Team> getUsedTeams() {
+    public List<Team> getUsedTeams() {
         List<Team> usedTeams = new ArrayList<>();
         for (TGroup group : tournamentGroups) {
             usedTeams.addAll(group.getTeams());
