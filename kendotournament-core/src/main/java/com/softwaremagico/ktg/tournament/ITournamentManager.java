@@ -91,4 +91,10 @@ public interface ITournamentManager {
      * Remove all fights of all groups.
      */
     void resetFights();
+
+    /**
+     * Returns the level where still are fights not finished.
+     * @return
+     */
+	LeagueLevel getCurrentLevel();
 }

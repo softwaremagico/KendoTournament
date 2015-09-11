@@ -23,13 +23,15 @@ package com.softwaremagico.ktg.tournament;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class LeagueLevel implements Serializable {
 
@@ -155,8 +157,8 @@ public abstract class LeagueLevel implements Serializable {
         return null;
     }
 
-    public List<Team> getUsedTeams() {
-        List<Team> usedTeams = new ArrayList<>();
+    public Set<Team> getUsedTeams() {
+        Set<Team> usedTeams = new HashSet<>();
         for (TGroup group : tournamentGroups) {
             usedTeams.addAll(group.getTeams());
         }

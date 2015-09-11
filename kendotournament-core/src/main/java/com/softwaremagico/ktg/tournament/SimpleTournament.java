@@ -217,4 +217,9 @@ public class SimpleTournament implements ITournamentManager {
     public int getIndexOfGroup(TGroup group) {
         return getIndex(0, group);
     }
+
+	@Override
+	public LeagueLevel getCurrentLevel() {
+		return null;
+	}
 }
