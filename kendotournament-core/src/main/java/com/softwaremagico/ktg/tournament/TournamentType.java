@@ -35,8 +35,8 @@ public enum TournamentType {
 	LOOP("loop"),
 
 	CUSTOM_CHAMPIONSHIP("custom_championship"),
-        
-        PERSONALIZED("personalized");
+
+	PERSONALIZED("personalized");
 
 	private String sqlName;
 
