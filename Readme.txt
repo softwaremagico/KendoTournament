@@ -123,6 +123,8 @@ Version:
 
 1.2.2	Adapted to the rules of the WKC
 	Solved issue when updating roles.
+	
+1.2.3	Added code generator for exporting championship information to sites like Wordpress. 
 
 
 
