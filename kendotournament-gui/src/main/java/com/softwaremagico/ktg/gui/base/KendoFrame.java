@@ -88,6 +88,16 @@ public abstract class KendoFrame extends KFrame {
     public String exploreWindowsForPdfAndTxt(String title, int mode, String file) {
         return exploreWindows(title, mode, file, new PdfAndTxtFilter());
     }
+    
+    /**
+     * Generate a window to search in the file system.
+     *
+     * @param mode The kind of window.
+     * @see setFileSelectionMode
+     */
+    public String exploreWindowsForTxt(String title, int mode, String file) {
+        return exploreWindows(title, mode, file, new TxtFilter());
+    }
 
     /**
      * Generate a window to search in the file system.
@@ -160,6 +170,20 @@ public abstract class KendoFrame extends KFrame {
         @Override
         public String getDescription() {
             return "Portable Document Format and text files";
+        }
+    }
+    
+     private class TxtFilter extends javax.swing.filechooser.FileFilter {
+
+        @Override
+        public boolean accept(File file) {
+            String filename = file.getName();
+            return file.isDirectory() || filename.endsWith(".txt");
+        }
+
+        @Override
+        public String getDescription() {
+            return "TXT files";
         }
     }
 

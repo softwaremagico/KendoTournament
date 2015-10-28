@@ -23,28 +23,33 @@ package com.softwaremagico.ktg.lists;
  * #L%
  */
 
+import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.ListFromTournamentCreateFile;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 
-public abstract class ListFromTournamentCreatePDF extends ListFromTournamentCreateFile {
+public abstract class ListFromTournamentCreateTxt extends ListFromTournamentCreateFile {
 
-    public ListFromTournamentCreatePDF(boolean allowAllTournaments) {
+    public ListFromTournamentCreateTxt(boolean allowAllTournaments) {
         createGui(allowAllTournaments);
         addGenerateListeners();
     }
 
-    protected abstract ParentList getPdfGenerator();
+    protected abstract String getTxtGenerator();
 
     public void generate() {
         try {
             String file;
-            if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
+            if (!(file = exploreWindowsForTxt(trans.getTranslatedText("ExportTxt"),
                     JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-                ParentList pdf = getPdfGenerator();
-                if (pdf.createFile(file)) {
+                String txt = getTxtGenerator();
+                if (!MyFile.fileExist(file) || AlertManager.questionMessage("existFile", "Warning!")) {
+                    try (PrintWriter out = new PrintWriter(file)) {
+                        out.println(txt);
+                    }
                     this.dispose();
                 }
             }

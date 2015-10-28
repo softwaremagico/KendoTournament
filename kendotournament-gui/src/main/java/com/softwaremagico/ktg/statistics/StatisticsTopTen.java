@@ -53,12 +53,12 @@ import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
 
 public class StatisticsTopTen extends StatisticsGUI {
 
-    Translator transl;
-    Tournament tournament;
-	List<ScoreOfCompetitor> competitorTopTen;
-    int startRange = 0;
+    private Translator transl;
+    private Tournament tournament;
+	private List<ScoreOfCompetitor> competitorTopTen;
+    private int startRange = 0;
     private List<RegisteredPerson> competitors;
-    boolean changesAllowed = false;
+    private boolean changesAllowed = false;
 
     public StatisticsTopTen(Tournament tournament) {
         this.tournament = tournament;

@@ -101,19 +101,19 @@ public class FightListPDF extends ParentList {
 			mainTable.addCell(getHeader2(
 					trans.getTranslatedText("FightAreaNoDots") + " " + Tournament.getFightAreaName(i), 0));
 
-			for (int j = 0; j < fights.size(); j++) {
-				cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
-				cell.setBorderWidth(BORDER_WIDTH);
-				cell.setColspan(3);
-				// if (fights.get(j).isOver()) {
-				// cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200,
-				// 200, 200));
-				// } else {
-				cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
-				// }
-				// cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    for (Fight fight : fights) {
+                        cell = new PdfPCell(fightTable(fight, font, fontSize));
+                        cell.setBorderWidth(BORDER_WIDTH);
+                        cell.setColspan(3);
+                        // if (fights.get(j).isOver()) {
+                        // cell.setBackgroundColor(new com.itextpdf.text.BaseColor(200,
+                        // 200, 200));
+                        // } else {
+                        cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
+                        // }
+                        // cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				mainTable.addCell(cell);
-			}
+                    }
 		}
 
 		return mainTable;
@@ -157,23 +157,22 @@ public class FightListPDF extends ParentList {
 									+ trans.getTranslatedText("FightArea") + " "
 									+ Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")", 0));
 
-					for (int j = 0; j < fights.size(); j++) {
-						if (groups.get(i).isFightOfGroup(fights.get(j))) {
-
-							cell = new PdfPCell(fightTable(fights.get(j), font, fontSize));
-							cell.setBorderWidth(BORDER_WIDTH);
-							cell.setColspan(3);
-							// if (FightPool.getManager(tournament).get(j).isOver())
-							// {
-							// cell.setBackgroundColor(new
-							// com.itextpdf.text.BaseColor(200, 200, 200));
-							// } else {
-							cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
-							// }
+                                    for (Fight fight : fights) {
+                                        if (groups.get(i).isFightOfGroup(fight)) {
+                                            cell = new PdfPCell(fightTable(fight, font, fontSize));
+                                            cell.setBorderWidth(BORDER_WIDTH);
+                                            cell.setColspan(3);
+                                            // if (FightPool.getManager(tournament).get(j).isOver())
+                                            // {
+                                            // cell.setBackgroundColor(new
+                                            // com.itextpdf.text.BaseColor(200, 200, 200));
+                                            // } else {
+                                            cell.setBackgroundColor(new com.itextpdf.text.BaseColor(255, 255, 255));
+                                            // }
 							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-							mainTable.addCell(cell);
-						}
-					}
+                                            mainTable.addCell(cell);
+                                        }
+                                    }
 				}
 			}
 		}

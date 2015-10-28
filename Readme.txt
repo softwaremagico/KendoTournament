@@ -122,6 +122,7 @@ Version:
 1.2.1   Minor bugs fixed. 
 
 1.2.2	Adapted to the rules of the WKC
+	Solved issue when updating roles.
 
 
 

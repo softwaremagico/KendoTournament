@@ -40,6 +40,7 @@ import com.softwaremagico.ktg.gui.tournament.TournamentDesigner;
 import com.softwaremagico.ktg.gui.tournament.TournamentEvolution;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.lists.AccreditionCards;
+import com.softwaremagico.ktg.lists.BlogList;
 import com.softwaremagico.ktg.lists.ClubList;
 import com.softwaremagico.ktg.lists.DiplomaEditor;
 import com.softwaremagico.ktg.lists.EmptyFightsList;
@@ -126,6 +127,7 @@ public class Controller {
     private DatabaseConversor databaseConversor = null;
     private ListFromTournamentTree listFromTournamentTree = null;
     private SelectTournamentForCompetitorPointList competitorsScoreList = null;
+    private BlogList blogList = null;
 
     public Controller(MainGUI tmp_gui) {
         main = tmp_gui;
@@ -210,6 +212,20 @@ public class Controller {
         main.addManualMenuItemListener(new NewPersonalizedFightListener());
         main.addLoadMenuItemListener(new LoadListener());
         main.addClearCacheMenuItemListener(new ClearCacheListener());
+        main.addBlockMenuItemListener(new BlogExportListener());
+    }
+
+    class BlogExportListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                blogList.dispose();
+            } catch (NullPointerException npe) {
+            }
+            blogList = new BlogList();
+            blogList.setVisible(true);
+        }
     }
 
     class ClearCacheListener implements ActionListener {
@@ -312,7 +328,7 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             KendoTournamentGenerator.getInstance().setLanguage(main.getSelectedLanguage());
-            RolePool.getInstance().resetRoleTags();
+            RolePool.resetRoleTags();
             Locale.setDefault(new Locale(KendoTournamentGenerator.getInstance().getLanguage()));
             Configuration.storeLanguageConfiguration(KendoTournamentGenerator.getInstance().getLanguage());
             main.setLanguage();

@@ -1656,6 +1656,14 @@
 		<ca>Exportar a PDF</ca>
 		<it>Esportare a PDF</it>
 	</ExportPDF>
+	<ExportTxt>
+		<en>Export to TXT</en>
+		<es>Exportar a TXT</es>
+		<nl>Export naar TXT</nl>
+		<de>Exportieren als TXT</de>
+		<ca>Exportar a TXT</ca>
+		<it>Esportare a TXT</it>
+	</ExportTxt>
 	<ExportSQL>
 		<en>Export to SQL</en>
 		<es>Exportar a SQL</es>
@@ -2251,4 +2259,12 @@
 		<ca>Pulix la Cache</ca>
 		<it>Pulire la Cache</it>
 	</ClearCacheLabel>
+	<titleBlogStatistics>
+		<en>Blogger code</en>
+		<es>Código Blogger</es>
+		<nl>Blogger code</nl>
+		<de>Blogger code</de>
+		<ca>Blogger code</ca>
+		<it>Blogger code</it>
+	</titleBlogStatistics>
 </translator>

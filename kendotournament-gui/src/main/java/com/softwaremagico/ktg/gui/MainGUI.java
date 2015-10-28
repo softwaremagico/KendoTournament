@@ -132,6 +132,7 @@ public final class MainGUI extends KendoFrame {
         AutosaveByActionRadioButton.setText(trans.getTranslatedText("ByActionRadioButton"));
         AutosaveByTimeRadioButton.setText(trans.getTranslatedText("ByTimeRadioButton"));
         clearCacheMenuItem.setText(trans.getTranslatedText("ClearCacheLabel"));
+        blogMenuItem.setText(trans.getTranslatedText("titleBlogStatistics"));
     }
 
     private void setPhoto() {
@@ -451,6 +452,10 @@ public final class MainGUI extends KendoFrame {
     public void addClearCacheMenuItemListener(ActionListener al) {
         clearCacheMenuItem.addActionListener(al);
     }
+    
+    public void addBlockMenuItemListener(ActionListener al){
+        blogMenuItem.addActionListener(al);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -501,6 +506,7 @@ public final class MainGUI extends KendoFrame {
         PointListMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         CompetitorsGlobalScoreMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"xpdf.png"));
         TournamentTreeMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"tree.png"));
+        blogMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"text-html.png"));
         DiplomaMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"diploma.png"));
         StatisticsMenu = new javax.swing.JMenu();
         TournamentStatisticsMenu = new javax.swing.JMenu();
@@ -670,6 +676,9 @@ public final class MainGUI extends KendoFrame {
 
         TournamentTreeMenuItem.setText("TournamentTree");
         ListMenu.add(TournamentTreeMenuItem);
+
+        blogMenuItem.setText("Blog");
+        ListMenu.add(blogMenuItem);
 
         DiplomaMenuItem.setText("Diploma");
         ListMenu.add(DiplomaMenuItem);
@@ -896,6 +905,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem TournamentTopTenMenuItem;
     private javax.swing.JMenuItem TournamentTreeMenuItem;
     private javax.swing.JMenuItem WonLostMenuItem;
+    private javax.swing.JMenuItem blogMenuItem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem clearCacheMenuItem;
     private javax.swing.JMenuItem manualMenuItem;
