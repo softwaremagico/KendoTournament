@@ -30,6 +30,7 @@ import java.util.List;
 
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
@@ -40,6 +41,8 @@ import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
+import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
@@ -53,6 +56,8 @@ public class BlogExporter {
 		addInformation(stringBuilder, tournament);
 		addCompetitors(stringBuilder, tournament);
 		addScoreTables(stringBuilder, tournament);
+		addTeamClassificationTable(stringBuilder, tournament);
+		addCompetitorClassificationTable(stringBuilder, tournament);
 		return stringBuilder.toString();
 	}
 
@@ -175,6 +180,67 @@ public class BlogExporter {
 				}
 			}
 		}
+	}
+
+	private static void addTeamClassificationTable(StringBuilder stringBuilder, Tournament tournament) {
+		stringBuilder.append(NEW_LINE + "<h4>" + trans.getTranslatedText("ScoreMonitorMenuItem") + "</h4>\n");
+		List<List<String>> rows = new ArrayList<>();
+		// Header
+		List<String> columns = new ArrayList<>();
+		columns.add("<b>" + trans.getTranslatedText("Team") + "</b>");
+		columns.add("<b>" + trans.getTranslatedText("fightsWon") + "</b>");
+		columns.add("<b>" + trans.getTranslatedText("duelsWon") + "</b>");
+		columns.add("<b>" + trans.getTranslatedText("histsWon") + "</b>");
+		rows.add(columns);
+
+		List<ScoreOfTeam> teamTopTen;
+		try {
+			teamTopTen = Ranking.getTeamsScoreRanking(FightPool.getInstance().get(tournament));
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+			teamTopTen = new ArrayList<>();
+		}
+
+		for (int i = 0; i < teamTopTen.size(); i++) {
+			columns = new ArrayList<>();
+			columns.add(teamTopTen.get(i).getTeam().getShortName());
+			columns.add(teamTopTen.get(i).getWonFights() + "/" + teamTopTen.get(i).getDrawFights());
+			columns.add(teamTopTen.get(i).getWonDuels() + "/" + teamTopTen.get(i).getDrawDuels());
+			columns.add("" + teamTopTen.get(i).getHits());
+			rows.add(columns);
+		}
+		createTable(stringBuilder, rows);
+	}
+
+	private static void addCompetitorClassificationTable(StringBuilder stringBuilder, Tournament tournament) {
+		stringBuilder.append(NEW_LINE + "<h4>" + trans.getTranslatedText("GeneralClassification") + "</h4>\n");
+		List<List<String>> rows = new ArrayList<>();
+		// Header
+		List<String> columns = new ArrayList<>();
+		columns.add("<b>" + trans.getTranslatedText("CompetitorMenu") + "</b>");
+		columns.add("<b>" + trans.getTranslatedText("duelsWon") + "</b>");
+		columns.add("<b>" + trans.getTranslatedText("histsWon") + "</b>");
+		rows.add(columns);
+
+		List<ScoreOfCompetitor> competitorTopTen = new ArrayList<>();
+		try {
+			if (tournament == null) { // null == all.
+				competitorTopTen = Ranking.getCompetitorsScoreRanking(FightPool.getInstance().getAll());
+			} else {
+				competitorTopTen = Ranking.getCompetitorsScoreRanking(FightPool.getInstance().get(tournament));
+			}
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+		}
+
+		for (int i = 0; i < competitorTopTen.size(); i++) {
+			columns = new ArrayList<>();
+			columns.add(competitorTopTen.get(i).getCompetitor().getSurnameName());
+			columns.add(competitorTopTen.get(i).getDuelsWon() + "/" + competitorTopTen.get(i).getDuelsDraw());
+			columns.add("" + competitorTopTen.get(i).getHits());
+			rows.add(columns);
+		}
+		createTable(stringBuilder, rows);
 	}
 
 	private static void createTable(StringBuilder stringBuilder, List<List<String>> rows) {
