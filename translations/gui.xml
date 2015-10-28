@@ -761,7 +761,7 @@
 		<it>Liste</it>
 	</ListMenu>
 	<FightListMenuItem>
-		<en>List of figts</en>
+		<en>List of fights</en>
 		<es>Lista de partidos</es>
 		<nl>Overzicht wedstrijden</nl>
 		<de>Liste der Kämpfe</de>
@@ -2267,4 +2267,52 @@
 		<ca>Blogger code</ca>
 		<it>Blogger code</it>
 	</titleBlogStatistics>
+	<championship>
+		<en>Championship</en>
+		<es>Campeonato</es>
+		<nl>Poule</nl>
+		<de>Championship</de>
+		<ca>Campeonat</ca>
+		<it>Campionato</it>
+	</championship>
+	<simple>
+		<en>League</en>
+		<es>Liga</es>
+		<nl>League</nl>
+		<de>League</de>
+		<ca>Lliga</ca>
+		<it>Liga</it>
+	</simple>
+	<tree>
+		<en>Championship</en>
+		<es>Campeonato</es>
+		<nl>Poule</nl>
+		<de>Championship</de>
+		<ca>Campeonat</ca>
+		<it>Campionato</it>
+	</tree>
+	<personalized>
+		<en>Custom</en>
+		<es>Personalizado</es>
+		<nl>Custom</nl>
+		<de>Custom</de>
+		<ca>Personalizat</ca>
+		<it>Personalizzato</it>
+	</personalized>
+	<custom_championship>
+		<en>Custom</en>
+		<es>Personalizado</es>
+		<nl>Custom</nl>
+		<de>Custom</de>
+		<ca>Personalizat</ca>
+		<it>Personalizzato</it>
+	</custom_championship>
+	<loop>
+		<en>Loop</en>
+		<es>Rueda</es>
+		<nl>Loop</nl>
+		<de>Loop</de>
+		<ca>Roda</ca>
+		<it>Loop</it>
+	</loop>
 </translator>
