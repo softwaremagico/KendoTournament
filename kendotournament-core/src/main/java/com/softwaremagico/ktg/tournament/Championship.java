@@ -277,4 +277,15 @@ public class Championship implements ITournamentManager {
 			level = level.nextLevel;
 		}
 	}
+
+	@Override
+	public List<TGroup> getGroupsByShiajo(Integer shiaijo) {
+		List<TGroup> groups = new ArrayList<>();
+		for (TGroup group : getGroups()) {
+			if (group.getFightArea().equals(shiaijo)) {
+				groups.add(group);
+			}
+		}
+		return groups;
+	}
 }

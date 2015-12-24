@@ -46,6 +46,8 @@ public interface ITournamentManager {
     List<TGroup> getGroups();
 
     List<TGroup> getGroups(Integer level);
+    
+    List<TGroup> getGroupsByShiajo(Integer shiaijo);
 
     TGroup getGroup(Fight fight);
 
