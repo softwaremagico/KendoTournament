@@ -36,6 +36,7 @@ import com.softwaremagico.ktg.log.KendoLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,19 +55,17 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Translator {
-
-	private String fileTranslated;
+	private final static String DEFAULT_LANGUAGE = "en";
+	private final static String LANGUAGES_FILE = "languages.xml";
 	private Document doc = null;
-	private final String DEFAULT_LANGUAGE = "en";
 	private boolean errorShowed = false;
 	private boolean retried = false;
 	private boolean showedMessage = false;
 	private static List<Language> languagesList = null;
 	private static HashMap<String, RoleTags> rolesList;
 
-	public Translator(String tmp_file) {
-		fileTranslated = tmp_file;
-		doc = parseFile(doc, fileTranslated);
+	public Translator(String filePath) {
+		doc = parseFile(doc, filePath);
 		rolesList = new HashMap<>();
 	}
 
@@ -76,11 +75,11 @@ public class Translator {
 	 * @param tagName
 	 *            Tag of the data to be readed
 	 */
-	private static Document parseFile(Document usedDoc, String fileParsed) {
+	private static Document parseFile(Document usedDoc, String filePath) {
 		DocumentBuilderFactory dbf;
 		DocumentBuilder db;
 		try {
-			File file = new File(Path.getTranslatorPath() + fileParsed);
+			File file = new File(filePath);
 			dbf = DocumentBuilderFactory.newInstance();
 			db = dbf.newDocumentBuilder();
 			usedDoc = db.parse(file);
@@ -95,8 +94,7 @@ public class Translator {
 		} catch (ParserConfigurationException ex) {
 			KendoLog.errorMessage(Translator.class.getName(), ex);
 		} catch (FileNotFoundException fnf) {
-			String text = "The file "
-					+ fileParsed
+			String text = "The file " + filePath
 					+ " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
 			System.out.println(text);
 			// KendoTournamentGenerator.showErrorInformation(fnf);
@@ -127,9 +125,9 @@ public class Translator {
 						// npe.printStackTrace();
 						if (!retried) {
 							if (!showedMessage) {
-								KendoLog.warning(Translator.class.getName(), "There is a problem with tag: " + tag
-										+ " in  language: \"" + language
-										+ "\". We tray to use english language instead.");
+								KendoLog.warning(Translator.class.getName(),
+										"There is a problem with tag: " + tag + " in  language: \"" + language
+												+ "\". We tray to use english language instead.");
 								showedMessage = true;
 							}
 							retried = true;
@@ -145,8 +143,8 @@ public class Translator {
 							return readTag(tag, DEFAULT_LANGUAGE);
 						} else {
 							if (!errorShowed) {
-								KendoLog.severe(this.getClass().getName(), "Language selection failed: " + language
-										+ " on " + tag + ".");
+								KendoLog.severe(this.getClass().getName(),
+										"Language selection failed: " + language + " on " + tag + ".");
 								errorShowed = true;
 							}
 							return null;
@@ -166,14 +164,14 @@ public class Translator {
 		if (languagesList == null) {
 			languagesList = new ArrayList<>();
 			Document storedLanguages = null;
-			storedLanguages = parseFile(storedLanguages, "languages.xml");
+			storedLanguages = parseFile(storedLanguages, getTranslatorPath(LANGUAGES_FILE).getPath());
 			NodeList nodeLst = storedLanguages.getElementsByTagName("languages");
 			for (int s = 0; s < nodeLst.getLength(); s++) {
 				Node fstNode = nodeLst.item(s);
 				try {
-					Language lang = new Language(fstNode.getTextContent(), fstNode.getAttributes()
-							.getNamedItem("abbrev").getNodeValue(), fstNode.getAttributes().getNamedItem("flag")
-							.getNodeValue());
+					Language lang = new Language(fstNode.getTextContent(),
+							fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(),
+							fstNode.getAttributes().getNamedItem("flag").getNodeValue());
 					languagesList.add(lang);
 				} catch (NullPointerException npe) {
 					KendoLog.severe(Translator.class.getName(),
@@ -230,5 +228,26 @@ public class Translator {
 			}
 		}
 		return rolesList.get(language);
+	}
+
+	public static File getTranslatorPath(String xmlFile) {
+		File file = new File(Path.getTranslatorPath() + xmlFile);
+		if (file.exists()) {
+			// Get from folder
+			return file;
+		} else {
+			try {
+				if (Translator.class.getClassLoader()
+						.getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile) != null) {
+					file = new File(Translator.class.getClassLoader()
+							.getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile).toURI());
+					if (file.exists()) {
+						return file;
+					}
+				}
+			} catch (URISyntaxException e) {
+			}
+		}
+		return null;
 	}
 }

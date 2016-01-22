@@ -25,21 +25,33 @@ package com.softwaremagico.ktg.language;
  * #L%
  */
 
+import java.io.File;
 import java.util.HashMap;
+
+import com.softwaremagico.ktg.files.Path;
 
 public class LanguagePool {
 
-    private static HashMap<String, Translator> existingTranslators = new HashMap<>();
+	private static HashMap<String, Translator> existingTranslators = new HashMap<>();
 
-    private LanguagePool() {
-    }
+	private LanguagePool() {
+	}
 
-    public static Translator getTranslator(String xmlFile) {
-        Translator translator = existingTranslators.get(xmlFile);
-        if (translator == null) {
-            translator = new Translator(xmlFile);
-            existingTranslators.put(xmlFile, translator);
-        }
-        return translator;
-    }
+	public static Translator getTranslator(String xmlFile) {
+		Translator translator = existingTranslators.get(xmlFile);
+		if (translator == null) {
+			File file = Translator.getTranslatorPath(xmlFile);
+			if (file!=null && file.exists()) {
+				// Get from folder
+				translator = new Translator(file.getPath());
+				existingTranslators.put(xmlFile, translator);
+			} else {
+				// Get from resources
+				translator = new Translator(LanguagePool.class.getClassLoader()
+						.getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile).toString());
+				existingTranslators.put(xmlFile, translator);
+			}
+		}
+		return translator;
+	}
 }
