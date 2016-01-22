@@ -108,15 +108,18 @@ public class Translator {
 	}
 
 	public String getTranslatedText(String tag) {
-		if (tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()) == null) {
-			tagTranslations.put(KendoTournamentGenerator.getInstance().getLanguage(), new HashMap<String, String>());
+		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage());
+	}
+
+	public String getTranslatedText(String tag, String language) {
+		if (tagTranslations.get(language) == null) {
+			tagTranslations.put(language, new HashMap<String, String>());
 		}
 
-		if (tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).get(tag) == null) {
-			tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).put(tag,
-					readTag(tag, KendoTournamentGenerator.getInstance().getLanguage()));
+		if (tagTranslations.get(language).get(tag) == null) {
+			tagTranslations.get(language).put(tag, readTag(tag, language));
 		}
-		return tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).get(tag);
+		return tagTranslations.get(language).get(tag);
 	}
 
 	private String readTag(String tag, String language) {
