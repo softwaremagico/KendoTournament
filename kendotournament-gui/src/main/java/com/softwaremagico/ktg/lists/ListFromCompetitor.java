@@ -1,5 +1,11 @@
 package com.softwaremagico.ktg.lists;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,20 +31,15 @@ package com.softwaremagico.ktg.lists;
  */
 
 import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 
 public abstract class ListFromCompetitor extends KendoFrame {
-
-	public Translator trans = null;
+	private static final long serialVersionUID = -1630725004411372496L;
+	public ITranslator trans = null;
 	public List<RegisteredPerson> listCompetitors = new ArrayList<>();
 	private boolean voidTournament;
 
@@ -66,8 +67,8 @@ public abstract class ListFromCompetitor extends KendoFrame {
 				CompetitorComboBox.addItem(trans.getTranslatedText("All"));
 			}
 			for (int i = 0; i < listCompetitors.size(); i++) {
-				CompetitorComboBox.addItem(listCompetitors.get(i).getSurname() + ", "
-						+ listCompetitors.get(i).getName());
+				CompetitorComboBox
+						.addItem(listCompetitors.get(i).getSurname() + ", " + listCompetitors.get(i).getName());
 			}
 			if (CompetitorComboBox.getItemCount() > 0) {
 				CompetitorComboBox.setSelectedIndex(0);
@@ -110,69 +111,65 @@ public abstract class ListFromCompetitor extends KendoFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	// <editor-fold defaultstate="collapsed" desc="Generated
+	// Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        CompetitorComboBox = new javax.swing.JComboBox();
-        CompetitorLabel = new javax.swing.JLabel();
-        GenerateButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
+		CompetitorComboBox = new javax.swing.JComboBox();
+		CompetitorLabel = new javax.swing.JLabel();
+		GenerateButton = new javax.swing.JButton();
+		CancelButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
 
-        CompetitorLabel.setText("Competitor:");
+		CompetitorLabel.setText("Competitor:");
 
-        GenerateButton.setText("Generate List");
-        GenerateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GenerateButtonActionPerformed(evt);
-            }
-        });
+		GenerateButton.setText("Generate List");
+		GenerateButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				GenerateButtonActionPerformed(evt);
+			}
+		});
 
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
+		CancelButton.setText("Cancel");
+		CancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CancelButtonActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(CompetitorLabel)
-                        .addGap(18, 18, 18)
-                        .addComponent(CompetitorComboBox, 0, 308, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton)))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup().addComponent(CompetitorLabel)
+										.addGap(18, 18, 18).addComponent(CompetitorComboBox, 0, 308, Short.MAX_VALUE))
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+								layout.createSequentialGroup()
+										.addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(CancelButton)))
+						.addContainerGap()));
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, GenerateButton});
+		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+				new java.awt.Component[] { CancelButton, GenerateButton });
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CompetitorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CompetitorLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelButton)
-                    .addComponent(GenerateButton))
-                .addContainerGap())
-        );
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(CompetitorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(CompetitorLabel))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(CancelButton).addComponent(GenerateButton)).addContainerGap()));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
 	private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_GenerateButtonActionPerformed
 		Generate();
@@ -181,10 +178,11 @@ public abstract class ListFromCompetitor extends KendoFrame {
 	private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CancelButtonActionPerformed
 		this.dispose();
 	}// GEN-LAST:event_CancelButtonActionPerformed
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CancelButton;
-    protected javax.swing.JComboBox CompetitorComboBox;
-    private javax.swing.JLabel CompetitorLabel;
-    protected javax.swing.JButton GenerateButton;
-    // End of variables declaration//GEN-END:variables
+		// Variables declaration - do not modify//GEN-BEGIN:variables
+
+	private javax.swing.JButton CancelButton;
+	protected javax.swing.JComboBox CompetitorComboBox;
+	private javax.swing.JLabel CompetitorLabel;
+	protected javax.swing.JButton GenerateButton;
+	// End of variables declaration//GEN-END:variables
 }

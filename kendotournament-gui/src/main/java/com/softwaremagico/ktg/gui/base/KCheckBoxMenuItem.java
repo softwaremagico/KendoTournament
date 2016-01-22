@@ -23,23 +23,25 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JCheckBoxMenuItem;
 
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+
 public class KCheckBoxMenuItem extends JCheckBoxMenuItem {
+	private static final long serialVersionUID = 6790923811692732278L;
 
-    public KCheckBoxMenuItem(String tag) {
-        setTranslatedText(tag);
-    }
+	public KCheckBoxMenuItem(String tag) {
+		setTranslatedText(tag);
+	}
 
-    public final void setTranslatedText(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        String label = trans.getTranslatedText(tag);
-        if (label != null) {
-            setText(label);
-        } else {
-            setText("** error tag '" + tag + "' **");
-        }
-    }
+	public final void setTranslatedText(String tag) {
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		String label = trans.getTranslatedText(tag);
+		if (label != null) {
+			setText(label);
+		} else {
+			setText("** error tag '" + tag + "' **");
+		}
+	}
 }

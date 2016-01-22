@@ -23,22 +23,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.core.Role;
-import com.softwaremagico.ktg.core.RoleTag;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.gui.base.KendoFrame;
-import com.softwaremagico.ktg.gui.base.RolesMenu;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
-import com.softwaremagico.ktg.log.KendoLog;
-import com.softwaremagico.ktg.persistence.AutoSaveByAction;
-import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-import com.softwaremagico.ktg.persistence.RolePool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
-
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,9 +30,25 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Role;
+import com.softwaremagico.ktg.core.RoleTag;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.gui.base.RolesMenu;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.lists.CompetitorAccreditationCardPDF;
+import com.softwaremagico.ktg.log.KendoLog;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
+import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
+import com.softwaremagico.ktg.persistence.RolePool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
+
 public class NewRole extends KendoFrame {
 	private static final long serialVersionUID = 1704796642678109441L;
-	private Translator trans = null;
+	private ITranslator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshCompetitor = true;

@@ -23,23 +23,25 @@ package com.softwaremagico.ktg.gui.base.buttons;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import javax.swing.Icon;
 import javax.swing.JButton;
 
-public class KButton extends JButton {
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
 
-    public void setTranslatedText(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        setText(trans.getTranslatedText(tag));
-    }
-    
-    //Disable button icons.
-    @Override
-    public void setIcon(Icon defaultIcon){
-        if(this instanceof DownButton || this instanceof UpButton){
-            super.setIcon(defaultIcon);
-        }
-    }
+public class KButton extends JButton {
+	private static final long serialVersionUID = -7971142311588646995L;
+
+	public void setTranslatedText(String tag) {
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		setText(trans.getTranslatedText(tag));
+	}
+
+	// Disable button icons.
+	@Override
+	public void setIcon(Icon defaultIcon) {
+		if (this instanceof DownButton || this instanceof UpButton) {
+			super.setIcon(defaultIcon);
+		}
+	}
 }

@@ -32,16 +32,16 @@ import com.softwaremagico.ktg.files.Path;
 
 public class LanguagePool {
 
-	private static HashMap<String, Translator> existingTranslators = new HashMap<>();
+	private static HashMap<String, ITranslator> existingTranslators = new HashMap<>();
 
 	private LanguagePool() {
 	}
 
-	public static Translator getTranslator(String xmlFile) {
-		Translator translator = existingTranslators.get(xmlFile);
+	public static ITranslator getTranslator(String xmlFile) {
+		ITranslator translator = existingTranslators.get(xmlFile);
 		if (translator == null) {
 			File file = Translator.getTranslatorPath(xmlFile);
-			if (file!=null && file.exists()) {
+			if (file != null && file.exists()) {
 				// Get from folder
 				translator = new Translator(file.getPath());
 				existingTranslators.put(xmlFile, translator);

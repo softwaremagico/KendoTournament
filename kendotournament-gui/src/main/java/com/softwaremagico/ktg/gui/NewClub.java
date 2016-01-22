@@ -1,5 +1,10 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.List;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,20 +30,15 @@ package com.softwaremagico.ktg.gui;
  */
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.List;
 
 public class NewClub extends javax.swing.JFrame {
-
-    private Translator trans = null;
+	private static final long serialVersionUID = -2068014947133236190L;
+	private ITranslator trans = null;
     private Club club;
     private List<RegisteredPerson> competitors;
     private NewCompetitor newCompetitor = null;

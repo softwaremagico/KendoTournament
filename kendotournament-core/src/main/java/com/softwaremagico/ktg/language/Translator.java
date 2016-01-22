@@ -54,7 +54,7 @@ import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.log.KendoLog;
 
-public class Translator {
+public class Translator implements ITranslator {
 	private final static String DEFAULT_LANGUAGE = "en";
 	private final static String LANGUAGES_FILE = "languages.xml";
 	private final static String ROLES_FILE = "roles.xml";
@@ -107,10 +107,12 @@ public class Translator {
 		return usedDoc;
 	}
 
+	@Override
 	public String getTranslatedText(String tag) {
 		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage());
 	}
 
+	@Override
 	public String getTranslatedText(String tag, String language) {
 		if (tagTranslations.get(language) == null) {
 			tagTranslations.put(language, new HashMap<String, String>());

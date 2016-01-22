@@ -1,5 +1,17 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,31 +40,19 @@ import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Photo;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.PhotoPool;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
-import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.gui.base.KendoFrame;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tools.Media;
 
-import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-
 public class NewCompetitor extends KendoFrame {
-
-	private Translator trans = null;
+	private static final long serialVersionUID = 8803005649701213021L;
+	private ITranslator trans = null;
 	// private PhotoFrame photoFrame = null;
 	private boolean refreshClub;
 	private RegisteredPerson oldCompetitor = null;

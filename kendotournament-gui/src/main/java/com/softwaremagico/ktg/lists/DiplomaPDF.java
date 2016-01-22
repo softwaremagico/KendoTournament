@@ -68,8 +68,8 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.DuelPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
@@ -78,20 +78,20 @@ import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
 import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 
 public class DiplomaPDF {
-
 	protected int fontSize = 17;
 	private final int border = 0;
 	private boolean statistics;
-	Tournament tournament;
-	float nameposition = 100;
-	List<Duel> duels = new ArrayList<>();
-	static int TOTAL_RANGES = 9;
-	List<ScoreOfTeam> teamTopTen;
-	List<ScoreOfCompetitor> competitorTopTen;
-	List<RoleTag> rolesWithDiploma = null;
+	private Tournament tournament;
+	private float nameposition = 100;
+	private List<Duel> duels = new ArrayList<>();
+	private static int TOTAL_RANGES = 9;
+	private List<ScoreOfTeam> teamTopTen;
+	private List<ScoreOfCompetitor> competitorTopTen;
+	private List<RoleTag> rolesWithDiploma = null;
 	private boolean allDiplomas;
 
-	public DiplomaPDF(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas, List<RoleTag> roles) {
+	public DiplomaPDF(Tournament tmp_championship, boolean tmp_statistics, boolean printAllDiplomas,
+			List<RoleTag> roles) {
 		tournament = tmp_championship;
 		statistics = tmp_statistics;
 		allDiplomas = printAllDiplomas;
@@ -128,10 +128,10 @@ public class DiplomaPDF {
 
 	public class ThreadDiploma extends Thread {
 
-		TimerPanel timerPanel;
-		Document document;
-		String path;
-		Translator transl;
+		private TimerPanel timerPanel;
+		private Document document;
+		private String path;
+		private ITranslator transl;
 		private com.itextpdf.text.Image background;
 
 		public ThreadDiploma(TimerPanel tp, Document d, String p) {
@@ -170,8 +170,8 @@ public class DiplomaPDF {
 			return error;
 		}
 
-		void addBackGroundImage(Document document, String imagen) throws BadElementException, DocumentException,
-				MalformedURLException, IOException {
+		void addBackGroundImage(Document document, String imagen)
+				throws BadElementException, DocumentException, MalformedURLException, IOException {
 			// com.itextpdf.text.Image png;
 
 			if (background == null) {
@@ -217,8 +217,9 @@ public class DiplomaPDF {
 			}
 
 			for (int i = 0; i < competitors.size(); i++) {
-				timerPanel.updateText(transl.getTranslatedText("DiplomaProgressBarLabel") + ": " + (i + 1) + "/"
-						+ competitors.size(), i, competitors.size());
+				timerPanel.updateText(
+						transl.getTranslatedText("DiplomaProgressBarLabel") + ": " + (i + 1) + "/" + competitors.size(),
+						i, competitors.size());
 				diplomaTable(document, writer, competitors.get(i), font, fontSize);
 				if (statistics) {
 					statisticsTable(document, writer, competitors.get(i), font, fontSize);
@@ -237,8 +238,8 @@ public class DiplomaPDF {
 			document.newPage();
 			addBackGroundImage(document, Path.getDiplomaPath());
 
-			p = new Paragraph(competitor.getSurname() + ", " + competitor.getName(), FontFactory.getFont(font,
-					fontSize + 20));
+			p = new Paragraph(competitor.getSurname() + ", " + competitor.getName(),
+					FontFactory.getFont(font, fontSize + 20));
 			cell = new PdfPCell(p);
 			cell.setBorderWidth(border);
 			cell.setColspan(1);
@@ -280,8 +281,8 @@ public class DiplomaPDF {
 				}
 
 				// Performed hits.
-				image = com.itextpdf.text.Image.getInstance(
-						createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft),
+				image = com.itextpdf.text.Image
+						.getInstance(createPieChart(createPerformedHitsDataset(duelsTeamRight, duelsTeamLeft),
 								transl.getTranslatedText("PerformedHitsStatisticsMenuItem")), null, false);
 				cell = new PdfPCell(image, true);
 				cell.setBorderWidth(1);
@@ -289,8 +290,8 @@ public class DiplomaPDF {
 				mainTable.addCell(cell);
 
 				// Received hits.
-				image = com.itextpdf.text.Image.getInstance(
-						createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft),
+				image = com.itextpdf.text.Image
+						.getInstance(createPieChart(createReceivedHitsDataset(duelsTeamRight, duelsTeamLeft),
 								transl.getTranslatedText("ReceivedHitsStatisticsMenuItem")), null, false);
 				cell = new PdfPCell(image, true);
 				cell.setBorderWidth(1);
@@ -305,10 +306,9 @@ public class DiplomaPDF {
 				mainTable.addCell(cell);
 
 				// Team ranking.
-				image = com.itextpdf.text.Image.getInstance(
-						createBarChart(createTeamRankingDataset(competitor),
-								transl.getTranslatedText("TopTenTeamTitle"),
-								transl.getTranslatedText("NumberOfWinnedTopTen")), null, false);
+				image = com.itextpdf.text.Image.getInstance(createBarChart(createTeamRankingDataset(competitor),
+						transl.getTranslatedText("TopTenTeamTitle"), transl.getTranslatedText("NumberOfWinnedTopTen")),
+						null, false);
 				cell = new PdfPCell(image, true);
 				cell.setBorderWidth(1);
 				cell.setColspan(3);
@@ -455,7 +455,8 @@ public class DiplomaPDF {
 				startValue = 0;
 			}
 
-			int padding = 0; // If the result can not be centered because is in the last one, move the graphic.
+			int padding = 0; // If the result can not be centered because is in
+								// the last one, move the graphic.
 			int endValue = startValue + TOTAL_RANGES;
 			if (endValue >= teamTopTen.size()) {
 				padding = endValue - (teamTopTen.size());
@@ -486,26 +487,28 @@ public class DiplomaPDF {
 		private BufferedImage createPieChart(DefaultPieDataset dataset, String title) {
 
 			// create the chart…
-			JFreeChart chart = ChartFactory.createPieChart(title, // Titulo de grafico
+			JFreeChart chart = ChartFactory.createPieChart(title, // Titulo de
+																	// grafico
 					dataset, // data
 					true, // incluye leyenda
 					true, // visualiza tooltips
 					false // urls
-					);
+			);
 			BufferedImage image = chart.createBufferedImage(600, 400);
 			return image;
 		}
 
 		private BufferedImage createBarChart(CategoryDataset dataset, String title, String axis) {
 			// create the chart...
-			final JFreeChart chart = ChartFactory.createBarChart(title, // chart title
+			final JFreeChart chart = ChartFactory.createBarChart(title, // chart
+																		// title
 					"", axis, // domain axis label
 					dataset, // data
 					PlotOrientation.VERTICAL, // orientation
 					true, // include legend
 					true, // tooltips?
 					false // URLs?
-					);
+			);
 
 			// get a reference to the plot for further customisation...
 			final CategoryPlot plot = chart.getCategoryPlot();
@@ -522,7 +525,8 @@ public class DiplomaPDF {
 			return image;
 		}
 
-		private PdfPTable CompetitorTable(RegisteredPerson c, ScoreOfCompetitor cr, int index, String font, int fontSize) {
+		private PdfPTable CompetitorTable(RegisteredPerson c, ScoreOfCompetitor cr, int index, String font,
+				int fontSize) {
 			PdfPCell cell;
 			Paragraph p;
 			float[] width = { (float) 0.3, (float) 0.3, (float) 0.3 };
@@ -531,8 +535,8 @@ public class DiplomaPDF {
 			if (!cr.getCompetitor().getId().equals(c.getId())) {
 				p = new Paragraph((index + 1) + "º ", FontFactory.getFont(font, fontSize - 8));
 			} else {
-				p = new Paragraph((index + 1) + "º " + c.getAcronim(), FontFactory.getFont(font, fontSize - 8,
-						Font.BOLD));
+				p = new Paragraph((index + 1) + "º " + c.getAcronim(),
+						FontFactory.getFont(font, fontSize - 8, Font.BOLD));
 			}
 			cell = new PdfPCell(p);
 			cell.setBorderWidth(0);
@@ -572,8 +576,8 @@ public class DiplomaPDF {
 				float[] width2 = { (float) 0.3, (float) 0.3, (float) 0.3 };
 				PdfPTable table2 = new PdfPTable(width2);
 
-				p = new Paragraph(transl.getTranslatedText("TopTenCompetitorNumber"), FontFactory.getFont(font,
-						fontSize - 12));
+				p = new Paragraph(transl.getTranslatedText("TopTenCompetitorNumber"),
+						FontFactory.getFont(font, fontSize - 12));
 				cell = new PdfPCell(p);
 				cell.setBorderWidth(1);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -606,7 +610,8 @@ public class DiplomaPDF {
 				startValue = 0;
 			}
 
-			int padding = 0; // If the result can not be centered because is in the last one, move the graphic.
+			int padding = 0; // If the result can not be centered because is in
+								// the last one, move the graphic.
 			int endValue = startValue + files * columns;
 			if (endValue >= competitorTopTen.size()) {
 				padding = endValue - (competitorTopTen.size());

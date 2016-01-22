@@ -1,5 +1,13 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+
+import com.softwaremagico.ktg.language.ITranslator;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,15 +33,10 @@ package com.softwaremagico.ktg.gui;
  */
 
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.util.List;
-import javax.swing.DefaultListModel;
 
 public abstract class Search<T> extends javax.swing.JFrame {
 	private static final long serialVersionUID = -1190635923759340815L;
-	protected Translator trans = null;
+	protected ITranslator trans = null;
 	protected DefaultListModel<String> resultModel = new DefaultListModel<>();
 	protected List<T> results;
 

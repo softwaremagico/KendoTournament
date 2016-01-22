@@ -23,19 +23,21 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
-public class DatabaseConnectionWindow extends javax.swing.JFrame {
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
 
-    private DatabaseConnectionPanel connectionPanel = new DatabaseConnectionPanel();
+public class DatabaseConnectionWindow extends javax.swing.JFrame {
+	private static final long serialVersionUID = -2696748471565546897L;
+	private DatabaseConnectionPanel connectionPanel = new DatabaseConnectionPanel();
 
     /**
      * Creates new form DatabaseConnection
@@ -56,7 +58,7 @@ public class DatabaseConnectionWindow extends javax.swing.JFrame {
     }
 
     private void setLanguage() {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
+        ITranslator trans = LanguagePool.getTranslator("gui.xml");
         this.setTitle(trans.getTranslatedText("titleDatabaseConnection"));
         ConnectButton.setText(trans.getTranslatedText("ConnectButton"));
         CloseButton.setText(trans.getTranslatedText("CloseButton"));

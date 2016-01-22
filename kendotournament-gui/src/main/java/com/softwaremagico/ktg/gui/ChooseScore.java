@@ -1,5 +1,9 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.List;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,21 +29,16 @@ package com.softwaremagico.ktg.gui;
  */
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentScore;
 
-import java.awt.Toolkit;
-import java.sql.SQLException;
-import java.util.List;
-
 public class ChooseScore extends javax.swing.JFrame {
-
     private static final long serialVersionUID = 4593127586769712466L;
-    Translator trans = null;
+    private ITranslator trans = null;
     private boolean refreshing = false;
 
     /**

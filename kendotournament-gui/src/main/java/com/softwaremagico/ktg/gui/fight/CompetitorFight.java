@@ -33,6 +33,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -45,13 +46,11 @@ import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.DuelPool;
-
-import java.sql.SQLException;
 
 public class CompetitorFight extends JPanel {
 	private static final long serialVersionUID = -7099479717436351865L;
@@ -65,7 +64,7 @@ public class CompetitorFight extends JPanel {
 	private JLabel nameLabel;
 	private RegisteredPerson competitor;
 	private Fight fight;
-	private Translator trans = null;
+	private ITranslator trans = null;
 	private TeamFight teamFight;
 	private GridBagConstraints gridBagConstraints;
 

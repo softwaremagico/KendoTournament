@@ -23,20 +23,6 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.Photo;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.gui.base.KendoFrame;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.lists.TournamentAccreditationPDF;
-import com.softwaremagico.ktg.persistence.AutoSaveByAction;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.tools.Media;
-import com.softwaremagico.ktg.tournament.TournamentType;
-
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -52,9 +38,23 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SwingConstants;
 
-public class NewTournament extends KendoFrame {
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Photo;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.lists.TournamentAccreditationPDF;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
+import com.softwaremagico.ktg.persistence.TeamPool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
+import com.softwaremagico.ktg.tools.Media;
+import com.softwaremagico.ktg.tournament.TournamentType;
 
-    Translator trans = null;
+public class NewTournament extends KendoFrame {
+	private static final long serialVersionUID = 538910511776840660L;
+	private ITranslator trans = null;
     private Integer maxCompetitorTeam = null;
     private Tournament oldTournament = null;
     private BufferedImage banner;

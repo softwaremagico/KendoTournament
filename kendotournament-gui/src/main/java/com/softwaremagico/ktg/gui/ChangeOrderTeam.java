@@ -23,25 +23,27 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.persistence.TournamentPool;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 
-public class ChangeOrderTeam extends javax.swing.JFrame {
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.persistence.TeamPool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
 
-    private Translator trans = null;
+public class ChangeOrderTeam extends javax.swing.JFrame {
+	private static final long serialVersionUID = 50457036957789013L;
+	private ITranslator trans = null;
     private List<Tournament> listTournaments = new ArrayList<>();
     private List<Team> teams = new ArrayList<>();
     private DefaultListModel<Team> teamsModel = new DefaultListModel<>();

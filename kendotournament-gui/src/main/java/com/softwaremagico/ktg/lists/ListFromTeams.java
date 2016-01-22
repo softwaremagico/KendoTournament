@@ -1,5 +1,11 @@
 package com.softwaremagico.ktg.lists;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -25,20 +31,15 @@ package com.softwaremagico.ktg.lists;
  */
 
 import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.softwaremagico.ktg.persistence.TeamPool;
 
 public abstract class ListFromTeams extends KendoFrame {
-
-	public Translator trans = null;
+	private static final long serialVersionUID = 6487068508001136053L;
+	public ITranslator trans = null;
 	public List<Team> listTeams = new ArrayList<>();
 	private boolean voidTournament;
 
@@ -67,8 +68,8 @@ public abstract class ListFromTeams extends KendoFrame {
 				TeamComboBox.addItem(trans.getTranslatedText("All"));
 			}
 			for (int i = 0; i < listTeams.size(); i++) {
-				TeamComboBox.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).getTournament().getName()
-						+ ")");
+				TeamComboBox
+						.addItem(listTeams.get(i).getName() + " (" + listTeams.get(i).getTournament().getName() + ")");
 			}
 			if (TeamComboBox.getItemCount() > 0) {
 				TeamComboBox.setSelectedIndex(0);
@@ -114,79 +115,76 @@ public abstract class ListFromTeams extends KendoFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	// <editor-fold defaultstate="collapsed" desc="Generated
+	// Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        TeamComboBox = new javax.swing.JComboBox();
-        TeamLabel = new javax.swing.JLabel();
-        GenerateButton = new javax.swing.JButton();
-        CancelButton = new javax.swing.JButton();
-        CheckBox = new javax.swing.JCheckBox();
+		TeamComboBox = new javax.swing.JComboBox();
+		TeamLabel = new javax.swing.JLabel();
+		GenerateButton = new javax.swing.JButton();
+		CancelButton = new javax.swing.JButton();
+		CheckBox = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setResizable(false);
 
-        TeamLabel.setText("Team:");
+		TeamLabel.setText("Team:");
 
-        GenerateButton.setText("Generate List");
-        GenerateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GenerateButtonActionPerformed(evt);
-            }
-        });
+		GenerateButton.setText("Generate List");
+		GenerateButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				GenerateButtonActionPerformed(evt);
+			}
+		});
 
-        CancelButton.setText("Cancel");
-        CancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancelButtonActionPerformed(evt);
-            }
-        });
+		CancelButton.setText("Cancel");
+		CancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CancelButtonActionPerformed(evt);
+			}
+		});
 
-        CheckBox.setText("CheckBox");
-        CheckBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CheckBoxActionPerformed(evt);
-            }
-        });
+		CheckBox.setText("CheckBox");
+		CheckBox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CheckBoxActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CheckBox)
-                    .addComponent(TeamLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton))
-                    .addComponent(TeamComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(CheckBox).addComponent(TeamLabel))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+								layout.createSequentialGroup()
+										.addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 147,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(CancelButton))
+						.addComponent(TeamComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addContainerGap()));
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {CancelButton, GenerateButton});
+		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+				new java.awt.Component[] { CancelButton, GenerateButton });
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TeamComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TeamLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CancelButton)
-                    .addComponent(GenerateButton)
-                    .addComponent(CheckBox))
-                .addContainerGap())
-        );
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
+						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(TeamComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(TeamLabel))
+				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(CancelButton).addComponent(GenerateButton).addComponent(CheckBox))
+				.addContainerGap()));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
 	private void GenerateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_GenerateButtonActionPerformed
 		Generate();
@@ -199,11 +197,12 @@ public abstract class ListFromTeams extends KendoFrame {
 	private void CheckBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_CheckBoxActionPerformed
 		CkeckBoxClicked();
 	}// GEN-LAST:event_CheckBoxActionPerformed
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CancelButton;
-    public javax.swing.JCheckBox CheckBox;
-    protected javax.swing.JButton GenerateButton;
-    protected javax.swing.JComboBox TeamComboBox;
-    private javax.swing.JLabel TeamLabel;
-    // End of variables declaration//GEN-END:variables
+		// Variables declaration - do not modify//GEN-BEGIN:variables
+
+	private javax.swing.JButton CancelButton;
+	public javax.swing.JCheckBox CheckBox;
+	protected javax.swing.JButton GenerateButton;
+	protected javax.swing.JComboBox TeamComboBox;
+	private javax.swing.JLabel TeamLabel;
+	// End of variables declaration//GEN-END:variables
 }

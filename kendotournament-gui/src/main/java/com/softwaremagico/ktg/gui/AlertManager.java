@@ -1,5 +1,19 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -26,30 +40,16 @@ package com.softwaremagico.ktg.gui;
 
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.sql.SQLException;
-
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 public class AlertManager {
 
 	private static final int LINE = 50;
-	private static final Translator trans = LanguagePool.getTranslator("messages.xml");
+	private static final ITranslator trans = LanguagePool.getTranslator("messages.xml");
 	private static ImageIcon winnerIcon = null;
 	private static ImageIcon clockIcon = null;
 	private static JDialog waitingNetworkDialog;

@@ -46,113 +46,113 @@ import com.softwaremagico.ktg.gui.base.KendoFrame;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.gui.tournament.BlackBoardPanel;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 
 public class TreeWindow extends KendoFrame {
 	private static final long serialVersionUID = -1587125061547952914L;
 	private BlackBoardPanel bbp;
-    private JScrollPane blackBoardScrollPane;
-    private Tournament tournament;
+	private JScrollPane blackBoardScrollPane;
+	private Tournament tournament;
 
-    public TreeWindow(Tournament tournament) {
-        this.tournament = tournament;
-        defineWindow(750, 400);
-        setResizable(true);
-        setElements();
-        update();
-    }
+	public TreeWindow(Tournament tournament) {
+		this.tournament = tournament;
+		defineWindow(750, 400);
+		setResizable(true);
+		setElements();
+		update();
+	}
 
-    private void setElements() {
-        bbp = new BlackBoardPanel(null, false);
-        blackBoardScrollPane = new JScrollPane();
-        blackBoardScrollPane.setViewportView(bbp);
-        blackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+	private void setElements() {
+		bbp = new BlackBoardPanel(null, false);
+		blackBoardScrollPane = new JScrollPane();
+		blackBoardScrollPane.setViewportView(bbp);
+		blackBoardScrollPane.setBackground(new java.awt.Color(255, 255, 255));
 
-        getContentPane().removeAll();
-        setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 1;
-        getContentPane().add(blackBoardScrollPane, gridBagConstraints);
+		getContentPane().removeAll();
+		setLayout(new GridBagLayout());
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridheight = 1;
+		gridBagConstraints.gridwidth = 2;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 1;
+		getContentPane().add(blackBoardScrollPane, gridBagConstraints);
 
-        KPanel saveButtonPanel = new KPanel(new FlowLayout(FlowLayout.LEFT));
-        saveButtonPanel.setMinimumSize(new Dimension(200, 50));
-        KButton saveButton = new KButton();
-        saveButton.setTranslatedText("SaveImageButton");
-        saveButtonPanel.add(saveButton);
-        saveButton.setPreferredSize(new Dimension(180, 40));
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveImage();
-            }
-        });
+		KPanel saveButtonPanel = new KPanel(new FlowLayout(FlowLayout.LEFT));
+		saveButtonPanel.setMinimumSize(new Dimension(200, 50));
+		KButton saveButton = new KButton();
+		saveButton.setTranslatedText("SaveImageButton");
+		saveButtonPanel.add(saveButton);
+		saveButton.setPreferredSize(new Dimension(180, 40));
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveImage();
+			}
+		});
 
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(saveButtonPanel, gridBagConstraints);
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		getContentPane().add(saveButtonPanel, gridBagConstraints);
 
-        KPanel closeButtonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
-        closeButtonPanel.setMinimumSize(new Dimension(200, 50));
-        CloseButton closeButton = new CloseButton(this);
-        closeButton.setPreferredSize(new Dimension(180, 40));
-        closeButtonPanel.add(closeButton);
+		KPanel closeButtonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+		closeButtonPanel.setMinimumSize(new Dimension(200, 50));
+		CloseButton closeButton = new CloseButton(this);
+		closeButton.setPreferredSize(new Dimension(180, 40));
+		closeButtonPanel.add(closeButton);
 
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = xPadding;
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridwidth = 1;
-        gridBagConstraints.weightx = 1;
-        gridBagConstraints.weighty = 0;
-        gridBagConstraints.insets = new Insets(5, 5, 5, 5);
-        getContentPane().add(closeButtonPanel, gridBagConstraints);
-    }
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 1;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		getContentPane().add(closeButtonPanel, gridBagConstraints);
+	}
 
-    @Override
-    public final void update() {
-        try {
-            bbp.update(tournament);
-            blackBoardScrollPane.revalidate();
-            blackBoardScrollPane.repaint();
-        } catch (NullPointerException npe) {
-            AlertManager.showErrorInformation(this.getClass().getName(), npe);
-        }
-    }
+	@Override
+	public final void update() {
+		try {
+			bbp.update(tournament);
+			blackBoardScrollPane.revalidate();
+			blackBoardScrollPane.repaint();
+		} catch (NullPointerException npe) {
+			AlertManager.showErrorInformation(this.getClass().getName(), npe);
+		}
+	}
 
-    private void saveImage() {
-        String file;
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        if (!(file = exploreWindowsForPng(trans.getTranslatedText("ExportPNG"),
-                JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
-            try {
-                Container c = bbp;
-                BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                c.paint(im.getGraphics());
-                ImageIO.write(im, "PNG", new File(file));
-            } catch (IOException ex) {
-                AlertManager.showErrorInformation(this.getClass().getName(), ex);
-            }
-        }
-    }
+	private void saveImage() {
+		String file;
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		if (!(file = exploreWindowsForPng(trans.getTranslatedText("ExportPNG"), JFileChooser.FILES_AND_DIRECTORIES, ""))
+				.equals("")) {
+			try {
+				Container c = bbp;
+				BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				c.paint(im.getGraphics());
+				ImageIO.write(im, "PNG", new File(file));
+			} catch (IOException ex) {
+				AlertManager.showErrorInformation(this.getClass().getName(), ex);
+			}
+		}
+	}
 
-    @Override
-    public String defaultFileName() {
-        return "Tree.png";
-    }
+	@Override
+	public String defaultFileName() {
+		return "Tree.png";
+	}
 }

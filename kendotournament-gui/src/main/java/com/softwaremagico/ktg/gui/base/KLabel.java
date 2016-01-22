@@ -23,34 +23,37 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import java.awt.Font;
+
 import javax.swing.JLabel;
 
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+
 public class KLabel extends JLabel {
-    
-    public KLabel() {
-        
-    }
+	private static final long serialVersionUID = -5622225463794843573L;
 
-    public KLabel(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        String label = trans.getTranslatedText(tag);
-        if (label != null) {
-            setText(label);
-        } else {
-            setText("** error tag '" + tag + "' **");
-        }
-    }
-    
-    public void setBoldFont(boolean bold) {
-        Font currentFont = this.getFont();
-        setFont(new Font(currentFont.getName(), currentFont.getStyle() | Font.BOLD, currentFont.getSize()));
-    }
+	public KLabel() {
 
-    public void setFontSize(int fontSize) {
-         Font currentFont = this.getFont();
-        setFont(new Font(currentFont.getName(), currentFont.getStyle(), fontSize));
-    }
+	}
+
+	public KLabel(String tag) {
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		String label = trans.getTranslatedText(tag);
+		if (label != null) {
+			setText(label);
+		} else {
+			setText("** error tag '" + tag + "' **");
+		}
+	}
+
+	public void setBoldFont(boolean bold) {
+		Font currentFont = this.getFont();
+		setFont(new Font(currentFont.getName(), currentFont.getStyle() | Font.BOLD, currentFont.getSize()));
+	}
+
+	public void setFontSize(int fontSize) {
+		Font currentFont = this.getFont();
+		setFont(new Font(currentFont.getName(), currentFont.getStyle(), fontSize));
+	}
 }

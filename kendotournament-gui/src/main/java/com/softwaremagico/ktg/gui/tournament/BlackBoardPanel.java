@@ -25,6 +25,7 @@ package com.softwaremagico.ktg.gui.tournament;
  */
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Rectangle;
@@ -41,13 +42,12 @@ import javax.swing.Timer;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KLabel;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import java.awt.Font;
 
 public class BlackBoardPanel extends javax.swing.JPanel {
 
@@ -56,7 +56,7 @@ public class BlackBoardPanel extends javax.swing.JPanel {
 	private Tournament tournament;
 	private static int TITLE_COLUMN = 1;
 	private static int TITLE_ROW = 2;
-	transient private Translator trans = LanguagePool.getTranslator("gui.xml");
+	private transient ITranslator trans = LanguagePool.getTranslator("gui.xml");
 	private HashMap<Integer, List<TournamentGroupBox>> grpsBox; // GroupBox per
 																// level.
 	private Integer selectedGroupIndex = null;

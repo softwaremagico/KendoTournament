@@ -23,18 +23,20 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Duel;
-import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.DuelPool;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
+
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.DuelPool;
 
 public abstract class StatisticsHits extends StatisticsGUI {
 
@@ -115,7 +117,7 @@ public abstract class StatisticsHits extends StatisticsGUI {
     }
 
     protected JFreeChart createChart(DefaultPieDataset dataset, String tag) {
-        Translator transl = LanguagePool.getTranslator("gui.xml");
+        ITranslator transl = LanguagePool.getTranslator("gui.xml");
         String title;
         if (competitor != null) {
             title = transl.getTranslatedText(tag) + ": " + competitor.getName() + " " + competitor.getSurname(); // Titulo de grafico

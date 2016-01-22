@@ -1,5 +1,17 @@
 package com.softwaremagico.ktg.gui.tournament;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.swing.JLabel;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -26,31 +38,21 @@ package com.softwaremagico.ktg.gui.tournament;
 
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
+import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.SQLException;
-import java.util.List;
-import javax.swing.JLabel;
 
 public class TournamentGroupBox extends Group {
-
+	private static final long serialVersionUID = -2303870847314824614L;
 	private TGroup tournamentGroup;
 	private ITournamentManager tournamentManager;
 	private DesignGroupWindow dgw;
 	private boolean selected = false;
-	private Translator trans = null;
+	private ITranslator trans = null;
 	private boolean color = true;
 	private java.awt.event.MouseAdapter ma;
 	private boolean listenerAdded = false;

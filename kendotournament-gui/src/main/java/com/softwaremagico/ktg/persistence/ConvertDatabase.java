@@ -23,6 +23,9 @@ package com.softwaremagico.ktg.persistence;
  * #L%
  */
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
@@ -34,114 +37,129 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.lists.TimerPanel;
-import java.sql.SQLException;
-import java.util.List;
 
 public class ConvertDatabase {
 
-    private Database fromDatabase;
-    private Database toDatabase;
+	private Database fromDatabase;
+	private Database toDatabase;
 
-    public ConvertDatabase(Database fromDatabase, Database toDatabase) {
-        this.fromDatabase = fromDatabase;
-        this.toDatabase = toDatabase;
-    }
+	public ConvertDatabase(Database fromDatabase, Database toDatabase) {
+		this.fromDatabase = fromDatabase;
+		this.toDatabase = toDatabase;
+	}
 
-    private void startThread() {
-        TimerPanel tp = new TimerPanel();
-        ThreadConversion tc = new ThreadConversion(tp);
-        tc.start();
-    }
+	private void startThread() {
+		TimerPanel tp = new TimerPanel();
+		ThreadConversion tc = new ThreadConversion(tp);
+		tc.start();
+	}
 
-    public void stablishConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
-            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) throws CommunicationsException {
-        if (createConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer,
-                toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer)) {
-            startThread();
-        }
-    }
+	public void stablishConnection(String fromDatabasePassword, String fromDatabaseUser,
+			String fromDatabaseDatabaseName, String fromDatabaseServer, String toDatabasePassword,
+			String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer)
+					throws CommunicationsException {
+		if (createConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer,
+				toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer)) {
+			startThread();
+		}
+	}
 
-    private boolean createConnection(String fromDatabasePassword, String fromDatabaseUser, String fromDatabaseDatabaseName, String fromDatabaseServer,
-            String toDatabasePassword, String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer) throws CommunicationsException {
-        try {
-            if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer, true, true)) {
-                if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer, true, true)) {
-                    return true;
-                }
-            }
-        } catch (SQLException ex) {
-            AlertManager.showSqlErrorMessage(ex);
-        }
-        return false;
-    }
+	private boolean createConnection(String fromDatabasePassword, String fromDatabaseUser,
+			String fromDatabaseDatabaseName, String fromDatabaseServer, String toDatabasePassword,
+			String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer)
+					throws CommunicationsException {
+		try {
+			if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName,
+					fromDatabaseServer, true, true)) {
+				if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer,
+						true, true)) {
+					return true;
+				}
+			}
+		} catch (SQLException ex) {
+			AlertManager.showSqlErrorMessage(ex);
+		}
+		return false;
+	}
 
-    public class ThreadConversion extends Thread {
+	public class ThreadConversion extends Thread {
 
-        private TimerPanel timerPanel;
-        private Translator transl;
+		private TimerPanel timerPanel;
+		private ITranslator transl;
 
-        public ThreadConversion(TimerPanel tp) {
-            transl = LanguagePool.getTranslator("gui.xml");
-            timerPanel = tp;
-            tp.updateTitle(transl.getTranslatedText("ExportDatabaseProgressBarTitle"));
-            tp.updateLabel(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"));
-        }
+		public ThreadConversion(TimerPanel tp) {
+			transl = LanguagePool.getTranslator("gui.xml");
+			timerPanel = tp;
+			tp.updateTitle(transl.getTranslatedText("ExportDatabaseProgressBarTitle"));
+			tp.updateLabel(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"));
+		}
 
-        @Override
-        public void run() {
-            dumpData();
-        }
+		@Override
+		public void run() {
+			dumpData();
+		}
 
-        private boolean dumpData() {
-            try {
-                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"), 0, 1);
-                List<Tournament> tournaments = fromDatabase.getTournaments();
-                toDatabase.addTournaments(tournaments);
-                
-                Integer total = 3 + tournaments.size() * 5;
-                Integer current = 0;
+		private boolean dumpData() {
+			try {
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"), 0, 1);
+				List<Tournament> tournaments = fromDatabase.getTournaments();
+				toDatabase.addTournaments(tournaments);
 
-                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelClub"), current++, total);
-                List<Club> clubs = fromDatabase.getClubs();
-                toDatabase.addClubs(clubs);
+				Integer total = 3 + tournaments.size() * 5;
+				Integer current = 0;
 
-                timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelCompetitor"), current++, total);
-                List<RegisteredPerson> people = fromDatabase.getRegisteredPeople();
-                toDatabase.addRegisteredPeople(people);
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelClub"), current++, total);
+				List<Club> clubs = fromDatabase.getClubs();
+				toDatabase.addClubs(clubs);
 
-                for (Tournament tournament : tournaments) {
-                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")", current++, total);
-                    List<Role> roles = fromDatabase.getRoles(tournament);
-                    toDatabase.addRoles(roles);
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelCompetitor"), current++,
+						total);
+				List<RegisteredPerson> people = fromDatabase.getRegisteredPeople();
+				toDatabase.addRegisteredPeople(people);
 
-                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"), current++, total);
-                    List<Team> teams = fromDatabase.getTeams(tournament);
-                    toDatabase.addTeams(teams);
+				for (Tournament tournament : tournaments) {
+					timerPanel.updateText(
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")",
+							current++, total);
+					List<Role> roles = fromDatabase.getRoles(tournament);
+					toDatabase.addRoles(roles);
 
-                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
-                    List<Fight> fights = fromDatabase.getFights(tournament);
-                    toDatabase.addFights(fights);
+					timerPanel.updateText(
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"),
+							current++, total);
+					List<Team> teams = fromDatabase.getTeams(tournament);
+					toDatabase.addTeams(teams);
 
-                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
-                    List<Duel> duels = fromDatabase.getDuels(tournament);
-                    toDatabase.addDuels(duels);
+					timerPanel.updateText(
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
+							current++, total);
+					List<Fight> fights = fromDatabase.getFights(tournament);
+					toDatabase.addFights(fights);
 
-                    timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"), current++, total);
-                    List<Undraw> undraws = fromDatabase.getUndraws(tournament);
-                    toDatabase.addUndraws(undraws);
-                }
+					timerPanel.updateText(
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
+							current++, total);
+					List<Duel> duels = fromDatabase.getDuels(tournament);
+					toDatabase.addDuels(duels);
 
-                timerPanel.dispose();
-                AlertManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
-            } catch (SQLException | TeamMemberOrderException e) {
-                AlertManager.showErrorInformation(this.getClass().getName(), e);
-                timerPanel.dispose();
-                return false;
-            }
-            return true;
-        }
-    }
+					timerPanel.updateText(
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
+							current++, total);
+					List<Undraw> undraws = fromDatabase.getUndraws(tournament);
+					toDatabase.addUndraws(undraws);
+				}
+
+				timerPanel.dispose();
+				AlertManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
+			} catch (SQLException | TeamMemberOrderException e) {
+				AlertManager.showErrorInformation(this.getClass().getName(), e);
+				timerPanel.dispose();
+				return false;
+			}
+			return true;
+		}
+	}
 }

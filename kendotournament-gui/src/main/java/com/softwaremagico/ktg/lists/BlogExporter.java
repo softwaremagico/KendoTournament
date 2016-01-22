@@ -35,8 +35,8 @@ import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Score;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
@@ -48,7 +48,7 @@ import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 
 public class BlogExporter {
 	private final static String NEW_LINE = "&nbsp;\n";
-	private static Translator trans = LanguagePool.getTranslator("gui.xml");
+	private static ITranslator trans = LanguagePool.getTranslator("gui.xml");
 
 	public static String getWordpressFormat(Tournament tournament) {
 		StringBuilder stringBuilder = new StringBuilder();

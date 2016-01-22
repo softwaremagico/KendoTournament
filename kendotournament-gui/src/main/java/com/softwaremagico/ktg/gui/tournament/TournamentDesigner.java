@@ -35,8 +35,8 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
 import com.softwaremagico.ktg.persistence.DatabaseConnection;
@@ -54,7 +54,7 @@ import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 public final class TournamentDesigner extends javax.swing.JFrame {
 	private static final long serialVersionUID = 3824274132477001088L;
 	private DefaultListModel<String> teamModel = new DefaultListModel<>();
-    private Translator trans = null;
+    private ITranslator trans = null;
     private List<Team> teams;
     private List<Tournament> listTournaments = new ArrayList<>();
     private boolean refreshTournament = true;

@@ -1,5 +1,19 @@
 package com.softwaremagico.ktg.gui;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -26,6 +40,7 @@ package com.softwaremagico.ktg.gui;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.KendoFrame;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.AutoSaveOption;
@@ -34,22 +49,10 @@ import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tools.Media;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
 
 public final class MainGUI extends KendoFrame {
-
-    Translator trans = null;
+	private static final long serialVersionUID = 3360747218076032140L;
+	private ITranslator trans = null;
     private List<JRadioButtonMenuItem> languageList = new ArrayList<>();
     private boolean refresh = true;
 

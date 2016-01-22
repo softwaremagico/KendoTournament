@@ -23,19 +23,20 @@ package com.softwaremagico.ktg.gui;
  * #L%
  */
 
-import com.softwaremagico.ktg.files.Folder;
-import com.softwaremagico.ktg.files.Path;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.DatabaseConnection;
-import com.softwaremagico.ktg.persistence.DatabaseEngine;
-import com.softwaremagico.ktg.persistence.SQLite;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-public class DatabaseConnectionPanel extends javax.swing.JPanel {
+import com.softwaremagico.ktg.files.Folder;
+import com.softwaremagico.ktg.files.Path;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.DatabaseConnection;
+import com.softwaremagico.ktg.persistence.DatabaseEngine;
+import com.softwaremagico.ktg.persistence.SQLite;
 
-    private boolean engineUpdate = true;
+public class DatabaseConnectionPanel extends javax.swing.JPanel {
+	private static final long serialVersionUID = -3570078407789403883L;
+	private boolean engineUpdate = true;
     private String selectedEngine = "MySQL";
 
     /**
@@ -49,7 +50,7 @@ public class DatabaseConnectionPanel extends javax.swing.JPanel {
     }
 
     private void setLanguage() {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
+        ITranslator trans = LanguagePool.getTranslator("gui.xml");
         UserLabel.setText(trans.getTranslatedText("UserLabel"));
         ServerLabel.setText(trans.getTranslatedText("ServerLabel"));
         PasswordLabel.setText(trans.getTranslatedText("PasswordLabel"));

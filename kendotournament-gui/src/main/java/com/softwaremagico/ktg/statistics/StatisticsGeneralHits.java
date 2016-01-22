@@ -23,29 +23,28 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.Duel;
-import com.softwaremagico.ktg.core.Score;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.gui.AlertManager;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
-import com.softwaremagico.ktg.persistence.DuelPool;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JPanel;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
-/**
- *
- * @author Jorge
- */
-public class StatisticsGeneralHits extends StatisticsGUI {
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.Score;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.persistence.DuelPool;
 
-    private List<Duel> duels = new ArrayList<>();
+public class StatisticsGeneralHits extends StatisticsGUI {
+	private static final long serialVersionUID = -2681437218335984145L;
+	private List<Duel> duels = new ArrayList<>();
     private Tournament tournament;
 
     public StatisticsGeneralHits(Tournament tournament) {
@@ -85,7 +84,7 @@ public class StatisticsGeneralHits extends StatisticsGUI {
     }
 
     private JFreeChart createChart(DefaultPieDataset dataset) {
-        Translator transl = LanguagePool.getTranslator("gui.xml");
+        ITranslator transl = LanguagePool.getTranslator("gui.xml");
         // create the chart…
         JFreeChart chart = ChartFactory.createPieChart(
                 transl.getTranslatedText("TitleHits") + ": " + tournament, // Titulo de grafico

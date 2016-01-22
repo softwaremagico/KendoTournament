@@ -23,10 +23,8 @@ package com.softwaremagico.ktg.statistics;
  * #L%
  */
 
-import com.softwaremagico.ktg.core.KendoTournamentGenerator;
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JPanel;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -35,9 +33,13 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class StatisticsLines extends StatisticsGUI {
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
 
-    Translator transl;
+public class StatisticsLines extends StatisticsGUI {
+	private static final long serialVersionUID = -6644163172877393383L;
+	private ITranslator transl;
 
     public StatisticsLines(KendoTournamentGenerator tmp_tournament) {
         transl = LanguagePool.getTranslator("gui.xml");

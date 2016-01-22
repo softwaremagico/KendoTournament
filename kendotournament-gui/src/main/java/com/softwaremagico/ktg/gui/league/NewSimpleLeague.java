@@ -1,5 +1,12 @@
 package com.softwaremagico.ktg.gui.league;
 
+import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,8 +35,8 @@ import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
@@ -38,19 +45,12 @@ import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 
-import java.awt.Toolkit;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.DefaultListModel;
-
 public class NewSimpleLeague extends javax.swing.JFrame {
-
-    Translator trans = null;
-    DefaultListModel<String> fightsModel = new DefaultListModel<>();
-    List<Team> listTeams = new ArrayList<>();
-    List<Fight> fights = new ArrayList<>();
+	private static final long serialVersionUID = 2052810834933904519L;
+	private ITranslator trans = null;
+    private DefaultListModel<String> fightsModel = new DefaultListModel<>();
+    private List<Team> listTeams = new ArrayList<>();
+    private List<Fight> fights = new ArrayList<>();
     private boolean refreshTournament = true;
     private boolean refreshTeam1 = true;
 

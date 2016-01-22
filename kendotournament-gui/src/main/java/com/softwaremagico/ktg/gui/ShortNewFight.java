@@ -33,22 +33,19 @@ import java.util.List;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import com.softwaremagico.ktg.persistence.TeamPool;
 
-/**
- * 
- * @author Jorge
- */
 public class ShortNewFight extends javax.swing.JFrame {
 
-	Translator trans = null;
-	List<Tournament> listTournaments = new ArrayList<>();
-	List<Team> listTeams = new ArrayList<>();
-	List<Fight> fights = new ArrayList<>();
-	Tournament tournament;
-	int selectedArena;
+	private static final long serialVersionUID = 7046938250195861195L;
+	private ITranslator trans = null;
+	private List<Tournament> listTournaments = new ArrayList<>();
+	private List<Team> listTeams = new ArrayList<>();
+	private List<Fight> fights = new ArrayList<>();
+	private Tournament tournament;
+	private int selectedArena;
 
 	/**
 	 * Creates new form ShortNewFight
@@ -215,107 +212,72 @@ public class ShortNewFight extends javax.swing.JFrame {
 
 		javax.swing.GroupLayout NewFightPanelLayout = new javax.swing.GroupLayout(NewFightPanel);
 		NewFightPanel.setLayout(NewFightPanelLayout);
-		NewFightPanelLayout
-				.setHorizontalGroup(NewFightPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								NewFightPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												NewFightPanelLayout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																NewFightPanelLayout
-																		.createSequentialGroup()
-																		.addGroup(
-																				NewFightPanelLayout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING)
-																						.addComponent(Team2Label)
-																						.addComponent(Team1Label)
-																						.addComponent(FightAreaLabel))
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				39, Short.MAX_VALUE)
-																		.addGroup(
-																				NewFightPanelLayout
-																						.createParallelGroup(
-																								javax.swing.GroupLayout.Alignment.LEADING,
-																								false)
-																						.addComponent(
-																								FightAreaComboBox,
-																								0,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								Team2ComboBox,
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								0,
-																								javax.swing.GroupLayout.DEFAULT_SIZE,
-																								Short.MAX_VALUE)
-																						.addComponent(
-																								Team1ComboBox,
-																								javax.swing.GroupLayout.Alignment.TRAILING,
-																								javax.swing.GroupLayout.PREFERRED_SIZE,
-																								257,
-																								javax.swing.GroupLayout.PREFERRED_SIZE)))
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																NewFightPanelLayout
-																		.createSequentialGroup()
-																		.addComponent(AddButton,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				87,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(CancelButton))).addContainerGap()));
+		NewFightPanelLayout.setHorizontalGroup(NewFightPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(NewFightPanelLayout.createSequentialGroup().addContainerGap()
+						.addGroup(NewFightPanelLayout
+								.createParallelGroup(
+										javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(
+										NewFightPanelLayout.createSequentialGroup()
+												.addGroup(
+														NewFightPanelLayout
+																.createParallelGroup(
+																		javax.swing.GroupLayout.Alignment.LEADING)
+																.addComponent(Team2Label).addComponent(Team1Label)
+																.addComponent(FightAreaLabel))
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39,
+														Short.MAX_VALUE)
+										.addGroup(NewFightPanelLayout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+												.addComponent(FightAreaComboBox, 0,
+														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(Team2ComboBox, javax.swing.GroupLayout.Alignment.TRAILING,
+														0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(Team1ComboBox, javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.PREFERRED_SIZE, 257,
+														javax.swing.GroupLayout.PREFERRED_SIZE)))
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										NewFightPanelLayout.createSequentialGroup()
+												.addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+												.addComponent(CancelButton)))
+						.addContainerGap()));
 
-		NewFightPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { AddButton,
-				CancelButton });
+		NewFightPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
+				new java.awt.Component[] { AddButton, CancelButton });
 
-		NewFightPanelLayout.setVerticalGroup(NewFightPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				NewFightPanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(Team1ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(Team1Label))
+		NewFightPanelLayout.setVerticalGroup(NewFightPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(NewFightPanelLayout.createSequentialGroup().addContainerGap()
+						.addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+								.addComponent(Team1ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(Team1Label))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(Team2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(Team2Label))
+						.addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+								.addComponent(Team2ComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(Team2Label))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-										.addComponent(FightAreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(FightAreaLabel))
+						.addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+								.addComponent(FightAreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(FightAreaLabel))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addGroup(
-								NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(CancelButton).addComponent(AddButton))
+						.addGroup(NewFightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(CancelButton).addComponent(AddButton))
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(NewFightPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addContainerGap()));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				layout.createSequentialGroup()
-						.addContainerGap()
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap().addComponent(NewFightPanel,
+						javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addComponent(NewFightPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));

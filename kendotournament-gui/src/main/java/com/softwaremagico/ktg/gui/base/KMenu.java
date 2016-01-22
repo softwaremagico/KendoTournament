@@ -23,22 +23,25 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JMenu;
 
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
+
 public class KMenu extends JMenu {
-    public KMenu(String tag){
-        setTranslatedText(tag);
-    }
-    
-    public final void setTranslatedText(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        String label = trans.getTranslatedText(tag);
-        if (label != null) {
-            setText(label);
-        } else {
-            setText("** error tag '" + tag + "' **");
-        }
-    }
+	private static final long serialVersionUID = -3547627770832846893L;
+
+	public KMenu(String tag) {
+		setTranslatedText(tag);
+	}
+
+	public final void setTranslatedText(String tag) {
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		String label = trans.getTranslatedText(tag);
+		if (label != null) {
+			setText(label);
+		} else {
+			setText("** error tag '" + tag + "' **");
+		}
+	}
 }

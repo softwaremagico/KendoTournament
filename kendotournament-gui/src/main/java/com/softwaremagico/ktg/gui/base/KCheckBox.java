@@ -23,19 +23,21 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
-import com.softwaremagico.ktg.language.LanguagePool;
-import com.softwaremagico.ktg.language.Translator;
 import javax.swing.JCheckBox;
 
-public class KCheckBox extends JCheckBox {
+import com.softwaremagico.ktg.language.ITranslator;
+import com.softwaremagico.ktg.language.LanguagePool;
 
-    public KCheckBox(String tag) {
-        Translator trans = LanguagePool.getTranslator("gui.xml");
-        String label = trans.getTranslatedText(tag);
-        if (label != null) {
-            setText(label);
-        } else {
-            setText("** error tag '" + tag + "' **");
-        }
-    }
+public class KCheckBox extends JCheckBox {
+	private static final long serialVersionUID = -4978214226556529782L;
+
+	public KCheckBox(String tag) {
+		ITranslator trans = LanguagePool.getTranslator("gui.xml");
+		String label = trans.getTranslatedText(tag);
+		if (label != null) {
+			setText(label);
+		} else {
+			setText("** error tag '" + tag + "' **");
+		}
+	}
 }
