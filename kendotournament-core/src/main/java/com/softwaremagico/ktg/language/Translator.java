@@ -1,5 +1,26 @@
 package com.softwaremagico.ktg.language;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -33,27 +54,6 @@ import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.log.KendoLog;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-
 public class Translator {
 	private final static String DEFAULT_LANGUAGE = "en";
 	private final static String LANGUAGES_FILE = "languages.xml";
@@ -63,8 +63,10 @@ public class Translator {
 	private boolean showedMessage = false;
 	private static List<Language> languagesList = null;
 	private static HashMap<String, RoleTags> rolesList;
+	private static HashMap<String, HashMap<String, String>> tagTranslations;
 
 	public Translator(String filePath) {
+		tagTranslations = new HashMap<>();
 		doc = parseFile(doc, filePath);
 		rolesList = new HashMap<>();
 	}
@@ -105,7 +107,15 @@ public class Translator {
 	}
 
 	public String getTranslatedText(String tag) {
-		return readTag(tag, KendoTournamentGenerator.getInstance().getLanguage());
+		if (tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()) == null) {
+			tagTranslations.put(KendoTournamentGenerator.getInstance().getLanguage(), new HashMap<String, String>());
+		}
+
+		if (tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).get(tag) == null) {
+			tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).put(tag,
+					readTag(tag, KendoTournamentGenerator.getInstance().getLanguage()));
+		}
+		return tagTranslations.get(KendoTournamentGenerator.getInstance().getLanguage()).get(tag);
 	}
 
 	private String readTag(String tag, String language) {

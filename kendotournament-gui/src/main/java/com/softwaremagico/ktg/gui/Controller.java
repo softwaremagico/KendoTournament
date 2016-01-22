@@ -351,7 +351,7 @@ public class Controller {
                     try {
                         aboutGui.UpdateText(MyFile.inString(Path.getRootPath() + ".." + File.separator + "Readme.txt"));
                     } catch (FileNotFoundException fnf2) {
-                        aboutGui.UpdateText("Not available untile project installed!");
+                        aboutGui.UpdateText("Not available until the project is installed!");
                     }
                 }
                 aboutGui.setVisible(true);
