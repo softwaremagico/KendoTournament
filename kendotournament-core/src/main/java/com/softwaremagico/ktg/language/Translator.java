@@ -57,6 +57,7 @@ import com.softwaremagico.ktg.log.KendoLog;
 public class Translator {
 	private final static String DEFAULT_LANGUAGE = "en";
 	private final static String LANGUAGES_FILE = "languages.xml";
+	private final static String ROLES_FILE = "roles.xml";
 	private Document doc = null;
 	private boolean errorShowed = false;
 	private boolean retried = false;
@@ -197,7 +198,7 @@ public class Translator {
 			int red, green, blue;
 			rolesList.put(language, new RoleTags());
 			Document storedRoles = null;
-			storedRoles = parseFile(storedRoles, "roles.xml");
+			storedRoles = parseFile(storedRoles, getTranslatorPath(ROLES_FILE).getPath());
 			NodeList nodeLst = storedRoles.getElementsByTagName("role");
 			for (int i = 0; i < nodeLst.getLength(); i++) {
 				org.w3c.dom.Node firstNode = nodeLst.item(i);
