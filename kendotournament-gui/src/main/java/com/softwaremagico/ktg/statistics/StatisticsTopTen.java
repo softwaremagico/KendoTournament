@@ -54,14 +54,11 @@ import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
 public class StatisticsTopTen extends StatisticsGUI {
 	private static final long serialVersionUID = 8825408636741174219L;
 	private ITranslator transl;
-	private Tournament tournament;
 	private List<ScoreOfCompetitor> competitorTopTen;
-	private int startRange = 0;
 	private List<RegisteredPerson> competitors;
 	private boolean changesAllowed = false;
 
 	public StatisticsTopTen(Tournament tournament) {
-		this.tournament = tournament;
 		try {
 			Ranking ranking;
 			if (tournament == null) {

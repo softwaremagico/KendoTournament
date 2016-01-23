@@ -55,7 +55,7 @@ import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.log.KendoLog;
 
 public class Translator implements ITranslator {
-	private final static String DEFAULT_LANGUAGE = "en";
+	public final static String DEFAULT_LANGUAGE = "en";
 	private final static String LANGUAGES_FILE = "languages.xml";
 	private final static String ROLES_FILE = "roles.xml";
 	private Document doc = null;
@@ -109,11 +109,21 @@ public class Translator implements ITranslator {
 
 	@Override
 	public String getTranslatedText(String tag) {
-		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage());
+		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage(), null);
+	}
+	
+	@Override
+	public String getTranslatedText(String tag, String language) {
+		return getTranslatedText(tag, language, null);
+	}
+	
+	@Override
+	public String getTranslatedText(String tag, String[] args) {
+		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage(), args);
 	}
 
 	@Override
-	public String getTranslatedText(String tag, String language) {
+	public String getTranslatedText(String tag, String language, Object[] args) {
 		if (tagTranslations.get(language) == null) {
 			tagTranslations.put(language, new HashMap<String, String>());
 		}
@@ -121,7 +131,7 @@ public class Translator implements ITranslator {
 		if (tagTranslations.get(language).get(tag) == null) {
 			tagTranslations.get(language).put(tag, readTag(tag, language));
 		}
-		return tagTranslations.get(language).get(tag);
+		return String.format(tagTranslations.get(language).get(tag), args);
 	}
 
 	private String readTag(String tag, String language) {

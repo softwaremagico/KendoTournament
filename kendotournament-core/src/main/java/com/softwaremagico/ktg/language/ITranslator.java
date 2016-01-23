@@ -6,4 +6,8 @@ public interface ITranslator {
 
 	String getTranslatedText(String tag, String language);
 
+	String getTranslatedText(String tag, String[] args);
+	
+	String getTranslatedText(String tag, String language, Object[] args);
+
 }

@@ -64,14 +64,14 @@ public abstract class ListFromCompetitor extends KendoFrame {
 		try {
 			listCompetitors = RegisteredPersonPool.getInstance().getSorted();
 			if (voidTournament) {
-				CompetitorComboBox.addItem(trans.getTranslatedText("All"));
+				competitorComboBox.addItem(trans.getTranslatedText("All"));
 			}
 			for (int i = 0; i < listCompetitors.size(); i++) {
-				CompetitorComboBox
+				competitorComboBox
 						.addItem(listCompetitors.get(i).getSurname() + ", " + listCompetitors.get(i).getName());
 			}
-			if (CompetitorComboBox.getItemCount() > 0) {
-				CompetitorComboBox.setSelectedIndex(0);
+			if (competitorComboBox.getItemCount() > 0) {
+				competitorComboBox.setSelectedIndex(0);
 			}
 		} catch (NullPointerException npe) {
 		} catch (SQLException ex) {
@@ -80,10 +80,10 @@ public abstract class ListFromCompetitor extends KendoFrame {
 	}
 
 	public RegisteredPerson returnSelectedCompetitor() {
-		if (voidTournament && CompetitorComboBox.getSelectedIndex() <= 0) {
+		if (voidTournament && competitorComboBox.getSelectedIndex() <= 0) {
 			return null;
 		}
-		return listCompetitors.get(CompetitorComboBox.getSelectedIndex() - 1);
+		return listCompetitors.get(competitorComboBox.getSelectedIndex() - 1);
 	}
 
 	public abstract void Generate();
@@ -115,7 +115,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		CompetitorComboBox = new javax.swing.JComboBox();
+		competitorComboBox = new javax.swing.JComboBox();
 		CompetitorLabel = new javax.swing.JLabel();
 		GenerateButton = new javax.swing.JButton();
 		CancelButton = new javax.swing.JButton();
@@ -145,7 +145,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup().addComponent(CompetitorLabel)
-										.addGap(18, 18, 18).addComponent(CompetitorComboBox, 0, 308, Short.MAX_VALUE))
+										.addGap(18, 18, 18).addComponent(competitorComboBox, 0, 308, Short.MAX_VALUE))
 						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
 								layout.createSequentialGroup()
 										.addComponent(GenerateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 152,
@@ -160,7 +160,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(CompetitorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
+								.addComponent(competitorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addComponent(CompetitorLabel))
 				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
@@ -181,7 +181,7 @@ public abstract class ListFromCompetitor extends KendoFrame {
 		// Variables declaration - do not modify//GEN-BEGIN:variables
 
 	private javax.swing.JButton CancelButton;
-	protected javax.swing.JComboBox CompetitorComboBox;
+	protected javax.swing.JComboBox competitorComboBox;
 	private javax.swing.JLabel CompetitorLabel;
 	protected javax.swing.JButton GenerateButton;
 	// End of variables declaration//GEN-END:variables

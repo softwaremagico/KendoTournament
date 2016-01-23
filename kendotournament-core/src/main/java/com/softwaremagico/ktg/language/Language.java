@@ -25,27 +25,62 @@ package com.softwaremagico.ktg.language;
  * #L%
  */
 
-public class Language {
+public class Language implements Comparable<Language> {
 
-    private String name;
-    private String abbreviation;
-    private String flag;
+	private String name;
+	private String abbreviation;
+	private String flag;
 
-    public Language(String tmp_name, String tmp_abbrev, String pathFlag) {
-        name = tmp_name;
-        abbreviation = tmp_abbrev;
-        flag = pathFlag;
-    }
+	public Language(String tmp_name, String tmp_abbrev, String pathFlag) {
+		name = tmp_name;
+		abbreviation = tmp_abbrev;
+		flag = pathFlag;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getAbbreviature() {
-        return abbreviation;
-    }
+	public String getAbbreviature() {
+		return abbreviation;
+	}
 
-    public String getFlag() {
-        return flag;
-    }
+	public String getFlag() {
+		return flag;
+	}
+
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+	@Override
+	public int compareTo(Language otherLanguage) {
+		return getName().compareTo(otherLanguage.getName());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Language other = (Language) obj;
+		if (abbreviation == null) {
+			if (other.abbreviation != null)
+				return false;
+		} else if (!abbreviation.equals(other.abbreviation))
+			return false;
+		return true;
+	}
 }
