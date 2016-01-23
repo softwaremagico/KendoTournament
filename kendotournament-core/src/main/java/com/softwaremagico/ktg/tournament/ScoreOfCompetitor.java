@@ -62,10 +62,11 @@ public abstract class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor>
 		if (fightsDraw == null) {
 			fightsDraw = 0;
 			for (int j = 0; j < fights.size(); j++) {
-				if (fights.get(j).getWinner() == 0
-						&& (fights.get(j).getTeam1().isMember(competitor) || fights.get(j).getTeam2()
-								.isMember(competitor))) {
-					fightsDraw++;
+				if (fights.get(j).isOver()) {
+					if (fights.get(j).getWinner() == 0 && (fights.get(j).getTeam1().isMember(competitor)
+							|| fights.get(j).getTeam2().isMember(competitor))) {
+						fightsDraw++;
+					}
 				}
 			}
 		}
@@ -77,7 +78,9 @@ public abstract class ScoreOfCompetitor implements Comparable<ScoreOfCompetitor>
 		if (drawDuels == null) {
 			drawDuels = 0;
 			for (int j = 0; j < fights.size(); j++) {
-				drawDuels += fights.get(j).getDrawDuels(competitor);
+				if (fights.get(j).isOver()) {
+					drawDuels += fights.get(j).getDrawDuels(competitor);
+				}
 			}
 		}
 		return drawDuels;
