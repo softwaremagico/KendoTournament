@@ -58,12 +58,12 @@ public class Language implements Comparable<Language> {
 	public int compareTo(Language otherLanguage) {
 		return getName().compareTo(otherLanguage.getName());
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((abbreviation == null) ? 0 : abbreviation.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -76,10 +76,10 @@ public class Language implements Comparable<Language> {
 		if (getClass() != obj.getClass())
 			return false;
 		Language other = (Language) obj;
-		if (abbreviation == null) {
-			if (other.abbreviation != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!abbreviation.equals(other.abbreviation))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
