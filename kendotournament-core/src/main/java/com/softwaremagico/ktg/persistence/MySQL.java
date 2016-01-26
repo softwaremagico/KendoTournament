@@ -77,7 +77,7 @@ public class MySQL extends SQL {
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database
-                    + "?allowMultiQueries=true", user, password);
+                    + "?allowMultiQueries=true&autoReconnect=true", user, password);
             // MysqlDataSource dataSource = new MysqlDataSource();
             // dataSource.setUser(user);
             // dataSource.setPassword(password);
