@@ -126,10 +126,10 @@ public class DatabaseConnection {
 
 	public boolean testDatabaseConnection(String user, String password, String databaseName, String server,
 			boolean storeInConfigFile) throws SQLException {
-		this.user = user;
-		this.password = password;
-		this.databaseName = databaseName;
-		this.server = server;
+		this.user = user.trim();
+		this.password = password.trim();
+		this.databaseName = databaseName.trim();
+		this.server = server.trim();
 		this.database = databaseEngine.getDatabaseClass();
 		if (storeInConfigFile) {
 			generateDatabaseConnectionFile();
