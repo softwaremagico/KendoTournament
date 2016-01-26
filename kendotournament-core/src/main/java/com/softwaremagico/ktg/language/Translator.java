@@ -88,8 +88,7 @@ public class Translator implements ITranslator {
 			usedDoc = db.parse(file);
 			usedDoc.getDocumentElement().normalize();
 		} catch (SAXParseException ex) {
-			String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId()
-					+ "\nMessage: " + ex.getMessage();
+			String text = "Parsing error" + ".\n Line: " + ex.getLineNumber() + "\nUri: " + ex.getSystemId() + "\nMessage: " + ex.getMessage();
 			KendoLog.severe(Translator.class.getName(), text);
 			KendoLog.errorMessage(Translator.class.getName(), ex);
 		} catch (SAXException ex) {
@@ -97,7 +96,8 @@ public class Translator implements ITranslator {
 		} catch (ParserConfigurationException ex) {
 			KendoLog.errorMessage(Translator.class.getName(), ex);
 		} catch (FileNotFoundException fnf) {
-			String text = "The file " + filePath
+			String text = "The file "
+					+ filePath
 					+ " containing the translations is not found. Please, check your program files and put the translation XML files on the \"translations\" folder.";
 			System.out.println(text);
 			// KendoTournamentGenerator.showErrorInformation(fnf);
@@ -111,12 +111,12 @@ public class Translator implements ITranslator {
 	public String getTranslatedText(String tag) {
 		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage(), null);
 	}
-	
+
 	@Override
 	public String getTranslatedText(String tag, String language) {
 		return getTranslatedText(tag, language, null);
 	}
-	
+
 	@Override
 	public String getTranslatedText(String tag, String[] args) {
 		return getTranslatedText(tag, KendoTournamentGenerator.getInstance().getLanguage(), args);
@@ -131,7 +131,14 @@ public class Translator implements ITranslator {
 		if (tagTranslations.get(language).get(tag) == null) {
 			tagTranslations.get(language).put(tag, readTag(tag, language));
 		}
-		return String.format(tagTranslations.get(language).get(tag), args);
+		if (tagTranslations.get(language).get(tag) == null) {
+			return "Invalida tag '" + tag + "'.";
+		}
+		if (args != null) {
+			return String.format(tagTranslations.get(language).get(tag), args);
+		} else {
+			return tagTranslations.get(language).get(tag);
+		}
 	}
 
 	private String readTag(String tag, String language) {
@@ -151,9 +158,8 @@ public class Translator implements ITranslator {
 						// npe.printStackTrace();
 						if (!retried) {
 							if (!showedMessage) {
-								KendoLog.warning(Translator.class.getName(),
-										"There is a problem with tag: " + tag + " in  language: \"" + language
-												+ "\". We tray to use english language instead.");
+								KendoLog.warning(Translator.class.getName(), "There is a problem with tag: " + tag + " in  language: \"" + language
+										+ "\". We tray to use english language instead.");
 								showedMessage = true;
 							}
 							retried = true;
@@ -169,8 +175,7 @@ public class Translator implements ITranslator {
 							return readTag(tag, DEFAULT_LANGUAGE);
 						} else {
 							if (!errorShowed) {
-								KendoLog.severe(this.getClass().getName(),
-										"Language selection failed: " + language + " on " + tag + ".");
+								KendoLog.severe(this.getClass().getName(), "Language selection failed: " + language + " on " + tag + ".");
 								errorShowed = true;
 							}
 							return null;
@@ -195,13 +200,11 @@ public class Translator implements ITranslator {
 			for (int s = 0; s < nodeLst.getLength(); s++) {
 				Node fstNode = nodeLst.item(s);
 				try {
-					Language lang = new Language(fstNode.getTextContent(),
-							fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(),
-							fstNode.getAttributes().getNamedItem("flag").getNodeValue());
+					Language lang = new Language(fstNode.getTextContent(), fstNode.getAttributes().getNamedItem("abbrev").getNodeValue(), fstNode
+							.getAttributes().getNamedItem("flag").getNodeValue());
 					languagesList.add(lang);
 				} catch (NullPointerException npe) {
-					KendoLog.severe(Translator.class.getName(),
-							"Error retrieving the available languages. Check your installation.");
+					KendoLog.severe(Translator.class.getName(), "Error retrieving the available languages. Check your installation.");
 				}
 			}
 		}
@@ -263,10 +266,8 @@ public class Translator implements ITranslator {
 			return file;
 		} else {
 			try {
-				if (Translator.class.getClassLoader()
-						.getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile) != null) {
-					file = new File(Translator.class.getClassLoader()
-							.getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile).toURI());
+				if (Translator.class.getClassLoader().getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile) != null) {
+					file = new File(Translator.class.getClassLoader().getResource(Path.TRANSLATIONS_FOLDER + File.separator + xmlFile).toURI());
 					if (file.exists()) {
 						return file;
 					}
