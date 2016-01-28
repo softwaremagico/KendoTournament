@@ -358,7 +358,7 @@ public abstract class LeagueLevel implements Serializable {
 
     public abstract Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner);
 
-    protected TGroup getGroupDestinationOfWinner(TGroup group, Integer winner) {
+    public TGroup getGroupDestinationOfWinner(TGroup group, Integer winner) {
         return nextLevel.getGroups().get(getGroupIndexDestinationOfWinner(group, winner));
     }
 
