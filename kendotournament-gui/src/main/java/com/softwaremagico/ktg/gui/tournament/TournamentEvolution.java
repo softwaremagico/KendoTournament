@@ -34,11 +34,10 @@ import javax.swing.JScrollBar;
 import javax.swing.Timer;
 
 public class TournamentEvolution extends javax.swing.JFrame {
-
-    BlackBoardPanel bbp;
-    Timer timer = null;
-    final int seconds = 5;
-    int center = 21;
+	private static final long serialVersionUID = -2826704050750402584L;
+	private BlackBoardPanel bbp;
+    private Timer timer = null;
+    private final int seconds = 5;
     private Tournament tournament;
 
     /**
@@ -52,15 +51,15 @@ public class TournamentEvolution extends javax.swing.JFrame {
         this.setSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.setExtendedState(this.getExtendedState() | TournamentEvolution.MAXIMIZED_BOTH);
         bbp = new BlackBoardPanel(null, false);
-        BlackBoardScrollPane.setViewportView(bbp);
+        blackBoardScrollPane.setViewportView(bbp);
     }
 
     public void updateBlackBoard(Tournament tournament, boolean refill) {
         this.tournament = tournament;
         if (!tournament.getType().equals(TournamentType.LEAGUE)) {
             bbp.update(tournament);
-            BlackBoardScrollPane.revalidate();
-            BlackBoardScrollPane.repaint();
+            blackBoardScrollPane.revalidate();
+            blackBoardScrollPane.repaint();
             if (timer == null) {
                 startTimer(tournament);
             }
@@ -82,8 +81,8 @@ public class TournamentEvolution extends javax.swing.JFrame {
     }
 
     private void centerImage() {
-        JScrollBar verticalScrollBar = BlackBoardScrollPane.getVerticalScrollBar();
-        JScrollBar horizontalScrollBar = BlackBoardScrollPane.getHorizontalScrollBar();
+        JScrollBar verticalScrollBar = blackBoardScrollPane.getVerticalScrollBar();
+        JScrollBar horizontalScrollBar = blackBoardScrollPane.getHorizontalScrollBar();
         int columns = 1;
         int rows = 1;
         try {
@@ -123,7 +122,7 @@ public class TournamentEvolution extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        BlackBoardScrollPane = new javax.swing.JScrollPane();
+        blackBoardScrollPane = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("League Viewer");
@@ -139,11 +138,11 @@ public class TournamentEvolution extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BlackBoardScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
+            .addComponent(blackBoardScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BlackBoardScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+            .addComponent(blackBoardScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
         );
 
         pack();
@@ -159,6 +158,6 @@ public class TournamentEvolution extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formKeyReleased
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JScrollPane BlackBoardScrollPane;
+    protected javax.swing.JScrollPane blackBoardScrollPane;
     // End of variables declaration//GEN-END:variables
 }
