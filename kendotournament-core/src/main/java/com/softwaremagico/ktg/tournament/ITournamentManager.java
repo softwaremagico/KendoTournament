@@ -106,4 +106,6 @@ public interface ITournamentManager {
 	Tournament getTournament();
 
 	void setTournament(Tournament tournament);
+
+	List<LeagueLevel> getLevels();
 }

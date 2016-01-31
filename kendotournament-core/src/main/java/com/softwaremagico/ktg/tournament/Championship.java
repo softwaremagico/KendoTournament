@@ -298,4 +298,15 @@ public class Championship implements ITournamentManager {
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 	}
+
+	@Override
+	public List<LeagueLevel> getLevels() {
+		List<LeagueLevel> levels = new ArrayList<>();
+		LeagueLevel level = levelZero;
+		while (level != null) {
+			levels.add(level);
+			level = level.nextLevel;
+		}
+		return levels;
+	}
 }

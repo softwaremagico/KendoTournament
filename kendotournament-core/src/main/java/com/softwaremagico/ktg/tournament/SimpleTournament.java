@@ -236,4 +236,9 @@ public class SimpleTournament implements ITournamentManager {
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 	}
+
+	@Override
+	public List<LeagueLevel> getLevels() {
+		return new ArrayList<>();
+	}
 }
