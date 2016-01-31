@@ -1,15 +1,15 @@
 package com.softwaremagico.ktg.tournament;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple tournament is a tournament with only one group.
@@ -20,10 +20,10 @@ public class SimpleTournament implements ITournamentManager {
 	private TGroup group = null;
 
 	protected SimpleTournament(Tournament tournament) {
-		this.tournament = tournament;
+		setTournament(tournament);
 	}
 
-	protected Tournament getTournament() {
+	public Tournament getTournament() {
 		return tournament;
 	}
 
@@ -230,5 +230,10 @@ public class SimpleTournament implements ITournamentManager {
 			groups.add(getGroup());
 		}
 		return groups;
+	}
+
+	@Override
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
 }

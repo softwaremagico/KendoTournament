@@ -206,7 +206,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getRegisteredPeople");
@@ -226,7 +226,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -254,7 +254,7 @@ public abstract class SQL extends Database {
 				showSqlError(ex);
 				return false;
 			} catch (NullPointerException npe) {
-				KendoLog.severe(this.getClass().getName(), "Database connection fail");
+				KendoLog.errorMessage(this.getClass().getName(), npe);
 				throw new SQLException("Database connection fail.");
 			}
 		}
@@ -281,7 +281,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getPhoto");
@@ -375,7 +375,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getRoles");
@@ -396,7 +396,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -425,7 +425,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -465,7 +465,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -511,7 +511,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getClubs");
@@ -531,7 +531,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -560,7 +560,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -638,7 +638,7 @@ public abstract class SQL extends Database {
 				showSqlError(ex);
 				return false;
 			} catch (NullPointerException npe) {
-				KendoLog.severe(this.getClass().getName(), "Database connection fail");
+				KendoLog.errorMessage(this.getClass().getName(), npe);
 				throw new SQLException("Database connection fail.");
 			}
 		}
@@ -690,7 +690,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getTournaments");
@@ -710,7 +710,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -768,7 +768,7 @@ public abstract class SQL extends Database {
 				showSqlError(ex);
 				return false;
 			} catch (NullPointerException npe) {
-				KendoLog.severe(this.getClass().getName(), "Database connection fail");
+				KendoLog.errorMessage(this.getClass().getName(), npe);
 				throw new SQLException("Database connection fail.");
 			}
 		}
@@ -884,7 +884,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -907,7 +907,7 @@ public abstract class SQL extends Database {
 				showSqlError(ex);
 				return false;
 			} catch (NullPointerException npe) {
-				KendoLog.severe(this.getClass().getName(), "Database connection fail");
+				KendoLog.errorMessage(this.getClass().getName(), npe);
 				throw new SQLException("Database connection fail.");
 			}
 		}
@@ -960,7 +960,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getFights");
@@ -1012,7 +1012,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1044,7 +1044,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1125,7 +1125,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getDuels");
@@ -1191,7 +1191,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1231,7 +1231,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1272,7 +1272,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getUndraws");
@@ -1322,7 +1322,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1353,7 +1353,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";
@@ -1398,7 +1398,7 @@ public abstract class SQL extends Database {
 		} catch (SQLException ex) {
 			showSqlError(ex);
 		} catch (NullPointerException npe) {
-			KendoLog.severe(this.getClass().getName(), "Database connection fail");
+			KendoLog.errorMessage(this.getClass().getName(), npe);
 			throw new SQLException("Database connection fail.");
 		}
 		KendoLog.exiting(this.getClass().getName(), "getCustomWinnerLinks");
@@ -1446,7 +1446,7 @@ public abstract class SQL extends Database {
 					showSqlError(ex);
 					return false;
 				} catch (NullPointerException npe) {
-					KendoLog.severe(this.getClass().getName(), "Database connection fail");
+					KendoLog.errorMessage(this.getClass().getName(), npe);
 					throw new SQLException("Database connection fail.");
 				}
 				query = "";

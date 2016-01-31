@@ -177,7 +177,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 
     protected abstract String getId(ElementPool element);
 
-    protected HashMap<String, ElementPool> getMap(Tournament tournament) throws SQLException {
+    protected synchronized HashMap<String, ElementPool> getMap(Tournament tournament) throws SQLException {
         if (elements == null) {
             elements = new HashMap<>();
         }

@@ -23,80 +23,87 @@ package com.softwaremagico.ktg.tournament;
  * #L%
  */
 
+import java.util.List;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
-import java.util.List;
+import com.softwaremagico.ktg.core.Tournament;
 
 public interface ITournamentManager {
 
-    /**
-     * Generate fights of level.
-     *
-     * @param level
-     * @return
-     */
-    List<Fight> getFights(Integer level);
+	/**
+	 * Generate fights of level.
+	 *
+	 * @param level
+	 * @return
+	 */
+	List<Fight> getFights(Integer level);
 
-    List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
+	List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
 
-    List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
+	List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
 
-    void fillGroups();
+	void fillGroups();
 
-    List<TGroup> getGroups();
+	List<TGroup> getGroups();
 
-    List<TGroup> getGroups(Integer level);
-    
-    List<TGroup> getGroupsByShiajo(Integer shiaijo);
+	List<TGroup> getGroups(Integer level);
 
-    TGroup getGroup(Fight fight);
+	List<TGroup> getGroupsByShiajo(Integer shiaijo);
 
-    void addGroup(TGroup group);
+	TGroup getGroup(Fight fight);
 
-    int getIndexOfGroup(TGroup group);
+	void addGroup(TGroup group);
 
-    void removeGroup(Integer level, Integer groupIndex);
+	int getIndexOfGroup(TGroup group);
 
-    void removeGroup(TGroup group);
+	void removeGroup(Integer level, Integer groupIndex);
 
-    void removeGroups(Integer level);
+	void removeGroup(TGroup group);
 
-    int getIndex(Integer level, TGroup group);
+	void removeGroups(Integer level);
 
-    LeagueLevel getLevel(Integer level);
+	int getIndex(Integer level, TGroup group);
 
-    Integer getNumberOfLevels();
+	LeagueLevel getLevel(Integer level);
 
-    Integer getLastLevelUsed();
+	Integer getNumberOfLevels();
 
-    boolean exist(Team team);
+	Integer getLastLevelUsed();
 
-    void removeTeams(Integer level);
+	boolean exist(Team team);
 
-    void removeTeams();
+	void removeTeams(Integer level);
 
-    /**
-     * Divide groups into fight areas.
-     */
-    void setDefaultFightAreas();
+	void removeTeams();
 
-    void setHowManyTeamsOfGroupPassToTheTree(Integer winners);
+	/**
+	 * Divide groups into fight areas.
+	 */
+	void setDefaultFightAreas();
 
-    /**
-     * We are in the final fight of the tournament.
-     *
-     * @return
-     */
-    boolean inTheLastFight();
+	void setHowManyTeamsOfGroupPassToTheTree(Integer winners);
 
-    /**
-     * Remove all fights of all groups.
-     */
-    void resetFights();
+	/**
+	 * We are in the final fight of the tournament.
+	 *
+	 * @return
+	 */
+	boolean inTheLastFight();
 
-    /**
-     * Returns the level where still are fights not finished.
-     * @return
-     */
+	/**
+	 * Remove all fights of all groups.
+	 */
+	void resetFights();
+
+	/**
+	 * Returns the level where still are fights not finished.
+	 * 
+	 * @return
+	 */
 	LeagueLevel getCurrentLevel();
+
+	Tournament getTournament();
+
+	void setTournament(Tournament tournament);
 }

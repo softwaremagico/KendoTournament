@@ -16,7 +16,7 @@ public class Championship implements ITournamentManager {
 	protected LeagueLevel levelZero;
 
 	protected Championship(Tournament tournament) {
-		this.tournament = tournament;
+		setTournament(tournament);
 		levelZero = new LeagueLevelChampionship(tournament, 0, null, null);
 	}
 
@@ -287,5 +287,15 @@ public class Championship implements ITournamentManager {
 			}
 		}
 		return groups;
+	}
+
+	@Override
+	public Tournament getTournament() {
+		return tournament;
+	}
+
+	@Override
+	public void setTournament(Tournament tournament) {
+		this.tournament = tournament;
 	}
 }
