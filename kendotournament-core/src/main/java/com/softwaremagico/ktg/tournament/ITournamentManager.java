@@ -42,6 +42,8 @@ public interface ITournamentManager {
 	List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
 
 	List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
+	
+	int getNumberOfFightsFinished();
 
 	void fillGroups();
 

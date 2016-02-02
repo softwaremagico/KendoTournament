@@ -241,4 +241,19 @@ public class SimpleTournament implements ITournamentManager {
 	public List<LeagueLevel> getLevels() {
 		return new ArrayList<>();
 	}
+
+	@Override
+	public int getNumberOfFightsFinished() {
+		int i = 0;
+		try {
+			for (Fight fight : FightPool.getInstance().get(tournament)) {
+				if (fight.isOver()) {
+					i++;
+				}
+			}
+		} catch (SQLException e) {
+			return 0;
+		}
+		return i;
+	}
 }
