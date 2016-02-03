@@ -188,6 +188,9 @@ public abstract class TournamentDependentPool<ElementPool> {
 		HashMap<String, ElementPool> elementsOfTournament = elements.get(tournament);
 		if (elementsOfTournament == null && tournament != null) {
 			elementsOfTournament = getElementsFromDatabase(tournament);
+			if (elementsOfTournament == null) {
+				elementsOfTournament = new HashMap<String, ElementPool>();
+			}
 			elements.put(tournament, elementsOfTournament);
 		}
 		return elementsOfTournament;
@@ -304,7 +307,8 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return true;
 	}
 
-	protected abstract boolean removeElementsFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete) throws SQLException;
+	protected abstract boolean removeElementsFromDatabase(Tournament tournament, List<ElementPool> elementsToDelete)
+			throws SQLException;
 
 	public void reset() {
 		sortedElements = null;
@@ -334,7 +338,8 @@ public abstract class TournamentDependentPool<ElementPool> {
 
 	protected abstract List<ElementPool> sort(Tournament tournament) throws SQLException;
 
-	protected abstract boolean storeElementsInDatabase(Tournament tournament, List<ElementPool> elementsToStore) throws SQLException;
+	protected abstract boolean storeElementsInDatabase(Tournament tournament, List<ElementPool> elementsToStore)
+			throws SQLException;
 
 	public boolean update(Tournament tournament, ElementPool elementUpdated) throws SQLException {
 		return update(tournament, elementUpdated, elementUpdated);
@@ -366,7 +371,8 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return true;
 	}
 
-	protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate) throws SQLException;
+	protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate)
+			throws SQLException;
 
 	public void clearCache() {
 		reset();
