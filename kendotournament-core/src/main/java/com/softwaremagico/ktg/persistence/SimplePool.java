@@ -9,14 +9,12 @@ import java.util.List;
 public abstract class SimplePool<ElementPool> {
 
 	private HashMap<String, ElementPool> elements = null;
+
 	private List<ElementPool> sortedElements = null;
 	private HashMap<String, ElementPool> elementsToStore = new HashMap<>();
 	private HashMap<String, ElementPool> elementsToRemove = new HashMap<>();
-	private HashMap<ElementPool, ElementPool> elementsToUpdate = new HashMap<>(); // New
-																					// element
-																					// replace
-																					// old
-																					// one.
+	// New element replace old one.
+	private HashMap<ElementPool, ElementPool> elementsToUpdate = new HashMap<>();
 
 	public boolean add(ElementPool element) throws SQLException {
 		if (!getMap().containsValue(element)) {
@@ -259,5 +257,9 @@ public abstract class SimplePool<ElementPool> {
 
 	protected String normalizeElementId(String elementId) {
 		return elementId.toLowerCase();
+	}
+
+	public Collection<ElementPool> getPooledElements() {
+		return elements.values();
 	}
 }
