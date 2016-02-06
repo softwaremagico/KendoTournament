@@ -203,7 +203,22 @@ public class Championship implements ITournamentManager {
 
 	@Override
 	public void removeTeams(Integer level) {
-		removeTeams(getLevel(level));
+		if (level != null) {
+			removeTeams(getLevel(level));
+		}
+	}
+
+	@Override
+	public void removeWinners(Integer level) {
+		if (level != null) {
+			List<TGroup> groups = getGroups(level);
+			for (TGroup group : groups) {
+				List<Fight> fights = group.getFights();
+				for (Fight fight : fights) {
+					fight.setWinner(null);
+				}
+			}
+		}
 	}
 
 	public void removeTeams(LeagueLevel level) {

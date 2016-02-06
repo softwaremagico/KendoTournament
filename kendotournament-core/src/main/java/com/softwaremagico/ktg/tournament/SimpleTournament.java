@@ -256,4 +256,17 @@ public class SimpleTournament implements ITournamentManager {
 		}
 		return i;
 	}
+	
+	@Override
+	public void removeWinners(Integer level) {
+		if (level != null) {
+			List<TGroup> groups = getGroups(level);
+			for (TGroup group : groups) {
+				List<Fight> fights = group.getFights();
+				for (Fight fight : fights) {
+					fight.setWinner(null);
+				}
+			}
+		}
+	}
 }

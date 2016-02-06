@@ -42,7 +42,7 @@ public interface ITournamentManager {
 	List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
 
 	List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
-	
+
 	int getNumberOfFightsFinished();
 
 	void fillGroups();
@@ -110,4 +110,11 @@ public interface ITournamentManager {
 	void setTournament(Tournament tournament);
 
 	List<LeagueLevel> getLevels();
+
+	/**
+	 * Unset the winners of the selected level.
+	 * 
+	 * @param level
+	 */
+	void removeWinners(Integer level);
 }
