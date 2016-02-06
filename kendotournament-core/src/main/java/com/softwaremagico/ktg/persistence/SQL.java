@@ -1,18 +1,3 @@
-package com.softwaremagico.ktg.persistence;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /*
  * #%L
  * KendoTournamentGenerator
@@ -38,7 +23,23 @@ import java.util.logging.Logger;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
+package com.softwaremagico.ktg.persistence;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Duel;
 import com.softwaremagico.ktg.core.Fight;
@@ -1156,12 +1157,16 @@ public abstract class SQL extends Database {
 				try (PreparedStatement s = connection.prepareStatement(query)) {
 					s.executeUpdate();
 				} catch (MySQLIntegrityConstraintViolationException e) {
-					// Error when storing duels. Probably because the tournament
-					// has been redesigned and now exists different duels with
-					// same primary key. Ignore the error and try an update.
-					HashMap<Duel, Duel> duelsToUpdate = new HashMap<>();
-					duelsToUpdate.put(duels.get(i), duels.get(i));
-					updateDuels(duelsToUpdate);
+					if (duels.get(i).getFight() != null) {
+						// Error when storing duels. Probably because the
+						// tournament
+						// has been redesigned and now exists different duels
+						// with
+						// same primary key. Ignore the error and try an update.
+						HashMap<Duel, Duel> duelsToUpdate = new HashMap<>();
+						duelsToUpdate.put(duels.get(i), duels.get(i));
+						updateDuels(duelsToUpdate);
+					}
 				} catch (SQLException ex) {
 					showSqlError(ex);
 					return false;

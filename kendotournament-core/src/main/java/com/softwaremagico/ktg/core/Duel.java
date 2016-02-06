@@ -34,7 +34,11 @@ import java.util.Objects;
 public class Duel implements Comparable<Duel> {
 
     private Fight fight;
-    private Integer order;
+    public void setFight(Fight fight) {
+		this.fight = fight;
+	}
+
+	private Integer order;
     private final int POINTS_TO_WIN = 2;
     private List<Score> hitsFromCompetitorA = new ArrayList<>(); // M, K, T, D,
     // H, I
