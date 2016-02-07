@@ -17,7 +17,11 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 
 	public static CustomLinkPool getInstance() {
 		if (instance == null) {
-			instance = new CustomLinkPool();
+			synchronized (CustomLinkPool.class) {
+				if (instance == null) {
+					instance = new CustomLinkPool();
+				}
+			}
 		}
 		return instance;
 	}

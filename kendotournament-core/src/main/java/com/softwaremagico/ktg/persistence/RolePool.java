@@ -24,7 +24,11 @@ public class RolePool extends TournamentDependentPool<Role> {
 
 	public synchronized static RolePool getInstance() {
 		if (instance == null) {
-			instance = new RolePool();
+			synchronized (RolePool.class) {
+				if (instance == null) {
+					instance = new RolePool();
+				}
+			}
 		}
 		return instance;
 	}
@@ -48,10 +52,10 @@ public class RolePool extends TournamentDependentPool<Role> {
 		return hashMap;
 	}
 
-    @Override
-    protected String getId(Role element) {
-        return normalizeElementId(element.getCompetitor().getId() + element.getTournament().getName());
-    }
+	@Override
+	protected String getId(Role element) {
+		return normalizeElementId(element.getCompetitor().getId() + element.getTournament().getName());
+	}
 
 	protected String getId(Tournament tournament, RegisteredPerson person) {
 		return person.getId() + tournament.getName();
@@ -312,8 +316,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 	}
 
 	/**
-	 * Import roles from one tournament to other. If the destination tournament already have a designed role for a
-	 * competitor, it is not changed.
+	 * Import roles from one tournament to other. If the destination tournament
+	 * already have a designed role for a competitor, it is not changed.
 	 *
 	 * @param sourceTournament
 	 * @param destinationTournament

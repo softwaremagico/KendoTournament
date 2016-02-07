@@ -20,7 +20,11 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 
 	public static DuelPool getInstance() {
 		if (instance == null) {
-			instance = new DuelPool();
+			synchronized (DuelPool.class) {
+				if (instance == null) {
+					instance = new DuelPool();
+				}
+			}
 		}
 		return instance;
 	}

@@ -40,7 +40,11 @@ public class FightPool extends TournamentDependentPool<Fight> {
 
 	public static FightPool getInstance() {
 		if (instance == null) {
-			instance = new FightPool();
+			synchronized (FightPool.class) {
+				if (instance == null) {
+					instance = new FightPool();
+				}
+			}
 		}
 		return instance;
 	}

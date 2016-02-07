@@ -17,7 +17,11 @@ public class PhotoPool {
 
     public static PhotoPool getInstance() {
         if (instance == null) {
-            instance = new PhotoPool();
+			synchronized (PhotoPool.class) {
+				if (instance == null) {
+					instance = new PhotoPool();
+				}
+			}
         }
         return instance;
     }
