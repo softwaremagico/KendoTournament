@@ -1,17 +1,18 @@
 package com.softwaremagico.ktg.persistence;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.log.KendoLog;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 public class TeamPool extends TournamentDependentPool<Team> {
 
@@ -211,7 +212,7 @@ public class TeamPool extends TournamentDependentPool<Team> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<Team, Team> elementsToUpdate) throws SQLException {
+	protected boolean updateElements(Tournament tournament, Map<Team, Team> elementsToUpdate) throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateTeams(elementsToUpdate);
 		}

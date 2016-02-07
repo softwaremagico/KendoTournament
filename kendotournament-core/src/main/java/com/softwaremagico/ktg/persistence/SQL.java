@@ -36,6 +36,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -238,7 +239,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateRegisteredPeople(HashMap<RegisteredPerson, RegisteredPerson> peopleExchange)
+	protected synchronized boolean updateRegisteredPeople(Map<RegisteredPerson, RegisteredPerson> peopleExchange)
 			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
 		List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
@@ -408,7 +409,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateRoles(Tournament tournament, HashMap<Role, Role> rolesExchange)
+	protected synchronized boolean updateRoles(Tournament tournament, Map<Role, Role> rolesExchange)
 			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
 		List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
@@ -543,7 +544,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateClubs(HashMap<Club, Club> clubsExchange) throws SQLException {
+	protected synchronized boolean updateClubs(Map<Club, Club> clubsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateClubs");
 		List<Club> newClubs = new ArrayList<>(clubsExchange.keySet());
 		String query = "";
@@ -722,7 +723,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateTournaments(HashMap<Tournament, Tournament> tournamentsExchange)
+	protected synchronized boolean updateTournaments(Map<Tournament, Tournament> tournamentsExchange)
 			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateTournaments");
 		List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
@@ -798,7 +799,7 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "searchTeam");
 		KendoLog.finer(SQL.class.getName(), query);
 
-		HashMap<String, Team> teams = new HashMap<>();
+		Map<String, Team> teams = new HashMap<>();
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
 				Team t = teams.get(rs.getObject("Name").toString());
@@ -917,7 +918,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateTeams(HashMap<Team, Team> teamsExchange) throws SQLException {
+	protected synchronized boolean updateTeams(Map<Team, Team> teamsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateTeams");
 		List<Team> oldTeams = new ArrayList<>(teamsExchange.values());
 		List<Team> newTeams = new ArrayList<>(teamsExchange.keySet());
@@ -1024,7 +1025,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateFights(HashMap<Fight, Fight> fightsExchange) throws SQLException {
+	protected synchronized boolean updateFights(Map<Fight, Fight> fightsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateFights");
 		List<Fight> newFights = new ArrayList<>(fightsExchange.keySet());
 		String query = "";
@@ -1163,7 +1164,7 @@ public abstract class SQL extends Database {
 						// has been redesigned and now exists different duels
 						// with
 						// same primary key. Ignore the error and try an update.
-						HashMap<Duel, Duel> duelsToUpdate = new HashMap<>();
+						Map<Duel, Duel> duelsToUpdate = new HashMap<>();
 						duelsToUpdate.put(duels.get(i), duels.get(i));
 						updateDuels(duelsToUpdate);
 					}
@@ -1207,7 +1208,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateDuels(HashMap<Duel, Duel> duelsExchange) throws SQLException {
+	protected synchronized boolean updateDuels(Map<Duel, Duel> duelsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateDuels");
 		List<Duel> newDuels = new ArrayList<>(duelsExchange.keySet());
 		String query = "";
@@ -1338,7 +1339,7 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateUndraws(HashMap<Undraw, Undraw> undrawsExchange) throws SQLException {
+	protected synchronized boolean updateUndraws(Map<Undraw, Undraw> undrawsExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateUndraws");
 		List<Undraw> newUndraws = new ArrayList<>(undrawsExchange.keySet());
 		String query = "";
@@ -1463,7 +1464,7 @@ public abstract class SQL extends Database {
 
 	@Override
 	protected synchronized boolean updateCustomWinnerLinks(
-			HashMap<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException {
+			Map<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateUndraws");
 		List<CustomWinnerLink> oldLinks = new ArrayList<>(customWinnerLinks.values());
 		List<CustomWinnerLink> newLinks = new ArrayList<>(customWinnerLinks.keySet());

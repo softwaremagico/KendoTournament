@@ -1,12 +1,14 @@
 package com.softwaremagico.ktg.persistence;
 
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 
 public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 
@@ -27,14 +29,14 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 	}
 
 	@Override
-	protected HashMap<String, CustomWinnerLink> getElementsFromDatabase(Tournament tournament) throws SQLException {
+	protected Map<String, CustomWinnerLink> getElementsFromDatabase(Tournament tournament) throws SQLException {
 		if (!DatabaseConnection.getInstance().connect()) {
 			return null;
 		}
 		List<CustomWinnerLink> links = DatabaseConnection.getConnection().getDatabase()
 				.getCustomWinnerLinks(tournament);
 		DatabaseConnection.getInstance().disconnect();
-		HashMap<String, CustomWinnerLink> hashMap = new HashMap<>();
+		Map<String, CustomWinnerLink> hashMap = new HashMap<>();
 		if (links != null) {
 			for (CustomWinnerLink t : links) {
 				hashMap.put(getId(t), t);
@@ -88,7 +90,7 @@ public class CustomLinkPool extends TournamentDependentPool<CustomWinnerLink> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<CustomWinnerLink, CustomWinnerLink> elementsToUpdate)
+	protected boolean updateElements(Tournament tournament, Map<CustomWinnerLink, CustomWinnerLink> elementsToUpdate)
 			throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateCustomWinnerLinks(elementsToUpdate);

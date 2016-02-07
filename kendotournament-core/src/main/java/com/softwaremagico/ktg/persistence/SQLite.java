@@ -1,5 +1,18 @@
 package com.softwaremagico.ktg.persistence;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -28,11 +41,6 @@ package com.softwaremagico.ktg.persistence;
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.log.KendoLog;
-
-import java.io.*;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SQLite extends SQL {
 

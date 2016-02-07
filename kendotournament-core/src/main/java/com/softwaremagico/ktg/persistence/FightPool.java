@@ -1,23 +1,25 @@
 package com.softwaremagico.ktg.persistence;
 
-import com.softwaremagico.ktg.core.Duel;
-import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.Undraw;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Undraw;
 
 public class FightPool extends TournamentDependentPool<Fight> {
 
 	private static FightPool instance;
-	private HashMap<Tournament, HashMap<Integer, List<Fight>>> figthsPerArea;
+	private Map<Tournament, Map<Integer, List<Fight>>> figthsPerArea;
 
 	private FightPool() {
 		figthsPerArea = new HashMap<>();
@@ -178,13 +180,13 @@ public class FightPool extends TournamentDependentPool<Fight> {
 	}
 
 	@Override
-	protected HashMap<String, Fight> getElementsFromDatabase(Tournament tournament) throws SQLException {
+	protected Map<String, Fight> getElementsFromDatabase(Tournament tournament) throws SQLException {
 		if (!DatabaseConnection.getInstance().connect()) {
 			return null;
 		}
 		List<Fight> fights = DatabaseConnection.getConnection().getDatabase().getFights(tournament);
 		DatabaseConnection.getInstance().disconnect();
-		HashMap<String, Fight> hashMap = new HashMap<>();
+		Map<String, Fight> hashMap = new HashMap<>();
 		for (Fight fight : fights) {
 			hashMap.put(getId(fight), fight);
 		}
@@ -382,7 +384,7 @@ public class FightPool extends TournamentDependentPool<Fight> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<Fight, Fight> elementsToUpdate)
+	protected boolean updateElements(Tournament tournament, Map<Fight, Fight> elementsToUpdate)
 			throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateFights(elementsToUpdate);

@@ -1,5 +1,12 @@
 package com.softwaremagico.ktg.persistence;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
@@ -8,11 +15,6 @@ import com.softwaremagico.ktg.core.RoleTag;
 import com.softwaremagico.ktg.core.RoleTags;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 public class RolePool extends TournamentDependentPool<Role> {
 
@@ -39,13 +41,13 @@ public class RolePool extends TournamentDependentPool<Role> {
 	}
 
 	@Override
-	protected HashMap<String, Role> getElementsFromDatabase(Tournament tournament) throws SQLException {
+	protected Map<String, Role> getElementsFromDatabase(Tournament tournament) throws SQLException {
 		if (!DatabaseConnection.getInstance().connect()) {
 			return null;
 		}
 		List<Role> roles = DatabaseConnection.getInstance().getDatabase().getRoles(tournament);
 		DatabaseConnection.getInstance().disconnect();
-		HashMap<String, Role> hashMap = new HashMap<>();
+		Map<String, Role> hashMap = new HashMap<>();
 		for (Role role : roles) {
 			hashMap.put(getId(role), role);
 		}
@@ -308,7 +310,7 @@ public class RolePool extends TournamentDependentPool<Role> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<Role, Role> elementsToUpdate) throws SQLException {
+	protected boolean updateElements(Tournament tournament, Map<Role, Role> elementsToUpdate) throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
 		}

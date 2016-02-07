@@ -1,13 +1,15 @@
 package com.softwaremagico.ktg.persistence;
 
-import com.softwaremagico.ktg.core.Team;
-import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.core.Undraw;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.softwaremagico.ktg.core.Team;
+import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.core.Undraw;
 
 public class UndrawPool extends TournamentDependentPool<Undraw> {
 
@@ -129,8 +131,7 @@ public class UndrawPool extends TournamentDependentPool<Undraw> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<Undraw, Undraw> elementsToUpdate)
-			throws SQLException {
+	protected boolean updateElements(Tournament tournament, Map<Undraw, Undraw> elementsToUpdate) throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateUndraws(elementsToUpdate);
 		}

@@ -1,19 +1,21 @@
 package com.softwaremagico.ktg.persistence;
 
-import com.softwaremagico.ktg.core.Duel;
-import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.RegisteredPerson;
-import com.softwaremagico.ktg.core.Tournament;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.softwaremagico.ktg.core.Duel;
+import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Tournament;
 
 public class DuelPool extends TournamentDependentPool<Duel> {
 
 	private static DuelPool instance;
-	private static HashMap<Fight, List<Duel>> duelsPerFight;
+	private static Map<Fight, List<Duel>> duelsPerFight;
 
 	private DuelPool() {
 	}
@@ -128,13 +130,13 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 	}
 
 	@Override
-	protected HashMap<String, Duel> getElementsFromDatabase(Tournament tournament) throws SQLException {
+	protected Map<String, Duel> getElementsFromDatabase(Tournament tournament) throws SQLException {
 		if (!DatabaseConnection.getInstance().connect()) {
 			return null;
 		}
 		List<Duel> duels = DatabaseConnection.getConnection().getDatabase().getDuels(tournament);
 		DatabaseConnection.getInstance().disconnect();
-		HashMap<String, Duel> hashMap = new HashMap<>();
+		Map<String, Duel> hashMap = new HashMap<>();
 		for (Duel duel : duels) {
 			hashMap.put(getId(duel), duel);
 		}
@@ -227,7 +229,7 @@ public class DuelPool extends TournamentDependentPool<Duel> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, HashMap<Duel, Duel> elementsToUpdate) throws SQLException {
+	protected boolean updateElements(Tournament tournament, Map<Duel, Duel> elementsToUpdate) throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateDuels(elementsToUpdate);
 		}

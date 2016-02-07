@@ -4,18 +4,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tools.Tools;
 
 public abstract class TournamentDependentPool<ElementPool> {
 
-	private HashMap<Tournament, HashMap<String, ElementPool>> elements = new HashMap<>();
-	private HashMap<Tournament, List<ElementPool>> sortedElements = new HashMap<>();
-	private HashMap<Tournament, HashMap<String, ElementPool>> elementsToStore = new HashMap<>();
-	private HashMap<Tournament, HashMap<String, ElementPool>> elementsToDelete = new HashMap<>();
+	private Map<Tournament, Map<String, ElementPool>> elements = new HashMap<>();
+	private Map<Tournament, List<ElementPool>> sortedElements = new HashMap<>();
+	private Map<Tournament, Map<String, ElementPool>> elementsToStore = new HashMap<>();
+	private Map<Tournament, Map<String, ElementPool>> elementsToDelete = new HashMap<>();
 	// New element replace old one.
-	private HashMap<Tournament, HashMap<ElementPool, ElementPool>> elementsToUpdate = new HashMap<>();
+	private HashMap<Tournament, Map<ElementPool, ElementPool>> elementsToUpdate = new HashMap<>();
 
 	protected TournamentDependentPool() {
 	}
@@ -64,13 +65,13 @@ public abstract class TournamentDependentPool<ElementPool> {
 	}
 
 	private void addElementToRemove(Tournament tournament, ElementPool element) {
-		HashMap<String, ElementPool> elementGroup = getElementToRemove(tournament);
+		Map<String, ElementPool> elementGroup = getElementToRemove(tournament);
 		elementGroup.put(getId(element), element);
 		elementsToDelete.put(tournament, elementGroup);
 	}
 
 	private void addElementToStore(Tournament tournament, ElementPool element) {
-		HashMap<String, ElementPool> elementGroup = getElementToStore(tournament);
+		Map<String, ElementPool> elementGroup = getElementToStore(tournament);
 		if (elementGroup == null) {
 			elementGroup = new HashMap<>();
 		}
@@ -79,7 +80,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 	}
 
 	private void addElementToUpdate(Tournament tournament, ElementPool oldElement, ElementPool newElement) {
-		HashMap<ElementPool, ElementPool> elementGroup = getElementToUpdate(tournament);
+		Map<ElementPool, ElementPool> elementGroup = getElementToUpdate(tournament);
 		if (elementGroup == null) {
 			elementGroup = new HashMap<>();
 			elementGroup.put(newElement, oldElement);
@@ -138,13 +139,13 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return result;
 	}
 
-	protected abstract HashMap<String, ElementPool> getElementsFromDatabase(Tournament tournament) throws SQLException;
+	protected abstract Map<String, ElementPool> getElementsFromDatabase(Tournament tournament) throws SQLException;
 
-	private HashMap<String, ElementPool> getElementToRemove(Tournament tournament) {
+	private Map<String, ElementPool> getElementToRemove(Tournament tournament) {
 		if (elementsToDelete == null) {
 			elementsToDelete = new HashMap<>();
 		}
-		HashMap<String, ElementPool> elementsOfTournament = elementsToDelete.get(tournament);
+		Map<String, ElementPool> elementsOfTournament = elementsToDelete.get(tournament);
 		if (elementsOfTournament == null) {
 			elementsOfTournament = new HashMap<>();
 			elementsToDelete.put(tournament, elementsOfTournament);
@@ -152,11 +153,11 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return elementsOfTournament;
 	}
 
-	private HashMap<String, ElementPool> getElementToStore(Tournament tournament) {
+	private Map<String, ElementPool> getElementToStore(Tournament tournament) {
 		if (elementsToStore == null) {
 			elementsToStore = new HashMap<>();
 		}
-		HashMap<String, ElementPool> elementsOfTournament = elementsToStore.get(tournament);
+		Map<String, ElementPool> elementsOfTournament = elementsToStore.get(tournament);
 		if (elementsOfTournament == null) {
 			elementsOfTournament = new HashMap<>();
 			elementsToStore.put(tournament, elementsOfTournament);
@@ -164,11 +165,11 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return elementsOfTournament;
 	}
 
-	private HashMap<ElementPool, ElementPool> getElementToUpdate(Tournament tournament) {
+	private Map<ElementPool, ElementPool> getElementToUpdate(Tournament tournament) {
 		if (elementsToUpdate == null) {
 			elementsToUpdate = new HashMap<>();
 		}
-		HashMap<ElementPool, ElementPool> elementsOfTournament = elementsToUpdate.get(tournament);
+		Map<ElementPool, ElementPool> elementsOfTournament = elementsToUpdate.get(tournament);
 		if (elementsOfTournament == null) {
 			elementsOfTournament = new HashMap<>();
 			elementsToUpdate.put(tournament, elementsOfTournament);
@@ -178,20 +179,22 @@ public abstract class TournamentDependentPool<ElementPool> {
 
 	protected abstract String getId(ElementPool element);
 
-	protected synchronized HashMap<String, ElementPool> getMap(Tournament tournament) throws SQLException {
+	protected synchronized Map<String, ElementPool> getMap(Tournament tournament) throws SQLException {
 		if (tournament == null) {
 			return new HashMap<>();
 		}
 		if (elements == null) {
 			elements = new HashMap<>();
 		}
-		HashMap<String, ElementPool> elementsOfTournament = elements.get(tournament);
+		Map<String, ElementPool> elementsOfTournament = elements.get(tournament);
 		if (elementsOfTournament == null && tournament != null) {
 			elementsOfTournament = getElementsFromDatabase(tournament);
 			if (elementsOfTournament == null) {
 				elementsOfTournament = new HashMap<String, ElementPool>();
 			}
-			elements.put(tournament, elementsOfTournament);
+			if (elements != null) {
+				elements.put(tournament, elementsOfTournament);
+			}
 		}
 		return elementsOfTournament;
 	}
@@ -371,7 +374,7 @@ public abstract class TournamentDependentPool<ElementPool> {
 		return true;
 	}
 
-	protected abstract boolean updateElements(Tournament tournament, HashMap<ElementPool, ElementPool> elementsToUpdate)
+	protected abstract boolean updateElements(Tournament tournament, Map<ElementPool, ElementPool> elementsToUpdate)
 			throws SQLException;
 
 	public void clearCache() {
