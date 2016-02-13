@@ -119,13 +119,14 @@ Version:
 		Now autosave options.
 		Monitor added. 
 
-1.2.1   Minor bugs fixed. 
+1.2.1  	Minor bugs fixed. 
 
 1.2.2	Adapted to the rules of the WKC
-	Solved issue when updating roles.
+		Solved issue when updating roles.
 	
 1.2.3	Added code generator for exporting championship information to sites like Wordpress. 
 
+1.2.4	Adapted to v1.0.0 of KendoViewer.
 
 
 Thanks to
