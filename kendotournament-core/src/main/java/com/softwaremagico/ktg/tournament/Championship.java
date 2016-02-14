@@ -312,6 +312,10 @@ public class Championship implements ITournamentManager {
 	@Override
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
+		// Update levels if exists.
+		for (LeagueLevel level : getLevels()) {
+			level.setTournament(tournament);
+		}
 	}
 
 	@Override

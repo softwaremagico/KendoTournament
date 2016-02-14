@@ -265,7 +265,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
 	}
 
 	private void updateBlackBoard() {
-		try {
+		try {		
 			bbp.update(getSelectedTournament());
 			BlackBoardScrollPane.revalidate();
 			BlackBoardScrollPane.repaint();
