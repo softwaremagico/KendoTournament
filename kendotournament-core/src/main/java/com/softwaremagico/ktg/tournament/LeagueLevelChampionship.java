@@ -28,66 +28,68 @@ import com.softwaremagico.ktg.core.Tournament;
 public class LeagueLevelChampionship extends LeagueLevel {
 	private static final long serialVersionUID = -2490242867449978156L;
 
-	protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-        super(tournament, level, nextLevel, previousLevel);
-        if (level > 0) { // Inner levels always have at least one group.
-            addGroup(new TreeTournamentGroup(tournament, level, 0));
-        }
-    }
+	protected LeagueLevelChampionship(Tournament tournament, int level, LeagueLevel nextLevel,
+			LeagueLevel previousLevel) {
+		super(tournament, level, nextLevel, previousLevel);
+		if (level > 0) { // Inner levels always have at least one group.
+			addGroup(new TreeTournamentGroup(tournament, level, 0));
+		}
+	}
 
-    @Override
-    protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
-            LeagueLevel previousLevel) {
-        return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
-    }
+	@Override
+	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
+			LeagueLevel previousLevel) {
+		return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
+	}
 
-    /**
-     * Even number of groups.
-     *
-     * @param branch
-     * @param branchs
-     * @return
-     */
-    private Integer obtainPositionOfOneWinnerEven(Integer branch, Integer branchs) {
-        if (branch % 2 == 0) {
-            return branch / 2;
-        } else {
-            return (branchs - branch) / 2;
-        }
-    }
+	/**
+	 * Even number of groups.
+	 *
+	 * @param branch
+	 * @param branchs
+	 * @return
+	 */
+	private Integer obtainPositionOfOneWinnerEven(Integer branch, Integer branchs) {
+		if (branch % 2 == 0) {
+			return branch / 2;
+		} else {
+			return (branchs - branch) / 2;
+		}
+	}
 
-    private Integer obtainPositionOfWinner(Integer branch, Integer branchs) {
-        return branch / 2;
-    }
+	private Integer obtainPositionOfWinner(Integer branch, Integer branchs) {
+		return branch / 2;
+	}
 
-    /**
-     * Odd number of groups
-     *
-     * @param branch
-     * @param branchs
-     * @return
-     */
-    private Integer obtainPositionOfOneWinnerOdd(Integer branch, Integer branchs) {
-        if (branch % 2 == 0) {
-            return branch / 2;
-        } else {
-            return ((branch + 1) % branchs) / 2;
-        }
-    }
+	/**
+	 * Odd number of groups
+	 *
+	 * @param branch
+	 * @param branchs
+	 * @return
+	 */
+	private Integer obtainPositionOfOneWinnerOdd(Integer branch, Integer branchs) {
+		if (branch % 2 == 0) {
+			return branch / 2;
+		} else {
+			return ((branch + 1) % branchs) / 2;
+		}
+	}
 
-    @Override
-    public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
-        Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
-        Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
-        // If inner level or tree championship
-        if ((previousLevel != null || tournament.getHowManyTeamsOfGroupPassToTheTree() == 1) && TournamentManagerFactory.getManager(tournament).getLevel(group.getLevel()).getGroups().size() % 2 == 0) {
-            return obtainPositionOfWinner(winnerIndex, winnerTeams);
-        } else {
-            if ((size() % 2) == 0) {
-                return obtainPositionOfOneWinnerEven(winnerIndex, winnerTeams);
-            } else {
-                return obtainPositionOfOneWinnerOdd(winnerIndex, winnerTeams);
-            }
-        }
-    }
+	@Override
+	public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
+		Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
+		Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
+		// If inner level or tree championship
+		if ((previousLevel != null || tournament.getHowManyTeamsOfGroupPassToTheTree() == 1)
+				&& this.getGroups().size() % 2 == 0) {
+			return obtainPositionOfWinner(winnerIndex, winnerTeams);
+		} else {
+			if ((size() % 2) == 0) {
+				return obtainPositionOfOneWinnerEven(winnerIndex, winnerTeams);
+			} else {
+				return obtainPositionOfOneWinnerOdd(winnerIndex, winnerTeams);
+			}
+		}
+	}
 }

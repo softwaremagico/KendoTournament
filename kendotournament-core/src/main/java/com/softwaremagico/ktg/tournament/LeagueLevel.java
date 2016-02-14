@@ -122,24 +122,11 @@ public abstract class LeagueLevel implements Serializable {
 
 	protected void updateArenaOfGroups() {
 		if (tournamentGroups.size() > 0) {
-			/**
-			 * The arena of a group in a level > 1 is the same arena of the
-			 * group in the same row.
-			 */
-			if (previousLevel != null) {
-				for (int j = 0; j < tournamentGroups.size(); j++) {
-					tournamentGroups.get(j).setFightArea(previousLevel.getGroups()
-							.get((int) (j * (((long) previousLevel.size()) / size()))).getFightArea());
-				}
-			} else {
-				/**
-				 * In level zero, all groups are divided by arenas.
-				 */
-				double groupsPerArena = Math
-						.ceil((double) tournamentGroups.size() / (double) tournament.getFightingAreas());
-				for (int j = 0; j < tournamentGroups.size(); j++) {
-					tournamentGroups.get(j).setFightArea((j) / (int) groupsPerArena);
-				}
+			//Divide groups by arena. 
+			double groupsPerArena = Math
+					.ceil((double) tournamentGroups.size() / (double) tournament.getFightingAreas());
+			for (int j = 0; j < tournamentGroups.size(); j++) {
+				tournamentGroups.get(j).setFightArea((j) / (int) groupsPerArena);
 			}
 		}
 		if (nextLevel != null) {
