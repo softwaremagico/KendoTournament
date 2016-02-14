@@ -180,6 +180,10 @@ public abstract class TGroup {
 			}
 			return true;
 		}
+		//Only one team. Cannot have fights. Is over always. 
+		if (getTeams()!=null && getTeams().size() == 1) {
+			return true;
+		}
 		return false;
 	}
 
