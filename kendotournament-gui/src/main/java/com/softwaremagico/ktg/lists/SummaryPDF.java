@@ -190,7 +190,6 @@ public class SummaryPDF extends ParentList {
 					AlertManager.showSqlErrorMessage(ex);
 				}
 				for (int i = 0; i < groups.size(); i++) {
-					System.out.println(groups.get(i));
 					// Only groups of shiaijo X.
 					if (useOnlyShiaijo < 0 || groups.get(i).getFightArea().equals(useOnlyShiaijo)) {
 						mainTable.addCell(getEmptyRow());
