@@ -2315,4 +2315,12 @@
 		<ca>Roda</ca>
 		<it>Loop</it>
 	</loop>
+	<maxFightsCheckBox>
+		<en>Create all possible fights.</en>
+		<es>Crea todos los combates posibles</es>
+		<nl>Create all possible fights.</nl>
+		<de>Create all possible fights.</de>
+		<ca>Crea tots els combats possibles</ca>
+		<it>Creare tutte le possibili corrispondenze</it>
+	</maxFightsCheckBox>
 </translator>
