@@ -65,16 +65,16 @@ public class Championship implements ITournamentManager {
 	}
 
 	@Override
-	public List<Fight> createRandomFights(Integer level) {
-		return createFightsOfGroups(level, true);
+	public List<Fight> createRandomFights(boolean maximizeFights, Integer level) {
+		return createFightsOfGroups(maximizeFights, level, true);
 	}
 
 	@Override
-	public List<Fight> createSortedFights(Integer level) {
-		return createFightsOfGroups(level, false);
+	public List<Fight> createSortedFights(boolean maximizeFights, Integer level) {
+		return createFightsOfGroups(maximizeFights, level, false);
 	}
 
-	private List<Fight> createFightsOfGroups(Integer level, boolean random) {
+	private List<Fight> createFightsOfGroups(boolean maximizeFights, Integer level, boolean random) {
 		List<Fight> fights = new ArrayList<>();
 		// Obtain winners of previous level.
 		if (level < getNumberOfLevels()) {
@@ -82,7 +82,7 @@ public class Championship implements ITournamentManager {
 			List<TGroup> groupsOfLevel = getGroups(level);
 			for (TGroup groupsOfLevel1 : groupsOfLevel) {
 				try {
-					fights.addAll(groupsOfLevel1.createFights(random));
+					fights.addAll(groupsOfLevel1.createFights(maximizeFights, random));
 				} catch (NullPointerException npe) {
 					// No teams in group. Add no fights.
 				}

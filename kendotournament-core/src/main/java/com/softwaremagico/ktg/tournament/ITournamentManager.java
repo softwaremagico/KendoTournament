@@ -39,9 +39,9 @@ public interface ITournamentManager {
 	 */
 	List<Fight> getFights(Integer level);
 
-	List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException;
+	List<Fight> createRandomFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException;
 
-	List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException;
+	List<Fight> createSortedFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException;
 
 	int getNumberOfFightsFinished();
 

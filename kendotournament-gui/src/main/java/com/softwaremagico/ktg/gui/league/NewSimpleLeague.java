@@ -509,7 +509,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
                 setTournamentType();
                 try {
 					fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-					        getDefinedType()).createRandomFights(0);
+					        getDefinedType()).createRandomFights(true, 0);
 				} catch (PersonalizedFightsException e) {
 					//Not possible here. 
 				}
@@ -596,7 +596,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
                 setTournamentType();
                 try {
 					fights = TournamentManagerFactory.getManager((Tournament) TournamentComboBox.getSelectedItem(),
-					        getDefinedType()).createSortedFights(0);
+					        getDefinedType()).createSortedFights(true, 0);
 				} catch (PersonalizedFightsException e) {
 					// Not possible here. 
 				}

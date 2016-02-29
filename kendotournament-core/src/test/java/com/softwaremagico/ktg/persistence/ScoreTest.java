@@ -33,20 +33,16 @@ public class ScoreTest {
 	public void addTournament() throws SQLException {
 		tournament = new Tournament(TOURNAMENT_NAME, 1, 2, 3, TournamentType.CHAMPIONSHIP);
 		TournamentPool.getInstance().add(tournament);
-                tournament.setTournamentScore(new TournamentScore(ScoreType.WIN_OVER_DRAWS));
+		tournament.setTournamentScore(new TournamentScore(ScoreType.WIN_OVER_DRAWS));
 		Assert.assertTrue(TournamentPool.getInstance().get(TOURNAMENT_NAME) != null);
 	}
 
 	@Test(dependsOnMethods = { "addTournament" })
 	public void addRoles() throws SQLException {
 		for (RegisteredPerson competitor : RegisteredPersonPool.getInstance().getAll()) {
-			RolePool.getInstance().add(
-					tournament,
-					new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false,
-							false));
+			RolePool.getInstance().add(tournament, new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false, false));
 		}
-		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length
-				* PopulateDatabase.competitors.length);
+		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length * PopulateDatabase.competitors.length);
 	}
 
 	@Test(dependsOnMethods = { "addRoles" })
@@ -74,9 +70,7 @@ public class ScoreTest {
 				team = null;
 			}
 		}
-		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance()
-				.getCompetitors(tournament).size()
-				/ MEMBERS);
+		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
 	}
 
 	@Test(dependsOnMethods = { "addTeams" })
@@ -100,7 +94,7 @@ public class ScoreTest {
 
 	@Test(dependsOnMethods = { "createTournamentGroups" })
 	public void createFights() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
 	}
 
@@ -131,7 +125,7 @@ public class ScoreTest {
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
 	public void solveSecondLevel() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 1));
 
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0);
@@ -160,7 +154,7 @@ public class ScoreTest {
 
 	@Test(dependsOnMethods = { "solveSecondLevel" })
 	public void solveThirdLevel() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 2));
 
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);

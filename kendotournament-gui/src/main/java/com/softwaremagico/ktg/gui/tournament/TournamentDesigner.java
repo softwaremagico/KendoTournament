@@ -681,7 +681,7 @@ public final class TournamentDesigner extends javax.swing.JFrame {
 				TournamentManagerFactory.getManager(getSelectedTournament()).removeTeams(1);
 				try {
 					if (FightPool.getInstance().add(getSelectedTournament(), TournamentManagerFactory
-							.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(0))) {
+							.getManager(getSelectedTournament(), getDefinedType()).createSortedFights(false, 0))) {
 						AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
 						// Update tournament type to database.
 						TournamentPool.getInstance().update(getSelectedTournament());

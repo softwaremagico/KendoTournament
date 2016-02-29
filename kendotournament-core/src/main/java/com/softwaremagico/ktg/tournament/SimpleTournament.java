@@ -133,19 +133,19 @@ public class SimpleTournament implements ITournamentManager {
 	}
 
 	@Override
-	public List<Fight> createRandomFights(Integer level) throws PersonalizedFightsException {
+	public List<Fight> createRandomFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
 		if (level != 0) {
 			return null;
 		}
-		return getGroup().createFights(true);
+		return getGroup().createFights(maximizeFights, true);
 	}
 
 	@Override
-	public List<Fight> createSortedFights(Integer level) throws PersonalizedFightsException {
+	public List<Fight> createSortedFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
 		if (level != 0) {
 			return null;
 		}
-		return getGroup().createFights(false);
+		return getGroup().createFights(maximizeFights, false);
 	}
 
 	@Override
@@ -256,7 +256,7 @@ public class SimpleTournament implements ITournamentManager {
 		}
 		return i;
 	}
-	
+
 	@Override
 	public void removeWinners(Integer level) {
 		if (level != null) {
