@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.2.2
+v1.2.5
 \end_layout
 
 \begin_layout Author
@@ -1903,7 +1903,7 @@ reference "fig:Diseñador-de-ligas."
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -1978,6 +1978,21 @@ flechas
 flechas de distinto color.
  Las rojas indican dónde pasará el cabeza de grupo, y la verde indicará
  dónde pasará el segundo del grupo.
+ 
+\end_layout
+
+\begin_layout Standard
+Por último, la opción 
+\begin_inset Quotes eld
+\end_inset
+
+Crea todos los combates posibles
+\begin_inset Quotes erd
+\end_inset
+
+ cambia el comportamiento de los grupos de la primera fase.
+ Es decir, en vez de que cada equipo participe únicamente en dos combates,
+ tendrá un combate con cada equipo del grupo.
  
 \end_layout
 
