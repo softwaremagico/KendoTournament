@@ -33,8 +33,10 @@ import com.softwaremagico.ktg.tournament.TournamentType;
 import java.awt.Image;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Tournament implements Comparable<Tournament>, Serializable {
 	private static final long serialVersionUID = 7794355885352426608L;
@@ -199,7 +201,13 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 
 	@Override
 	public int compareTo(Tournament t) {
-		return getName().compareTo(t.getName());
+		
+		// Ignore accents
+		Collator collator = Collator.getInstance(new Locale("es"));
+		collator.setStrength(Collator.SECONDARY);
+		collator.setDecomposition(Collator.FULL_DECOMPOSITION);
+		
+		return collator.compare(getName(), t.getName());
 	}
 
 	public static String getFightAreaName(int pos) {

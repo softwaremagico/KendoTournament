@@ -1,11 +1,13 @@
 package com.softwaremagico.ktg.tournament;
 
-import com.softwaremagico.ktg.core.Team;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+
+import com.softwaremagico.ktg.core.Team;
 
 class TeamSelector {
 
@@ -14,6 +16,7 @@ class TeamSelector {
 
     protected TeamSelector(List<Team> teams) {
         this.teams = teams;
+        
         Collections.sort(this.teams);
         combination = getAdversaries();
     }
