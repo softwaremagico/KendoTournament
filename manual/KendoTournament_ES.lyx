@@ -1835,9 +1835,8 @@ Una liga en círculo es aquella en que un equipo se enfrenta de forma consecutiv
  intentando distribuir sus fuerzas en los diversos partidos.
  Aunque no es un sistema de liga oficial, resulta muy útil en entrenamientos
  y por ello se incluye en el programa.
- Para el uso de esta modalidad, se recomienda que los participantes con
- mayor experiencia entren antes a competir, es decir, estén en posiciones
- más altas en la lista, ya que el agotamiento perjudica a los primeros equipos.
+ Cuando un equipo termina sus enfrentamiento con los demás equipos, este
+ pasará a ser el último de los adversarios del siguiente equipo.
  
 \end_layout
 

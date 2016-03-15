@@ -128,6 +128,8 @@ Version:
 
 1.2.4	Adapted to v1.0.0 of KendoViewer.
 
+1.2.5	Changed combat generator for loop tournament. 
+
 
 Thanks to
 -------------------------

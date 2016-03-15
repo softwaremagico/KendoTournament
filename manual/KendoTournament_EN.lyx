@@ -1686,9 +1686,13 @@ We call round-robin league or ring league is the one in which a team competes
  way, trying to distribute their strengths in different matches.
  Although is not an official league system, it is very useful in training
  and it is why is included in the program.
- For using this modality, it is recommended that the participants with more
- experience match earlier, saying, being in higher positions in the list.
- In this window, the user only need to select the order in which the teams
+ The team that finish its fights agains all other adversaries, becames the
+ last adversarie for the next team entering the shiaijo.
+ 
+\end_layout
+
+\begin_layout Standard
+In this window, the user only need to select the order in which the teams
  will enter the shiaijo and the program will calculate all the matches keeping
  that order.
  It stands out that number of matches obtained this way are equal to (teams*(tea
