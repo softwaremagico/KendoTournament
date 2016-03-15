@@ -410,7 +410,7 @@ public abstract class TGroup {
 			return null;
 		}
 		List<Fight> fights = new ArrayList<>();
-		TeamSelector remainingFights = new TeamSelector(teams);
+		TeamSelector remainingFights = new LoopTeamSelector(teams);
 
 		List<Team> remainingTeams = remainingFights.getTeams();
 		if (random) {
