@@ -21,6 +21,13 @@ class TeamSelector {
 		combination = getAdversaries();
 	}
 
+	public void shuffleTeams() {
+		if (teams != null) {
+			Collections.shuffle(teams);
+			combination = getAdversaries();
+		}
+	}
+
 	public List<Team> getAdversaries(Team team) {
 		return combination.get(team);
 	}
