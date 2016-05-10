@@ -27,8 +27,9 @@ package com.softwaremagico.ktg.lists;
 import com.softwaremagico.ktg.core.Tournament;
 
 public class BlogList extends ListFromTournamentCreateTxt {
+	private static final long serialVersionUID = 1248748187924180215L;
 
-    public BlogList() {
+	public BlogList() {
         super(false);
         this.setTitle(trans.getTranslatedText("titleBlogStatistics"));
     }
