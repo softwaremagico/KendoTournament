@@ -148,7 +148,9 @@ public class BlogExporter {
 					for (Fight fight : fights) {
 						List<List<String>> rows = new ArrayList<>();
 						if (groups.get(i).isFightOfGroup(fight)) {
-							stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName() + "</h5>\n");
+							if (tournament.getTeamSize() > 1) {
+								stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName() + "</h5>\n");
+							}
 							// Create for each competitor
 
 							for (int teamMember = 0; teamMember < fight.getTournament().getTeamSize(); teamMember++) {
