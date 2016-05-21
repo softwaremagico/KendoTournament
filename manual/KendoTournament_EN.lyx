@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.2.2
+v1.2.3
 \end_layout
 
 \begin_layout Author
@@ -151,10 +151,27 @@ Autosave: new options for autosaving.
 \begin_layout Description
 Monitor: new functionality that allows the use of a projector to display
  the score of a championship.
- More info in Section 
+ More info at Section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Marcador-de-la"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Blogger
+\begin_inset space ~
+\end_inset
+
+code: exports a summary of a finished championship into code that can be
+ copied and paste in any html page such as Wordpress website.
+ More info at Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Support-lists"
 
 \end_inset
 
@@ -2704,6 +2721,12 @@ Apart from the handling of participants and league, the program also allows
 \end_layout
 
 \begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Support-lists"
+
+\end_inset
+
 Support lists for the organization
 \end_layout
 
@@ -2744,7 +2767,7 @@ credentials
 
 \end_inset
 
-Credentials: This option allows generating a file with all the accreditations/cr
+Credentials: this option allows generating a file with all the accreditations/cr
 edentials of a championship, this way, they will be ready to print and hand
  over to the competitors.
  Four accreditations/credentials appear in a page.
@@ -2767,7 +2790,7 @@ Team
 \begin_inset space ~
 \end_inset
 
-list: A list with all the teams and members that participate in the league.
+list: a list with all the teams and members that participate in the league.
  This way, all competitors of that league and all the other teams can check
  if their data are correct.
  
@@ -2787,7 +2810,7 @@ Match
 \begin_inset space ~
 \end_inset
 
-list: A list with all the matches already defined in the league.
+list: a list with all the matches already defined in the league.
  This way, if there is no projector and you cannot see the scoreboard, at
  least you can check the order of matches in order to be ready for your
  turn.
@@ -2808,7 +2831,7 @@ Scoreboard
 \begin_inset space ~
 \end_inset
 
-list: Once a championship is finished (or any of its rounds) you can print
+list: once a championship is finished (or any of its rounds) you can print
  a list with the score of each of the teams.
  This way, you made public the total score of a team and you can see which
  team will pass to the next round or which team is the winner.
@@ -2832,7 +2855,7 @@ Match
 \begin_inset space ~
 \end_inset
 
-summary: Creates a summary with all the matches including all the hits done
+summary: creates a summary with all the matches including all the hits done
  by each of the competitors.
  
 \end_layout
@@ -2851,9 +2874,31 @@ Referee
 \begin_inset space ~
 \end_inset
 
-list: A short list with the names of all the referees that take part in
+list: a short list with the names of all the referees that take part in
  the competition.
  
+\end_layout
+
+\begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+blogger
+\end_layout
+
+\end_inset
+
+Blogger
+\begin_inset space ~
+\end_inset
+
+code: exports a summary of a finished championship into code that can be
+ copied and paste in any blog site that uses the standard blog engine.
+ The generated code must be pasted as raw code into the webpage using the
+ administration panel of the site.
+ Only webpages that allows html tags will work, such as Wordpress, Blogger,
+ ...
 \end_layout
 
 \begin_layout Subsection

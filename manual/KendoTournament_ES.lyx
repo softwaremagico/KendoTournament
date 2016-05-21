@@ -85,7 +85,7 @@ KENDO TOURNAMENT MANAGER
 \begin_inset Newline newline
 \end_inset
 
-v1.2.2
+v1.2.3
 \end_layout
 
 \begin_layout Author
@@ -164,6 +164,23 @@ s del campeonato.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "sec:Marcador-de-la"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+Código
+\begin_inset space ~
+\end_inset
+
+Blogger: genera el resumen de un campeonato ya finalizado en código semi-html
+ que puede ser pegado en cualquier página web de tipo Wordpress o similar.
+ Más información en la Sección 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sub:Listas-de-apoyo"
 
 \end_inset
 
@@ -2923,6 +2940,12 @@ Aparte del manejo de participantes y ligas, el programa permite imprimir
 \end_layout
 
 \begin_layout Subsection
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Listas-de-apoyo"
+
+\end_inset
+
 Listas de apoyo a la organización
 \end_layout
 
@@ -3116,6 +3139,29 @@ de
 
 árbitros: Un pequeño listado con los nombres de todos los árbitros que participa
 n en la competición.
+\end_layout
+
+\begin_layout Description
+\begin_inset Index idx
+status open
+
+\begin_layout Plain Layout
+blogger
+\end_layout
+
+\end_inset
+
+Código
+\begin_inset space ~
+\end_inset
+
+blogger: exporta un resumen de un campeonato ya terminado en format que
+ puede ser copiado y pegado en cualquier sitio de tipo blog actual.
+ El código generado debe ser pegado como text sin formato en la página web
+ usando el panel de administración del sitio.
+ Solo los sitios web que permiten estos tipos de tag como Blogger, Wordpress
+ y similares funcionarán correctamente.
+ 
 \end_layout
 
 \begin_layout Subsection
