@@ -78,8 +78,10 @@ public final class TournamentDesigner extends javax.swing.JFrame {
 		 * TournamentManagerFactory.getManager(getSelectedTournament()).
 		 * fillGroups(); }
 		 */
-		updateInfo();
-		updateLevel();
+                if(getSelectedTournament()!=null) {
+                    updateInfo();
+                    updateLevel();
+                }
 	}
 
 	private void setLanguage() {
@@ -131,7 +133,9 @@ public final class TournamentDesigner extends javax.swing.JFrame {
 			AlertManager.showSqlErrorMessage(ex);
 		}
 		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-		uptadeTournament();
+                if(getSelectedTournament()!=null) {
+                    uptadeTournament();
+                }
 		refreshTournament = true;
 	}
 

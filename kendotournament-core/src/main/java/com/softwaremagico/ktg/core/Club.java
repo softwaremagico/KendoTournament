@@ -1,5 +1,8 @@
 package com.softwaremagico.ktg.core;
 
+import java.text.Collator;
+import java.util.Locale;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -220,6 +223,11 @@ public class Club implements Comparable<Club> {
 	 */
 	@Override
 	public int compareTo(Club c) {
-		return (getName() + city).compareTo(c.getName() + c.getCity());
+		// Ignore accents
+		Collator collator = Collator.getInstance(new Locale("es"));
+		collator.setStrength(Collator.SECONDARY);
+		collator.setDecomposition(Collator.FULL_DECOMPOSITION);
+
+		return collator.compare(getName() + getCity(), c.getName() + c.getCity());
 	}
 }

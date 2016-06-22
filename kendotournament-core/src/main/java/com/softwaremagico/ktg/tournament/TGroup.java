@@ -341,8 +341,7 @@ public abstract class TGroup {
 				fight = new Fight(tournament, team2, team1, fightArea, level, index, fights.size());
 			}
 			// Force the creation of duels for more than one fight area. If not,
-			// multiple computers
-			// generates different duels.
+			// multiple computers generates different duels.
 			if (tournament.isUsingMultipleComputers() && tournament.getFightingAreas() > 1) {
 				fight.getDuels();
 			}
@@ -394,40 +393,4 @@ public abstract class TGroup {
 		return fights;
 	}
 
-	/**
-	 * One team fights agains all other teams.
-	 * 
-	 * @param tournament
-	 * @param teams
-	 * @param fightArea
-	 * @param level
-	 * @param index
-	 * @param random
-	 * @return
-	 */
-	protected static List<Fight> createLoopFights(Tournament tournament, List<Team> teams, int fightArea, int level, int index, boolean random) {
-		if (teams.size() < 2) {
-			return null;
-		}
-		List<Fight> fights = new ArrayList<>();
-		TeamSelector remainingFights = new TeamSelector(teams);
-
-		List<Team> remainingTeams = remainingFights.getTeams();
-		if (random) {
-			Collections.shuffle(remainingTeams);
-		}
-		for (Team team : remainingTeams) {
-			for (Team adversary : remainingFights.getAdversaries(team)) {
-				Fight fight = new Fight(tournament, team, adversary, fightArea, level, index, fights.size());
-				// Force the creation of duels for more than one fight area. If
-				// not, multiple computers generates different duels.
-				if (tournament.isUsingMultipleComputers() && tournament.getFightingAreas() > 1) {
-					fight.getDuels();
-				}
-				fights.add(fight);
-			}
-		}
-
-		return fights;
-	}
 }

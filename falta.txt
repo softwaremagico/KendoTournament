@@ -1,4 +1,3 @@
 Que las listas se puedan exportar en TXT
-Que pasa si en la liga manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
+Que pasa si en un campeonato manual un grupo solo tiene un link y los demás tienen dos? ¿funciona?
 Tekken -> Kachinuki
-Separar los Fights en el PDF for Shiaijo. 

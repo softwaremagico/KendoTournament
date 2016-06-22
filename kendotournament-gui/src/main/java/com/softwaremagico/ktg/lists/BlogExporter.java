@@ -110,7 +110,8 @@ public class BlogExporter {
 					rows.add(columns);
 				}
 			}
-			createTable(stringBuilder, rows);
+			int[] widths = { 30, 15 };
+			createTable(stringBuilder, rows, widths);
 		} catch (SQLException ex) {
 			AlertManager.showSqlErrorMessage(ex);
 		}
@@ -134,6 +135,8 @@ public class BlogExporter {
 				} catch (SQLException ex) {
 					AlertManager.showSqlErrorMessage(ex);
 				}
+
+				int[] widths = { 25, 5, 5, 5, 5, 5, 5, 5, 25 };
 				// Separate by groups
 				for (int i = 0; i < groups.size(); i++) {
 					if (groups.size() > 1) {
@@ -145,8 +148,11 @@ public class BlogExporter {
 					for (Fight fight : fights) {
 						List<List<String>> rows = new ArrayList<>();
 						if (groups.get(i).isFightOfGroup(fight)) {
-							stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName() + "</h5>\n");
+							if (tournament.getTeamSize() > 1) {
+								stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName() + "</h5>\n");
+							}
 							// Create for each competitor
+
 							for (int teamMember = 0; teamMember < fight.getTournament().getTeamSize(); teamMember++) {
 								List<String> columns = new ArrayList<>();
 								// Team 1
@@ -174,7 +180,7 @@ public class BlogExporter {
 								rows.add(columns);
 							}
 
-							createTable(stringBuilder, rows);
+							createTable(stringBuilder, rows, widths);
 						}
 					}
 				}
@@ -209,7 +215,8 @@ public class BlogExporter {
 			columns.add("" + teamTopTen.get(i).getHits());
 			rows.add(columns);
 		}
-		createTable(stringBuilder, rows);
+		int[] widths = { 20, 10, 10, 10 };
+		createTable(stringBuilder, rows, widths);
 	}
 
 	private static void addCompetitorClassificationTable(StringBuilder stringBuilder, Tournament tournament) {
@@ -240,18 +247,25 @@ public class BlogExporter {
 			columns.add("" + competitorTopTen.get(i).getHits());
 			rows.add(columns);
 		}
-		createTable(stringBuilder, rows);
+		int[] widths = { 30, 15, 15 };
+		createTable(stringBuilder, rows, widths);
 	}
 
-	private static void createTable(StringBuilder stringBuilder, List<List<String>> rows) {
+	private static void createTable(StringBuilder stringBuilder, List<List<String>> rows, int[] widths) {
 		stringBuilder.append("<table>\n");
 		stringBuilder.append("<tbody>\n");
 		for (List<String> row : rows) {
 			stringBuilder.append("<tr>\n");
+			int columnNumber = 0;
 			for (String column : row) {
-				stringBuilder.append("<td>\n");
+				if (widths != null && columnNumber < widths.length) {
+					stringBuilder.append("<td style=\"width:" + widths[columnNumber] + "%\">\n");
+				} else {
+					stringBuilder.append("<td>\n");
+				}
 				stringBuilder.append(column);
 				stringBuilder.append("</td>\n");
+				columnNumber++;
 			}
 			stringBuilder.append("</tr>\n");
 		}
