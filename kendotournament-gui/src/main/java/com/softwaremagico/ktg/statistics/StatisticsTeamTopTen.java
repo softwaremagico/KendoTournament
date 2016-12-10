@@ -47,7 +47,7 @@ import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.tournament.ScoreOfTeam;
+import com.softwaremagico.ktg.tournament.score.ScoreOfTeam;
 
 public class StatisticsTeamTopTen extends StatisticsGUI {
 	private static final long serialVersionUID = -6158179793380571245L;

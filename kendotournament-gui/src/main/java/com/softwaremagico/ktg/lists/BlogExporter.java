@@ -41,10 +41,10 @@ import com.softwaremagico.ktg.persistence.ClubPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
-import com.softwaremagico.ktg.tournament.ScoreOfTeam;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.score.ScoreOfTeam;
 
 public class BlogExporter {
 	private final static String NEW_LINE = "&nbsp;\n";

@@ -25,10 +25,10 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
-import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
+import com.softwaremagico.ktg.tournament.score.TournamentScore;
 
 import java.awt.Image;
 import java.io.InputStream;

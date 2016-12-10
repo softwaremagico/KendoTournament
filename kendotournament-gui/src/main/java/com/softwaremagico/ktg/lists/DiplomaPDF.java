@@ -74,8 +74,8 @@ import com.softwaremagico.ktg.persistence.DuelPool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TeamPool;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
-import com.softwaremagico.ktg.tournament.ScoreOfTeam;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.score.ScoreOfTeam;
 
 public class DiplomaPDF {
 	protected int fontSize = 17;

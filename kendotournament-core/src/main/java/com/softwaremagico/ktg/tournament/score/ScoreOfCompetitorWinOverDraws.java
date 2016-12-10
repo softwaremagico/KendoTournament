@@ -1,13 +1,13 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.score;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
 
 import java.util.List;
 
-public class ScoreOfCompetitorClassic extends ScoreOfCompetitor {
+public class ScoreOfCompetitorWinOverDraws extends ScoreOfCompetitor {
 
-	public ScoreOfCompetitorClassic(RegisteredPerson competitor, List<Fight> fights) {
+	public ScoreOfCompetitorWinOverDraws(RegisteredPerson competitor, List<Fight> fights) {
 		super(competitor, fights);
 	}
 
@@ -19,10 +19,18 @@ public class ScoreOfCompetitorClassic extends ScoreOfCompetitor {
 		if (getDuelsWon() < o.getDuelsWon()) {
 			return 1;
 		}
+
 		if (getHits() > o.getHits()) {
 			return -1;
 		}
 		if (getHits() < o.getHits()) {
+			return 1;
+		}
+
+		if (getDuelsDraw() > o.getDuelsDraw()) {
+			return -1;
+		}
+		if (getDuelsDraw() < o.getDuelsDraw()) {
 			return 1;
 		}
 
@@ -38,5 +46,4 @@ public class ScoreOfCompetitorClassic extends ScoreOfCompetitor {
 		// Draw score, order by name;
 		return getCompetitor().getSurnameName().compareTo(o.getCompetitor().getSurnameName());
 	}
-
 }

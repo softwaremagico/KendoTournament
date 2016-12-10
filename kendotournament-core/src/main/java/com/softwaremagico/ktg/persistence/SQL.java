@@ -57,9 +57,9 @@ import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
-import com.softwaremagico.ktg.tournament.ScoreType;
-import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
+import com.softwaremagico.ktg.tournament.score.TournamentScore;
 
 public abstract class SQL extends Database {
 

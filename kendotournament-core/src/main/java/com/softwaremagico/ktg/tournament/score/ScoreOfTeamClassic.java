@@ -1,12 +1,12 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.score;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import java.util.List;
 
-public class ScoreOfTeamEuropean extends ScoreOfTeam {
+public class ScoreOfTeamClassic extends ScoreOfTeam {
 
-    public ScoreOfTeamEuropean(Team team, List<Fight> fights) {
+    public ScoreOfTeamClassic(Team team, List<Fight> fights) {
         super(team, fights);
     }
 
@@ -20,27 +20,11 @@ public class ScoreOfTeamEuropean extends ScoreOfTeam {
             return 1;
         }
 
-        if (getDrawFights() > o.getDrawFights()) {
-            return -1;
-        }
-
-        if (getDrawFights() < o.getDrawFights()) {
-            return 1;
-        }
-
         if (getWonDuels() > o.getWonDuels()) {
             return -1;
         }
 
         if (getWonDuels() < o.getWonDuels()) {
-            return 1;
-        }
-
-        if (getDrawDuels() > o.getDrawDuels()) {
-            return -1;
-        }
-
-        if (getDrawDuels() < o.getDrawDuels()) {
             return 1;
         }
 

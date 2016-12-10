@@ -49,7 +49,7 @@ import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.RolePool;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitor;
 
 public class StatisticsTopTen extends StatisticsGUI {
 	private static final long serialVersionUID = 8825408636741174219L;

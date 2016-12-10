@@ -1,12 +1,13 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.score;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+
 import java.util.List;
 
-public class ScoreOfCompetitorEuropean extends ScoreOfCompetitor {
+public class ScoreOfCompetitorClassic extends ScoreOfCompetitor {
 
-	public ScoreOfCompetitorEuropean(RegisteredPerson competitor, List<Fight> fights) {
+	public ScoreOfCompetitorClassic(RegisteredPerson competitor, List<Fight> fights) {
 		super(competitor, fights);
 	}
 
@@ -18,14 +19,6 @@ public class ScoreOfCompetitorEuropean extends ScoreOfCompetitor {
 		if (getDuelsWon() < o.getDuelsWon()) {
 			return 1;
 		}
-
-		if (getDuelsDraw() > o.getDuelsDraw()) {
-			return -1;
-		}
-		if (getDuelsDraw() < o.getDuelsDraw()) {
-			return 1;
-		}
-
 		if (getHits() > o.getHits()) {
 			return -1;
 		}

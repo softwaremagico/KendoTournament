@@ -9,12 +9,13 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
-import com.softwaremagico.ktg.tournament.ScoreType;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
-import com.softwaremagico.ktg.tournament.TournamentScore;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
+import com.softwaremagico.ktg.tournament.score.TournamentScore;
+
 import java.sql.SQLException;
 import org.testng.Assert;
 import org.testng.annotations.Test;

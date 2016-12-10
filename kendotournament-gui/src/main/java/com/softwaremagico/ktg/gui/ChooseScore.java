@@ -33,8 +33,8 @@ import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.AutoSaveByAction;
 import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.tournament.ScoreType;
-import com.softwaremagico.ktg.tournament.TournamentScore;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
+import com.softwaremagico.ktg.tournament.score.TournamentScore;
 
 public class ChooseScore extends javax.swing.JFrame {
     private static final long serialVersionUID = 4593127586769712466L;

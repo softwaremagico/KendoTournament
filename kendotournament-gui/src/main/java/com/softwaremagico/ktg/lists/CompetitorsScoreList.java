@@ -42,7 +42,7 @@ import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.language.LanguagePool;
 import com.softwaremagico.ktg.persistence.FightPool;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitor;
 
 public class CompetitorsScoreList extends ParentList {
 	private List<ScoreOfCompetitor> competitorTopTen;

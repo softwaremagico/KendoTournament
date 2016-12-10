@@ -43,7 +43,7 @@ import javax.swing.JScrollPane;
 import javax.swing.Timer;
 
 import com.softwaremagico.ktg.core.Ranking;
-import com.softwaremagico.ktg.tournament.ScoreOfTeam;
+import com.softwaremagico.ktg.tournament.score.ScoreOfTeam;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KPanel;

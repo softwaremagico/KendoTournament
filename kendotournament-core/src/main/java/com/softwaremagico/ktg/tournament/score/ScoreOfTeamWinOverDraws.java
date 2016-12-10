@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.score;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;

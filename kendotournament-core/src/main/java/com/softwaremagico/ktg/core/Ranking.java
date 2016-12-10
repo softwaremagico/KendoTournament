@@ -30,14 +30,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitor;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorClassic;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorCustom;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorEuropean;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorInternational;
-import com.softwaremagico.ktg.tournament.ScoreOfCompetitorWinOverDraws;
-import com.softwaremagico.ktg.tournament.ScoreOfTeam;
-import com.softwaremagico.ktg.tournament.ScoreType;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitor;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitorClassic;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitorCustom;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitorEuropean;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitorInternational;
+import com.softwaremagico.ktg.tournament.score.ScoreOfCompetitorWinOverDraws;
+import com.softwaremagico.ktg.tournament.score.ScoreOfTeam;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
 
 public class Ranking {
 
