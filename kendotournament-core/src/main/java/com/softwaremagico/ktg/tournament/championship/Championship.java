@@ -1,58 +1,21 @@
 package com.softwaremagico.ktg.tournament.championship;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.softwaremagico.ktg.core.Fight;
-import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.LeagueLevelChampionship;
 import com.softwaremagico.ktg.tournament.LevelBasedTournament;
 import com.softwaremagico.ktg.tournament.TGroup;
-
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Championship extends LevelBasedTournament {
 
 	public Championship(Tournament tournament) {
 		super(tournament);
 		setLevelZero(new LeagueLevelChampionship(tournament, 0, null, null));
-	}
-
-	@Override
-	public void fillGroups() {
-		try {
-			// Read groups from fights.
-			List<Fight> fights = FightPool.getInstance().get(getTournament());
-			for (Fight fight : fights) {
-				LeagueLevel leagueLevel = getLevel(fight.getLevel());
-				leagueLevel.fillGroups(fight);
-				// Create duels if multiple computers to avoid repetitions.
-				if (getTournament().isUsingMultipleComputers()) {
-					fight.getDuels();
-				}
-			}
-			// Fill teams of groups without fights. (i.e group with only one
-			// team).
-			LeagueLevel level = getLevelZero();
-			while (level.getNextLevel() != null) {
-				level = level.getNextLevel();
-				// A level with several groups, has already filled teams and one
-				// of them has no teams.
-				if (level.getPreviousLevel().getGroups().size() % 2 == 1
-						&& level.getPreviousLevel().isLevelFinished()) {
-					// Search a group without teams.
-					for (TGroup group : level.getGroups()) {
-						if (group.getTeams().isEmpty()) {
-							level.update();
-						}
-					}
-				}
-			}
-		} catch (SQLException ex) {
-			KendoLog.errorMessage(this.getClass().getName(), ex);
-		}
 	}
 
 	@Override
@@ -83,27 +46,6 @@ public class Championship extends LevelBasedTournament {
 	}
 
 	@Override
-	public void addGroup(TGroup group) {
-		getLevel(0).addGroup(group);
-	}
-
-	@Override
-	public boolean exist(Team team) {
-		List<TGroup> groups = getGroups(0);
-		for (TGroup group : groups) {
-			if (group.getTeams().contains(team)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public void setDefaultFightAreas() {
-		getLevel(0).updateArenaOfGroups();
-	}
-
-	@Override
 	public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
 		getTournament().setHowManyTeamsOfGroupPassToTheTree(winners);
 		for (TGroup group : getLevelZero().getGroups()) {
@@ -115,7 +57,7 @@ public class Championship extends LevelBasedTournament {
 	}
 
 	@Override
-	public boolean inTheLastFight() {
+	public boolean isTheLastFight() {
 		if (!getGroups().isEmpty()) {
 			if (getGroups().size() > 1) {
 				// With more than one group If penultimus group is over, then we

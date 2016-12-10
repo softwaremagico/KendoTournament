@@ -12,16 +12,13 @@ public class KingLevel extends LeagueLevel {
 	}
 
 	@Override
-	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
-			LeagueLevel previousLevel) {
-		// TODO Auto-generated method stub
-		return null;
+	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+		return new KingLevel(tournament, level, nextLevel, previousLevel);
 	}
 
 	@Override
 	public Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner) {
-		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 }

@@ -34,14 +34,12 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	}
 
 	@Override
-	public List<Fight> createRandomFights(boolean maximizeFights, Integer level)
-			throws PersonalizedFightsException {
-		return null;
+	public List<Fight> createRandomFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
+		return createFightsOfGroups(maximizeFights, level, true);
 	}
 
 	@Override
-	public List<Fight> createSortedFights(boolean maximizeFights, Integer level)
-			throws PersonalizedFightsException {
+	public List<Fight> createSortedFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
 		return createFightsOfGroups(maximizeFights, level, false);
 	}
 
@@ -63,38 +61,15 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	}
 
 	@Override
-	public void fillGroups() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addGroup(TGroup group) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public boolean exist(Team team) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setDefaultFightAreas() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
-		// TODO Auto-generated method stub
-
+		for (TGroup group : getLevelZero().getGroups()) {
+			group.setMaxNumberOfWinners(winners);
+		}
 	}
 
 	@Override
-	public boolean inTheLastFight() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isTheLastFight() {
+		return redTeams.isEmpty() || whiteTeams.isEmpty();
 	}
 
 }

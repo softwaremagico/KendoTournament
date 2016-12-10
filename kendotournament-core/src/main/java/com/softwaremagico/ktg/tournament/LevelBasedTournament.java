@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
@@ -227,6 +228,62 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public void fillGroups() {
+		try {
+			// Read groups from fights.
+			List<Fight> fights = FightPool.getInstance().get(getTournament());
+			for (Fight fight : fights) {
+				LeagueLevel leagueLevel = getLevel(fight.getLevel());
+				leagueLevel.fillGroups(fight);
+				// Create duels if multiple computers to avoid repetitions.
+				if (getTournament().isUsingMultipleComputers()) {
+					fight.getDuels();
+				}
+			}
+			// Fill teams of groups without fights. (i.e group with only one
+			// team).
+			LeagueLevel level = getLevelZero();
+			while (level.getNextLevel() != null) {
+				level = level.getNextLevel();
+				// A level with several groups, has already filled teams and one
+				// of them has no teams.
+				if (level.getPreviousLevel().getGroups().size() % 2 == 1 && level.getPreviousLevel().isLevelFinished()) {
+					// Search a group without teams.
+					for (TGroup group : level.getGroups()) {
+						if (group.getTeams().isEmpty()) {
+							level.update();
+						}
+					}
+				}
+			}
+		} catch (SQLException ex) {
+			KendoLog.errorMessage(this.getClass().getName(), ex);
+		}
+	}
+
+	@Override
+	public void addGroup(TGroup group) {
+		getLevel(0).addGroup(group);
+	}
+
+	@Override
+	public boolean exist(Team team) {
+		for (Level level : getLevels()) {
+			for (TGroup group : level.getGroups()) {
+				if (group.getTeams().contains(team)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void setDefaultFightAreas() {
+		getLevel(0).updateArenaOfGroups();
 	}
 
 }

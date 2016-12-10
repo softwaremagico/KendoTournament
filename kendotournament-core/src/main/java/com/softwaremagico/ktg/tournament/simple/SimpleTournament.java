@@ -192,7 +192,7 @@ public class SimpleTournament implements ITournamentManager {
 	}
 
 	@Override
-	public boolean inTheLastFight() {
+	public boolean isTheLastFight() {
 		try {
 			List<Fight> fights = FightPool.getInstance().get(tournament);
 			if (fights.size() > 0) {

@@ -92,7 +92,7 @@ public interface ITournamentManager {
 	 *
 	 * @return
 	 */
-	boolean inTheLastFight();
+	boolean isTheLastFight();
 
 	/**
 	 * Remove all fights of all groups.

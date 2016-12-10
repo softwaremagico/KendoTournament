@@ -671,7 +671,7 @@ public class FightPanel extends KFrame {
         if (TournamentManagerFactory.getManager(getSelectedTournament()) != null
                 && !getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)) {
             if (getSelectedFightArea() == 0
-                    && TournamentManagerFactory.getManager(getSelectedTournament()).inTheLastFight()) {
+                    && TournamentManagerFactory.getManager(getSelectedTournament()).isTheLastFight()) {
                 nextButton.updateIcon(true);
                 nextButton.updateText(true);
             } else {
