@@ -6,7 +6,6 @@ import java.util.List;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.LeagueLevel;
 import com.softwaremagico.ktg.tournament.LevelBasedTournament;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
@@ -70,81 +69,14 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	}
 
 	@Override
-	public List<TGroup> getGroupsByShiajo(Integer shiaijo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TGroup getGroup(Fight fight) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void addGroup(TGroup group) {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getIndexOfGroup(TGroup group) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void removeGroup(Integer level, Integer groupIndex) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeGroup(TGroup group) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeGroups(Integer level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public int getIndex(Integer level, TGroup group) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public LeagueLevel getLevel(Integer level) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Integer getLastLevelUsed() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
 	public boolean exist(Team team) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void removeTeams(Integer level) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeTeams() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -163,30 +95,6 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	public boolean inTheLastFight() {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void resetFights() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public LeagueLevel getCurrentLevel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<LeagueLevel> getLevels() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void removeWinners(Integer level) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

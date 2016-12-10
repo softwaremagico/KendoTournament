@@ -9,12 +9,12 @@ import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.core.Undraw;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
-import com.softwaremagico.ktg.tournament.CustomChampionship;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.championship.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.championship.custom.CustomChampionship;
 import com.softwaremagico.ktg.tournament.score.ScoreType;
 import com.softwaremagico.ktg.tournament.score.TournamentScore;
 

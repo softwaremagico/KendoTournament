@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.championship;
 
 /*
  * #%L
@@ -28,6 +28,8 @@ import java.util.List;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.Level;
+import com.softwaremagico.ktg.tournament.TGroup;
 
 public abstract class LeagueLevel extends Level {
 	private static final long serialVersionUID = -2913139758103386033L;
@@ -36,7 +38,7 @@ public abstract class LeagueLevel extends Level {
 		super(tournament, level, nextLevel, previousLevel);
 	}
 
-	protected void fillGroups(Fight fight) {
+	public void fillGroups(Fight fight) {
 		while (fight.getGroup() >= getGroups().size()) {
 			addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(),
 					fight.getAsignedFightArea()));
@@ -115,7 +117,7 @@ public abstract class LeagueLevel extends Level {
 	/**
 	 * Update the number of groups according of the size of the previous level.
 	 */
-	protected void updateGroupsSize() {
+	public void updateGroupsSize() {
 		while ((getPreviousLevel() != null)
 				&& ((getPreviousLevel().getNumberOfTotalTeamsPassNextRound() + 1) / 2 > this.size())) {
 			addGroup(new TreeTournamentGroup(getTournament(), getLevelIndex(), 0));
@@ -150,7 +152,7 @@ public abstract class LeagueLevel extends Level {
 	 * @param group
 	 * @return
 	 */
-	protected LeagueLevel addGroup(TGroup group) {
+	public LeagueLevel addGroup(TGroup group) {
 		getTournamentGroups().add(group);
 
 		if ((getNextLevel() == null)
@@ -183,7 +185,7 @@ public abstract class LeagueLevel extends Level {
 		return false;
 	}
 
-	protected void removeGroup(TGroup group) {
+	public void removeGroup(TGroup group) {
 		if (getTournamentGroups().size() > 0) {
 			getTournamentGroups().remove(group);
 			if (getNextLevel() != null) {
@@ -195,7 +197,7 @@ public abstract class LeagueLevel extends Level {
 		}
 	}
 
-	protected void removeGroups() {
+	public void removeGroups() {
 		setTournamentGroups(new ArrayList<TGroup>());
 		setNextLevel(null);
 	}

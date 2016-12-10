@@ -43,13 +43,13 @@ import com.softwaremagico.ktg.persistence.DatabaseConnection;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
-import com.softwaremagico.ktg.tournament.CustomChampionship;
-import com.softwaremagico.ktg.tournament.LeagueLevelCustom;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.championship.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.championship.custom.CustomChampionship;
+import com.softwaremagico.ktg.tournament.championship.custom.LeagueLevelCustom;
 
 public final class TournamentDesigner extends javax.swing.JFrame {
 	private static final long serialVersionUID = 3824274132477001088L;

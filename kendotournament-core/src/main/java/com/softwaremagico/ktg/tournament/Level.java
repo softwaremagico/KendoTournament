@@ -9,8 +9,10 @@ import java.util.Set;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
 
 public class Level implements Serializable {
+	private static final long serialVersionUID = -1611900089563066556L;
 	private int levelIndex;
 	private Tournament tournament;
 	private List<TGroup> tournamentGroups;
@@ -46,7 +48,7 @@ public class Level implements Serializable {
 		}
 	}
 
-	protected void removeTeams() {
+	public void removeTeams() {
 		for (TGroup group : tournamentGroups) {
 			group.removeTeams();
 		}
@@ -70,7 +72,7 @@ public class Level implements Serializable {
 		return false;
 	}
 
-	protected boolean isLevelFinished() {
+	public boolean isLevelFinished() {
 		for (TGroup t : tournamentGroups) {
 			if (!t.areFightsOverOrNull()) {
 				return false;
@@ -87,7 +89,7 @@ public class Level implements Serializable {
 		return teams;
 	}
 
-	protected void updateArenaOfGroups() {
+	public void updateArenaOfGroups() {
 		if (tournamentGroups.size() > 0) {
 			// Divide groups by arena.
 			double groupsPerArena = Math.ceil((double) tournamentGroups.size()

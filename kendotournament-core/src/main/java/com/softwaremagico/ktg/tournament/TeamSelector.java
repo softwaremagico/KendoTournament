@@ -9,7 +9,7 @@ import java.util.Random;
 
 import com.softwaremagico.ktg.core.Team;
 
-class TeamSelector {
+public class TeamSelector {
 
 	private List<Team> teams;
 	private Map<Team, List<Team>> combination;

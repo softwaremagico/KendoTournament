@@ -6,6 +6,10 @@ import java.util.HashMap;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.tournament.championship.Championship;
+import com.softwaremagico.ktg.tournament.championship.custom.CustomChampionship;
+import com.softwaremagico.ktg.tournament.loop.LoopTournamentManager;
+import com.softwaremagico.ktg.tournament.simple.SimpleTournament;
 
 public class TournamentManagerFactory {
 

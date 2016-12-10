@@ -1,6 +1,7 @@
 package com.softwaremagico.ktg.tournament;
 
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.championship.custom.CustomChampionship;
 
 import java.io.Serializable;
 import java.util.Objects;

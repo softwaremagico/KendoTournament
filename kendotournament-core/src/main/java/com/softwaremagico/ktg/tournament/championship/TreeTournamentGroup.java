@@ -1,10 +1,11 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.championship;
 
 import java.util.List;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.TGroup;
 
 public class TreeTournamentGroup extends TGroup {
 

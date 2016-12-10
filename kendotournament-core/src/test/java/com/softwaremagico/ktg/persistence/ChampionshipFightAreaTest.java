@@ -12,7 +12,7 @@ import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
+import com.softwaremagico.ktg.tournament.championship.TreeTournamentGroup;
 import com.softwaremagico.ktg.tournament.score.ScoreType;
 import com.softwaremagico.ktg.tournament.score.TournamentScore;
 

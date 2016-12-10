@@ -1,8 +1,10 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.loop;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.TeamPool;
+import com.softwaremagico.ktg.tournament.TGroup;
+import com.softwaremagico.ktg.tournament.simple.SimpleTournament;
 
 import java.sql.SQLException;
 
@@ -11,7 +13,7 @@ import java.sql.SQLException;
  */
 public class LoopTournamentManager extends SimpleTournament {
 
-    protected LoopTournamentManager(Tournament tournament) {
+    public LoopTournamentManager(Tournament tournament) {
         super(tournament);
     }
 

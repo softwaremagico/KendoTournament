@@ -1,4 +1,4 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.championship.custom;
 
 /*
  * #%L
@@ -27,6 +27,10 @@ package com.softwaremagico.ktg.tournament;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
+import com.softwaremagico.ktg.tournament.CustomWinnerLink;
+import com.softwaremagico.ktg.tournament.LeagueLevelChampionship;
+import com.softwaremagico.ktg.tournament.TGroup;
+import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
 
 import java.io.Serializable;
 import java.sql.SQLException;

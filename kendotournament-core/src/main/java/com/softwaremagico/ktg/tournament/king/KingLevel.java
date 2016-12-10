@@ -1,8 +1,8 @@
 package com.softwaremagico.ktg.tournament.king;
 
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.LeagueLevel;
 import com.softwaremagico.ktg.tournament.TGroup;
+import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
 
 public class KingLevel extends LeagueLevel {
 	private static final long serialVersionUID = -1706037125819985383L;

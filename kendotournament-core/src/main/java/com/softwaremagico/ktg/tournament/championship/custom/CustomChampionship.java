@@ -1,8 +1,11 @@
-package com.softwaremagico.ktg.tournament;
+package com.softwaremagico.ktg.tournament.championship.custom;
 
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
+import com.softwaremagico.ktg.tournament.CustomWinnerLink;
+import com.softwaremagico.ktg.tournament.TGroup;
+import com.softwaremagico.ktg.tournament.championship.Championship;
 
 import java.sql.SQLException;
 import java.util.List;
