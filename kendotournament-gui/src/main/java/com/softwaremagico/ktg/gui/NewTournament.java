@@ -296,7 +296,7 @@ public class NewTournament extends KendoFrame {
 			}
 		});
 
-		NumCompetitorsSpinner.setModel(new javax.swing.SpinnerNumberModel(3, 1, 7, 2));
+		NumCompetitorsSpinner.setModel(new javax.swing.SpinnerNumberModel(3, 1, 13, 1));
 		NumCompetitorsSpinner.setValue(3);
 		NumCompetitorsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
 			public void stateChanged(javax.swing.event.ChangeEvent evt) {
