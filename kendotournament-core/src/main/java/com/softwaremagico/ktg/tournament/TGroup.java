@@ -167,7 +167,17 @@ public abstract class TGroup {
 		return fightsG;
 	}
 
-	public abstract List<Fight> createFights(boolean random);
+	/**
+	 * Create fights for this group depending on the tournament type and the
+	 * assigned teams.
+	 * 
+	 * @param maximizeFights
+	 *            Create maxim number of fights.
+	 * @param random
+	 *            Do not sort teams by name.
+	 * @return
+	 */
+	public abstract List<Fight> createFights(boolean maximizeFights, boolean random);
 
 	public boolean areFightsOver(List<Fight> allFights) {
 		List<Fight> fights = getFightsOfGroup(allFights);
@@ -178,6 +188,10 @@ public abstract class TGroup {
 					return false;
 				}
 			}
+			return true;
+		}
+		// Only one team. Cannot have fights. Is over always.
+		if (getTeams() != null && getTeams().size() == 1) {
 			return true;
 		}
 		return false;
@@ -235,8 +249,7 @@ public abstract class TGroup {
 
 	@Override
 	public String toString() {
-		return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + getIndex() + ", fight area: "
-				+ fightArea + ", teams " + teams + "\n";
+		return "(" + tournament + ") Group in level: " + level + ", GroupIndex: " + getIndex() + ", fight area: " + fightArea + ", teams " + teams + "\n";
 	}
 
 	/**
@@ -289,4 +302,95 @@ public abstract class TGroup {
 		}
 		resetFights();
 	}
+
+	/**
+	 * Create a list of fights where all teams fight versus all others.
+	 * 
+	 * @param tournament
+	 * @param teams
+	 * @param fightArea
+	 * @param level
+	 * @param index
+	 * @param random
+	 * @return
+	 */
+	protected static List<Fight> createCompleteFightList(Tournament tournament, List<Team> teams, int fightArea, int level, int index, boolean random) {
+		if (teams == null || tournament == null || teams.size() < 2) {
+			return null;
+		}
+		List<Fight> fights = new ArrayList<>();
+		TeamSelector remainingFights = new TeamSelector(teams);
+
+		Team team1 = remainingFights.getTeamWithMoreAdversaries(random);
+		Fight fight, lastFight = null;
+		while (remainingFights.remainFights()) {
+			Team team2 = remainingFights.getNextAdversary(team1, random);
+			// Team1 has no more adversaries. Use another one.
+			if (team2 == null) {
+				team1 = remainingFights.getTeamWithMoreAdversaries(random);
+				continue;
+			}
+			// Remaining fights sometimes repeat team. Align them.
+			if (lastFight != null && (lastFight.getTeam1().equals(team2) || lastFight.getTeam2().equals(team1))) {
+				fight = new Fight(tournament, team2, team1, fightArea, level, index, fights.size());
+			} else if (lastFight != null && (lastFight.getTeam1().equals(team1) || lastFight.getTeam2().equals(team2))) {
+				fight = new Fight(tournament, team1, team2, fightArea, level, index, fights.size());
+			} else if (fights.size() % 2 == 0) {
+				fight = new Fight(tournament, team1, team2, fightArea, level, index, fights.size());
+			} else {
+				fight = new Fight(tournament, team2, team1, fightArea, level, index, fights.size());
+			}
+			// Force the creation of duels for more than one fight area. If not,
+			// multiple computers generates different duels.
+			if (tournament.isUsingMultipleComputers() && tournament.getFightingAreas() > 1) {
+				fight.getDuels();
+			}
+			fights.add(fight);
+			lastFight = fight;
+			remainingFights.removeAdveresary(team1, team2);
+			team1 = team2;
+		}
+		return fights;
+	}
+
+	/**
+	 * All teams fights agains the next and previous team of the list.
+	 * 
+	 * @param tournament
+	 * @param teams
+	 * @param fightArea
+	 * @param level
+	 * @param index
+	 * @param random
+	 * @return
+	 */
+	protected static List<Fight> createTwoFightsForEachTeam(Tournament tournament, List<Team> teams, int fightArea, int level, int index) {
+		if (teams == null || tournament == null || teams.size() < 2) {
+			return null;
+		}
+		List<Fight> fights = new ArrayList<>();
+
+		// If only exists two teams, there are only one fight. If no, as many
+		// fights as teams
+		for (int i = 0; i < (teams.size() > 2 ? teams.size() : 1); i++) {
+			Fight fight;
+			Team team1 = teams.get(i);
+			Team team2 = teams.get((i + 1) % teams.size());
+
+			if (fights.size() % 2 == 0) {
+				fight = new Fight(tournament, team1, team2, fightArea, level, index, fights.size());
+			} else {
+				fight = new Fight(tournament, team2, team1, fightArea, level, index, fights.size());
+			}
+			// Force the creation of duels for more than one fight area. If not,
+			// multiple computers
+			// generates different duels.
+			if (tournament.isUsingMultipleComputers() && tournament.getFightingAreas() > 1) {
+				fight.getDuels();
+			}
+			fights.add(fight);
+		}
+		return fights;
+	}
+
 }

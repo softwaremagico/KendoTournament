@@ -36,13 +36,9 @@ public class ChampionshipTreeTest {
 	@Test(dependsOnMethods = { "addTournament" })
 	public void addRoles() throws SQLException {
 		for (RegisteredPerson competitor : RegisteredPersonPool.getInstance().getAll()) {
-			RolePool.getInstance().add(
-					tournament,
-					new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false,
-							false));
+			RolePool.getInstance().add(tournament, new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false, false));
 		}
-		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length
-				* PopulateDatabase.competitors.length);
+		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length * PopulateDatabase.competitors.length);
 	}
 
 	@Test(dependsOnMethods = { "addRoles" })
@@ -70,9 +66,7 @@ public class ChampionshipTreeTest {
 				team = null;
 			}
 		}
-		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance()
-				.getCompetitors(tournament).size()
-				/ MEMBERS);
+		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
 	}
 
 	@Test(dependsOnMethods = { "addTeams" })
@@ -95,7 +89,7 @@ public class ChampionshipTreeTest {
 
 	@Test(dependsOnMethods = { "createTournamentGroups" })
 	public void createFights() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
 	}
 
@@ -124,7 +118,7 @@ public class ChampionshipTreeTest {
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
 	public void solveSecondLevel() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 1));
 
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0);

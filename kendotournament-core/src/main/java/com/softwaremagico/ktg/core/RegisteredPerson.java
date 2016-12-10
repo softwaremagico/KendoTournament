@@ -134,8 +134,7 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 
 		float rateSurname = (name.length() + getShortSurname(20).length()) / (float) surname.length();
 		float rateName = (name.length() + getShortSurname(20).length()) / (float) name.length();
-		String ret = getShortSurname((int) (maxLength / rateSurname)).trim() + ", "
-				+ getShortName((int) (maxLength / rateName));
+		String ret = getShortSurname((int) (maxLength / rateSurname)).trim() + ", " + getShortName((int) (maxLength / rateName));
 		return ret.trim();
 	}
 
@@ -294,6 +293,7 @@ public class RegisteredPerson implements Comparable<RegisteredPerson> {
 		String string1 = this.surname + " " + this.name;
 		String string2 = otherParticipant.surname + " " + otherParticipant.name;
 
+		// Ignore accents
 		Collator collator = Collator.getInstance(new Locale("es"));
 		collator.setStrength(Collator.SECONDARY);
 		collator.setDecomposition(Collator.FULL_DECOMPOSITION);

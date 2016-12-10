@@ -23,7 +23,8 @@ import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.TreeTournamentGroup;
 
 /**
- * Comp1clb1 will do all points, Comp2clb7 do nothing. Both comeptitors will change the order during the test.
+ * Comp1clb1 will do all points, Comp2clb7 do nothing. Both comeptitors will
+ * change the order during the test.
  */
 @Test(groups = { "changeMemberOrderTest" }, dependsOnGroups = { "populateDatabase" })
 public class ChangeMemberOrderTest {
@@ -47,13 +48,9 @@ public class ChangeMemberOrderTest {
 	@Test(dependsOnMethods = { "addTournament" })
 	public void addRoles() throws SQLException {
 		for (RegisteredPerson competitor : RegisteredPersonPool.getInstance().getAll()) {
-			RolePool.getInstance().add(
-					tournament,
-					new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false,
-							false));
+			RolePool.getInstance().add(tournament, new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false, false));
 		}
-		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length
-				* PopulateDatabase.competitors.length);
+		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length * PopulateDatabase.competitors.length);
 	}
 
 	@Test(dependsOnMethods = { "addRoles" })
@@ -81,9 +78,7 @@ public class ChangeMemberOrderTest {
 				team = null;
 			}
 		}
-		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance()
-				.getCompetitors(tournament).size()
-				/ MEMBERS);
+		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
 	}
 
 	@Test(dependsOnMethods = { "addTeams" })
@@ -107,7 +102,7 @@ public class ChangeMemberOrderTest {
 
 	@Test(dependsOnMethods = { "createTournamentGroups" })
 	public void createFights() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(0));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == GROUPS * TEAMS_PER_GROUP);
 	}
 
@@ -145,10 +140,8 @@ public class ChangeMemberOrderTest {
 
 		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb7
 		// will do nothing)
-		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITH_SCORE));
-		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITHOUT_SCORE));
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITHOUT_SCORE));
 		Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
 		Assert.assertTrue(scoreCompWinner.getHits() == 2);
 		Assert.assertTrue(scoreCompLooser.getDuelsWon() == 0);
@@ -157,7 +150,7 @@ public class ChangeMemberOrderTest {
 
 	@Test(dependsOnMethods = { "solveFirstLevel" })
 	public void solveSecondLevel() throws SQLException, TeamMemberOrderException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(1));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 1));
 
 		// Change member order.
 		Integer fightIndex = FightPool.getInstance().getCurrentFightIndex(tournament);
@@ -165,18 +158,14 @@ public class ChangeMemberOrderTest {
 			fightIndex = FightPool.getInstance().get(tournament).size() - 1;
 		}
 
-		RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01")
-				.exchangeMembersOrder(0, 2, fightIndex);
-		RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05")
-				.exchangeMembersOrder(2, 0, fightIndex);
+		RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(0, 2, fightIndex);
+		RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(2, 0, fightIndex);
 
 		// Ensure that the changed competitors are the desired one.
 		Assert.assertTrue(moved1.getId().equals(COMPETITOR_WITH_SCORE));
-		Assert.assertTrue(TeamPool.getInstance().get(tournament, "Team01").getMember(2, fightIndex).getId()
-				.equals(COMPETITOR_WITH_SCORE));
+		Assert.assertTrue(TeamPool.getInstance().get(tournament, "Team01").getMember(2, fightIndex).getId().equals(COMPETITOR_WITH_SCORE));
 		Assert.assertTrue(moved2.getId().equals(COMPETITOR_WITHOUT_SCORE));
-		Assert.assertTrue(TeamPool.getInstance().get(tournament, "Team05").getMember(0, fightIndex).getId()
-				.equals(COMPETITOR_WITHOUT_SCORE));
+		Assert.assertTrue(TeamPool.getInstance().get(tournament, "Team05").getMember(0, fightIndex).getId().equals(COMPETITOR_WITHOUT_SCORE));
 
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(1).getGroups().get(0);
@@ -208,10 +197,8 @@ public class ChangeMemberOrderTest {
 
 		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
 		// will do nothing)
-		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITH_SCORE));
-		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITHOUT_SCORE));
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking2.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITHOUT_SCORE));
 		Assert.assertTrue(scoreCompWinner.getFightsWon() == 1);
 		Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
 		Assert.assertTrue(scoreCompWinner.getHits() == 2);
@@ -222,7 +209,7 @@ public class ChangeMemberOrderTest {
 
 	@Test(dependsOnMethods = { "solveSecondLevel" })
 	public void solveThirdLevel() throws SQLException, PersonalizedFightsException {
-		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(2));
+		FightPool.getInstance().add(tournament, TournamentManagerFactory.getManager(tournament).createSortedFights(false, 2));
 
 		// Check teams of group.
 		TGroup group1 = TournamentManagerFactory.getManager(tournament).getLevel(2).getGroups().get(0);
@@ -234,10 +221,8 @@ public class ChangeMemberOrderTest {
 		if (fightIndex == null) {
 			fightIndex = FightPool.getInstance().get(tournament).size() - 1;
 		}
-		RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01")
-				.exchangeMembersOrder(2, 1, fightIndex);
-		RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05")
-				.exchangeMembersOrder(0, 1, fightIndex);
+		RegisteredPerson moved1 = TeamPool.getInstance().get(tournament, "Team01").exchangeMembersOrder(2, 1, fightIndex);
+		RegisteredPerson moved2 = TeamPool.getInstance().get(tournament, "Team05").exchangeMembersOrder(0, 1, fightIndex);
 
 		// Last fight.
 		Assert.assertTrue(group1.getFights().size() == 1);
@@ -265,10 +250,8 @@ public class ChangeMemberOrderTest {
 
 		// Check competitor ranking (Comp1clb1 will do all points, Comp2clb5
 		// will do nothing)
-		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITH_SCORE));
-		ScoreOfCompetitor scoreCompLooser = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITHOUT_SCORE));
+		ScoreOfCompetitor scoreCompWinner = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking1.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITHOUT_SCORE));
 		Assert.assertTrue(scoreCompWinner.getDuelsWon() == 1);
 		Assert.assertTrue(scoreCompWinner.getHits() == 2);
 		Assert.assertTrue(scoreCompLooser.getDuelsWon() == 0);
@@ -278,10 +261,8 @@ public class ChangeMemberOrderTest {
 	@Test(dependsOnMethods = { "solveThirdLevel" })
 	public void finalRanking() throws SQLException {
 		Ranking ranking = new Ranking(FightPool.getInstance().get(tournament));
-		ScoreOfCompetitor scoreCompWinner = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITH_SCORE));
-		ScoreOfCompetitor scoreCompLooser = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(
-				COMPETITOR_WITHOUT_SCORE));
+		ScoreOfCompetitor scoreCompWinner = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITH_SCORE));
+		ScoreOfCompetitor scoreCompLooser = ranking.getScoreRanking(RegisteredPersonPool.getInstance().get(COMPETITOR_WITHOUT_SCORE));
 
 		Assert.assertTrue(scoreCompWinner.getDuelsWon() == 3);
 		Assert.assertTrue(scoreCompWinner.getHits() == 6);

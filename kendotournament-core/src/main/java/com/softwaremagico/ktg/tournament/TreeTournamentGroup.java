@@ -1,6 +1,5 @@
 package com.softwaremagico.ktg.tournament;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.softwaremagico.ktg.core.Fight;
@@ -16,33 +15,12 @@ public class TreeTournamentGroup extends TGroup {
 	}
 
 	@Override
-	public List<Fight> createFights(boolean random) {
-		if (getTeams().size() < 2) {
-			return null;
+	public List<Fight> createFights(boolean maximizeFights, boolean random) {
+		if (!maximizeFights) {
+			return createTwoFightsForEachTeam(getTournament(), getTeams(), getFightArea(), getLevel(), getIndex());
+		} else {
+			return createCompleteFightList(getTournament(), getTeams(), getFightArea(), getLevel(), getIndex(), random);
 		}
-		List<Fight> fights = new ArrayList<>();
-
-		// If only exists two teams, there are only one fight. If no, as many
-		// fights as teams
-		for (int i = 0; i < (getTeams().size() > 2 ? getTeams().size() : 1); i++) {
-			Fight fight;
-			Team team1 = getTeams().get(i);
-			Team team2 = getTeams().get((i + 1) % getTeams().size());
-
-			if (fights.size() % 2 == 0) {
-				fight = new Fight(getTournament(), team1, team2, getFightArea(), getLevel(), getIndex(), fights.size());
-			} else {
-				fight = new Fight(getTournament(), team2, team1, getFightArea(), getLevel(), getIndex(), fights.size());
-			}
-			// Force the creation of duels for more than one fight area. If not,
-			// multiple computers
-			// generates different duels.
-			if (getTournament().isUsingMultipleComputers() && getTournament().getFightingAreas() > 1) {
-				fight.getDuels();
-			}
-			fights.add(fight);
-		}
-		return fights;
 	}
 
 	@Override

@@ -93,7 +93,7 @@ public class SimpleChampionshipTest {
 	@Test(dependsOnMethods = { "addTeams" })
 	public void createFights() throws SQLException, PersonalizedFightsException {
 		ITournamentManager tournamentManager = TournamentManagerFactory.getManager(tournament, TournamentType.LEAGUE);
-		FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(0));
+		FightPool.getInstance().add(tournament, tournamentManager.createSortedFights(true, 0));
 		Assert.assertTrue(FightPool.getInstance().get(tournament).size() == getNumberOfCombats(TeamPool.getInstance()
 				.get(tournament).size()));
 		// Check than teams are not crossed.

@@ -14,6 +14,7 @@
                 <include name="customScoreTest" />
                 <include name="europeanChampionshipTest" />
                 <include name="internationalChampionshipTest" />
+                <include name="championshipMaxFightsTest" />
                 <include name="changeMemberOrderTest" />  
                 <exclude name="databaseStore" />
             </run>
@@ -26,6 +27,7 @@
             <class name="com.softwaremagico.ktg.persistence.ChampionshipEvenGroupsTest" /> 
             <class name="com.softwaremagico.ktg.persistence.ChampionshipTreeTest" />
             <class name="com.softwaremagico.ktg.persistence.ChampionshipFightAreaTest" />
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipMaxFightsTest" />
             <class name="com.softwaremagico.ktg.persistence.ChangeMemberOrderTest" />
             <class name="com.softwaremagico.ktg.persistence.ScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.EuropeanScoreTest" />

@@ -829,7 +829,7 @@ public class FightPanel extends KFrame {
 
                             // Standard championship.
                             newFights = TournamentManagerFactory.getManager(getSelectedTournament())
-                                    .createSortedFights(currentFight.getLevel() + 1);
+                                    .createSortedFights(false, currentFight.getLevel() + 1);
                             if (newFights != null && newFights.size() > 0) {
                                 // Add new fights and continue.
                                 FightPool.getInstance().add(getSelectedTournament(), newFights);

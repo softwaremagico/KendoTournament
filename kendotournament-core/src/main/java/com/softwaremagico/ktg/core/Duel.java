@@ -64,13 +64,13 @@ public class Duel implements Comparable<Duel> {
     /**
      * Set a hit point to a player
      *
-     * @param playerA if true, the hit is set to the player of the first team,
+     * @param playerTeam1 if true, the hit is set to the player of the first team,
      * if false to the player of the other team.
      * @param hitNumber
      * @param score
      */
-    public void setHit(boolean playerA, Integer hitNumber, Score score) {
-        if (playerA) {
+    public void setHit(boolean playerTeam1, Integer hitNumber, Score score) {
+        if (playerTeam1) {
             hitsFromCompetitorA.set(hitNumber, score);
         } else {
             hitsFromCompetitorB.set(hitNumber, score);
