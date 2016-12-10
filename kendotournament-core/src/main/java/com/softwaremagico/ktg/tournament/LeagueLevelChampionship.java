@@ -81,7 +81,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
 		Integer winnerTeams = getNumberOfTotalTeamsPassNextRound(); // [1..N]
 		Integer winnerIndex = getGlobalPositionWinner(group, winner); // [0..N-1]
 		// If inner level or tree championship
-		if ((previousLevel != null || tournament.getHowManyTeamsOfGroupPassToTheTree() == 1)
+		if ((getPreviousLevel() != null || getTournament().getHowManyTeamsOfGroupPassToTheTree() == 1)
 				&& this.getGroups().size() % 2 == 0) {
 			return obtainPositionOfWinner(winnerIndex, winnerTeams);
 		} else {

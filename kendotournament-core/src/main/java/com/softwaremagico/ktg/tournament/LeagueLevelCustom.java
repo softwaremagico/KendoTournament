@@ -37,7 +37,8 @@ public class LeagueLevelCustom extends LeagueLevel {
 	private static final long serialVersionUID = -2577905774251254041L;
 	private Links links;
 
-	protected LeagueLevelCustom(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+	protected LeagueLevelCustom(Tournament tournament, int level, LeagueLevel nextLevel,
+			LeagueLevel previousLevel) {
 		super(tournament, level, nextLevel, previousLevel);
 		links = new Links();
 	}
@@ -111,7 +112,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
 		protected void add(TGroup from, TGroup to) {
 			if (to.getLevel() == from.getLevel() + 1) {
-				customLinks.add(new CustomWinnerLink(tournament, from, to));
+				customLinks.add(new CustomWinnerLink(getTournament(), from, to));
 				setWinnerOrder(from);
 			}
 		}
@@ -127,7 +128,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
 		/**
 		 * Update the order of winners of a source group.
-		 *
+		 * 
 		 * @param from
 		 */
 		private void setWinnerOrder(TGroup from) {
@@ -244,11 +245,11 @@ public class LeagueLevelCustom extends LeagueLevel {
 
 	public boolean allGroupsHaveCustomLink() {
 		try {
-			for (int i = 0; i < tournamentGroups.size(); i++) {
+			for (int i = 0; i < getTournamentGroups().size(); i++) {
 				boolean found = false;
 
 				for (int j = 0; j < links.size(); j++) {
-					if (links.get(j).getSourceGroup().equals(tournamentGroups.get(i))) {
+					if (links.get(j).getSourceGroup().equals(getTournamentGroups().get(i))) {
 						found = true;
 						break;
 					}
@@ -265,7 +266,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 
 	protected void removeLinksSelectedGroup(TGroup lastSelected) {
 		try {
-			CustomLinkPool.getInstance().remove(tournament, getIndexOfGroup(lastSelected));
+			CustomLinkPool.getInstance().remove(getTournament(), getIndexOfGroup(lastSelected));
 			for (int i = 0; i < links.size(); i++) {
 				if (links.get(i).getSourceGroup().equals(lastSelected)) {
 					links.remove(i);
@@ -279,8 +280,8 @@ public class LeagueLevelCustom extends LeagueLevel {
 	}
 
 	protected void removeLinks() {
-		for (int i = tournamentGroups.size() - 1; i >= 0; i--) {
-			removeLinksSelectedGroup(tournamentGroups.get(i));
+		for (int i = getTournamentGroups().size() - 1; i >= 0; i--) {
+			removeLinksSelectedGroup(getTournamentGroups().get(i));
 		}
 	}
 }

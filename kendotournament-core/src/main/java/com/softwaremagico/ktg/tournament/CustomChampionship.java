@@ -9,40 +9,40 @@ import java.util.List;
 
 public class CustomChampionship extends Championship {
 
-    @Override
-    public void fillGroups() {
-        super.fillGroups();
-        try {
-            ((LeagueLevelCustom) levelZero).setLinks(CustomLinkPool.getInstance().get(tournament));
-        } catch (SQLException ex) {
-            KendoLog.errorMessage(this.getClass().getName(), ex);
-        }
-    }
+	public CustomChampionship(Tournament tournament) {
+		super(tournament);
+		setLevelZero(new LeagueLevelCustom(tournament, 0, null, null));
+	}
 
-    public CustomChampionship(Tournament tournament) {
-        super(tournament);
-        levelZero = new LeagueLevelCustom(tournament, 0, null, null);
-    }
+	public boolean allGroupsHaveNextLink() {
+		return ((LeagueLevelCustom) getLevelZero()).allGroupsHaveCustomLink();
+	}
 
-    public boolean allGroupsHaveNextLink() {
-        return ((LeagueLevelCustom) levelZero).allGroupsHaveCustomLink();
-    }
+	public void addLink(TGroup source, TGroup address) {
+		((LeagueLevelCustom) getLevelZero()).addLink(source, address);
+	}
 
-    public void addLink(TGroup source, TGroup address) {
-        ((LeagueLevelCustom) levelZero).addLink(source, address);
-    }
+	public void removeLinks(TGroup group) {
+		// Remove links from manager.
+		((LeagueLevelCustom) getLevelZero()).removeLinksSelectedGroup(group);
+	}
 
-    public void removeLinks(TGroup group) {
-        //Remove links from manager.
-        ((LeagueLevelCustom) levelZero).removeLinksSelectedGroup(group);
-    }
+	public void removeLinks() {
+		// Remove all links from manager.
+		((LeagueLevelCustom) getLevelZero()).removeLinks();
+	}
 
-    public void removeLinks() {
-        //Remove all links from manager.
-        ((LeagueLevelCustom) levelZero).removeLinks();
-    }
+	public List<CustomWinnerLink> getLinks() {
+		return ((LeagueLevelCustom) getLevelZero()).getLinks();
+	}
 
-    public List<CustomWinnerLink> getLinks() {
-        return ((LeagueLevelCustom) levelZero).getLinks();
-    }
+	@Override
+	public void fillGroups() {
+		super.fillGroups();
+		try {
+			((LeagueLevelCustom) getLevelZero()).setLinks(CustomLinkPool.getInstance().get(getTournament()));
+		} catch (SQLException ex) {
+			KendoLog.errorMessage(this.getClass().getName(), ex);
+		}
+	}
 }

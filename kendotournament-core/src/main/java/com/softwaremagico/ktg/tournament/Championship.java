@@ -10,37 +10,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Championship implements ITournamentManager {
-
-	protected Tournament tournament;
-	protected LeagueLevel levelZero;
+public class Championship extends LevelBasedTournament {
 
 	protected Championship(Tournament tournament) {
-		setTournament(tournament);
-		levelZero = new LeagueLevelChampionship(tournament, 0, null, null);
+		super(tournament);
+		setLevelZero(new LeagueLevelChampionship(tournament, 0, null, null));
 	}
 
 	@Override
 	public void fillGroups() {
 		try {
 			// Read groups from fights.
-			List<Fight> fights = FightPool.getInstance().get(tournament);
+			List<Fight> fights = FightPool.getInstance().get(getTournament());
 			for (Fight fight : fights) {
 				LeagueLevel leagueLevel = getLevel(fight.getLevel());
 				leagueLevel.fillGroups(fight);
 				// Create duels if multiple computers to avoid repetitions.
-				if (tournament.isUsingMultipleComputers()) {
+				if (getTournament().isUsingMultipleComputers()) {
 					fight.getDuels();
 				}
 			}
 			// Fill teams of groups without fights. (i.e group with only one
 			// team).
-			LeagueLevel level = levelZero;
-			while (level.nextLevel != null) {
-				level = level.nextLevel;
+			LeagueLevel level = getLevelZero();
+			while (level.getNextLevel() != null) {
+				level = level.getNextLevel();
 				// A level with several groups, has already filled teams and one
 				// of them has no teams.
-				if (level.previousLevel.getGroups().size() % 2 == 1 && level.previousLevel.isLevelFinished()) {
+				if (level.getPreviousLevel().getGroups().size() % 2 == 1 && level.getPreviousLevel().isLevelFinished()) {
 					// Search a group without teams.
 					for (TGroup group : level.getGroups()) {
 						if (group.getTeams().isEmpty()) {
@@ -51,16 +48,6 @@ public class Championship implements ITournamentManager {
 			}
 		} catch (SQLException ex) {
 			KendoLog.errorMessage(this.getClass().getName(), ex);
-		}
-	}
-
-	@Override
-	public List<Fight> getFights(Integer level) {
-		try {
-			return FightPool.getInstance().getFromLevel(tournament, level);
-		} catch (SQLException ex) {
-			KendoLog.errorMessage(this.getClass().getName(), ex);
-			return new ArrayList<>();
 		}
 	}
 
@@ -89,20 +76,6 @@ public class Championship implements ITournamentManager {
 			}
 		}
 		return fights;
-	}
-
-	@Override
-	public List<TGroup> getGroups() {
-		List<TGroup> allGroups = new ArrayList<>();
-		for (int i = 0; i < getNumberOfLevels(); i++) {
-			allGroups.addAll(getLevel(i).getGroups());
-		}
-		return allGroups;
-	}
-
-	@Override
-	public List<TGroup> getGroups(Integer level) {
-		return getLevel(level).getGroups();
 	}
 
 	@Override
@@ -142,27 +115,16 @@ public class Championship implements ITournamentManager {
 
 	@Override
 	public LeagueLevel getLevel(Integer levelIndex) {
-		LeagueLevel leagueLevel = levelZero;
+		LeagueLevel leagueLevel = getLevelZero();
 		while (levelIndex > 0) {
 			levelIndex--;
 			try {
-				leagueLevel = leagueLevel.nextLevel;
+				leagueLevel = leagueLevel.getNextLevel();
 			} catch (NullPointerException npe) {
 				return null;
 			}
 		}
 		return leagueLevel;
-	}
-
-	@Override
-	public Integer getNumberOfLevels() {
-		Integer total = 1; // Always exist level zero.
-		LeagueLevel level = levelZero.nextLevel;
-		while (level != null) {
-			total++;
-			level = level.nextLevel;
-		}
-		return total;
 	}
 
 	@Override
@@ -178,10 +140,10 @@ public class Championship implements ITournamentManager {
 	@Override
 	public LeagueLevel getCurrentLevel() {
 		LeagueLevel prevLevel = null;
-		LeagueLevel level = levelZero;
+		LeagueLevel level = getLevelZero();
 		while (level != null && level.isLevelFinished()) {
 			prevLevel = level;
-			level = level.nextLevel;
+			level = level.getNextLevel();
 		}
 		if (level != null) {
 			return level;
@@ -224,7 +186,7 @@ public class Championship implements ITournamentManager {
 	public void removeTeams(LeagueLevel level) {
 		while (level != null) {
 			level.removeTeams();
-			level = level.nextLevel;
+			level = level.getNextLevel();
 		}
 	}
 
@@ -235,12 +197,12 @@ public class Championship implements ITournamentManager {
 
 	@Override
 	public void setHowManyTeamsOfGroupPassToTheTree(Integer winners) {
-		tournament.setHowManyTeamsOfGroupPassToTheTree(winners);
-		for (TGroup group : levelZero.getGroups()) {
+		getTournament().setHowManyTeamsOfGroupPassToTheTree(winners);
+		for (TGroup group : getLevelZero().getGroups()) {
 			group.setMaxNumberOfWinners(winners);
 		}
-		if (levelZero.nextLevel != null) {
-			levelZero.nextLevel.updateGroupsSize();
+		if (getLevelZero().getNextLevel() != null) {
+			getLevelZero().getNextLevel().updateGroupsSize();
 		}
 	}
 
@@ -264,7 +226,7 @@ public class Championship implements ITournamentManager {
 			} else {
 				// With one group is the same that a Simple Tournament.
 				try {
-					List<Fight> fights = FightPool.getInstance().get(tournament);
+					List<Fight> fights = FightPool.getInstance().get(getTournament());
 					if (fights.size() > 0) {
 						if (fights.size() == 1 || fights.get(fights.size() - 2).isOver()) {
 							return true;
@@ -286,10 +248,10 @@ public class Championship implements ITournamentManager {
 
 	@Override
 	public void removeTeams() {
-		LeagueLevel level = levelZero;
+		LeagueLevel level = getLevelZero();
 		while (level != null) {
 			removeTeams(level);
-			level = level.nextLevel;
+			level = level.getNextLevel();
 		}
 	}
 
@@ -305,42 +267,14 @@ public class Championship implements ITournamentManager {
 	}
 
 	@Override
-	public Tournament getTournament() {
-		return tournament;
-	}
-
-	@Override
-	public void setTournament(Tournament tournament) {
-		this.tournament = tournament;
-		// Update levels if exists.
-		for (LeagueLevel level : getLevels()) {
-			level.setTournament(tournament);
-		}
-	}
-
-	@Override
 	public List<LeagueLevel> getLevels() {
 		List<LeagueLevel> levels = new ArrayList<>();
-		LeagueLevel level = levelZero;
+		LeagueLevel level = getLevelZero();
 		while (level != null) {
 			levels.add(level);
-			level = level.nextLevel;
+			level = level.getNextLevel();
 		}
 		return levels;
 	}
 
-	@Override
-	public int getNumberOfFightsFinished() {
-		int i = 0;
-		try {
-			for (Fight fight : FightPool.getInstance().get(tournament)) {
-				if (fight.isOver()) {
-					i++;
-				}
-			}
-		} catch (SQLException e) {
-			return 0;
-		}
-		return i;
-	}
 }
