@@ -35,12 +35,14 @@ public enum TournamentType {
 	LOOP("loop"),
 
 	CUSTOM_CHAMPIONSHIP("custom_championship"),
+	
+	KING_OF_THE_MOUNTAIN("king_of_the_mountain"),
 
 	PERSONALIZED("personalized");
 
 	private String sqlName;
 
-	TournamentType(String sqlName) {
+	private TournamentType(String sqlName) {
 		this.sqlName = sqlName;
 	}
 
