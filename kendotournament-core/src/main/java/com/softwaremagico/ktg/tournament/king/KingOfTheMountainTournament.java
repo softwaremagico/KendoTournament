@@ -19,15 +19,11 @@ import com.softwaremagico.ktg.tournament.TGroup;
 public class KingOfTheMountainTournament extends LevelBasedTournament {
 	private List<Team> redTeams;
 	private List<Team> whiteTeams;
-	private ListIterator<Team> redTeam;
-	private ListIterator<Team> whiteTeam;
 
 	public KingOfTheMountainTournament(Tournament tournament) {
 		super(tournament);
 		redTeams = new ArrayList<>();
-		redTeam = redTeams.listIterator();
 		whiteTeams = new ArrayList<>();
-		whiteTeam = whiteTeams.listIterator();
 	}
 
 	@Override
@@ -66,18 +62,16 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 
 	@Override
 	public boolean isTheLastFight() {
-		return !redTeam.hasNext() || !whiteTeam.hasNext();
+		return isInLastGroup();
 	}
 
 	public void setRedTeams(List<Team> redTeams) {
 		this.redTeams = redTeams;
-		redTeam = redTeams.listIterator();
 		initializeLevelZero();
 	}
 
 	public void setWhiteTeams(List<Team> whiteTeams) {
 		this.whiteTeams = whiteTeams;
-		whiteTeam = whiteTeams.listIterator();
 		initializeLevelZero();
 	}
 
@@ -91,11 +85,19 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 
 	private void initializeLevelZero() {
 		if (!redTeams.isEmpty() && !whiteTeams.isEmpty()) {
-			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeam, whiteTeam));
+			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeams.listIterator(), whiteTeams.listIterator()));
 		}
 	}
 
 	private boolean needsNewLevel() {
+		KingLevel lastLevel = (KingLevel) getLastLevel();
+		if (lastLevel != null && !lastLevel.getGroups().isEmpty()) {
+			return !isInLastGroup();
+		}
+		return false;
+	}
+
+	private boolean isInLastGroup() {
 		KingLevel lastLevel = (KingLevel) getLastLevel();
 		if (lastLevel != null && !lastLevel.getGroups().isEmpty()) {
 			KingGroup group = (KingGroup) lastLevel.getGroups().get(0);
@@ -104,11 +106,11 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 				// is Red.
 				if (winnerTeam.equals(lastLevel.getCurrentRedTeam())) {
 					// Not the last white member.
-					return !whiteTeams.get(whiteTeams.size() - 1).equals(lastLevel.getCurrentWhiteTeam());
+					return whiteTeams.get(whiteTeams.size() - 1).equals(lastLevel.getCurrentWhiteTeam());
 				} else
 				// is White
 				if (winnerTeam.equals(lastLevel.getCurrentWhiteTeam())) {
-					return !redTeams.get(redTeams.size() - 1).equals(lastLevel.getCurrentRedTeam());
+					return redTeams.get(redTeams.size() - 1).equals(lastLevel.getCurrentRedTeam());
 				}
 			}
 		}
