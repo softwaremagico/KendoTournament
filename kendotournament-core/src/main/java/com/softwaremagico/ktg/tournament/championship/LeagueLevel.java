@@ -40,8 +40,7 @@ public abstract class LeagueLevel extends Level {
 
 	public void fillGroups(Fight fight) {
 		while (fight.getGroup() >= getGroups().size()) {
-			addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(),
-					fight.getAsignedFightArea()));
+			addGroup(new TreeTournamentGroup(fight.getTournament(), fight.getLevel(), fight.getAsignedFightArea()));
 		}
 		TGroup group = getGroups().get(fight.getGroup());
 		group.addFight(fight);
@@ -76,6 +75,7 @@ public abstract class LeagueLevel extends Level {
 		return arenas.size();
 	}
 
+	@Override
 	public void update() {
 		fillTeamsWithWinnersPreviousLevel();
 	}
@@ -89,8 +89,7 @@ public abstract class LeagueLevel extends Level {
 				for (TGroup previousLevelGroup : getPreviousLevel().getGroups()) {
 					// Add winners only if created
 					if (winner < previousLevelGroup.getWinners().size()) {
-						TGroup group = getPreviousLevel().getGroupDestinationOfWinner(previousLevelGroup,
-								winner);
+						TGroup group = getPreviousLevel().getGroupDestinationOfWinner(previousLevelGroup, winner);
 						group.addTeam(previousLevelGroup.getWinners().get(winner));
 					}
 				}
@@ -98,14 +97,7 @@ public abstract class LeagueLevel extends Level {
 		}
 	}
 
-	public boolean hasFightsAssigned() {
-		for (TGroup group : getTournamentGroups()) {
-			if (group.getFights() == null || group.getFights().isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
+
 
 	/**
 	 ********************************************* 
@@ -117,23 +109,22 @@ public abstract class LeagueLevel extends Level {
 	/**
 	 * Update the number of groups according of the size of the previous level.
 	 */
+	@Override
 	public void updateGroupsSize() {
-		while ((getPreviousLevel() != null)
-				&& ((getPreviousLevel().getNumberOfTotalTeamsPassNextRound() + 1) / 2 > this.size())) {
+		while ((getPreviousLevel() != null) && ((getPreviousLevel().getNumberOfTotalTeamsPassNextRound() + 1) / 2 > this.size())) {
 			addGroup(new TreeTournamentGroup(getTournament(), getLevelIndex(), 0));
 		}
 
 		// When we remove two groups in one level, we must remove one in the
 		// next one.
 		while ((getPreviousLevel() != null)
-				&& (Math.ceil((float) getPreviousLevel().getNumberOfTotalTeamsPassNextRound() / 2) < this
-						.size())) {
+				&& (Math.ceil((float) getPreviousLevel().getNumberOfTotalTeamsPassNextRound() / 2) < this.size())) {
 			removeGroup();
 		}
 
 		updateArenaOfGroups();
 
-		// If only one group. It is laslevel
+		// If only one group. It is lastlevel
 		if (getTournamentGroups().size() < 2) {
 			setNextLevel(null);
 		}
@@ -143,28 +134,17 @@ public abstract class LeagueLevel extends Level {
 		}
 	}
 
-	protected abstract LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
-			LeagueLevel previousLevel);
+	@Override
+	public void addGroup(TGroup group) {
+		super.addGroup(group);
 
-	/**
-	 * Return a new getNextLevel() if has been created.
-	 * 
-	 * @param group
-	 * @return
-	 */
-	public LeagueLevel addGroup(TGroup group) {
-		getTournamentGroups().add(group);
-
-		if ((getNextLevel() == null)
-				&& ((getNumberOfTotalTeamsPassNextRound() > 1) || getTournamentGroups().size() > 1)) {
-			setNextLevel(addNewLevel(getTournament(), getLevelIndex() + 1, null, this));
+		if ((getNextLevel() == null) && ((getNumberOfTotalTeamsPassNextRound() > 1) || getTournamentGroups().size() > 1)) {
+			setNextLevel(createNewLevel(getTournament(), getLevelIndex() + 1, null, this));
 		}
 
 		if (getNextLevel() != null) {
 			getNextLevel().updateGroupsSize();
 		}
-
-		return getNextLevel();
 	}
 
 	/**
@@ -183,23 +163,6 @@ public abstract class LeagueLevel extends Level {
 			}
 		}
 		return false;
-	}
-
-	public void removeGroup(TGroup group) {
-		if (getTournamentGroups().size() > 0) {
-			getTournamentGroups().remove(group);
-			if (getNextLevel() != null) {
-				getNextLevel().updateGroupsSize();
-				if (getNextLevel().size() == 0) {
-					setNextLevel(null);
-				}
-			}
-		}
-	}
-
-	public void removeGroups() {
-		setTournamentGroups(new ArrayList<TGroup>());
-		setNextLevel(null);
 	}
 
 	/**
@@ -235,17 +198,10 @@ public abstract class LeagueLevel extends Level {
 		}
 	}
 
-	public abstract Integer getGroupIndexDestinationOfWinner(TGroup group, Integer winner);
-
-	public TGroup getGroupDestinationOfWinner(TGroup group, Integer winner) {
-		return getNextLevel().getGroups().get(getGroupIndexDestinationOfWinner(group, winner));
-	}
-
 	protected Integer getGroupIndexSourceOfWinner(TGroup group, Integer winner) {
 		if (getLevelIndex() > 0) {
 			for (int groupIndex = 0; groupIndex < getPreviousLevel().getGroups().size(); groupIndex++) {
-				if (getPreviousLevel().getGroupDestinationOfWinner(
-						getPreviousLevel().getGroups().get(groupIndex), winner).equals(group)) {
+				if (getPreviousLevel().getGroupDestinationOfWinner(getPreviousLevel().getGroups().get(groupIndex), winner).equals(group)) {
 					return groupIndex;
 				}
 			}

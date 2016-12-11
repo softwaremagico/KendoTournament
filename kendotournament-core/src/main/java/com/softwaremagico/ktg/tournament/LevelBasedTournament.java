@@ -12,18 +12,18 @@ import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
 
 public abstract class LevelBasedTournament implements ITournamentManager {
-	private LeagueLevel levelZero;
+	private Level levelZero;
 	private Tournament tournament;
 
 	protected LevelBasedTournament(Tournament tournament) {
 		setTournament(tournament);
 	}
 
-	public void setLevelZero(LeagueLevel levelZero) {
+	public void setLevelZero(Level levelZero) {
 		this.levelZero = levelZero;
 	}
 
-	public LeagueLevel getLevelZero() {
+	public Level getLevelZero() {
 		return levelZero;
 	}
 
@@ -69,7 +69,7 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	@Override
 	public Integer getNumberOfLevels() {
 		Integer total = 1; // Always exist level zero.
-		LeagueLevel level = getLevelZero().getNextLevel();
+		Level level = getLevelZero().getNextLevel();
 		while (level != null) {
 			total++;
 			level = level.getNextLevel();
@@ -86,14 +86,14 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	public void setTournament(Tournament tournament) {
 		this.tournament = tournament;
 		// Update levels if exists.
-		for (LeagueLevel level : getLevels()) {
+		for (Level level : getLevels()) {
 			level.setTournament(tournament);
 		}
 	}
 
 	@Override
 	public void removeTeams() {
-		LeagueLevel level = getLevelZero();
+		Level level = getLevelZero();
 		while (level != null) {
 			removeTeams(level);
 			level = level.getNextLevel();
@@ -107,7 +107,7 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 		}
 	}
 
-	public void removeTeams(LeagueLevel level) {
+	public void removeTeams(Level level) {
 		while (level != null) {
 			level.removeTeams();
 			level = level.getNextLevel();
@@ -138,9 +138,9 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	}
 
 	@Override
-	public List<LeagueLevel> getLevels() {
-		List<LeagueLevel> levels = new ArrayList<>();
-		LeagueLevel level = getLevelZero();
+	public List<Level> getLevels() {
+		List<Level> levels = new ArrayList<>();
+		Level level = getLevelZero();
 		while (level != null) {
 			levels.add(level);
 			level = level.getNextLevel();
@@ -162,9 +162,9 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	}
 
 	@Override
-	public LeagueLevel getCurrentLevel() {
-		LeagueLevel prevLevel = null;
-		LeagueLevel level = getLevelZero();
+	public Level getCurrentLevel() {
+		Level prevLevel = null;
+		Level level = getLevelZero();
 		while (level != null && level.isLevelFinished()) {
 			prevLevel = level;
 			level = level.getNextLevel();
@@ -207,8 +207,8 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	}
 
 	@Override
-	public LeagueLevel getLevel(Integer levelIndex) {
-		LeagueLevel leagueLevel = getLevelZero();
+	public Level getLevel(Integer levelIndex) {
+		Level leagueLevel = getLevelZero();
 		while (levelIndex > 0) {
 			levelIndex--;
 			try {
@@ -236,7 +236,7 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 			// Read groups from fights.
 			List<Fight> fights = FightPool.getInstance().get(getTournament());
 			for (Fight fight : fights) {
-				LeagueLevel leagueLevel = getLevel(fight.getLevel());
+				LeagueLevel leagueLevel = (LeagueLevel) getLevel(fight.getLevel());
 				leagueLevel.fillGroups(fight);
 				// Create duels if multiple computers to avoid repetitions.
 				if (getTournament().isUsingMultipleComputers()) {
@@ -245,7 +245,7 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 			}
 			// Fill teams of groups without fights. (i.e group with only one
 			// team).
-			LeagueLevel level = getLevelZero();
+			Level level = getLevelZero();
 			while (level.getNextLevel() != null) {
 				level = level.getNextLevel();
 				// A level with several groups, has already filled teams and one

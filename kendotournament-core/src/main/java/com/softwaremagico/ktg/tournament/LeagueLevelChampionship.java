@@ -39,7 +39,7 @@ public class LeagueLevelChampionship extends LeagueLevel {
 	}
 
 	@Override
-	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
+	protected LeagueLevel createNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
 			LeagueLevel previousLevel) {
 		return new LeagueLevelChampionship(tournament, level, nextLevel, previousLevel);
 	}

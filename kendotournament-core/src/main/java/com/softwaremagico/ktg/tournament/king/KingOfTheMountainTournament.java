@@ -2,6 +2,7 @@ package com.softwaremagico.ktg.tournament.king;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
@@ -17,20 +18,15 @@ import com.softwaremagico.ktg.tournament.TGroup;
 public class KingOfTheMountainTournament extends LevelBasedTournament {
 	private List<Team> redTeams;
 	private List<Team> whiteTeams;
+	private ListIterator<Team> redTeam;
+	private ListIterator<Team> whiteTeam;
 
-	protected KingOfTheMountainTournament(Tournament tournament) {
+	public KingOfTheMountainTournament(Tournament tournament) {
 		super(tournament);
 		redTeams = new ArrayList<>();
+		redTeam = redTeams.listIterator();
 		whiteTeams = new ArrayList<>();
-		setLevelZero(new KingLevel(tournament, 0, null, null));
-	}
-
-	private Team getNextRedTeam() {
-		return redTeams.get(0);
-	}
-
-	private Team getNextWhiteTeam() {
-		return whiteTeams.get(0);
+		whiteTeam = whiteTeams.listIterator();
 	}
 
 	@Override
@@ -69,7 +65,35 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 
 	@Override
 	public boolean isTheLastFight() {
-		return redTeams.isEmpty() || whiteTeams.isEmpty();
+		return !redTeam.hasNext() || !whiteTeam.hasNext();
+	}
+
+	public void setRedTeams(List<Team> redTeams) {
+		this.redTeams = redTeams;
+		redTeam = redTeams.listIterator();
+		initializeLevelZero();
+	}
+
+	public void setWhiteTeams(List<Team> whiteTeams) {
+		this.whiteTeams = whiteTeams;
+		whiteTeam = whiteTeams.listIterator();
+		initializeLevelZero();
+	}
+
+	public List<Team> getRedTeams() {
+		return redTeams;
+	}
+
+	public List<Team> getWhiteTeams() {
+		return whiteTeams;
+	}
+
+	private void initializeLevelZero() {
+		if (!redTeams.isEmpty() && !whiteTeams.isEmpty()) {
+			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeam, whiteTeam));
+			// Create group of level.
+			getLevel(0).update();
+		}
 	}
 
 }

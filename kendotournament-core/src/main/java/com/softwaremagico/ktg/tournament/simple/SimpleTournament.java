@@ -11,6 +11,7 @@ import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.tournament.ITournamentManager;
+import com.softwaremagico.ktg.tournament.Level;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
@@ -242,7 +243,7 @@ public class SimpleTournament implements ITournamentManager {
 	}
 
 	@Override
-	public List<LeagueLevel> getLevels() {
+	public List<Level> getLevels() {
 		return new ArrayList<>();
 	}
 

@@ -4,18 +4,19 @@
         <groups>
             <run>
                 <include name="populateDatabase" />
-                <include name="championshipTest" />
-                <include name="customChampionshipTest" />
-                <include name="simpleChampionshipTest" />  
-                <include name="evenGroupsChampionshipTest" />    
-                <include name="championshipTreeTest" />                
-                <include name="championshipFightAreaTest" />                                          
-                <include name="scoreTest" />
-                <include name="customScoreTest" />
-                <include name="europeanChampionshipTest" />
-                <include name="internationalChampionshipTest" />
-                <include name="championshipMaxFightsTest" />
-                <include name="changeMemberOrderTest" />  
+                <exclude name="championshipTest" />
+                <exclude name="customChampionshipTest" />
+                <exclude name="simpleChampionshipTest" />  
+                <exclude name="evenGroupsChampionshipTest" />    
+                <exclude name="championshipTreeTest" />                
+                <exclude name="championshipFightAreaTest" />                                          
+                <exclude name="scoreTest" />
+                <exclude name="customScoreTest" />
+                <exclude name="europeanChampionshipTest" />
+                <exclude name="internationalChampionshipTest" />
+                <exclude name="championshipMaxFightsTest" />
+                <exclude name="changeMemberOrderTest" />
+                <include name="kingOfTheMountain" />  
                 <exclude name="databaseStore" />
             </run>
         </groups>
@@ -34,6 +35,7 @@
             <class name="com.softwaremagico.ktg.persistence.InternationalScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.CustomScoreTest" />
             <class name="com.softwaremagico.ktg.persistence.DatabaseStore" />
+            <class name="com.softwaremagico.ktg.persistence.KingOfTheMountainTest" />
         </classes>
     </test>
 </suite>

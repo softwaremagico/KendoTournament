@@ -105,7 +105,8 @@ public class BlogExporter {
 					List<String> columns = new ArrayList<>();
 
 					columns.add(competitor.getSurnameName());
-					columns.add(RolePool.getInstance().getRoleTags().getTranslation(RolePool.getInstance().getRole(tournament, competitor).getDatabaseTag()));
+					columns.add(RolePool.getInstance().getRoleTags()
+							.getTranslation(RolePool.getInstance().getRole(tournament, competitor).getDatabaseTag()));
 
 					rows.add(columns);
 				}
@@ -141,15 +142,16 @@ public class BlogExporter {
 				for (int i = 0; i < groups.size(); i++) {
 					if (groups.size() > 1) {
 						stringBuilder.append("<h4>" + trans.getTranslatedText("GroupString") + " " + (i + 1) + " ("
-								+ trans.getTranslatedText("FightAreaNoDots") + " " + Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")"
-								+ "</h4>\n");
+								+ trans.getTranslatedText("FightAreaNoDots") + " "
+								+ Tournament.getFightAreaName(groups.get(i).getFightArea()) + ")" + "</h4>\n");
 					}
 					// For each fight
 					for (Fight fight : fights) {
 						List<List<String>> rows = new ArrayList<>();
 						if (groups.get(i).isFightOfGroup(fight)) {
 							if (tournament.getTeamSize() > 1) {
-								stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName() + "</h5>\n");
+								stringBuilder.append(NEW_LINE + "<h5>" + fight.getTeam1().getName() + " - " + fight.getTeam2().getName()
+										+ "</h5>\n");
 							}
 							// Create for each competitor
 

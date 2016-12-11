@@ -28,7 +28,6 @@ import java.util.List;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
 
 public interface ITournamentManager {
 
@@ -68,7 +67,7 @@ public interface ITournamentManager {
 
 	int getIndex(Integer level, TGroup group);
 
-	LeagueLevel getLevel(Integer level);
+	Level getLevel(Integer level);
 
 	Integer getNumberOfLevels();
 
@@ -104,13 +103,13 @@ public interface ITournamentManager {
 	 * 
 	 * @return
 	 */
-	LeagueLevel getCurrentLevel();
+	Level getCurrentLevel();
 
 	Tournament getTournament();
 
 	void setTournament(Tournament tournament);
 
-	List<LeagueLevel> getLevels();
+	List<Level> getLevels();
 
 	/**
 	 * Unset the winners of the selected level.

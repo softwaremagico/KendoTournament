@@ -8,6 +8,7 @@ import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.championship.Championship;
 import com.softwaremagico.ktg.tournament.championship.custom.CustomChampionship;
+import com.softwaremagico.ktg.tournament.king.KingOfTheMountainTournament;
 import com.softwaremagico.ktg.tournament.loop.LoopTournamentManager;
 import com.softwaremagico.ktg.tournament.simple.SimpleTournament;
 
@@ -76,11 +77,12 @@ public class TournamentManagerFactory {
 	}
 
 	private static ITournamentManager createManager(Tournament tournament, TournamentType type) {
-		ITournamentManager manager;
+		ITournamentManager manager = null;
 		switch (type) {
 		case LOOP:
 			manager = new LoopTournamentManager(tournament);
 			break;
+		case TREE:
 		case CHAMPIONSHIP:
 			manager = new Championship(tournament);
 			manager.fillGroups();
@@ -93,8 +95,10 @@ public class TournamentManagerFactory {
 			manager = new PersonalizedTournament(tournament);
 			break;
 		case LEAGUE:
-		default:
 			manager = new SimpleTournament(tournament);
+			break;
+		case KING_OF_THE_MOUNTAIN:
+			manager = new KingOfTheMountainTournament(tournament);
 			break;
 		}
 		return manager;

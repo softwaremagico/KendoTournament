@@ -70,7 +70,7 @@ public class LeagueLevelCustom extends LeagueLevel {
 	}
 
 	@Override
-	protected LeagueLevel addNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
+	protected LeagueLevel createNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel,
 			LeagueLevel previousLevel) {
 		// Only first level is particular.
 		if (level > 0) {
