@@ -65,6 +65,13 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		return isInLastGroup();
 	}
 
+	public Team getWinner() {
+		if (isInLastGroup()) {
+			return getLastLevel().getGroups().get(0).getWinners().get(0);
+		}
+		return null;
+	}
+
 	public void setRedTeams(List<Team> redTeams) {
 		this.redTeams = redTeams;
 		initializeLevelZero();
@@ -139,4 +146,5 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 			throw new TournamentFinishedException("All teams has been discualified");
 		}
 	}
+
 }
