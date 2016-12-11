@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.tournament;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -117,4 +118,6 @@ public interface ITournamentManager {
 	 * @param level
 	 */
 	void removeWinners(Integer level);
+
+	Level getLastLevel();
 }

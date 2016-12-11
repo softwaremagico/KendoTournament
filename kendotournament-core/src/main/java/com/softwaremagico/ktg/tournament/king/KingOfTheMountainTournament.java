@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.Level;
 import com.softwaremagico.ktg.tournament.LevelBasedTournament;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
@@ -91,9 +92,36 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	private void initializeLevelZero() {
 		if (!redTeams.isEmpty() && !whiteTeams.isEmpty()) {
 			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeam, whiteTeam));
-			// Create group of level.
-			getLevel(0).update();
 		}
 	}
 
+	private boolean needsNewLevel() {
+		KingLevel lastLevel = (KingLevel) getLastLevel();
+		if (lastLevel != null && !lastLevel.getGroups().isEmpty()) {
+			KingGroup group = (KingGroup) lastLevel.getGroups().get(0);
+			if (!group.getWinners().isEmpty()) {
+				Team winnerTeam = lastLevel.getGroups().get(0).getWinners().get(0);
+				// is Red.
+				if (winnerTeam.equals(lastLevel.getCurrentRedTeam())) {
+					// Not the last white member.
+					return !whiteTeams.get(whiteTeams.size() - 1).equals(lastLevel.getCurrentWhiteTeam());
+				} else
+				// is White
+				if (winnerTeam.equals(lastLevel.getCurrentWhiteTeam())) {
+					return !redTeams.get(redTeams.size() - 1).equals(lastLevel.getCurrentRedTeam());
+				}
+			}
+		}
+		return false;
+	}
+
+	public void createNextLevel() {
+		if (needsNewLevel()) {
+			KingLevel lastLevel = (KingLevel) getLastLevel();
+			System.out.println("Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '" + lastLevel.getRedTeam().nextIndex()
+					+ "' and '" + lastLevel.getWhiteTeam().nextIndex() + "'.");
+			lastLevel.setNextLevel(new KingLevel(getTournament(), lastLevel.getLevelIndex() + 1, null, lastLevel, lastLevel.getRedTeam(),
+					lastLevel.getWhiteTeam()));
+		}
+	}
 }

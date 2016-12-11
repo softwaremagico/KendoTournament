@@ -231,6 +231,17 @@ public abstract class LevelBasedTournament implements ITournamentManager {
 	}
 
 	@Override
+	public Level getLastLevel() {
+		Level level = getLevelZero();
+		Level selectedLevel = level;
+		while (level != null) {
+			selectedLevel = level;
+			level = level.getNextLevel();
+		}
+		return selectedLevel;
+	}
+
+	@Override
 	public void fillGroups() {
 		try {
 			// Read groups from fights.

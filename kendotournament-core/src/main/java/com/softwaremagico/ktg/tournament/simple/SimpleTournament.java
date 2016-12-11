@@ -274,4 +274,9 @@ public class SimpleTournament implements ITournamentManager {
 			}
 		}
 	}
+
+	@Override
+	public Level getLastLevel() {
+		return getLevel(0);
+	}
 }

@@ -20,7 +20,7 @@ public class Level implements Serializable {
 	private Level nextLevel;
 	private Level previousLevel;
 
-	protected Level(Tournament tournament, int levelIndex, LeagueLevel nextLevel, LeagueLevel previousLevel) {
+	protected Level(Tournament tournament, int levelIndex, Level nextLevel, Level previousLevel) {
 		this.tournament = tournament;
 		tournamentGroups = new ArrayList<>();
 		this.levelIndex = levelIndex;

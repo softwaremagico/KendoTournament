@@ -97,8 +97,6 @@ public abstract class LeagueLevel extends Level {
 		}
 	}
 
-
-
 	/**
 	 ********************************************* 
 	 * 
@@ -124,7 +122,7 @@ public abstract class LeagueLevel extends Level {
 
 		updateArenaOfGroups();
 
-		// If only one group. It is lastlevel
+		// If only one group. It is the last level
 		if (getTournamentGroups().size() < 2) {
 			setNextLevel(null);
 		}

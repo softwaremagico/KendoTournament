@@ -109,7 +109,7 @@ public abstract class TGroup {
 	}
 
 	public void addTeam(Team team) {
-		// Can not be repeated.
+		// Cannot be repeated.
 		if (!teams.contains(team)) {
 			teams.add(team);
 		}

@@ -13,12 +13,13 @@ public class KingLevel extends Level {
 	private ListIterator<Team> redTeam;
 	private ListIterator<Team> whiteTeam;
 
-	protected KingLevel(Tournament tournament, int level, LeagueLevel nextLevel, LeagueLevel previousLevel, ListIterator<Team> redTeam,
+	protected KingLevel(Tournament tournament, int level, Level nextLevel, Level previousLevel, ListIterator<Team> redTeam,
 			ListIterator<Team> whiteTeam) {
 		super(tournament, level, nextLevel, previousLevel);
 		this.redTeam = redTeam;
 		this.whiteTeam = whiteTeam;
 		addGroup(new KingGroup(tournament, level, 0));
+		fillTeams();
 	}
 
 	@Override
@@ -28,7 +29,7 @@ public class KingLevel extends Level {
 
 	@Override
 	public void update() {
-		fillTeams();
+
 	}
 
 	private TGroup getGroup() {
@@ -62,19 +63,18 @@ public class KingLevel extends Level {
 						// Add winners only if created
 						if (winner < previousLevelGroup.getWinners().size()) {
 							Team winnerTeam = previousLevelGroup.getWinners().get(winner);
+							System.out.println("Winner of '" + previousLevelGroup.getLevel() + "' is " + winnerTeam);
 							// is Red.
 							if (winnerTeam.equals(getCurrentRedTeam())) {
 								getGroup().addTeam(winnerTeam);
 								getGroup().addTeam(whiteTeam.next());
-								System.out.println(whiteTeam.next());
-								System.out.println(whiteTeam.next());
+								System.out.println("R: " + getGroup().getTeams());
 							} else
 							// is White
-							if (winnerTeam.equals(getCurrentRedTeam())) {
+							if (winnerTeam.equals(getCurrentWhiteTeam())) {
 								getGroup().addTeam(redTeam.next());
-								System.out.println(redTeam.next());
-								System.out.println(redTeam.next());
 								getGroup().addTeam(winnerTeam);
+								System.out.println("W: " + getGroup().getTeams());
 							}
 						} else {
 							// No winner defined yet.
@@ -111,5 +111,13 @@ public class KingLevel extends Level {
 		// Move backwards the iterator.
 		iterator.previous();
 		return team;
+	}
+
+	public ListIterator<Team> getRedTeam() {
+		return redTeam;
+	}
+
+	public ListIterator<Team> getWhiteTeam() {
+		return whiteTeam;
 	}
 }
