@@ -24,7 +24,7 @@ public class KingLevel extends Level {
 
 	@Override
 	protected Level createNewLevel(Tournament tournament, Integer level, LeagueLevel nextLevel, LeagueLevel previousLevel) {
-		return new KingLevel(tournament, level, nextLevel, previousLevel, redTeam, whiteTeam);
+		return null;
 	}
 
 	@Override
@@ -58,29 +58,8 @@ public class KingLevel extends Level {
 	private void fillTeams() {
 		if (getPreviousLevel() != null) {
 			if (!getPreviousLevel().getGroups().isEmpty()) {
-				for (int winner = 0; winner < getTournament().getHowManyTeamsOfGroupPassToTheTree(); winner++) {
-					for (TGroup previousLevelGroup : getPreviousLevel().getGroups()) {
-						// Add winners only if created
-						if (winner < previousLevelGroup.getWinners().size()) {
-							Team winnerTeam = previousLevelGroup.getWinners().get(winner);
-							System.out.println("Winner of '" + previousLevelGroup.getLevel() + "' is " + winnerTeam);
-							// is Red.
-							if (winnerTeam.equals(getCurrentRedTeam())) {
-								getGroup().addTeam(winnerTeam);
-								getGroup().addTeam(whiteTeam.next());
-								System.out.println("R: " + getGroup().getTeams());
-							} else
-							// is White
-							if (winnerTeam.equals(getCurrentWhiteTeam())) {
-								getGroup().addTeam(redTeam.next());
-								getGroup().addTeam(winnerTeam);
-								System.out.println("W: " + getGroup().getTeams());
-							}
-						} else {
-							// No winner defined yet.
-						}
-					}
-				}
+				getGroup().addTeam(getCurrentRedTeam());
+				getGroup().addTeam(getCurrentWhiteTeam());
 			}
 		} else {
 			// Initialize group with new team of both lists.
@@ -119,5 +98,10 @@ public class KingLevel extends Level {
 
 	public ListIterator<Team> getWhiteTeam() {
 		return whiteTeam;
+	}
+
+	@Override
+	public String toString() {
+		return "Level: " + getLevelIndex();
 	}
 }

@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
-import com.softwaremagico.ktg.tournament.Level;
+import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.tournament.LevelBasedTournament;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
@@ -115,13 +115,26 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		return false;
 	}
 
-	public void createNextLevel() {
+	public void createNextLevel() throws TournamentFinishedException {
 		if (needsNewLevel()) {
 			KingLevel lastLevel = (KingLevel) getLastLevel();
-			System.out.println("Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '" + lastLevel.getRedTeam().nextIndex()
-					+ "' and '" + lastLevel.getWhiteTeam().nextIndex() + "'.");
-			lastLevel.setNextLevel(new KingLevel(getTournament(), lastLevel.getLevelIndex() + 1, null, lastLevel, lastLevel.getRedTeam(),
-					lastLevel.getWhiteTeam()));
+			// Move iterators
+			ListIterator<Team> redTeam = lastLevel.getRedTeam();
+			ListIterator<Team> whiteTeam = lastLevel.getWhiteTeam();
+
+			Team winner = lastLevel.getGroups().get(0).getWinners().get(0);
+			if (redTeams.contains(winner)) {
+				whiteTeam.next();
+			} else if (whiteTeams.contains(winner)) {
+				redTeam.next();
+			}
+			KendoLog.debug(
+					this.getClass().getName(),
+					"Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '" + redTeam.nextIndex() + "' and '"
+							+ whiteTeam.nextIndex() + "'.");
+			lastLevel.setNextLevel(new KingLevel(getTournament(), lastLevel.getLevelIndex() + 1, null, lastLevel, redTeam, whiteTeam));
+		} else {
+			throw new TournamentFinishedException("All teams has been discualified");
 		}
 	}
 }
