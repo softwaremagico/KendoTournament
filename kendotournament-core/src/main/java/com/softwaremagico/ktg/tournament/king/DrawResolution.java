@@ -4,7 +4,7 @@ public enum DrawResolution {
 	
 	OLDEST_ELIMINATED,
 	
-	BOTH_ELIMINTED,
+	BOTH_ELIMINATED,
 	
 	NEWEST_ELIMINATED;
 

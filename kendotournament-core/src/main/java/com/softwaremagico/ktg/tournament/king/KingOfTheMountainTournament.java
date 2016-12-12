@@ -29,14 +29,12 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 	}
 
 	@Override
-	public List<Fight> createRandomFights(boolean maximizeFights, Integer level)
-			throws PersonalizedFightsException {
+	public List<Fight> createRandomFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
 		return createFightsOfGroups(maximizeFights, level, true);
 	}
 
 	@Override
-	public List<Fight> createSortedFights(boolean maximizeFights, Integer level)
-			throws PersonalizedFightsException {
+	public List<Fight> createSortedFights(boolean maximizeFights, Integer level) throws PersonalizedFightsException {
 		return createFightsOfGroups(maximizeFights, level, false);
 	}
 
@@ -74,13 +72,22 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 			// Draw game.
 			KingLevel lastLevel = (KingLevel) getLastLevel();
 			if (lastLevel.getGroups().get(0).getFights().get(0).getWinner() == 0) {
+				Team olderTeam = getOlderTeam(lastLevel);
 				switch (drawResolution) {
-				case BOTH_ELIMINTED:
+				case BOTH_ELIMINATED:
 					return null;
 				case NEWEST_ELIMINATED:
-
+					if (isInRedTeam(olderTeam)) {
+						return lastLevel.getCurrentRedTeam();
+					} else {
+						return lastLevel.getCurrentWhiteTeam();
+					}
 				case OLDEST_ELIMINATED:
-
+					if (isInRedTeam(olderTeam)) {
+						return lastLevel.getCurrentWhiteTeam();
+					} else {
+						return lastLevel.getCurrentRedTeam();
+					}
 				}
 			}
 			return getLastLevel().getGroups().get(0).getWinners().get(0);
@@ -108,8 +115,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 
 	private void initializeLevelZero() {
 		if (!redTeams.isEmpty() && !whiteTeams.isEmpty()) {
-			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeams.listIterator(),
-					whiteTeams.listIterator()));
+			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeams.listIterator(), whiteTeams.listIterator()));
 		}
 	}
 
@@ -150,8 +156,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 
 			// Draw game.
 			if (lastLevel.getGroups().get(0).getFights().get(0).getWinner() == 0) {
-				System.out.println(lastLevel.getLevelIndex() + " -> "
-						+ lastLevel.getGroups().get(0).getFights().get(0).getWinner());
+				System.out.println(lastLevel.getLevelIndex() + " -> " + lastLevel.getGroups().get(0).getFights().get(0).getWinner());
 				Team olderTeam = getOlderTeam(lastLevel);
 				System.out.println("Older team: " + olderTeam);
 				if (olderTeam == null) {
@@ -160,7 +165,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 					redTeam.next();
 				} else {
 					switch (drawResolution) {
-					case BOTH_ELIMINTED:
+					case BOTH_ELIMINATED:
 						whiteTeam.next();
 						redTeam.next();
 						break;
@@ -188,12 +193,11 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 					redTeam.next();
 				}
 			}
-			System.out.println("Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '"
-					+ redTeam.nextIndex() + "' and '" + whiteTeam.nextIndex() + "'.");
-			KendoLog.debug(this.getClass().getName(), "Creating level '" + (lastLevel.getLevelIndex() + 1)
-					+ "' with teams '" + redTeam.nextIndex() + "' and '" + whiteTeam.nextIndex() + "'.");
-			lastLevel.setNextLevel(new KingLevel(getTournament(), lastLevel.getLevelIndex() + 1, null,
-					lastLevel, redTeam, whiteTeam));
+			System.out.println("Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '" + redTeam.nextIndex() + "' and '"
+					+ whiteTeam.nextIndex() + "'.");
+			KendoLog.debug(this.getClass().getName(), "Creating level '" + (lastLevel.getLevelIndex() + 1) + "' with teams '" + redTeam.nextIndex() + "' and '"
+					+ whiteTeam.nextIndex() + "'.");
+			lastLevel.setNextLevel(new KingLevel(getTournament(), lastLevel.getLevelIndex() + 1, null, lastLevel, redTeam, whiteTeam));
 		} else {
 			throw new TournamentFinishedException("All teams has been discualified");
 		}
@@ -221,8 +225,8 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		}
 		List<Team> teamsOfLevel = new ArrayList<>(level.getGroups().get(0).getTeams());
 		teamsOfLevel.retainAll(level.getPreviousLevel().getGroups().get(0).getTeams());
-		System.out.println("Level '" + level.getLevelIndex() + "' " + level.getGroups().get(0).getTeams()
-				+ " - " + level.getPreviousLevel().getGroups().get(0).getTeams());
+		System.out.println("Level '" + level.getLevelIndex() + "' " + level.getGroups().get(0).getTeams() + " - "
+				+ level.getPreviousLevel().getGroups().get(0).getTeams());
 		if (!teamsOfLevel.isEmpty()) {
 			return teamsOfLevel.get(0);
 		}
