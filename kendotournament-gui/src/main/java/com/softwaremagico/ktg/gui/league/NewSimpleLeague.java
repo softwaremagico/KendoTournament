@@ -63,7 +63,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
                 (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
         setLanguage();
         fillTournaments();
-        RefreshTournament();
+        refreshTournament();
         fillTeam1ComboBox();
         fillTeam2ComboBox();
         fillFightingAreas();
@@ -154,7 +154,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
         }
     }
 
-    private void UpFight(int index) {
+    private void moveUpFight(int index) {
         if (index >= 0 && index < fights.size()) {
             Fight f = fights.get(index);
             fights.remove(index);
@@ -165,7 +165,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
         }
     }
 
-    private void DownFight(int index) {
+    private void moveDownFight(int index) {
         if (index >= 0 && index < fights.size()) {
             Fight f = fights.get(index);
             fights.remove(index);
@@ -176,7 +176,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
         }
     }
 
-    private void RefreshTournament() {
+    private void refreshTournament() {
         try {
             if (TournamentComboBox.getItemCount() > 0) {
                 fights = FightPool.getInstance().get((Tournament) TournamentComboBox.getSelectedItem());
@@ -496,7 +496,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
 
     private void TournamentComboBoxActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_TournamentComboBoxActionPerformed
         if (refreshTournament) {
-            RefreshTournament();
+            refreshTournament();
             KendoTournamentGenerator.getInstance().setLastSelectedTournament(
                     TournamentComboBox.getSelectedItem().toString());
         }
@@ -565,7 +565,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
 
     private void UpButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_UpButtonActionPerformed
         int index = FightsList.getSelectedIndex();
-        UpFight(index);
+        moveUpFight(index);
         fillFights();
         if (index > 0) {
             index--;
@@ -575,7 +575,7 @@ public class NewSimpleLeague extends javax.swing.JFrame {
 
     private void DownButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_DownButtonActionPerformed
         int index = FightsList.getSelectedIndex();
-        DownFight(index);
+        moveDownFight(index);
         fillFights();
         if (index < fights.size() - 1) {
             index++;
