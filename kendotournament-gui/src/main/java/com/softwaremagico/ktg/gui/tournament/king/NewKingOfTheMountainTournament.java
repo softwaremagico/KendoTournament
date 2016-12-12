@@ -35,10 +35,12 @@ import java.awt.event.ActionListener;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.base.KFrame;
+import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KPanel;
 import com.softwaremagico.ktg.gui.base.TeamComboBox;
 import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
+import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
 
@@ -61,7 +63,8 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		getContentPane().removeAll();
 		setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.fill = GridBagConstraints.CENTER;
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.anchor = GridBagConstraints.EAST;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
@@ -70,6 +73,12 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.weightx = 1;
 		gridBagConstraints.weighty = 0;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+		
+		KPanel tournamentPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+		tournamentPanel.setMinimumSize(new Dimension(200, 50));
+		
+		KLabel tournamentLabel = new KLabel("championship");
+		tournamentPanel.add(tournamentLabel);
 
 		tournamentComboBox = new TournamentComboBox(this);
 		tournamentComboBox.addActionListener(new ActionListener() {
@@ -80,15 +89,45 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			}
 		});
 		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-		tournamentComboBox.setWidth(350);
-		getContentPane().add(tournamentComboBox, gridBagConstraints);
+		tournamentComboBox.setWidth(280);
+		tournamentPanel.add(tournamentComboBox);
+		getContentPane().add(tournamentPanel, gridBagConstraints);
 
+		
+		KPanel teamPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
+		teamPanel.setMinimumSize(new Dimension(200, 50));
+		
+		KLabel teamLabel = new KLabel("Team");
+		teamPanel.add(teamLabel);
+		
 		gridBagConstraints.gridy = 1;
 		teamComboBox = new TeamComboBox(tournament, this);
-		teamComboBox.setWidth(350);
-		getContentPane().add(teamComboBox, gridBagConstraints);
+		teamComboBox.setWidth(280);
+		teamPanel.add(teamComboBox);
+		getContentPane().add(teamPanel, gridBagConstraints);
+
+		KPanel addButtonPanel = new KPanel(new FlowLayout(FlowLayout.CENTER));
+		addButtonPanel.setMinimumSize(new Dimension(200, 50));
+
+		KButton addToRedTeam = new KButton();
+		addToRedTeam.setTranslatedText("RedTeamButton");
+		addButtonPanel.add(addToRedTeam);
 		
-		
+		KButton addToWhiteTeam = new KButton();
+		addToWhiteTeam.setTranslatedText("WhiteTeamButton");
+		addButtonPanel.add(addToWhiteTeam);
+
+		gridBagConstraints.gridy = 2;
+		gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+		gridBagConstraints.anchor = GridBagConstraints.CENTER;
+		getContentPane().add(addButtonPanel, gridBagConstraints);
+
+		gridBagConstraints.gridy = 3;
+		gridBagConstraints.weighty = 1;
+		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		KPanel listPanel = new KPanel(new FlowLayout(FlowLayout.CENTER));
+		listPanel.setMinimumSize(new Dimension(200, 60));
+		getContentPane().add(listPanel, gridBagConstraints);
 
 		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.setMinimumSize(new Dimension(200, 50));
@@ -99,7 +138,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.fill = GridBagConstraints.NONE;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 2;
+		gridBagConstraints.gridy = 4;
 		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 0;
