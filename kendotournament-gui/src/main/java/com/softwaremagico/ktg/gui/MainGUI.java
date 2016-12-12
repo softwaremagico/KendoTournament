@@ -136,6 +136,7 @@ public final class MainGUI extends KendoFrame {
         AutosaveByTimeRadioButton.setText(trans.getTranslatedText("ByTimeRadioButton"));
         clearCacheMenuItem.setText(trans.getTranslatedText("ClearCacheLabel"));
         blogMenuItem.setText(trans.getTranslatedText("titleBlogStatistics"));
+        kingMenuItem.setText(trans.getTranslatedText("kingOfTheMountainTournament"));
     }
 
     private void setPhoto() {
@@ -403,6 +404,10 @@ public final class MainGUI extends KendoFrame {
     public void addRingMenuItemListener(ActionListener al) {
         RingMenuItem.addActionListener(al);
     }
+    
+    public void addKingMenuItemListener(ActionListener al){
+        kingMenuItem.addActionListener(al);
+    }
 
     public void addDesignerMenuItemListener(ActionListener al) {
         DesignerMenuItem.addActionListener(al);
@@ -497,6 +502,7 @@ public final class MainGUI extends KendoFrame {
         RingMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"ring.png"));
         DesignerMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"project.png"));
         manualMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"manual.png"));
+        kingMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"king.png"));
         TournamentPanelMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"panel.png"));
         ListMenu = new javax.swing.JMenu();
         AccreditationMenuItem = new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+"acreditation.png"));
@@ -639,6 +645,9 @@ public final class MainGUI extends KendoFrame {
 
         manualMenuItem.setText("Manual");
         DefineFightsMenu.add(manualMenuItem);
+
+        kingMenuItem.setText("kingMenuItem");
+        DefineFightsMenu.add(kingMenuItem);
 
         TournamentMenu.add(DefineFightsMenu);
 
@@ -911,6 +920,7 @@ public final class MainGUI extends KendoFrame {
     private javax.swing.JMenuItem blogMenuItem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem clearCacheMenuItem;
+    private javax.swing.JMenuItem kingMenuItem;
     private javax.swing.JMenuItem manualMenuItem;
     private javax.swing.JMenuItem reloadMenuItem;
     // End of variables declaration//GEN-END:variables
