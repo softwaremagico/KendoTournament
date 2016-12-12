@@ -26,7 +26,9 @@ package com.softwaremagico.ktg.gui.base;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
@@ -36,28 +38,39 @@ import com.softwaremagico.ktg.persistence.TeamPool;
 public class TeamComboBox extends KComboBox<Team> {
 	private static final long serialVersionUID = 5739678513371517215L;
 	private List<Team> listTeams;
+	private Set<Team> hiddenTeams;
 
 	public TeamComboBox(Tournament tournament, KFrame parent) {
+		fillTeams(tournament);
+		hiddenTeams = new HashSet<>();
+	}
+
+	public void fillTeams(Tournament tournament) {
 		try {
 			listTeams = TeamPool.getInstance().getSorted(tournament);
 		} catch (SQLException ex) {
 			listTeams = new ArrayList<>();
 			AlertManager.showSqlErrorMessage(ex);
 		}
-		fillTeams();
-	}
-
-	private void fillTeams() {
+		this.removeAllItems();
 		try {
 			for (int i = 0; i < listTeams.size(); i++) {
-				addItem(listTeams.get(i));
+				if (!hiddenTeams.contains(listTeams.get(i))) {
+					addItem(listTeams.get(i));
+				}
 			}
 			if (getItemCount() > 0) {
 				setSelectedIndex(0);
 			}
 		} catch (NullPointerException npe) {
 			AlertManager.showErrorInformation(this.getClass().getName(), npe);
+			npe.printStackTrace();
 		}
+	}
+
+	public void setHiddenTeams(Tournament tournament, Set<Team> hiddenTeams) {
+		this.hiddenTeams = hiddenTeams;
+		fillTeams(tournament);
 	}
 
 	public Team getSelectedTeam() {

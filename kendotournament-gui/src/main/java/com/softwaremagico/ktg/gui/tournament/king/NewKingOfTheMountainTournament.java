@@ -29,9 +29,15 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import com.softwaremagico.ktg.core.KendoTournamentGenerator;
+import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KPanel;
+import com.softwaremagico.ktg.gui.base.TeamComboBox;
+import com.softwaremagico.ktg.gui.base.TournamentComboBox;
 import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
@@ -39,27 +45,50 @@ import com.softwaremagico.ktg.language.LanguagePool;
 public class NewKingOfTheMountainTournament extends KFrame {
 	private static final long serialVersionUID = -9216293186060151629L;
 	private ITranslator trans = null;
+	private Tournament tournament;
+	private TeamComboBox teamComboBox;
+	private TournamentComboBox tournamentComboBox;
 
 	public NewKingOfTheMountainTournament() {
+		defineWindow(400, 600);
+		setResizable(false);
 		setElements();
 		setLanguage();
-		defineWindow(400, 600);
-		setResizable(true);
+		fillTeams();
 	}
 
 	private void setElements() {
 		getContentPane().removeAll();
 		setLayout(new GridBagLayout());
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.fill = GridBagConstraints.BOTH;
+		gridBagConstraints.fill = GridBagConstraints.CENTER;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
 		gridBagConstraints.gridheight = 1;
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 1;
-		gridBagConstraints.weighty = 1;
+		gridBagConstraints.weighty = 0;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+
+		tournamentComboBox = new TournamentComboBox(this);
+		tournamentComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournamentComboBox.getSelectedItem().toString());
+				fillTeams();
+			}
+		});
+		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+		tournamentComboBox.setWidth(350);
+		getContentPane().add(tournamentComboBox, gridBagConstraints);
+
+		gridBagConstraints.gridy = 1;
+		teamComboBox = new TeamComboBox(tournament, this);
+		teamComboBox.setWidth(350);
+		getContentPane().add(teamComboBox, gridBagConstraints);
+		
+		
 
 		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.setMinimumSize(new Dimension(200, 50));
@@ -70,7 +99,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.fill = GridBagConstraints.NONE;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 2;
 		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 0;
@@ -82,6 +111,12 @@ public class NewKingOfTheMountainTournament extends KFrame {
 	private void setLanguage() {
 		trans = LanguagePool.getTranslator("gui.xml");
 		this.setTitle(trans.getTranslatedText("kingOfTheMountainTournament"));
+	}
+
+	private void fillTeams() {
+		if (teamComboBox != null) {
+			teamComboBox.fillTeams((Tournament) tournamentComboBox.getSelectedItem());
+		}
 	}
 
 	@Override

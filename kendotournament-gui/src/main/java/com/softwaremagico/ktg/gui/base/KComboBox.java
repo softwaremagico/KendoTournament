@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.base;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,9 +24,16 @@ package com.softwaremagico.ktg.gui.base;
  * #L%
  */
 
+import java.awt.Dimension;
+
 import javax.swing.JComboBox;
 
-public class KComboBox<T> extends JComboBox<T>{
+public class KComboBox<T> extends JComboBox<T> {
 	private static final long serialVersionUID = -9108599234992762273L;
-    
+
+	public void setWidth(int width) {
+		this.setMinimumSize(new Dimension(width, (int) this.getMinimumSize().getHeight()));
+		this.setPreferredSize(new Dimension(width, (int) this.getPreferredSize().getHeight()));
+	}
+
 }

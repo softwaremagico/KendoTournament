@@ -2331,4 +2331,20 @@
 		<ca>Crea tots els combats possibles</ca>
 		<it>Il Re della Montagna</it>
 	</kingOfTheMountainTournament>
+	<RedTeamButton>
+		<en>Red Team</en>
+		<es>Equipo Rojo</es>
+		<nl>Red Team</nl>
+		<de>Red Team</de>
+		<ca>Equip Roig</ca>
+		<it>Squadra Rosso</it>	
+	</RedTeamButton>
+	<WhiteTeamButton>
+		<en>White Team</en>
+		<es>Equipo Blanco</es>
+		<nl>Witte Team</nl>
+		<de>White Team</de>
+		<ca>Equipo Blanc</ca>
+		<it>Squadra Bianca</it>	
+	</WhiteTeamButton>
 </translator>
