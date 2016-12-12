@@ -2323,4 +2323,12 @@
 		<ca>Crea tots els combats possibles</ca>
 		<it>Creare tutte le possibili corrispondenze</it>
 	</maxFightsCheckBox>
+	<kingOfTheMountainTournament>
+		<en>King of the Mountain</en>
+		<es>El Rey de la Montaña</es>
+		<nl>King of the Mountain</nl>
+		<de>King of the Mountain</de>
+		<ca>Crea tots els combats possibles</ca>
+		<it>Il Re della Montagna</it>
+	</kingOfTheMountainTournament>
 </translator>
