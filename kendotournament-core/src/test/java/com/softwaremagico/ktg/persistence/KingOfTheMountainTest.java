@@ -45,13 +45,9 @@ public class KingOfTheMountainTest {
 	@Test(dependsOnMethods = { "addTournament" })
 	public void addRoles() throws SQLException {
 		for (RegisteredPerson competitor : RegisteredPersonPool.getInstance().getAll()) {
-			RolePool.getInstance().add(
-					tournament,
-					new Role(tournament, competitor, RolePool.getInstance().getRoleTags()
-							.getRole("Competitor"), false, false));
+			RolePool.getInstance().add(tournament, new Role(tournament, competitor, RolePool.getInstance().getRoleTags().getRole("Competitor"), false, false));
 		}
-		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length
-				* PopulateDatabase.competitors.length);
+		Assert.assertTrue(RolePool.getInstance().get(tournament).size() == PopulateDatabase.clubs.length * PopulateDatabase.competitors.length);
 	}
 
 	@Test(dependsOnMethods = { "addRoles" })
@@ -79,16 +75,13 @@ public class KingOfTheMountainTest {
 				team = null;
 			}
 		}
-		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance()
-				.getCompetitors(tournament).size()
-				/ MEMBERS);
+		Assert.assertTrue(TeamPool.getInstance().get(tournament).size() == RolePool.getInstance().getCompetitors(tournament).size() / MEMBERS);
 	}
 
 	@Test(dependsOnMethods = { "addTeams" })
 	public void setTournamentTeams() throws SQLException {
 		tournament.setHowManyTeamsOfGroupPassToTheTree(1);
-		kingOfTheMountainTournament = (KingOfTheMountainTournament) TournamentManagerFactory
-				.getManager(tournament);
+		kingOfTheMountainTournament = (KingOfTheMountainTournament) TournamentManagerFactory.getManager(tournament);
 
 		List<Team> redTeams = new ArrayList<>();
 		List<Team> whiteTeams = new ArrayList<>();
@@ -128,22 +121,18 @@ public class KingOfTheMountainTest {
 		Fight fight = kingOfTheMountainTournament.getLevel(0).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertEquals(kingOfTheMountainTournament.getLevel(0).getGroups().get(0).getWinners().get(0),
-				kingOfTheMountainTournament.getRedTeams().get(0));
+		Assert.assertEquals(kingOfTheMountainTournament.getLevel(0).getGroups().get(0).getWinners().get(0), kingOfTheMountainTournament.getRedTeams().get(0));
 	}
 
 	@Test(dependsOnMethods = { "resolveFirstLevelFights" })
-	public void createSecondLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createSecondLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 2);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 2);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 1));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(1).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(1)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(0));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(1)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(1));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(1)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(0));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(1)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(1));
 	}
 
 	@Test(dependsOnMethods = { "createSecondLevelFights" })
@@ -152,22 +141,18 @@ public class KingOfTheMountainTest {
 		Fight fight = kingOfTheMountainTournament.getLevel(1).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertEquals(kingOfTheMountainTournament.getLevel(1).getGroups().get(0).getWinners().get(0),
-				kingOfTheMountainTournament.getRedTeams().get(0));
+		Assert.assertEquals(kingOfTheMountainTournament.getLevel(1).getGroups().get(0).getWinners().get(0), kingOfTheMountainTournament.getRedTeams().get(0));
 	}
 
 	@Test(dependsOnMethods = { "resolveSecondLevelFights" })
-	public void createThirdLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createThirdLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 3);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 3);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 2));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(2).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(2)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(0));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(2)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(2));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(2)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(0));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(2)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(2));
 	}
 
 	@Test(dependsOnMethods = { "createThirdLevelFights" })
@@ -176,22 +161,18 @@ public class KingOfTheMountainTest {
 		Fight fight = kingOfTheMountainTournament.getLevel(2).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertEquals(kingOfTheMountainTournament.getLevel(2).getGroups().get(0).getWinners().get(0),
-				kingOfTheMountainTournament.getWhiteTeams().get(2));
+		Assert.assertEquals(kingOfTheMountainTournament.getLevel(2).getGroups().get(0).getWinners().get(0), kingOfTheMountainTournament.getWhiteTeams().get(2));
 	}
 
 	@Test(dependsOnMethods = { "resolveThirdLevelFights" })
-	public void createFourthLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createFourthLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 4);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 4);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 3));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(3).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(3)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(1));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(3)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(2));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(3)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(1));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(3)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(2));
 	}
 
 	@Test(dependsOnMethods = { "createFourthLevelFights" })
@@ -200,22 +181,18 @@ public class KingOfTheMountainTest {
 		Fight fight = kingOfTheMountainTournament.getLevel(3).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertEquals(kingOfTheMountainTournament.getLevel(3).getGroups().get(0).getWinners().get(0),
-				kingOfTheMountainTournament.getRedTeams().get(1));
+		Assert.assertEquals(kingOfTheMountainTournament.getLevel(3).getGroups().get(0).getWinners().get(0), kingOfTheMountainTournament.getRedTeams().get(1));
 	}
 
 	@Test(dependsOnMethods = { "resolveFourthLevelFights" })
-	public void createFifthLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createFifthLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 5);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 5);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 4));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(4).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(4)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(1));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(4)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(3));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(4)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(1));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(4)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(3));
 	}
 
 	@Test(dependsOnMethods = { "createFifthLevelFights" })
@@ -226,22 +203,18 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertTrue(kingOfTheMountainTournament.getLevel(4).getGroups().get(0).getFights().get(0)
-				.isDrawFight());
+		Assert.assertTrue(kingOfTheMountainTournament.getLevel(4).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
 	@Test(dependsOnMethods = { "resolveFifthLevelFights" })
-	public void createSixthLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createSixthLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 6);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 6);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 5));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(5).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(5)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(2));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(5)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(3));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(5)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(2));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(5)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(3));
 	}
 
 	@Test(dependsOnMethods = { "createSixthLevelFights" })
@@ -252,22 +225,18 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertTrue(kingOfTheMountainTournament.getLevel(5).getGroups().get(0).getFights().get(0)
-				.isDrawFight());
+		Assert.assertTrue(kingOfTheMountainTournament.getLevel(5).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
 	@Test(dependsOnMethods = { "resolveSixthLevelFights" })
-	public void createSeventhLevelFights() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
+	public void createSeventhLevelFights() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
 		kingOfTheMountainTournament.createNextLevel();
-		Assert.assertEquals((int)kingOfTheMountainTournament.getNumberOfLevels(), 7);
+		Assert.assertEquals((int) kingOfTheMountainTournament.getNumberOfLevels(), 7);
 		FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, 6));
 		Assert.assertEquals(kingOfTheMountainTournament.getLevel(6).getGroups().size(), 1);
 		// Check red team is the same. White team is the next.
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(6)).getCurrentRedTeam(),
-				kingOfTheMountainTournament.getRedTeams().get(3));
-		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(6)).getCurrentWhiteTeam(),
-				kingOfTheMountainTournament.getWhiteTeams().get(3));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(6)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(3));
+		Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(6)).getCurrentWhiteTeam(), kingOfTheMountainTournament.getWhiteTeams().get(3));
 	}
 
 	@Test(dependsOnMethods = { "createSeventhLevelFights" })
@@ -278,28 +247,26 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
-		Assert.assertTrue(kingOfTheMountainTournament.getLevel(6).getGroups().get(0).getFights().get(0)
-				.isDrawFight());
+		Assert.assertTrue(kingOfTheMountainTournament.getLevel(6).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
 	@Test(dependsOnMethods = { "resolveSeventhLevelFights" }, expectedExceptions = { TournamentFinishedException.class })
-	public void checkFinalOfTournament() throws SQLException, PersonalizedFightsException,
-			TournamentFinishedException {
-		for (int i = 4; i < kingOfTheMountainTournament.getWhiteTeams().size(); i++) {
+	public void checkFinalOfTournament() throws SQLException, PersonalizedFightsException, TournamentFinishedException {
+		// Big i value to force the detection of the end of the tournament.
+		for (int i = 7; i < 30; i++) {
 			kingOfTheMountainTournament.createNextLevel();
 			FightPool.getInstance().add(tournament, kingOfTheMountainTournament.createSortedFights(false, i));
 			Assert.assertEquals(kingOfTheMountainTournament.getLevel(i).getGroups().size(), 1);
 			// Check red team is the same. White team is the next.
-			Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(i)).getCurrentRedTeam(),
-					kingOfTheMountainTournament.getRedTeams().get(4));
+			Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(i)).getCurrentRedTeam(), kingOfTheMountainTournament.getRedTeams().get(4));
 			Assert.assertEquals(((KingLevel) kingOfTheMountainTournament.getLevel(i)).getCurrentWhiteTeam(),
-					kingOfTheMountainTournament.getWhiteTeams().get(i));
+					kingOfTheMountainTournament.getWhiteTeams().get(i - 3));
 
 			Fight fight = kingOfTheMountainTournament.getLevel(i).getGroups().get(0).getFights().get(0);
 			fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 			fight.setOver(true);
-			Assert.assertEquals(kingOfTheMountainTournament.getLevel(i).getGroups().get(0).getWinners()
-					.get(0), kingOfTheMountainTournament.getRedTeams().get(1));
+			Assert.assertEquals(kingOfTheMountainTournament.getLevel(i).getGroups().get(0).getWinners().get(0), kingOfTheMountainTournament.getRedTeams()
+					.get(4));
 		}
 	}
 
