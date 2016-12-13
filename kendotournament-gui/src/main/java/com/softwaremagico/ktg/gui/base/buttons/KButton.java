@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui.base.buttons;
+
 /*
  * #%L
  * Kendo Tournament Generator GUI
@@ -23,6 +24,8 @@ package com.softwaremagico.ktg.gui.base.buttons;
  * #L%
  */
 
+import java.awt.Dimension;
+
 import javax.swing.Icon;
 import javax.swing.JButton;
 
@@ -43,5 +46,10 @@ public class KButton extends JButton {
 		if (this instanceof DownButton || this instanceof UpButton) {
 			super.setIcon(defaultIcon);
 		}
+	}
+
+	public void setWidth(int width) {
+		this.setMinimumSize(new Dimension(width, (int) this.getMinimumSize().getHeight()));
+		this.setPreferredSize(new Dimension(width, (int) this.getPreferredSize().getHeight()));
 	}
 }
