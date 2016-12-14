@@ -258,6 +258,8 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 				getWhiteTeams().add(fight.getTeam2());
 			}
 		}
+		if (!fights.isEmpty()) {
+			initializeLevelZero();
+		}
 	}
-
 }

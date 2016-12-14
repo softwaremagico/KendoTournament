@@ -41,8 +41,8 @@ public class TeamComboBox extends KComboBox<Team> {
 	private Set<Team> hiddenTeams;
 
 	public TeamComboBox(Tournament tournament, KFrame parent) {
-		fillTeams(tournament);
 		hiddenTeams = new HashSet<>();
+		fillTeams(tournament);
 	}
 
 	public void fillTeams(Tournament tournament) {

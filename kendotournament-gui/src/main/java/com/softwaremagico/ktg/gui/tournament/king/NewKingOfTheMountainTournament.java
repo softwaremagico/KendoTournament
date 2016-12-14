@@ -149,7 +149,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (AlertManager.questionMessage("questionCreateFight", "Warning!")) {
-					defineFights();
+					createNewFights();
 					thisWindow.dispose();
 				}
 			}
@@ -384,7 +384,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		return TournamentType.KING_OF_THE_MOUNTAIN;
 	}
 
-	private void defineFights() {
+	private void createNewFights() {
 		setTournamentType();
 		for (int i = 0; i < redTeamModel.getSize(); i++) {
 			tournamentManager.getRedTeams().add(getTeamByName(redTeamModel.getElementAt(i)));
@@ -399,9 +399,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			// Delete old group fights if any.
 			getTournamentManager().resetFights();
 			List<Fight> newFights = tournamentManager.createSortedFights(false, 0);
-			System.out.println(newFights);
 			FightPool.getInstance().add(tournament, newFights);
-			System.out.println(FightPool.getInstance().get(tournament));
 			TournamentPool.getInstance().update(tournament);
 			AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
 			AutoSaveByAction.getInstance().save();
