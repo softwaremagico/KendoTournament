@@ -99,9 +99,4 @@ public class KingLevel extends Level {
 	public ListIterator<Team> getWhiteTeam() {
 		return whiteTeam;
 	}
-
-	@Override
-	public String toString() {
-		return "Level: " + getLevelIndex();
-	}
 }

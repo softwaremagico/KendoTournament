@@ -31,6 +31,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,9 +41,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 
+import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.gui.AlertManager;
 import com.softwaremagico.ktg.gui.base.KFrame;
 import com.softwaremagico.ktg.gui.base.KLabel;
 import com.softwaremagico.ktg.gui.base.KPanel;
@@ -52,6 +55,11 @@ import com.softwaremagico.ktg.gui.base.buttons.CloseButton;
 import com.softwaremagico.ktg.gui.base.buttons.KButton;
 import com.softwaremagico.ktg.language.ITranslator;
 import com.softwaremagico.ktg.language.LanguagePool;
+import com.softwaremagico.ktg.log.KendoLog;
+import com.softwaremagico.ktg.persistence.AutoSaveByAction;
+import com.softwaremagico.ktg.persistence.FightPool;
+import com.softwaremagico.ktg.persistence.TournamentPool;
+import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
 import com.softwaremagico.ktg.tournament.king.KingOfTheMountainTournament;
@@ -65,7 +73,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 	private TournamentComboBox tournamentComboBox;
 	private DefaultListModel<String> redTeamModel = new DefaultListModel<>();
 	private DefaultListModel<String> whiteTeamModel = new DefaultListModel<>();
-	private KingOfTheMountainTournament tournamentManager;
+	private KingOfTheMountainTournament tournamentManager = null;
 
 	public NewKingOfTheMountainTournament() {
 		defineWindow(400, 600);
@@ -73,6 +81,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		setElements();
 		setLanguage();
 		fillTeams();
+		fillSelectedTeams();
 	}
 
 	private void setElements() {
@@ -101,6 +110,12 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournamentComboBox.getSelectedItem().toString());
+				tournament = (Tournament) tournamentComboBox.getSelectedItem();
+				try {
+					getTournamentManager().setTeams(FightPool.getInstance().get(tournament));
+				} catch (SQLException error) {
+					KendoLog.errorMessage(this.getClass().getName(), error);
+				}
 				fillTeams();
 			}
 		});
@@ -123,8 +138,24 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.gridheight = 4;
 		getContentPane().add(listTeams, gridBagConstraints);
 
+		final KFrame thisWindow = this;
+
 		KPanel buttonPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.setMinimumSize(new Dimension(200, 50));
+		KButton acceptButton = new KButton();
+		acceptButton.setTranslatedText("AcceptButton");
+		acceptButton.setPreferredSize(new Dimension(80, 40));
+		acceptButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (AlertManager.questionMessage("questionCreateFight", "Warning!")) {
+					defineFights();
+					thisWindow.dispose();
+				}
+			}
+		});
+		buttonPanel.add(acceptButton);
+
 		CloseButton closeButton = new CloseButton(this);
 		buttonPanel.add(closeButton);
 
@@ -339,11 +370,8 @@ public class NewKingOfTheMountainTournament extends KFrame {
 
 	private KingOfTheMountainTournament getTournamentManager() {
 		if (tournamentManager == null) {
-			if (TournamentManagerFactory.getManager(tournamentComboBox.getSelectedTournament()) instanceof KingOfTheMountainTournament) {
-				tournamentManager = (KingOfTheMountainTournament) TournamentManagerFactory.getManager(tournamentComboBox.getSelectedTournament());
-			} else {
-				tournamentManager = new KingOfTheMountainTournament(tournament);
-			}
+			// Gets existing tournamentManager or creates a new one.
+			tournamentManager = (KingOfTheMountainTournament) TournamentManagerFactory.getManager(tournamentComboBox.getSelectedTournament(), getDefinedType());
 		}
 		return tournamentManager;
 	}
@@ -352,8 +380,48 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		((Tournament) tournamentComboBox.getSelectedItem()).setType(getDefinedType());
 	}
 
-	protected TournamentType getDefinedType() {
+	private TournamentType getDefinedType() {
 		return TournamentType.KING_OF_THE_MOUNTAIN;
+	}
+
+	private void defineFights() {
+		setTournamentType();
+		for (int i = 0; i < redTeamModel.getSize(); i++) {
+			tournamentManager.getRedTeams().add(getTeamByName(redTeamModel.getElementAt(i)));
+		}
+
+		for (int i = 0; i < whiteTeamModel.getSize(); i++) {
+			tournamentManager.getWhiteTeams().add(getTeamByName(whiteTeamModel.getElementAt(i)));
+		}
+		tournamentManager.initializeLevelZero();
+		try {
+			FightPool.getInstance().remove(tournament);
+			// Delete old group fights if any.
+			getTournamentManager().resetFights();
+			List<Fight> newFights = tournamentManager.createSortedFights(false, 0);
+			System.out.println(newFights);
+			FightPool.getInstance().add(tournament, newFights);
+			System.out.println(FightPool.getInstance().get(tournament));
+			TournamentPool.getInstance().update(tournament);
+			AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
+			AutoSaveByAction.getInstance().save();
+		} catch (PersonalizedFightsException e) {
+			KendoLog.errorMessage(this.getClass().getName(), e);
+		} catch (SQLException e) {
+			KendoLog.errorMessage(this.getClass().getName(), e);
+		}
+	}
+
+	private Team getTeamByName(String name) {
+		try {
+			for (Team team : teamComboBox.getTeams()) {
+				if (team.getName().equals(name)) {
+					return team;
+				}
+			}
+		} catch (NullPointerException npe) {
+		}
+		return null;
 	}
 
 	@Override

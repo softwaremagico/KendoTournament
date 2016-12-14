@@ -88,4 +88,8 @@ public class TeamComboBox extends KComboBox<Team> {
 			super.setSelectedItem(team);
 		}
 	}
+
+	public List<Team> getTeams() {
+		return listTeams;
+	}
 }

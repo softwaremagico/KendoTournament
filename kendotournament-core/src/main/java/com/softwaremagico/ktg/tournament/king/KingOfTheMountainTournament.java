@@ -113,7 +113,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		return whiteTeams;
 	}
 
-	private void initializeLevelZero() {
+	public void initializeLevelZero() {
 		if (!redTeams.isEmpty() && !whiteTeams.isEmpty()) {
 			setLevelZero(new KingLevel(getTournament(), 0, null, null, redTeams.listIterator(), whiteTeams.listIterator()));
 		}
@@ -246,6 +246,18 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 			return teamsOfLevel.get(0);
 		}
 		return null;
+	}
+
+	public void setTeams(List<Fight> fights) {
+		for (Fight fight : fights) {
+			if (!getRedTeams().contains(fight.getTeam1())) {
+				getRedTeams().add(fight.getTeam1());
+			}
+
+			if (!getWhiteTeams().contains(fight.getTeam2())) {
+				getWhiteTeams().add(fight.getTeam2());
+			}
+		}
 	}
 
 }
