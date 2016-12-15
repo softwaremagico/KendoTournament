@@ -25,11 +25,6 @@ package com.softwaremagico.ktg.core;
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
-import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
-import com.softwaremagico.ktg.tournament.TournamentType;
-import com.softwaremagico.ktg.tournament.score.ScoreType;
-import com.softwaremagico.ktg.tournament.score.TournamentScore;
-
 import java.awt.Image;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -38,10 +33,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
+import com.softwaremagico.ktg.tournament.TournamentType;
+import com.softwaremagico.ktg.tournament.king.DrawResolution;
+import com.softwaremagico.ktg.tournament.score.ScoreType;
+import com.softwaremagico.ktg.tournament.score.TournamentScore;
+
 public class Tournament implements Comparable<Tournament>, Serializable {
 	private static final long serialVersionUID = 7794355885352426608L;
-	private static char[] fightAreaNames = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+	private static char[] fightAreaNames = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+			'X', 'Y', 'Z' };
 	public static final List<TournamentType> CHAMPIONSHIP_TYPES = new ArrayList<>();
 	private String name;
 	private transient Photo banner;
@@ -51,11 +52,15 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 	private int howManyTeamsOfGroupPassToTheTree;
 	private int teamSize;
 	private boolean usingMultipleComputers;
-	private TournamentType type; // simple, championship, custom, personalized, tree
+	private TournamentType type; // simple, championship, custom, personalized,
+									// tree
 	// private float scoreForWin = 1;
 	// private float scoreForDraw = 0;
 	// private ScoreType choosedScore = ScoreType.WIN_OVER_DRAWS;
 	private TournamentScore tournamentScore;
+
+	// only for king of the mountain.
+	private DrawResolution drawResolution = DrawResolution.OLDEST_ELIMINATED;
 
 	static {
 		CHAMPIONSHIP_TYPES.add(TournamentType.CHAMPIONSHIP);
@@ -64,6 +69,7 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 
 	public Tournament(String name, int areas, int passingTeams, int teamSize, TournamentType type) {
 		this.name = name;
+		drawResolution = DrawResolution.OLDEST_ELIMINATED;
 		fightingAreas = areas;
 		howManyTeamsOfGroupPassToTheTree = passingTeams;
 		this.teamSize = teamSize;
@@ -201,12 +207,12 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 
 	@Override
 	public int compareTo(Tournament t) {
-		
+
 		// Ignore accents
 		Collator collator = Collator.getInstance(new Locale("es"));
 		collator.setStrength(Collator.SECONDARY);
 		collator.setDecomposition(Collator.FULL_DECOMPOSITION);
-		
+
 		return collator.compare(getName(), t.getName());
 	}
 
@@ -232,5 +238,13 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 
 	public void setUsingMultipleComputers(boolean multipleComputers) {
 		this.usingMultipleComputers = multipleComputers;
+	}
+
+	public DrawResolution getDrawResolution() {
+		return drawResolution;
+	}
+
+	public void setDrawResolution(DrawResolution drawResolution) {
+		this.drawResolution = drawResolution;
 	}
 }

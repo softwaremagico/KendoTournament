@@ -2,7 +2,6 @@ package com.softwaremagico.ktg.tournament.score;
 
 import java.io.Serializable;
 
-
 public class TournamentScore implements Serializable {
 	private static final long serialVersionUID = -1567086981260203992L;
 	private ScoreType scoreType;

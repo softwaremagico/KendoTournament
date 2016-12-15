@@ -66,6 +66,7 @@ CREATE TABLE "tournament" (
   "Accreditation" mediumblob,
   "DiplomaSize" double NOT NULL DEFAULT '0',
   "AccreditationSize" double NOT NULL,
+  "DrawResolution" char(15) NOT NULL DEFAULT 'oldest',
   PRIMARY KEY (Name)
 )
 

@@ -197,7 +197,7 @@ public class KingOfTheMountainTest {
 
 	@Test(dependsOnMethods = { "createFifthLevelFights" })
 	public void resolveFifthLevelFights() {
-		kingOfTheMountainTournament.setDrawResolution(DrawResolution.OLDEST_ELIMINATED);
+		tournament.setDrawResolution(DrawResolution.OLDEST_ELIMINATED);
 		// Draw fight.
 		Fight fight = kingOfTheMountainTournament.getLevel(4).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
@@ -219,7 +219,7 @@ public class KingOfTheMountainTest {
 
 	@Test(dependsOnMethods = { "createSixthLevelFights" })
 	public void resolveSixthLevelFights() {
-		kingOfTheMountainTournament.setDrawResolution(DrawResolution.NEWEST_ELIMINATED);
+		tournament.setDrawResolution(DrawResolution.NEWEST_ELIMINATED);
 		// Draw fight.
 		Fight fight = kingOfTheMountainTournament.getLevel(5).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
@@ -241,7 +241,7 @@ public class KingOfTheMountainTest {
 
 	@Test(dependsOnMethods = { "createSeventhLevelFights" })
 	public void resolveSeventhLevelFights() {
-		kingOfTheMountainTournament.setDrawResolution(DrawResolution.BOTH_ELIMINATED);
+		tournament.setDrawResolution(DrawResolution.BOTH_ELIMINATED);
 		// Draw fight.
 		Fight fight = kingOfTheMountainTournament.getLevel(6).getGroups().get(0).getFights().get(0);
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);

@@ -19,11 +19,9 @@ import com.softwaremagico.ktg.tournament.TGroup;
 public class KingOfTheMountainTournament extends LevelBasedTournament {
 	private List<Team> redTeams;
 	private List<Team> whiteTeams;
-	private DrawResolution drawResolution;
 
 	public KingOfTheMountainTournament(Tournament tournament) {
 		super(tournament);
-		this.drawResolution = DrawResolution.OLDEST_ELIMINATED;
 		redTeams = new ArrayList<>();
 		whiteTeams = new ArrayList<>();
 	}
@@ -73,7 +71,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 			KingLevel lastLevel = (KingLevel) getLastLevel();
 			if (lastLevel.getGroups().get(0).getFights().get(0).getWinner() == 0) {
 				Team olderTeam = getOlderTeam(lastLevel);
-				switch (drawResolution) {
+				switch (getTournament().getDrawResolution()) {
 				case BOTH_ELIMINATED:
 					return null;
 				case NEWEST_ELIMINATED:
@@ -135,7 +133,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 			if (group.getFights().get(0).getWinner() == 0) {
 				// Draw fight. Check the disqualified team.
 				Team olderTeam = getOlderTeam(lastLevel);
-				switch (drawResolution) {
+				switch (getTournament().getDrawResolution()) {
 				case BOTH_ELIMINATED:
 					return whiteTeams.get(whiteTeams.size() - 1).equals(lastLevel.getCurrentWhiteTeam())
 							|| redTeams.get(redTeams.size() - 1).equals(lastLevel.getCurrentRedTeam());
@@ -185,7 +183,7 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 					whiteTeam.next();
 					redTeam.next();
 				} else {
-					switch (drawResolution) {
+					switch (getTournament().getDrawResolution()) {
 					case BOTH_ELIMINATED:
 						whiteTeam.next();
 						redTeam.next();
@@ -220,14 +218,6 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		} else {
 			throw new TournamentFinishedException("All teams has been discualified");
 		}
-	}
-
-	public DrawResolution getDrawResolution() {
-		return drawResolution;
-	}
-
-	public void setDrawResolution(DrawResolution drawResolution) {
-		this.drawResolution = drawResolution;
 	}
 
 	private boolean isInRedTeam(Team team) {

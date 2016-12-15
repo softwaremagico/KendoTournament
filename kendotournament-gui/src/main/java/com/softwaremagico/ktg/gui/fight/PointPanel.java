@@ -28,11 +28,11 @@ import com.softwaremagico.ktg.gui.PanelBackground;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 
-
 public class PointPanel extends PanelBackground {
-    
-    public PointPanel(){
-        super();
-        this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-    }
+	private static final long serialVersionUID = -1773475011901785913L;
+
+	public PointPanel() {
+		super();
+		this.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+	}
 }

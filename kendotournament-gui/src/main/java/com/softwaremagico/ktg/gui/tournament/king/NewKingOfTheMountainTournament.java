@@ -37,8 +37,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import com.softwaremagico.ktg.core.Fight;
@@ -62,6 +64,7 @@ import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
+import com.softwaremagico.ktg.tournament.king.DrawResolution;
 import com.softwaremagico.ktg.tournament.king.KingOfTheMountainTournament;
 
 public class NewKingOfTheMountainTournament extends KFrame {
@@ -74,14 +77,14 @@ public class NewKingOfTheMountainTournament extends KFrame {
 	private DefaultListModel<String> redTeamModel = new DefaultListModel<>();
 	private DefaultListModel<String> whiteTeamModel = new DefaultListModel<>();
 	private KingOfTheMountainTournament tournamentManager = null;
+	private JRadioButton oldestEliminated, newestEliminated, bothEliminated;
 
 	public NewKingOfTheMountainTournament() {
-		defineWindow(400, 600);
+		defineWindow(450, 700);
 		setResizable(false);
 		setElements();
 		setLanguage();
 		fillTeams();
-		fillSelectedTeams();
 	}
 
 	private void setElements() {
@@ -93,46 +96,25 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
 		gridBagConstraints.gridy = 0;
-		gridBagConstraints.gridheight = 1;
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 1;
 		gridBagConstraints.weighty = 0;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 
-		KPanel tournamentPanel = new KPanel(new FlowLayout(FlowLayout.RIGHT));
-		tournamentPanel.setMinimumSize(new Dimension(200, 50));
-
-		KLabel tournamentLabel = new KLabel("championship");
-		tournamentPanel.add(tournamentLabel);
-
-		tournamentComboBox = new TournamentComboBox(this);
-		tournamentComboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournamentComboBox.getSelectedItem().toString());
-				tournament = (Tournament) tournamentComboBox.getSelectedItem();
-				try {
-					getTournamentManager().setTeams(FightPool.getInstance().get(tournament));
-				} catch (SQLException error) {
-					KendoLog.errorMessage(this.getClass().getName(), error);
-				}
-				fillTeams();
-			}
-		});
-		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
-		tournamentComboBox.setWidth(280);
-		tournamentPanel.add(tournamentComboBox);
+		KPanel tournamentPanel = createTournamentPanel();
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridheight = 5;
 		getContentPane().add(tournamentPanel, gridBagConstraints);
 
 		KPanel teamSelector = createTeamSelector();
-		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridy = 5;
 		gridBagConstraints.gridheight = 2;
 		getContentPane().add(teamSelector, gridBagConstraints);
 
 		KPanel listTeams = createTeamList();
 
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
-		gridBagConstraints.gridy = 3;
+		gridBagConstraints.gridy = 7;
 		gridBagConstraints.weightx = 1;
 		gridBagConstraints.weighty = 1;
 		gridBagConstraints.gridheight = 4;
@@ -149,6 +131,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (AlertManager.questionMessage("questionCreateFight", "Warning!")) {
+					tournament.setDrawResolution(getDrawResolution());
 					createNewFights();
 					thisWindow.dispose();
 				}
@@ -163,13 +146,79 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.fill = GridBagConstraints.NONE;
 		gridBagConstraints.ipadx = xPadding;
 		gridBagConstraints.gridx = 0;
-		gridBagConstraints.gridy = 7;
+		gridBagConstraints.gridy = 11;
 		gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
 		gridBagConstraints.gridwidth = 1;
 		gridBagConstraints.weightx = 0;
 		gridBagConstraints.weighty = 0;
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 		getContentPane().add(buttonPanel, gridBagConstraints);
+	}
+
+	private KPanel createTournamentPanel() {
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.fill = GridBagConstraints.NONE;
+		gridBagConstraints.ipadx = xPadding;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridheight = 1;
+		gridBagConstraints.gridwidth = 1;
+		gridBagConstraints.weightx = 1;
+		gridBagConstraints.weighty = 0;
+		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
+
+		KPanel tournamentPanel = new KPanel(new GridBagLayout());
+		tournamentPanel.setMinimumSize(new Dimension(200, 50));
+
+		KLabel tournamentLabel = new KLabel("championship");
+		gridBagConstraints.gridx = 0;
+		tournamentPanel.add(tournamentLabel, gridBagConstraints);
+
+		// Select score system.
+		oldestEliminated = new JRadioButton();
+		newestEliminated = new JRadioButton();
+		bothEliminated = new JRadioButton();
+
+		tournamentComboBox = new TournamentComboBox(this);
+		tournamentComboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournamentComboBox.getSelectedItem().toString());
+				tournament = (Tournament) tournamentComboBox.getSelectedItem();
+				tournamentManager = null;
+				try {
+					getTournamentManager().setTeams(FightPool.getInstance().get(tournament));
+				} catch (SQLException error) {
+					KendoLog.errorMessage(this.getClass().getName(), error);
+				}
+				fillTeams();
+				if (getTournamentManager() != null) {
+					getRadioButton(tournament.getDrawResolution()).setSelected(true);
+				}
+			}
+		});
+		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+		tournamentComboBox.setWidth(280);
+		gridBagConstraints.gridwidth = 3;
+		gridBagConstraints.gridx = 1;
+		tournamentPanel.add(tournamentComboBox, gridBagConstraints);
+
+		ButtonGroup scoreGroup = new ButtonGroup();
+		scoreGroup.add(oldestEliminated);
+		scoreGroup.add(newestEliminated);
+		scoreGroup.add(bothEliminated);
+
+		gridBagConstraints.gridwidth = 4;
+		gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 1;
+		tournamentPanel.add(oldestEliminated, gridBagConstraints);
+		gridBagConstraints.gridy = 2;
+		tournamentPanel.add(newestEliminated, gridBagConstraints);
+		gridBagConstraints.gridy = 3;
+		tournamentPanel.add(bothEliminated, gridBagConstraints);
+
+		return tournamentPanel;
 	}
 
 	private KPanel createTeamSelector() {
@@ -203,7 +252,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		addButtonPanel.setMinimumSize(new Dimension(200, 50));
 
 		KButton addToRedTeam = new KButton();
-		addToRedTeam.setTranslatedText("RedTeamButton");
+		addToRedTeam.setTranslatedText("redTeamButton");
 		addToRedTeam.addActionListener(new ActionListener() {
 
 			@Override
@@ -212,7 +261,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 					if (getTournamentManager() != null) {
 						getTournamentManager().getRedTeams().add(teamComboBox.getSelectedTeam());
 					}
-					fillSelectedTeams();
 					fillTeams();
 				}
 			}
@@ -221,7 +269,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		addButtonPanel.add(addToRedTeam);
 
 		KButton addToWhiteTeam = new KButton();
-		addToWhiteTeam.setTranslatedText("WhiteTeamButton");
+		addToWhiteTeam.setTranslatedText("whiteTeamButton");
 		addToWhiteTeam.addActionListener(new ActionListener() {
 
 			@Override
@@ -230,7 +278,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 					if (getTournamentManager() != null) {
 						getTournamentManager().getWhiteTeams().add(teamComboBox.getSelectedTeam());
 					}
-					fillSelectedTeams();
 					fillTeams();
 				}
 			}
@@ -244,7 +291,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		rootPanel.add(addButtonPanel, gridBagConstraints);
 
 		return rootPanel;
-
 	}
 
 	private KPanel createTeamList() {
@@ -297,7 +343,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			public void actionPerformed(ActionEvent e) {
 				removeTeamSelection(redList, redTeamModel, getTournamentManager().getRedTeams());
 				fillTeams();
-				fillSelectedTeams();
 			}
 		});
 
@@ -313,7 +358,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			public void actionPerformed(ActionEvent e) {
 				removeTeamSelection(whiteList, whiteTeamModel, getTournamentManager().getWhiteTeams());
 				fillTeams();
-				fillSelectedTeams();
 			}
 		});
 
@@ -321,6 +365,31 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		listPanel.add(removeFromWhiteTeam, gridBagConstraints);
 
 		return listPanel;
+	}
+
+	private JRadioButton getRadioButton(DrawResolution drawResolution) {
+		switch (drawResolution) {
+		case OLDEST_ELIMINATED:
+			return oldestEliminated;
+		case NEWEST_ELIMINATED:
+			return newestEliminated;
+		case BOTH_ELIMINATED:
+			return bothEliminated;
+		}
+		return oldestEliminated;
+	}
+
+	private DrawResolution getDrawResolution() {
+		if (oldestEliminated.isSelected()) {
+			return DrawResolution.OLDEST_ELIMINATED;
+		}
+		if (newestEliminated.isSelected()) {
+			return DrawResolution.NEWEST_ELIMINATED;
+		}
+		if (bothEliminated.isSelected()) {
+			return DrawResolution.BOTH_ELIMINATED;
+		}
+		return DrawResolution.OLDEST_ELIMINATED;
 	}
 
 	private void removeTeamSelection(JList<String> teamOptionList, DefaultListModel<String> teamModel, List<Team> teams) {
@@ -339,6 +408,9 @@ public class NewKingOfTheMountainTournament extends KFrame {
 	private void setLanguage() {
 		trans = LanguagePool.getTranslator("gui.xml");
 		this.setTitle(trans.getTranslatedText("kingOfTheMountainTournament"));
+		oldestEliminated.setText(trans.getTranslatedText("kingEliminateOldest"));
+		newestEliminated.setText(trans.getTranslatedText("kingEliminateNewest"));
+		bothEliminated.setText(trans.getTranslatedText("kingEliminateBoth"));
 	}
 
 	private void fillTeams() {
@@ -351,6 +423,7 @@ public class NewKingOfTheMountainTournament extends KFrame {
 			teamComboBox.setHiddenTeams((Tournament) tournamentComboBox.getSelectedItem(), hiddenTeams);
 			teamComboBox.fillTeams((Tournament) tournamentComboBox.getSelectedItem());
 		}
+		fillSelectedTeams();
 	}
 
 	private void fillSelectedTeams() {

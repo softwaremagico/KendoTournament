@@ -2331,20 +2331,44 @@
 		<ca>Crea tots els combats possibles</ca>
 		<it>Il Re della Montagna</it>
 	</kingOfTheMountainTournament>
-	<RedTeamButton>
+	<redTeamButton>
 		<en>Red Team</en>
 		<es>Equipo Rojo</es>
 		<nl>Red Team</nl>
 		<de>Red Team</de>
 		<ca>Equip Roig</ca>
 		<it>Squadra Rosso</it>	
-	</RedTeamButton>
-	<WhiteTeamButton>
+	</redTeamButton>
+	<whiteTeamButton>
 		<en>White Team</en>
 		<es>Equipo Blanco</es>
 		<nl>Witte Team</nl>
 		<de>White Team</de>
 		<ca>Equipo Blanc</ca>
 		<it>Squadra Bianca</it>	
-	</WhiteTeamButton>
+	</whiteTeamButton>
+	<kingEliminateOldest>
+		<en>Eliminate oldest</en>
+		<es>Elimina el más antiguo</es>
+		<nl>Eliminate oldest</nl>
+		<de>Eliminate oldest</de>
+		<ca>Elimina el més antic</ca>
+		<it>Elimina il più antica</it>	
+	</kingEliminateOldest>
+	<kingEliminateNewest>
+		<en>Eliminate newest</en>
+		<es>Elimina el más reciente</es>
+		<nl>Eliminate newest</nl>
+		<de>Eliminate newest</de>
+		<ca>Elimina el més recent</ca>
+		<it>Elimina il più recente</it>	
+	</kingEliminateNewest>
+	<kingEliminateBoth>
+		<en>Eliminate both</en>
+		<es>Elimina ambos</es>
+		<nl>Eliminate both</nl>
+		<de>Eliminate both</de>
+		<ca>Elmina tots dos</ca>
+		<it>Elimina entrambi</it>	
+	</kingEliminateBoth>
 </translator>
