@@ -119,7 +119,8 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		}
 	}
 
-	private boolean needsNewLevel() {
+	@Override
+	public boolean isNewLevelNeeded() {
 		KingLevel lastLevel = (KingLevel) getLastLevel();
 		if (lastLevel != null && !lastLevel.getGroups().isEmpty()) {
 			return !isInLastGroup();
@@ -168,8 +169,9 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 		return false;
 	}
 
+	@Override
 	public void createNextLevel() throws TournamentFinishedException {
-		if (needsNewLevel()) {
+		if (isNewLevelNeeded()) {
 			KingLevel lastLevel = (KingLevel) getLastLevel();
 			// Move iterators
 			ListIterator<Team> redTeam = lastLevel.getRedTeam();

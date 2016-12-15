@@ -29,6 +29,7 @@ import java.util.List;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
+import com.softwaremagico.ktg.tournament.king.TournamentFinishedException;
 
 public interface ITournamentManager {
 
@@ -120,4 +121,8 @@ public interface ITournamentManager {
 	void removeWinners(Integer level);
 
 	Level getLastLevel();
+
+	boolean isNewLevelNeeded();
+
+	void createNextLevel() throws TournamentFinishedException;
 }

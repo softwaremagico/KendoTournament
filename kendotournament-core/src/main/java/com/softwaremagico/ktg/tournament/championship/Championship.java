@@ -10,6 +10,7 @@ import com.softwaremagico.ktg.persistence.FightPool;
 import com.softwaremagico.ktg.tournament.LeagueLevelChampionship;
 import com.softwaremagico.ktg.tournament.LevelBasedTournament;
 import com.softwaremagico.ktg.tournament.TGroup;
+import com.softwaremagico.ktg.tournament.king.TournamentFinishedException;
 
 public class Championship extends LevelBasedTournament {
 
@@ -82,6 +83,17 @@ public class Championship extends LevelBasedTournament {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isNewLevelNeeded() {
+		// Leves are created at the beginning.
+		return false;
+	}
+
+	@Override
+	public void createNextLevel() throws TournamentFinishedException {
+		// Autoegenerated at the beginning.
 	}
 
 }

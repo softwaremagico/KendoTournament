@@ -15,6 +15,7 @@ import com.softwaremagico.ktg.tournament.Level;
 import com.softwaremagico.ktg.tournament.PersonalizedFightsException;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.championship.LeagueLevel;
+import com.softwaremagico.ktg.tournament.king.TournamentFinishedException;
 
 /**
  * A simple tournament is a tournament with only one group.
@@ -278,5 +279,16 @@ public class SimpleTournament implements ITournamentManager {
 	@Override
 	public Level getLastLevel() {
 		return getLevel(0);
+	}
+
+	@Override
+	public boolean isNewLevelNeeded() {
+		// Only one level is needed.
+		return false;
+	}
+
+	@Override
+	public void createNextLevel() throws TournamentFinishedException {
+		// Only one level is needed.
 	}
 }
