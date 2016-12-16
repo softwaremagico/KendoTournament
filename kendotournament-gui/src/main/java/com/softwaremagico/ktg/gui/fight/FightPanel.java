@@ -784,12 +784,10 @@ public class FightPanel extends KFrame {
 				TGroup group = TournamentManagerFactory.getManager(getSelectedTournament()).getGroup(currentFight);
 				// If it was the last fight of group.
 				if (group.areFightsOver()) {
-					// Personalized and king of the mountain cannot undraw.
 					Ranking ranking = null;
 					try {
 						ranking = new Ranking(group.getFights());
 						if (TournamentManagerFactory.getManager(getSelectedTournament()).hasDrawScore(group)) {
-
 							moreDrawTeams = true;
 							while (moreDrawTeams) {
 								ranking = new Ranking(group.getFights());
