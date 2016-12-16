@@ -791,8 +791,10 @@ public class FightPanel extends KFrame {
 						if (!getSelectedTournament().getType().equals(TournamentType.PERSONALIZED)
 						// King of the mountain only resolve draw fights in the
 						// last fight.
-								&& (!getSelectedTournament().getType().equals(TournamentType.KING_OF_THE_MOUNTAIN) || !TournamentManagerFactory.getManager(
-										getSelectedTournament()).isNewLevelNeeded())) {
+								&& (!getSelectedTournament().getType().equals(TournamentType.KING_OF_THE_MOUNTAIN) || (!TournamentManagerFactory.getManager(
+										getSelectedTournament()).isNewLevelNeeded() && Objects.equals(currentFight.getLevel(), TournamentManagerFactory
+										.getManager(getSelectedTournament()).getCurrentLevel().getLevelIndex())))) {
+
 							moreDrawTeams = true;
 							while (moreDrawTeams) {
 								ranking = new Ranking(group.getFights());
