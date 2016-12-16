@@ -3,11 +3,13 @@ package com.softwaremagico.ktg.persistence;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.tools.Tools;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class TournamentPool extends SimplePool<Tournament> {
 
@@ -27,7 +29,7 @@ public class TournamentPool extends SimplePool<Tournament> {
 		return instance;
 	}
 
-	public List<Tournament> getByName(String name) throws SQLException {
+	public List<Tournament> getBySimilarName(String name) throws SQLException {
 		List<Tournament> result = new ArrayList<>();
 		for (Tournament element : getAll()) {
 			if (Tools.isSimilar(element.getName(), name)) {
@@ -36,6 +38,15 @@ public class TournamentPool extends SimplePool<Tournament> {
 		}
 		Collections.sort(result);
 		return result;
+	}
+
+	public Tournament getByName(String name) throws SQLException {
+		for (Tournament element : getAll()) {
+			if (Objects.equals(element.getName(), name)) {
+				return element;
+			}
+		}
+		return null;
 	}
 
 	@Override

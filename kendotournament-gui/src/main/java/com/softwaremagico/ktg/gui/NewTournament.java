@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.gui;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -68,8 +69,9 @@ public class NewTournament extends KendoFrame {
 	 */
 	public NewTournament() {
 		initComponents();
-		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2),
-				(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (int) (this.getHeight() / 2));
+		setLocation((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (int) (this.getWidth() / 2), (int) Toolkit.getDefaultToolkit()
+				.getScreenSize().getHeight()
+				/ 2 - (int) (this.getHeight() / 2));
 		setLanguage();
 		createBanner();
 
@@ -135,12 +137,21 @@ public class NewTournament extends KendoFrame {
 		createBanner();
 	}
 
+	/**
+	 * Name cannot be editable if the tournament is saved.
+	 * 
+	 * @param enable
+	 */
+	private void enableNameField(boolean enable) {
+		NameTextField.setEditable(enable);
+	}
+
 	public void updateWindow(Tournament tournament) {
 		updatingTournament = true;
 		oldTournament = tournament;
 		maxCompetitorTeam = tournament.getTeamSize();
 		NameTextField.setText(tournament.getName());
-		NameTextField.setEditable(false);
+		enableNameField(false);
 		NumCompetitorsSpinner.setValue(tournament.getTeamSize());
 		BannerTextField.setText("");
 		usingMultipleComputersCheckBox.setSelected(tournament.isUsingMultipleComputers());
@@ -172,9 +183,8 @@ public class NewTournament extends KendoFrame {
 	public boolean acceptTournament() {
 		try {
 			if (NameTextField.getText().length() > 0) {
-				Tournament newTournament = new Tournament(NameTextField.getText().trim(),
-						(Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(),
-						TournamentType.LEAGUE);
+				Tournament newTournament = new Tournament(NameTextField.getText().trim(), (Integer) AreasSpinner.getValue(), 1,
+						(Integer) NumCompetitorsSpinner.getValue(), TournamentType.LEAGUE);
 				newTournament.setUsingMultipleComputers(usingMultipleComputersCheckBox.isSelected());
 				if (!defaultBanner) {
 					newTournament.addBanner(banner);
@@ -191,12 +201,11 @@ public class NewTournament extends KendoFrame {
 					newTournament.setDiploma(oldTournament.getDiploma());
 					newTournament.setType(oldTournament.getType());
 					newTournament.setTournamentScore(oldTournament.getTournamentScore());
-					newTournament
-							.setHowManyTeamsOfGroupPassToTheTree(oldTournament.getHowManyTeamsOfGroupPassToTheTree());
+					newTournament.setHowManyTeamsOfGroupPassToTheTree(oldTournament.getHowManyTeamsOfGroupPassToTheTree());
 					TournamentPool.getInstance().update(oldTournament, newTournament);
 					AlertManager.informationMessage(NewTournament.class.getName(), "tournamentUpdated", "SQL");
 					AutoSaveByAction.getInstance().save();
-					//Update tournament of the manager if exists.
+					// Update tournament of the manager if exists.
 					TournamentManagerFactory.getManager(oldTournament).setTournament(newTournament);
 				} else {
 					TournamentPool.getInstance().add(newTournament);
@@ -311,61 +320,71 @@ public class NewTournament extends KendoFrame {
 
 		javax.swing.GroupLayout TournamentPanelLayout = new javax.swing.GroupLayout(TournamentPanel);
 		TournamentPanel.setLayout(TournamentPanelLayout);
-		TournamentPanelLayout.setHorizontalGroup(TournamentPanelLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(TournamentPanelLayout.createSequentialGroup().addContainerGap().addGroup(TournamentPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(usingMultipleComputersCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(bannerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
-						.addGroup(TournamentPanelLayout.createSequentialGroup().addGroup(TournamentPanelLayout
-								.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(FightingAreasLabel).addComponent(BannerLabel).addComponent(NameLabel)
-								.addComponent(NumberCompetitorsLabel))
-								.addGap(39, 39, 39)
-								.addGroup(TournamentPanelLayout
+		TournamentPanelLayout.setHorizontalGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				TournamentPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								TournamentPanelLayout
 										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(NumCompetitorsSpinner, javax.swing.GroupLayout.Alignment.TRAILING,
-												javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-										.addGroup(TournamentPanelLayout.createSequentialGroup()
-												.addComponent(BannerTextField, javax.swing.GroupLayout.DEFAULT_SIZE,
-														347, Short.MAX_VALUE)
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(ExploreButton))
-										.addComponent(AreasSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 419,
-												Short.MAX_VALUE)
-										.addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING,
-												javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))))
+										.addComponent(usingMultipleComputersCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(bannerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+										.addGroup(
+												TournamentPanelLayout
+														.createSequentialGroup()
+														.addGroup(
+																TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+																		.addComponent(FightingAreasLabel).addComponent(BannerLabel).addComponent(NameLabel)
+																		.addComponent(NumberCompetitorsLabel))
+														.addGap(39, 39, 39)
+														.addGroup(
+																TournamentPanelLayout
+																		.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+																		.addComponent(NumCompetitorsSpinner, javax.swing.GroupLayout.Alignment.TRAILING,
+																				javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+																		.addGroup(
+																				TournamentPanelLayout
+																						.createSequentialGroup()
+																						.addComponent(BannerTextField, javax.swing.GroupLayout.DEFAULT_SIZE,
+																								347, Short.MAX_VALUE)
+																						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																						.addComponent(ExploreButton))
+																		.addComponent(AreasSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+																		.addComponent(NameTextField, javax.swing.GroupLayout.Alignment.TRAILING,
+																				javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE))))
 						.addContainerGap()));
-		TournamentPanelLayout.setVerticalGroup(TournamentPanelLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(TournamentPanelLayout.createSequentialGroup().addContainerGap()
-						.addGroup(TournamentPanelLayout
-								.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false)
-								.addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(NameLabel))
+		TournamentPanelLayout.setVerticalGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				TournamentPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								TournamentPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER, false)
+										.addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(NameLabel))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(NumCompetitorsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(NumberCompetitorsLabel))
+						.addGroup(
+								TournamentPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(NumCompetitorsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(NumberCompetitorsLabel))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-								.addComponent(AreasSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(FightingAreasLabel))
+						.addGroup(
+								TournamentPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+										.addComponent(AreasSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(FightingAreasLabel))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(usingMultipleComputersCheckBox)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(TournamentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-								.addComponent(BannerTextField, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(BannerLabel).addComponent(ExploreButton))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(bannerPanel,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(
+								TournamentPanelLayout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+										.addComponent(BannerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(BannerLabel).addComponent(ExploreButton))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(bannerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
 
 		CancelButton.setText("Cancel");
 		CancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -389,36 +408,35 @@ public class NewTournament extends KendoFrame {
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup().addContainerGap()
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-								.addComponent(TournamentPanel, javax.swing.GroupLayout.Alignment.LEADING,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)
-								.addGroup(layout.createSequentialGroup().addComponent(SearchButton)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(PDFButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129,
-												Short.MAX_VALUE)
-										.addComponent(AcceptButton)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90,
-												javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap()));
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+										.addComponent(TournamentPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addGroup(
+												layout.createSequentialGroup()
+														.addComponent(SearchButton)
+														.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+														.addComponent(PDFButton, javax.swing.GroupLayout.PREFERRED_SIZE, 118,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+														.addComponent(AcceptButton)
+														.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+														.addComponent(CancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90,
+																javax.swing.GroupLayout.PREFERRED_SIZE))).addContainerGap()));
 
-		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL,
-				new java.awt.Component[] { AcceptButton, CancelButton, PDFButton, SearchButton });
+		layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] { AcceptButton, CancelButton, PDFButton, SearchButton });
 
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				javax.swing.GroupLayout.Alignment.TRAILING,
-				layout.createSequentialGroup().addContainerGap()
-						.addComponent(TournamentPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				layout.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(TournamentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(CancelButton).addComponent(AcceptButton).addComponent(SearchButton)
-								.addComponent(PDFButton))
-						.addContainerGap()));
+						.addGroup(
+								layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(CancelButton).addComponent(AcceptButton)
+										.addComponent(SearchButton).addComponent(PDFButton)).addContainerGap()));
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -446,13 +464,12 @@ public class NewTournament extends KendoFrame {
 
 	private void PDFButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_PDFButtonActionPerformed
 		if (NameTextField.getText().length() > 0) {
-			Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1,
-					(Integer) NumCompetitorsSpinner.getValue(), TournamentType.LEAGUE);
+			Tournament t = new Tournament(NameTextField.getText(), (Integer) AreasSpinner.getValue(), 1, (Integer) NumCompetitorsSpinner.getValue(),
+					TournamentType.LEAGUE);
 
 			try {
 				String file;
-				if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"),
-						JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
+				if (!(file = exploreWindowsForPdf(trans.getTranslatedText("ExportPDF"), JFileChooser.FILES_AND_DIRECTORIES, "")).equals("")) {
 					TournamentAccreditationPDF pdf = new TournamentAccreditationPDF(t);
 					pdf.setPrintAll(true);
 					pdf.createFile(file);

@@ -250,14 +250,20 @@ public class Tournament implements Comparable<Tournament>, Serializable, IClonab
 
 	@Override
 	public Tournament clone(Tournament tournament) {
-		Tournament newTournament = new Tournament(tournament.getName(), tournament.getFightingAreas(), tournament.getHowManyTeamsOfGroupPassToTheTree(),
-				tournament.getTeamSize(), tournament.getType());
+		Tournament newTournament = new Tournament(tournament.getName() + "_cloned", tournament.getFightingAreas(),
+				tournament.getHowManyTeamsOfGroupPassToTheTree(), tournament.getTeamSize(), tournament.getType());
 		newTournament.setBanner(tournament.getBanner());
 		newTournament.setDiploma(tournament.getDiploma());
 		newTournament.setAccreditation(tournament.getAccreditation());
 		newTournament.setTournamentScore(tournament.getTournamentScore());
 		newTournament.setDrawResolution(tournament.getDrawResolution());
 		newTournament.setUsingMultipleComputers(tournament.isUsingMultipleComputers());
+		return newTournament;
+	}
+
+	public Tournament clone(Tournament tournament, String newName) {
+		Tournament newTournament = clone(tournament);
+		newTournament.name = newName;
 		return newTournament;
 	}
 }

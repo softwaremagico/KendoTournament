@@ -23,17 +23,34 @@ package com.softwaremagico.ktg.gui;
  * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
  * #L%
  */
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.Configuration;
 import com.softwaremagico.ktg.core.Fight;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
 import com.softwaremagico.ktg.core.RegisteredPerson;
+import com.softwaremagico.ktg.core.Role;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.files.MyFile;
 import com.softwaremagico.ktg.files.Path;
 import com.softwaremagico.ktg.gui.base.RolesMenu;
-import com.softwaremagico.ktg.gui.fight.*;
+import com.softwaremagico.ktg.gui.fight.FightPanel;
+import com.softwaremagico.ktg.gui.fight.NewPersonalizedFight;
 import com.softwaremagico.ktg.gui.league.NewLoopLeague;
 import com.softwaremagico.ktg.gui.league.NewSimpleLeague;
 import com.softwaremagico.ktg.gui.tournament.TournamentDesigner;
@@ -65,24 +82,16 @@ import com.softwaremagico.ktg.persistence.RolePool;
 import com.softwaremagico.ktg.persistence.TeamPool;
 import com.softwaremagico.ktg.persistence.TournamentPool;
 import com.softwaremagico.ktg.persistence.UndrawPool;
-import com.softwaremagico.ktg.statistics.*;
+import com.softwaremagico.ktg.statistics.SelectCompetitorForPerformedHits;
+import com.softwaremagico.ktg.statistics.SelectCompetitorForReceivedHits;
+import com.softwaremagico.ktg.statistics.SelectCompetitorForWonFights;
+import com.softwaremagico.ktg.statistics.StatisticsGeneralHits;
+import com.softwaremagico.ktg.statistics.StatisticsHitsPerformed;
+import com.softwaremagico.ktg.statistics.StatisticsHitsReceived;
+import com.softwaremagico.ktg.statistics.StatisticsTeamTopTen;
+import com.softwaremagico.ktg.statistics.StatisticsTopTen;
 import com.softwaremagico.ktg.tournament.TournamentManagerFactory;
 import com.softwaremagico.ktg.tournament.TournamentType;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 public class Controller {
 	private MainGUI main;
@@ -1108,6 +1117,7 @@ public class Controller {
 	 */
 	private void addSearchTournamentListeners() {
 		searchTournament.addSelectButtonListener(new SearchTournamentSelectButtonListener());
+		searchTournament.getCloneButton().addActionListener(new CloneButtonListener());
 	}
 
 	class SearchTournamentSelectButtonListener implements ActionListener {
@@ -1119,6 +1129,50 @@ public class Controller {
 				newTournament.setVisible(true);
 				newTournament.updateWindow(tournament);
 				searchTournament.dispose();
+			}
+		}
+	}
+
+	class CloneButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			final Tournament tournament = searchTournament.returnSelectedItem();
+			if (tournament != null) {
+				searchTournament.dispose();
+				// Open name window.
+				final CloneTournamentNameWindow cloneTournamentNameWindow = new CloneTournamentNameWindow();
+				cloneTournamentNameWindow.setTournamentName(tournament.getName());
+				cloneTournamentNameWindow.setVisible(true);
+				cloneTournamentNameWindow.addAcceptButtonListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						try {
+							// Check not repeated name
+							if (TournamentPool.getInstance().getByName(cloneTournamentNameWindow.getTournamentName()) != null) {
+								AlertManager.errorMessage(Controller.class.getName(), "nameTournament", "");
+							} else {
+								final Tournament clonedTournament = tournament.clone(tournament, cloneTournamentNameWindow.getTournamentName());
+								// Finishing cloning.
+
+								for (Team team : TeamPool.getInstance().get(tournament)) {
+									Team clonedTeam = team.clone(clonedTournament);
+									TeamPool.getInstance().add(clonedTournament, clonedTeam);
+								}
+								for (Role role : RolePool.getInstance().get(tournament)) {
+									Role clonedRole = role.clone(clonedTournament);
+									RolePool.getInstance().add(clonedTournament, clonedRole);
+								}
+
+								newTournament.setVisible(true);
+								newTournament.updateWindow(clonedTournament);
+								cloneTournamentNameWindow.dispose();
+							}
+						} catch (SQLException ex) {
+							AlertManager.showSqlErrorMessage(ex);
+						}
+					}
+				});
 			}
 		}
 	}

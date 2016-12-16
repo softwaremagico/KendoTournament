@@ -16,6 +16,14 @@
 		<ca>El nom del club insertat ja existeix!</ca>
 		<it>Già esiste un club con questo nome!</it>
 	</nameClub>
+	<nameTournament>
+		<en>The name of the tournament already exists!</en>
+		<es>¡El nombre del campeonato ya existe!</es>
+		<nl>Naam van de toernooi bestaat al!</nl>
+		<de>Der Name des Wettkampf existiere bereits!</de>
+		<ca>El nom del campiontat insertat ja existeix!</ca>
+		<it>Già esiste un campionato con questo nome!</it>
+	</nameTournament>
 	<deniedUser>
 		<en>Access denied for the selected user. Check the user and the password.</en>
 		<es>Acceso denegado para el usuario seleccionado. Comprueba si la contraseña es correcta.</es>

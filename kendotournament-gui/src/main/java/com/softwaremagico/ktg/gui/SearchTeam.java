@@ -38,8 +38,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public final class SearchTeam extends Search<Team> {
-
-    private JLabel NameLabel = new JLabel("Name:");
+	private static final long serialVersionUID = 5008422991288117767L;
+	private JLabel NameLabel = new JLabel("Name:");
     private JTextField NameTextField = new JTextField();
     private JComboBox<Tournament> TournamentComboBox = new JComboBox();
     private JLabel TournamentLabel = new JLabel("Tournament:");

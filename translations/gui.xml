@@ -2371,4 +2371,12 @@
 		<ca>Elmina tots dos</ca>
 		<it>Elimina entrambi</it>	
 	</kingEliminateBoth>
+	<cloneButton>
+		<en>Clone</en>
+		<es>Clonar</es>
+		<nl>Clone</nl>
+		<de>Clone</de>
+		<ca>Clonar</ca>
+		<it>Clonare</it>	
+	</cloneButton>
 </translator>

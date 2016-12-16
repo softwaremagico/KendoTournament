@@ -131,6 +131,7 @@ Version:
 1.2.5	Changed combat generator for loop tournament. 
 
 1.3.0	Added "King of the Mountain" tournament mode.
+		Tournament can be cloned.
 
 
 Thanks to

@@ -7,6 +7,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
@@ -62,7 +63,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace pref="295" max="32767" attributes="0"/>
+                  <EmptySpace pref="362" max="32767" attributes="0"/>
                   <Component id="SearchButton" min="-2" pref="108" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -121,10 +122,12 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="ResultScrollPanel" alignment="1" pref="372" max="32767" attributes="0"/>
+                      <Component id="ResultScrollPanel" alignment="1" pref="458" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="DeleteButton" linkSize="2" min="-2" pref="96" max="-2" attributes="0"/>
-                          <EmptySpace pref="97" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="cloneButton" min="-2" pref="89" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="SelectButton" linkSize="2" min="-2" pref="89" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="CancelButton" linkSize="2" min="-2" max="-2" attributes="0"/>
@@ -144,6 +147,7 @@
                       <Component id="DeleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="SelectButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cloneButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -187,6 +191,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="cloneButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Clone"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cloneButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
