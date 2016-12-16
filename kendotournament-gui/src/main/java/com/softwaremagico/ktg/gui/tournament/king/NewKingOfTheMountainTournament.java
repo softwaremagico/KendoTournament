@@ -168,7 +168,6 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		gridBagConstraints.insets = new Insets(5, 5, 5, 5);
 
 		KPanel tournamentPanel = new KPanel(new GridBagLayout());
-		tournamentPanel.setMinimumSize(new Dimension(200, 50));
 
 		KLabel tournamentLabel = new KLabel("championship");
 		gridBagConstraints.gridx = 0;
