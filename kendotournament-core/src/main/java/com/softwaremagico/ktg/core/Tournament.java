@@ -39,7 +39,7 @@ import com.softwaremagico.ktg.tournament.king.DrawResolution;
 import com.softwaremagico.ktg.tournament.score.ScoreType;
 import com.softwaremagico.ktg.tournament.score.TournamentScore;
 
-public class Tournament implements Comparable<Tournament>, Serializable {
+public class Tournament implements Comparable<Tournament>, Serializable, IClonable<Tournament> {
 	private static final long serialVersionUID = 7794355885352426608L;
 	private static char[] fightAreaNames = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
 			'X', 'Y', 'Z' };
@@ -246,5 +246,18 @@ public class Tournament implements Comparable<Tournament>, Serializable {
 
 	public void setDrawResolution(DrawResolution drawResolution) {
 		this.drawResolution = drawResolution;
+	}
+
+	@Override
+	public Tournament clone(Tournament tournament) {
+		Tournament newTournament = new Tournament(tournament.getName(), tournament.getFightingAreas(), tournament.getHowManyTeamsOfGroupPassToTheTree(),
+				tournament.getTeamSize(), tournament.getType());
+		newTournament.setBanner(tournament.getBanner());
+		newTournament.setDiploma(tournament.getDiploma());
+		newTournament.setAccreditation(tournament.getAccreditation());
+		newTournament.setTournamentScore(tournament.getTournamentScore());
+		newTournament.setDrawResolution(tournament.getDrawResolution());
+		newTournament.setUsingMultipleComputers(tournament.isUsingMultipleComputers());
+		return newTournament;
 	}
 }

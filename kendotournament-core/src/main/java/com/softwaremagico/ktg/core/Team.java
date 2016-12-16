@@ -35,7 +35,7 @@ import java.util.Locale;
 import com.softwaremagico.ktg.core.exceptions.TeamMemberOrderException;
 import com.softwaremagico.ktg.persistence.RegisteredPersonPool;
 
-public class Team implements Comparable<Team> {
+public class Team implements Comparable<Team>, IClonable<Team> {
 
 	private Tournament tournament;
 	private HashMap<Integer, HashMap<Integer, RegisteredPerson>> membersOrder; // HashMap<Fight,HashMap<Order,Competitor>>
@@ -340,7 +340,7 @@ public class Team implements Comparable<Team> {
 	}
 
 	/**
-	 * Remove a meber of the team
+	 * Remove a member of the team
 	 *
 	 * @return false if the member is not of this team.
 	 */
@@ -355,5 +355,20 @@ public class Team implements Comparable<Team> {
 			}
 		}
 		return found;
+	}
+
+	@Override
+	public Team clone(Tournament tournament) {
+		Team newTeam = new Team(getName(), tournament);
+		newTeam.setGroup(getGroup());
+		for (int fight : membersOrder.keySet()) {
+			if (newTeam.getMembersOrder(fight) == null) {
+				newTeam.getMembersOrder().put(fight, new HashMap<Integer, RegisteredPerson>());
+			}
+			for (Integer order : getMembersOrder(fight).keySet()) {
+				newTeam.getMembersOrder(fight).put(order, getMembersOrder(fight).get(order));
+			}
+		}
+		return newTeam;
 	}
 }
