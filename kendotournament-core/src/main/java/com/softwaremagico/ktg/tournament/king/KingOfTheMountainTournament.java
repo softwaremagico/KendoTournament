@@ -3,8 +3,10 @@ package com.softwaremagico.ktg.tournament.king;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
@@ -163,6 +165,17 @@ public class KingOfTheMountainTournament extends LevelBasedTournament {
 					return redTeams.get(redTeams.size() - 1).equals(lastLevel.getCurrentRedTeam());
 				}
 			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean hasDrawScore(TGroup group) {
+		// King of the mountain only resolve draw fights in the last level.
+		if (!isNewLevelNeeded() && Objects.equals(group.getLevel(), getCurrentLevel().getLevelIndex())) {
+			Ranking ranking = new Ranking(group.getFights());
+			List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getTournament().getHowManyTeamsOfGroupPassToTheTree());
+			return (teamsInDraw != null);
 		}
 		return false;
 	}

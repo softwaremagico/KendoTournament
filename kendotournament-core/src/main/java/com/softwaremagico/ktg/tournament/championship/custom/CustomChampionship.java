@@ -1,14 +1,14 @@
 package com.softwaremagico.ktg.tournament.championship.custom;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
 import com.softwaremagico.ktg.persistence.CustomLinkPool;
 import com.softwaremagico.ktg.tournament.CustomWinnerLink;
 import com.softwaremagico.ktg.tournament.TGroup;
 import com.softwaremagico.ktg.tournament.championship.Championship;
-
-import java.sql.SQLException;
-import java.util.List;
 
 public class CustomChampionship extends Championship {
 
@@ -47,5 +47,13 @@ public class CustomChampionship extends Championship {
 		} catch (SQLException ex) {
 			KendoLog.errorMessage(this.getClass().getName(), ex);
 		}
+	}
+
+	/**
+	 * Custom championship do not handle draw fights.
+	 */
+	@Override
+	public boolean hasDrawScore(TGroup group) {
+		return false;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.softwaremagico.ktg.core.Fight;
+import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
 import com.softwaremagico.ktg.core.Tournament;
 import com.softwaremagico.ktg.log.KendoLog;
@@ -290,5 +291,12 @@ public class SimpleTournament implements ITournamentManager {
 	@Override
 	public void createNextLevel() throws TournamentFinishedException {
 		// Only one level is needed.
+	}
+
+	@Override
+	public boolean hasDrawScore(TGroup group) {
+		Ranking ranking = new Ranking(group.getFights());
+		List<Team> teamsInDraw = ranking.getFirstTeamsWithDrawScore(getTournament().getHowManyTeamsOfGroupPassToTheTree());
+		return (teamsInDraw != null);
 	}
 }

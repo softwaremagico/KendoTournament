@@ -125,4 +125,12 @@ public interface ITournamentManager {
 	boolean isNewLevelNeeded();
 
 	void createNextLevel() throws TournamentFinishedException;
+
+	/**
+	 * Defines if a fight has a draw value or not.
+	 * 
+	 * @param fight
+	 * @return
+	 */
+	boolean hasDrawScore(TGroup group);
 }

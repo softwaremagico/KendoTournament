@@ -203,6 +203,7 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
+		Assert.assertFalse(kingOfTheMountainTournament.hasDrawScore(kingOfTheMountainTournament.getLevel(4).getGroups().get(0)));
 		Assert.assertTrue(kingOfTheMountainTournament.getLevel(4).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
@@ -225,6 +226,7 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
+		Assert.assertFalse(kingOfTheMountainTournament.hasDrawScore(kingOfTheMountainTournament.getLevel(5).getGroups().get(0)));
 		Assert.assertTrue(kingOfTheMountainTournament.getLevel(5).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
@@ -247,6 +249,7 @@ public class KingOfTheMountainTest {
 		fight.getDuels().get(0).setHit(true, 0, Score.MEN);
 		fight.getDuels().get(0).setHit(false, 0, Score.MEN);
 		fight.setOver(true);
+		Assert.assertFalse(kingOfTheMountainTournament.hasDrawScore(kingOfTheMountainTournament.getLevel(6).getGroups().get(0)));
 		Assert.assertTrue(kingOfTheMountainTournament.getLevel(6).getGroups().get(0).getFights().get(0).isDrawFight());
 	}
 
