@@ -1,4 +1,5 @@
 package com.softwaremagico.ktg.persistence;
+
 /*
  * #%L
  * KendoTournamentGenerator
@@ -60,9 +61,10 @@ public class ConvertDatabase {
 	public void stablishConnection(String fromDatabasePassword, String fromDatabaseUser,
 			String fromDatabaseDatabaseName, String fromDatabaseServer, String toDatabasePassword,
 			String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer)
-					throws CommunicationsException {
-		if (createConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName, fromDatabaseServer,
-				toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer)) {
+			throws CommunicationsException {
+		if (createConnection(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName,
+				fromDatabaseServer, toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName,
+				toDatabaseServer)) {
 			startThread();
 		}
 	}
@@ -70,12 +72,12 @@ public class ConvertDatabase {
 	private boolean createConnection(String fromDatabasePassword, String fromDatabaseUser,
 			String fromDatabaseDatabaseName, String fromDatabaseServer, String toDatabasePassword,
 			String toDatabaseUser, String toDatabaseDatabaseName, String toDatabaseServer)
-					throws CommunicationsException {
+			throws CommunicationsException {
 		try {
 			if (fromDatabase.connect(fromDatabasePassword, fromDatabaseUser, fromDatabaseDatabaseName,
 					fromDatabaseServer, true, true)) {
-				if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName, toDatabaseServer,
-						true, true)) {
+				if (toDatabase.connect(toDatabasePassword, toDatabaseUser, toDatabaseDatabaseName,
+						toDatabaseServer, true, true)) {
 					return true;
 				}
 			}
@@ -104,57 +106,63 @@ public class ConvertDatabase {
 
 		private boolean dumpData() {
 			try {
-				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"), 0, 1);
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelTournament"),
+						0, 1);
 				List<Tournament> tournaments = fromDatabase.getTournaments();
 				toDatabase.addTournaments(tournaments);
 
 				Integer total = 3 + tournaments.size() * 5;
 				Integer current = 0;
 
-				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelClub"), current++, total);
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelClub"),
+						current++, total);
 				List<Club> clubs = fromDatabase.getClubs();
 				toDatabase.addClubs(clubs);
 
-				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelCompetitor"), current++,
-						total);
+				timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelCompetitor"),
+						current++, total);
 				List<RegisteredPerson> people = fromDatabase.getRegisteredPeople();
 				toDatabase.addRegisteredPeople(people);
 
 				for (Tournament tournament : tournaments) {
-					timerPanel.updateText(
-							transl.getTranslatedText("ExportDatabaseProgressBarLabelRole") + " (" + tournament + ")",
-							current++, total);
+					timerPanel.updateText(transl.getTranslatedText("ExportDatabaseProgressBarLabelRole")
+							+ " (" + tournament + ")", current++, total);
 					List<Role> roles = fromDatabase.getRoles(tournament);
 					toDatabase.addRoles(roles);
 
 					timerPanel.updateText(
-							transl.getTranslatedText("ExportDatabaseProgressBarLabelTeam" + " (" + tournament + ")"),
-							current++, total);
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelTeam") + " (" + tournament
+									+ ")", current++, total);
 					List<Team> teams = fromDatabase.getTeams(tournament);
 					toDatabase.addTeams(teams);
 
 					timerPanel.updateText(
-							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
-							current++, total);
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight") + " ("
+									+ tournament + ")", current++, total);
 					List<Fight> fights = fromDatabase.getFights(tournament);
 					toDatabase.addFights(fights);
 
 					timerPanel.updateText(
-							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
-							current++, total);
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight") + " ("
+									+ tournament + ")", current++, total);
 					List<Duel> duels = fromDatabase.getDuels(tournament);
 					toDatabase.addDuels(duels);
 
 					timerPanel.updateText(
-							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight" + " (" + tournament + ")"),
-							current++, total);
+							transl.getTranslatedText("ExportDatabaseProgressBarLabelFight") + " ("
+									+ tournament + ")", current++, total);
 					List<Undraw> undraws = fromDatabase.getUndraws(tournament);
 					toDatabase.addUndraws(undraws);
 				}
 
 				timerPanel.dispose();
 				AlertManager.informationMessage(this.getClass().getName(), "ConversionCompleted", "Database");
-			} catch (SQLException | TeamMemberOrderException e) {
+			} catch (SQLException e) {
+				AlertManager.errorMessage(this.getClass().getName(), "invalidDatabase", "SQL");
+				AlertManager.showErrorInformation(this.getClass().getName(), e);
+				timerPanel.dispose();
+				return false;
+			} catch (TeamMemberOrderException e) {
 				AlertManager.showErrorInformation(this.getClass().getName(), e);
 				timerPanel.dispose();
 				return false;

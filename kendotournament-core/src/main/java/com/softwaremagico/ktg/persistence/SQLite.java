@@ -176,6 +176,7 @@ public class SQLite extends SQL {
                 + "\"Accreditation\" mediumblob," + "\"DiplomaSize\" double NOT NULL DEFAULT '0',"
                 + "\"AccreditationSize\" double NOT NULL,"
                 + "\"UsingMultipleComputers\" integer DEFAULT 0,"
+                + "\"DrawResolution\" varchar(10) DEFAULT 'oldest',"
                 + "PRIMARY KEY (Name)" + ")";
         executeQuery(sqlQuery);
     }

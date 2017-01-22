@@ -1206,5 +1206,13 @@
 		<ca>La contrasenya inserida no coincidix!</ca>
 		<it>La password digitata non corrisponde!</it>
 	</passwordDoesNotMatch>
+	<invalidDatabase>
+		<en>The destination database is not valid. Probably from an old version of the software.</en>
+		<es>La base de datos de destino no es válida. Probablemente pertenezca a una versión antigua del software.</es>
+		<nl>The destination database is not valid. Probably from an old version of the software.</nl>
+		<de>The destination database is not valid. Probably from an old version of the software.</de>
+		<ca>The destination database is not valid. Probably from an old version of the software.</ca>
+		<it>The destination database is not valid. Probably from an old version of the software.</it>
+	</invalidDatabase>
 </translator>
 

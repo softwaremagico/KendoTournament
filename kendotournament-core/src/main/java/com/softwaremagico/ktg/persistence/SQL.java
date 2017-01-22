@@ -138,7 +138,8 @@ public abstract class SQL extends Database {
 		}
 	}
 
-	protected abstract void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size) throws SQLException;
+	protected abstract void storeBinaryStream(PreparedStatement stmt, int index, InputStream input, int size)
+			throws SQLException;
 
 	protected abstract InputStream getBinaryStream(ResultSet rs, String column) throws SQLException;
 
@@ -150,23 +151,25 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * COMPETITOR
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a role into the database.
-	 *
+	 * 
 	 * @param registeredPeople
 	 * @return
 	 * @throws java.sql.SQLException
 	 */
 	@Override
-	protected synchronized boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople) throws SQLException {
+	protected synchronized boolean addRegisteredPeople(List<RegisteredPerson> registeredPeople)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "addRegisteredPeople");
 		for (RegisteredPerson person : registeredPeople) {
-			try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club) VALUES (?,?,?,?);")) {
+			try (PreparedStatement stmt = connection
+					.prepareStatement("INSERT INTO competitor (ID, Name, Surname, Club) VALUES (?,?,?,?);")) {
 				stmt.setString(1, person.getId());
 				stmt.setString(2, person.getName());
 				stmt.setString(3, person.getSurname());
@@ -193,10 +196,12 @@ public abstract class SQL extends Database {
 	protected synchronized List<RegisteredPerson> getRegisteredPeople() throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "getRegisteredPeople");
 		List<RegisteredPerson> results = new ArrayList<>();
-		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery("SELECT ID, Name, Surname, Club FROM competitor ORDER BY Surname;")) {
+		try (Statement s = connection.createStatement();
+				ResultSet rs = s
+						.executeQuery("SELECT ID, Name, Surname, Club FROM competitor ORDER BY Surname;")) {
 			while (rs.next()) {
-				RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs.getObject("Name").toString(), rs.getObject("Surname")
-						.toString());
+				RegisteredPerson registered = new RegisteredPerson(rs.getObject("ID").toString(), rs
+						.getObject("Name").toString(), rs.getObject("Surname").toString());
 				Object clubName = rs.getObject("Club");
 				if (clubName != null) {
 					registered.setClub(ClubPool.getInstance().get(clubName.toString()));
@@ -237,13 +242,15 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateRegisteredPeople(Map<RegisteredPerson, RegisteredPerson> peopleExchange) throws SQLException {
+	protected synchronized boolean updateRegisteredPeople(
+			Map<RegisteredPerson, RegisteredPerson> peopleExchange) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
 		List<RegisteredPerson> newPeople = new ArrayList<>(peopleExchange.keySet());
 		for (RegisteredPerson newPerson : newPeople) {
 			RegisteredPerson oldPerson = peopleExchange.get(newPerson);
-			try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET ID=?, Name=?, Surname=?, Club=? WHERE ID='" + oldPerson.getId()
-					+ "'")) {
+			try (PreparedStatement stmt = connection
+					.prepareStatement("UPDATE competitor SET ID=?, Name=?, Surname=?, Club=? WHERE ID='"
+							+ oldPerson.getId() + "'")) {
 				stmt.setString(1, newPerson.getId());
 				stmt.setString(2, newPerson.getName());
 				stmt.setString(3, newPerson.getSurname());
@@ -291,7 +298,9 @@ public abstract class SQL extends Database {
 	protected synchronized boolean setPhotos(List<Photo> photos) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "setPhoto");
 		for (Photo photo : photos) {
-			try (PreparedStatement stmt = connection.prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId() + "'")) {
+			try (PreparedStatement stmt = connection
+					.prepareStatement("UPDATE competitor SET Photo=?, PhotoSize=? WHERE ID='" + photo.getId()
+							+ "'")) {
 				storeBinaryStream(stmt, 1, photo.getInput(), (int) photo.getSize());
 				stmt.setLong(2, photo.getSize());
 				try {
@@ -310,14 +319,14 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * ROLE
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a role into the database.
-	 *
+	 * 
 	 * @param roles
 	 * @return
 	 * @throws java.sql.SQLException
@@ -329,10 +338,19 @@ public abstract class SQL extends Database {
 		// Insert team.
 		for (int i = 0; i < roles.size(); i++) {
 			try {
-				RegisteredPerson participant = RegisteredPersonPool.getInstance().get(roles.get(i).getCompetitor().getId());
+				RegisteredPerson participant = RegisteredPersonPool.getInstance().get(
+						roles.get(i).getCompetitor().getId());
 				query += "INSERT INTO role (Role, Tournament, Competitor, ImpressCardOrder, ImpressCardPrinted, DiplomaPrinted) VALUES ('"
-						+ roles.get(i).getDatabaseTag() + "','" + roles.get(i).getTournament().getName() + "','" + participant.getId() + "', "
-						+ roles.get(i).getAccreditationOrder() + ", " + getBoolean(roles.get(i).isAccreditationPrinted()) + ","
+						+ roles.get(i).getDatabaseTag()
+						+ "','"
+						+ roles.get(i).getTournament().getName()
+						+ "','"
+						+ participant.getId()
+						+ "', "
+						+ roles.get(i).getAccreditationOrder()
+						+ ", "
+						+ getBoolean(roles.get(i).isAccreditationPrinted())
+						+ ","
 						+ getBoolean(roles.get(i).isDiplomaPrinted()) + ");\n ";
 			} catch (NullPointerException npe) {
 				KendoLog.errorMessage(this.getClass().getName(), npe);
@@ -361,9 +379,11 @@ public abstract class SQL extends Database {
 
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
-				Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()), RegisteredPersonPool.getInstance().get(
-						rs.getObject("Competitor").toString()), RolePool.getInstance().getRoleTags().getRole(rs.getObject("Role").toString()),
-						rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"), rs.getBoolean("DiplomaPrinted"));
+				Role role = new Role(TournamentPool.getInstance().get(rs.getObject("Tournament").toString()),
+						RegisteredPersonPool.getInstance().get(rs.getObject("Competitor").toString()),
+						RolePool.getInstance().getRoleTags().getRole(rs.getObject("Role").toString()),
+						rs.getInt("ImpressCardOrder"), rs.getBoolean("ImpressCardPrinted"),
+						rs.getBoolean("DiplomaPrinted"));
 				results.add(role);
 			}
 		} catch (SQLException ex) {
@@ -381,7 +401,8 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "removeRoles");
 		String query = "";
 		for (int i = 0; i < roles.size(); i++) {
-			query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + roles.get(i).getCompetitor() + "'; ";
+			query += "DELETE FROM role WHERE Tournament='" + tournament.getName() + "' AND Competitor='"
+					+ roles.get(i).getCompetitor() + "'; ";
 			if (i % getMaxElementsInQuery() == 0 || i == roles.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -400,14 +421,17 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateRoles(Tournament tournament, Map<Role, Role> rolesExchange) throws SQLException {
+	protected synchronized boolean updateRoles(Tournament tournament, Map<Role, Role> rolesExchange)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateRoles");
 		List<Role> newRoles = new ArrayList<>(rolesExchange.keySet());
 		String query = "";
 		for (int i = 0; i < newRoles.size(); i++) {
-			query += "UPDATE role SET Role='" + newRoles.get(i).getDatabaseTag() + "', ImpressCardOrder=" + newRoles.get(i).getAccreditationOrder()
-					+ ", ImpressCardPrinted=" + newRoles.get(i).isAccreditationPrinted() + ", DiplomaPrinted=" + newRoles.get(i).isDiplomaPrinted()
-					+ "  WHERE Tournament='" + tournament.getName() + "' AND Competitor='" + newRoles.get(i).getCompetitor().getId() + "'; ";
+			query += "UPDATE role SET Role='" + newRoles.get(i).getDatabaseTag() + "', ImpressCardOrder="
+					+ newRoles.get(i).getAccreditationOrder() + ", ImpressCardPrinted="
+					+ newRoles.get(i).isAccreditationPrinted() + ", DiplomaPrinted="
+					+ newRoles.get(i).isDiplomaPrinted() + "  WHERE Tournament='" + tournament.getName()
+					+ "' AND Competitor='" + newRoles.get(i).getCompetitor().getId() + "'; ";
 			if (i % getMaxElementsInQuery() == 0 || i == newRoles.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -427,14 +451,14 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * CLUB
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a Club into the database.
-	 *
+	 * 
 	 * @param clubs
 	 * @return
 	 * @throws java.sql.SQLException
@@ -444,9 +468,20 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "storeClub");
 		String query = "";
 		for (int i = 0; i < clubs.size(); i++) {
-			query += "INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('" + clubs.get(i).getName() + "','"
-					+ clubs.get(i).getCountry() + "','" + clubs.get(i).getCity() + "','" + clubs.get(i).getAddress() + "','" + clubs.get(i).getWeb() + "','"
-					+ clubs.get(i).getMail() + "','" + clubs.get(i).getPhone() + "','" + clubs.get(i).getRepresentativeID() + "'); ";
+			query += "INSERT INTO club (Name, Country, City, Address, Web, Mail, Phone, Representative) VALUES ('"
+					+ clubs.get(i).getName()
+					+ "','"
+					+ clubs.get(i).getCountry()
+					+ "','"
+					+ clubs.get(i).getCity()
+					+ "','"
+					+ clubs.get(i).getAddress()
+					+ "','"
+					+ clubs.get(i).getWeb()
+					+ "','"
+					+ clubs.get(i).getMail()
+					+ "','"
+					+ clubs.get(i).getPhone() + "','" + clubs.get(i).getRepresentativeID() + "'); ";
 			if (i % getMaxElementsInQuery() == 0 || i == clubs.size() - 1) {
 				try (PreparedStatement s = connection.prepareStatement(query)) {
 					s.executeUpdate();
@@ -468,7 +503,8 @@ public abstract class SQL extends Database {
 	protected synchronized List<Club> getClubs() throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "getClubs");
 		List<Club> results = new ArrayList<>();
-		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery("SELECT * FROM club ORDER BY Name")) {
+		try (Statement s = connection.createStatement();
+				ResultSet rs = s.executeQuery("SELECT * FROM club ORDER BY Name")) {
 			while (rs.next()) {
 				String city = "";
 				if (rs.getObject("City") != null) {
@@ -490,7 +526,8 @@ public abstract class SQL extends Database {
 				} catch (NullPointerException npe) {
 				}
 				try {
-					c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail").toString(), rs.getObject("Phone").toString());
+					c.setRepresentative(rs.getObject("Representative").toString(), rs.getObject("Mail")
+							.toString(), rs.getObject("Phone").toString());
 				} catch (NullPointerException npe) {
 				}
 				results.add(c);
@@ -535,10 +572,12 @@ public abstract class SQL extends Database {
 		String query = "";
 		for (int i = 0; i < newClubs.size(); i++) {
 			Club oldClub = clubsExchange.get(newClubs.get(i));
-			query += "UPDATE club SET Name='" + newClubs.get(i).getName() + "', Country='" + newClubs.get(i).getCountry() + "', City='"
-					+ newClubs.get(i).getCity() + "', Address='" + newClubs.get(i).getAddress() + "', Web='" + newClubs.get(i).getWeb() + "', Mail='"
-					+ newClubs.get(i).getMail() + "', Phone='" + newClubs.get(i).getPhone() + "', Representative='" + newClubs.get(i).getRepresentativeID()
-					+ "' WHERE Name='" + oldClub.getName() + "'; ";
+			query += "UPDATE club SET Name='" + newClubs.get(i).getName() + "', Country='"
+					+ newClubs.get(i).getCountry() + "', City='" + newClubs.get(i).getCity() + "', Address='"
+					+ newClubs.get(i).getAddress() + "', Web='" + newClubs.get(i).getWeb() + "', Mail='"
+					+ newClubs.get(i).getMail() + "', Phone='" + newClubs.get(i).getPhone()
+					+ "', Representative='" + newClubs.get(i).getRepresentativeID() + "' WHERE Name='"
+					+ oldClub.getName() + "'; ";
 			if (i % getMaxElementsInQuery() == 0 || i == newClubs.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -558,14 +597,14 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * TOURNAMENT
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a Club into the database.
-	 *
+	 * 
 	 * @param tournaments
 	 * @return
 	 * @throws java.sql.SQLException
@@ -578,7 +617,8 @@ public abstract class SQL extends Database {
 					.prepareStatement("INSERT INTO tournament (Name, Banner, Size, FightingAreas, PassingTeams, TeamSize, Type, ScoreWin, ScoreDraw, ScoreType, Diploma, DiplomaSize, Accreditation, AccreditationSize, UsingMultipleComputers, DrawResolution) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
 				stmt.setString(1, tournament.getName());
 				if (tournament.getBanner() != null) {
-					storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
+					storeBinaryStream(stmt, 2, tournament.getBanner().getInput(), (int) tournament
+							.getBanner().getSize());
 					stmt.setLong(3, tournament.getBanner().getSize());
 				} else {
 					storeBinaryStream(stmt, 2, null, 0);
@@ -602,14 +642,16 @@ public abstract class SQL extends Database {
 					}
 				}
 				if (tournament.getDiploma() != null) {
-					storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
+					storeBinaryStream(stmt, 11, tournament.getDiploma().getInput(), (int) tournament
+							.getDiploma().getSize());
 					stmt.setLong(12, tournament.getDiploma().getSize());
 				} else {
 					storeBinaryStream(stmt, 11, null, 0);
 					stmt.setLong(12, 0);
 				}
 				if (tournament.getAccreditation() != null) {
-					storeBinaryStream(stmt, 13, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
+					storeBinaryStream(stmt, 13, tournament.getAccreditation().getInput(), (int) tournament
+							.getAccreditation().getSize());
 					stmt.setLong(14, tournament.getAccreditation().getSize());
 				} else {
 					storeBinaryStream(stmt, 13, null, 0);
@@ -635,12 +677,14 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "getTournaments");
 		List<Tournament> results = new ArrayList<>();
 		KendoLog.fine(SQL.class.getName(), "Getting all tournaments.");
-		try (Statement st = connection.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
+		try (Statement st = connection.createStatement();
+				ResultSet rs = st.executeQuery("SELECT * FROM tournament ORDER BY Name")) {
 			while (rs.next()) {
-				Tournament tournament = new Tournament(rs.getObject("Name").toString(), rs.getInt("FightingAreas"), rs.getInt("PassingTeams"),
-						rs.getInt("TeamSize"), TournamentType.getType(rs.getObject("Type").toString()));
-				tournament.setTournamentScore(new TournamentScore(ScoreType.getScoreType(rs.getString("ScoreType")), rs.getInt("ScoreWin"), rs
-						.getInt("ScoreDraw")));
+				Tournament tournament = new Tournament(rs.getObject("Name").toString(),
+						rs.getInt("FightingAreas"), rs.getInt("PassingTeams"), rs.getInt("TeamSize"),
+						TournamentType.getType(rs.getObject("Type").toString()));
+				tournament.setTournamentScore(new TournamentScore(ScoreType.getScoreType(rs
+						.getString("ScoreType")), rs.getInt("ScoreWin"), rs.getInt("ScoreDraw")));
 				InputStream sImage = getBinaryStream(rs, "Banner");
 				Integer size = rs.getInt("Size");
 				Photo banner = new Photo(tournament.getName());
@@ -665,7 +709,8 @@ public abstract class SQL extends Database {
 						return getTournaments();
 					}
 				}
-				tournament.setDrawResolution(DrawResolution.getFromTag(rs.getObject("DrawResolution").toString()));
+				tournament.setDrawResolution(DrawResolution.getFromTag(rs.getObject("DrawResolution")
+						.toString()));
 				results.add(tournament);
 			}
 			KendoLog.exiting(this.getClass().getName(), "getTournaments");
@@ -704,7 +749,8 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateTournaments(Map<Tournament, Tournament> tournamentsExchange) throws SQLException {
+	protected synchronized boolean updateTournaments(Map<Tournament, Tournament> tournamentsExchange)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateTournaments");
 		List<Tournament> newTournaments = new ArrayList<>(tournamentsExchange.keySet());
 		for (Tournament tournament : newTournaments) {
@@ -713,7 +759,8 @@ public abstract class SQL extends Database {
 					.prepareStatement("UPDATE tournament SET Banner=?, Size=?, FightingAreas=?, PassingTeams=?, TeamSize=?, Type=?, ScoreWin=?, ScoreDraw=?, ScoreType=?, Diploma=?, DiplomaSize=?, Accreditation=?, AccreditationSize=?, Name=?, UsingMultipleComputers=?, DrawResolution=? WHERE Name='"
 							+ oldTournament.getName() + "';")) {
 				try {
-					storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament.getBanner().getSize());
+					storeBinaryStream(stmt, 1, tournament.getBanner().getInput(), (int) tournament
+							.getBanner().getSize());
 					stmt.setLong(2, tournament.getBanner().getSize());
 				} catch (NullPointerException npe) {
 					storeBinaryStream(stmt, 1, null, 0);
@@ -727,14 +774,16 @@ public abstract class SQL extends Database {
 				stmt.setFloat(8, tournament.getTournamentScore().getPointsDraw());
 				stmt.setString(9, tournament.getTournamentScore().getScoreType().getTag());
 				try {
-					storeBinaryStream(stmt, 10, tournament.getDiploma().getInput(), (int) tournament.getDiploma().getSize());
+					storeBinaryStream(stmt, 10, tournament.getDiploma().getInput(), (int) tournament
+							.getDiploma().getSize());
 					stmt.setLong(11, tournament.getDiploma().getSize());
 				} catch (NullPointerException npe) {
 					storeBinaryStream(stmt, 10, null, 0);
 					stmt.setLong(11, 0);
 				}
 				try {
-					storeBinaryStream(stmt, 12, tournament.getAccreditation().getInput(), (int) tournament.getAccreditation().getSize());
+					storeBinaryStream(stmt, 12, tournament.getAccreditation().getInput(), (int) tournament
+							.getAccreditation().getSize());
 					stmt.setLong(13, tournament.getAccreditation().getSize());
 				} catch (NullPointerException npe) {
 					storeBinaryStream(stmt, 12, null, 0);
@@ -758,21 +807,23 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * TEAM
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * @param tournament
 	 * @return
 	 * @throws java.sql.SQLException
 	 * @throws TeamMemberOrderException
-	 *
+	 * 
 	 */
 	@Override
-	protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException, TeamMemberOrderException {
-		String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName() + "' ORDER BY Name, FightOfTournament, Position; ";
+	protected synchronized List<Team> getTeams(Tournament tournament) throws SQLException,
+			TeamMemberOrderException {
+		String query = "SELECT * FROM team WHERE Tournament='" + tournament.getName()
+				+ "' ORDER BY Name, FightOfTournament, Position; ";
 		KendoLog.entering(this.getClass().getName(), "searchTeam");
 		KendoLog.finer(SQL.class.getName(), query);
 
@@ -781,12 +832,14 @@ public abstract class SQL extends Database {
 			while (rs.next()) {
 				Team t = teams.get(rs.getObject("Name").toString());
 				if (t == null) {
-					t = new Team(rs.getObject("Name").toString(), TournamentPool.getInstance().get(rs.getObject("Tournament").toString()));
+					t = new Team(rs.getObject("Name").toString(), TournamentPool.getInstance().get(
+							rs.getObject("Tournament").toString()));
 					teams.put(t.getName(), t);
 					t.addGroup(rs.getInt("LeagueGroup"));
 				}
 				// For each line obtained from the database, add a member.
-				t.setMember(RegisteredPersonPool.getInstance().get(rs.getObject("Member").toString()), rs.getInt("Position"), rs.getInt("FightOfTournament"));
+				t.setMember(RegisteredPersonPool.getInstance().get(rs.getObject("Member").toString()),
+						rs.getInt("Position"), rs.getInt("FightOfTournament"));
 			}
 		} catch (SQLException ex) {
 			showSqlError(ex);
@@ -800,7 +853,7 @@ public abstract class SQL extends Database {
 
 	/**
 	 * Insert a team into the database.
-	 *
+	 * 
 	 * @param teams
 	 * @return
 	 * @throws java.sql.SQLException
@@ -814,9 +867,16 @@ public abstract class SQL extends Database {
 			for (Integer fightIndex : teams.get(i).getMembersOrder().keySet()) {
 				for (Integer indexCompetitor : teams.get(i).getMembersOrder().get(fightIndex).keySet()) {
 					try {
-						query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('" + teams.get(i).getName()
-								+ "','" + teams.get(i).getMember(indexCompetitor, fightIndex).getId() + "','" + teams.get(i).getTournament().getName() + "',"
-								+ indexCompetitor + "," + teams.get(i).getGroup() + "," + fightIndex + ");\n";
+						query += "INSERT INTO team (Name, Member, Tournament, Position, LeagueGroup, FightOfTournament) VALUES ('"
+								+ teams.get(i).getName()
+								+ "','"
+								+ teams.get(i).getMember(indexCompetitor, fightIndex).getId()
+								+ "','"
+								+ teams.get(i).getTournament().getName()
+								+ "',"
+								+ indexCompetitor
+								+ ","
+								+ teams.get(i).getGroup() + "," + fightIndex + ");\n";
 					} catch (NullPointerException npe) { // The team has one
 						// competitor less...
 					}
@@ -850,7 +910,8 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "removeTeams");
 		String query = "";
 		for (int i = 0; i < teams.size(); i++) {
-			query += "DELETE FROM team WHERE Name='" + teams.get(i).getName() + "' AND Tournament='" + teams.get(i).getTournament().getName() + "'; ";
+			query += "DELETE FROM team WHERE Name='" + teams.get(i).getName() + "' AND Tournament='"
+					+ teams.get(i).getTournament().getName() + "'; ";
 			if (i % getMaxElementsInQuery() == 0 || i == teams.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -869,11 +930,13 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean removeTeamsOrder(Tournament tournament, Integer fightIndex) throws SQLException {
+	protected synchronized boolean removeTeamsOrder(Tournament tournament, Integer fightIndex)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "removeTeams");
 		if (fightIndex != null) {
 			String query = "";
-			query += "DELETE FROM team WHERE Tournament='" + tournament.getName() + "' AND FightOfTournament >=" + fightIndex + "; ";
+			query += "DELETE FROM team WHERE Tournament='" + tournament.getName()
+					+ "' AND FightOfTournament >=" + fightIndex + "; ";
 			try (Statement s = connection.createStatement()) {
 				s.executeUpdate(query);
 			} catch (SQLException ex) {
@@ -901,13 +964,13 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * FIGHTS
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
-	 *
+	 * 
 	 * @param tournament
 	 * @return
 	 * @throws java.sql.SQLException
@@ -921,9 +984,10 @@ public abstract class SQL extends Database {
 		List<Fight> results = new ArrayList<>();
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
-				Fight f = new Fight(tournament, TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()), TeamPool.getInstance().get(
-						tournament, rs.getObject("Team2").toString()), rs.getInt("FightArea"), rs.getInt("TournamentLevel"), rs.getInt("TournamentGroup"),
-						rs.getInt("GroupIndex"));
+				Fight f = new Fight(tournament, TeamPool.getInstance().get(tournament,
+						rs.getObject("Team1").toString()), TeamPool.getInstance().get(tournament,
+						rs.getObject("Team2").toString()), rs.getInt("FightArea"),
+						rs.getInt("TournamentLevel"), rs.getInt("TournamentGroup"), rs.getInt("GroupIndex"));
 				f.setWinner(rs.getInt("Winner"));
 				// Set duels of fight:
 				results.add(f);
@@ -945,9 +1009,21 @@ public abstract class SQL extends Database {
 		for (int i = 0; i < fights.size(); i++) {
 			try {
 				query += "INSERT INTO fight (Team1, Team2, Tournament, FightArea, Winner, TournamentLevel, TournamentGroup, GroupIndex) VALUES ('"
-						+ fights.get(i).getTeam1().getName() + "','" + fights.get(i).getTeam2().getName() + "','" + fights.get(i).getTournament().getName()
-						+ "'," + fights.get(i).getAsignedFightArea() + "," + fights.get(i).getWinner() + "," + fights.get(i).getLevel() + ","
-						+ fights.get(i).getGroup() + "," + fights.get(i).getOrderInGroup() + "); ";
+						+ fights.get(i).getTeam1().getName()
+						+ "','"
+						+ fights.get(i).getTeam2().getName()
+						+ "','"
+						+ fights.get(i).getTournament().getName()
+						+ "',"
+						+ fights.get(i).getAsignedFightArea()
+						+ ","
+						+ fights.get(i).getWinner()
+						+ ","
+						+ fights.get(i).getLevel()
+						+ ","
+						+ fights.get(i).getGroup()
+						+ ","
+						+ fights.get(i).getOrderInGroup() + "); ";
 			} catch (NullPointerException npe) {
 				KendoLog.errorMessage(this.getClass().getName(), npe);
 			}
@@ -970,8 +1046,10 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "removeFights");
 		String query = "";
 		for (int i = 0; i < fights.size(); i++) {
-			query += "DELETE FROM fight WHERE Tournament='" + fights.get(i).getTournament().getName() + "' AND TournamentLevel=" + fights.get(i).getLevel()
-					+ " AND Team1='" + fights.get(i).getTeam1().getName() + "' AND Team2='" + fights.get(i).getTeam2().getName() + "' AND TournamentGroup="
+			query += "DELETE FROM fight WHERE Tournament='" + fights.get(i).getTournament().getName()
+					+ "' AND TournamentLevel=" + fights.get(i).getLevel() + " AND Team1='"
+					+ fights.get(i).getTeam1().getName() + "' AND Team2='"
+					+ fights.get(i).getTeam2().getName() + "' AND TournamentGroup="
 					+ fights.get(i).getGroup() + " AND GroupIndex=" + fights.get(i).getOrderInGroup() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == fights.size() - 1) {
 				try (Statement s = connection.createStatement()) {
@@ -997,12 +1075,16 @@ public abstract class SQL extends Database {
 		String query = "";
 		for (int i = 0; i < newFights.size(); i++) {
 			Fight oldFight = fightsExchange.get(newFights.get(i));
-			query += "UPDATE fight SET Team1='" + newFights.get(i).getTeam1() + "', Tournament='" + newFights.get(i).getTournament() + "', Team2='"
-					+ newFights.get(i).getTeam2() + "', Winner=" + newFights.get(i).getWinner() + ", TournamentLevel=" + newFights.get(i).getLevel()
-					+ ", FightArea=" + newFights.get(i).getAsignedFightArea() + ", TournamentGroup=" + newFights.get(i).getGroup() + ", GroupIndex="
-					+ newFights.get(i).getOrderInGroup() + " WHERE Team1='" + oldFight.getTeam1() + "' AND Team2='" + oldFight.getTeam2()
-					+ "' AND Tournament='" + oldFight.getTournament().getName() + "' AND TournamentLevel=" + oldFight.getLevel() + " AND TournamentGroup="
-					+ oldFight.getGroup() + " AND GroupIndex=" + oldFight.getOrderInGroup() + "; ";
+			query += "UPDATE fight SET Team1='" + newFights.get(i).getTeam1() + "', Tournament='"
+					+ newFights.get(i).getTournament() + "', Team2='" + newFights.get(i).getTeam2()
+					+ "', Winner=" + newFights.get(i).getWinner() + ", TournamentLevel="
+					+ newFights.get(i).getLevel() + ", FightArea=" + newFights.get(i).getAsignedFightArea()
+					+ ", TournamentGroup=" + newFights.get(i).getGroup() + ", GroupIndex="
+					+ newFights.get(i).getOrderInGroup() + " WHERE Team1='" + oldFight.getTeam1()
+					+ "' AND Team2='" + oldFight.getTeam2() + "' AND Tournament='"
+					+ oldFight.getTournament().getName() + "' AND TournamentLevel=" + oldFight.getLevel()
+					+ " AND TournamentGroup=" + oldFight.getGroup() + " AND GroupIndex="
+					+ oldFight.getOrderInGroup() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == newFights.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -1022,10 +1104,10 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * DUEL
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a duel into the database.
@@ -1043,9 +1125,10 @@ public abstract class SQL extends Database {
 		List<Duel> results = new ArrayList<>();
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
-				Fight fight = FightPool.getInstance().get(tournament, TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
-						TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()), rs.getInt("TournamentLevel"), rs.getInt("TournamentGroup"),
-						rs.getInt("GroupIndex"));
+				Fight fight = FightPool.getInstance().get(tournament,
+						TeamPool.getInstance().get(tournament, rs.getObject("Team1").toString()),
+						TeamPool.getInstance().get(tournament, rs.getObject("Team2").toString()),
+						rs.getInt("TournamentLevel"), rs.getInt("TournamentGroup"), rs.getInt("GroupIndex"));
 				Duel duel = new Duel(fight, rs.getInt("MemberOrder"));
 
 				char c;
@@ -1126,29 +1209,33 @@ public abstract class SQL extends Database {
 						+ "', '"
 						+ duels.get(i).getHits(false).get(1).getAbbreviation()
 						+ "', "
-						+ getBoolean(duels.get(i).getFaults(true)) + ", " + getBoolean(duels.get(i).getFaults(false)) + ");\n";
+						+ getBoolean(duels.get(i).getFaults(true))
+						+ ", "
+						+ getBoolean(duels.get(i).getFaults(false)) + ");\n";
+				if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
+					try (PreparedStatement s = connection.prepareStatement(query)) {
+						s.executeUpdate();
+					} catch (MySQLIntegrityConstraintViolationException e) {
+						if (duels.get(i).getFight() != null) {
+							// Error when storing duels. Probably because the
+							// tournament
+							// has been redesigned and now exists different
+							// duels
+							// with
+							// same primary key. Ignore the error and try an
+							// update.
+							Map<Duel, Duel> duelsToUpdate = new HashMap<>();
+							duelsToUpdate.put(duels.get(i), duels.get(i));
+							updateDuels(duelsToUpdate);
+						}
+					} catch (SQLException ex) {
+						showSqlError(ex);
+						return false;
+					}
+					query = "";
+				}
 			} catch (NullPointerException npe) {
 				KendoLog.errorMessage(this.getClass().getName(), npe);
-			}
-			if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
-				try (PreparedStatement s = connection.prepareStatement(query)) {
-					s.executeUpdate();
-				} catch (MySQLIntegrityConstraintViolationException e) {
-					if (duels.get(i).getFight() != null) {
-						// Error when storing duels. Probably because the
-						// tournament
-						// has been redesigned and now exists different duels
-						// with
-						// same primary key. Ignore the error and try an update.
-						Map<Duel, Duel> duelsToUpdate = new HashMap<>();
-						duelsToUpdate.put(duels.get(i), duels.get(i));
-						updateDuels(duelsToUpdate);
-					}
-				} catch (SQLException ex) {
-					showSqlError(ex);
-					return false;
-				}
-				query = "";
 			}
 		}
 		KendoLog.exiting(this.getClass().getName(), "addDuels");
@@ -1160,10 +1247,14 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "removeDuels");
 		String query = "";
 		for (int i = 0; i < duels.size(); i++) {
-			query += "DELETE FROM duel WHERE Tournament='" + duels.get(i).getFight().getTournament().getName() + "' AND TournamentLevel="
-					+ duels.get(i).getFight().getLevel() + " AND Team1='" + duels.get(i).getFight().getTeam1().getName() + "' AND Team2='"
-					+ duels.get(i).getFight().getTeam2().getName() + "' AND TournamentGroup=" + duels.get(i).getFight().getGroup() + " AND GroupIndex="
-					+ duels.get(i).getFight().getOrderInGroup() + " AND MemberOrder=" + duels.get(i).getOrder() + "; ";
+			query += "DELETE FROM duel WHERE Tournament='"
+					+ duels.get(i).getFight().getTournament().getName() + "' AND TournamentLevel="
+					+ duels.get(i).getFight().getLevel() + " AND Team1='"
+					+ duels.get(i).getFight().getTeam1().getName() + "' AND Team2='"
+					+ duels.get(i).getFight().getTeam2().getName() + "' AND TournamentGroup="
+					+ duels.get(i).getFight().getGroup() + " AND GroupIndex="
+					+ duels.get(i).getFight().getOrderInGroup() + " AND MemberOrder="
+					+ duels.get(i).getOrder() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == duels.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -1188,17 +1279,24 @@ public abstract class SQL extends Database {
 		String query = "";
 		for (int i = 0; i < newDuels.size(); i++) {
 			Duel oldDuel = duelsExchange.get(newDuels.get(i));
-			query += "UPDATE duel SET Team1='" + newDuels.get(i).getFight().getTeam1() + "', Tournament='" + newDuels.get(i).getFight().getTournament()
-					+ "', Team2='" + newDuels.get(i).getFight().getTeam2() + "', TournamentLevel=" + newDuels.get(i).getFight().getLevel()
-					+ ", TournamentGroup=" + newDuels.get(i).getFight().getGroup() + ", GroupIndex=" + newDuels.get(i).getFight().getOrderInGroup()
-					+ ", MemberOrder=" + newDuels.get(i).getOrder() + ", PointPlayer1A='" + newDuels.get(i).getHits(true).get(0).getAbbreviation()
-					+ "', PointPlayer1B='" + newDuels.get(i).getHits(true).get(1).getAbbreviation() + "', PointPlayer2A='"
-					+ newDuels.get(i).getHits(false).get(0).getAbbreviation() + "', PointPlayer2B='" + newDuels.get(i).getHits(false).get(1).getAbbreviation()
-					+ "', FaultsPlayer1=" + newDuels.get(i).getFaults(true) + ", FaultsPlayer2=" + newDuels.get(i).getFaults(false) + " WHERE Team1='"
-					+ oldDuel.getFight().getTeam1() + "' AND Team2='" + oldDuel.getFight().getTeam2() + "' AND Tournament='"
-					+ oldDuel.getFight().getTournament().getName() + "' AND TournamentLevel=" + oldDuel.getFight().getLevel() + " AND TournamentGroup="
-					+ oldDuel.getFight().getGroup() + " AND GroupIndex=" + oldDuel.getFight().getOrderInGroup() + " AND MemberOrder=" + oldDuel.getOrder()
-					+ "; ";
+			query += "UPDATE duel SET Team1='" + newDuels.get(i).getFight().getTeam1() + "', Tournament='"
+					+ newDuels.get(i).getFight().getTournament() + "', Team2='"
+					+ newDuels.get(i).getFight().getTeam2() + "', TournamentLevel="
+					+ newDuels.get(i).getFight().getLevel() + ", TournamentGroup="
+					+ newDuels.get(i).getFight().getGroup() + ", GroupIndex="
+					+ newDuels.get(i).getFight().getOrderInGroup() + ", MemberOrder="
+					+ newDuels.get(i).getOrder() + ", PointPlayer1A='"
+					+ newDuels.get(i).getHits(true).get(0).getAbbreviation() + "', PointPlayer1B='"
+					+ newDuels.get(i).getHits(true).get(1).getAbbreviation() + "', PointPlayer2A='"
+					+ newDuels.get(i).getHits(false).get(0).getAbbreviation() + "', PointPlayer2B='"
+					+ newDuels.get(i).getHits(false).get(1).getAbbreviation() + "', FaultsPlayer1="
+					+ newDuels.get(i).getFaults(true) + ", FaultsPlayer2=" + newDuels.get(i).getFaults(false)
+					+ " WHERE Team1='" + oldDuel.getFight().getTeam1() + "' AND Team2='"
+					+ oldDuel.getFight().getTeam2() + "' AND Tournament='"
+					+ oldDuel.getFight().getTournament().getName() + "' AND TournamentLevel="
+					+ oldDuel.getFight().getLevel() + " AND TournamentGroup=" + oldDuel.getFight().getGroup()
+					+ " AND GroupIndex=" + oldDuel.getFight().getOrderInGroup() + " AND MemberOrder="
+					+ oldDuel.getOrder() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == newDuels.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -1218,10 +1316,10 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * UNDRAWS
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store a undraw into the database.
@@ -1238,8 +1336,10 @@ public abstract class SQL extends Database {
 		List<Undraw> results = new ArrayList<>();
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
-				Undraw u = new Undraw(tournament, Integer.parseInt(rs.getObject("TournamentGroup").toString()), TeamPool.getInstance().get(tournament,
-						rs.getObject("Team").toString()), (Integer) rs.getObject("Player"), (Integer) rs.getObject("TournamentLevel"));
+				Undraw u = new Undraw(tournament,
+						Integer.parseInt(rs.getObject("TournamentGroup").toString()), TeamPool.getInstance()
+								.get(tournament, rs.getObject("Team").toString()),
+						(Integer) rs.getObject("Player"), (Integer) rs.getObject("TournamentLevel"));
 				u.setPoints((Integer) rs.getObject("Points"));
 				results.add(u);
 			}
@@ -1260,8 +1360,17 @@ public abstract class SQL extends Database {
 		for (int i = 0; i < undraws.size(); i++) {
 			try {
 				query += "INSERT INTO undraw (Tournament, Team, Player, TournamentGroup, TournamentLevel, Points) VALUES ('"
-						+ undraws.get(i).getTournament().getName() + "', '" + undraws.get(i).getTeam().getName() + "', " + undraws.get(i).getPlayer() + ", "
-						+ undraws.get(i).getGroupIndex() + ", " + undraws.get(i).getLevel() + ", " + undraws.get(i).getPoints() + "); ";
+						+ undraws.get(i).getTournament().getName()
+						+ "', '"
+						+ undraws.get(i).getTeam().getName()
+						+ "', "
+						+ undraws.get(i).getPlayer()
+						+ ", "
+						+ undraws.get(i).getGroupIndex()
+						+ ", "
+						+ undraws.get(i).getLevel()
+						+ ", "
+						+ undraws.get(i).getPoints() + "); ";
 			} catch (NullPointerException npe) {
 				KendoLog.errorMessage(this.getClass().getName(), npe);
 			}
@@ -1284,8 +1393,10 @@ public abstract class SQL extends Database {
 		KendoLog.entering(this.getClass().getName(), "removeUndraws");
 		String query = "";
 		for (int i = 0; i < undraws.size(); i++) {
-			query += "DELETE FROM undraw WHERE Tournament='" + undraws.get(i).getTournament().getName() + "' AND TournamentLevel=" + undraws.get(i).getLevel()
-					+ " AND Team='" + undraws.get(i).getTeam().getName() + "' AND TournamentGroup=" + undraws.get(i).getGroupIndex() + "; ";
+			query += "DELETE FROM undraw WHERE Tournament='" + undraws.get(i).getTournament().getName()
+					+ "' AND TournamentLevel=" + undraws.get(i).getLevel() + " AND Team='"
+					+ undraws.get(i).getTeam().getName() + "' AND TournamentGroup="
+					+ undraws.get(i).getGroupIndex() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == undraws.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -1310,11 +1421,13 @@ public abstract class SQL extends Database {
 		String query = "";
 		for (int i = 0; i < newUndraws.size(); i++) {
 			Undraw oldUndraw = undrawsExchange.get(newUndraws.get(i));
-			query += "UPDATE undraw SET Team='" + newUndraws.get(i).getTeam().getName() + "', Tournament='" + newUndraws.get(i).getTournament().getName()
-					+ "', TournamentLevel=" + newUndraws.get(i).getLevel() + ", TournamentGroup=" + newUndraws.get(i).getGroupIndex() + ", Player="
-					+ newUndraws.get(i).getPlayer() + ", Points=" + newUndraws.get(i).getPoints() + " WHERE Team='" + oldUndraw.getTeam().getName()
-					+ "' AND Tournament='" + oldUndraw.getTournament().getName() + "' AND TournamentLevel=" + oldUndraw.getLevel() + " AND TournamentGroup="
-					+ oldUndraw.getGroupIndex() + "; ";
+			query += "UPDATE undraw SET Team='" + newUndraws.get(i).getTeam().getName() + "', Tournament='"
+					+ newUndraws.get(i).getTournament().getName() + "', TournamentLevel="
+					+ newUndraws.get(i).getLevel() + ", TournamentGroup=" + newUndraws.get(i).getGroupIndex()
+					+ ", Player=" + newUndraws.get(i).getPlayer() + ", Points="
+					+ newUndraws.get(i).getPoints() + " WHERE Team='" + oldUndraw.getTeam().getName()
+					+ "' AND Tournament='" + oldUndraw.getTournament().getName() + "' AND TournamentLevel="
+					+ oldUndraw.getLevel() + " AND TournamentGroup=" + oldUndraw.getGroupIndex() + "; ";
 			if (i % getMaxElementsInQuery() == 0 || i == newUndraws.size() - 1) {
 				try (Statement s = connection.createStatement()) {
 					s.executeUpdate(query);
@@ -1334,10 +1447,10 @@ public abstract class SQL extends Database {
 
 	/**
 	 * *******************************************************************
-	 *
+	 * 
 	 * CUSTOM LINKS
-	 *
-	 ********************************************************************
+	 * 
+	 ******************************************************************** 
 	 */
 	/**
 	 * Store user defined links.
@@ -1347,18 +1460,22 @@ public abstract class SQL extends Database {
 	 * @throws java.sql.SQLException
 	 */
 	@Override
-	protected synchronized List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament) throws SQLException {
+	protected synchronized List<CustomWinnerLink> getCustomWinnerLinks(Tournament tournament)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "getCustomWinnerLinks");
 		if (!tournament.getType().equals(TournamentType.CUSTOM_CHAMPIONSHIP)) {
 			return null;
 		}
-		String query = "SELECT * FROM customlinks WHERE Tournament='" + tournament.getName() + "' ORDER BY Tournament, SourceGroup, WinnerOrder";
+		String query = "SELECT * FROM customlinks WHERE Tournament='" + tournament.getName()
+				+ "' ORDER BY Tournament, SourceGroup, WinnerOrder";
 		KendoLog.finer(SQL.class.getName(), query);
 		List<CustomWinnerLink> results = new ArrayList<>();
 		try (Statement s = connection.createStatement(); ResultSet rs = s.executeQuery(query)) {
 			while (rs.next()) {
-				CustomWinnerLink link = new CustomWinnerLink(tournament, Integer.parseInt(rs.getObject("SourceGroup").toString()), Integer.parseInt(rs
-						.getObject("AddressGroup").toString()), Integer.parseInt(rs.getObject("WinnerOrder").toString()));
+				CustomWinnerLink link = new CustomWinnerLink(tournament, Integer.parseInt(rs.getObject(
+						"SourceGroup").toString()),
+						Integer.parseInt(rs.getObject("AddressGroup").toString()), Integer.parseInt(rs
+								.getObject("WinnerOrder").toString()));
 				results.add(link);
 			}
 		} catch (SQLException ex) {
@@ -1372,14 +1489,19 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks) throws SQLException {
+	protected synchronized boolean addCustomWinnerLinks(List<CustomWinnerLink> customWinnerLinks)
+			throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "addCustomWinnerLinks");
 		String query = "";
 		for (int i = 0; i < customWinnerLinks.size(); i++) {
 			try {
 				query += "INSERT INTO customlinks (Tournament, SourceGroup, AddressGroup, WinnerOrder) VALUES ('"
-						+ customWinnerLinks.get(i).getTournament().getName() + "', " + customWinnerLinks.get(i).getSource() + ", "
-						+ customWinnerLinks.get(i).getAddress() + ", " + customWinnerLinks.get(i).getWinner() + "); ";
+						+ customWinnerLinks.get(i).getTournament().getName()
+						+ "', "
+						+ customWinnerLinks.get(i).getSource()
+						+ ", "
+						+ customWinnerLinks.get(i).getAddress()
+						+ ", " + customWinnerLinks.get(i).getWinner() + "); ";
 			} catch (NullPointerException npe) {
 				KendoLog.errorMessage(this.getClass().getName(), npe);
 			}
@@ -1422,7 +1544,8 @@ public abstract class SQL extends Database {
 	}
 
 	@Override
-	protected synchronized boolean updateCustomWinnerLinks(Map<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException {
+	protected synchronized boolean updateCustomWinnerLinks(
+			Map<CustomWinnerLink, CustomWinnerLink> customWinnerLinks) throws SQLException {
 		KendoLog.entering(this.getClass().getName(), "updateUndraws");
 		List<CustomWinnerLink> oldLinks = new ArrayList<>(customWinnerLinks.values());
 		List<CustomWinnerLink> newLinks = new ArrayList<>(customWinnerLinks.keySet());
