@@ -33,6 +33,8 @@ public enum DatabaseEngine {
 
     MySQL(true),
     SQLite(false);
+    
+    
     private final boolean networkConnection;
     private static final List<DatabaseEngine> availableDatabase = new ArrayList<>();
 
