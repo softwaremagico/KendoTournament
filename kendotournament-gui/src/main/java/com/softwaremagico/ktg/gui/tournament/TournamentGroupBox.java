@@ -5,36 +5,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JLabel;
-
-/*
- * #%L
- * Kendo Tournament Generator GUI
- * %%
- * Copyright (C) 2008 - 2013 Softwaremagico
- * %%
- * This software is designed by Jorge Hortelano Otero. Jorge Hortelano Otero
- * <softwaremagico@gmail.com> Valencia (Spain).
- *  
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *  
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *  
- * You should have received a copy of the GNU General Public License along with
- * this program; If not, see <http://www.gnu.org/licenses/gpl-3.0.html>.
- * #L%
- */
 
 import com.softwaremagico.ktg.core.Ranking;
 import com.softwaremagico.ktg.core.Team;
@@ -54,8 +31,7 @@ public class TournamentGroupBox extends Group {
 	private boolean selected = false;
 	private ITranslator trans = null;
 	private boolean color = true;
-	private java.awt.event.MouseAdapter ma;
-	private boolean listenerAdded = false;
+	private MouseAdapter ma;
 	private boolean selectable = false;
 
 	public TournamentGroupBox(TGroup tournamentGroup, boolean selectable) {
@@ -109,7 +85,7 @@ public class TournamentGroupBox extends Group {
 	final void updateSize() {
 		// xSize = 110 * Math.max(2, teams.size());
 		xSize = 200;
-		ySize = 50 + 12 * Math.max(2, tournamentGroup.getTeams().size());
+		ySize = 50 + 13 * Math.max(2, tournamentGroup.getTeams().size());
 		setPreferredSize(new Dimension(xSize, ySize));
 		setMaximumSize(new Dimension(xSize, ySize));
 		setMinimumSize(new Dimension(0, 0));
@@ -130,8 +106,8 @@ public class TournamentGroupBox extends Group {
 			for (int i = 0; i < teamRanking.size(); i++) {
 				Color c = obtainWinnerColor(i, true);
 				if (color) {
-					text += "<b><font color=\"#" + Integer.toHexString(c.getRed()) + Integer.toHexString(c.getGreen())
-							+ Integer.toHexString(c.getBlue()) + "\">";
+					text += "<b><font color=\"#" + Integer.toHexString(c.getRed())
+							+ Integer.toHexString(c.getGreen()) + Integer.toHexString(c.getBlue()) + "\">";
 				}
 				text += teamRanking.get(i).getShortName();
 				if (color) {
@@ -256,15 +232,13 @@ public class TournamentGroupBox extends Group {
 	 * 
 	 * @param al
 	 */
-	public void addMouseClickListener(java.awt.event.MouseAdapter e) {
+	public void addMouseClickListener(MouseAdapter e) {
 		ma = e;
 		addMouseListener(ma);
-		listenerAdded = true;
 	}
 
 	public void removeMouseClickListener() {
 		removeMouseListener(ma);
-		listenerAdded = false;
 	}
 
 	/**
