@@ -44,7 +44,7 @@ public class CloneTournamentNameWindow extends KFrame {
 	private KTextField nameTextField;
 
 	public CloneTournamentNameWindow() {
-		defineWindow(250, 120);
+		defineWindow(350, 120);
 		setResizable(false);
 		setElements();
 	}
