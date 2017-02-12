@@ -44,8 +44,8 @@ public class Role implements Comparable<Role>, IClonable<Role> {
 	private boolean accreditationPrinted;
 	private boolean diplomaPrinted;
 
-	public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag, Integer accreditationOrder, boolean accreditationPrinted,
-			boolean diplomaPrinted) {
+	public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag, Integer accreditationOrder,
+			boolean accreditationPrinted, boolean diplomaPrinted) {
 		this.tournament = tournament;
 		this.competitor = competitor;
 		this.tag = tag;
@@ -54,7 +54,8 @@ public class Role implements Comparable<Role>, IClonable<Role> {
 		this.diplomaPrinted = diplomaPrinted;
 	}
 
-	public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag, boolean accreditationPrinted, boolean diplomaPrinted) {
+	public Role(Tournament tournament, RegisteredPerson competitor, RoleTag tag,
+			boolean accreditationPrinted, boolean diplomaPrinted) {
 		this.tournament = tournament;
 		this.competitor = competitor;
 		this.tag = tag;
@@ -120,7 +121,8 @@ public class Role implements Comparable<Role>, IClonable<Role> {
 			return false;
 		}
 		Role otherRole = (Role) object;
-		return this.tournament.equals(otherRole.tournament) && this.tag.equals(otherRole.tag) && this.competitor.equals(otherRole.competitor);
+		return this.tournament.equals(otherRole.tournament) && this.tag.equals(otherRole.tag)
+				&& this.competitor.equals(otherRole.competitor);
 	}
 
 	@Override
@@ -134,7 +136,8 @@ public class Role implements Comparable<Role>, IClonable<Role> {
 
 	@Override
 	public String toString() {
-		return competitor.getSurnameName() + "(" + RolePool.getInstance().getRoleTags().getTranslation(getDatabaseTag()) + ")";
+		return competitor.getSurnameName() + "("
+				+ RolePool.getInstance().getRoleTags().getTranslation(getDatabaseTag()) + ")";
 	}
 
 	@Override

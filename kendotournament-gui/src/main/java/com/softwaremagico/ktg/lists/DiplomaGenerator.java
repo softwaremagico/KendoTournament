@@ -38,8 +38,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 
 public class DiplomaGenerator extends ListFromTournamentCreatePDF {
-
-    private float nameposition = 100;
+	private static final long serialVersionUID = -5642095886240384329L;
+	private float nameposition = 100;
     private InputStream photoInput;
     private int size;
     private boolean statistics = false;

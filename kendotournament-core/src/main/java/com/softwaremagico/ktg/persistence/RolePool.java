@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.softwaremagico.ktg.core.Club;
 import com.softwaremagico.ktg.core.KendoTournamentGenerator;
@@ -111,17 +113,34 @@ public class RolePool extends TournamentDependentPool<Role> {
 		return result;
 	}
 
+	public List<RegisteredPerson> getPeopleWithRole(Tournament tournament, List<RoleTag> roleTags)
+			throws SQLException {
+		Set<RegisteredPerson> competitors = new HashSet<>();
+		List<RegisteredPerson> result = new ArrayList<>();
+		for (Role role : getMap(tournament).values()) {
+			if (roleTags == null || roleTags.contains(role.getTag())) {
+				if (role.getCompetitor() != null) {
+					competitors.add(role.getCompetitor());
+				}
+			}
+		}
+		result = new ArrayList<>(competitors);
+		Collections.sort(result);
+		return result;
+	}
+
 	public List<RegisteredPerson> getPeople(Tournament tournament, String roleTag) throws SQLException {
 		List<String> roles = new ArrayList<>();
 		roles.add(roleTag);
 		return getPeople(tournament, roles);
 	}
 
-	public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament, List<RoleTag> rolesWithDiploma)
-			throws SQLException {
+	public List<RegisteredPerson> getPeopleWithoutDiploma(Tournament tournament,
+			List<RoleTag> rolesWithDiploma) throws SQLException {
 		List<RegisteredPerson> results = new ArrayList<>();
 		for (Role role : getMap(tournament).values()) {
-			if ((rolesWithDiploma == null || rolesWithDiploma.contains(role.getTag())) && !role.isDiplomaPrinted()) {
+			if ((rolesWithDiploma == null || rolesWithDiploma.contains(role.getTag()))
+					&& !role.isDiplomaPrinted()) {
 				results.add(role.getCompetitor());
 			}
 		}
@@ -252,7 +271,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 		roleTags = null;
 	}
 
-	public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament) throws SQLException {
+	public void setRegisteredPeopleInTournamentAsAccreditationPrinted(Tournament tournament)
+			throws SQLException {
 		List<Role> roles = new ArrayList<>(getMap(tournament).values());
 		for (Role role : roles) {
 			if (!role.isAccreditationPrinted()) {
@@ -283,8 +303,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 		}
 	}
 
-	public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament, List<RoleTag> rolesWithDiploma)
-			throws SQLException {
+	public void setRegisteredPeopleInTournamentAsDiplomaPrinted(Tournament tournament,
+			List<RoleTag> rolesWithDiploma) throws SQLException {
 		List<Role> roles = new ArrayList<>(getMap(tournament).values());
 		for (Role role : roles) {
 			if (rolesWithDiploma.contains(role.getTag()) && !role.isDiplomaPrinted()) {
@@ -302,7 +322,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 	}
 
 	@Override
-	protected boolean storeElementsInDatabase(Tournament tournament, List<Role> elementsToStore) throws SQLException {
+	protected boolean storeElementsInDatabase(Tournament tournament, List<Role> elementsToStore)
+			throws SQLException {
 		if (elementsToStore.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().addRoles(elementsToStore);
 		}
@@ -310,7 +331,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 	}
 
 	@Override
-	protected boolean updateElements(Tournament tournament, Map<Role, Role> elementsToUpdate) throws SQLException {
+	protected boolean updateElements(Tournament tournament, Map<Role, Role> elementsToUpdate)
+			throws SQLException {
 		if (elementsToUpdate.size() > 0) {
 			return DatabaseConnection.getConnection().getDatabase().updateRoles(tournament, elementsToUpdate);
 		}
@@ -325,7 +347,8 @@ public class RolePool extends TournamentDependentPool<Role> {
 	 * @param destinationTournament
 	 * @throws SQLException
 	 */
-	public void importRoles(Tournament sourceTournament, Tournament destinationTournament) throws SQLException {
+	public void importRoles(Tournament sourceTournament, Tournament destinationTournament)
+			throws SQLException {
 		if (sourceTournament != null && destinationTournament != null) {
 			List<Role> sourceRoles = get(sourceTournament);
 			for (Role role : sourceRoles) {

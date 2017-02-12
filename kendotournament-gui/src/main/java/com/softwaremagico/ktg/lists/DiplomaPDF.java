@@ -211,7 +211,7 @@ public class DiplomaPDF {
 			List<RegisteredPerson> competitors;
 
 			if (allDiplomas) {
-				competitors = RolePool.getInstance().getPeopleWithoutDiploma(tournament, null);
+				competitors = RolePool.getInstance().getPeopleWithRole(tournament, rolesWithDiploma);
 			} else {
 				competitors = RolePool.getInstance().getPeopleWithoutDiploma(tournament, rolesWithDiploma);
 			}
