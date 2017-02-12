@@ -1153,6 +1153,7 @@ public class Controller {
 								AlertManager.errorMessage(Controller.class.getName(), "nameTournament", "");
 							} else {
 								final Tournament clonedTournament = tournament.clone(tournament, cloneTournamentNameWindow.getTournamentName());
+								TournamentPool.getInstance().add(clonedTournament);
 								// Finishing cloning.
 
 								for (Team team : TeamPool.getInstance().get(tournament)) {
