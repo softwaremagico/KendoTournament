@@ -132,6 +132,8 @@ Version:
 
 1.3.0	Added "King of the Mountain" tournament mode.
 		Tournament can be cloned.
+		
+1.3.1	Fixed some minor issues. 
 
 
 Thanks to
