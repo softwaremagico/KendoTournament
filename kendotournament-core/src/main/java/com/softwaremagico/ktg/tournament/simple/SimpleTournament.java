@@ -144,6 +144,9 @@ public class SimpleTournament implements ITournamentManager {
 		if (level != 0) {
 			return null;
 		}
+		//Clear cache.
+		
+		//Create fights.
 		return getGroup().createFights(maximizeFights, true);
 	}
 

@@ -182,7 +182,8 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		tournamentComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				KendoTournamentGenerator.getInstance().setLastSelectedTournament(tournamentComboBox.getSelectedItem().toString());
+				KendoTournamentGenerator.getInstance().setLastSelectedTournament(
+						tournamentComboBox.getSelectedItem().toString());
 				tournament = (Tournament) tournamentComboBox.getSelectedItem();
 				tournamentManager = null;
 				try {
@@ -196,7 +197,8 @@ public class NewKingOfTheMountainTournament extends KFrame {
 				}
 			}
 		});
-		tournamentComboBox.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
+		tournamentComboBox
+				.setSelectedItem(KendoTournamentGenerator.getInstance().getLastSelectedTournament());
 		tournamentComboBox.setWidth(280);
 		gridBagConstraints.gridwidth = 3;
 		gridBagConstraints.gridx = 1;
@@ -391,7 +393,8 @@ public class NewKingOfTheMountainTournament extends KFrame {
 		return DrawResolution.OLDEST_ELIMINATED;
 	}
 
-	private void removeTeamSelection(JList<String> teamOptionList, DefaultListModel<String> teamModel, List<Team> teams) {
+	private void removeTeamSelection(JList<String> teamOptionList, DefaultListModel<String> teamModel,
+			List<Team> teams) {
 		int selectedTeam = teamOptionList.getSelectedIndex();
 		if (selectedTeam >= 0) {
 			teamModel.remove(selectedTeam);
@@ -442,8 +445,11 @@ public class NewKingOfTheMountainTournament extends KFrame {
 
 	private KingOfTheMountainTournament getTournamentManager() {
 		if (tournamentManager == null) {
+			// Remove any existing manager for the tournament.
+			TournamentManagerFactory.removeManager(tournamentComboBox.getSelectedTournament());
 			// Gets existing tournamentManager or creates a new one.
-			tournamentManager = (KingOfTheMountainTournament) TournamentManagerFactory.getManager(tournamentComboBox.getSelectedTournament(), getDefinedType());
+			tournamentManager = (KingOfTheMountainTournament) TournamentManagerFactory.getManager(
+					tournamentComboBox.getSelectedTournament(), getDefinedType());
 		}
 		return tournamentManager;
 	}
@@ -459,18 +465,18 @@ public class NewKingOfTheMountainTournament extends KFrame {
 	private void createNewFights() {
 		setTournamentType();
 		for (int i = 0; i < redTeamModel.getSize(); i++) {
-			tournamentManager.getRedTeams().add(getTeamByName(redTeamModel.getElementAt(i)));
+			getTournamentManager().getRedTeams().add(getTeamByName(redTeamModel.getElementAt(i)));
 		}
 
 		for (int i = 0; i < whiteTeamModel.getSize(); i++) {
-			tournamentManager.getWhiteTeams().add(getTeamByName(whiteTeamModel.getElementAt(i)));
+			getTournamentManager().getWhiteTeams().add(getTeamByName(whiteTeamModel.getElementAt(i)));
 		}
-		tournamentManager.initializeLevelZero();
+		getTournamentManager().initializeLevelZero();
 		try {
 			FightPool.getInstance().remove(tournament);
 			// Delete old group fights if any.
 			getTournamentManager().resetFights();
-			List<Fight> newFights = tournamentManager.createSortedFights(false, 0);
+			List<Fight> newFights = getTournamentManager().createSortedFights(false, 0);
 			FightPool.getInstance().add(tournament, newFights);
 			TournamentPool.getInstance().update(tournament);
 			AlertManager.informationMessage(this.getClass().getName(), "fightStored", "New Fight");
