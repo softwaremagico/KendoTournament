@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=@version@
+Encoding=@encoding@
+Name=@projectname@
+Type=Application
+Categories=Application;Utility;
+Terminal=false
+Icon[es_ES]=/usr/share/icons/hicolor/64x64/apps/kendotournament.ico
+Icon=/usr/share/icons/hicolor/64x64/apps/kendotournament.ico
+Exec=/usr/bin/kendo-tournament-manager
+Name[es_ES]=Kendo Tournament Manager
+Comment[es_ES]=Gestor de campeonatos de Kendo.
+Comment=@description@
+GenericName[es_ES]=

@@ -1,0 +1,12 @@
+lang=$(locale | grep LANG | cut -d= -f2 | cut -d_ -f1)
+if [ $lang == 'es' ]
+then
+	gpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_ES.pdf | evince /usr/share/kendo-tournament-manager/manual/KendoTournament_ES.pdf | kpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_ES.pdf
+else
+	if [ $lang == 'nl' ]
+	then
+		gpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_NL.pdf | evince /usr/share/kendo-tournament-manager/manual/KendoTournament_NL.pdf | kpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_NL.pdf
+	else
+		gpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_EN.pdf | evince /usr/share/kendo-tournament-manager/manual/KendoTournament_EN.pdf | kpdf /usr/share/kendo-tournament-manager/manual/KendoTournament_EN.pdf
+	fi
+fi

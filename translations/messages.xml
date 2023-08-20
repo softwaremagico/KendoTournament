@@ -1,0 +1,1218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<translator>
+	<clubStored>
+		<en>Club successfully stored!</en>
+		<es>¡Club insertado correctamente!</es>
+		<nl>Club toegevoegd!</nl>
+		<de>Klub erfolgreich gespeichert!</de>
+		<ca>Club insertat correctament</ca>
+		<it>Club inserito correttamente</it>
+	</clubStored>
+	<nameClub>
+		<en>The name of the club already exists!</en>
+		<es>¡El nombre del club insertado ya existe!</es>
+		<nl>Naam van de club bestaat al!</nl>
+		<de>Der Name des Klubs existiere bereits!</de>
+		<ca>El nom del club insertat ja existeix!</ca>
+		<it>Già esiste un club con questo nome!</it>
+	</nameClub>
+	<nameTournament>
+		<en>The name of the tournament already exists!</en>
+		<es>¡El nombre del campeonato ya existe!</es>
+		<nl>Naam van de toernooi bestaat al!</nl>
+		<de>Der Name des Wettkampf existiere bereits!</de>
+		<ca>El nom del campiontat insertat ja existeix!</ca>
+		<it>Già esiste un campionato con questo nome!</it>
+	</nameTournament>
+	<deniedUser>
+		<en>Access denied for the selected user. Check the user and the password.</en>
+		<es>Acceso denegado para el usuario seleccionado. Comprueba si la contraseña es correcta.</es>
+		<nl>Toegang gewijgerd voor deze deelnemer. Controleer naam en wachtwoord.</nl>
+		<de>Zugang verweigert für den Benutzer. Überprüfen sie Benutzername und Passwort.</de>
+		<ca>Accés denegat per al usuari seleccionat. Comprova si la contrasenya és correcta</ca>
+		<it>Accesso negato per l'utente selezionato. Controllare user e password.</it>
+	</deniedUser>
+	<noDatabase>
+		<en>The database does not exist in the MySQL server.</en>
+		<es>No se ha encontrado la base de datos en el servidor MySQL seleccionado.</es>
+		<nl>Database komt niet voor in de MySQL server.</nl>
+		<de>Die Datenbank existiert nicht auf dem MySQL Server.</de>
+		<ca>No s'ha trobat la base de dades al servidor MySQL seleccionat.</ca>
+		<it>Il database no esiste nel server MySQL.</it>
+	</noDatabase>
+	<noRunningDatabase>
+		<en>There is no MySQL server running. This program needs the server to run.</en>
+		<es>No se ha encontrado ningún servidor MySQL. Ejecuta el servidor MySQL para poder utilizar este programa.</es>
+		<nl>Er is geen MySQL server actief. Dit programma draait alleen met een server.</nl>
+		<de>Es wurde kein MySQL Server gfunden. Das Programm funktioniert nur mit einem MySQL Server.</de>
+		<ca>No s'ha trobat ningun servidor MySQL. Executa el servidor MySQL per a podre emprar aquest programa</ca>
+		<it>Non c'è nessun server MySQL attivo. Il programma ha bisogno che ci sia un serve attivo.</it>
+	</noRunningDatabase>
+	<corruptedDatabase>
+		<en>Error when trying to access to the database. Maybe the version of the database is from a previous Kendo Tournament or maybe is corrupted.</en>
+		<es>Error al acceder a la base de datos. Puede ser que estés utilizando una versión antigua de la base de datos de Kendo Tournament o que esta esté corrupta.</es>
+		<nl>Probleem met benaderen database. Waarschijnlijk gebruik je een oude versie van Kendo database of deze is beschadigd.</nl>
+		<de>Fehler beim verbinden zur Datenbank. Vielleicht nutzen sie eine alte Version von Kendo Tournament oder sie ist beschädigt.</de>
+		<ca>Error a l'accedir a la base de dades. Pot ser que estàs emprant una versió antiga de la base de dades de Kendo o que aquesta está corrupta.</ca>
+		<it>Errore ad accedere al database. Forse si sta utilizzando una versione vecchia del database o il database è corrotto.</it>
+	</corruptedDatabase>
+	<databaseConnected>
+		<en>Connected to database!</en>
+		<es>Se ha conectado con la base de datos.</es>
+		<nl>Verbonden met de database.</nl>
+		<de>Erfolgreich verbunden mit der Datenbank!</de>
+		<ca>S'ha connectat amb la base de dades.</ca>
+		<it>Si è connessi al database.</it>
+	</databaseConnected>
+	<databaseDisconnected>
+		<en>Database disconnection success!</en>
+		<es>Se ha desconectado de la de datos con éxito.</es>
+		<nl>Verbinding met de database succesvol verbroken.</nl>
+		<de>Datanbankverbindung wurde gertennt!</de>
+		<ca>S'ha desconnectat de la base de dades amb èxit.</ca>
+		<it>Si è disconnessi dal database con successo.</it>
+	</databaseDisconnected>
+	<disconnectDatabaseFail>
+		<en>Database disconnection fail!</en>
+		<es>Se ha encontrado un error al desconectarse de la base de datos.</es>
+		<nl>Verbinding met de database niet verbroken!</nl>
+		<de>Datenbankverbindung wurde nicht getrennt!</de>
+		<ca>S'ha trobat un error al desconnectar-se de la base de dades</ca>
+		<it>Si è verificato un errore nel disconnettersi dal database.</it>
+	</disconnectDatabaseFail>
+	<questionUpdateDatabase>
+		<en>The database will be upgraded. Are you sure to continue?</en>
+		<es>Se procederá a la actualización de la base de datos. ¿Está seguro de continuar?</es>
+		<nl>Datbase zal worden geupgrade. Weet je zeker dat je door wilt gaan?</nl>
+		<de>Die Datenbank wird upgedated. Sind Sie sicher, dass Sie fortfahren wollen?</de>
+		<ca>Es procedirà a l'actualització de la base de dades. Està segur de continuar?</ca>
+		<it>Il database sarà aggiornato. Si è sicuro di voler procedere?</it>
+	</questionUpdateDatabase>
+	<notUpdateDatabase>
+		<en>The database is not updated.</en>
+		<es>No se ha actualizado la base de datos.</es>
+		<nl>Database is niet geupdate.</nl>
+		<de>Die Datenbank ist veraltet und muss upgedated werden.</de>
+		<ca>No s'actualitzat la base de dades</ca>
+		<it>Il database non si è aggiornato.</it>
+	</notUpdateDatabase>
+	<updatedDatabase>
+		<en>The database has been updated</en>
+		<es>Se ha actualizado la base de datos</es>
+		<nl>De database is geupdate</nl>
+		<de>Die Datenbank wurde geupdated</de>
+		<ca>S'ha actualitzat la base de dades</ca>
+		<it>Il database è stato aggiornato</it>
+	</updatedDatabase>
+	<storeCompetitorError>
+		<en>Error when trying to store a competitor into the database.</en>
+		<es>Error mientras se intentaba almacenar un competidor en la base de datos.</es>
+		<nl>Fout bij het opslaan van de deelnemer in de database.</nl>
+		<de>Fehler beim speichern eines Teilnehmers in die Datenbank</de>
+		<ca>Error mentre s'intentaba enmagatzemar un competidor a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando un competitore nel database</it>
+	</storeCompetitorError>
+	<imageTooLarge>
+		<en>The image is too large for being stored into the database (the image's size must be less than 1MB).</en>
+		<es>La imagen es demasiado grande para guardarse en la base de datos (debe ser menor que 1MB).</es>
+		<nl>De foto is te groot om in de database te worden opgenomen (het bestand mag max. 1 MB zijn).</nl>
+		<de>Das Bild ist zu groß und kann nicht gespeichert werden. (max. 1MB)</de>
+		<ca>La imatge és massa gran per a guardar-se a la base de dades (deu de ser menor que 1MB).</ca>
+		<it>L'immagine è troppo grande per essere salvata nel database (deve essere inferiore de 1MB)</it>
+	</imageTooLarge>
+	<storeTournamentError>
+		<en>Error when trying to store a tournament into the database.</en>
+		<es>Error mientras se intentaba almacenar un campeonato en la base de datos.</es>
+		<nl>Fout bij het opslaan van het toernooi in de database.</nl>
+		<de>Fehler beim speichern eines Wettkampfes.</de>
+		<ca>Error mentre s'intentava enmagatzemar un campiontat a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando un campionato</it>
+	</storeTournamentError>
+	<tournamentDeleteQuestion>
+		<en>The selected tournament will be deleted. Would you like to continue?</en>
+		<es>Se va a eliminar el campeonato seleccionado. ¿Desea continuar?</es>
+		<nl>De geselecteerde toernooi wordt verwijderd. Weet je zeker dat je wilt doorgaan?</nl>
+		<de>Der ausgewählte Wettkampf wird gelöscht. Fortfahren?</de>
+		<ca>Va a eliminar-se el campionat seleccionat. Desitja continuar?</ca>
+		<it>Si cancellerà il campionato selezionato. Si vuole continuare?</it>
+	</tournamentDeleteQuestion>
+	<tournamentDeleted>
+		<en>The tournament has been deleted!</en>
+		<es>¡Se ha eliminado el campeonato!</es>
+		<nl>Het toernooi is verwijderd!</nl>
+		<de>Der Wettkampf wurde gelöscht!</de>
+		<ca>S'ha eliminat el campionat!</ca>
+		<it>Il campionato è stato cancellato!</it>
+	</tournamentDeleted>
+	<storeRefereeError>
+		<en>Error when trying to store a referee into the database.</en>
+		<es>Error mientras se intentaba almacenar un árbitro en la base de datos.</es>
+		<nl>Fout bij het opslaan van het scheidsrechters in de database.</nl>
+		<de>Fehler beim speichern eines Kampfrichters.</de>
+		<ca>Error mentre s'intentava enmagatzemar un àbitre a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando un arbitro nel database</it>
+	</storeRefereeError>
+	<storeTeamError>
+		<en>Error when trying to store a team into the database.</en>
+		<es>Error mientras se intentaba almacenar un equipo en la base de datos.</es>
+		<nl>Fout bij het opslaan van het team in de database.</nl>
+		<de>Fehler beim speichern eines Teams.</de>
+		<ca>Error mentre s'intentava enmagatzemar un equip a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando una squadra nel database</it>
+	</storeTeamError>
+	<deleteTeamError>
+		<en>Error when trying to delete a team from the database.</en>
+		<es>Error mientras se intentaba borrar un equipo de la base de datos.</es>
+		<nl>Fout bij het verwijderen van het team uit de database.</nl>
+		<de>Fehler beim löschen eines Teams.</de>
+		<ca>Error mentre s'intentava esborrar un equip de la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando una squadra del database</it>
+	</deleteTeamError>
+	<deleteClubError>
+		<en>Error when trying to delete a club from the database.</en>
+		<es>Error mientras se intentaba borrar un club de la base de datos.</es>
+		<nl>Fout bij het verwijderen van de club uit de database.</nl>
+		<de>Fehler beim löschen eines Klubs.</de>
+		<ca>Error mentre s'intentava esborrar un club de la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando un club del database</it>
+	</deleteClubError>
+	<deleteCompetitorError>
+		<en>Error when trying to delete a competitor from the database.</en>
+		<es>Error mientras se intentaba borrar un competidor de la base de datos.</es>
+		<nl>Fout bij het verwijderen van de deelnemer uit de database.</nl>
+		<de>Fehler beim löschen eines Teilnehmers.</de>
+		<ca>Error mentre s'intentava esborrar un competidor de la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando un competitore del database</it>
+	</deleteCompetitorError>
+	<storeImageError>
+		<en>The image is too large for being stored into the database (the image's size must be less than 1MB).</en>
+		<es>La imagen es demasiado grande para guardarse en la base de datos (debe ser menor que 1MB).</es>
+		<nl>De foto is te groot om in de database te worden opgenomen (het bestand mag max. 1 MB zijn).</nl>
+		<de>Das Bild ist zu groß zum speichern. (Max. 1MB)</de>
+		<ca>La imatge és massa gran per a guardar-se a la base de dades (deu de ser menor que 1 MB).</ca>
+		<it>L'immagine è troppo grande per essere salvata nel database (deve essere inferiore de 1MB)</it>
+	</storeImageError>
+	<storeFightsError>
+		<en>Error when trying to store the match list into the database.</en>
+		<es>Error mientras se intentaba almacenar los partidos en la base de datos.</es>
+		<nl>Fout bij het opslaan van de competitie in de database.</nl>
+		<de>Fehler beim speichern der Kampfliste in die Datenbank.</de>
+		<ca>Error mentre s'intentava enmagatzemar els partits a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando gli incontri nel database</it>
+	</storeFightsError>
+	<storeDuelError>
+		<en>Error when trying to store a duel into the database.</en>
+		<es>Error mientras se intentaba almacenar un combate en la base de datos.</es>
+		<nl>Fout bij het opslaan van de wedstrijd in de database.</nl>
+		<de>Fehler beim speichern eines Duells.</de>
+		<ca>Error mentre s'intentava enmagatzemar un duel a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava salvando un incontro nel database</it>
+	</storeDuelError>
+	<installDatabaseError>
+		<en>The program can not install the database. Is the server running?</en>
+		<es>No se puedo instalar la base de datos. ¿Está ejecutándose el servidor?</es>
+		<nl>Kan de database niet installeren. Is de server actief?</nl>
+		<de>Das Programm kann die Datenbank nicht installieren. Läuft ein MySQL Server?</de>
+		<ca>No es pot instal·lar la base de dades. Està executant-se el servidor?.</ca>
+		<it>Non si puó installare el database. El server è attivo?</it>
+	</installDatabaseError>
+	<noClubsInserted>
+		<en>There is no previous club inserted! You need to select a club to insert a competitor.</en>
+		<es>No existe ningún club insertado en la base de datos. Necesitas seleccionar un club para insertar un competidor.</es>
+		<nl>Er is nog geen club ingevoerd. Je moet eerst een club toevoegen dan pas een deelnemer.</nl>
+		<de>Es bestehen keine Klubs. Sie müssen zuerst einen Klub anlegen, um einen Teilnehmer eingeben zu können.</de>
+		<ca>No existeix ningun club insertat a la base de dades. Necessites seleccionar un club per insertar un competidor.</ca> 
+		<it>Nel database non esiste nessun club. Bisogna selezionare un club per inserire un competitore</it>
+	</noClubsInserted>
+	<noResults>
+		<en>No results found in the database</en>
+		<es>La búsqueda no ha producido resultado alguno.</es>
+		<nl>Geen resultaten gevonden in de databse.</nl>
+		<de>Es wurden keine Ergebnisse in der Datenbank gefunden.</de>
+		<ca>La recerca no ha produït ningun resultat.</ca>ç
+		<it>La ricerca non ha generato nessun risultato</it>
+	</noResults>
+	<noCompetitiorFieldsFilled>
+		<en>You must fill the name, surname and identificacion number!</en>
+		<es>¡Debes de rellenar los campos de nombre, apellidos y numero de identificación!</es>
+		<nl>De velden voornaam, achternaam en ID-nummer zijn verplicht in te vullen!</nl>
+		<de>Sie müssen Vorname, Nachname und ID/Passnummer eintragen!</de>
+		<ca>Deus d'omplir els camps de nom, cognoms i número d'identificació!</ca>
+		<it>Si devono riempire i campi di nome, cognome e numero di identificazione!</it>
+	</noCompetitiorFieldsFilled>
+	<noClubFieldsFilled>
+		<en>You must fill the name and country of the club!</en>
+		<es>¡Debes de rellenar los campos de nombre y país del club!</es>
+		<nl>De naam en het land zijn verplichte club velden!</nl>
+		<de>Sie müssen den Namen und das Land eingeben!</de>
+		<ca>Deus d'omplir els camps de nom i païs del club!</ca>
+		<it>Si devono riempire i campi di nome e Paese del club!</it>
+	</noClubFieldsFilled>
+	<noTournamentFieldsFilled>
+		<en>You must fill the tournament name!</en>
+		<es>¡Debes de rellenar los campos de nombre del torneo!</es>
+		<nl>Je moet het toernooi een naam geven!</nl>
+		<de>Sie müssen den Wettkampfnamen eingeben!</de>
+		<ca>Deus d'omplir els camps del nom del torneig</ca>
+		<it>Si deve riempire il campo del nome del torneo!</it>
+	</noTournamentFieldsFilled>
+	<noTeamFieldsFilled>
+		<en>You must fill team field!</en>
+		<es>¡Debes de rellenar los campos del equipo!</es>
+		<nl>Je moet het team een naam geven!</nl>
+		<de>Sie müssen Team-Namen eingeben!</de>
+		<ca>Deus d'omplir els camps de l'equip!</ca>
+		<it>Si devono riempire i campi della squadra!</it>
+	</noTeamFieldsFilled>
+	<competitorStored>
+		<en>The new competitor has been stored added.</en>
+		<es>Se ha agregado un nuevo competidor.</es>
+		<nl>De deelnemer is aan de database toegevoegd.</nl>
+		<de>Der neue Teilnehmer wurde gespeichert.</de>
+		<ca>S'ha agregat un nou competidor.</ca>
+		<it>Un nuovo competitore è stato aggiunto.</it>
+	</competitorStored>
+	<tournamentStored>
+		<en>The new tournament has been stored.</en>
+		<es>Se ha agregado un nuevo campeonato.</es>
+		<nl>Het toernooi is aan de databse toegevoegd.</nl>
+		<de>Der neue Wettkampf wurde gespeichert.</de>
+		<ca>S'ha agregat un nou campionat.</ca>
+		<it>Un nuovo campionato è stato aggiunto.</it>
+	</tournamentStored>
+	<teamStored>
+		<en>The new team has been stored into the database.</en>
+		<es>Se ha agregado un nuevo equipo a la base de datos.</es>
+		<nl>Het team is aan de database toegevoegd.</nl>
+		<de>Das neue Team wurde gespeichert.</de>
+		<ca>S'ha agregat un nou equip a la base de dades.</ca>
+		<it>Una nuova squadra è stata aggiunta nel database.</it>
+	</teamStored>
+	<fightStored>
+		<en>The match has been stored.</en>
+		<es>Se han agregado los distintos partidos.</es>
+		<nl>De competitie is aan de database toegevoegd.</nl>
+		<de>Der Kampf wurde gespeichert.</de>
+		<ca>S'han agragat els distints partits.</ca>
+		<it>Gli incontri sono stati salvati.</it>
+	</fightStored>
+	<duelStored>
+		<en>The duel has been stored into the database.</en>
+		<es>Se ha agregado el combate a la base de datos.</es>
+		<nl>De wedstrijd is aan de database toegevoegd.</nl>
+		<de>Das Kampfduell wurde gespeichert.</de>
+		<ca>S'ha agregat el duel a la base de dades.</ca>
+		<it>Il combattimento è stato inserito nel database.</it>
+	</duelStored>
+	<teamUpdated>
+		<en>The team has been updated into the database.</en>
+		<es>El equipo ha sido actualizado en la base de datos.</es>
+		<nl>De teamgegevens zijn in de database aangapast.</nl>
+		<de>Das Team wurde gespeichert.</de>
+		<ca>L'equip ha sigut actualitzat a la base de dades.</ca>
+		<it>La squadra è stata aggiornata nel database.</it>
+	</teamUpdated>
+	<competitorUpdated>
+		<en>The competitor has been updated in the database.</en>
+		<es>El competidor ha sido actualizado en la base de datos.</es>
+		<nl>De gegevens van de deelnemer is in de database aangepast.</nl>
+		<de>Der Teilnehmer wurde gespeichert.</de>
+		<ca>El participant ha sigut actualitzat a la base de dades.</ca>
+		<it>Il competitore è stato aggiornato nel database.</it>
+	</competitorUpdated>
+	<clubUpdated>
+		<en>The club has been updated into the database.</en>
+		<es>El club ha sido actualizado en la base de datos.</es>
+		<nl>De gevens van de club zijn in de database aangepast.</nl>
+		<de>Der Klub wurde gespeichert.</de>
+		<ca>el club ha sigut actualitzat a la base de dades.</ca>
+		<it>Il club è stato aggiornato nel database.</it>
+	</clubUpdated>
+	<tournamentUpdated>
+		<en>The tournament has been updated.</en>
+		<es>El campeonato ha sido actualizado.</es>
+		<nl>De gegevens van het toernooi zijn in de database aangepast.</nl>
+		<de>Der Wettkampf wurde gespeichert.</de>
+		<ca>El campionat ha sigut actualitzat.</ca>
+		<it>Il campionato è stato aggiornato.</it>
+	</tournamentUpdated>
+	<fillFields>
+		<en>You must fill one of the fields to start a search.</en>
+		<es>Debes de rellenar uno de los campos para realizar una búsqueda.</es>
+		<nl>Om te kunnen zoeken moet je iets in een van de velden invoeren.</nl>
+		<de>Sie müssen mindestens ein Feld füllen, um eine Suche zu starten.</de>
+		<ca>Deus d'omplir un dels camps per a realitzat la recerca.</ca>
+		<it>si deve riempiere uno dei campi per realizzare la ricerca.</it>
+	</fillFields>
+	<deleteFights>
+		<en>This action will erase all previous matchs stored for this tournament. Are you sure you want to continue?</en>
+		<es>Esta acción borrará todos los partidos guardados anteriormente para este campeonato. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee worden alle eerder opgeslagen wedstrijden verwijderd. Weet je zeker dat je dit wilt?</nl>
+		<de>Diese Aktion löscht alle vorherigen Kämpfe für dieses Tunier. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà tots els partits guardats anteriorment per a aquest campionat. Està segur que vol continuar?.</ca>
+		<it>Questa azione cancellerà tutti gli incontri salvati precedentemente per questo campionato. Si è sicuri di voler procedere?</it>
+	</deleteFights>
+	<deleteOneFight>
+		<en>This action will erase the selected match. Are you sure you want to continue?</en>
+		<es>Esta acción borrará el partido seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee verwijder je de geselecteerde wedstrijd. Weet je zeker dat je dit wilt?</nl>
+		<de>Diese Aktion löscht den ausgewählten Kampf. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà el partit seleccionat. Està segur de continuar?.</ca>
+		<it>Questa azione cancellerà l'incontro selezionato. Si è sicuri di voler procedere?</it>
+	</deleteOneFight>
+	<questionDeleteCompetitor>
+		<en>This action will erase the selected competitor. Are you sure you want to continue?</en>
+		<es>Esta acción borrará el competidor seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee verwijder je de geselecteerde deelnemer. Weet je zeker dat je dit wilt?</nl>
+		<de>Diese Aktion löscht den ausgwählten Teilnehmer. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà al competidor seleccionat. Està segur de continuar?.</ca>
+		<it>Questa azione cancellerà il competitore selezionato. Si è sicuri di voler procedere?</it>
+	</questionDeleteCompetitor>
+	<questionUpdateCompetitor>
+		<en>Do you want to update an existing competitor?</en>
+		<es>El competidor ya existe. ¿Quieres actualizar el competidor?</es>
+		<nl>Wil je de gegevens van een deelnemer aanpassen?</nl>
+		<de>Wollen Sie den bestehenden Teilnehmer speichern?</de>
+		<ca>El competidor ja existeix. Vols actualitzar-lo?.</ca>
+		<it>Il competitore già esiste? Si vuole aggionarlo?</it>
+	</questionUpdateCompetitor>
+	<questionUpdateClub>
+		<en>Do you want to update an existing club?</en>
+		<es>El club ya existe. ¿Quieres actualizar el club?</es>
+		<nl>Wil je de gegevens van een club aanpassen?</nl>
+		<de>Wollen Sie den Klub speichern?</de>
+		<ca>El club ja existeix. Vols actualitzar-lo?.</ca>
+		<it>Il club già esiste? Si vuole aggionarlo?</it>
+	</questionUpdateClub>
+	<questionDeleteTeam>
+		<en>This action will remove the selected team. Are you sure you want to continue?</en>
+		<es>Esta acción borrará el equipo seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee verwijder je het geselecteerde team. Weet je zeker dat je wilt doorgaan?</nl>
+		<de>Diese Aktion löscht das ausgewählte Team. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà a l'equip seleccionat. Està segur de continuar?.</ca>
+		<it>Questa azione cancellerà la squadra selezionato. Si è sicuri di voler procedere?</it>
+	</questionDeleteTeam>
+	<questionDeleteTeams>
+		<en>This action will erase all previous inserted teams on this tournament. Are you sure you want to continue?</en>
+		<es>Esta acción borrará todos los equipos insertados previamente en la liga seleccionada. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee worden alle teams verwijderd uit het toernooi. Weet je zeker dat je wilt doorgaan?</nl>
+		<de>Diese Aktion löscht alle eingefüten Teams in diesem Tunier. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà tots els equips insertats prèviament en la lliga seleccionada. Estas segur de continuar?.</ca>
+		<it>Questa azione cancellerà tutte le squadre salvate precedentemente per questo campionato. Si è sicuri di voler procedere?</it>
+	</questionDeleteTeams>
+	<questionUpdateTeam>
+		<en>Do you want to update an existing team?</en>
+		<es>El equipo ya existe. ¿Quieres actualizar el equipo?</es>
+		<nl>Wil je de gegevens van een team aanpassen?</nl>
+		<de>Wollen Sie das Team speichern?</de>
+		<ca>L'equip ja existeix. Vols actualitzar-lo?.</ca>
+		<it>La squadra già esiste? Si vuole aggionarla?</it>
+	</questionUpdateTeam>
+	<questionUpdateTournament>
+		<en>Do you want to update an existing tournament?</en>
+		<es>El torneo ya existe. ¿Quieres actualizar el torneo?</es>
+		<nl>Wil je de gegevens van het toernooi aanpassen?</nl>
+		<de>Wollen sie den Wettkampf speichern?</de>
+		<ca>El torneig ja existeix. Vols actualitzar-lo?-</ca>
+		<it>Il torneo già esiste? Si vuole aggionarlo?</it>
+	</questionUpdateTournament>
+	<questionDeleteClub>
+		<en>This action will erase the selected club. Are you sure you want to continue?</en>
+		<es>Esta acción borrará el club seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee verwijder je de geselecteerde club, Weet je zeker dat je wilt doorgaan?</nl>
+		<de>Diese Aktion löscht den ausgewählten Klub. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà al club seleccionat. Està segur de continuar?.</ca>
+		<it>Questa azione cancellerà il club selezionato. Si è sicuri di voler procedere?</it>
+	</questionDeleteClub>
+	<questionCreateFight>
+		<en>Do you want to generate all the tournament matchs?</en>
+		<es>¿Quieres generar todos los partidos del campeonato?</es>
+		<nl>Wil je alle wedstrijden samenstellen?</nl>
+		<de>Wollen sie alles Kämpfe des Wettkampfes erstellen lassen?</de>
+		<ca>Vols generar tots els partits del campionat?.</ca>
+		<it>Si vuole generare tutti gli incontri del campionato?</it>
+	</questionCreateFight>
+	<questionLoadDesign>
+		<en>Do you want to load the previous design?</en>
+		<es>¿Quieres cargar el diseño anterior?</es>
+		<nl>Wil je het vorig ontwerp laden?</nl>
+		<de>Wollen Sie das vorherige Design laden?</de>
+		<ca>Vols carregar el disseny anterior?.</ca>
+		<it>Si vuolve caricare il progetto precedente?</it>
+	</questionLoadDesign>
+	<repeatedCompetitor>
+		<en>There is a repeated member in the team.</en>
+		<es>Existe un miembro repetido en el equipo.</es>
+		<nl>Er zijn twee dezelfde deelnemers in het team.</nl>
+		<de>Es gibt ein oder mehrere gleiche Teilnehmer in einem Team.</de>
+		<ca>Existeix un membre repetit a l'equip.</ca>
+		<it>Esiste un membro ripetuto nella squadra</it>
+	</repeatedCompetitor>
+	<leagueFinished>
+		<en>All matches are over. The league has finished and the winner is</en>
+		<es>Todos los partidos han acabado, la liga ha terminado y el ganador es</es>
+		<nl>Alle wedstrijden in de poule zijn voorbij. De winnaar is: </nl>
+		<de>Alle Kämpfe sind vorüber. Der Wettkampf ist beendet und der Gewinner ist</de>
+		<ca>Tots els partits han finalitzat, la lliga ha conclús i el guanyador és.</ca>
+		<it>Tutti gli incontri si sono disputati, il campionato è finito e il vincitore è</it>
+	</leagueFinished>
+	<deleteFightError>
+		<en>Error when deleting a match.</en>
+		<es>Error mientras se intentaba borrar un partido.</es>
+		<nl>Fout bij het verwijderen van de wedstrijd!</nl>
+		<de>Fehler beim löschen eines Kampfes.</de>
+		<ca>Error mentre s'intentava esborrar un partit.</ca>
+		<it>Si è generato un errore mentre si stava cancellando un incontro</it>
+	</deleteFightError>
+	<fightDeleted>
+		<en>The match has been deleted!</en>
+		<es>¡El partido ha sido borrado!</es>
+		<nl>De wedstrijd is verwijderd!</nl>
+		<de>Der Kampf wurde gelöscht!</de>
+		<ca>El partit ha sigut esborrat!</ca>
+		<it>L'incotro sono stati cancellato!</it>
+	</fightDeleted>
+	<fightsDeleted>
+		<en>The matchs have been deleted!</en>
+		<es>¡Los partidos han sido borrados!</es>
+		<nl>De wedstrijd is verwijderd!</nl>
+		<de>Der Kampf wurde gelöscht!</de>
+		<ca>Els partits han sigut esborrats!</ca>
+		<it>L'incotri sono stato cancellato!</it>
+	</fightsDeleted>
+	<competitorDeleted>
+		<en>The competitor has been deleted!</en>
+		<es>¡El competidor ha sido borrado!</es>
+		<nl>De deelnemer is verwijderd!</nl>
+		<de>Der Teilnehmer wurde gelöscht!</de>
+		<ca>El competidor ha sigut esborrat!</ca>
+		<it>Il competitore è stato cancellato!</it>
+	</competitorDeleted>
+	<teamDeleted>
+		<en>The team has been deleted!</en>
+		<es>¡El equipo ha sido borrado!</es>
+		<nl>Het team is verwijderd!</nl>
+		<de>Das Team wurde gelöscht!</de>
+		<ca>L'equip ha sigut esborrat!</ca>
+		<it>La squadra è stata cancellata!</it>
+	</teamDeleted>
+	<teamNotDeleted>
+		<en>The team does not exist!</en>
+		<es>¡El equipo no existe o acurrido un problema con la base de datos!</es>
+		<nl>Het team bestaat niet!</nl>
+		<de>Das Team existiert nicht!</de>
+		<ca>L'equip no existeix o ha ocorregut un problema amb la base de dades!</ca>
+		<it>La squadra non esiste o si è verificato un problema con el database</it>
+	</teamNotDeleted>
+	<clubDeleted>
+		<en>The club has been deleted!</en>
+		<es>¡El club ha sido borrado!</es>
+		<nl>De club is verwijderd!</nl>
+		<de>Der Klub wurde gelöscht!</de>
+		<ca>El club ha sigut esborrat!</ca>
+		<it>Il club è stata cancellata!</it>
+	</clubDeleted>
+	<deleteSelectedFights>
+		<en>This action will erase the selected match. Are you sure you want to continue?</en>
+		<es>Esta acción borrará el partido seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Hiermee wordt de geselecteerde wedstrijd verwijderd. Weet je zeker dat je wilt doorgaan?</nl>
+		<de>Diese Aktion löscht den ausgewählten Kampf. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció esborrarà el partit seleccionat. Està segur de continuar?.</ca>
+		<it>Questa azione cancellerà l'incontro selezionato. Si è sicuri di voler procedere?</it>
+	</deleteSelectedFights>
+	<accreditationOK>
+		<en>The acreditation has been created in a PDF file. </en>
+		<es>La acreditación ha sido creada en un archivo PDF.</es>
+		<nl>Het bewijs van deelname is aangemaakt in PDF-bestand.</nl>
+		<de>Die Akkreditierung wurde in einer PDF-Datei erstellt.</de>
+		<ca>L'acreditació ha sigut creada en un arxiu PDF.</ca>
+		<it>Il badge è stato creato in un file PDF</it>
+	</accreditationOK>
+	<accreditationBad>
+		<en>A problem has been found when generating the accreditation card. There is any other program accessing to the destination file?</en>
+		<es>Ha ocurrido un problema cuando se intentaba generar la acreditación. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het creën van het deelnemersbewijs. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Akkreditierungskarten trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'acreditació. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il badge. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</accreditationBad>
+	<teamOK>
+		<en>Acreditations has been created in a PDF file. </en>
+		<es>Las acreditaciones han sido creada en un archivo PDF.</es>
+		<nl>Bewijs van deelname zijn in een PDF bestand aangemaakt.</nl>
+		<de>Die Akkreditierungen wurden als PDF-Datei erstellt.</de>
+		<ca>Les acreditacions han sigut creades en un arxiu PDF.</ca>
+		<it>I badge sono stati creati in un file PDF</it>
+	</teamOK>
+	<teamBad>
+		<en>A problem has been found when generating the teams accreditation. There is any other program accessing to the destination file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar las acrediationes del equipo. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het creën van het deelnemersbewijzen. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Akkreditierungskarten der Teams trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar les acreditacions de l'equip. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stavano creando i badge della squadra. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</teamBad>
+	<tournamentOK>
+		<en>Acreditations has been created in a PDF file. </en>
+		<es>Las acreditaciones han sido creada en un archivo PDF.</es>
+		<nl>Alle deelnemersbewijzen zijn in een PDF bestand aangemaakt.</nl>
+		<de>Die Akkreditierungen wurden als PDF-Datei erstellt.</de>
+		<ca>Les acreditacions han sigut creades en un arxiu PDF.</ca>
+		<it>I badge sono stati creati in un file PDF</it>
+	</tournamentOK>
+	<tournamentBad>
+		<en>A problem has been found when generating the tournament's accreditation. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar las acreditaciones. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Een probleen heeft zich voorgedaan bij toewijzing van het toernooi. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Akkreditierungskarten für den Wettbewerb trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar  les acreditacins. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stavano creando i badge. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</tournamentBad>
+	<teamsListOK>
+		<en>The list of teams has been created correctly.</en>
+		<es>La lista de equipos ha sido creada correctamente.</es>
+		<nl>De lijst met voorwaarden is succesvol aangemaakt.</nl>
+		<de>Die Teamliste wurde korrekt erstellt.</de>
+		<ca>La llista d'equips ha sigut creada correctament.</ca>
+		<it>La lista delle squadre è stata creata correttamente</it>
+	</teamsListOK>
+	<scoreListOK>
+		<en>The list of scores has been created correctly.</en>
+		<es>La lista de puntuaciones ha sido creada correctamente.</es>
+		<nl>De sorelijst is met succes aangemaakt.</nl>
+		<de>Die Punkteliste wurde erfolgreich erstellt.</de>
+		<ca>La llista de puntuacions ha sigut creada correctament.</ca>
+		<it>La lista dei punteggi è stata creata correttamente</it>
+	</scoreListOK>
+	<fightsListOK>
+		<en>The list of matches has been created correctly. </en>
+		<es>La lista de partidos ha sido creada correctamente.</es>
+		<nl>De lijst met wedstrijden is met succes aangemaakt.</nl>
+		<de>Die Kampfliste wurde erfolgreich erstellt.</de>
+		<ca>La llista de partits ha sigut creada correctament.</ca>
+		<it>La lista degli incontri è stata creata correttamente</it>
+	</fightsListOK>
+	<SummaryListOK>
+		<en>The list of matches has been created correctly.</en>
+		<es>La lista de partidos ha sido creada correctamente.</es>
+		<nl>Overzicht van de wedstrijden is succesvol aangemaakt.</nl>
+		<de>Die Kampfliste wurde erfolgreich erstellt.</de>
+		<ca>La llista de partits ha sigut creada correctament.</ca>
+		<it>La lista degli incontri è stata creata correttamente</it>
+	</SummaryListOK>
+	<ClubListOK>
+		<en>The list of clubs has been created correctly.</en>
+		<es>La lista de los clubes ha sido creada correctamente.</es>
+		<nl>Overzicht van clubs is succesvol aangemaakt.</nl>
+		<de>Die Klubliste wurde erfolgreich erstellt.</de>
+		<ca>La llista de clubs ha sigut creada correctament.</ca>
+		<it>La lista dei club è stata creata correttamente</it>
+	</ClubListOK>
+	<refereeListOK>
+		<en>The list of referees has been created correctly.</en>
+		<es>La lista de árbitros ha sido creada correctamente.</es>
+		<nl>Overzicht van scheidsrechters is succesvol aangemaakt.</nl>
+		<de>Die Kampfrichterliste wurde erfolgreich erstellt.</de>
+		<ca>La llista d'àrbitres ha sigut creada correctament.</ca>
+		<it>La lista degli arbitri è stata creata correttamente</it>
+	</refereeListOK>
+	<teamsListBad>
+		<en>A problem has been found when generating the list of teams file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con la lista de equipos. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het samenstellen van het teamoverzicht.Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Teamliste trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb la llista d'equips. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con la lista delle squadre. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</teamsListBad>
+	<scoreListBad>
+		<en>A problem has been found when generating the list of score file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con la lista de puntuaciones. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het samenstellen van het scoreoverzicht. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Punkteliste trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb la llista de punntuacions. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con la lista dei punteggi. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</scoreListBad>
+	<fightsListBad>
+		<en>A problem has been found when generating the list of matches file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con la lista de partidos. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het samenstellen van wedstrijdoverzicht. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Kampfliste trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb la llista de partits. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con la lista degli incontri. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</fightsListBad>
+	<SummaryListBad>
+		<en>A problem has been found when generating the summary list file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con el resumen de partidos. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Een probleem heeft zich voorgedaan bij het aanmaken van de samenvatting. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Zusammenfassung trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb el resum dels partits. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con il riassunto degli incontri. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</SummaryListBad>	
+	<ClubListBad>
+		<en>A problem has been found when generating the list of clubs file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con el listado de los clubes. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Een probleem heeft zich voorgedaan bij het aanmaken van het cluboverzicht. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Klubliste trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb la llista de clubs. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con la lista dei club. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</ClubListBad>	
+	<refereeListBad>
+		<en>A problem has been found when generating the list of referees file. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar el archivo con la lista de árbitros. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Een probleem heeft zich voorgedaan bij het aanmaken van het overzicht van scheidsrechters. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Kampfrichterliste trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentava generar l'arxiu amb la llista d'àrbitres. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stava creando il file con la lista degli arbitri. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</refereeListBad>
+	<diplomaOK>
+		<en>The diplomas have been created in a PDF file. </en>
+		<es>Los diplomas han sido creados en un archivo PDF.</es>
+		<nl>De diploma's zijn in een PDF bestand aangemaakt.</nl>
+		<de>Die Urkunden wurden in einer PDF-Datei erstellt.</de>
+		<ca>Els diplomes han sigut creats en un arxiu PDF.</ca>
+		<it>I diploma sono stati creati in un file PDF.</it>
+	</diplomaOK>
+	<diplomaBad>
+		<en>A problem has been found when generating the tournament's diplomas. There is any other program accessing to this file?</en>
+		<es>A ocurrido un problema cuando se intentaba generar los diplomas. ¿Existe algún otro programa intentando acceder al archivo?</es>
+		<nl>Er is een probleem bij het samenstellen van de diploma's. Gebruikt een ander programma het bestand?</nl>
+		<de>Ein Problem beim erstellen der Wettbewerbsurkunden trat auf. Ein anderes Programm hat eventuell Zugriff auf die Datei?</de>
+		<ca>Ha ocorregut un problema quan s'intentaven generar els diplomes. Existeix algun altre programa intentant accedir a l'arxiu?.</ca>
+		<it>Si è verificato un problema mentre si stavano generando i diploma. Esiste qualche altro programmo che sta accedendo al file?</it>
+	</diplomaBad>	
+	<roleChanged>
+		<en>The role of the participant has been changed.</en>
+		<es>Se ha cambiado el rol del participante.</es>
+		<nl>De rol van de deelnemer is gewijzigd.</nl>
+		<de>Die Rolle des Teilnehmers wurde geändert.</de>
+		<ca>S'ha canviat el rol dels participants.</ca>
+		<it>Il ruolo del partecipante è stato cambiato</it>
+	</roleChanged>
+	<roleDeleteQuestion>
+		<en>The role of the participant will be deleted. Are you sure you want to continue?</en>
+		<es>Se va a eliminar el rol del participante seleccionado. ¿Desea Continuar?</es>
+		<nl>De rol van de deelnemer wordt verwijderd, Weet je zeker dat je door wilt gaan?</nl>
+		<de>Die Rolle des Teilnehmers wird gelöscht. Wollen Sie fortfahren?</de>
+		<ca>Va a eliminar-se el rol del participant seleccionat. Desitja continuar?</ca>
+		<it>Questa azione cancellerà il ruolo del partecipante. Si è sicuri di voler procedere?</it>
+	</roleDeleteQuestion>
+	<roleDeleted>
+		<en>The role has been deleted!</en>
+		<es>Se ha eliminado el rol.</es>
+		<nl>Deze rol is verwijderd</nl>
+		<de>Die Rolle wurde gelöscht!</de>
+		<ca>S'ha eliminat el rol</ca>
+		<it>Il ruolo è stato cancellato</it>
+	</roleDeleted>
+	<noAccessUser>
+		<en>The selected user has not granted access to the database into the remote machine.</en>
+		<es>El usuario seleccionado no tiene permiso para acceder a la base de datos de la máquina indicada.</es>
+		<nl>Deze gebruiker wordt de toegang tot de centrale database geweigerd.</nl>
+		<de>Der ausgewählte Benutzer hat keinen Zugriff auf die Datenbank.</de>
+		<ca>L'usuari seleccionat no té permès per accedir a la base de dades de la màquina indicada.</ca>
+		<it>L'utente selezionato non ha permesso per accedere al database della macchina indicata.</it>
+	</noAccessUser>
+	<noUserPrivileges>
+		<en>The selected user has no privileges to access to this database.</en>
+		<es>El usuario seleccionado no tiene permisos para acceder a la base de datos.</es>
+		<nl>Deze gebruiker heeft geen rechten om de databse te gebruiken.</nl>
+		<de>Der ausgewählte Benutzer hat keine Rechte auf die Datenbank zuzugreifen.</de>
+		<ca>L'usuari seleccionat no té permisos per accedir a la base de dades</ca>
+		<it>L'utente selezionato non ha permesso per accedere al database.</it>
+	</noUserPrivileges>
+	<unknownColumn>
+		<en>Unknown database column. Are you sure that the database exist and is the correct version?</en>
+		<es>Columna desconocida en la base de datos. Está usted seguro que la base de datos está instalada correctamente y la versión es correcta?</es>
+		<nl>Onbekende kolom in de database. Ben je zeker dat de datbase betsaat en van de juiste verzie is?</nl>
+		<de>Unbekante Datenbankspalte. Sind Sie sicher, dass die Datenbank existiert und es die korrekte Version ist?</de>
+		<ca>Columna desconeguda a la base de dades. Està vostè segur que la base de dades está instal·lada correctament i la versió és correcta?</ca>
+		<it>Colonna sconosciuta nel database. Si è sicuri che il database è installato correttamente e che la versione è corretta?</it>
+	</unknownColumn>
+	<noTournamentOrCompetitorExist>
+		<en>Does not exist any tournament or competitor into the database. Please insert first both of them.</en>
+		<es>No existe ningún torneo o competidor en la base de datos. Por favor, inserte uno para cada uno de ellos primero.</es>
+		<nl>De database bevat geen Toernooi en deelnemer. Voeg beiden eerst toe!</nl>
+		<de>Es sind noch keine Wetbewerbe oder Teilnehmer angelegt. Bitte erst beides anlegen.</de>
+		<ca>No existeix ningun torneig o competidor a la base de dades. Per favor, inserisca un per cadascun d'ells primer.</ca>
+		<it>Non esiste nessun campionato e nessun competitore. Per favore, inserisca uno di ogni tipo.</it>
+	</noTournamentOrCompetitorExist>
+	<errorTree>
+		<en>Error in the league's tree: the number of the pools and the width of the tree do not match.</en>
+		<es>Error en el árbol de la liga: el número de grupos y el ancho del árbol no coincide.</es>
+		<nl>Fout in het overzicht van de poule: het aantal groepen en wedtrijden klopt niet.</nl>
+		<de>Fehler im Wettbewerbsbaum: Die Anzahl der Pools stimmt nicht mit der Anzahl der Runden überein.</de>
+		<ca>Error a l'arbre de la lliga: el número de grups i l'ample de l'arbre no coincideix.</ca>
+		<it>Errore nell'albero del campionato: il numero dei gruppi e la larghezza dell'albero non coincidono.</it>
+	</errorTree>
+	<noFight>
+		<en>There is not match defined.</en>
+		<es>No se ha definido ningún partido.</es>
+		<nl>Geen resultaat gevonden.</nl>
+		<de>Es sind keine Kämpfe angelegt.</de>
+		<ca>No s'ha definit cap partit</ca>
+		<it>Nessun incontro è stato definito.</it>
+	</noFight>
+	<noTeam>
+		<en>There is not team selected.</en>
+		<es>No se ha seleccionado ningún equipo.</es>
+		<nl>Er is geen team geselecteerd.</nl>
+		<de>Es ist kein Team ausgewählt.</de>
+		<ca>no s'ha seleccionat cap equip</ca>
+		<it>Nessuna squadra è stata selezionata.</it>
+	</noTeam>
+	<oneTeamPerCompetitor>
+		<en>Now the program will generate one team for each competitor.</en>
+		<es>Ahora se generará un equipo por cada competidor.</es>
+		<nl>Voor iedere deelnemer wordt nu een team aangemaakt.</nl>
+		<de>Das Programm erstellt nun ein Team für jeden Teilnehmer.</de>
+		<ca>Ara es generará un equip per cada participant!.</ca>
+		<it>Si genererà una squadra per ogni competitore.</it>
+	</oneTeamPerCompetitor>
+	<nextLevel>
+		<en>All matchs are over. Do you want to continue to the next phase of the tournament?</en>
+		<es>Los partidos de esta ronda han acabado. ¿Quieres pasar a la siguiente fase del campeonato?</es>
+		<nl>Alle wedstrijden zijn voorbij. Wil je verder gaan met het toernooi?</nl>
+		<de>Alle Kämpfe sind vorüber. Wollen Sie mit der nächsten Runde des Wettbewerbs fortfahren?</de>
+		<ca>Els partits d'aquesta ronda han finalitzat. Vols passar a la següent fase del campionat?</ca>
+		<it>Gli incontri di questa ronda sono finiti. Si desidera passare alla seguente fase del campionato?</it>
+	</nextLevel>
+	<noFightsDistributedInArenas>
+		<en>The pools are not distributed in different shiaijos. Do you want to distribute it automatically?</en>
+		<es>Los grupos no están distribuidos en los distintos shiaijos. ¿Quieres permitir que se distribuyan automáticamente?</es>
+		<nl>De groepen zijn niet automatisch aan de wedstrijdvelden toegewezen. Wil je dit alsnog doen?</nl>
+		<de>Die Pools sind nicht auf die verschiedenen Shiaijos verteilt. Wollen Sie die Pools automatisch verteilen lassen?</de>
+		<ca>Els grups no estan distribuïts als diferents shiaijos. Vols permetre que es distribuisquen automàticament?</ca>
+		<it>I gruppi non sono distribuiti nei vari shiaijos. Si vuole che si distribuiscano automaticamente?</it>
+	</noFightsDistributedInArenas>
+	<noLinkFinished>
+		<en>The league design is not finished. Fights can not be generated. </en>
+		<es>No se ha acabado el diseño de la liga. Los partidos no pueden ser generados. </es>
+		<nl>De samenstelling van de poule is nog niet voltooid. Wedstrijden kunnen nog niet worden aangemaakt.</nl>
+		<de>Das Wettbewerbsdesign ist nicht fertig. Kämpfe können nicht erstellt werden.</de>
+		<ca>No s'ha finalitzat el diseny de la lliga. Els combats no poden ser generats.</ca>
+		<it>Il disegno del campionato non è finito. Non si possono generare i combattimenti.</it>
+	</noLinkFinished>
+	<winnerOfgroup>
+		<en>The fights of a pool are over. Teams that pass to the next round are</en>
+		<es>Los partidos de un grupo han acabado. Los equipos que pasan a la siguiente ronda son</es>
+		<nl>De wedstrijden van de groep zijn voorbij. Teams die doorgaan naar de volgende ronde zijn:</nl>
+		<de>Die Kämpfe des Pools sind vorbei. Die Teams die eine Runde weiterkommen sind</de>
+		<ca>Els combats d'un grup han finalitzat. Els equips que passen a la següent ronda són:</ca>
+		<it>Gli incontri di questo gruppo sono finiti. Le squadre che passano alla seguente fase sono</it>
+	</winnerOfgroup>
+	<storeUndrawError>
+		<en>Error when trying to store the score for the breakthrough.</en>
+		<es>Error mientras se intentaba almacenar el punto para desempatar.</es>
+		<nl>Fout bij het opslaan van de score.</nl>
+		<de>Error when trying to store the score for the breakthrough.</de>
+		<ca>Error mentre s'intentava enmagatzemar el punt per desempatar.</ca>
+		<it>Si è generato un errore mentre si stava salvando il punto per lo spareggio.</it>
+	</storeUndrawError>
+	<waitingArena>
+		<en>Wait until all fights are finished. Remain shiaijo </en>
+		<es>Espere mientras se acaban los partidos del shiaijo </es>
+		<nl>Wacht tot alle wedstrijden voorbij zijn: Volgende wedstrijd </nl>
+		<de>Wait until all fights are finished. Remain shiaijo</de>
+		<ca>Espere mentre finalitzen els combats del shiaijo</ca>
+		<it>Si prega di attendere metre si concludono gli incontri del shiaijo</it>
+	</waitingArena>
+	<isDNI>
+		<en>It seems that from this spanish ID card the final letter is missed. Do you want to add it?</en>
+		<es>Parece que a este DNI le falta la letra. ¿Quiere agregarla?</es>
+		<nl>Blijkbaar mist deze Spaanse ID-kaart de laatste letter. Wil je deze toevoegen?</nl>
+		<de>It seems that from this spanish ID card the final letter is missed. Do you want to add it?</de>
+		<ca>Pareix que a aquest DNI li falte la lletra. Vol agregar-la?</ca>
+		<it>Sembra che a questo DNI manca la lettera. Si desidera modificarlo?</it>
+	</isDNI>
+	<csvImported>
+		<en>The CSV file has been imported correctly!</en>
+		<es>¡El fichero CSV ha sido importado correctamente!</es>
+		<nl>Het CSV-bestand is succesvol geïmporteerd!</nl>
+		<de>Die CSV-Datei wurde korrekt importiert!</de>
+		<ca>El fitxer CSV ha sigut importat correctament!</ca>
+		<it>Il file CSV è stato importato correttamente</it>
+	</csvImported>
+	<csvExported>
+		<en>The CSV file has been exported correctly!</en>
+		<es>¡El fichero CSV ha sido exportado correctamente!</es>
+		<nl>Het CSV-bestand is succesvol geëxporteerd!</nl>
+		<de>Die CSV-Datei wurde korrekt geexportiert!</de>
+		<ca>El fitxer CSV ha sigut exportat correctament!</ca>
+		<it>Il file CSV è stato exportato correttamente</it>
+	</csvExported>
+	<clubNotStored>
+		<en>Error when trying to add a new club!</en>
+		<es>¡Error al intentar insertar un nuevo club!</es>
+		<nl>Fout bij het toevoegen van een nieuwe club!</nl>
+		<de>Fehler beim hinzufügen eines neuen Klubs!</de>
+		<ca>Error a l'intentar inserir un nou club!</ca>
+		<it>Errore nell'inserire un nuovo club!</it>
+	</clubNotStored>
+	<RefresehdData>
+		<en>Data have been succesfully refreshed!</en>
+		<es>¡Datos actualizados correctamente!</es>
+		<nl>Gegevens zijn succesvol ververst!</nl>
+		<de>Datan wurde erfolgreich aufgefrischt!</de>
+		<ca>Dades actualitzades correctament!</ca>
+		<it>Dati aggiornati correttamente!</it>
+	</RefresehdData>
+	<storeSeminarBad>
+		<en>Error when trying to store a seminar into the database.</en>
+		<es>Error mientras se intentaba almacenar un seminarista en la base de datos.</es>
+		<nl>Fout bij het opslaan van een seminar in de database.</nl>
+		<de>Fehler beim speichern eines Lehrgangs.</de>
+		<ca>Error mentre s'intentava enmagatzemar un seminarista a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava inserento un seminarista nel database.</it>
+	</storeSeminarBad>
+	<notEnoughCompetitors>
+		<en>There are not enough competitors on the team.</en>
+		<es>El equipo no tiene suficientes competidores.</es>
+		<nl>Er zijn onvoldoende delnemers in het team.</nl>
+		<de>Es sind nicht genug Teilnehmer in einem Team.</de>
+		<ca>L'equip no té suficients competidors.</ca>
+		<it>La squadra non ha competitori sufficienti.</it>
+	</notEnoughCompetitors>	
+	<exportDatabase>
+		<en>The database has been exported to the desired file.</en>
+		<es>La base de datos ha sido exportada correctamente al fichero.</es>
+		<nl>De database is naar het opgegeven bestand gekopiëerd.</nl>
+		<de>Die Datenbank wurde erfolgreich exportiert.</de>
+		<ca>La base de dades ha sigut exportada correctament al fitxer.</ca>
+		<it>El database è stato esportato correttamente nel file.</it>
+	</exportDatabase>
+	<exportDatabaseFail>
+		<en>Error: database has NOT been exported correctly.</en>
+		<es>Error: la base de datos NO ha sido exportada.</es>
+		<nl>Error: De database is NIET correct geëxporteerd!</nl>
+		<de>Fehler: Die Datenbank konnte NICHT exportiert werden!</de>
+		<ca>Error: la base de dades NO ha sigut exportada.</ca>
+		<it>Errore: il database non è stato esportato!</it>
+	</exportDatabaseFail>
+	<importDatabase>
+		<en>The database has been imported successfully!</en>
+		<es>¡La base de datos ha sido importada correctamente!</es>
+		<nl>De database is correct geïmporteerd!</nl>
+		<de>Die Datenbank wurde erfolgreich importiert!</de>
+		<ca>La base de dades ha sigut importada correctament!</ca>
+		<it>Il database è stato importato correttamente!</it>
+	</importDatabase>
+	<importDatabaseFail>
+		<en>Error: database has NOT been imported.</en>
+		<es>Error: ¡La base de datos NO ha sido importada!</es>
+		<nl>Error: database is NIET correct geïmporteerd!</nl>
+		<de>Fehler: Datenbank NICHT erfolgreich importiert!</de>
+		<ca>Error: la base de dades NO ha sigut importada!</ca>
+		<it>Errore: il database non è stato importato!</it>
+	</importDatabaseFail>
+	<questionRemoveTeam>
+		<en>This action will remove the selected team. Are you sure you want to continue?</en>
+		<es>Esta acción quitará el equipo seleccionado. ¿Estas seguro de continuar?</es>
+		<nl>Met deze actie verwijder je het geselecteerde team. Weet je zeker dat je door wilt gaan?</nl>
+		<de>Diese Aktion wird das ausgewählte team entfernen. Wollen Sie fortfahren?</de>
+		<ca>Aquesta acció llevará l'equip seleccionat. Está segur que vol continuar?</ca>
+		<it>Questa azione cancellerà la squadra selezionata. Si è sicuri di voler procedere?</it>
+	</questionRemoveTeam>
+	<errorLanguage>
+		<en>There is a problem with the language file. Check the XML file</en>
+		<es>Existe un problema con el fichero de idiomas. Comprobar que el XML está creado correctamente.</es>
+		<nl>Er is een probleem met het taalbestand. Controleer de XML file</nl>
+		<de>Es gibt Probleme mit der Sprachdatei. Überprüfen Sie die XML-Dateien.</de>
+		<ca>Existeix un problema amb el fitxer d'idiomes. Comprovar que el XML està creat correctament.</ca>
+		<it>Esiste un problema con il file delle lingue. Controllare che il file XML sia creato correttamente.</it>
+	</errorLanguage>
+	<orderChanged>
+		<en>The order of the members has been changed.</en>
+		<es>El orden de los miembros del equipo ha sido cambiado.</es>
+		<nl>De volgorde van de leden is gewijzigd.</nl>
+		<de>Die Reihenfolge der Teilnehmer wurde geändert.</de>
+		<ca>L'ordre dels membres de l'equip ha sigut canviat.</ca>
+		<it>L'ordine dei membri della squadra è stato cambiato.</it>
+	</orderChanged>
+	<databaseImported>
+		<en>The database has been imported correctly!</en>
+		<es>¡La base de datos ha sido importado correctamente!</es>
+		<nl>Het database is succesvol geïmporteerd!</nl>
+		<de>Die datenbank wurde korrekt importiert!</de>
+		<ca>La base de dades ha sigut importada correctament!</ca>
+		<it>Il database è stato importato correttamente!</it>
+	</databaseImported>
+	
+	<!-- ///////////TRADUCIR //////////////// -->
+	<addFight>
+		<en>The fight has been added correctly.</en>
+		<es>El partido ha sido añadido con éxito.</es>
+		<nl>De wedstrijd is correct toegevoegd.</nl>
+		<de>The fight has been added correctly.</de>
+		<ca>El combat ha sigut inserit correctament.</ca>
+		<it>L'incontro è stato inserito con successo.</it>
+	</addFight>
+	<waitNewLevel>
+		<en>The team order can not be changed until all current fights are finished.</en>
+		<es>No se puede cambiar el orden del equipo hasta que se terminen los partidos actuales.</es>
+		<nl>De samenstelling van het team kan niet worden gewijzigd voordat alle wedstrijden zijn beëindigd.</nl>
+		<de>The team order can not be changed until all current fights are finished.</de>
+		<ca>El ordre del equips not pot ser cambiat fins que els combats no finisquen</ca>
+		<it>Non si puó cambiare l'ordine della squadra finché gli incontri attuali non saranno terminati</it>
+	</waitNewLevel>
+	<existFile>
+		<en>The file already exists. Do you want to overwrite it?</en>
+		<es>El fichero ya existe. ¿Desea sobreescribirlo?</es>
+		<nl>Het bestand bestaat al. Wil je het overschrijven?</nl>
+		<de>The file already exists. Do you want to overwrite it?</de>
+		<ca>El fitxer ja existix. Desitja sobreescriure'l?</ca>
+		<it>Il file già esiste. Si desidera sovrascriverlo?</it>
+	</existFile>
+	<ConversionCompleted>
+		<en>The database has been exported successfully!</en>
+		<es>¡La base de datos ha sido exportada correctamente!</es>
+		<nl>De database is met succes geëxperteerd!</nl>
+		<de>The database has been exported successfully!</de>
+		<ca>La base de dades ha sigut exportada correctament!</ca>
+		<it>Il database è stato esportato correttamente!</it>
+	</ConversionCompleted>
+	<imageNotFound>
+		<en>Background image not found!</en>
+		<es>¡La imagen de fondo no ha sido encontrada!</es>
+		<nl>Achtergrondafbeelding niet gevonden!</nl>
+		<de>Background image not found!</de>
+		<ca>La imatge no ha sigut trabada!</ca>
+		<it>La immagine di fondo non è stata incontrata!</it>
+	</imageNotFound>
+	<teamsStored>
+		<en>The new teams have been stored into the database.</en>
+		<es>Se ha agregado los nuevos equipos a la base de datos.</es>
+		<nl>Nieuwe teams zijn in de database opgeslagen.</nl>
+		<de>The new teams have been stored into the database.</de>
+		<ca>S'ha agregat els nous equips a la base de dades.</ca>
+		<it>I nuovi gruppi sono stati inseriti nel database.</it>
+	</teamsStored>
+	<noTournament>
+		<en>There is not any tournament created.</en>
+		<es>No hay ningún torneo en la base de datos.</es>
+		<nl>Er is geen toernooi aangemaakt.</nl>
+		<de>There is not any tournament created.</de>
+		<ca>No hi ha cap torneig en la base de dades.</ca>
+		<it>Non esiste nessun torneo nel database.</it>
+	</noTournament>	
+	<errorTournament>
+		<en>Unexpected error when reading tournament information.</en>
+		<es>Error inesperado al leer el torneo de la base de datos.</es>
+		<nl>Onverwachte fout bij het lezen van de toernooi informatie.</nl>
+		<de>Unexpected error when reading tournament information.</de>
+		<ca>Error inesperat al llegir el torneig de la base de dades.</ca>
+		<it>Errore inaspettato a leggere la base di dati.</it>
+	</errorTournament>
+	<csvNotImported>
+		<en>Error when importing the CSV file.</en>
+		<es>¡Error mientras se intentaba importar el fichero CSV!</es>
+		<nl>Fout bij het importeren van het CSV bestand.</nl>
+		<de>Error when importing the CSV file.</de>
+		<ca>Error mentres s'intentava importar el fitxer CSV!</ca>
+		<it>Errore durante il tentativo di importare il file CSV!</it>
+	</csvNotImported>
+	<disableMonitor>
+		<en>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</en>
+		<es>Esta opción es incompatible con el monitor de puntuaciones. Se ruega no utilizarlo si se selecciona esta opción.</es>
+		<nl>Deze optie is niet te combineren met de score weergaven. Gelieve niet te gebruiken als u die optie selecteert.</nl>
+		<de>This option is incompatible with the score monitor. Please, do not use it if this option if you select this option.</de>
+		<ca>Esta opció és incompatible amb el monitor de puntuacions. Es prega no utilitzar-ho si es selecciona esta opció.</ca>
+		<it>Questa opzione è incompatibile con il monitor di punteggi. Si prega di non utilizzarlo si seleziona questa opzione.</it>	
+	</disableMonitor>
+	<tournamentNotOver>
+		<en>Tournament is not over yet!</en>
+		<es>El campeonato no ha terminado todavía!</es>
+		<nl>Het tournooi is nog niet teneinde!</nl>
+		<de>Tournament is not over yet!</de>
+		<ca>El campionat no ha acabat encara!</ca>
+		<it>Il campionato non è ancora finito!</it>		
+	</tournamentNotOver>
+	<databaseConnectionFailure>
+		<en>Communications link failure with the database server!</en>
+		<es>Fallo en el enlace de comunicación con el servidor de bases de datos.</es>
+		<nl>Geen communicatie mogelijk met de databaseserver!</nl>
+		<de>Communications link failure with the database server!</de>
+		<ca>Error en l'enllaç de comunicació amb el servidor de bases de dades.</ca>
+		<it>Errore di communicazione con il server della base di dati.</it>
+	</databaseConnectionFailure>
+	<deleteRoleError>
+		<en>Error when trying to delete a role from the database.</en>
+		<es>Error mientras se intentaba borrar un rol de la base de datos.</es>
+		<nl>Fout bij het verrwijderen van een rol uit de database.</nl>
+		<de>Error when trying to delete a role from the database.</de>
+		<ca>Error mentre s'intentava esborrar un rol de la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando un ruolo del database</it>
+	</deleteRoleError>
+	<deleteDuelError>
+		<en>Error when trying to remove a duel into the database.</en>
+		<es>Error mientras se intentaba eliminar un combate en la base de datos.</es>
+		<nl>Fout bij het verwijderen van een gevecht uit de database.</nl>
+		<de>Error when trying to remove a duel into the database.</de>
+		<ca>Error mentre s'intentava esborrar un duel a la base de dades.</ca>
+		<it>Si è verificato un errore mentre si stava cancellando un incontro nel database</it>
+	</deleteDuelError>
+	<autosaving>
+		<en>Autosaving...</en>
+		<es>Auto guardando...</es>
+		<nl>Automatisch opslaan...</nl>
+		<de>Autosaving...</de>
+		<ca>Auto guardant...</ca>
+		<it>Autosalvare...</it>
+	</autosaving>
+	<saveBeforeExit>
+		<en>There are some unsaved changes. Do you want to save it in the database?</en>
+		<es>Existen cambios sin guardar. ¿Quieres guardar estos cambios en la base de datos?</es>
+		<nl>Niet alle gegevens zijn ogeslagen. Wijzigen opslaan in de database?</nl>
+		<de>There are some unsaved changes. Do you want to save it in the database?</de>
+		<ca>Hi ha canvis per guardar. Vols guardar estos canvis a la base de dades?</ca>
+		<it>Ci sono dati modificati non salvati. Vuoi salvare li dati nel database?</it>
+	</saveBeforeExit>
+	<repatedTeam>
+		<en>A team with this name already exist.</en>
+		<es>Ya existe un equipo con ese nombre.</es>
+		<nl>Naam van het team bestaat al.</nl>
+		<de>A team with this name already exist.</de>
+		<ca>Existeix un equip amb aquest nom.</ca>
+		<it>Esiste un squadra con questo nome.</it>
+	</repatedTeam>
+	<repeatedFight>
+		<en>There is a repeated fight in the tournament.</en>
+		<es>Existe un partido repetido en el torneo.</es>
+		<nl>Wedstrijd bestaat al in het toernooi.</nl>
+		<de>There is a repeated fight in the tournament.</de>
+		<ca>Existeix un combat repetit al campionat.</ca>
+		<it>Esiste un incontro ripetuto en il campionato.</it>
+	</repeatedFight>
+	<manualChampionshipHelp>
+		<en>Select a source teams group and the address teams group for creating the winners cross.</en>
+		<es>Selecciona un grupo de equipos origen y un grupo destino para generar los cruces entre los ganadores.</es>
+		<nl>Selecteer het 1e team uit de groep en het 2e teams uit de groep voor het maken van de winnaars kruistabel.</nl>
+		<de>Select a source teams group and the address teams group for creating the winners cross.</de>
+		<ca>Selecciona un grup de equips d'origen i un grup destí per a generar els encreuaments dels guanyadors.</ca>
+		<it>Seleziona un gruppo di squadre di origine e un gruppo di destino per generare la combinazione dei vincitori.</it>
+	</manualChampionshipHelp>
+	<storeDataError>
+		<en>Error when trying to store some data in the database.</en>
+		<es>Error mientras se intentaba almacenar algunos datos en la base de datos</es>
+		<nl>Fout bij het opslaan van gegevens in de database.</nl>
+		<de>Error when trying to store tsome data in the database.</de>
+		<ca>Error mentre s'intentava enmagatzemar dades a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava salvando datti nel database.</it>
+	</storeDataError>
+	<deleteDataError>
+		<en>Error when trying to remove some data in the database.</en>
+		<es>Error mientras se intentaba borrar algunos datos en la base de datos</es>
+		<nl>Fout bij het verwijderen van gegevens uit de database.</nl>
+		<de>Error when trying to remove some data in the database.</de>
+		<ca>Error mentre s'intentava esborrar dades a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava cancellando datti nel database.</it>
+	</deleteDataError>
+	<unknownDatabaseError>
+		<en>An unknown error has occurred when accessing to the database. </en>
+		<es>Ha ocurrido un error desconocido mientras se intentaba acceder a la base de datos.</es>
+		<nl>Er heeft zich een onbekende fout voorgedaan bij het benaderen van de database.</nl>
+		<de>An unknown error has occurred when accessing to the database.</de>
+		<ca>Ha ocorregut un error desconegut mentres s'intentava accedir a la base de dades.</ca>
+		<it>Si è generato un errore mentre si stava accedendo nel database.</it>
+	</unknownDatabaseError>
+	<genericError>
+		<en>An unknown error has occurred when trying to do the operation.</en>
+		<es>Ha ocurrido un error desconocido mientras se intentaba hacer la operación.</es>
+		<nl>Een onbekende fout heeft zicht bij deze actie voorgedaan.</nl>
+		<de>An unknown error has occurred when trying to do the operation. </de>
+		<ca>Ha ocorregut un error desconegut mentres s'intentava fer l'operació.</ca>
+		<it>Si è verificato un errore sconosciuto durante il tentativo di fare l'operazione.</it>
+	</genericError>
+	<emptyPdfError>
+		<en>The generated document is empty. Please, review the selected options.</en>
+		<es>El documento generado está vacío. Por favor, revisa las opciones seleccionadas.</es>
+		<nl>Het aangemaakte document is leeg. ControleeR a.u.b. de geselecteerde opties.</nl>
+		<de>The generated document is empty. Please, review the selected options.</de>
+		<ca>El document generat està buit. Per favor, revisa les opcions seleccionades.</ca>
+		<it>Il documento generato è vuoto. Si prega di rivedere le opzioni selezionate.</it>
+	</emptyPdfError>
+	
+	<!-- -TRANSLATION -->
+	
+	<importSuccess>
+		<en>Data has been imported successfully.</en>
+		<es>Se han importado con éxito los datos.</es>
+		<nl>Data has been imported successfully.</nl>
+		<de>Data has been imported successfully.</de>
+		<ca>S'han importat amb èxit les dades.</ca>
+		<it>I dati sono stati importati con successo.</it>
+	</importSuccess>
+	<importFail>
+		<en>An error has occurred when trying to import the data.</en>
+		<es>Ha habido un error mientras se intentaban importar los datos.</es>
+		<nl>An error has occurred when trying to import the data.</nl>
+		<de>An error has occurred when trying to import the data.</de>
+		<ca>Hi ha hagut un error mentres s'intentaven importar les dades.</ca>
+		<it>Si è verificato un errore mentre si stava intentando importare i dati.</it>
+	</importFail>
+	<convertToPersonalized>
+		<en>Do you want to define as personalized the selected tournament?</en>
+		<es>¿Quiere definir como personalizado el torneo seleccionado?</es>
+		<nl>Do you want to define as personalized the selected tournament?</nl>
+		<de>Do you want to define as personalized the selected tournament?</de>
+		<de>Do you want to define as personalized the selected tournament?</de>
+		<ca>Vol definir com a manual el torneig seleccionat?</ca>
+		<it>Si vuole definire come personalizzato il torneo selezionato?</it>
+	</convertToPersonalized>
+	<canceledAction>
+		<en>Action canceled.</en>
+		<es>Acción cancelada.</es>
+		<nl>Action canceled.</nl>
+		<de>Action canceled.</de>
+		<ca>Acció cancel·lada.</ca>
+		<it>Azione annullata.</it>
+	</canceledAction>
+	<userWithoutRole>
+		<en>The selected person is not enrolled in the tournament.</en>
+		<es>La persona seleccionada no está inscrita en el torneo.</es>
+		<nl>De geselecteerde persoon in niet aan het toernooi toegevoegd!</nl>
+		<de>The selected person is not enrolled in the tournament.</de>
+		<ca>La persona seleccionada no està inscrita en el torneig.</ca>
+		<it>La persona seleccionata non è inscritta al torneo.</it>
+	</userWithoutRole>
+	<saveRequired>
+		<en>Fights must be saved into the database to proceed. Do you want to save them now?</en>
+		<es>Los partidos deben ser almacenados en la base de datos para continuar. ¿Quieres almacenarlos ahora?</es>
+		<nl>Om verder te kunnen gaan moeten wedstrijden in de database worden opgeslagen. Wil je ze nu opslaan?</nl>
+		<de>Fights must be saved into the database to proceed. Do you want to save then now?</de>
+		<ca>Els combats han de ser emmagatzemats en la base de dades per a continuar. Vols emmagatzemar-los ara?</ca>
+		<it>Il combattimenti devono essere salvati nella base di dati per continuare. Vuoi salvarli adesso?</it>
+	</saveRequired>
+	<fightInOtherArea>
+		<en>You are going to modify a team that is in other shiaijo. Are you sure to procedeed?</en>
+		<es>Vas a editar un equipo que está en otro shiaijo. ¿Estás seguro de continuar?</es>
+		<nl>Je staat op het punt wijzigingen aan te brengen in een team dat in een andere shiaijo staat. Weet je zeker dat je wilt doorgaan?</nl>
+		<de>You are going to modify a team that is in other shiaijo. Are you sure to procedeed?</de>
+		<ca>Editaràs un equip que està en un altre shiaijo. Estàs segur de continuar?</ca>
+		<it>Si va a cambiare una squadra che sta in un altro shiaijo. Si è sicuro di continuare?</it>
+	</fightInOtherArea>
+	<waitingConnection>
+		<en>Waiting database response. Check the network connection.</en>
+		<es>Esperando respuesta de la base de datos. Compruebe la conexión de red.</es>
+		<nl>Wachten op reactie van de database. Controleer netwerkconnectie.</nl>
+		<de>Waiting database response. Check the network connection.</de>
+		<ca>Esperant resposta de la base de dades. Comprove la connexió de xarxa.</ca>
+		<it>Aspettando risposta dalla base di dati. Controllare la conessionne di rete.</it>
+	</waitingConnection>
+	<passwordDoesNotMatch>
+		<en>The inserted password does not match!</en>
+		<es>La contraseña insertada no coincide!</es>
+		<nl>Het ingevoerde wachtwoord is niet correct!</nl>
+		<de>The inserted password does not match!</de>
+		<ca>La contrasenya inserida no coincidix!</ca>
+		<it>La password digitata non corrisponde!</it>
+	</passwordDoesNotMatch>
+	<invalidDatabase>
+		<en>The destination database is not valid. Probably from an old version of the software.</en>
+		<es>La base de datos de destino no es válida. Probablemente pertenezca a una versión antigua del software.</es>
+		<nl>The destination database is not valid. Probably from an old version of the software.</nl>
+		<de>The destination database is not valid. Probably from an old version of the software.</de>
+		<ca>The destination database is not valid. Probably from an old version of the software.</ca>
+		<it>The destination database is not valid. Probably from an old version of the software.</it>
+	</invalidDatabase>
+</translator>
+

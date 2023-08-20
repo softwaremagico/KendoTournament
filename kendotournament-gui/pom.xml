@@ -1,0 +1,326 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>kendo-tournament-manager-gui</artifactId>
+    <packaging>jar</packaging>
+    <name>Kendo Tournament Manager GUI</name>
+	
+    <parent>
+        <groupId>com.softwaremagico</groupId>
+        <artifactId>kendo-tournament-manager</artifactId>
+        <version>1.3.1</version>
+    </parent>
+	
+    <properties>
+        <url>http://kendotournament.sourceforge.net/</url>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <linux.releasedir>../install_linux</linux.releasedir>
+        <linux.origin>../linux-basic-files</linux.origin>
+        <linux.destination-folder>/usr/share/kendo-tournament-manager</linux.destination-folder>
+        <windows.releasedir>../install_windows</windows.releasedir>
+        <windows.origin>../windows-basic-files</windows.origin>
+        <winexe>KendoTournamentManager.exe</winexe>
+        <plugin.exec.version>1.2.1</plugin.exec.version>
+        <application.mainclass>com.softwaremagico.ktg.gui.Main</application.mainclass>
+    </properties>
+    
+    <build>
+        <finalName>KendoTournamentManager</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>${application.mainclass}</mainClass>
+                        </manifest>
+		    <manifestEntries>
+			<Implementation-Version>${project.parent.version}</Implementation-Version>
+		    </manifestEntries>
+                    </archive>
+                </configuration>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <excludes>
+                        <exclude>**/DEBIAN/*</exclude>
+                        <exclude>**/usr/*</exclude>
+                        <exclude>**/*.exe</exclude>
+                        <exclude>**/*.bat</exclude>
+                        <exclude>**/*.iss</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <inceptionYear>2008</inceptionYear>
+                    <licenseName>gnugpl</licenseName>
+        			<licenseResolver>${project.baseUri}/src/license</licenseResolver>
+                    <excludes>
+                        <exclude>**/licenses.properties</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>first</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${linux.releasedir}</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>${windows.releasedir}</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${plugin.exec.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>${application.mainclass}</mainClass>
+		<includeProjectDependencies>true</includeProjectDependencies>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <delete dir="${linux.releasedir}" failonerror="false" includeemptydirs="true" />
+                                <copy todir="${linux.releasedir}/DEBIAN" overwrite="true" >
+                                    <fileset dir="${linux.origin}/DEBIAN" includes="**/*" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                    </filterset>
+                                </copy>
+                                <!-- exclude images because are corrupted -->
+                                <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                    <fileset dir="${linux.origin}/usr" includes="**/*" excludes="**/*.ico" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                        <filter value="${project.name}" token="projectname" />
+                                        <filter value="${project.build.sourceEncoding}" token="encoding" />
+                                        <filter value="${project.description}" token="description" />
+                                    </filterset> 
+                                </copy>
+                                <!-- copy images -->
+                                <copy todir="${linux.releasedir}/usr" overwrite="true" >
+                                    <fileset dir="${linux.origin}/usr" includes="**/*.ico" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/" overwrite="true" >
+                                    <fileset dir="./target/" includes="**/KendoTournamentManager.jar" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/lib" overwrite="true" >
+                                    <fileset dir="./target/lib" includes="**/*.jar" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/translations" overwrite="true" >
+                                    <fileset dir="../translations" includes="**/*.xml" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/images" overwrite="true" >
+                                    <fileset dir="../images" excludes="**/*.svg" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
+                                    <fileset dir="../manual" includes="**/*.pdf" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}/manual" overwrite="true" >
+                                    <fileset dir="../manual" includes="**/*.txt" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
+                                    <fileset dir="../" includes="**/gnu.txt" />
+                                </copy>
+                                <copy todir="${linux.releasedir}${linux.destination-folder}" overwrite="true" flatten="true" >
+                                    <fileset dir="../" includes="**/Readme.txt" />
+                                </copy>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-manager" perm="755"/>
+                                <chmod file="${linux.releasedir}/usr/bin/kendo-tournament-manager-doc" perm="755"/>
+                                        
+                                        
+                                <delete dir="${windows.releasedir}" failonerror="false" includeemptydirs="true" />
+                                <copy todir="${windows.releasedir}" overwrite="true" >
+                                    <fileset dir="./target/" includes="**/KendoTournamentManager.jar" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/lib" overwrite="true" >
+                                    <fileset dir="./target/lib" includes="**/*.jar" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/translations" overwrite="true" >
+                                    <fileset dir="../translations" includes="**/*.xml" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/images" overwrite="true" >
+                                    <fileset dir="../images" excludes="**/*.svg" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                    <fileset dir="../manual" includes="**/*.pdf" />
+                                </copy>
+                                <copy todir="${windows.releasedir}/manual" overwrite="true" >
+                                    <fileset dir="../manual" includes="**/*.txt" />
+                                </copy>
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="../" includes="**/gnu.txt" />
+                                </copy>
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="../" includes="**/Readme.txt" />
+                                </copy>   
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/*.ico" />
+                                </copy>  
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/KendoTournamentManager.exe" />
+                                </copy>  
+                                <copy todir="${windows.releasedir}" overwrite="true" flatten="true" >
+                                    <fileset dir="${windows.origin}/" includes="**/InstallScript.iss" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                        <filter value="${project.name}" token="projectname" />
+                                        <filter value="${project.groupId}" token="group" />
+                                        <filter value="${url}" token="url" />
+                                        <filter value="${winexe}" token="winexe" />
+                                    </filterset>
+                                </copy>  
+				
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        
+                    </execution>
+                    <execution>
+                        <id>version-copy</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <target>
+                                <!-- version number -->
+                                <copy todir="src/main/resources/" overwrite="true" >
+                                    <fileset dir="${basedir}" includes="version.txt" />
+                                    <filterset>
+                                        <filter value="${project.version}" token="version" />
+                                    </filterset>
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.apache.maven.plugins
+        								</groupId>
+        								<artifactId>
+        									maven-antrun-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.7,)
+        								</versionRange>
+        								<goals>
+        									<goal>run</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>kendo-tournament-manager-core</artifactId>
+            <version>${project.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.swinglabs</groupId>
+            <artifactId>swing-layout</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+    </dependencies>
+</project>

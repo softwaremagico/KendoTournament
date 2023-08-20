@@ -1,0 +1,22 @@
+Quick guide for this program:
+
+1. Connecto to the database using the pop up windows that apperar when the program is started.
+
+2. Add all invited clubs to the program (Insert->Add new club). The representative will be added later.
+
+3. Add all competitors, referees and other to the system (Insert->Add new participant).
+
+4. Now you can add the representative to the club (Insert->Add new club). 
+
+5. Add the new league (Insert->Add new league).
+
+6. Define the participant's roles (League->Define a participant's role). Only the participants with a role in a league will be used for the system in the future options. For example, when creating a new team. 
+
+7. Add the desired teams and its members (League->Add new team to the league).
+
+8. Design the league and the fights (League->Define League as->...). 
+
+9. Use the fight panel for adding the points obtained in each fight (League->League Panel). This panel can also be used to show this information to the public. 
+
+The steaps 1, 2, 3 and 4 only must be done one time, because are common for each league. You only need to add the participant's information one time, and it will be used in any league. The steaps 5, 6, 7, 8, and 9 must be repeated for each league. 
+

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="LanguageButtonGroup">
+    </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
+    <Menu class="javax.swing.JMenuBar" name="MainMenuBar">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Ubuntu" size="15" style="1"/>
+        </Property>
+      </Properties>
+      <SubComponents>
+        <Menu class="javax.swing.JMenu" name="ProgramMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Program"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="DatabaseMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Database"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DatabaseMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;book.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="DatabaseConnectMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Connect"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;connect.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="DatabaseDisconnectMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Disconnect"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DatabaseDisconnectMenuItemActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;disconnect.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ConvertDatabaseMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Convert database"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;convertDatabase.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="reloadMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+L"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Reload"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;reload.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="SaveMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Save"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;save.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ExitMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+Q"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Exit"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExitMenuItemActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;exit.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="InsertMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Insert"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="ClubMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add Club"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;club.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="CompetitorMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+C"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Add Competitor"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;user.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="TournamentMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add Tournament"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;highscores.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="TournamentMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tournament"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="ScoreMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Score"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;score.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="RoleMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Define competitor&apos;s role"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;photo.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="TeamMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add Team"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;team.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <Menu class="javax.swing.JMenu" name="DefineFightsMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Define Fights"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DefineFightsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;designer.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="FightMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Add Fight"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;keyboard.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="RingMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ring Tournament"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;ring.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="DesignerMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Designer"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;project.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="manualMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Manual"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;manual.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="kingMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="kingMenuItem"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;king.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="TournamentPanelMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+P"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tournament Panel"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;panel.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="ListMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Lists"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="AccreditationMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Accreditation Cards"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;acreditation.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ClubListMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List of Clubs"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="TeamListMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List of Teams"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="RefereeListMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List of Referees"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="FightListMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List of Fights"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="FightsCardMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="FightsCard"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;gtodo.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="SummaryMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Fights Summary"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="PointListMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="List of Points"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="CompetitorsGlobalScoreMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CompetitorsGlobalScore"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;xpdf.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="TournamentTreeMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="TournamentTree"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;tree.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="blogMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Blog"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;text-html.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="DiplomaMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Diploma"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;diploma.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="StatisticsMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Statistics"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="TournamentStatisticsMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="By tournament"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="TournamentStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;statistics.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="TournamentHitsStatisticsMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Hits"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;chart.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="TournamentTopTenMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Top Ten"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;bars.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="TeamStatisticsMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="By team"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="TeamStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;statistics.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="TeamTopTenMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Top Ten"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;bars.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="CompetitorStatisticsMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="By competitor"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="CompetitorStatisticsMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;statistics.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="WonLostMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Fights Won"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;bars.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="PerformedHitsMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Performed Hits"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;chart.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="ReceivedHitsMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Received Hits"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;chart.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="OptionsMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Options"/>
+          </Properties>
+          <SubComponents>
+            <Menu class="javax.swing.JMenu" name="LanguageMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Language"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="LanguageMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;language.png&quot;));"/>
+              </AuxValues>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="AutosaveMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autosave"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="AutosaveMenu.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;session-save.png&quot;));"/>
+              </AuxValues>
+              <SubComponents>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="DisabledAutosaveRadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Disabled"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DisabledAutosaveRadioButtonActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DisabledAutosaveRadioButton.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;stop.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="AutosaveByTimeRadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
+                    <Property name="selected" type="boolean" value="true"/>
+                    <Property name="text" type="java.lang.String" value="Autosave By Time"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AutosaveByTimeRadioButtonActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="AutosaveByTimeRadioButton.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;save-time.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="AutosaveByActionRadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="buttonGroup1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Autosave By Action"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AutosaveByActionRadioButtonActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="AutosaveByActionRadioButton.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;save-action.png&quot;));"/>
+                  </AuxValues>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="LogMenuCheckBox">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Log"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="LogMenuCheckBoxItemStateChanged"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="LogMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;log.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="DebugMenuCheckBox">
+              <Properties>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Debug"/>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="DebugMenuCheckBoxItemStateChanged"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="DebugMenuCheckBox.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;debug.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="clearCacheMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clear Cache"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="clearCacheMenuItem.setIcon(new ImageIcon(Path.returnIconFolder()+&quot;clearCache.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="HelpMenu">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Help"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="HelpMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+H"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Help"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;help.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="AboutMenuItem">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+A"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="About..."/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JMenuItem(new ImageIcon(Path.returnIconFolder()+&quot;info.png&quot;));"/>
+              </AuxValues>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+      </SubComponents>
+    </Menu>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" value="Kendo Tournament Manager"/>
+    <Property name="name" type="java.lang.String" value="mainGui" noResource="true"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="menuBar" type="java.lang.String" value="MainMenuBar"/>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="WindowClose"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="524" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="MainPhotoPanel" pref="352" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="MainPhotoPanel">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="5" type="rgb"/>
+        </Property>
+        <Property name="opaque" type="boolean" value="false"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+    </Container>
+  </SubComponents>
+</Form>

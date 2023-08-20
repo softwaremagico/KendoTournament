@@ -1,0 +1,41 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" verbose="1" name="CoreTestSuite">
+    <test name="DatabaseSet" enabled="true" preserve-order="true">
+        <groups>
+            <run>
+                <include name="populateDatabase" />
+                <include name="championshipTest" />
+                <include name="customChampionshipTest" />
+                <include name="simpleChampionshipTest" />  
+                <include name="evenGroupsChampionshipTest" />    
+                <include name="championshipTreeTest" />                
+                <include name="championshipFightAreaTest" />                                          
+                <include name="scoreTest" />
+                <include name="customScoreTest" />
+                <include name="europeanChampionshipTest" />
+                <include name="internationalChampionshipTest" />
+                <include name="championshipMaxFightsTest" />
+                <include name="changeMemberOrderTest" />
+                <include name="kingOfTheMountain" />  
+                <exclude name="databaseStore" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.softwaremagico.ktg.persistence.PopulateDatabase" />
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipTest" />
+            <class name="com.softwaremagico.ktg.persistence.SimpleChampionshipTest" />                        
+            <class name="com.softwaremagico.ktg.persistence.CustomChampionshipTest" /> 
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipEvenGroupsTest" /> 
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipTreeTest" />
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipFightAreaTest" />
+            <class name="com.softwaremagico.ktg.persistence.ChampionshipMaxFightsTest" />
+            <class name="com.softwaremagico.ktg.persistence.ChangeMemberOrderTest" />
+            <class name="com.softwaremagico.ktg.persistence.ScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.EuropeanScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.InternationalScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.CustomScoreTest" />
+            <class name="com.softwaremagico.ktg.persistence.DatabaseStore" />
+            <class name="com.softwaremagico.ktg.persistence.KingOfTheMountainTest" />
+        </classes>
+    </test>
+</suite>

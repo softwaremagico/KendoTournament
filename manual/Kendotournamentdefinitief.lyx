@@ -1,0 +1,2125 @@
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\language dutch
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Title
+KENDO TOURNAMENT GENERATION TOOL
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename /usr/svn/KendoTournament/images/defaults/mainPhoto.png
+	display false
+	width 60col%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+v0.91
+\end_layout
+
+\begin_layout Author
+Jos Maas
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Installatie
+\end_layout
+
+\begin_layout Section
+Vereisten
+\end_layout
+
+\begin_layout Standard
+Ik heb de applicatie KTG geproduceerd op een zodanige wijze dat deze compatibel
+ is met alle versies van Windows (op z’n minst vanaf Windows 200) en met
+ alle versies van Linux.
+ Jammer genoeg is de verscheidenheid aan mogelijkheden zo groot dat ik geen
+ proeftesten heb kunnen maken bij iedere mogelijkheid en daardoor zouden
+ er fouten kunnen ontstaan in sommige daarvan.
+ 
+\end_layout
+
+\begin_layout Standard
+De toepassing bevat/heeft twee belangrijke gedeelten: een toepassing die
+ een grafische omgeving produceert met vensters om het gebruik van de gebruiker
+ te vergemakkelijken en een database die het mogelijk maakt om de informatie
+ betreffende de wedstrijden van Kendo op te slaan en te bewerken.
+ Dus deze toepassing heeft twee eisen/programma’s die dienen geïnstalleerd
+ te worden op uw computer:
+\end_layout
+
+\begin_layout Description
+Maquina
+\begin_inset space ~
+\end_inset
+
+virtual
+\begin_inset space ~
+\end_inset
+
+Java.
+ Hoewel enkele operatieve systemen hun eigen virtuele machine hebben, raad
+ ik aan de officiële versie verleend door Sun te gebruiken.
+ Deze MV kan gratis gedownload worden in de officiële website zonder kosten
+ voor de gebruiker 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.java.com/es/download/
+\end_layout
+
+\end_inset
+
+ Ons programma is ontwikkeld voor de versie 6 (1.6) update 0, waardoor iedere
+ gelijktijdige versie of jongere versie ook zou moeten voldoen.
+\end_layout
+
+\begin_layout Description
+MySQL: Dit is een database server gebruikt door onze applicatie.
+ Zoals de virtuele machine van Java, is deze volledig gratis (met uitzondering
+ van de technische ondersteuning).
+ Het kan hier gedownload worden: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/downloads/mysql/5.1.html
+\end_layout
+
+\end_inset
+
+ De versie die wij gebruiken is 5.1, waardoor iedere versie die gelijktijdig
+ is of jonger zou ook voldoen.
+ Ik raad ook aan enkele toepassingen voor het behoud van de server te downloaden
+: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/downloads/gui-tools/5.0.html
+\end_layout
+
+\end_inset
+
+ Met deze toepassingen zul je back-ups van jouw database creëren en het
+ verlies van gegevens op de disks voorkomen, maar de back-ups zijn niet
+ essentieel voor het gebruik van KTG.
+ De installatie van deze toepassing is alleen nodig op de computer die de
+ gegevens zal bevatten.
+\end_layout
+
+\begin_layout Standard
+Als laatste vermelden dat zowel de MV van Java als de server MyQSL door
+ grote bedrijven zijn uitgevoerd (echt hele grote bedrijven) waarvoor ik
+ niet werk.
+ Dus voor vragen over onderhoud zou men met deze bedrijven contact moeten
+ opnemen.
+\end_layout
+
+\begin_layout Section
+Installatie
+\end_layout
+
+\begin_layout Subsection
+Installatie van de vereisten
+\end_layout
+
+\begin_layout Standard
+Zowel de virtuele machine van Java, als de server van de database van MySQL
+ hebben een grafische omgeving voor de installatie ervan in Windows, of
+ ze worden geleverd in pakketjes voor opslag in Linux.
+ Zodoende ga ik niet uitleggen wat men moet doen voor de installatie daarvan
+ (in wezen “ja’ zeggen op alles).Ik ga alleen enkele details uitleggen over
+ MySQL voor diegenen die onervaren zijn.
+\end_layout
+
+\begin_layout Standard
+Tijdens het installeren van de database MySQL in Windows, zullen enkele
+ vragen gesteld worden aan de gebruiker.
+ Van deze vragen, het onjuiste antwoord is meestal goed geraden (in geval
+ van twijfel, raadpleegt
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://dev.mysql.com/doc/refman/5.0/es/
+\end_layout
+
+\end_inset
+
+).
+ Niettemin raad ik aan om rekening te houden met drie dingen als de hulpconfigur
+ator wordt opgestart:
+\end_layout
+
+\begin_layout Enumerate
+Dialoogvenster van het type server.
+ In ons geval, zullen wij kiezen de optie “Developer machine” want deze
+ gebruikt het minste energie.
+ Deze optie is voldoende voor onze wensen.
+\end_layout
+
+\begin_layout Enumerate
+Dialoogvenster met de symbolen verzameling.
+ Ik raad het gebruik van VTF-8 aan, maar het is niet wezenlijk.
+\end_layout
+
+\begin_layout Enumerate
+1.
+ De dialoogvenster omtrent veiligheid.
+ Wij zullen de optie ‘’alleen locale toegang” niet aanvinken, want op die
+ manier kunnen wij werken met verschillende teams in een competitie.
+ Hier dien je het aangegeven wachtwoord te gebruiken voor het voltrekken
+ van onze programma.
+ 
+\emph on
+Opmerking: om het simpel te maken in deze handleiding zullen wij toegang
+ krijgen tot onze database met de gebruiker root want deze voorkomt het
+ ontstaan van nieuwe gebruikersaccounts.
+ Als u een gevorderde gebruiker bent of vreest u voor de beveiliging van
+ uw systeem, raad ik u aan om met een andere gebruiker te in te loggen.
+ KTG zal u de naam van de gebruiker en het wachtwoord vragen als u de database
+ wil gebruiken waardoor u geen enkele probleem zal ondervinden.
+ Denk er aan als u dit doet, geef toestemming aan de gebruiker voor de database
+ van KPG zowel lokaal als remote.
+\end_layout
+
+\begin_layout Standard
+Rekening houdend met de opties beschreven hierboven, zou alles correct moeten
+ functioneren.
+\end_layout
+
+\begin_layout Subsection
+Installatie van de toepassing
+\end_layout
+
+\begin_layout Standard
+Voor de gebruikers van Windows, de toepassing is verdeeld zoals de typische
+ installatie venstergroep.
+ Het is niet erg flexibel want de gebruiker kan amper de opties wijzigen.
+ Toch, dit vergemakkelijkt enorm de installatie want de gebruiker hoeft
+ alleen alles wat op de beeldscherm verschijnt te accepteren.
+\end_layout
+
+\begin_layout Standard
+Voor de gebruikers van Linux (Debian/Ubuntu) de toepassing is verdeeld in
+ een pakket DEB.
+ Dus een dpkg-i bestand.deb zou voldoende moeten zijn.
+ Voor de gebruikers van anderen distributies en niet over dpkg beschikken,
+ raad ik aan om het pakket SRC te downloaden en te compileren met een Java
+ compilator.
+\end_layout
+
+\begin_layout Standard
+In alle gevallen waar men een installateur nodig heeft, zal een symbolische
+ koppeling ontstaan die het mogelijk zal maken de toepassing te starten.
+\end_layout
+
+\begin_layout Subsection
+Installatie van de database
+\end_layout
+
+\begin_layout Standard
+Vanaf de versie 0.9 van het programma, de database wordt automatisch geïnstalleer
+d in de server MyQSL als deze nog niet geïnstalleerd is.
+ Hoe dan ook, als er een probleem zich voordoet, kan men deze handmatig
+ installeren.
+ Hiervoor gebruikt men het programma MyQSL Admin en het bestand bijgevoegd
+ in de map “database”.
+ Installeren alsof het een back-up is met de optie die MyQSL Admin voorstelt.
+\end_layout
+
+\begin_layout Chapter
+Gebruik van de toepassing
+\end_layout
+
+\begin_layout Standard
+Wij kunnen zeggen dat het programma op een logische wijze is verdeeld in
+ vijf delen.
+\end_layout
+
+\begin_layout Enumerate
+Verbinding met de database.
+ Eerst moeten wij ons verbinden aan de database van de machine om de gegevens
+ te kunnen bewerken en opslaan.
+ Als deze verbinding faalt, de toepassing kan geen enkele handeling bewerkstelli
+gen, dit is dus het eerste wat gedaan moet worden.
+\end_layout
+
+\begin_layout Enumerate
+Invoeging of opslag van data.
+ Voor de competitie, dient men de database van de deelnemers, clubs, teams
+ en andere nodige gegevens te invoegen.
+ Vanzelfsprekend, alles wat niet ingevoegd is zal niet door het programma
+ worden herkend.
+\end_layout
+
+\begin_layout Enumerate
+Design van de competitie.
+ De initiële wedstrijden, de structuur van de competitie en andere details
+ zullen beslist moeten worden.
+\end_layout
+
+\begin_layout Enumerate
+Scorebord van de competitie.
+ Een scherm dat zich telkens zal vernieuwen met de verschillende verkregen
+ scores van de wedstrijden.
+ De scores zullen de verschillende gevechten genereren.
+\end_layout
+
+\begin_layout Enumerate
+Grafieken.
+ Een verzameling van statistieken en competitielijsten.
+ Vanuit hier kan men de ranking uithalen, een resultatenlijst en veel dingen
+ meer.
+\end_layout
+
+\begin_layout Section
+Verbinding met de database
+\end_layout
+
+\begin_layout Standard
+Het eerste wat het programma vraagt zijn de gegevens om te kunnen verbinden
+ met de server van de database (MySQL).
+ Deze gegevens zijn de gebruiker, wachtwoord, machine en database.
+ De gebruiker en het wachtwoord is root en de aangegeven installatie, of
+ een andere als de installatie veranderd is.
+ De machine zal localhost zijn als de server in dezelfde machine zit (wat
+ gebruikelijk is in de meeste gevallen), of de besturing van het net van
+ de machine die de server bevat in andere gevallen (zie Sectie
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "cha:Uso-de-distintos"
+
+\end_inset
+
+).
+ De database zal kendotournament zijn en dit is wat onze database onderscheidt
+ van de databases van andere programma’s die deze ook gebruiken op dat moment.
+ 
+\end_layout
+
+\begin_layout Section
+Invoeren van de informatie
+\end_layout
+
+\begin_layout Standard
+Hier hoort er bij het opslaan van de informatie die nodig is voor het ontwikkele
+n van de competitie: deelnemers, teams, clubs zelfs de eigen competitie.
+ Deze vensters hebben een gelijk gebruik, waardoor dit hoofdstuk ze allemaal
+ omvat.
+\end_layout
+
+\begin_layout Subsection
+Algemene informatie
+\end_layout
+
+\begin_layout Standard
+Er bestaan twee elementen die niet hoeven te veranderen van competitie.
+ Daarom moet men deze één keer invoegen en niet vaker.
+ Tussen deze voorbeelden bevinden zich de deelnemers: de informatie daarvan(
+ naam, identiteitsnummer,enz.) zal nooit veranderen, waardoor je alleen een
+ keer hoeft op te slaan.
+\end_layout
+
+\begin_layout Subsection
+Specifieke informatie voor iedere competitie
+\end_layout
+
+\begin_layout Standard
+Er zijn enkele gegevens die uitsluitend worden gebruikt binnen een competitie
+ en in andere competities zich al dan niet voordoen.
+ Bijvoorbeeld de teams.
+ Een team is alleen geldig in een competitie al kan de naam hiervan zich
+ herhalen in de verschillende competities, de deelnemers kunnen variëren.
+ Een andere voorbeeld is de selectie van de deelnemers die deelnemen in
+ een specifieke competitie en hun rollen.
+ Want in der loop der jaren de kunnen deelnemers stoppen of verdwijnen in
+ opeenvolgende versies van dezelfde competitie.
+\end_layout
+
+\begin_layout Subsection
+Het zoeken en wijzigen van informatie
+\end_layout
+
+\begin_layout Standard
+Er bestaat de mogelijkheid om gegevens te veranderen die al eerder waren
+ ingevoerd (deelnemers, clubs, competitie’s,…) Hiervoor dient men te gaan
+ naar het geschikte invoegvenster afhankelijk van het onderwerp die wij
+ gaan wijzigen.
+ Daarin is de toets Zoeken.
+ In Figuur
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Botón-buscar."
+
+\end_inset
+
+ verschijnt een voorbeeld van de genoemde toets.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/BotonBuscar.png
+	lyxscale 60
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Botón-buscar."
+
+\end_inset
+
+Toets Zoeken.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Door het indrukken van deze toets zal een nieuwe venster zal verschijnen
+ waarin wij een zoekmodel kunnen kiezen.
+ Men kan ieder model kiezen om de zoekactie uit te voeren.
+ In het geval dat je verschillende modellen kiest, zal het programma automatisch
+ kiezen voor het model dat het dichtstbijzijnde staat van de bovenste hoek
+ van het scherm.
+ In Figuur
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Búsqueda-de-competidores."
+
+\end_inset
+
+ verschijnt een voorbeeld van het venster Zoeken naar deelnemers.
+ Daarin zijn er duidelijk twee secties: (A) waar de gegevens voor de zoekactie
+ worden ingetoetst en (B) waar de resultaten van de zoekactie verschijnen.
+ In het voorbeeldfiguur, als wij de naam en achternaam zouden invoegen,
+ het programma zou alleen de achternaam zoeken.
+ Bovendien het is niet nodig om de volledige achternaam in te vullen want
+ het programma zoekt patronen.
+ Bijvoorbeeld een letter zou voldoende zijn voor het verschijnen van alle
+ achternamen die deze letter bevatten in ieder deel van het woord.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/Buscador.png
+	lyxscale 60
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Búsqueda-de-competidores."
+
+\end_inset
+
+Venster Zoeken naar deelnemers.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+De onderste helft van de venster is de lijst van resultaten (B) die een
+ lijst laat zien van deelnemers die met het zoekpatroon overeenkomen wanneer
+ de zoekactie is gestart.
+ Als je een willekeurig deelnemer kiest en je drukt de toets Selecteren
+ ga je terug naar het invoegscherm waar de gegevens van alle velden van
+ de geselecteerde deelnemer verschijnen en waarin je de gegevens kunt wijzigen.
+\end_layout
+
+\begin_layout Subsection
+Het wissen van informatie
+\end_layout
+
+\begin_layout Standard
+Het wissen van informatie wordt gedaan vanuit het zoekvenster.
+ Terug naar het voorbeeld van de vorige sectie, om een deelnemer te wissen,
+ zouden wij hem eerst moeten zoeken en dan hem selecteren op de resultatenlijst
+ (B).
+ Op dat moment kun je de toets wissen indrukken en de deelnemer zal definitief
+ gewist worden uit de database.
+ Maar wees voorzichtig met de samenhang van gegevens want als je een competitie
+ wist, zullen ook alle wedstrijden die met deze competitie te maken hebben
+ verwijderd worden.
+\end_layout
+
+\begin_layout Subsection
+Voorbeeld van invoegen van een deelnemer
+\end_layout
+
+\begin_layout Standard
+De stappen die je moet volgen om een deelnemer te registreren zijn de volgende:
+\end_layout
+
+\begin_layout Enumerate
+Vragen of hij al voorkomt in een vroegere competitie, in dit geval zijn
+ al zijn gegevens in het programma.
+\end_layout
+
+\begin_layout Enumerate
+Als het niet zo is, dan zul je de gegevens moeten invoeren.
+ Om dit te doen:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Maak een foto met een webcam en een geschikte software om deze op te slaan
+ in een vindbare map.
+\end_layout
+
+\begin_layout Enumerate
+In het programma (Insert-> toevoegen nieuw deelnemer), alle nieuwe gegevens
+ van de deelnemer invoegen: naam, id, foto,enz.
+\end_layout
+
+\begin_layout Enumerate
+Na de invoeging van de gegevens, dien je de rol van de deelnemer te beschrijven:
+ is hij een deelnemer, scheidsrechter, enz.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Als de deelnemer al eerder was toegevoegd aan de database, de volgende stappen:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+In het venster (Insert-> Toevoegen nieuwe deelnemer) druk de toets zoeken.
+ Zoek daar de deelnemer om te kijken of alle gegevens goed zijn ingevoerd,
+ gebruik daarvoor de i.d.
+ of de naam.
+\end_layout
+
+\begin_layout Enumerate
+Voeg in de rol van de deelnemer zodat men hem kan gebruiken in de huidige
+ competitie.
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Accreditaties
+\end_layout
+
+\begin_layout Standard
+Het programma maakt het mogelijk om met de eerder ingevoerde gegevens een
+ accreditatielijst te maken
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/acreditacion.png
+	height 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Accreditaties.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Het programma zal een PDF creëren met de informatie van de deelnemer.
+ Zijn rol in de competitie en zijn foto om hem te herkennen.
+ Deze accreditatie moet geprint worden (en het liefst geplastificeerd) om
+ later deze aan de deelnemer te overhandigen.
+\end_layout
+
+\begin_layout Standard
+Deze accreditaties kunnen bruikbaar zijn als je wil controleren wie toegang
+ heeft tot de competitie, in het bijzonder als er enige soort quote betaald
+ moet worden.
+ Bovendien kun je ook op die manier controleren dat ieder van de deelnemers
+ hoort bij zijn team.
+\end_layout
+
+\begin_layout Section
+Ontwerp van de competitie
+\end_layout
+
+\begin_layout Standard
+Eenmaal alle gegevens van de competitie zijn ingevoerd en de competitie
+ is gemaakt, kan men de verschillende wedstrijden definiëren.
+ Er bestaan verschillende manieren om dit te doen afhankelijk van het type
+ competitie die men nodig heeft.
+ Voor dit hoeft men alleen de geschikte optie in de bovenste menu te kiezen:
+\end_layout
+
+\begin_layout Subsection
+Handmatige competitie
+\end_layout
+
+\begin_layout Standard
+Als je de competitie als handmatig definieert, zal het venster Competitiewijzer
+ volledig leeg zijn (zie Sectie
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Marcador-de-la"
+
+\end_inset
+
+ voor meer informatie over dit venster).
+ Daarin kun je selecteren de competitie die je hebt ontworpen en met deze
+ beginnen te werken.
+ Om de verschillende wedstrijden toe te voegen, hoef je slechts via knop
+ Toevoegen de teams te selecteren die gaan strijden.
+ Het scorebord zal automatisch worden geactualiseerd met de nieuwe informatie
+ en zal beginnen met het opslaan van de punten van de wedstrijden.
+\end_layout
+
+\begin_layout Standard
+Met deze optie, het programma maakt geen controlelijst van de wedstrijden,
+ waardoor de eigen keuze van de gebruiker is om te kiezen of elk team hetzelfde
+ aantal wedstrijden gaat spelen of dat deze zich herhalen.
+ Op die manier de heeft gebruiker volledige vrijheid om zijn eigen competities
+ te ontwerpen zonder beperkingen van het programma.
+\end_layout
+
+\begin_layout Subsection
+Eenvoudige competities
+\end_layout
+
+\begin_layout Standard
+Wij noemen een eenvoudige competitie een competitie waarin alle teams tegen
+ elkaar spelen.
+ De winnaar, zal uiteraard diegene zijn die meer wedstrijden heeft gewonnen
+ , in geval van gelijk spel diegene die meer gevechten heeft gewonnen en
+ in geval van een nieuw gelijke stand, diegene die meer punten heeft.
+ De gebruiker kan zelf de combinaties maken die hij wenselijk acht.
+\end_layout
+
+\begin_layout Standard
+Er bestaat een knop die het mogelijk maakt om het wedstrijden te creëren
+ van op een willekeurige manier.
+ Als je deze intoetst, zal er een lijst ontstaan van wedstrijden waarin
+ het programma zal proberen dat ieder van de teams twee achtereenvolgende
+ wedstrijden speelt zonder shiaijo te verlaten om de wedstrijden te versnellen,
+ zoals gebruikelijk in Kendo.
+\end_layout
+
+\begin_layout Standard
+De wedstrijden zullen niet worden opgeslagen totdat de knop Accepteren ingedrukt
+ wordt.
+ Hierdoor kan de gebruiker verschillende testen doen.
+ Als je eenmaal de toets Accepteren intoetst, zal iedere wedstrijd die alvorens
+ in deze competitie bestond, gewist worden en de nieuwe gegevens zullen
+ worden opgeslagen.
+\end_layout
+
+\begin_layout Subsection
+Ontwerper
+\end_layout
+
+\begin_layout Standard
+Het ontwerp is een grafische omgeving die probeert de gebruiker het ontwerpen
+ van een competitie te vergemakkelijken.
+ Hij is in het bijzonder ontworpen om te doen begrijpen wat wordt er gedaan
+ wanneer men een boomcompetitie of kampioenschap maakt.
+ Figuur 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Diseñador-de-ligas."
+
+\end_inset
+
+ laat een voorbeeld zien van de ontwerper:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/Diseñador.png
+	lyxscale 70
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Diseñador-de-ligas."
+
+\end_inset
+
+Competitiesontwerper.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In de ontwerper bestaan twee goed gedifferentieerde delen.
+ Een waarin wordt getekend de structuur van de competitie, en een ander
+ waarin de teams verschijnen die nog niet toegewezen zijn aan de competitie
+ en het dus mogelijk maakt deze te selecteren om ze te in te voegen.
+\end_layout
+
+\begin_layout Subsubsection
+Het maken van de competitie.
+\end_layout
+
+\begin_layout Standard
+Om de competitie te maken.
+ Wat je dient te doen is het invoegen van zoveel groepen als je wenst.
+ In ieder van de groepen zullen wij de teams invoegen die overblijven zodat
+ ze tegen elkaar kunnen spelen.
+ Om een team in een groep te voegen, wat je dient te doen is de groep selecteren
+ en daarna het team selecteren.
+ Daarna drukken wij de knop “Toevoegen aan team” op die manier zal het team
+ in de groep bijgevoegd worden.
+ Het team zal verdwijnen van de lijst want een dezelfde team kan niet in
+ twee verschillende groepen bestaan.
+\end_layout
+
+\begin_layout Standard
+Alleen kun je de initiële groepen bewerken,want de winnaars van deze groepen
+ zullen naar automatisch gaan naar de volgende fase.
+\end_layout
+
+\begin_layout Subsubsection
+Het bewerken van de ingevoegde groepen.
+\end_layout
+
+\begin_layout Standard
+Door het dubbelklikken in een van de groepen wordt een venster geopend en
+ men kan enkele specifieke opties van deze groep bewerken, zoals shiaijo,
+ het aantal winnaars die naar de volgende ronde zullen gaan (als wij zitten
+ bij toepassing kampioenschap) of de volgorde van de teams.
+ Als een groep meer dan een winnar heeft, de pijlen zullen van kleur veranderen
+ om te onderscheiden waar ieder van de winnaars heen gaat.
+\end_layout
+
+\begin_layout Subsubsection
+Soorten competities
+\end_layout
+
+\begin_layout Standard
+Met de ontwerper kun je een competitie op drie verschillende manieren ontwerpen.
+ Als kampioenschap, boom of handmatig.
+\end_layout
+
+\begin_layout Paragraph
+Kampioenschap
+\end_layout
+
+\begin_layout Standard
+Een kampioenschap is gelijk aan wat er gebeurt in de Champions League van
+ de Europese voetbal.
+ Eerst worden de groepen van de teams die tegen elkaar spelen samengesteld.
+ Van deze zullen alleen de eersten naar de volgende fase kunnen gaan.
+ De wedstrijden zullen automatisch aangemaakt worden door deze toepassing,
+ deze houdt hier bij rekening met de rangorde van de teams aan het einde
+ van de groepsfase.
+ De winnaars van het kampioenschap worden gekruist tussen de anderen volgens
+ een bepaalde richtlijn.
+ De kruisingen van de andere fasen worden op een automatische wijze gemaakt.
+\end_layout
+
+\begin_layout Paragraph
+Boomcompetitie
+\end_layout
+
+\begin_layout Standard
+Het grootste verschil tussen een boomcompetitie en een kampioenschap is
+ dat er in de eerstgenoemde alleen groepen met twee teams zijn.
+ Alle groepen hebben twee teams waarvan slechts een de winnaar zal zijn
+ en naar de volgende fase gaat.
+ Bovendien wordende groepen niet gekruist als ze naar de volgende fase gaan.
+\end_layout
+
+\begin_layout Paragraph
+Handmatige competitie
+\end_layout
+
+\begin_layout Standard
+Deze optie geeft meer vrijheid aan de gebruiker.
+ Je mag aangeven welke winnaar naar welke groep zal gaan.
+ Je hoeft alleen een groep van de eerste fase te selecteren en daarna een
+ van de tweede fase.
+ Een pijl zal verschijnen en aangeven dat de optie is opgeslagen.
+ Je moet er rekening houden dat het programma enkele vreemde zaken niet
+ toestaat zoals dat twee groepen als bestemming selecteren een groep van
+ de tweede fase, waardoor de verbindingen(links) die niet geschikt zijn
+ zullen worden gewist.
+\end_layout
+
+\begin_layout Paragraph*
+Eenvoudig competitie
+\end_layout
+
+\begin_layout Standard
+Deze optie betekent dat de competitie is ontworpen met een andere venster
+ en het is daardoor niet raadzaam iets te veranderen.
+ Dus worden veel opties van dit venster beperkt als je deze optie selecteert.
+\end_layout
+
+\begin_layout Subsubsection
+Eenvoudig competitie
+\end_layout
+
+\begin_layout Standard
+Deze optie betekent dat de competitie is ontworpen met een andere venster
+ en het is daardoor niet raadzaam iets te veranderen.
+ Dus worden veel opties van dit venster beperkt als je deze optie selecteert.
+\end_layout
+
+\begin_layout Subsubsection
+Knoppen
+\end_layout
+
+\begin_layout Standard
+Een korte uitleg van de werking van de knoppen van deze venster.
+\end_layout
+
+\begin_layout Description
+Teams
+\begin_inset space ~
+\end_inset
+
+toevoegen: verwijdert alle teams van de geselecteerde venster.
+\end_layout
+
+\begin_layout Description
+Teams
+\begin_inset space ~
+\end_inset
+
+poetsen: verwijdert alle teams van de geselecteerde groep
+\end_layout
+
+\begin_layout Description
+Winnaars
+\begin_inset space ~
+\end_inset
+
+wissen: verwijdert van de groep alle eerder gemaakte verbindingen voor de
+ volgende fase.
+ Deze toets is alleen beschikbaar in de handmatige competitie.
+\end_layout
+
+\begin_layout Description
+Groep
+\begin_inset space ~
+\end_inset
+
+toevoegen: voegt een groep aan het ontwerp onder de geselecteerde groep.
+ In deze groep kun je de verschillende teams bijvoegen zodat ze met elkaar
+ concurreren.
+ Bovendien als het nodig is zal alle groepen in de andere niveaus toevoegen.
+ Dit is alleen mogelijk als er beschikbare teams zij om in te vullen.
+\end_layout
+
+\begin_layout Description
+Groep
+\begin_inset space ~
+\end_inset
+
+wissen: wist de geselecteerde groep en negeert de toegevoegde teams zodat
+ ze in een andere groep kunnen worden toegevoegd.
+ Als het nodig is wist deze optie ook de groepen van de volgende niveaus.
+\end_layout
+
+\begin_layout Description
+Alles
+\begin_inset space ~
+\end_inset
+
+wissen: wist alle groepen, verbindingen, toegevoegde teams, zodat men opnieuw
+ kan beginnen.
+\end_layout
+
+\begin_layout Description
+Wedstrijden
+\begin_inset space ~
+\end_inset
+
+creëren: als het afgelopen is, als je deze toets drukt worden alle gewenste
+ wedstrijden gecreëerd.
+ Het venster zal dichtgaan want is niet meer nuttig.
+ De rest van de competitie is dan geautomatiseerd.
+\end_layout
+
+\begin_layout Description
+Sluiten: sluit het venster en slaat het ontwerp op en maakt het mogelijk
+ om later verder te gaan.
+\end_layout
+
+\begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Marcador-de-la"
+
+\end_inset
+
+Scorepaneel
+\end_layout
+
+\begin_layout Standard
+Dit is het belangrijkste venster van het programma want het verloop van
+ de wedstrijden wordt gecontroleerd.
+ In dit panel kan de gebruiker invoegen de doelpunten van de wedstrijd zodra
+ ze zich voordoen op een eenvoudige, snel en intuïtieve manier.
+ Het programma zal ze automatisch opslaan in de database.
+\end_layout
+
+\begin_layout Standard
+Het type (soort) dat zal worden behandeld is “SAN BON SHOBU”.
+ Op zijn best kunnen maximaal drie punten worden toegekend aan een individuele
+ wedstrijd gespeeld binnen de hiervoor toegestane tijd.
+ Het team dat de meeste wedstrijden heeft gewonnen, zal de winnar worden.
+ Als het aantal gewonnen wedstrijden hetzelfde is, wint degene die de meeste
+ individuele wedstrijden heeft gewonnen, en als er dan nog geen winnaar
+ is, wint het team dat de meeste geldige punten haalt.
+ Als er dan nog steeds geen winnaar is zal men overgaan naar een beslissingsweds
+trijd waarin vertegenwoordigers van ieder team tegen elkaar zullen optreden
+ en de eerste die een doelpunt maakt, zal winnen.
+\end_layout
+
+\begin_layout Standard
+De scorebord is verdeeld in drie delen: competitiecontrol, wedstrijd control
+ en knoppengroep.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/FightPanel.png
+	lyxscale 50
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Scorepaneel.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Competitiecontrol
+\end_layout
+
+\begin_layout Standard
+Het bovenste gedeelte van het venster laat alle gegevens van de competitie
+ zien.
+ Laat een banner of reclame zien als het paneel door een projector wordt
+ getoond, dit maakt het mogelijk om de competitie te wijzigen en om te controler
+en welke competitie geschikt blijkt te zijn en de shiaijos kunnen ook gewijzigd
+ worden.
+ Een paneel kan alleen de wedstrijden van een shiaijo op een bepaalde moment
+ laten zien, dus als je beschikt over enkele computers, wordt het aangeraden
+ voor elke computer een shiaijo (en nooit meer dan een per shiaijo).
+\end_layout
+
+\begin_layout Subsection
+Gevechtscontrole
+\end_layout
+
+\begin_layout Standard
+Hier zal verschijnen een lijst van de gevechten tussen teams.
+ Deze lijst is afhankelijk van de geselecteerde competitie, de geselecteerde
+ shiaijo en de daarvoor gedefinieerde gevechten d.m.v.
+ de competitieontwerper.
+\end_layout
+
+\begin_layout Standard
+De gevechtslijst past zich aan de beeldschermresolutie.
+ D.w.z.
+ hoe groter de resolutie, meer gevechten in het paneel zullen verschijnen.
+ Meestal zullen twee of drie gevechten verschijnen.
+ In het bijgevoegde scherm zijn slechts twee gevechten gepresenteerd.
+\end_layout
+
+\begin_layout Description
+Vorige
+\begin_inset space ~
+\end_inset
+
+wedstrijd: met de ingevoegde score kunnen de deelnemers het verloop van
+ hun gevechten nakijken als ze eenmaal uit de shiaijo zijn en het is een
+ geheugensteun van de vorige scores voor het publiek.
+ Deze scores zullen niet in het beeld verschijnen vanwege de onvoldoende
+ resolutie van de scherm.
+\end_layout
+
+\begin_layout Description
+Huidige
+\begin_inset space ~
+\end_inset
+
+wedstrijd: gemarkeerd met een zwart vierkant.
+ Deze is de belangrijkste optie want dit is de enige die in beeld gebracht
+ kan worden.
+ In deze wedstrijd kun je de verschillende scores of overtredingen invoegen
+ door eenvoudigweg het desbetreffende vakje te selecteren met de rechterknop
+ van de muis.
+ Een menu selecteert dan welk soort slag en het gevecht zal geactualiseerd
+ worden.
+\end_layout
+
+\begin_layout Description
+De
+\begin_inset space ~
+\end_inset
+
+volgende
+\begin_inset space ~
+\end_inset
+
+wedstrijd: een lijst met de namen van de volgende deelnemers maakt het mogelijk
+ klaar staan voor de volgende wedstrijd.
+ Zo wordt tijd gespaard en het publiek kan het verloop van de wedstrijd
+ zien.
+ Als het beeldscherm groot genoeg is, kunnen verschillende latere wedstrijden
+ verschijnen.
+\end_layout
+
+\begin_layout Standard
+Denk er aan, je kunt alleen de huidige gevecht bewerken.
+ De rest van de gevechten zijn beschermd door het systeem.
+ In ieder van de wedstrijden het programma zal de deelnemers rangschikken
+ volgens het volgorde die gegeven was tijdens het ontstaan van de team.
+\end_layout
+
+\begin_layout Subsubsection
+Score menu
+\end_layout
+
+\begin_layout Standard
+Als je een score of overtredingvakje selecteert met de rechter knop van
+ de muis wordt een klein menu geopend met alle opties.
+ Eigenlijk kun je de verschillende slagen toevoegen zodat ze op papier worden
+ getoond.
+ Het programma is intelligent, waardoor het de scores automatisch aanvult
+ als een paar overtredingen zich opstapelen of blokkeert het invullen van
+ de scores in een verkeerd vakje.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Gelijkspel menu
+\end_layout
+
+\begin_layout Standard
+Als je met de rechter knop van de muis de ruimte selecteert die bestaat
+ tussen de twee teams, zal een kleine menu verschijnen dat aanwijst dat
+ de wedstrijd is beëindigt met gelijkspel.
+ Deze optie zal een grote x tekenen tussen de twee teams zodat de gebruiker
+ en het publiek zich kunnen makkelijker herinneren dat er een gelijkspel
+ is.
+ Hoe dan ook, als het resultaat van het volgende gevecht verandert, de toepassin
+g begrijpt dat de vorige gevecht afgelopen is en zodoende reproduceert de
+ x automatisch.
+\end_layout
+
+\begin_layout Subsection
+Knoppen
+\end_layout
+
+\begin_layout Standard
+In het onderste gedeelte van de venster verschijnt een verzameling van knoppen
+ waarmee je de controle van de gevechten bedient.
+\end_layout
+
+\begin_layout Description
+Vorige
+\begin_inset space ~
+\end_inset
+
+wedstrijd: je kunt terugvallen tussen de wedstrijden om mogelijke fouten
+ te corrigeren.
+\end_layout
+
+\begin_layout Description
+Volgende
+\begin_inset space ~
+\end_inset
+
+wedstrijd: eindigt de huidige wedstrijd en deze wordt de vorige wedstrijd.
+ De volgende wedstrijd kan worden klaargemaakt voor het invoegen van de
+ scores.
+ Om een wedstrijd te eindigen, het programma wacht totdat alle gevechten
+ van de andere deelnemers zijn uitgevoerd.
+ Deze knop maakt ook de volgende fases aan naarmate de gevechten worden
+ afgespeeld.
+ Als alle gevechten zijn afgespeeld( alle van alle shiaijos) zal het programma
+ automatisch de volgende rondes aanmaken.
+ Dus, denk er aan dat je de gevechten moet beëindigen voordat je van shiaijo
+ verandert.
+ En als je ziet dat het programma geen wedstrijden van de volgende niveau
+ aanmaakt, waarschijnlijk is ergens het einde van de wedstrijden van een
+ ander shiaijo vergeten
+\end_layout
+
+\begin_layout Description
+Wedstrijd
+\begin_inset space ~
+\end_inset
+
+verwijderen: met deze knop kun je de geselecteerde wedstrijd verwijderen.
+ Deze wedstrijd is voorgoed verloren en gevaarlijk want de structuur van
+ een kampioenschap zal ongedaan maken.
+ Het is raadzaam om deze optie alleen te gebruiken tijdens het aanmaken
+ van een competitie op een handmatige manier.
+\end_layout
+
+\begin_layout Description
+Wedstrijd
+\begin_inset space ~
+\end_inset
+
+toevoegen: je kunt nog een wedstrijd toevoegen nadat je alle wedstrijden
+ hebt ingevoerd.
+ Het is alleen nuttig als je de competitie op een handmatige manier wilt
+ bewerken want het programma zal het correct verwerken van de competitiebomen
+ belemmeren.
+\end_layout
+
+\begin_layout Description
+De
+\begin_inset space ~
+\end_inset
+
+plaats
+\begin_inset space ~
+\end_inset
+
+van
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+teams
+\begin_inset space ~
+\end_inset
+
+omkeren: omdat het moeilijk is de plaats van de computer mbt het gevecht
+ te raden , maakt deze optie mogelijk de plaats van de getoonde teams in
+ het paneel om te draaien.
+ Op deze wijze zullen de teams die links staan naar rechts gaan een anders
+ om.
+ Het programma aanvaardt dat de computer tegenover de hoofdscheidsrechter
+ zal staan, mocht dit niet zo zijn kun je de volgorde van de teams omdraaien.
+\end_layout
+
+\begin_layout Description
+Boom: open een venster waar de voortgang van de competitie zichtbaar is(
+ deze optie zal allen beschikbaar zijn in het geval dat de competitie het
+ formaat van een kampioenschap heeft), de teams die naar de volgende fase
+ gaan en de gedefinieerde gevechten.
+ De fases worden automatisch aangevuld als alle gevechten van de vorige
+ fase zijn beëindigd.
+ Door Control + P in te drukken kun je de boom printen.
+\end_layout
+
+\begin_layout Description
+Sluiten: sluit het venster op een veilige manier zonder dat de informatie
+ verloren gaat.
+\end_layout
+
+\begin_layout Section
+Grafieken en lijsten
+\end_layout
+
+\begin_layout Standard
+Afgezien van de bediening van deelnemers en competities, het programma maakt
+ het mogelijk de gegevens voor de verbetering van de competitie af te drukken.
+\end_layout
+
+\begin_layout Subsection
+Hulplijsten voor de organisatie
+\end_layout
+
+\begin_layout Standard
+Er bestaat de mogelijkheid om verschillende lijsten met informatie te maken
+ om deze te printen en te zetten in de verschillende installaties of rondom
+ shiaijo.
+\end_layout
+
+\begin_layout Standard
+Alle lijsten maken een PDF bestand om deze te kunnen visualiseren of uitdrukken.
+\end_layout
+
+\begin_layout Description
+Accreditaties: met deze optie kun je een bestand maken met alle accreditaties
+ van een toernooi.
+ Op deze wijze zullen de lijsten klaar staan om geprint en overhandigd te
+ worden.
+ Er worden 4 accreditaties per bladzijde geprint.
+ Ik raad aan om deze te plastificeren en te overhandigen met een hangertje
+ om de nek heen zodat ze zichtbaar worden.
+\end_layout
+
+\begin_layout Description
+Teamlijsten: een lijst met alle teams en degene die daar deel uit maken
+ in de competitie.
+ Op die manier kunnen de deelnemers controleren of hun gegevens kloppen
+ en die van de rest van de teams als het nodig zou zijn.
+\end_layout
+
+\begin_layout Description
+Lijst
+\begin_inset space ~
+\end_inset
+
+met
+\begin_inset space ~
+\end_inset
+
+scores: als de kampioenschap is afgelopen (of een van de fases) kan men
+ de scorelijst van ieder van de teams printen.
+ Op die manier wordt voor iedereen bekend gemaakt de totale score van ieder
+ team en men weet wie naar de volgende fase gaat of wie de winnaar is.
+ De competitie zijnde of een kampioenschap of een boomcompetitie, de score
+ blijft bij elkaar volgens iedere fase van de competitie zodat er aan de
+ deelnemers ten alle tijd het verloop van deze laten zien kan worden.
+ 
+\end_layout
+
+\begin_layout Description
+Samenvatting
+\begin_inset space ~
+\end_inset
+
+van
+\begin_inset space ~
+\end_inset
+
+de
+\begin_inset space ~
+\end_inset
+
+wedstrijden: maak een samenvatting van alle gevechten inclusief de slagen
+ die door ieder van de deelnemers zijn gemaakt.
+\end_layout
+
+\begin_layout Section
+Grafieken en lijsten
+\end_layout
+
+\begin_layout Standard
+Afgezien van het gebruik van deelnemers en competities, het programma maakt
+ het mogelijk het gedeeltelijk printen van gegevens voor de verbetering
+ van de ligaverwerking.
+\end_layout
+
+\begin_layout Subsection
+Lijsten ter ondersteuning van de organisatie
+\end_layout
+
+\begin_layout Standard
+Er bestaat de mogelijkheid om verschillende lijsten met informatie te maken
+ om uitgeprint te worden en plaatsen in de verschillende toepassingen of
+ rondom shiaijo.
+ Alle lijsten produceren en PDF-bestand om deze te kunnen visualiseren of
+ uitprinten.
+ 
+\end_layout
+
+\begin_layout Description
+Accreditaties: Deze optie maakt het mogelijk een bestand met alle accreditaties
+ van een toernooi te produceren.
+ Op deze manier de lijsten zullen gereed zijn om uitgeprint te worden en
+ te overhandigen.
+ Er worden 4 accreditaties per bladzijde uitgeprint.
+ Ik raad aan om deze te plastificeren en te overhandigen met een hangertje
+ of iets anders wat zichtbaar is.
+ 
+\end_layout
+
+\begin_layout Description
+Teamlijsten: een lijst met alle teams e deelnemers aan de competitie.
+ Op deze manier de deelnemers kunnen nakijken of hun gegevens correct zijn
+ en die van de rest van de teams als het nodig zou zijn.
+ 
+\end_layout
+
+\begin_layout Description
+Lijst van gevechten: Lijst met alle gevechten die gedefinieerd zijn in de
+ competitie.
+ Op deze manier als er geen projector bestaat en ze kunnen de doelborden
+ niet zien, op z’n minst kunnen ze het volgorde van de wedstrijden kijken
+ om klaar te staan als hun beurt is.
+ 
+\end_layout
+
+\begin_layout Description
+Scorelijst: als de kampioenschap is afgelopen (of van de fases hiervan)
+ kan men een lijst uitprinten met alle scores van ieder team.
+ Op deze manier maakt men de totale score openbaar van ieder team en zo
+ weet men wie gaat naar de volgende fase of wie de winnar is.
+ Als de kampioenschap een kampioenschap is of een boom competitie, de score
+ zal gegroepeerd worden volgens ieder fase van de competitie zodat op ieder
+ moment getoond kan worden de voortgang hiervan aan de deelnemers.
+ 
+\end_layout
+
+\begin_layout Description
+Samenvatting
+\begin_inset space ~
+\end_inset
+
+van
+\begin_inset space ~
+\end_inset
+
+gevechten: produceert een samenvatting van alle gevechten inclusief de slagen
+ die gemaakt zijn door de rivalen.
+\end_layout
+
+\begin_layout Subsection
+Diploma
+\end_layout
+
+\begin_layout Standard
+Een klein herkenningsdiploma voor iedereen die deel heeft genomen aan de
+ kampioenschap.
+ Vanzelfsprekend de design de achtergrond moet ieder jaar gewijzigd worden
+ om misverstanden te voorkomen.
+ Een maal uitgeprint is het voldoende om deze te ondertekenen door de verantwoor
+delijke en op deze manier een bepaalde geldigheid toekennen, zodat een mooie
+ herinnering blijft voor alle deelnemers.
+ Omdat de designs kunnen variëren, het programma geeft de mogelijkheid,
+ het volgorde van de namen van de deelnemers te wijzigen om dit aan het
+ design te kunnen aanpassen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/NombreDiploma.png
+	lyxscale 50
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Nombre-Diploma"
+
+\end_inset
+
+ Diploma.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In de figuur
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Nombre-Diploma"
+
+\end_inset
+
+ kan men zien een voorbeeld waarin worden geselecteerd te plaatsen de diplomanam
+en in de toegestane blanco ruimte.
+ De slider aan de zijkant maakt mogelijk de hoogte waar de namen zullen
+ verschijnen te wijzigen terwijl een dunne lijn wijst aan de ruwe plaats
+ hiervan afhankelijk van de waarde van deze slider.
+\end_layout
+
+\begin_layout Subsection
+Grafieken als conclusies van de competities
+\end_layout
+
+\begin_layout Standard
+Men kan verschillende grafieken aanmaken om te observeren op makkelijke
+ wijze hoe een competitie is doorlopen of hoe de spelers het gemaakt hebben.
+ Deze grafieken kan men krijgen voor een concrete competitie of voor allemaal
+ (algemene statistieken).
+\end_layout
+
+\begin_layout Description
+Slagpercentage: Deze grafieken geven aan het scorepercentage.
+ D.w.z.
+ welke percentage de Mems, Kotes, enzovoorts zijn gemaakt of ontvangen.
+ Ze kunnen nuttig zijn voor een speler om zijn sterke en zwakke punten te
+ weten te komen.
+ Bijvoorbeeld, observeren of alle ontvangen slagen van een soort zijn, dit
+ kan de speler aanwijzen op zijn kwetsbaarheid in de verdedigingspositie
+ en laat een gedeelte van zijn lichaam bloot staan aan de tegenstander.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/PercentageOfPerformedHits.png
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Slagpercentage.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Samenvatting
+\end_layout
+
+\begin_layout Standard
+Voor de meest weetgierige herhaal ik de belangrijkste stappen om deze applicatie
+ correct toe te passen.
+\end_layout
+
+\begin_layout Enumerate
+Met de database verbinden met de initiële venster die verschijnt.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Toevoegen alle uitgenodigde clubs aan de competitie.
+ De vertegenwoordigers zullen later worden toegevoegd.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Alle deelnemers toevoegen 
+\end_layout
+
+\begin_layout Enumerate
+Eenmaal de deelnemers bestaan, kun je de clubvertegenwoordigers invoegen
+ 
+\end_layout
+
+\begin_layout Enumerate
+Een nieuwe competitie toevoegen 
+\end_layout
+
+\begin_layout Enumerate
+De rollen van de deelnemers definiëren.
+ Alleen de deelnemers die een rol hebben toegewezen gekregen zullen worden
+ toegelaten binnen de genoemde liga.
+ 
+\end_layout
+
+\begin_layout Enumerate
+De verschillende teams en spelers creëren.
+ 
+\end_layout
+
+\begin_layout Enumerate
+De stijl van de liga definiëren en daarmee de gevechten tussen teams 
+\end_layout
+
+\begin_layout Enumerate
+De scorebord gebruiken om de resultaten van de verschillende gevechten toe
+ te voegen.
+ Dit paneel kan gebruikt worden in een projector als informatie voor het
+ bijwonende publiek van de competitie.
+ 
+\end_layout
+
+\begin_layout Standard
+De stappen 1,2,3, en 4 dienen allen een keer gemaakt worden want ze zijn
+ gemeenschappelijk aan de verschillende competities.
+ De stappen 5,6,7,8 en 9 dienen herhaald te worden voor ieder competitie.
+\end_layout
+
+\begin_layout Chapter
+\begin_inset CommandInset label
+LatexCommand label
+name "cha:Uso-de-distintos"
+
+\end_inset
+
+Gebruik van de verschillende computers
+\end_layout
+
+\begin_layout Standard
+Dit gedeelte veronderstelt dat de teams zijn met elkaar verbonden in een
+ web.
+ Deze web, bij voorkeur wireless, dient robuust te zijn want ze lijdt niet
+ aan uitvallen.
+ In het geval van een wireless web, a.u.b., een toegangspunt van goede kwaliteit
+ gebruiken om zeker van te zijn dat de net op een goede manier werkt en
+ val niet uit tijdens de competitie.
+\end_layout
+
+\begin_layout Section
+Gebruik van een andere team voor ieder shiaijo
+\end_layout
+
+\begin_layout Standard
+Het programma maakt het mogelijk de database te scheiden van de grafische
+ omgeving.
+ Dus, er kunnen verschillende computers tegelijkertijd het programma draaien
+ en toegang hebben tot de database.
+ Dit toestaat het kunnen neerzetten van een computer in ieder van de shiaijos
+ zodat diegene die het bedient alleen op zijn eigen zone moet concentreren
+ en niet op die van de anderen.
+\end_layout
+
+\begin_layout Standard
+Daarvoor, eenvoudigweg dient geïnstalleerd te worden een database in een
+ dezelfde computer en de andere teams daarop verbinden d.m.v.
+ een web (bij voorkeur wifi).
+ Tijdens het opstarten van de KTG, in ieder van de computers zal er aangewijzigd
+ moeten worden op de verbindingsvenster naar de database, de IP van de computer
+ die de database bevat.
+ De IP, die het adres van het net is, kan gekeken worden in de eigenschappen
+ van de web van genoemde machine.
+\end_layout
+
+\begin_layout Standard
+Een enkele database gebruiken maakt de fragmentatie van de informatie onmogelijk
+, en op die manier voorkom je problemen in de gevorderden fases van de kampioens
+chap als teams van verschillende shiaijos tegen elkaar strijden; en toelaat
+ dat de statistieken van de deelnemers compleet zijn.
+ Dus een competitie dient alleen een geïnstalleerde database te hebben in
+ ieder van de gebruikte machines.
+\end_layout
+
+\begin_layout Section
+Monitor wijze
+\end_layout
+
+\begin_layout Standard
+De belangrijkste doel van de monitors is het gebruiken van een projector
+ en de samenvattingen laten zien aan het publiek zodanig dat het verloop
+ van de competitie gekeken mag worden.
+ De beste manier voor het gebruik van de opties is het gebruiken van een
+ exclusieve team verbonden aan het web en een projector gericht naar het
+ publiek.
+ Uiteraard bestaat er geen bezwaar als er verschillende projectoren tegelijkerti
+jd dezelfde informatie uitzenden (laten zien).
+\end_layout
+
+\begin_layout Subsection
+Scorenmonitor
+\end_layout
+
+\begin_layout Standard
+Dit beeldscherm laat zien de score van de liga dat verandert.
+ Ieder 10 minuten roteert tussen de verschillende shiaijos om de werking
+ van ieder te laten zien op deze manier met alleen een projector, kun je
+ de hele competitie laten zien.
+ Het venster is niet interactief, d.w.z., laat het niet toe een resultaat te
+ wijzigen vanuit hier om fouten in de bediening te voorkomen.
+ Om uit het scherm te gaan, hoef je alleen de ESC knop te drukken.
+\end_layout
+
+\begin_layout Subsection
+Scorenmonitor van de boom hiërarchie
+\end_layout
+
+\begin_layout Standard
+Dit scherm laat de hiërarchie van de ligaboom zien.
+ Daarin, de initiële groepen worden vertegenwoordigt in de boombladeren
+ en naarmate ze afgespeeld zijn de gevechten, de gevechten worden aangevuld
+ tot de wortel van de boom die de finale vertegenwoordigt.
+ De beeldscherm is ook niet interactief.
+ Om van het beeldscherm uit te zijn hoef je maar de knop Esc te drukken.
+\end_layout
+
+\begin_layout Chapter
+Personalisatie van de toepassing
+\end_layout
+
+\begin_layout Standard
+Deze toepassing staat op de markt als vrij software en kan gebruik worden
+ in ieder willekeurige club zonder geen enkele kosten.
+ Bovendien als jullie tijd hebben en zin, zijn jullie vrij de toepassing
+ aan te passen aan jullie persoonlijke behoeftes.
+ Voornamelijk wat je kunt wijzigen is de lay-out en tekst.
+\end_layout
+
+\begin_layout Section
+Wijziging van beelden
+\end_layout
+
+\begin_layout Standard
+Alle beelden kunnen gewijzigd worden.
+ Niets is makkelijker dan naar de map Beelden gaan en wijzigen de inhoud
+ zolang je de naam van de map behoudt.
+ Op deze manier het programma zal jullie beelden uploaden en niet de originelen.
+ Het beeld van diploma in de map Diploma’s zou ieder jaar gewijzigd moeten
+ worden, door de tekst te wijzigen, de datum en op z’n minst de naam van
+ de toernooi.
+ Het is ook aanbevolen de inhoud van de map AccreditationCard ieder jaar
+ te wijzigen want anders iemand zou de accreditatie van een vorig jaar kunnen
+ gebruiken.
+ Men kan niet makkelijk de plaats van de letters en foto’s wijzigen, daardoor
+ is het aangeraden dat men een lay-out kiest die goed uitziet rekening houdend
+ met de plaats waar de informatie wordt neergezet.
+ Enkele beelden worden gebruik als achtergrond van de lijsten die gemaakt
+ zijn door het programma.
+\end_layout
+
+\begin_layout Section
+Een taal toevoegen
+\end_layout
+
+\begin_layout Standard
+Het programma is zo gemaakt dat het makkelijk talen kunnen worden toegevoegd
+ of de bestaande talen corrigeren.
+ Er is een map die heet Translations die bevat alle informatie die het programma
+ laat zien.
+ De informatie is niet encrypted of gecompileerd in tegendeel het is een
+ tekst die je eenvoudig kunt wijzigen.
+ De informatie staat in XML, maar maak je maar geen zorgen als je niet wee
+ wat dat is, want het is heel makkelijk om wijzigingen aan te brengen.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+\end_layout
+
+\begin_layout Plain Layout
+<translator> 
+\end_layout
+
+\begin_layout Plain Layout
+<languages abbrev="en" >English</languages> 
+\end_layout
+
+\begin_layout Plain Layout
+<languages abbrev="es" >Español</languages> 
+\end_layout
+
+\begin_layout Plain Layout
+</translator>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Fichero-languages.xml"
+
+\end_inset
+
+Fichero languages.xml
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Het eerste is de taal toevoegen.
+ Om dit te kunnen doen, dien je het bestand (file) dat zich bevindt in de
+ map Translations genoemd languages.xml te wijzigen.
+ De algoritme 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:Fichero-languages.xml"
+
+\end_inset
+
+ laat zien de oorspronkelijke inhoud.
+ In principe wat je moet doen is een nieuwe lijn onder de lijn die het woord
+ Español bevat, toevoegen en voor de lijn die de code </tranlator> bevat.
+ Door de naam te veranderen in de taal die wij willen die verschijnt in
+ het programma en de inhoud van “abbrev” door een code die deze met elkaar
+ verbindt.
+ Deze code zal worden gebruikt in anderen files om de talen te zoeken.
+ Bijvoorbeeld, om Italiaans toe te voegen zouden wij het volgende moeten
+ doen:
+\end_layout
+
+\begin_layout Quotation
+<languages abbrev="it" >Italiano</languages>
+\end_layout
+
+\begin_layout Standard
+Onthoud dat je de taal moet wijzigen in de taal van de gebruiker zodat hij
+ het kan verstaan en vinden.
+\end_layout
+
+\begin_layout Standard
+Nu zul je alle andere files in de map Translations moeten wijzigen en ook
+ de inhoud daarvan.
+ Bijvoorbeeld in de file newClub.xml zien wij onder andere, wat wij zagen
+ in Algoritmo
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "alg:newClub.xml"
+
+\end_inset
+
+.
+ Hoewel het alleen een tekstfragment laat zien zul je hetzelfde moeten doen
+ in alle files.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+<AcceptButton> 
+\end_layout
+
+\begin_layout Plain Layout
+<en>Accept</en> 
+\end_layout
+
+\begin_layout Plain Layout
+<es>Aceptar</es> 
+\end_layout
+
+\begin_layout Plain Layout
+</AcceptButton>
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:newClub.xml"
+
+\end_inset
+
+Parte del Fichero newClub.xml
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Als wij volgen het voorbeeld van de taal Italiaans , zouden wij het volgende
+ VOOR </AcceptButton> dat is wat het einde van het tekstfragment aangeeft.
+\end_layout
+
+\begin_layout Standard
+<it>Accettare</it>
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+It
+\emph default
+ is de afkorting die wij hebben geschreven in de file languages.xml.
+ Op deze manier het programma vindt de geschikte tekst voor de gekozen taal.
+ Het is wel werk maar eenvoudig te realiseren.
+\end_layout
+
+\begin_layout Standard
+Uiteraard, na alle vertalingen als jullie jullie werk met anderen mensen
+ willen delen, hoeven me jullie alleen de gecomprimeerde map Translations
+ met jullie inhoud naar 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+softwaremagico@gmail.com
+\end_layout
+
+\end_inset
+
+.
+ Ik zal de map in de volgende versie van het programma toevoegen en bovendien
+ zal ik jullie bijvoegen in de lijst van bedankte personen voor jullie bijdrage.
+\end_layout
+
+\begin_layout Section
+De lay-out van de diploma’s wijzigen
+\end_layout
+
+\begin_layout Standard
+Om ieder jaar een nieuw diploma te maken, hoef je alleen de file die zich
+ bevindt in de map Diploma te wijzigen, maar de naam en bestandstype dien
+ je te behouden.
+ Het programma zal het nieuwe beeld selecteren als achtergrond voor de toekomsti
+ge gemaakte diploma’s.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename Images/diploma_areas.png
+	lyxscale 20
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Distribución-diploma"
+
+\end_inset
+
+De lay-out van de diploma’s wijzigen.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In figuur
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Distribución-diploma"
+
+\end_inset
+
+ kun je zien de typische de indeling van een diploma, waarin twee area’s
+ van fondo bestaan, een die de titel van de toernooi zou bevatten en de
+ ander waarin in kleine letters de belangrijkste gegevens van de toernooi
+ zouden verschijnen.
+ De grote van van de area’s kan gewijzigd worden want de toepassing toestaat
+ de plaats van de naam te wijzigen.
+\end_layout
+
+\begin_layout Section
+Licenties en ander zaken
+\end_layout
+
+\begin_layout Standard
+Als laatste toevoegen dat de venster 
+\begin_inset Quotes eld
+\end_inset
+
+Omtrent …
+\begin_inset Quotes erd
+\end_inset
+
+ (About…) zou je in geen geval moeten wijzigen.
+ Dit venster bevat o.a.
+ de licentie, de bedankwoorden en andere belangrijke zaken.
+ Uiteraard het vergt niet veel inspanning mijn naam in dit venster te verwijdere
+n en die van iemand anders te zetten, maar dit zou niet eerlijk zijn (ethisch).
+ En bovendien gaat er tegen de licentie van dit programma door GNU waardoor
+ het nogmaals illegaal zou zijn.
+ Ik nodig jullie uit om het programma eigen te maken, dat jullie hem verbeteren
+ en zelfs zaken schrijven die er ontbreken of die verbeterd kunnen worden.
+ Maar heb respect voor de naam de auteur (© Jorge Hortelano Otero) en die
+ van allen die hier aan mee hebben gewerkt.
+ 
+\end_layout
+
+\begin_layout Chapter
+FAQs
+\end_layout
+
+\begin_layout Section
+Gebruik
+\end_layout
+
+\begin_layout Subsection
+Als ik click doe op de link van het programma, er verschijnt geen venster
+\end_layout
+
+\begin_layout Standard
+Als ik click doe op de link van het programma, er verschijnt geen venster,
+ het meest waarschijnlijke is dat de versie van Java die je gebruikt niet
+ de meest geschikte is (versie 6 superior) of eenvoudigweg heb je niet de
+ Java Virtual machine geïnstalleerd.
+ Om dit te kunnen oplossen, hoef je het alleen maar te installeren.
+ Het is gratis en kan gedownload worden vanuit: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.java.com/es/download/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
