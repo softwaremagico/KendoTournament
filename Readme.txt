@@ -1,3 +1,5 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 Introduction:
 -----------
 Kendo Tournament Manager is a powerful tool developed for manage the kendo tournaments. Designed for the Kendo Club of the University of Valencia Kendo UV, it is a flexible and useful tool for different kinds of championships.
